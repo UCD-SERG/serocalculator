@@ -1,0 +1,14 @@
+citHeader("To cite package 'seroincidence' in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+url  <- gsub("\n", "", meta$URL)
+
+citEntry(entry  = "Manual",
+    title  = "seroincidence: Estimating Infection Rates from Serological Data",
+    author = personList(as.person("Peter Teunis")),
+    year   = year,
+    note   = vers,
+    url    = url,
+    textVersion = paste0("Peter Teunis (", year, "). Estimating Infection Rates from Serological Data. ", vers, "."),
+)

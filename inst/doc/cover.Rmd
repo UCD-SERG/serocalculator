@@ -1,6 +1,6 @@
 ---
 title: "R Package - seroincidence"
-author: "ECDC"
+author: "European Centre for Disease Prevention and Control (ECDC)"
 output: 
     rmarkdown::html_vignette:
         toc: yes

@@ -1,4 +1,4 @@
-## ----, echo = FALSE------------------------------------------------------
+## ---- echo = FALSE-------------------------------------------------------
 pkgVersion <- packageDescription("seroincidence")$Version
 pkgDate <- packageDescription("seroincidence")$Date
 authorsString <- gsub("^ *|(?<= ) |\n| *$", "", packageDescription("seroincidence")$Authors, perl = TRUE)

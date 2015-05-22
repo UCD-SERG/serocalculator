@@ -1,15 +1,15 @@
-## ----, echo = FALSE------------------------------------------------------
+## ---- echo = FALSE-------------------------------------------------------
 pkgUrl <- gsub("\n", "", packageDescription("seroincidence")$URL)
 
 ## ------------------------------------------------------------------------
 # Load package "seroincidence"
 library(seroincidence)
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  # List all objects (functions and data) exposed by package "seroincidence"
 #  ls("package:seroincidence")
 
-## ----, echo=FALSE--------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------
 ls("package:seroincidence")
 
 ## ------------------------------------------------------------------------
@@ -30,7 +30,7 @@ serologyData <- simulateSerologyData(n = 300)
 # Show first rows of object "serologyData"
 head(serologyData)
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  # Read content of file "c:\\cross-sectional-data.csv" into object named "serologyData"
 #  serologyData <- read.csv(file = "c:\\cross-sectional-data.csv")
 
@@ -47,14 +47,14 @@ responseParams <- campylobacterResponseParams
 ## ------------------------------------------------------------------------
 responseParams <- simulateSalmonellaResponseParams()
 
-## ----,eval=FALSE---------------------------------------------------------
+## ----eval=FALSE----------------------------------------------------------
 #  AData <- read.csv(file = "A.csv")
 #  kData <- read.csv(file = "k.csv")
 #  
 #  # Create a list named "responseData" containing objects named "A" and "k"
 #  responseParams <- list(A = AData, k = kData)
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  # Assign output of function "estimateSeroincidence" to object named "seroincidenceData"
 #  serologyData <- salmonellaSerologyData
 #  responseParams <- simulateSalmonellaResponseParams()
@@ -68,20 +68,20 @@ responseParams <- simulateSalmonellaResponseParams()
 #  print(seroincidenceData)
 #  # or simply type in the console: 'seroincidenceData' (without "'") and press ENTER
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  censorLimits <- list(IgG = 0, IgM = 0, IgA = 0)
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  summary(seroincidenceData)
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  # Compute seroincidence summary and assign to object "seroincidenceSummary"
 #  seroincidenceSummary <- summary(seroincidenceData)
 #  
 #  # Show the results
 #  seroincidenceSummary$Results
 
-## ----, eval=FALSE--------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
 #  # Calculate seroincidence rates for Salmonella
 #  
 #  # 1. Define cross-sectional data

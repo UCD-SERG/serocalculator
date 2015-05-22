@@ -21,7 +21,7 @@ pkgVersion <- packageDescription("seroincidence")$Version
 pkgDate <- packageDescription("seroincidence")$Date
 pkgBaseFileName <- paste("seroincidence", pkgVersion, sep = "_")
 pkgUrl <- gsub("\n", "", packageDescription("seroincidence")$URL)
-pkgPath <- dirname(pkgUrl)
+pkgPath <- "http://ecdc.europa.eu/en/data-tools/seroincidence-calculator-tool/Documents"
 library("knitr")
 ```
 

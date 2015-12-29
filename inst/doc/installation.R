@@ -42,14 +42,14 @@ chunkSource <- knit_expand(text = chunkTemplate, pkgBaseFileName = pkgBaseFileNa
 #  # Install Windows binary package "seroincidence" directly from internet location:
 #  install.packages(
 #      pkgs = "http://ecdc.europa.eu/en/data-tools/seroincidence-calculator-tool/Documents/
-#                  seroincidence_1.0.4.zip",
+#                  seroincidence_1.0.5.zip",
 #      repos = NULL, type = "win.binary")
 #  
 #  # OPTION B
 #  # Install source package directly from internet location:
 #  install.packages(
 #      pkgs = "http://ecdc.europa.eu/en/data-tools/seroincidence-calculator-tool/Documents/
-#                  seroincidence_1.0.4.tar.gz",
+#                  seroincidence_1.0.5.tar.gz",
 #      repos = NULL, type = "source")
 #  
 #  # OPTION C
@@ -57,11 +57,11 @@ chunkSource <- knit_expand(text = chunkTemplate, pkgBaseFileName = pkgBaseFileNa
 #  #   install.packages("[PATH/TO/FILE/]seroincidence_[version].zip",
 #  #                       repos = NULL, type = "win.binary")
 #  # For instance:
-#  install.packages(pkgs = "C:/seroincidence_1.0.4.zip", repos = NULL, type = "win.binary")
+#  install.packages(pkgs = "C:/seroincidence_1.0.5.zip", repos = NULL, type = "win.binary")
 #  
 #  # OPTION D
 #  # Install source package from a local file:
-#  install.packages(pkgs = "C:/seroincidence_1.0.4.tar.gz", repos = NULL, type = "source")
+#  install.packages(pkgs = "C:/seroincidence_1.0.5.tar.gz", repos = NULL, type = "source")
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  # Load package "seroincidence"

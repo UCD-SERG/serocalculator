@@ -1,8 +1,6 @@
-#' @docType
-#' data
+#' @docType data
 #'
-#' @name
-#' salmonellaSerologyData
+#' @name salmonellaSerologyData
 #'
 #' @title
 #' Salmonella Antibody Levels Data

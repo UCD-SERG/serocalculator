@@ -1,8 +1,6 @@
-#' @docType
-#' data
+#' @docType data
 #'
-#' @name
-#' campylobacterResponseParams
+#' @name campylobacterResponseParams
 #'
 #' @title
 #' Campylobacter Response Parameters Data

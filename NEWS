@@ -1,3 +1,11 @@
+seroincidence v.1.0.5 (Release date: 2015-12-29)
+================
+
+Changes:
+* Packages "stats" and "utils" listed in the "Imports" section of DESCRIPTION. Imported functions are called as "pkg::fun()".
+* Vignette "methodology.Rmd" made compatible with rmarkdown 0.9. Line "- \usepackage[pdftex]{graphicx}" removed.
+* Oxygen documentation made compatible with roxygen2 5.0.1. Values for tags "docType" and "news" put on the same line.
+
 seroincidence v.1.0.4 (Release date: 2015-05-22)
 ================
 

@@ -29,7 +29,7 @@ simulateSerologyData <- function(n = 500)
 {
     simSerology <- function(n = 500, mu = 1, sd = 0.5)
     {
-        return(exp(rnorm(n = n, mean = mu, sd = sd)))
+        return(exp(stats::rnorm(n = n, mean = mu, sd = sd)))
     }
 
     result <- data.frame(

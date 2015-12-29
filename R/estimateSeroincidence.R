@@ -47,7 +47,6 @@
 #' }
 #'
 #' @export
-
 estimateSeroincidence <- function(data, antibodies, strata = "", Ak, censorLimits, showProgress = FALSE, ...)
 {
     # Check antibodies
@@ -100,7 +99,7 @@ estimateSeroincidence <- function(data, antibodies, strata = "", Ak, censorLimit
     progressBarCreated <- FALSE
     if (showProgress & numLevels > 1)
     {
-        pb <- txtProgressBar(min = 0, max = numLevels)
+        pb <- utils::txtProgressBar(min = 0, max = numLevels)
         progressBarCreated <- TRUE
     }
 
@@ -115,13 +114,13 @@ estimateSeroincidence <- function(data, antibodies, strata = "", Ak, censorLimit
         if (nrow(y) == 0) next
 
         # Estimate log.lambda, starting value = log(1/365.25) day^-1
-        fit <- optim(par = log(1 / 365.25), fn = .nll, y = y, m = 0, Ak = Ak, censorLimits = censorLimits, method = "BFGS", hessian = TRUE, ...)
+        fit <- stats::optim(par = log(1 / 365.25), fn = .nll, y = y, m = 0, Ak = Ak, censorLimits = censorLimits, method = "BFGS", hessian = TRUE, ...)
 
         # Collect results
         fits[[levelsStrata[i]]] <- fit
 
         if (progressBarCreated)
-            setTxtProgressBar(pb, i)
+            utils::setTxtProgressBar(pb, i)
 
     }
     if (progressBarCreated)

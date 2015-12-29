@@ -44,9 +44,9 @@ simulateSalmonellaResponseParams <- function(n = 500)
 {
     result <- list(
         A = data.frame(
-            IgG = rgamma(n = n, shape = 1.175, scale = 0.848),
-            IgM = rgamma(n = n, shape = 1.337, scale = 0.902),
-            IgA = rgamma(n = n, shape = 1.205, scale = 0.651)),
+            IgG = stats::rgamma(n = n, shape = 1.175, scale = 0.848),
+            IgM = stats::rgamma(n = n, shape = 1.337, scale = 0.902),
+            IgA = stats::rgamma(n = n, shape = 1.205, scale = 0.651)),
         k = data.frame(
             IgG = .rinvgamma(n = n, shape = 0.869, scale = 1/728.5),
             IgM = .rinvgamma(n = n, shape = 0.731, scale = 1/514.6),

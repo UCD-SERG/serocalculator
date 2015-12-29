@@ -7,7 +7,6 @@ output:
     toc: yes
 header-includes:
 - \usepackage{subfigure}
-- \usepackage[pdftex]{graphicx}
 - \usepackage[utf8]{inputenc}
 references:
 - DOI: 10.1002/sim.5322

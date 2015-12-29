@@ -1,8 +1,6 @@
-#' @docType
-#' data
+#' @docType data
 #'
-#' @name
-#' campylobacterSerologyData
+#' @name campylobacterSerologyData
 #'
 #' @title
 #' Campylobacter Antibody Levels Data

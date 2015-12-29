@@ -1,8 +1,6 @@
-#' @docType
-#' package
+#' @docType package
 #'
-#' @name
-#' seroincidence
+#' @name seroincidence
 #'
 #' @title
 #' Estimating Infection Rates from Serological Data

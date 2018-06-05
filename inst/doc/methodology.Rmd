@@ -7,12 +7,13 @@ output:
     toc: yes
 header-includes:
 - \usepackage{subfigure}
-- \usepackage[utf8]{inputenc}
+  \DeclareUnicodeCharacter{2010}{-}
 references:
-- DOI: 10.1002/sim.5322
+- id: teunis_etal12_biomarker
+  DOI: 10.1002/sim.5322
   author:
   - family: Teunis
-    given: P. F.
+    given: P. F. M.
   - family: van Eijkeren
     given: J. C.
   - family: Ang
@@ -26,7 +27,6 @@ references:
   - family: van Pelt
     given: W.
   container-title: Statistics in Medicine
-  id: teunis2012
   issue: 20
   issued:
     month: 9
@@ -35,104 +35,113 @@ references:
   title: 'Biomarker dynamics: estimating infection rates from serological data'
   type: article-journal
   volume: 31
-  
-- author:
-  - family: Versteegh
-    given: F. G.
-  - family: Mertens
-    given: P. L.
+- id: degraaf_etal14wh
+  author:
+  - family: de Graaf
+    given: W. F.
+  - family: Kretzschmar 
+    given: M. E. E.
+  - family: Teunis
+    given: P. F. M.
+  - family: Diekmann
+    given: O.
+  container-title: Epidemics
+  DOI: 10.1016/j.epidem.2014.08.002
+  issued:
+    month: 12
+    year: 2014
+  page: 1-7
+  title: 'A two-phase within-host model for immune response and its application to serological profiles of pertussis'
+  type: article-journal
+  volume: 9
+- id: teunis_etal16withinhost
+  author:
+  - family: Teunis
+    given: P. F. M.
+  - family: van Eijkeren
+    given: J. C.
+  - family: de Graaf
+    given: W. F.
+  - family: Bonačić Marinović
+    given: A.
+  - family: Kretzschmar 
+    given: M. E. E.    
+  container-title: Epidemics
+  DOI: 10.1016/j.epidem.2016.04.001
+  issued:
+    month: 9
+    year: 2016
+    page: 33-39
+  title: 'Linking the seroresponse to infection to within-host heterogeneity in antibody production'
+  type: article-journal
+  volume: 16  
+- id: satten_etal04
+  author:
+  - family: Satten
+    given: G. A.
+  - family: Kong
+    given: F.
+  - family: Wright
+    given: D. J.
+  - family: Glynn
+    given: S. A.
+  - family: Schreiber 
+    given: G. B.  
+  container-title: Biostatistics
+  DOI: 10.1093/biostatistics/5.1.145
+  issued:
+    month: 1
+    year: 2004
+    page: 145-151
+  title: 'How special is a ‘special’ interval: modeling departure from length‐biased sampling in renewal processes'
+  type: article-journal
+  volume: 5
+  issue: 1
+- id: zelen04
+  author:
+  - family: Zelen
+    given: M.
+  container-title: Lifetime Data Analysis
+  issued:
+    month: 12
+    year: 2004
+    page: 325-334
+  title: 'Forward and backward recurrence times and length biased sampling: age specific models'
+  type: article-journal
+  volume: 10
+  issue: 4
+- id: degreeff_etal12
+  author:
+  - family: de Greeff
+    given: S. C.
+  - family: Teunis
+    given: P. F. M.
   - family: de Melker
     given: H. E.
-  - family: Roord
-    given: J. J.
+  - family: Mooi
+    given: F. R.
+  - family: Notermans
+    given: D. W.
+  - family: Elvers
+    given: B.
   - family: Schellekens
-    given: J. F.
-  - family: Teunis
-    given: P. F.
-  container-title: Epidemiology and Infection
-  id: versteegh2005
-  issue: 4
+    given: J. F. P.
+  container-title: Clinical and Vaccine Immunology
+  DOI: 10.1128/CVI.00229-12
   issued:
-    month: 8
-    year: 2005
-  page: 737-748
-  title: Age-specific long-term course of IgG antibodies to pertussis toxin after
-    symptomatic infection with Bordetella pertussis
+    month: 9
+    year: 2012
+    page: 1452-1456
+  title: 'Two-Component Cluster Analysis of a Large Serodiagnostic Database for Specificity of Increases of IgG Antibodies against Pertussis Toxin in Paired Serum Samples and of Absolute Values in Single Serum Samples'
   type: article-journal
-  volume: 133
-  
-- DOI: 10.1002/sim.3592
-  author:
-  - family: Simonsen
-    given: J.
-  - family: Mølbak
-    given: K.
-  - family: Falkenhorst
-    given: G.
-  - family: Krogfelt
-    given: K. A.
-  - family: Linneberg
-    given: A.
-  - family: Teunis
-    given: P. F.
-  container-title: Statistics in Medicine
-  id: simonsen2009
-  issue: 14
-  issued:
-    month: 6
-    year: 2009
-  page: 1882-1895
-  title: Estimation of incidences of infectious diseases based on antibody measurements
-  type: article-journal
-  volume: 28
-  
-- author:
-  - family: Feller
-    given: W.
-  container-title: John Wiley & Sons
-  id: feller1968
-  issued:
-    year: 1968
-  title: An introduction to probability theory and its applications
-  type: book
-  volume: 2
-  
-- author:
-  - family: Higgins
-    given: P. M.
-  container-title: 'London: Springer Verlag'
-  id: higgins2008
-  issued:
-    year: 2008
-  title: Number Story. From counting to cryptography
-  type: book
-  
-- author:
-  - family: Scalia Tomba
-    given: G. P.
-  - family: Svenson
-    given: Å.
-  - family: Asikainen
-    given: T.
-  - family: Giesecke
-    given: J.
-  container-title: Mathematical Biosciences
-  id: scalia2010
-  issue: 1
-  issued:
-    year: 2010
-  page: 24-31
-  title: Some model based considerations on observing generation times for communicable
-    diseases
-  type: article-journal
-  volume: 223
+  volume: 19
+  issue: 9
 fontsize: 11pt
+vignette: >
+  %\VignetteIndexEntry{Seroincidence package methodology}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Seroincidence package methodology}
--->
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -140,475 +149,278 @@ MathJax.Hub.Config({
 });
 </script>
 
-# 1. Introduction
-
-The simplest possible model for serum antibody decay is an exponential
-decay function (see [Appendix](#method_longitudinal)). This is the default 
-longitudinal model used in **seroincidence** package. 
-Various modifications can be made, however, to allow for
-different interpretations of low antibody concentrations in cross-sectional data. 
-The following three approaches are implemented in the current version of the package:
-
-1. Exponential decay: seroconversion is instantaneous, and is followed by 
-exponential decrease to zero (see [Appendix](#method_longitudinal) for more information).
-  
-2. Exponential decay with left censoring: seroconversion is instantaneous, 
-and it is followed by exponential decay, but antibody concentrations below a
-given (fixed) level are treated as censored (see [Appendix](#censoring) for 
-more information). This implies that observations below censoring level are 
-considered to have been  generated by seroconversions from at least a 
-given time in the past (corresponding to the censoring level). In simple 
-terms: for very low antibody concentrations we can only conclude that 
-seroconversion occurred long ago, but not precisely how long.
-
-3. Exponential decay with nonzero baseline: seroconversion is again instantaneous, 
-and is again followed by exponential decay, but decay now is not towards zero 
-but instead, approaches some baseline antibody concentration that may be 
-different for any individual (see [Appendix](#baseline) for more information). 
-Low antibody concentrations in the cross-sectional sample now may correspond to
-baseline levels, in which case seroconversion would have occurred an infinite period ago.
-
-Because of their different interpretations of low cross-sectional
-serum antibody concentrations, both alternatives (left censoring and
-decay to baseline) lead to decreased estimates of seroincidence,
-compared to the default model.
-
-Finally, note that the methods described in the [Appendix](#appendices) allow for
-arbitrary antibody decay patterns, so that adaptations can be made to
-accommodate any longitudinal model for the shape of the decaying arm
-of the seroresponse.
-
-# 2. Influence of censoring on seroincidence
-
-In case serum antibody data are known to be censored, a cutoff level
-can be defined in the seroincidence calculator script as a list, with
-separate values for each of the three antibody classes (IgG, IgM,
-and/or IgA).
-
-\begin{figure}[h!]
-\centering
-\mbox{
-\subfigure[Same cutoff]{
-\includegraphics[width=0.48\linewidth]{./fig/cutoff-campylobacter-1.png}}
-\subfigure[Different cutoffs]{
-\includegraphics[width=0.48\linewidth]{./fig/cutoff-campylobacter-2.png}}}
-\caption{\label{censoring_campy}Influence of cutoff levels on
-  seroincidence estimates for a cross-sectional sample of {\em Campylobacter} antibodies. 
-  (a) Identical cutoffs for all three antibody types; 
-  (b) Different cutoffs for IgG, IgM and IgA.}
-\end{figure}
-
-\begin{figure}[h!]
-\centering
-\mbox{
-\subfigure[Same cutoff]{
-\includegraphics[width=0.48\linewidth]{./fig/cutoff-salmonella-1.png}}
-\subfigure[Different cutoffs]{
-\includegraphics[width=0.48\linewidth]{./fig/cutoff-salmonella-2.png}}}
-\caption{\label{censoring_salmo}Influence of cutoff levels on
-  seroincidence estimates for a cross-sectional sample of {\em Salmonella} antibodies (mixed ELISA). 
-  (a) Identical cutoffs for all three antibody types; 
-  (b) Different cutoffs for IgG, IgM and IgA.}
-\end{figure}
-
-Figures \ref{censoring_campy} and \ref{censoring_salmo} show the
-change in seroincidence estimate, for a given set of cross-sectional
-antibody data (*Campylobacter* and *Salmonella*), with
-increasing cutoff levels. Cutoffs need not be identical for IgG, IgM
-and IgA antibodies, as illustrated in these graphs.
-
-# 3. Checks using the longitudinal data
-
-The longitudinal data may be used to obtain a crude estimate of bias
-in the estimated incidences (Figure \ref{verif}a, \ref{verif}e).
-
-\begin{figure}[h!]
-\centering
-\mbox{
-\subfigure[Cutoff 0.0]{
-\includegraphics[width=0.24\linewidth]{./fig/delft-cutoff0.png}}
-\subfigure[Cutoff 0.5]{
-\includegraphics[width=0.24\linewidth]{./fig/delft-cutoff05.png}}
-\subfigure[Cutoff 1.0]{
-\includegraphics[width=0.24\linewidth]{./fig/delft-cutoff1.png}}
-\subfigure[Cutoff 2.0]{
-\includegraphics[width=0.24\linewidth]{./fig/delft-cutoff2.png}}}
-\mbox{
-\subfigure[Cutoff 0.0]{
-\includegraphics[width=0.24\linewidth]{./fig/ssi-cutoff0.png}}
-\subfigure[Cutoff 0.5]{
-\includegraphics[width=0.24\linewidth]{./fig/ssi-cutoff05.png}}
-\subfigure[Cutoff 1.0]{
-\includegraphics[width=0.24\linewidth]{./fig/ssi-cutoff1.png}}
-\subfigure[Cutoff 2.0]{
-\includegraphics[width=0.24\linewidth]{./fig/ssi-cutoff2.png}}}
-\caption{\label{verif}Estimated incidences for longitudinal sera at
-  different times since onset of illness symptoms. delta(incid) =
-  difference between estimated incidence and 365/(time since
-  onset). Top: Campylobacter, Delft ELISA, Bottom: Campylobacter, SSI
-  ELISA.}
-\end{figure}
-
-It is seen that for samples taken 100--250 days post symptom onset, the
-estimated incidences appear unbiased (the 95\% interval includes
-0). Increasing the cutoff (here applied identical values for all three
-antibody classes) causes underestimation of the incidence (Figures
-\ref{verif}b,c,d and \ref{verif}f,g,h). The high degree of variation
-in antibody levels in late samples (more than 100 days post symptom
-onset) renders estimation problematic.
-
 \newpage
 
+# Introduction
+
+The revised seroincidence calculator package provides three refinements to the method for 
+calculating seroincidence published earlier [@teunis_etal12_biomarker] and implemented in R package
+**seroincidence**, versions 1.x: (1) inclusion of infection episode with rising antibody levels, (2) 
+non--exponential decay of serum antibodies after infection, and (3) age--dependent correction for 
+subjects who have never seroconverted. It is important to note that, although the implemented 
+methods use a specific parametric model, as proposed in [@degraaf_etal14wh] and augmented in 
+[@teunis_etal16withinhost], the methods used to calculate the likelihood function allow 
+seroresponses of arbitrary shape.
+
+# 1. A simple model for the seroresponse
+
+The current version of the seroincidence package uses the model of [@teunis_etal16withinhost] for 
+the shape of the seroresponse:
+$$
+\begin{array}{l@{\qquad}l}
+\text{Infection/colonization episode} & \text{Waning immunity episode}\\
+b^{\prime}(t) = \mu_{0}b(t) - cy(t) & b(t) = 0 \\
+y^{\prime}(t) = \mu y(t) & y^{\prime}(t) = -\nu y(t)^r \\
+\end{array}
+$$
+
+With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen concentration 
+$b(0) = b_{0}$. The serum antibody response $y(t)$ can be written as
+$$
+y(t) = y_{+}(t) + y_{-}(t)
+$$
+where
+\begin{align*}
+y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\le t <t_{1}]\\
+y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\nu(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
+\end{align*}
+Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the (unobservable) growth rate $\mu$ can 
+be written as 
+$$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\linewidth]{fig/response.pdf}
+\caption{\label{response_graph}The antibody level at $t=0$ is $y_{0}$; the rising branch ends at 
+$t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any antibody level 
+$y_{0} \le y(t) < y_{1}$ occurs twice.}
+\end{figure}
+
+Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$, 
+log concentrations decrease rapidly after infection has terminated, but decay then slows down and 
+low antibody concentrations are maintained for a long period. When $r$ approaches 1, exponential 
+decay is restored.
+
+# 2. Backward recurrence time
+
+Considering the (fundamental) uniform distribution $u_{f}$ of sampling within a given interval, the 
+interval length distribution $p(\Delta t)$ and the distribution of (cross--sectionally) sampled 
+interval length [@teunis_etal12_biomarker]
+$$
+q(\Delta t) = \frac{p(\Delta t)\cdot\Delta t}{\overline{\Delta t_{p}}}
+$$
+the joint distribution of backward recurrence time and cross--sectional interval length is the 
+product $u_{f}\cdot q$ because these probabilities are independent.
+
+The distribution of backward recurrence time is the marginal distribution
+\begin{align*}
+u(\tau) & = \int_{\Delta t=0}^{\infty} u_{f}(\tau;\Delta t)\cdot q(\Delta t)\text{d}\Delta t\\
+        & = \int_{0}^{\infty}\frac{[0\le\tau\le\Delta t]}{\Delta t}\cdot \frac{p(\Delta t)\cdot
+            \Delta t}{\overline{\Delta t_{p}}}\text{d}\Delta t\\
+        & = \frac{1}{\overline{\Delta t_{p}}}\int_{\tau}^{\infty}p(\Delta t)\text{d}\Delta t
+\end{align*}
+
+# 3. Incidence of seroconversions
+
+To calculate the incidence of seroconversions, as in [@teunis_etal12_biomarker], the distribution 
+$p(\Delta t)$ of intervals $\Delta t$ between seroconversions, is important. Assuming any subject is 
+sampled completely at random during their intervals between seroconversions, and accounting for 
+interval length bias [@satten_etal04; @zelen04], the distribution of backward recurrence times 
+$\tau$ can be written as [@teunis_etal12_biomarker]
+$$
+u(\tau) = \frac{1}{\overline{\Delta t}} \int_{\tau=0}^{\infty}p(\Delta t)\text{d}\Delta t 
+        = \frac{1-P(\Delta t)}{\overline{\Delta t}}
+$$
+where $\overline{\Delta t}$ is the $p$--distribution expected value of $\Delta t$.
+
+This density is employed to estimate seroconversion rates. The antibody concentration $y$ is the 
+observable quantity, and we need to express the probability (density) of observed $y$ in terms of 
+the density of backward recurrence time.
+
+First, the backward recurrence time can $\tau$ be expressed as a function of the serum antibody 
+concentration $y$
+$$
+\tau(y) = \tau_{+}(y) + \tau_{-}(y)
+$$
+where
+\begin{align*}
+\tau_{+}(y) & = \displaystyle{\frac{1}{\mu}} \log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right) [0\le \tau<t_{1}]\\
+\tau_{-}(y) & = \left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}}\right)[t_{1}\le \tau < \infty]
+\end{align*}
+with corresponding derivatives
+$$
+\frac{\text{d}\tau_{+}}{\text{d}y} = \frac{1}{\mu y_{+}} \quad \text{ and } \quad
+\frac{\text{d}\tau_{-}}{\text{d}y} = - \frac{1}{\nu y_{-}^{r}}
+$$
+
+Now, consider the probability that an antibody level $y^{\prime}$, corresponding to a time since 
+infection $\tau^{\prime}$, is less than or equal to $y$ (see Figure \ref{response_graph}) 
+\begin{align*}
+P(y^{\prime} \le y) & = P\left(y_{0} \le y_{+}(\tau^{\prime})\le y_{+}(\tau) \vee y_{-}(\tau^{\prime}) 
+                        \le y_{-}(\tau) \le t_{1}\right) + [y_{1} < y]\\
+                    & = P\left(0 \le \tau^{\prime}\le \frac{1}{\mu} 
+                        \log\left(\frac{y_{+}}{y_{0}}\right)\right)\\
+                    &   \qquad {} + P\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)} \le 
+                        \tau^{\prime} < \infty\right) + [y_{1} < y]
+\end{align*}
+
+The probability density for $y$ then is 
+\begin{align*}
+\rho(y) & = \frac{\text{d}}{\text{d}y} P(y^{\prime}\le y)\\
+        & = \frac{\text{d}}{\text{d}\tau_{+}}\frac{\text{d}\tau_{+}}{\text{d}y_{+}} 
+            P\left(0\le\tau^{\prime}\le\tau_{+}(y)\right) +
+            \frac{\text{d}}{\text{d}\tau_{-}}\frac{\text{d}\tau_{-}}{\text{d}y_{-}} 
+            P\left(t_{1}+\tau_{-}(y)\le\tau^{\prime}<\infty\right)\\
+        & = \rho_{+}(y_{+}) + \rho_{-}(y_{-})
+\end{align*}
+
+So that
+\begin{equation}\label{rho_y}
+\begin{aligned}
+\rho_{+}(y_{+}) & = \displaystyle{\frac{1}{\mu y_{+}}} u\left(\displaystyle{\frac{1}{\mu}}\log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right)\right)\\
+\rho_{-}(y_{-}) & = \displaystyle{\frac{1}{\nu y_{-}^{r}}} u\left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}}\right)
+\end{aligned}
+\end{equation}
+when $[y_{0} \le y < y_{1}]$ there are two contributions to the density, one from the rising and one 
+from the decaying branch of the antibody response.
+
+If, as assumed before [@teunis_etal12_biomarker], intervals between incident infections are 
+generated by a process with Gamma probability density, $\overline{\Delta t} = (m+1)/\lambda$. The 
+cumulative distribution function for $\tau$ is
+\begin{equation}\label{pm_cumul}
+P_{m}(\tau) = 1-\frac{\Gamma(m+1, \lambda\tau)}{m!}
+\end{equation}
+and the density of backward recurrence times is
+\begin{equation}\label{bwrectime_pdf}
+u_{m}(\tau) = \frac{1-P_{m}(\tau)}{\overline{\Delta t}} =
+  \frac{\lambda\Gamma(m+1,\lambda\tau)}{(m+1)!} =
+  \frac{\lambda\text{e}^{-\lambda\tau}}{m+1}
+  \sum_{j=0}^{m}\frac{(\lambda\tau)^{j}}{j!}
+\end{equation}
+
+Combining equations \eqref{rho_y} and \eqref{bwrectime_pdf} the marginal density of $y$ can be found
+\begin{equation}
+\label{margdist_y_increase}
+\rho_{+}(y_{+}) = [y_{0} \le y_{+} < y_{1}] \frac{\lambda y_{0}}{\mu(m+1)}
+                  \left(\frac{y_{+}}{y_{0}}\right)^{-(1+\lambda/\mu)}
+                  \sum_{j=0}^{m} \frac{\left(\frac{\lambda}{\mu}\log(y_{+}/y_{0})\right)^{j}}{j!}
+\end{equation}
+and
+\begin{align}\label{margdist_y_decay}
+\rho_{-}(y_{-}) & = [0< y_{-} \le y_{1}] \frac{\lambda}{\nu y_{-}^{r}(m+1)} 
+                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)} \nonumber\\
+                &   \qquad {} \times\sum_{j=0}^{m}\frac{\lambda^{j}}{j!}\left(t_{1}+
+                    \frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)^{j}
+\end{align}
+where $\rho_{+}$ and $\rho_{-}$ refer to the contributions of the rising and decaying part of the 
+seroresponse to the density of $y$.
+
+The within--host parameters $\boldsymbol{\theta} = (y_{0}, y_{1}, t_{1}, \nu, r)$ vary among 
+responses of individual subjects. Heterogeneity in these parameters may be described by their joint 
+distribution, which can be used to calculate the marginal distribution $\rho(y)$ 
+[@teunis_etal12_biomarker]. Since a Monte Carlo sample of the posterior joint distribution is 
+available from the longitudinal model [@teunis_etal16withinhost] the marginal distribution of 
+$\rho(y)$ may be approximated by the sum
+\begin{equation}\label{rho_numsum}
+\rho(y) = \frac{1}{N}\sum_{n=1}^{N} \rho_{+}(y\vert \lambda, m, \boldsymbol{\theta}_{n}) + 
+          \rho_{-}(y\vert \lambda, m, \boldsymbol{\theta}_{n})
+\end{equation}
+for a Monte Carlo sample 
+$(\boldsymbol{\theta}_{1}, \boldsymbol{\theta}_{2}, \dots, \boldsymbol{\theta}_{N})$. A 
+cross--sectional sample of antibody concentrations $(Y_{1}, Y_{2}, \dots, Y_{K})$ can now be used to 
+calculate a likelihood
+$$
+\ell(\lambda,m) = \prod_{k=1}^{K}\rho(Y_{k}\vert \lambda, m)
+$$
+that can be used to estimate $(\lambda, m)$.
+
+# 4. True seronegative subjects
+
+At the time that a cross--sectional serum sample is collected, the subject whose blood is drawn may 
+have never been infected in their lifetime. The antibody concentration $y$ in that sample then 
+represents a true seronegative. For such a sample, the backward recurrence time does not exist. For 
+a given longitudinal response, the backward recurrence time $\tau$ corresponding with measured 
+antibody concentration $Y$ can be calculated. If that backward recurrence time is longer than the 
+age of the person (at time of sampling), their antibody concentration $Y$ cannot have resulted from 
+prior seroconversion.
+
+If, in the summation in equation \eqref{rho_numsum}, terms not satisfying the condition 
+$\tau(y) < a$ are discarded, the resulting partial sum
+$$
+\rho^{\ast}(y,a) = \frac{1}{N}\sum_{n=1}^{N}[\tau(y,\boldsymbol{\theta}_{n}) < a]
+                   (\rho_{+}(y\vert\lambda,m,\boldsymbol{\theta}_{n}) +
+                   (\rho_{-}(y\vert\lambda,m,\boldsymbol{\theta}_{n})
+$$
+counts only those seroconversions that can have occurred during the lifespan of the person whose 
+serum was sampled.
+
+Serum from a true seronegative subject is expected to have a low antibody concentration, 
+representative of a ``true'' negative sample [@degreeff_etal12]. The antibody concentrations $y$ in 
+sera from such truly negative subjects are not expected to decay over time: the baseline 
+distribution $\rho_{0}(y)$ may be assumed fixed and independent of $m$ and $\lambda$. Note that also 
+when $y$ corresponds to a backward recurrence time within the lifespan of a person, that same 
+antibody concentration $y$ could still result from the baseline distribution $\rho_{0}(y)$.
+
+Given the interval distribution for incident infections, the probability that a sampled subject has 
+never seroconverted depends on their age. For the gamma process assumed above, the survival function
+$P_{m}(a\vert m, \lambda)$ gives the probability of a subject having not seroconverted before age 
+$a$ (equation \eqref{pm_cumul}).
+
+Thus, for a serum sample with antibody concentration $y$ from a subject of age $a$ the probability 
+density is
+$$
+\psi (\lambda, m\vert y, a, \boldsymbol{\theta}, \boldsymbol{\theta}_{0}) =
+\rho^{\ast}(y, a) + P_{m}(a\vert m, \lambda)\rho_{0}(y\vert \boldsymbol{\theta}_{0})
+$$
+
+When the seroconversion rate is low, or a subject is young, or both, the probability of a true 
+negative may be considerable.
+
+# 5. Censored observations
+
+In case observations are censored at $y_{c}$ such that an observed $Y = \max(Y,y_{c})$, then for 
+$y_{c} < Y$ the density $\rho(y)$ as in equations \eqref{margdist_y_increase} and 
+\eqref{margdist_y_decay} holds, but the likelihood of any $Y \le y_{c}$ can be calculated 
+$$
+\ell(\lambda, m \vert y \le y_{c}) = \int_{z=0}^{y_{c}} \rho(z, \lambda, m) \text{d}z = R(y_{c}\vert\lambda,m)
+$$
+We need the cumulative distribution $R(y)$ for the backward recurrence time, from equation 
+\eqref{bwrectime_pdf}.
+$$
+U_{m}(\tau) = \frac{1}{m+1}\sum_{j=0}^{m} P_{j}(\tau\vert\lambda)
+$$
+while the cumulative distribution of antibody levels $y$ is
+\begin{align*}
+P(y^{\prime} \le y) & = U\left(\frac{1}{\mu}\log\left(\frac{y}{y_{0}} \right)\right) [y_{0}\le y < y_{1}] +\\
+                    &   \qquad {} \left(1-U\left(t_{1}+\frac{y^{-(r-1)}-y_{1}^{-(r-1)}}
+                        {\nu(r-1)}\right)\right) [y\le y_{1}] + [y_{1} < y]
+\end{align*}
+so that
+\begin{align*}
+R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}P_{j} \left(\frac{1}{\mu}\log
+         \left(\frac{y}{y_{0}}\right)\vert\lambda\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \left(1 - \frac{1}{m+1}\sum_{j=0}^{m}P_{j}\left(t_{1}+
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\vert\lambda\right)\right)[y \le y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align*}
+
+Using equation \eqref{pm_cumul} this can be written in terms of incomplete gamma functions 
+\begin{align*}
+R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}  \left(1-\frac{\Gamma\left(j+1,\frac{\lambda}{\mu}
+         \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \left(1-\frac{\Gamma\left(j+1,\lambda\left(t_{1} +
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)\right)}{j!}\right)\right)[y < y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align*}
+or
+\begin{align*}
+R(y) & = \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\frac{\lambda}{\mu} 
+         \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\lambda\left(t_{1} + 
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)\right)}{j!} [y < y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align*}
+
 \newpage
-
-# Appendices {#appendices}
-
-This is a slightly modified description from [@teunis2012], extended with adaptations for
-censoring and elevated baseline levels.
-
-## A.1. Characteristics of the serum antibody response {#method_longitudinal}
-
-The longitudinal model used for describing serum antibody responses
-has been published [@simonsen2009, @teunis2012]. As
-longitudinal data may include early samples taken shortly after
-infection, possibly during the initial increase in antibody
-concentrations (during seroconversion) the longitudinal model includes
-the rising phase of the seroresponse. This avoids misspecification of
-the peak antibody level, resulting in estimates for the (joint
-distribution of) peak levels, time to peak, and decay rates of the
-serum antibody concentration [@teunis2012, @versteegh2005].
-
-However, seroconversion usually is rapid: the increase in antibody
-levels is orders of magnitude faster than the subsequent decrease. For
-seroconversion rate calculations we ignore the time to reach peak
-levels. For simplicity it will be assumed that the antibody response
-decays exponentially but this is not an essential assumption and it
-can be relaxed to any monotonically decreasing function of time. So,
-the antibody response $y$ to incidence at $t = 0$ is an instantaneous
-increase to peak level ($A$) followed by an exponential decrease
-(with rate $k$):
-
-$$
-y = A \text{e}^{-kt}
-$$
-
-## A.2. Random sampling of randomly repeating responses {#A2}
-
-In a cross-sectional sample of responses, each subject will be sampled
-at a random time within its current inter-event interval $\Delta t$
-(interval, for short). The within--interval sampling distribution is
-uniform:
-
-\begin{equation}
-\label{fundamental}
-u_{f}(\tau\vert\Delta t)=\frac{[0\le \tau < \Delta t]}{\Delta t}
-\end{equation}
-
-The subscript $f$ is introduced to show that this distribution is
-fundamental to sampling from the period between events that are
-separated by a constant time interval $\Delta t$. As the intervals
-$\Delta t$ generally will vary, the within--interval sampling
-distribution and the distribution of intervals combine to a population
-distribution of backward recurrence times. The backward recurrence
-time distribution can be translated into a corresponding distribution
-of response values (antibody concentrations), due to the monotonicity
-of the response.
-
-The intervals $\Delta t$ are supposed to vary randomly with
-distribution $p(\Delta t)$. This introduces a subtle question about
-the probability of sampling the response within an infinitesimal range
-of intervals $[\Delta t, \Delta t + \text{d}\Delta t]$. One would
-be inclined to assume that the probability is given only by the
-probability density $p(\Delta t)$, but one should keep in mind that
-responses with longer intervals are more likely to be sampled than
-those with shorter intervals. Obviously, the probability of the range
-of sampling intervals $[\Delta t, \Delta t + \text{d}\Delta t]$
-should be proportional to the interval $\Delta t$ itself (size biased
-sampling, [@feller1968, @higgins2008, @scalia2010]). Then,
-the probability of sampling a response within an infinitesimal range
-of intervals $[\Delta t, \Delta t + \text{d}\Delta t]$ is
-
-$$
-\frac{p(\Delta t)\Delta t}{\overline{\Delta t}_{p}}\text{d}\Delta t
-$$
-
-Here $\overline{\Delta t}_{p}$ is the expected interval length from
-the distribution $p$. We define the incidence as its reciprocal
-$1/\overline{\Delta t}_{p}$.
-
-Combining this probability with the uniform distribution of sampling
-time within the interval $\Delta t$ leads to a population distribution
-of time since last event (backward recurrence time)
-
-\begin{eqnarray*}
-u(\tau) &=& \int_{\Delta t=0}^{\infty}u_{f}(\tau\vert\Delta t) \frac{p(\Delta t)\Delta t}{\overline{\Delta t}_{p}}\text{d}\Delta t\\
-        &=& \frac{1}{\overline{\Delta t}_{p}} \int_{\Delta t=\tau}^{\infty} p(\Delta t)\text{d}\Delta t = \frac{1-P(\tau)}{\overline{\Delta t}_{p}}
-\end{eqnarray*}
-
-where $P$ is the cumulative distribution of $p$. In going from the
-first to the second equality we used the fact that $\Delta t$ should
-exceed $\tau$ (equation (\ref{fundamental})). Note that the
-distribution $u(\tau)$ is monotonically non-increasing.
-
-## A.3. Delta distribution {#A3}
-
-If $p(\Delta t)$ is the delta-distribution $p(\Delta t) = \delta(\Delta t-\Delta t^{\ast})$ 
-representing identical intervals, then the uniform distribution $u_{f}(\tau\vert \Delta t^{\ast})$ 
-is regained: for the delta distribution $p(\Delta t) = \delta(\Delta t -\Delta t^{\ast})$ 
-the expected value is $\overline{\Delta t}_{p} = \Delta t^{\ast}$. It follows that
-
-$$
-u(\tau\vert\Delta t^{\ast}) 
-= \frac{1}{\Delta t^{\ast}} \int_{\tau}^{\infty} \delta (\Delta t-\Delta t^{\ast}) \text{d}\Delta t 
-= \frac{\left[0\le \tau < \Delta t^{\ast}\right]}{\Delta t^{\ast}}
-$$
-
-## A.4. Distribution of response values given the distribution of backward recurrence times {#A4}
-
-Given incidence at $\tau = 0$, the response decays as $y(\tau) = A \text{e}^{-k\tau}$, 
-with $\tau$ backward recurrence time. Consider
-
-\begin{eqnarray}
-P(y^{\prime}\le y) & = & P\left(A\text{e}^{-k\tau^{\prime}}\le A\text{e}^{-k\tau}\right) [y\le A] = P(\tau \le \tau^{\prime})[y\le A] \nonumber \\
-                   & = & \left(1-U(\tau)\right)[y\le A] = \left(1-U(\log(A/y)/k)\right) [y\le A] \label{cumul_distr}
-\end{eqnarray}
-
-Differentiating this expression leads to
-
-\begin{eqnarray}
-\rho(y) & = & \frac{\text{d}}{\text{d}y} P(y^{\prime}\le y) = -u\left(\log(A/y)/k\right) \left(\frac{1}{k}\right) \left(\frac{-1}{y}\right)[y\le A] \nonumber\\
-        & = & \frac{[y\le A]}{ky}u\left(\log(A/y)/k\right)\label{distrib_y}
-\end{eqnarray}
-
-Given the antibody response $y$ with respect to time of incidence,
-$\rho(y)$ is the corresponding density for sampled response values.
-
-For the $n$th moment of the backward recurrence time one derives
-
-\begin{eqnarray*}
-E(\tau^{n}) & = & \int_{\tau = 0}^{\infty} \tau^{n} u(\tau)\text{d}\tau 
-                    = \int_{\tau = 0}^{\infty}\left(\tau^{n}\frac{1}{\overline{\Delta t}_{p}} 
-                    \int_{\Delta t = \tau}^{\infty} p(\Delta t)\text{d}\Delta t\right)\text{d}\tau \\
-            & = & \frac{1}{\overline{\Delta t}_{p}}\int_{\Delta t=0}^{\infty}p(\Delta t) 
-                    \left(\int_{\tau = 0}^{\Delta t}\tau^{n}\text{d}\tau\right)\text{d}\Delta t \\
-            & = & \frac{1}{\overline{\Delta t}_{p}}\int_{\Delta t=0}^{\infty}p(\Delta t) 
-                    \frac{(\Delta t)^{{n+1}}}{n+1}\text{d}\Delta t 
-                    = \frac{\overline{(\Delta t)^{n+1}}_{p}}{(n+1)\overline{\Delta t}_{p}}
-\end{eqnarray*}
-
-## A.5. Family of Gamma distributions {#A5}
-
-The distribution of intervals $p(\Delta t)$ may have any
-form. Let the family of $\Gamma(\lambda, m)$ distributions be given:
-
-$$
-p_{m}(\Delta t\vert \lambda) = \frac{\lambda^{m+1}\Delta t^{m}}{m!}\text{e}^{-\lambda \Delta t}
-$$
-
-From
-
-$$
-\int_{x=0}^{\infty}x^{m+1}\text{e}^{-x}\text{d}x = (m+1)!
-$$
-
-one easily derives that $\overline{\Delta t}_{p} = (m+1)/\lambda$.
-
-We shall need the cumulative distribution
-
-\begin{eqnarray}
-P_{m}(\tau\vert \lambda) & = & \int_{\Delta t=0}^{\tau} p_{m}(\Delta t\vert \lambda) \text{d}\Delta t 
-                                = 1 - \int_{\Delta t=\tau}^{\infty}p_{m}(\Delta t\vert \lambda)d\Delta t \nonumber \\ 
-                         & = & 1 - \frac{\Gamma(m+1,\lambda \tau)}{m!} \label{p_dist_gamma}
-\end{eqnarray}
-
-where $\Gamma(m + 1, \lambda\tau)$ denotes the (upper) incomplete gamma
-function (not to be confused with the gamma distribution).
-
-Note: working out the integral
-
-$$
-P_{m}(\tau\vert\lambda) = \int_{\Delta t = 0}^{\tau} p_{m}(\Delta t\vert\lambda)\text{d}\Delta t,
-$$
-
-it is straightforward to show that
-
-\begin{equation}
-\label{gamma_pj}
-\Gamma(m+1,\lambda\tau) = \frac{m!}{\lambda}\sum_{j=0}^{m}p_{j}(\tau\vert\lambda)
-\end{equation}
-
-For the distribution of backward recurrence times one finds
-
-\begin{equation}
-\label{u_dist_gamma}
-u_{m}(\tau\vert \lambda) = \frac{\lambda}{m+1} \int_{\Delta t=\tau}^{\infty}p_{m}(\Delta t\vert \lambda)\text{d}\Delta t 
-    = \frac{\lambda}{(m+1)!}\Gamma(m+1,\lambda\tau)
-\end{equation}
-
-when $m = 0$
-
-$$
-u_{0}(\tau\vert \lambda) = \lambda \Gamma(1,\lambda\tau) = p_{0}(\tau\vert \lambda),
-$$
-
-the famous property of the Poisson process.
-
-## A.6. Heterogeneity in serum antibody responses {#A6}
-
-Incorporation of responses that also vary in amplitude $A$ and decay
-rate $k$ can be easily described with a joint density $g(A, k)$. Of
-course, such heterogeneity changes the population based distribution
-of $y$ to
-
-$$
-\rho(y) = \frac{1}{y}\int_{k=0}^{\infty}\int_{A=y}^{\infty} \frac{1}{k}u\left(\frac{\log(A/y)}{k}\right)g(A,k)\text{d}A\text{d}k
-$$
-
-instead of corresponding equation (\ref{distrib_y}). Note that the factor $[y\le A]$ 
-in equation ($\ref{distrib_y}$) forces the lower limit $y$ in the
-integration over $A$. In case the peak antibody levels $A$ and
-antibody decay rates $k$ are available as a Monte Carlo sample
-$\{A_{n},k_{n}\}$ of their joint distribution the integration can be
-approximated by
-
-\begin{equation}
-\label{mc_heterogeneity}
-\rho(y)=\frac{1}{y}\frac{1}{N}\sum_{n=1}^{N}\frac{1}{k_{n}} u\left(\frac{\log(A_{n}/y)}{k_{n}}\right)[y\le A_{n}]
-\end{equation}
-
-where $N$ is the size of the Monte-Carlo sample, maintaining any
-correlation between peak levels $A_{n}$ and decay rates $k_{n}$.
-Assuming e.g. that infections occur with Gamma distributed intervals
-with rate $\lambda$ and shape factor $m$:
-
-\begin{eqnarray*}
-\rho(y\vert \lambda, m) & = & \frac{1}{(m+1) N}\sum_{n=1}^{N}\left( \frac{\lambda}{k_{n}A_{n}} \left(\frac{y}{A_{n}}\right)^{-1+\lambda/k_{n}}\right.\\ 
-                        &\times & \left.\sum_{j=0}^{m} \frac{\left(\lambda/k_{n} \log(A_{n}/y)\right)^{j}}{j!}[y\le A_{n}]\right)
-\end{eqnarray*}
-
-For a cross-sectional sample $\{Y_{1}, Y_{2},\dots , Y_{N_{c}}\}$ a
-likelihood
-
-$$
-\ell (\lambda, m) = \prod_{i=1}^{N_{c}} \rho(Y_{i}\vert \lambda, m)
-$$
-
-can be calculated to allow estimation of the parameters $(\lambda, m)$ of 
-the process generating infections. The corresponding incidence is
-the average rate of infections $\lambda/(m+1)$.
-
-## A.7. Censored observations {#censoring}
-
-In case observations are censored at $y_{c}$ such that an observed $Y
-= \text{max}(Y, y_{c})$, then for $y_{c} < Y$ the density $\rho(y)$
-as in eq. ($\ref{distrib_y}$) holds, but the likelihood of any $Y \le y_{c}$
-can be calculated
-
-$$
-\ell(\lambda, m \vert y \le y_{c}) = \int_{z=0}^{y_{c}}\rho(z\vert \lambda,m)\text{d}z = R(y_{c}\vert \lambda,m)
-$$
-
-and the likelihood function for a cross-sectional sample $\{Y_{1}, Y_{2}, \dots, Y_{N_{c}}\}$ becomes
-
-$$
-\ell (\lambda, m) = \prod_{i=1}^{N_{c}} \left(\rho(Y_{i}\vert \lambda, m)[y_{c} < Y_{i}] \times R(y_{c}\vert \lambda,m)[Y_{i}\le y_{c}]\right)
-$$
-
-We need the cumulative distribution $R(y)$ as given by
-eq. ($\ref{cumul_distr}$)
-
-\begin{equation}
-\label{r_cumul_def}
-R(y) = 1 - U\left(\frac{\log\left(\frac{A}{\min(y,A)}\right)}{k}\right) = 1 - U\left(\frac{\text{lm}(y,A)}{k}\right)
-\end{equation}
-
-with obvious definition of $\text{lm}(y, A)$.
-
-For the family of gamma distributions for the intervals $\Delta t$,
-eq. ($\ref{r_cumul_def}$) leads to
-
-$$
-R_{m}(y) = 1 - U_{m}\left(\frac{\text{lm}(y,A)}{k}\vert \lambda\right)
-$$
-
-Substituting eq. ($\ref{gamma_pj}$) into eq. ($\ref{u_dist_gamma}$), and
-using the cumulative distribution $P_{j}$
-
-$$
-R_{m}(y) = 1 - \frac{1}{m+1}\sum_{j=0}^{m}P_{j} \left(\frac{\text{lm}(y,A)}{k}\vert\lambda\right)
-$$
-
-which can also be expressed in terms of incomplete Gamma
-functions, using eq. ($\ref{p_dist_gamma}$)
-
-$$
-R_{m}(y) = 1 - \frac{1}{m+1}\sum_{j=0}^{m} 1 - \frac{\Gamma\left(j+1,\lambda\frac{\text{lm}(y,A)}{k}\right)}{j!}
-$$
-
-or, expanding $\text{lm}$
-
-$$
-R(y) = \frac{1}{m+1}\sum_{j=0}^{m}\frac{1}{j!}\Gamma\left(j+1,  \frac{\lambda}{k}\log\left(\frac{A}{\min(y,A)}\right)\right)
-$$
-
-The latter form is useful for numeric calculations as there is a
-reliable and efficient implementation available in R.
-
-## A.8. Nonzero baseline {#baseline}
-
-The procedure outlined in [@teunis2012] is valid
-for any monotonically non-increasing serum antibody response. If for
-instance, after seroconversion, antibody levels decrease to some
-baseline level greater than zero (however long ago seroconversion has
-occurred), the antibody response is
-
-$$
-y = y_{0} + A \text{e}^{-kt}
-$$
-
-Such responses have been assumed for back-calculations [@simonsen2009].
-
-Now the distribution of response values given the distribution of the
-backward recurrence times becomes
-
-\begin{eqnarray*}
-P(y^{\prime}\le y) & = & P\left(y_{0}+A\text{e}^{-k\tau^{\prime}}\le y_{0}+A\text{e}^{-k\tau}\right)[y_{0} < y \le A] \\
-                   & = & P(\tau \le \tau^{\prime})[y_{0} < y \le A] = \left(1 - U(\tau)\right)[y_{0} < y \le A] \\
-                   & = & \left(1-U\left(\frac{1}{k}\log\left(\frac{A}{y-y_{0}}\right)\right)\right) [y_{0} < y \le A]
-\end{eqnarray*}
-
-Differentiation produces the density
-
-$$
-\rho(y) = \frac{\text{d}}{\text{d}y} P(y^{\prime}\le y) = \frac{1}{k(y-y_{0})} u\left(\frac{1}{k}\log\left(\frac{A}{y-y_{0}}\right)\right)
-$$
-
-Including heterogeneity in $A$, $k$ and $y_{0}$ via their joint distribution
-
-$$
-\rho(y) = \int_{k=0}^{\infty}\int_{A=y}^{\infty}\int_{y_{0}=0}^y 
-    \frac{1}{k(y-y_{0})} u\left(\frac{1}{k}\log\left(\frac{A}{y-y_{0}}\right)\right) 
-    g(A,K,y_{0})\text{d}y_{0}\text{d}A\text{d}k
-$$
-
-or, when a Monte-Carlo sample of $\{A_{n}, k_{n}, y_{0,n}\}$ triplets
-is available
-
-$$
-\rho(y) = \frac{1}{N}\sum_{n=1}^{N}\frac{u\left(\frac{1}{k_{n}}  \log\left(\frac{A_{n}}{y-y_{0,n}}\right)\right)}{k_{n}(y-y_{0,n})}  [y_{0,n} < y < A_{n}]
-$$
-
-For the gamma family of distributions for $\Delta t$,
-
-\begin{eqnarray*}
-\rho(y) & = & \frac{1}{N(m+1)}\sum_{n=1}^{N}\left(\frac{\lambda}{k_{n}A_{n}} \left(\frac{y-y_{0,n}}{A_{n}}\right)^{-1+\lambda/k_{n}}\right. \\
-        & \times & \left.\sum_{j=0}^{m}\frac{1}{j!}\left(\frac{\lambda}{k_{n}} \log\left(\frac{A_{n}}{y-y_{0,n}}\right)\right)^{j} [y_{0,n} < y \le A_{n}]\right)
-\end{eqnarray*}
-
-For the Poisson process ($m = 0$) this reduces to
-
-$$
-\rho(y) = \frac{1}{N}\sum_{n=1}^{N}\frac{\lambda}{k_{n}A_{n}} \left(\frac{y-y_{0,n}}{A_{n}}\right)^{-1+\lambda/k_{n}}[y_{0,n} < y \le A_{n}]
-$$
 
 # References

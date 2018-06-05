@@ -1,18 +1,57 @@
 ---
-vignette: |
-  %\VignetteIndexEntry{Seroincidence package tutorial}
-  %\VignetteEngine{knitr::rmarkdown}  
-  \usepackage[utf8]{inputenc}
-
 title: "Seroincidence package tutorial"
 author: "European Centre for Disease Prevention and Control (ECDC)"
 date: '`r Sys.Date()`'
 output:
   pdf_document:
     toc: yes
-
+header-includes:
+- \DeclareUnicodeCharacter{2010}{-}
 references:
-- id: teunis2012
+- id: 1
+  author:
+  - family: de Graaf
+    given: W. F.
+  - family: Kretzschmar 
+    given: M. E. E.
+  - family: Teunis
+    given: P. F. M.
+  - family: Diekmann
+    given: O.
+  container-title: Epidemics
+  DOI: 10.1016/j.epidem.2014.08.002
+  issued:
+    month: 12
+    year: 2014
+  page: 1-7
+  title: 'A two-phase within-host model for immune response and its application to serological profiles of pertussis'
+  type: article-journal
+  volume: 9
+- id: 2
+  author:
+  - family: Simonsen
+    given: J.
+  - family: Mølbak
+    given: K.
+  - family: Falkenhorst
+    given: G.
+  - family: Krogfelt
+    given: K. A.
+  - family: Linneberg
+    given: A.
+  - family: Teunis
+    given: P. F.
+  container-title: Statistics in Medicine
+  DOI: 10.1002/sim.3592
+  issue: 14
+  issued:
+    month: 6
+    year: 2009
+  page: 1882-1895
+  title: 'Estimation of incidences of infectious diseases based on antibody measurements'
+  type: article-journal
+  volume: 28
+- id: 3
   author:
   - family: Teunis
     given: P. F.
@@ -30,27 +69,36 @@ references:
     given: W.
   container-title: Statistics in Medicine
   DOI: 10.1002/sim.5322
-  issue: 20
+  issue: 208
   issued:
     month: 9
     year: 2012
-  page: 2240-2248
+    page: 2240-2248
   title: 'Biomarker dynamics: estimating infection rates from serological data'
   type: article-journal
   volume: 31
-  
-- id: feller1968
+- id: 4
   author:
-  - family: Feller
-    given: W.
+  - family: Teunis
+    given: P. F.
+  - family: van Eijkeren
+    given: J. C.
+  - family: de Graaf
+    given: W. F.
+  - family: Bonačić Marinović
+    given: A.
+  - family: Kretzschmar 
+    given: M. E. E.    
+  container-title: Epidemics
+  DOI: 10.1016/j.epidem.2016.04.001
   issued:
-    year: 1968
-  title: An introduction to probability theory and its applications
-  type: book
-  volume: 2
-  container-title: John Wiley & Sons
-  
-- id: strid2001
+    month: 9
+    year: 2016
+    page: 33-39
+  title: 'Linking the seroresponse to infection to within-host heterogeneity in antibody production'
+  type: article-journal
+  volume: 16
+- id: 5
   author:
   - family: Strid 
     given: M. A.
@@ -72,132 +120,196 @@ references:
   issued:
     year: 2001
     month: 3
-  DOI: 10.1128/CDLI.8.2.314-319.2001
-  
+  DOI: 10.1128/CDLI.8.2.314-319.2001  
+fontsize: 11pt
+vignette: >
+  %\VignetteIndexEntry{Seroincidence package tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
 </script>
 
 ```{r, echo = FALSE}
 pkgUrl <- gsub("\n", "", packageDescription("seroincidence")$URL)
 ```
 
+\newpage
+
 # 1. Introduction
 
-Antibody levels measured by ELISA in a (cross-sectional) population sample can
-be translated into an estimate of the frequency with which
-seroconversions (infections) occur in the sampled
-population. Formulated simply: the presence of many high titres
-indicates that many subjects likely experienced infection recently,
-while low titres indicate a low frequency of infections in the sampled
-population. More information about ELISA methods can be found at
+Antibody levels measured in a (cross–sectional) population sample can be translated into an estimate 
+of the frequency with which seroconversions (infections) occur in the sampled population. In simple 
+terms: the presence of many high antibody concentrations indicates that many subjects likely 
+experienced infection recently, while mostly low concentrations indicate a low frequency of 
+infections in the sampled population. More information about ELISA methods can be found on
 [ECDC web site](`r pkgUrl`).
 
-In order to thus interpret the measured cross-sectional antibody
-concentrations, characteristics of the time course of the serum
-antibody response must be known. For any antibody detected in the
-cross-sectional sample, a quantitative description of its dynamics
-following infection (seroconversion to an elevated concentration,
-followed by a gradual decrease) must be available. In published
-studies, this information on the time course of the serum antibody
-response has been obtained from follow-up data in subjects who had a
-symptomatic episode following infection. The onset of symptoms thus
-provided a proxy for the time that infection occurred. Care must be
-taken that longitudinal and cross-sectional measurements of antibody
-concentrations are calibrated on the same scale (or, preferably,
-expressed in identical units).
+In order to thus interpret the measured cross-sectional antibody concentrations, characteristics of 
+the time course of the serum antibody response must be known. For any antibody detected in the 
+cross–sectional sample, a quantitative description of its dynamics following infection 
+(seroconversion to an elevated concentration, followed by a gradual decrease) must be available. In 
+published studies, this information on the time course of the serum antibody response has been 
+obtained from follow–up data in subjects who had a symptomatic episode following infection. The 
+onset of symptoms thus provided a proxy for the time that infection occurred. Care must be taken 
+that longitudinal and cross–sectional measurements of antibody concentrations are calibrated on the 
+same scale (or, preferably, expressed in identical units).
 
-The time course of the serum antibody response to infection is assumed
-generic: anyone infected by the same pathogen is expected to produce a
-response similar to those seen in the symptomatic cohort used for the
-follow-up study. Thus, the strategy is to set up a longitudinal
-model from a follow-up study once, and use the thus obtained
-information to analyze many different cross-sectional data sets.
+The time course of the serum antibody response to infection is assumed generic: anyone infected by 
+the same pathogen is expected to produce a response similar to those seen in the symptomatic cohort 
+used for the follow–up study. Thus, the strategy is to set up a longitudinal model from a follow–up 
+study once, and use the thus obtained information to analyze many different cross–sectional data 
+sets.
 
-Note that it must be assumed that such variation among individuals as
-observed in the longitudinal cohort is the same as in the population
-where the cross-sectional sample was taken, where this variation
-cannot be observed.
+Note that it must be assumed that such variation in the time course of antibody concentrations among 
+individuals as observed in the longitudinal cohort is the same as in the population where the 
+cross-sectional sample was taken, where this variation cannot be observed.
 
-Analysis of longitudinal data and estimation of the required
-parameters is separated from the estimation of seroincidences, because
-(1) there are few longitudinal data sets available and they are
-difficult (and expensive) to obtain, (2) such longitudinal models may
-be considered "generic", presumably describing a physiological
-phenomenon that is similar in any infected individual, and (3)
-setting up and running the longitudinal model requires additional
-skills, not necessary for use of the sero-incidence estimator package.
+Analysis of longitudinal data and estimation of the required parameters is separated from the 
+estimation of seroincidences, because (1) there are few longitudinal data sets available and they 
+are difficult (and expensive) to obtain, (2) such longitudinal models may be considered *generic*, 
+presumably describing a physiological phenomenon that is similiar in any infected individual, and 
+(3) setting up and running the longitudinal model requires additional skills, not necessary for use 
+of the sero–incidence calculator script
 
 # 2. The seroincidence estimator
 
-Package **seroincidence** was designed to use the
-longitudinal response characteristics by means of a set of parameters
-characterizing the longitudinal response of the selected serum
-antibodies. These parameters are peak concentrations and decay rates
-(describing the maximum antibody concentration reached after
-seroconversion and the rate with which the antibody concentration
-decreases, assuming first order, or exponential, kinetics).
+Package **seroincidence** was designed to calculate incidence of seroconversion, by using the 
+longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a 
+cross–sectional population sample is calculated, as a function of the (longitudinal) seroresponse 
+and the frequency of seroconversion (or seroincidence). Given the seroresponse, this (marginal) 
+distribution of antibody concentrations can be fitted to the cross-sectional data, by adjusting the 
+seroconversion frequency, thus providing a means to estimate the seroconversion frequency.
 
-Peak concentrations and decay rates may be provided as a set of
-parameters describing parametric distributions (a **gamma** distribution
-for the peak concentrations and an **inverse gamma** distribution for the
-decay rates, denoted by *A* and *k*, respectively), that characterize the heterogeneity of these response
-characteristics: peak concentrations and decay rates show considerable
-variation among individuals. This individual variation in antibody
-responses is accounted for by generating a Monte Carlo sample 
-(default number of observations *n = 500*) from these parametric distributions 
-and calculating the resulting incidence (as in vignette [methodology.pdf](methodology.pdf), equation (7)).
-Alternatively, these peak concentrations and decay rates may be
-provided as sets of Monte-Carlo samples, as can be obtained from
-longitudinal models (analyzed by *MCMC* methods).
-Note that, due to the limited number of parameter pairs, the generated
-incidence estimates will show minor variations: if the same
-calculation is run twice, the outcomes may differ slightly. If this
-variation should be undesired, the numbers of parameter pairs may be
+## 2.1 Time course of serum antibodies
+
+The seroresponse, the time course of serum antibodies following seroconversion (infection) is 
+described by means of a set of parameters describing it. These parameters may include:
+
+a) baseline antibody concentration, 
+b) time to reach peak antibody concentration, 
+c) magnitude of the peak concentration, and 
+d) antibody decay parameters describing the time course (shape and rate) of antibody decay. 
+
+A model description that is used for the serocalculator is described in [@2; @3]. An alternative 
+model, simplified but with improved interpretation of the underlying biological mechanisms, is given 
+in [@1] and further improved in [@4]. 
+
+The current model assumes that upon exposure to an initial inoculum, pathogen concentrations 
+increase exponentially. Presence of pathogens (antigen presented to the immune system) signals an 
+increase in antibody production, resulting in exponentially increasing serum antibody 
+concentrations. Increased activity of the immune system, as signalled by circulating antibodies, 
+causes inactivation or die–off of pathogens, with a rate proportional to the serum antibody 
+concentration. Ultimately, when all pathogens are removed, infection is over and the promotion of 
+antibody production stops. Then the decay phase starts, and serum antibody concentrations decrease. 
+Antibody decay in the serum compartment may start fast and slow down later, resulting in 
+non–exponential decay. In [@4] this is modelled using a shape parameter, allowing gradual adjustment 
+between exponential (log–linear) and strongly non–exponential decay.
+
+## 2.2 Heterogenity
+
+The five parameters describing the seroresponse (in round brackets names of corresponding 
+parameters used in the package, see [section 3.2.2](#longParams) for details): baseline antibody 
+concentration (`y0` and `yb`), time to peak (`t1`), peak antibody concentration (`y1`), decay rate 
+(`alpha`) and shape factor of the decay curve (`r`) are not fixed numbers. In a population of 
+subjects, individuals each have their own seroresponse, different from those of other subjects. 
+Therefore, these parameters are provided as a (joint) distribution, describing their variation among 
+individuals in the sampled population. Of course, such a distribution depends on the pathogen, the 
+detected antibody, and even the detection assay.
+
+Estimates for these seroresponse parameters may be obtained by fitting the model to longitudinal 
+data. Typically, such data are collected in patients with confirmed infection, where the time of 
+infection is detected by appearance of symptoms. Ideally, blood samples are taken at several times 
+post infection, up to a period long enough to reliably estimate the shape of the serum antibody 
+decay curve.
+
+A Bayesian hierarchical framework allows for individual variation in seroresponses, so that one 
+obtains the (posterior) joint distribution of the parameters as a (Markov chain) Monte Carlo sample, 
+of all relevant parameters [@4].
+
+Note that, due to the limited number of iterations in the Monte Carlo sample, the generated 
+incidence estimates will show minor variations: if the same calculation is run twice, the outcomes 
+may differ slightly. If this variation should be smaller, the size of the Monte Carlo sample may be 
 increased. This however will slow down the calculations.
 
-Given these longitudinal response characteristics, the R-scripts
-delivered for the ECDC project provide a rapid and computationally
-simple method for calculating seroconversion rates, as published in
-[@teunis2012].
+## 2.3 Incidence estimation
 
-Given these longitudinal response characteristics, this package provide a rapid 
-and computationally simple method for calculating seroconversion rates, as published in [@feller1968].
+The longitudinal seroresponses are considered generic: they represent the time course of (specific) 
+human serum antibodies against a (specific) pathogen. Therefore, with any cross–sectional sample of 
+the same antibodies in a human population, an incidence estimate can be calculated. 
 
-The methods on which the seroincidence calculator is based were developed
-with publicly funded research. All procedures have been published and are open to
-the general public, including the core function on which the seroincidence calculator
-is based. To make the functionalities provided as broadly available as possible, R
-was chosen as the computing platform, because it is free and open source, and runs
-on any modern operating system.
+Given the longitudinal response characteristics, **seroincidence** R package provide a rapid and 
+computationally simple method for calculating seroconversion rates, as published in [@3].
+
+The methods on which the seroincidence calculator is based were developed with publicly funded 
+research. All procedures have been published and are open to the general public, including the core 
+script on which the seroincidence calculator is based. To make the functionalities provided as 
+broadly available as possible, R was chosen as the computing platform, because it is free and open 
+source, and runs on any modern computer operating system.
+
+## 2.4 Model variants
+
+The package contains longitudinal models for seroincidence calculations. Four model variants are 
+possible, depending on whether seroconversion is instantaneous ($t_{1} = 0$) or not ($t_{1} > 0$), 
+and whether decay is exponential ($r = 1$) or proceeds as a power function ($r > 1$). Power function 
+decay allows for rapid inital decay followed by a sustained period of very slow decay [@4]. 
+Available model variants are described in Table 1.
+
+\begin{table}[!h]
+\centering
+\caption{Model variants}
+\vspace{0.3cm}
+\begin{footnotesize}
+\begin{tabular}{ccc}
+ & Time to & Decay\\
+Model & Seroconversion ($t_{1}$) & parameter ($r$)\\
+1 & 0 & 1\\
+2 & 0 & $> 1$\\
+3 & $> 0$ & 1\\
+4 & $> 0$ & $> 1$\\
+\end{tabular}
+\begin{tabular}{lllcccc}
+ & & & \multicolumn{4}{c}{Model}\\
+Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
+{\em Campylobacter jejuni} & IgG & ELISA (Delft) & * & & * & * \\
+ & IgM & ELISA (Delft) & * & & * & * \\
+ & IgA & ELISA (Delft) & * & & * & * \\
+ & IgG & ELISA (SSI)   & * & * & & * \\
+ & IgM & ELISA (SSI)   & * & * & & * \\
+ & IgA & ELISA (SSI)   & * & * & & * \\ \hline
+{\em Salmonella} & IgG & mixed ELISA (SSI) & * & * & & * \\
+ & IgM & mixed ELISA (SSI) & * & * & & * \\
+ & IgA & mixed ELISA (SSI) & * & * & & * \\ \hline
+{\em Bordetella pertussis} & IgG-PT & IU    & * & * & * & * \\ \hline
+\end{tabular}
+\end{footnotesize}
+\end{table}
 
 # 3. How to use *seroincidence* package
 
-This section provides step-by-step directions on the usage of the *seroincidence*
-package.
+This section provides step-by-step directions on the usage of the *seroincidence* package.
 
 ## 3.1. Loading the package
 
-Functionality of the *seroincidence* package is made available to the end user 
-only once the library is loaded into the current workspace. Assuming the package 
-is installed already (covered in [installation.pdf](installation.pdf)) loading it
-is achieved by running the following command in the R console (bear in mind that 
-the text after character `#` is only a comment):
+Functionality of the *seroincidence* package is made available to the end user only once the library 
+is loaded into the current workspace. Assuming the package is installed already (covered in 
+[installation.pdf](installation.pdf)) loading is achieved by running the following command in the R 
+console (bear in mind that the text after character `#` is only a comment):
 
 ```{r}
 # Load package "seroincidence"
 library(seroincidence)
 ```
 
-At this moment you should have all functions required to run the seroincidence
-calculation available. You can check that by running:
+At this moment all functions required to run the seroincidence calculation are made available. It 
+can be checked by running:
 
 ```{r, eval=FALSE}
-# List all objects (functions and data) exposed by package "seroincidence"
+# List all objects (functions and data) exposed by package "seroincidence".
 ls("package:seroincidence")
 ```
 
@@ -207,105 +319,84 @@ Here is the resulting output:
 ls("package:seroincidence")
 ```
 
-We briefly describe the objects:
+We briefly describe the most important objects and functions:
 
-    [1] "campylobacterResponseParams": Monte Carlo sample of longitudinal response 
-            parameters `A` and `k` per antibody for Campylobacter collected with 
-            SSI ELISA procedure. 
-            Object class: `list`.
-    
-    [2] `campylobacterSerologyData`: Example antibody levels data measured in 
-            cross-sectional population sample for Campylobacter (Delft ELISA). 
-            Object class: `data.frame`.
-    
-    [3] `estimateSeroincidence`: Main function of the package. Estimates 
-            seroincidence based on supplied cross-section antibody levels data 
-            and longitudinal response parameters. 
-            Object class: `function`.
+a) `[DISEASE]Params[MODEL_TYPE]`: Monte Carlo sample of longitudinal response parameters per 
+antibody for various diseases: Campylobacter, Pertussis, Salmonella. Object class: `list`.
+b) `[DISEASE]Sim[Low|Medium|High]Data`: Example simulated antibody levels data measured in a 
+cross-sectional population for three values of lambda (incidence): 0.036 ("Low"), 0.21 ("Medium") 
+and 1.15 ("High") (1/yr). Object class: `data.frame`.
+c) `getAdditionalData`: Utility function for downloading additional longitudinal response 
+parameters from an online repository. Files available for download are `coxiellaIFAParams4.zip` and 
+`yersiniaSSIParams4.zip`. Object class: `function`.
+d) `estimateSeroincidence`: Main function of the package. Estimates seroincidence based on supplied 
+cross-section antibody levels data and longitudinal response parameters. Object class: `function`.
 
-    [4] `salmonellaSerologyData`: Example antibody levels data measured in 
-            cross-sectional population sample for Salmonella (SSI Mixed ELISA). 
-            Object class: `data.frame`.
-
-    [5] `simulateSalmonellaResponseParams`: Function to simulate the longitudinal 
-            response parameters `A` (peak level) and `k` (decay rate) per 
-            antibody for Salmonella. 
-            Object class: `function`.
-
-    [6] `simulateSerologyData`: Function to simulate cross-sectional serology 
-            data for three antibodies: `IgG`, `IgM`, `IgA`. 
-            Object class: `function`.
-        
 ## 3.2. Specifying input data
 
 There are two sets of inputs to the serology calculator that must always be specified:
 
-a) Antibody levels measured in cross-sectional population sample (see `salmonellaSerologyData`, 
-    `campylobacterSerologyData`, `simulateSerologyData` above).
-b) Longitudinal response characteristic as pair of peak concentrations and decay parameters `(A, k)` 
-    (see `simulateSalmonellaResponseParams`, `campylobacterResponseParams` above).
+a) Simulated antibody levels measured in cross-sectional population sample (see 
+`campylobacterSimLowData`, `campylobacterSimMediumData`, etc. above).
+b) Longitudinal response characteristic as set of parameters `(y1, alpha, yb, r, y0, mu1, t1)`
+(see `campylobacterDelftParams1`, `campylobacterSSIParams2`, etc. above).
 
 We start with loading antibody levels measured in cross-sectional population sample.
 
 ### 3.2.1. Specifying cross-sectional antibody levels data
 
-The user has many options of providing this data to the calculator. Here are a few:
+The user has a few options of providing this data to the calculator:
 
-**a) Using supplied sample data**
+**i) Using supplied sample data**
 
-Data sets `salmonellaSerologyData` and `campylobacterSerologyData` provide examples of 
-cross-sectional antibody levels data for Salmonella and Campylobacter, respectively.
-They are loaded into the workspace as soon as the package is loaded, therefore they
-can be referenced right away. Here are small exempts from these data sets:
+Data set `campylobacterSimMediumData` provides an example of a cross-sectional antibody levels data 
+for Campylobacter. It is loaded into the workspace as soon as the package is loaded, therefore it
+can be referenced right away. Here is a small exempt from this data set:
+
 ```{r}
-# Show first rows of "salmonellaSerologyData" data.frame
-head(salmonellaSerologyData)
-
-# Show first rows of "campylobacterSerologyData" data.frame
-head(campylobacterSerologyData)
+# Show three first rows of "campylobacterSimMediumData" data.frame.
+head(campylobacterSimMediumData, 3)
 ```
 
-Let us assign one of the sets to variable `serologyData`:
+Let us create the serology data `serologyData` based on this data set:
 ```{r}
-# Assign data.frame "salmonellaSerologyData" to object named "serologyData"
-serologyData <- salmonellaSerologyData
-```
+# Assign data.frame "campylobacterDelftData" to object named "serologyData".
+serologyData <- with(campylobacterSimMediumData,
+                     data.frame(
+                       Age = Age,
+                       IgG = IgG,
+                       IgM = IgM,
+                       IgA = IgA,
+                       AgeCat = cut(Age, 15, labels = FALSE)))
 
-In this particular example `sex = 1` denotes "male" and `sex = 2` denotes "female".
-
-We shall pass this object later to the calculator. Of course, object `salmonellaSerologyData`
-can be used as an argument of the calculator directly as well.
-
-**b) Simulating data from parametric model**
-
-Another option is to generate cross-sectional data from the supplied Monte-Carlo 
-simulation function `simulateSerologyData`. This function only exists for testing/training, 
-the simulations do not represent outcomes of any seroconversion process.
-The underlying parametric models are log-Normal distributions with parameters: 
-
-* IgG: `mu = 1.246, sd = 0.757`
-* IgM: `mu = -0.764, sd = 0.413`
-* IgA: `mu = -1.13, sd = 0.318`
-
-By default, 500 observations are generated if no argument `n` is supplied (`n`=number of observations). 
-In the following example we override the default number of  generated observations and set it to `300`:
-```{r}
-# Assign output of function "simulateSerologyData" to object named "serologyData"
-serologyData <- simulateSerologyData(n = 300)
-
-# Show first rows of object "serologyData"
+# Print a few first observations.
 head(serologyData)
 ```
 
-**c) Loading from external files**
+You can view the data also in a tabular form:
+```{r, eval=FALSE}
+View(serologyData)
+```
 
-Finally, user can load her/his own data into an R session. Details on loading specific 
-file types can be found in online R manual on [R Data Import/Export]
-(http://cran.r-project.org/doc/manuals/r-release/R-data.html).
+We shall pass this object later to the calculator. Object `serologyData` must contain at least one 
+column named `IgG`, `IgM`, or `IgA`. Additionally, column `Age` is used in the calculations if it is 
+present. Otherwise, it is created on-the-fly and initialized to `NA` (not available). Column `Age`,
+if supplied, is assumed to represent age in days.
 
-It is important that the input data is in a tabular form with each column containing
-levels measured for a single antibody type. Column name should indicate name of the
-measured antibody. For instance, a comma separated file with the following content:
+Please, note that the cross-sectional data set can include extra columns allowing performing the 
+seroincidence calculations stratified per factors available in those data. In the example above 
+column `AgeCat` can be used as a *stratum* variable. This particular variable is created by
+mapping the age in days (column `Age`) into 15 categories, category 1 grouping the youngest subjects 
+and category 15 grouping the oldest subjects.
+
+**ii) Loading from external files**
+
+The user can load her/his own data into an R session. Details on loading specific file types can be 
+found in online R manual on [R Data Import/Export](http://cran.r-project.org/doc/manuals/r-release/R-data.html).
+
+It is important that the input data is in a tabular form with each column containing levels measured 
+for a single antibody type. Column name should indicate name of the measured antibody. For instance, 
+a comma separated file with the following content:
 
 ```
 IgG, IgM, IgA
@@ -315,262 +406,324 @@ IgG, IgM, IgA
 2.957854, 0.4967764, 0.3472340
 ```
 
-is a valid cross-sectional data set. Suppose this file is named `c:\cross-sectional-data.csv`. 
+is a valid cross-sectional data set. Suppose this file is named `c:\cross-sectional-data.csv`.
 Then it can be loaded into R like this:
 ```{r, eval=FALSE}
-# Read content of file "c:\\cross-sectional-data.csv" into object named "serologyData"
-serologyData <- read.csv(file = "c:\\cross-sectional-data.csv")
+# Read content of file "C:\cross-sectional-data.csv" into object named 
+# "serologyData".
+serologyData <- read.csv(file = "C:\\cross-sectional-data.csv")
 ```
 
-Please, note that the cross-sectional data set can include extra columns allowing
-performing the seroincidence calculations stratified per factors available in those data.
-For instance, data set `salmonellaSerologyData` includes factors `sex` and `age`.
+### 3.2.2. Specifying longitudinal response parameters {#longParams}
 
-### 3.2.2. Specifying longitudinal response parameters `(A, k)`
+The longitudinal response parameters set consists of the following items:
 
-The longitudinal response parameters set consists of two items:
+- `y1`: antibody peak level (ELISA units)
+- `alpha`: antibody decay rate (1/days for the current longitudinal parameter sets)
+- `yb`: baseline antibody level at $t$ approaching infinity ($y(t->inf)$)
+- `r`: shape factor of antibody decay
+- `y0`: baseline antibody level at $t=0$ ($y(t=0)$)
+- `mu1`: initial antibody growth rate
+- `t1`: duration of infection
 
-* `A` = antibody peak level (ELISA units)
-* `k` = antibody decay rate (1/days for the current longitudinal parameter sets)
-
-Please, refer to vignette [methodology.pdf](methodology.pdf) for more details on
-the underlying methodology.
+Please, refer to vignette [methodology.pdf](methodology.pdf) for more details on the underlying 
+methodology.
 
 End user has three options for loading the response parameters into R session:
 
-**a) Using supplied data**
+**i) Using supplied data**
 
-For Campylobacter there is a data set provided by the package including Monte-Carlo
-sample of longitudinal response parameters, `campylobacterResponseParams`. 
-This object is a list containing two data.frame objects named `A` and `k`. 
-Let's have a pick into each of these two data sets separately 
-(notice character `$` indicating a subobject of the parent object):
+There are a few longitudinal response parameter data sets provided by the package including 
+Monte-Carlo sample of longitudinal response parameters, like `campylobacterDelftParams4`.
+This particular object is a list containing three data.frame objects named `IgG`, `IgM` and `IgA`.
+Let's have a pick into each of these two data sets separately (notice character `$` indicating a 
+sub-object of the parent object):
 ```{r}
-# Show first rows of data.frame "A" in list "campylobacterResponseParams"
-head(campylobacterResponseParams$A)
+# Show first rows of data.frame "IgG" in list "campylobacterDelftParams4".
+head(campylobacterDelftParams4$IgG)
 
-# Show first rows of data.frame "k" in list "campylobacterResponseParams"
-head(campylobacterResponseParams$k)
+# Show first rows of data.frame "IgM" in list "campylobacterDelftParams4".
+head(campylobacterDelftParams4$IgM)
+
+# Show first rows of data.frame "IgA" in list "campylobacterDelftParams4".
+head(campylobacterDelftParams4$IgA)
 ```
 
-Such data set is provided only for Campylobacter. Let us assign object 
-`campylobacterResponseParams` to variable `responseParams`:
+Let us assign object `campylobacterDelftParams4` to variable `responseParams`:
 ```{r}
-responseParams <- campylobacterResponseParams
+responseParams <- campylobacterDelftParams4
 ```
 
-**b) Simulating data from parametric model**
-
-Alternatively, for Salmonella an example of the `A` and `k` parameters can be 
-generated using function `simulateSalmonellaResponseParams` provided by the package:
-
-```{r}
-responseParams <- simulateSalmonellaResponseParams()
-```
-
-Similarly to function `simulateSerologyData` this function also accepts argument `n`
-specifying the number of observations to simulate. The default is `n = 500`.
-
-The underlying parametric models for peak levels `A` are Gamma distributions with parameters:
-
-* IgG: `shape = 1.1175, scale = 0.848`
-* IgM: `shape = 1.337, scale = 0.902`
-* IgA: `shape = 1.205, scale = 0.651`
-
-The underlying parametric models for decay rates `k` are Inverse Gamma distributions with parameters:
-
-* IgG: `shape = 0.869, scale = 1/728.5`
-* IgM: `shape = 0.731, scale = 1/514.6`
-* IgA: `shape = 1.759, scale = 1/132/5`
-
-**c) Loading from external files**
+**ii) Loading from local external files**
 
 Alternatively, this data can be loaded from an external file. Bear in mind, that most likely
-your data is organized into two files, separately for parameters `A` and `k`. Assuming
-that the data is saved into csv files named `A.csv` and `k.csv` 
-the end user would run the following code in order to create a valid input to the calculator:
-```{r,eval=FALSE}
-AData <- read.csv(file = "A.csv")
-kData <- read.csv(file = "k.csv")
+your data is organized into three files, separately for antibody `IgG`, `IgM` and `IgA`. Assuming
+that the data is saved into csv files named `IgG.csv`, `IgM.csv` and `IgA.csv` the end user would 
+run the following code in order to create a valid input to the calculator:
+```{r, eval=FALSE}
+IgGData <- read.csv(file = "IgG.csv")
+IgMData <- read.csv(file = "IgM.csv")
+IgAData <- read.csv(file = "IgA.csv")
 
-# Create a list named "responseData" containing objects named "A" and "k"
-responseParams <- list(A = AData, k = kData)
+# Create a list named "responseData" containing objects named "IgG", "IgM" and 
+# "IgA".
+responseParams <- list(IgG = IgGData, IgM = IgMData, IgA = IgAData)
 ```
 
-Note that object `responseParams` is a list with two dataframes named `A` 
-and `k` as required.
+Note that object `responseParams` is a list with three dataframes named `IgG`, `IgM` and `IgA` as 
+required.
 
-## 3.3. Estimating seroincidence for human Salmonella and Campylobacter infections
+**iii) Loading from an external repository**
+
+Finally, response parameters can be obtained from an online repository set up for this package. The
+repository is hosted on ECDC servers. At the time of publishing this package two files are 
+available:
+
+a) `coxiellaIFAParams4.zip`: longitudinal response parameters per antibody for Coxiella.
+b) `yersiniaSSIParams4.zip`: longitudinal response parameters per antibody for Yersinia.
+
+Simply use the supplied utility function `getAdditionalData` to download this data:
+```{r, eval=FALSE}
+responseParams <- getAdditionalData("coxiellaIFAParams4.zip")
+```
+
+Internet connection is needed for this function to work.
+
+## 3.3. Estimating seroincidence
 
 Main calculation function provided by package *seroincidence* is called `estimateSeroincidence`.
 It takes several arguments:
 
-- `data`: A data frame with the cross-sectional data. This may be the whole data set loaded 
-from file, but can also be a subset, e.g. `data = serologyData[1, ]` to use only the first row.
-In this tutorial this is the data loaded into variable `serologyData`. It is a required input.
-- `antibodies`: A list of antibodies to be used. This can be a triplet (`antibodies = c("IgG", "IgM", "IgA")`) or 
-any single antibody (`antibodies = c("IgG")`) or a combination of any two antibodies. It is a required input.
-- `strata`: A list of categories to stratify data. The column `age` in the example data set can be used as an example. 
-If `strata = ""` the whole data set is treated as a single stratum; 
-if each sample is assigned a unique identifier (e.g. `strata = "id"`) there are as many strata as there are
-samples and an incidence estimate is calculated for each sample. If not specified, then `strata` is initialized to `""`.
-- `Ak`: A list with the longitudinal parameters for all antibodies specified. In this tutorial this is the data loaded into variable `responseParams`. 
-It is a required input.
-- `censorLimits`: A list of cutoff levels, one for each antibody used. It is a required input.
-- `showProgress`: A Boolean input indicating whether or not to show progress of the calculation.
-It is an optional input. If not specified then it is initialized to `FALSE`.
+- `data`: A data frame with the cross-sectional data (see variable `serologyData` above). This may 
+  be the whole data set loaded from file, but can also be a subset, e.g. `data = serologyData[1, ]` 
+  to use only the first row. In this tutorial this is the data loaded into variable `serologyData`. 
+  It is a required input.
+- `antibodies`: A list of antibodies to be used. This can be a triplet 
+  (`antibodies = c("IgG", "IgM", "IgA")`) or any single antibody (`antibodies = c("IgG")`) or a 
+  combination of any two antibodies. It is a required input.
+- `strata`: A list of categories to stratify data. The column `AgeCat` in the example data set can 
+  be used as an example. If `strata = ""` (default), then the whole data set is treated as a single 
+  stratum; if each sample is assigned a unique identifier (e.g. `strata = "AgeCat"`) there are as 
+  many strata as there are samples and an incidence estimate is calculated for each sample. If not 
+  specified, then `strata` is initialized to `""`.
+- `params`: A list with the longitudinal parameters for all antibodies specified. In this tutorial 
+  this is the data loaded into variable `responseParams`. It is a required input.
+- `censorLimits`: A list of cutoff levels, one for each antibody used. These are antibody levels 
+  below which observations should be treated as censored. It is a required input.
+- `par0`: List of parameters for the (lognormal) distribution of antibody concentrations for true 
+  seronegatives (i.e. those who never seroconverted), by named antibody type (corresponding to 
+  `data`).
+- `start` A starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day 
+  (`log(1/365.25)`), value of -4 corresponds roughly to 1 week (`log(7/365.25)`). Users are adivised 
+  to experiment with this value to confirm that convergence to the same estimate is obtained. 
+  Default is -6.
+- `numCores` Number of processor cores to use for calculations when computing by `strata`. If set to 
+  more than 1 and R package `parallel` is available (installed by default), then the computations by 
+  stratum are executed in parallel. Default is 1, ie. no execution in parallel.
 
-Here is an example of the Salmonella seroincidence calculation for three antibodies measured,
-stratified per sex, and with measurements below 0.25 removed:
+Here is an example of the *Campylobacter* seroincidence calculation for three antibodies measured,
+stratified per `AgeCat`, and with measurements below `0.1` removed:
 ```{r, eval=FALSE}
-# Assign output of function "estimateSeroincidence" to object named "seroincidenceData"
-serologyData <- salmonellaSerologyData
-responseParams <- simulateSalmonellaResponseParams()
-seroincidenceData <- estimateSeroincidence(data = serologyData, 
-                                antibodies = c("IgG", "IgM", "IgA"),
-                                strata = "sex",
-                                Ak = responseParams,
-                                censorLimits = list(IgG = 0.25, IgM = 0.25, IgA = 0.25))
+# Prepare input data.
+serologyData <- with(campylobacterSimMediumData,
+                     data.frame(
+                       Age = rep(NA, nrow(campylobacterSimMediumData)),
+                       IgG = IgG,
+                       IgM = IgM,
+                       IgA = IgA,
+                       AgeCat = cut(Age, 15, labels = FALSE)))
 
-# Show content of the output variable
+responseParams <- campylobacterDelftParams4
+
+cutOffs <- list(IgG = 0.1, IgM = 0.1, IgA = 0.1)
+
+# Baseline distributions: the distributions of antibody concentrations in 
+# subjects who have never seroconverted.
+baseLine <- list(IgG = c(log(0.05), 1),
+                 IgM = c(log(0.005), 1),
+                 IgA = c(log(0.005), 1))
+
+# Assign output of function "estimateSeroincidence" to object named 
+# "seroincidenceData". Use all available processor cores.
+seroincidenceData <- estimateSeroincidence(
+  data = serologyData,
+  antibodies = c("IgG", "IgM", "IgA"),
+  strata = "AgeCat",
+  params = responseParams,
+  censorLimits = cutOffs,
+  par0 = baseLine,
+  start = -4,
+  numCores = parallel::detectCores())
+
+# Show content of the output variable...
 print(seroincidenceData)
-# or simply type in the console: 'seroincidenceData' (without "'") and press ENTER
+# ...or simply type in the console: 'seroincidenceData' (without "'") and 
+# press ENTER.
 ```
 
 The following text should be printed.
 
     ## Seroincidence object estimated given the following setup:
-    ## a) Antibodies:     IgG, IgM, IgA 
-    ## b) Strata:         sex 
-    ## c) Censor limits:  IgG = 0.25, IgM = 0.25, IgA = 0.25 
+    ## a) Antibodies   : IgG, IgM, IgA
+    ## b) Strata       : AgeCat 
+    ## c) Censor limits:  IgG = 0.1, IgM = 0.1, IgA = 0.1 
     ## 
     ## This object is a list containing the following items:
-    ## Fits - List of outputs of optim function per stratum.
-    ## Antibodies - Input parameter antibodies of function estimateSeroincidence.
-    ## Strata - Input parameter strata of function estimateSeroincidence.
-    ## CensorLimits - Input parameter censorLimits of function estimateSeroincidence.
+    ## Fits         - List of outputs of "optim" function per stratum.
+    ## Antibodies   - Input parameter antibodies of function "estimateSeroincidence".
+    ## Strata       - Input parameter strata of function "estimateSeroincidence".
+    ## CensorLimits - Input parameter censorLimits of function "estimateSeroincidence".
     ## 
     ## Call summary function to obtain output results.
 
-The most important output is subobject `Fits` containing raw results
-on the output incidence. Translation of these raw results is provided
-by a custom function `summary` explained in the following section.
+The most important output is subobject `Fits` containing raw results on the output incidence. 
+Translation of these raw results is provided by a custom function `summary` explained in the 
+following section.
 
-The cutoff argument is based on censoring of the observed
-serum antibody measurements [@strid2001]. Using different censoring levels will 
-produce different results. Choosing higher cut-off causes the estimates of 
-lambda to decrease. Results should be published together with the chosen 
-cut-off values.
+The cutoff argument is based on censoring of the observed serum antibody measurements [@5]. Cut-off 
+levels must always be specified when calling function `estimateSeroincidence` (argument 
+`censorLimits`). Value `0` should be set for antibody measurements where no censoring is needed, for 
+instance 
 
-Cut-off levels must always be specified when calling function `estimateSeroincidence` 
-(argument `censorLimits`). Value `0` should be set for antibody measurements where 
-no censoring is needed, for instance
 ```{r, eval=FALSE}
 censorLimits <- list(IgG = 0, IgM = 0, IgA = 0)
 ```
 
+Using different censoring levels will produce different results. Choosing higher cut-off causes the 
+estimates of lambda to decrease. Results should be published together with the chosen cut-off 
+values. The cut-off level of `0.1` set in the example above is a typical value, but users should set 
+it to value reflecting the censoring level in the data.
+
 ## 3.4. Getting a summary of seroincidence
 
-Output of the calculator should be passed in to function `summary` calculating output
-results:
+Output of the calculator should be passed in to function `summary` calculating output results:
 
 ```{r, eval=FALSE}
 summary(seroincidenceData)
 ```
 
     ## Seroincidence estimated given the following setup:
-    ## a) Antibodies:     IgG, IgM, IgA 
-    ## b) Strata:         sex 
-    ## c) Censor limits:  IgG = 0.25, IgM = 0.25, IgA = 0.25 
-    ## d) Quantiles:      0.025, 0.975 
-    ## e) Seroincidence estimates 
-    ##      Lambda Lambda.lwr Lambda.upr Deviance Convergence Stratum
-    ## 1 0.1218136 0.10788284  0.1375432 2144.977           0       1
-    ## 2 0.1063245 0.09367877  0.1206772 1908.507           0       2
+    ## a) Antibodies   : IgG, IgM, IgA 
+    ## b) Strata       : AgeCat 
+    ## c) Censor limits: IgG = 0.1, IgM = 0.1, IgA = 0.1 
+    ## d) Quantiles    : 0.025, 0.975 
+    ## 
+    ##  Seroincidence estimates:
+    ##    Lambda.est Lambda.lwr Lambda.upr  Deviance Convergence Stratum
+    ## 1  0.09721890 0.06397004 0.14774909 105.29815           0       1
+    ## 2  0.05497303 0.03573489 0.08456817 181.90627           0       2
+    ## 3  0.04456096 0.02845903 0.06977327 199.99357           0       3
+    ## 4  0.02944038 0.01715302 0.05052964 141.32558           0       4
+    ## 5  0.02569781 0.01436524 0.04597053 123.33213           0       5
+    ## 6  0.02565297 0.01587275 0.04145941 187.41060           0       6
+    ## 7  0.03458616 0.02012722 0.05943207 128.84486           0       7
+    ## 8  0.02776873 0.02640621 0.02920154 133.57166          52       8
+    ## 9  0.04016261 0.02133209 0.07561541  94.99389           0       9
+    ## 10 0.01996477 0.01898409 0.02099612 104.30992          52      10
+    ## 11 0.03356017 0.01917771 0.05872886 141.20168           0      11
+    ## 12 0.05287648 0.03263923 0.08566140 181.68655           0      12
+    ## 13 0.05081097 0.02946963 0.08760729 123.66670          52      13
+    ## 14 0.04813104 0.02945312 0.07865371 186.92218           0      14
+    ## 15 0.03421042 0.02210895 0.05293569 215.78684           0      15
 
-The `summary` function returns a list of objects as well. It contains sub-objects
-`Antibodies`, `Strata`, `CensorLimits`, `Quantiles` and `Results`. 
+The `summary` function returns a list of objects as well. It contains sub-objects `Antibodies`, 
+`Strata`, `CensorLimits`, `Quantiles` and `Results`.
 
 The most important sub-object of the output of the `summary` functions is `Results`, containing 
-estimates of `Lambda` (annual incidence) together with their lower and upper 
-bounds (`Lambda.lwr` and `Lambda.upr`, respectively). The default lower bound is 2.5% and
-the upper bound is 97.5% of the distribution of `Lambda`. These values can be changed (see 
-[Other examples](#other-examples)).
+estimates of `Lambda` (annual incidence) together with their lower and upper bounds (`Lambda.lwr` 
+and `Lambda.upr`, respectively). The default lower bound is 2.5% and the upper bound is 97.5% of the 
+distribution of `Lambda`. These values can be changed (see [Other examples](#other-examples)).
 
-In this particular example `lambda=0.12` for stratum `1` means that yearly 12% of people
-are infected based on the sample.
-
-Optionally, the summary function returns also `Deviance` (negative log likelihood at the
-estimated `Lambda`) and `Convergence` (indicator returned by function `optim`; value of 0 
-indicates convergence).
+Optionally, the summary function returns also `Deviance` (negative log likelihood at the estimated 
+`Lambda`) and `Convergence` (indicator returned by function `stats::optim`; value of 0 indicates 
+convergence).
 
 It may be beneficial to assign output of this function to a variable for further analysis:
 
 ```{r, eval=FALSE}
-# Compute seroincidence summary and assign to object "seroincidenceSummary"
+# Compute seroincidence summary and assign to object "seroincidenceSummary".
 seroincidenceSummary <- summary(seroincidenceData)
 
-# Show the results
+# Show the results.
 seroincidenceSummary$Results
 ```
 
-    ##      Lambda Lambda.lwr Lambda.upr Deviance Convergence Stratum
-    ## 1 0.1218136 0.10788284  0.1375432 2144.977           0       1
-    ## 2 0.1063245 0.09367877  0.1206772 1908.507           0       2
+    ##    Lambda.est Lambda.lwr Lambda.upr  Deviance Convergence Stratum
+    ## 1  0.09721890 0.06397004 0.14774909 105.29815           0       1
+    ## 2  0.05497303 0.03573489 0.08456817 181.90627           0       2
+    ## 3  0.04456096 0.02845903 0.06977327 199.99357           0       3
+    ## 4  0.02944038 0.01715302 0.05052964 141.32558           0       4
+    ## 5  0.02569781 0.01436524 0.04597053 123.33213           0       5
+    ## 6  0.02565297 0.01587275 0.04145941 187.41060           0       6
+    ## 7  0.03458616 0.02012722 0.05943207 128.84486           0       7
+    ## 8  0.02776873 0.02640621 0.02920154 133.57166          52       8
+    ## 9  0.04016261 0.02133209 0.07561541  94.99389           0       9
+    ## 10 0.01996477 0.01898409 0.02099612 104.30992          52      10
+    ## 11 0.03356017 0.01917771 0.05872886 141.20168           0      11
+    ## 12 0.05287648 0.03263923 0.08566140 181.68655           0      12
+    ## 13 0.05081097 0.02946963 0.08760729 123.66670          52      13
+    ## 14 0.04813104 0.02945312 0.07865371 186.92218           0      14
+    ## 15 0.03421042 0.02210895 0.05293569 215.78684           0      15
 
-As one may note it is a dataframe with six columns that can be later post-processed 
-with custom calculations.
+As one may note it is a dataframe with six columns that can be later post-processed with custom 
+calculations.
 
 # 4. Other examples
 
-The following examples show the standard procedure for estimating
-seroincidence. 
+The following examples show the standard procedure for estimating seroincidence.
 
 ```{r, eval=FALSE}
-# Calculate seroincidence rates for Salmonella
+# 1. Define cross-sectional data.
+serologyData <- with(campylobacterSimMediumData,
+                     data.frame(
+                       IgG = IgG.ratio.new,
+                       IgM = IgM.ratio.new,
+                       IgA = IgA.ratio.new))
 
-# 1. Define cross-sectional data
-serologyData <- salmonellaSerologyData
-
-# 2. Define longitudinal response data (simulate 1000 observations)
-responseParams <- simulateSalmonellaResponseParams(n = 1000)
+# 2. Define longitudinal response data
+responseParams <- campylobacterDelftParams3
 
 # 3. Define cut-offs
-cutoffs <- list(IgG = 0.25, IgM = 0.25, IgA = 0.25)
+cutOffs <- list(IgG = 0.25, IgM = 0.25, IgA = 0.25)
 
-# 4a. Calculate seroincidence rates by age (triplet of titres)...
-seroincidenceData <- estimateSeroincidence(data = serologyData, 
-                        antibodies = c("IgG", "IgM", "IgA"),
-                        strata = "age",
-                        Ak = responseParams,
-                        censorLimits = cutoffs,
-                        showProgress = TRUE)
+# 4. Baseline distributions
+baseLine <- list(IgG = c(log(0.05), 1),
+                 IgM = c(log(0.005), 1),
+                 IgA = c(log(0.005), 1))
 
-# 4b. ...or calculate a single seroincidence rate for all serum samples (triplet of titres)...
-seroincidenceData <- estimateSeroincidence(data = serologyData, 
-                        antibodies = c("IgG", "IgM", "IgA"),
-                        strata = "",
-                        Ak = responseParams,
-                        censorLimits = cutoffs)
+# 4a. Calculate a single seroincidence rate for all serum samples...
+seroincidenceData <- estimateSeroincidence(
+  data = serologyData,
+  antibodies = c("IgG", "IgM", "IgA"),
+  strata = "",
+  params = responseParams,
+  censorLimits = cutOffs,
+  par0 = baseLine)
 
-# 4c. ...or calculate a single seroincidence rate for a single serum sample (triplet of titres)...
-seroincidenceData <- estimateSeroincidence(data = serologyData[1, ], 
-                        antibodies = c("IgG", "IgM", "IgA"),
-                        strata = "",
-                        Ak = responseParams,
-                        censorLimits = cutoffs)
+# 4b. ...or calculate a single seroincidence rate for a single serum sample 
+# (triplet of titres)...
+seroincidenceData <- estimateSeroincidence(
+  data = serologyData[1, ],
+  antibodies = c("IgG", "IgM", "IgA"),
+  strata = "",
+  params = responseParams,
+  censorLimits = cutOffs,
+  par0 = baseLine)
 
-# 4d. ...or calculate a single seroincidence rate for all serum samples (only IgG)
-seroincidenceData <- estimateSeroincidence(data = serologyData, 
-                        antibodies = c("IgG"),
-                        strata = "",
-                        Ak = responseParams,
-                        censorLimits = cutoffs)
+# 4c. ...or calculate a single seroincidence rate for all serum samples (only IgG)
+seroincidenceData <- estimateSeroincidence(
+  data = serologyData,
+  antibodies = c("IgG"),
+  strata = "",
+  params = responseParams,
+  censorLimits = cutOffs,
+  par0 = baseLine)
 
 # 5a. Produce summary of the results with 2.5% and 97.5% bounds...
 summary(seroincidenceData)
 
-# 5b. ...or produce summary of the results with 5% and 95% bounds, do not show convergence...
+# 5b. ...or produce summary of the results with 5% and 95% bounds, do not show 
+# convergence...
 summary(seroincidenceData, quantiles = c(0.05, 0.95), showConvergence = FALSE)
 
 # 5c. ...or produce summary and assign to an object...
@@ -578,6 +731,8 @@ seroincidenceSummary <- summary(seroincidenceData)
 # ...and work with the results object from now on (here: display the results).
 seroincidenceSummary$Results
 ```
+
+\newpage
 
 # Acknowledgements
 

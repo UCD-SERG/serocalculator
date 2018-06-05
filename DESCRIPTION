@@ -1,32 +1,33 @@
 Package: seroincidence
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 1.0.5
-Date: 2015-10-12
-Authors@R: c(person(given = "Peter", family = "Teunis", email =
-    "peter.teunis@rivm.nl", role = c("aut"), comment = "Author of the method
-    and original code"), person(given = "Daniel", family = "Lewandowski", email
-    = "daniel@nextpagesoft.net", role = c("com", "ctb"), comment = "Creator of
-    the R package"), person(given = "Chantal", family = "Quinten", email =
-    "seroincidence@ecdc.europa.eu", role = c("ctb", "cre"), comment = "Project
-    manager and the package maintainer"))
+Version: 2.0.0
+Date: 2018-06-05
+Authors@R: c(
+  person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut"), comment = "Author of the method and original code."),
+  person(given = "Jan", family = "van Eijkeren", role = c("aut"), comment = "Author of the method and original code."), 
+  person(given = "Daniel", family = "Lewandowski", email = "daniel@nextpagesoft.net", role = c("com", "ctb"), comment = "Creator of the R package."), 
+  person(given = "Chantal", family = "Quinten", email = "seroincidence@ecdc.europa.eu", role = c("cre", "ctb"), comment = "Project manager and the package maintainer."))
 Maintainer: Chantal Quinten <seroincidence@ecdc.europa.eu>
 Description: Translates antibody levels measured in a (cross-sectional)
-    population sample into an estimate of the frequency with which
-    seroconversions (infections) occur in the sampled population.
+  population sample into an estimate of the frequency with which
+  seroconversions (infections) occur in the sampled population.
+Depends: R (>= 2.10)
 License: GPL-3
 Imports: stats, utils
-Suggests: testthat, knitr
+Suggests: knitr, rmarkdown, parallel
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
 URL:
-        http://ecdc.europa.eu/en/data-tools/seroincidence-calculator-tool/Pages/default.aspx
-RoxygenNote: 5.0.1
+        https://ecdc.europa.eu/en/publications-data/seroincidence-calculator-tool
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2015-12-29 10:11:42 UTC; Daniel
-Author: Peter Teunis [aut] (Author of the method and original code),
-  Daniel Lewandowski [com, ctb] (Creator of the R package),
-  Chantal Quinten [ctb, cre] (Project manager and the package maintainer)
+Packaged: 2018-06-05 15:09:00 UTC; Daniel Lewandowski
+Author: Peter Teunis [aut] (Author of the method and original code.),
+  Jan van Eijkeren [aut] (Author of the method and original code.),
+  Daniel Lewandowski [com, ctb] (Creator of the R package.),
+  Chantal Quinten [cre, ctb] (Project manager and the package
+    maintainer.)
 Repository: CRAN
-Date/Publication: 2015-12-29 23:22:48
+Date/Publication: 2018-06-05 16:34:14 UTC

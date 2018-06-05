@@ -1,135 +1,119 @@
-#' @title
-#' Estimate Seroincidences
+#' Estimate Seroincidence
 #'
-#' @description
-#' Function to estimate seroincidences based on cross-section serology data and
-#' longitudinal response model.
+#' Function to estimate seroincidences based on cross-section serology data and longitudinal
+#' response model.
 #'
-#' @param
-#' data Dataframe with cross-sectional serum antibody data. At least one
-#' antibody should be specified. Rows represent multiple antibody measurements
-#' in the same serum sample. Strata may be specified in additional columns.
-#' @param
-#' antibodies Character vector with names of antibodies to be included
-#' for incidence calculations. At least one antibody name must be specified,
-#' names must match with those in \code{data} and in \code{Ak}.
-#' @param
-#' strata Character vector with names of strata to be used, default ="". Names
-#' must match with data.
-#' @param
-#' Ak List with two dataframes containing longitudinal parameters named
-#' A (the peak serum antibody level) and k (the decay rate). Each dataframe
-#' contains sets of Monte Carlo samples, one for each antibody that is available.
-#' @param
-#' censorLimits List of cutoffs for each of the antibodies specified
-#' in 'antibodies'. Any cross-sectional observations below cutoff will be treated
-#' as censored at the cutoff level.
-#' @param
-#' showProgress Indicator whether or not to show text progress bar indicating progress of estimation.
-#' The setting is effective only if the number of levels per stratum if greater than 1. Default is \code{FALSE}.
-#' @param
-#' ... Additional arguments passed to function \code{\link{optim}}.
+#' @param data Data frame with cross-sectional serology data per antibody and age, and additional
+#'   columns to identify possible \code{strata}.
+#' @param antibodies Character vector with one or more antibody names. Values must match \code{data}.
+#' @param strata Character vector of strata. Values must match with \code{data}. Default = "".
+#' @param params List of data frames of all longitudinal parameters. Each data frame contains
+#'   Monte Carlo samples for each antibody type.
+#' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to
+#'   \code{data}).
+#' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
+#'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
+#'   (corresponding to \code{data}).
+#' @param start A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
+#'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
+#' @param numCores Number of processor cores to use for calculations when computing by strata. If
+#'   set to more than 1 and package \pkg{parallel} is available, then the computations are
+#'   executed in parallel. Default = 1L.
 #'
 #' @return
-#' A list with the following items:
-#' \describe{
-#' \item{\code{Fits}}{Outputs of \code{\link{optim}} function per stratum.}
-#' \item{\code{Antibodies}}{Input parameter \code{antibodies} saved for \code{\link{summary}} function.}
-#' \item{\code{Strata}}{Input parameter \code{strata} saved for \code{\link{summary}} function.}
-#' \item{\code{CensorLimits}}{Input parameter \code{censorLimits} saved for \code{\link{summary}} function.}
-#' }
+#' A set of lambda estimates for each strata.
 #'
 #' @examples
 #'
 #' \dontrun{
-#' estimateSeroincidence(data = serologyData, antibodies = c("IgG", "IgM", "IgA"),
-#'                          strata = c("age"), Ak = responseParams)
+#' estimateSeroincidence(data = csData,
+#'                       antibodies = c("IgG", "IgM", "IgA"),
+#'                       strata = "",
+#'                       params = campylobacterDelftParams4,
+#'                       censorLimits = cutOffs,
+#'                       par0 = baseLn,
+#'                       start = -4)
+#'
+#' estimateSeroincidence(data = csData,
+#'                       antibodies = c("IgG", "IgM", "IgA"),
+#'                       strata = "",
+#'                       params = campylobacterDelftParams4,
+#'                       censorLimits = cutOffs,
+#'                       par0 = baseLn,
+#'                       start = -4,
+#'                       numCores = parallel::detectCores())
 #' }
 #'
 #' @export
-estimateSeroincidence <- function(data, antibodies, strata = "", Ak, censorLimits, showProgress = FALSE, ...)
+estimateSeroincidence <- function(
+  data,
+  antibodies,
+  strata = "",
+  params,
+  censorLimits,
+  par0,
+  start = -6,
+  numCores = 1L)
 {
-    # Check antibodies
-    if (!is.character(antibodies))
-        stop("Argument \"antibodies\" is not a character vector.\nProvide a character vector with at least one antibody name")
+  if (!"Age" %in% names(data)) {
+    data$Age <- rep(NA, nrow(data))
+  }
 
-    if (all(antibodies == ""))
-        stop("Argument \"antibodies\" is empty.\nProvide a character vector with at least one antibody name")
+  .errorCheck(data = data,
+              antibodies = antibodies,
+              strata = strata,
+              params = params)
 
-    # Check data
-    if (!is.data.frame(data))
-        stop("Argument \"data\" is not a dataframe.\nProvide a dataframe with cross-sectional serology data per antibody")
+  antibodiesData <- .prepData(data = data,
+                              antibodies = antibodies,
+                              strata = strata)
 
-    if (!all(is.element(antibodies, names(data))))
-        stop("Antibody names in argument \"data\" and argument \"antibodies\" do not match")
+  ivc <- antibodiesData$Ivc
 
-    # Check strata
-    if (!is.character(strata))
-        stop("Argument \"strata\" is not a character vector.\nProvide a character vector with strata names")
+  # Split data per stratum
+  stratumDataList <- split(antibodiesData$Data,
+                           antibodiesData$Data$Stratum)
 
-    if (!all(is.element(strata, c("", names(data)))))
-        stop("Strata names in argument \"data\" and argument \"strata\" do not match")
+  # Loop over data per stratum
+  if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
+    libPaths <- .libPaths()
+    cl <- parallel::makeCluster(min(numCores, parallel::detectCores()))
+    on.exit({
+      parallel::stopCluster(cl)
+    })
 
-    # Check AkSim
-    if (!is.list(Ak) | length(Ak) != 2)
-        stop("Argument \"Ak\" is not a list with two dataframes.\nProvide a list with two dataframes named A and k\nEach dataframe contains Monte Carlo simulations per antibody")
+    parallel::clusterExport(cl, c("libPaths"), envir = environment())
+    parallel::clusterEvalQ(cl, {
+      .libPaths(libPaths)
+      library(seroincidence)
+    })
+    fits <- parallel::parLapplyLB(cl,
+                                  stratumDataList,
+                                  .optNll,
+                                  antibodies = antibodies,
+                                  params = params,
+                                  censorLimits = censorLimits,
+                                  ivc = ivc,
+                                  m = 0,
+                                  par0 = par0,
+                                  start = start)
+  } else {
+    fits <- lapply(stratumDataList,
+                   .optNll,
+                   antibodies = antibodies,
+                   params = params,
+                   censorLimits = censorLimits,
+                   ivc = ivc,
+                   m = 0,
+                   par0 = par0,
+                   start = start)
+  }
 
-    if (!is.data.frame(Ak[[1]]) | !is.data.frame(Ak[[2]]))
-        stop("Argument \"Ak\" does not contain two dataframes.\nProvide a list with two dataframes named A and k\nEach dataframe contains Monte Carlo simulations per antibody")
+  incidenceData <- list(Fits = fits,
+                        Antibodies = antibodies,
+                        Strata = strata,
+                        CensorLimits = censorLimits)
+  class(incidenceData) <- c("seroincidence", "list")
 
-    if (!all(is.element(names(Ak), c("A", "k"))))
-        stop("The two dataframes in argument \"Ak\" are not named A and k.\nProvide a list with two dataframes named A and k\nEach dataframe contains Monte Carlo simulations per antibody")
-
-    if (nrow(Ak$A) != nrow(Ak$k))
-        stop("The two dataframes A and k in argument \"Ak\" are of different length")
-
-    if (!all(is.element(antibodies, names(Ak$A))))
-        stop("Antibody names in argument \"antibodies\" and argument \"Ak\" do not match")
-
-    # Make stratum variable (if needed)
-    if (all(strata != ""))
-        data <- within(data, stratum <- interaction(data[, strata]))
-    else
-        data <- within(data, stratum <- factor(1))
-
-    levelsStrata <- levels(data$stratum)
-    numLevels <- nlevels(data$stratum)
-
-    # Loop over levelsStrata
-    progressBarCreated <- FALSE
-    if (showProgress & numLevels > 1)
-    {
-        pb <- utils::txtProgressBar(min = 0, max = numLevels)
-        progressBarCreated <- TRUE
-    }
-
-    fits <- list()
-    for (i in seq_len(nlevels(data$stratum)))
-    {
-
-        # Make subset of data: per stratum, select antibodies
-        y <- subset(data, subset = stratum == levelsStrata[i], select = antibodies)
-
-        # Incidence can not be calculated if there are zero observations
-        if (nrow(y) == 0) next
-
-        # Estimate log.lambda, starting value = log(1/365.25) day^-1
-        fit <- stats::optim(par = log(1 / 365.25), fn = .nll, y = y, m = 0, Ak = Ak, censorLimits = censorLimits, method = "BFGS", hessian = TRUE, ...)
-
-        # Collect results
-        fits[[levelsStrata[i]]] <- fit
-
-        if (progressBarCreated)
-            utils::setTxtProgressBar(pb, i)
-
-    }
-    if (progressBarCreated)
-        close(pb)
-
-    incidenceData <- list(Fits = fits, Antibodies = antibodies, Strata = strata, CensorLimits = censorLimits)
-
-    class(incidenceData) <- c("seroincidence", "list")
-
-    # Return seroincidence object
-    return(incidenceData)
+  return(incidenceData)
 }

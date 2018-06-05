@@ -17,7 +17,6 @@ Custom \code{\link{print}} function to show output of the seroincidence calculat
 \examples{
 
 \dontrun{
-
 # estimate seroincidence
 seroincidence <- estimateSeroincidence(...)
 
@@ -29,4 +28,3 @@ seroincidence
 }
 
 }
-

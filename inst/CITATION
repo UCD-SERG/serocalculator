@@ -6,9 +6,9 @@ url  <- gsub("\n", "", meta$URL)
 
 citEntry(entry  = "Manual",
     title  = "seroincidence: Estimating Infection Rates from Serological Data",
-    author = personList(as.person("Peter Teunis")),
+    author = personList(as.person("Peter Teunis"), as.person("Jan van Eijkeren")),
     year   = year,
     note   = vers,
     url    = url,
-    textVersion = paste0("Peter Teunis (", year, "). Estimating Infection Rates from Serological Data. ", vers, "."),
+    textVersion = paste0("Peter Teunis and Jan van Eijkeren (", year, "). Estimating Infection Rates from Serological Data. ", vers, "."),
 )

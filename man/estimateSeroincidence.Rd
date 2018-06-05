@@ -2,55 +2,62 @@
 % Please edit documentation in R/estimateSeroincidence.R
 \name{estimateSeroincidence}
 \alias{estimateSeroincidence}
-\title{Estimate Seroincidences}
+\title{Estimate Seroincidence}
 \usage{
-estimateSeroincidence(data, antibodies, strata = "", Ak, censorLimits,
-  showProgress = FALSE, ...)
+estimateSeroincidence(data, antibodies, strata = "", params, censorLimits,
+  par0, start = -6, numCores = 1L)
 }
 \arguments{
-\item{data}{Dataframe with cross-sectional serum antibody data. At least one
-antibody should be specified. Rows represent multiple antibody measurements
-in the same serum sample. Strata may be specified in additional columns.}
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional
+columns to identify possible \code{strata}.}
 
-\item{antibodies}{Character vector with names of antibodies to be included
-for incidence calculations. At least one antibody name must be specified,
-names must match with those in \code{data} and in \code{Ak}.}
+\item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
 
-\item{strata}{Character vector with names of strata to be used, default ="". Names
-must match with data.}
+\item{strata}{Character vector of strata. Values must match with \code{data}. Default = "".}
 
-\item{Ak}{List with two dataframes containing longitudinal parameters named
-A (the peak serum antibody level) and k (the decay rate). Each dataframe
-contains sets of Monte Carlo samples, one for each antibody that is available.}
+\item{params}{List of data frames of all longitudinal parameters. Each data frame contains
+Monte Carlo samples for each antibody type.}
 
-\item{censorLimits}{List of cutoffs for each of the antibodies specified
-in 'antibodies'. Any cross-sectional observations below cutoff will be treated
-as censored at the cutoff level.}
+\item{censorLimits}{List of cutoffs for one or more named antibody types (corresponding to
+\code{data}).}
 
-\item{showProgress}{Indicator whether or not to show text progress bar indicating progress of estimation.
-The setting is effective only if the number of levels per stratum if greater than 1. Default is \code{FALSE}.}
+\item{par0}{List of parameters for the (lognormal) distribution of antibody concentrations
+for true seronegatives (i.e. those who never seroconverted), by named antibody type
+(corresponding to \code{data}).}
 
-\item{...}{Additional arguments passed to function \code{\link{optim}}.}
+\item{start}{A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
+(log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
+
+\item{numCores}{Number of processor cores to use for calculations when computing by strata. If
+set to more than 1 and package \pkg{parallel} is available, then the computations are
+executed in parallel. Default = 1L.}
 }
 \value{
-A list with the following items:
-\describe{
-\item{\code{Fits}}{Outputs of \code{\link{optim}} function per stratum.}
-\item{\code{Antibodies}}{Input parameter \code{antibodies} saved for \code{\link{summary}} function.}
-\item{\code{Strata}}{Input parameter \code{strata} saved for \code{\link{summary}} function.}
-\item{\code{CensorLimits}}{Input parameter \code{censorLimits} saved for \code{\link{summary}} function.}
-}
+A set of lambda estimates for each strata.
 }
 \description{
-Function to estimate seroincidences based on cross-section serology data and
-longitudinal response model.
+Function to estimate seroincidences based on cross-section serology data and longitudinal
+response model.
 }
 \examples{
 
 \dontrun{
-estimateSeroincidence(data = serologyData, antibodies = c("IgG", "IgM", "IgA"),
-                         strata = c("age"), Ak = responseParams)
+estimateSeroincidence(data = csData,
+                      antibodies = c("IgG", "IgM", "IgA"),
+                      strata = "",
+                      params = campylobacterDelftParams4,
+                      censorLimits = cutOffs,
+                      par0 = baseLn,
+                      start = -4)
+
+estimateSeroincidence(data = csData,
+                      antibodies = c("IgG", "IgM", "IgA"),
+                      strata = "",
+                      params = campylobacterDelftParams4,
+                      censorLimits = cutOffs,
+                      par0 = baseLn,
+                      start = -4,
+                      numCores = parallel::detectCores())
 }
 
 }
-

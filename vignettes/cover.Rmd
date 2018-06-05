@@ -2,20 +2,26 @@
 title: "R Package - seroincidence"
 author: "European Centre for Disease Prevention and Control (ECDC)"
 output: 
-    rmarkdown::html_vignette:
-        toc: yes
+  rmarkdown::html_vignette:
+    toc: yes
 vignette: >
   %\VignetteIndexEntry{R Package - seroincidence}
   %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo = FALSE}
 pkgVersion <- packageDescription("seroincidence")$Version
+pkgLicense <- packageDescription("seroincidence")$License
 pkgDate <- packageDescription("seroincidence")$Date
 authorsString <- gsub("^ *|(?<= ) |\n| *$", "", packageDescription("seroincidence")$Authors, perl = TRUE)
 authorList <- eval(parse(text = authorsString))
-pkgAuthors <- paste(format(authorList, include = c("given", "family", "email", "comment"), braces = list(email = c("<", ">,<br />"), comment = c("", ""))), collapse = "<br /><br />")
+pkgAuthors <- paste(format(authorList,
+                           include = c("given", "family", "email", "comment"), 
+                           braces = list(family = c("", ",<br />"),
+                                         email = c("<", ">,<br />"), 
+                                         comment = c("", ""))), 
+                    collapse = "<br /><br />")
 pkgMaintainer <- packageDescription("seroincidence")$Maintainer
 pkgBaseFileName <- paste("seroincidence", pkgVersion, sep = "_")
 pkgUrl <- packageDescription("seroincidence")$URL
@@ -30,9 +36,7 @@ Version | `r pkgVersion`
 Published | `r pkgDate`
 Authors | `r pkgAuthors`
 Maintainer | `r pkgMaintainer`
-License | GPL-3
-Package source | [`r pkgBaseFileName`.tar.gz](seroincidence_`r pkgVersion`.tar.gz)
-Windows binary | [`r pkgBaseFileName`.zip](seroincidence_`r pkgVersion`.zip)
+License | `r pkgLicense`
 Installation manual | [installation.pdf](installation.pdf)
 Tutorial | [tutorial.pdf](tutorial.pdf)
 Appendix | [methodology.pdf](methodology.pdf)

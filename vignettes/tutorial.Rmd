@@ -552,8 +552,9 @@ seroincidenceData <- estimateSeroincidence(
   params = responseParams,
   censorLimits = cutOffs,
   par0 = baseLine,
-  start = -4,
-  numCores = parallel::detectCores())
+  # numCores = parallel::detectCores(),
+  numCores = 1,
+  start = -4)
 
 # Show content of the output variable...
 print(seroincidenceData)

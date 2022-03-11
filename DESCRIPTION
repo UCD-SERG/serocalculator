@@ -19,7 +19,12 @@ Imports:
     Rcpp,
     stats,
     utils
-Suggests: knitr, rmarkdown, parallel
+Suggests: 
+    knitr,
+    rmarkdown,
+    parallel,
+    pander,
+    Hmisc
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

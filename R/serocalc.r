@@ -1,5 +1,8 @@
 #  Utility functions: interface with C lib serocalc.so
 
+#' Calculate negative log-likelihood (deviance)
+#'
+#' [more description to be added here]
 #' @param log.lambda
 #' @param csdata
 #' @param lnpars

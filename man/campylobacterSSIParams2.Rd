@@ -4,12 +4,14 @@
 \name{campylobacterSSIParams2}
 \alias{campylobacterSSIParams2}
 \title{Campylobacter SSI Response Parameters Data for Model 2}
-\format{A list of three dataframes:
+\format{
+A list of three dataframes:
 \describe{
 \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
 \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
 \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
-}}
+}
+}
 \usage{
 campylobacterSSIParams2
 }

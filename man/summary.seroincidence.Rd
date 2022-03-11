@@ -4,8 +4,13 @@
 \alias{summary.seroincidence}
 \title{Summary Method for Seroincidence Object}
 \usage{
-\method{summary}{seroincidence}(object, ..., quantiles = c(0.025, 0.975),
-  showDeviance = TRUE, showConvergence = TRUE)
+\method{summary}{seroincidence}(
+  object,
+  ...,
+  quantiles = c(0.025, 0.975),
+  showDeviance = TRUE,
+  showConvergence = TRUE
+)
 }
 \arguments{
 \item{object}{A dataframe containing output of function \code{\link{estimateSeroincidence}}.}

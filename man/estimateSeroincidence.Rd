@@ -4,8 +4,16 @@
 \alias{estimateSeroincidence}
 \title{Estimate Seroincidence}
 \usage{
-estimateSeroincidence(data, antibodies, strata = "", params, censorLimits,
-  par0, start = -6, numCores = 1L)
+estimateSeroincidence(
+  data,
+  antibodies,
+  strata = "",
+  params,
+  censorLimits,
+  par0,
+  start = -6,
+  numCores = 1L
+)
 }
 \arguments{
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional

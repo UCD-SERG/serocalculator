@@ -9,13 +9,15 @@
 \alias{pertussisSimMediumData}
 \alias{pertussisSimHighData}
 \title{Simulated Cross-sectional Data}
-\format{A data frame with 500 observations on the following 2 to 4 variables:
+\format{
+A data frame with 500 observations on the following 2 to 4 variables:
 \describe{
 \item{Age}{}
 \item{IgG}{}
 \item{IgM}{}
 \item{IgA}{}
-}}
+}
+}
 \usage{
 campylobacterSimLowData
 }

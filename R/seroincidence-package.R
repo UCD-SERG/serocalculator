@@ -94,4 +94,10 @@
 #'
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom utils download.file unzip
+#'
+
+## usethis namespace: start
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib seroincidence, .registration = TRUE
+## usethis namespace: end
 NULL

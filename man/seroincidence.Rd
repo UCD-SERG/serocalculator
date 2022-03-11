@@ -4,7 +4,6 @@
 \name{seroincidence}
 \alias{seroincidence}
 \alias{seroincidence-package}
-\alias{seroincidence-package}
 \title{Estimating Infection Rates from Serological Data}
 \description{
 Translates antibody levels measured in a (cross-sectional) population sample into an

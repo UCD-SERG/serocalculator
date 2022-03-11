@@ -4,9 +4,11 @@
 \alias{getAdditionalData}
 \title{Get Additional Data}
 \usage{
-getAdditionalData(fileName,
+getAdditionalData(
+  fileName,
   repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
-  savePath = NULL)
+  savePath = NULL
+)
 }
 \arguments{
 \item{fileName}{Name of the file to download. Required.}

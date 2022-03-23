@@ -36,14 +36,23 @@ raw.data = system.file("extdata", "SimulDat.txt", package = "seroincidence") |> 
 ```
 
 ```{r}
+
 cat.bnd = seq(0,80,by=5); n.cats = length(cat.bnd)-1; # define age categories
 age.cat = rep(NA,length(raw.data$AGE))
-for(i in 1:length(cat.bnd-1)) age.cat[(raw.data$AGE >= cat.bnd[i])
-  & (raw.data$AGE < cat.bnd[i+1])] <- i
-clean.data = data.frame(age=floor(raw.data$AGE)+0.5,IgG=raw.data$IgG,cat=age.cat)
+for(i in 1:length(cat.bnd-1)) 
+{
+  age.cat[(raw.data$AGE >= cat.bnd[i])
+    & (raw.data$AGE < cat.bnd[i+1])] <- i
+}
+
+clean.data = data.frame(
+  age = floor(raw.data$AGE) + 0.5,
+  IgG = raw.data$IgG,
+  cat = age.cat)
 
 # define global parameters
-cond <- data.frame(nu=2.5,                    # B noise
+cond <- data.frame(
+  nu=2.5,                    # B noise
   eps=0.3,                   # M noise
   y.low=2.5,                 # low cutoff
   y.high=5e4);               # high cutoff
@@ -52,7 +61,8 @@ lambda = 0.015 # initial estimate: starting value
 log.lambda = log(lambda)
 log.lmin=log(lambda/10);log.lmax=log(10*lambda)   # seroincidence rate interval
 log.lambda.est=matrix(0, nrow=n.cats, ncol=6,
-  dimnames = list(rep("",n.cats),
+  dimnames = list(
+    rep("",n.cats),
     c("","ml.est", "lwr0.05", "upr0.95",
       "LLF","N iter.")))
 # loop over age categories

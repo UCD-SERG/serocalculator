@@ -4,12 +4,14 @@
 \name{campylobacterDelftParams1}
 \alias{campylobacterDelftParams1}
 \title{Campylobacter Delft Response Parameters Data for Model 1}
-\format{A list of three dataframes:
+\format{
+A list of three dataframes:
 \describe{
 \item{\code{IgA}}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
 \item{\code{IgM}}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
 \item{\code{IgG}}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
-}}
+}
+}
 \usage{
 campylobacterDelftParams1
 }

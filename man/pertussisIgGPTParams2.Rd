@@ -4,7 +4,9 @@
 \name{pertussisIgGPTParams2}
 \alias{pertussisIgGPTParams2}
 \title{Pertussis IgG-PT Response Parameters Data for Model 2}
-\format{A dataframe \code{IgG} containing 3000 rows with 7 parameters for IgG antibody.}
+\format{
+A dataframe \code{IgG} containing 3000 rows with 7 parameters for IgG antibody.
+}
 \usage{
 pertussisIgGPTParams2
 }

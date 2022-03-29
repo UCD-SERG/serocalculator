@@ -1,4 +1,4 @@
-Package: seroincidence
+Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
 Version: 2.0.0

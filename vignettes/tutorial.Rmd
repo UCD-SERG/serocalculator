@@ -135,7 +135,8 @@ vignette: >
 </script>
 
 ```{r, echo = FALSE}
-pkgUrl <- gsub("\n", "", packageDescription("seroincidence")$URL)
+pkgName = "serocalculator"
+pkgUrl <- gsub("\n", "", packageDescription(pkgName)$URL)
 ```
 
 \newpage

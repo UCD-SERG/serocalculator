@@ -83,7 +83,7 @@ include_graphics("fig/RGui1.png")
 
 ## 2.2. Installing *seroincidence* package
 
-Since this is a new installation of R, the **seroincidence** package must be installed before first 
+Since this is a new installation of R, the **serocalculator** package must be installed before first 
 use. The package can be installed either through a menu option in the graphical user interface (GUI) 
 or with a command executed in the R console. Both options are presented:
 

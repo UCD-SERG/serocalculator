@@ -3,6 +3,10 @@ serocalculator package
 
 ------------------------------------------------------------------------
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/UCD-SEG/serocalculator/workflows/R-CMD-check/badge.svg)](https://github.com/UCD-SEG/serocalculator/actions)
+<!-- badges: end -->
+
 Antibody levels measured in a (cross–sectional) population sample can be
 translated into an estimate of the frequency with which seroconversions
 (infections) occur in the sampled population. Formulated simply: the

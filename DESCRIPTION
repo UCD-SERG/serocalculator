@@ -33,8 +33,6 @@ URL: https://github.com/UCD-SEG/serocalculator,
     https://ucd-seg.github.io/serocalculator/
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Repository: CRAN
-Date/Publication: 2018-06-05 16:34:14 UTC
 LinkingTo: 
     Rcpp
 Language: en-US

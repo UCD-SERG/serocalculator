@@ -1,0 +1,15 @@
+pandoc: 2.7.3
+pkgdown: 2.0.2
+pkgdown_sha: ~
+articles:
+  cover: cover.html
+  example-analysis: example-analysis.html
+  installation: installation.html
+  methodology: methodology.html
+  simulation: simulation.html
+  tutorial: tutorial.html
+last_built: 2022-03-30T22:52Z
+urls:
+  reference: https://ucd-seg.github.io/serocalculator/reference
+  article: https://ucd-seg.github.io/serocalculator/articles
+

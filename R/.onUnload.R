@@ -1,3 +1,3 @@
 .onUnload <- function (libpath) {
-  library.dynam.unload("seroincidence", libpath)
+  library.dynam.unload("serocalculator", libpath)
 }

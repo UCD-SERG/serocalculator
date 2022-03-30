@@ -1,6 +1,6 @@
 ---
-title: "Seroincidence package tutorial"
-author: "European Centre for Disease Prevention and Control (ECDC)"
+title: "Serocalculator package tutorial"
+author: "UC Davis SeroEpidemiology Group"
 date: '`r Sys.Date()`'
 output:
   pdf_document:
@@ -302,7 +302,7 @@ console (bear in mind that the text after character `#` is only a comment):
 
 ```{r}
 # Load package "seroincidence"
-library(seroincidence)
+library(serocalculator)
 ```
 
 At this moment all functions required to run the seroincidence calculation are made available. It 
@@ -310,13 +310,13 @@ can be checked by running:
 
 ```{r, eval=FALSE}
 # List all objects (functions and data) exposed by package "seroincidence".
-ls("package:seroincidence")
+ls("package:serocalculator")
 ```
 
 Here is the resulting output:
 
 ```{r, echo=FALSE}
-ls("package:seroincidence")
+ls("package:serocalculator")
 ```
 
 We briefly describe the most important objects and functions:
@@ -491,7 +491,7 @@ Internet connection is needed for this function to work.
 
 ## 3.3. Estimating seroincidence
 
-Main calculation function provided by package *seroincidence* is called `estimateSeroincidence`.
+Main calculation function provided by package *serocalculator* is called `estimateSeroincidence`.
 It takes several arguments:
 
 - `data`: A data frame with the cross-sectional data (see variable `serologyData` above). This may 

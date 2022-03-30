@@ -15,14 +15,14 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(seroincidence)
+library(serocalculator)
 library(Hmisc)
 ```
 
 ```{r "load data"}
 
 # load longitudinal parameter MC sample
-system.file("extdata", "pertussis-iggpt2.rda", package = "seroincidence") |> load() # output: longpar.mc
+system.file("extdata", "pertussis-iggpt2.rda", package = "serocalculator") |> load() # output: longpar.mc
 lp = longpar.mc$IgG
 day2yr <- 365.25;
 ln.pars <- data.frame(
@@ -31,7 +31,7 @@ ln.pars <- data.frame(
   d=lp$r -1);             # shape (r-1 offset from exp)
 
 #read simulated data
-raw.data = system.file("extdata", "SimulDat.txt", package = "seroincidence") |> read.table(head=TRUE)
+raw.data = system.file("extdata", "SimulDat.txt", package = "serocalculator") |> read.table(head=TRUE)
 
 ```
 

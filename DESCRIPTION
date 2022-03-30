@@ -13,7 +13,7 @@ Maintainer: Douglas Ezra Morrison <demorrison@ucdavis.edu>
 Description: Translates antibody levels measured in a (cross-sectional)
   population sample into an estimate of the frequency with which
   seroconversions (infections) occur in the sampled population.
-  Fork of the "seroincidence" package v2.0.0 on CRAN.
+  Fork of the "seroincidence" package v2.0.0 on CRAN (https://cran.r-project.org/web/packages/seroincidence/index.html)
 Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
@@ -29,8 +29,8 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
-URL: https://github.com/UCD-SEG/serocalculator
-        https://ecdc.europa.eu/en/publications-data/seroincidence-calculator-tool
+URL: https://github.com/UCD-SEG/serocalculator,
+    https://ucd-seg.github.io/serocalculator/
 RoxygenNote: 7.1.2
 NeedsCompilation: no
 Repository: CRAN

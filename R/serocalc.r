@@ -8,7 +8,7 @@
 #' @param lnpars
 #' @param cond
 #' @export
-#' @useDynLib seroincidence negloglik
+#' @useDynLib serocalculator negloglik
 fdev <- function(log.lambda,csdata,lnpars,cond)
 {
   res <- 0; lambda <- as.double(exp(log.lambda));

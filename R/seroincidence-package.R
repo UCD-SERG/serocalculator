@@ -1,8 +1,8 @@
 #' @docType package
 #'
-#' @name seroincidence
+#' @name serocalculator
 #'
-#' @aliases seroincidence seroincidence-package
+#' @aliases serocalculator serocalculator-package
 #'
 #' @title
 #' Estimating Infection Rates from Serological Data
@@ -14,15 +14,16 @@
 #' @details
 #' For detailed documentation type the following in the R console:\cr
 #'
-#' \code{vignette("installation", package = "seroincidence")}\cr
-#' \code{vignette("tutorial", package = "seroincidence")}\cr
-#' \code{vignette("methodology", package = "seroincidence")}
+#' \code{vignette("installation", package = "serocalculator")}\cr
+#' \code{vignette("tutorial", package = "serocalculator")}\cr
+#' \code{vignette("methodology", package = "serocalculator")}
 #'
 #' @author
 #' Author: Peter Teunis \email{<p.teunis@@emory.edu>}\cr
 #' Author: Jan van Eijkeren\cr
 #' Contributor: Daniel Lewandowski \email{<daniel@@nextpagesoft.net>}\cr
-#' Maintainer: Chantal Quinten \email{<seroincidence@@ecdc.europa.eu>}
+#' Contributor: Chantal Quinten \email{<seroincidence@@ecdc.europa.eu>}
+#' Maintainer: Doug Ezra Morrison \email{<demorrison@@ucdavis.edu>}
 #'
 #' @references
 #'
@@ -98,6 +99,6 @@
 
 ## usethis namespace: start
 #' @importFrom Rcpp sourceCpp
-#' @useDynLib seroincidence, .registration = TRUE
+#' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end
 NULL

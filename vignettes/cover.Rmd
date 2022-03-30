@@ -1,20 +1,21 @@
 ---
-title: "R Package - seroincidence"
-author: "European Centre for Disease Prevention and Control (ECDC)"
+title: "R Package - serocalculator"
+author: "UC Davis SeroEpidemiology Group"
 output: 
   rmarkdown::html_vignette:
     toc: yes
 vignette: >
-  %\VignetteIndexEntry{R Package - seroincidence}
+  %\VignetteIndexEntry{R Package - serocalculator}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo = FALSE}
-pkgVersion <- packageDescription("seroincidence")$Version
-pkgLicense <- packageDescription("seroincidence")$License
-pkgDate <- packageDescription("seroincidence")$Date
-authorsString <- gsub("^ *|(?<= ) |\n| *$", "", packageDescription("seroincidence")$Authors, perl = TRUE)
+pkgName = "serocalculator"
+pkgVersion <- packageDescription(pkgName)$Version
+pkgLicense <- packageDescription(pkgName)$License
+pkgDate <- packageDescription(pkgName)$Date
+authorsString <- gsub("^ *|(?<= ) |\n| *$", "", packageDescription(pkgName)$Authors, perl = TRUE)
 authorList <- eval(parse(text = authorsString))
 pkgAuthors <- paste(format(authorList,
                            include = c("given", "family", "email", "comment"), 
@@ -22,12 +23,12 @@ pkgAuthors <- paste(format(authorList,
                                          email = c("<", ">,<br />"), 
                                          comment = c("", ""))), 
                     collapse = "<br /><br />")
-pkgMaintainer <- packageDescription("seroincidence")$Maintainer
-pkgBaseFileName <- paste("seroincidence", pkgVersion, sep = "_")
-pkgUrl <- packageDescription("seroincidence")$URL
+pkgMaintainer <- packageDescription(pkgName)$Maintainer
+pkgBaseFileName <- paste(pkgName, pkgVersion, sep = "_")
+pkgUrl <- packageDescription(pkgName)$URL
 ```
 
-R package **seroincidence** allows translation of antibody levels measured in a (cross-sectional) 
+R package **serocalculator** allows translation of antibody levels measured in a (cross-sectional) 
 population sample into an estimate of the frequency with which seroconversions (infections) occur in the sampled population.
 
 Item | Data

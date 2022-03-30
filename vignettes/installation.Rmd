@@ -157,20 +157,20 @@ Successful installation can be confirmed by loading the package into the workspa
 and exploring help files and manuals distributed with the package:
 ```{r, eval=FALSE}
 # Load package "seroincidence".
-library(seroincidence)
+library(serocalculator)
 
 # Show R help for the package.
-?seroincidence
+?serocalculator
 
 # Show tutorial for the package.
-vignette(topic = "tutorial", package = "seroincidence")
+vignette(topic = "tutorial", package = "serocalculator")
 ```
 
 Additionally, most package details can be found when executing the following commands:
 ```{r}
 # Show description.
-packageDescription("seroincidence")
+packageDescription("serocalculator")
 
 # Show citation.
-citation("seroincidence")
+citation("serocalculator")
 ```

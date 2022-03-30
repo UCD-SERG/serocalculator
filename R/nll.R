@@ -1,4 +1,4 @@
-#' Title
+#' Calculate log-likelihood
 #'
 #' @param stratumData
 #' @param antibodies

@@ -736,8 +736,4 @@ seroincidenceSummary$Results
 
 \newpage
 
-# Acknowledgements
-
-Project funded by European Centre for Disease Prevention and Control (ECDC).
-
 # References

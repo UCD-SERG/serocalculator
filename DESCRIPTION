@@ -1,7 +1,7 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 0.1.0
+Version: 0.1.0.9000
 Date: 2022-03-29
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut"), comment = "Author of the method and original code."),
@@ -13,6 +13,7 @@ Maintainer: Douglas Ezra Morrison <demorrison@ucdavis.edu>
 Description: Translates antibody levels measured in a (cross-sectional)
   population sample into an estimate of the frequency with which
   seroconversions (infections) occur in the sampled population.
+  Fork of the "seroincidence" package v2.0.0 on CRAN.
 Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
@@ -28,11 +29,10 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
-URL:
+URL: https://github.com/UCD-SEG/serocalculator
         https://ecdc.europa.eu/en/publications-data/seroincidence-calculator-tool
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2018-06-05 15:09:00 UTC; Daniel Lewandowski
 Repository: CRAN
 Date/Publication: 2018-06-05 16:34:14 UTC
 LinkingTo: 

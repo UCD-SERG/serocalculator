@@ -1,8 +1,8 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 2.0.0
-Date: 2018-06-05
+Version: 3.0.0
+Date: 2022-03-29
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut"), comment = "Author of the method and original code."),
   person(given = "Jan", family = "van Eijkeren", role = c("aut"), comment = "Author of the method and original code."), 
@@ -33,11 +33,6 @@ URL:
 RoxygenNote: 7.1.2
 NeedsCompilation: no
 Packaged: 2018-06-05 15:09:00 UTC; Daniel Lewandowski
-Author: Peter Teunis [aut] (Author of the method and original code.),
-  Jan van Eijkeren [aut] (Author of the method and original code.),
-  Daniel Lewandowski [com, ctb] (Creator of the R package.),
-  Chantal Quinten [cre, ctb] (Project manager and the package
-    maintainer.)
 Repository: CRAN
 Date/Publication: 2018-06-05 16:34:14 UTC
 LinkingTo: 

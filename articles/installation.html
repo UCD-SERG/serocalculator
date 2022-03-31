@@ -181,18 +181,19 @@
 <span class="co">## Version: 0.1.0.9000</span>
 <span class="co">## Date: 2022-03-29</span>
 <span class="co">## Authors@R: c( person(given = "Peter", family = "Teunis", email =</span>
-<span class="co">##         "p.teunis@emory.edu", role = c("aut"), comment = "Author of the</span>
-<span class="co">##         method and original code."), person(given = "Jan", family =</span>
-<span class="co">##         "van Eijkeren", role = c("aut"), comment = "Author of the</span>
-<span class="co">##         method and original code."), person(given = "Daniel", family =</span>
-<span class="co">##         "Lewandowski", email = "daniel@nextpagesoft.net", role =</span>
-<span class="co">##         c("com", "ctb"), comment = "Creator of the R package."),</span>
-<span class="co">##         person(given = "Chantal", family = "Quinten", email =</span>
-<span class="co">##         "seroincidence@ecdc.europa.eu", role = c("ctb")), person(given</span>
-<span class="co">##         = "Douglas Ezra", family = "Morrison", email =</span>
-<span class="co">##         "demorrison@ucdavis.edu", role = c("ctb", "cre"), comment =</span>
-<span class="co">##         "Project manager and the package maintainer."))</span>
-<span class="co">## Maintainer: Douglas Ezra Morrison &lt;demorrison@ucdavis.edu&gt;</span>
+<span class="co">##         "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author</span>
+<span class="co">##         of the method and original code."), person(given = "Jan",</span>
+<span class="co">##         family = "van Eijkeren", role = c("ctb"), comment = "Author of</span>
+<span class="co">##         the method and original code."), person(given = "Daniel",</span>
+<span class="co">##         family = "Lewandowski", email = "daniel@nextpagesoft.net", role</span>
+<span class="co">##         = c("ctb"), comment = "Creator of the `seroincidence` R</span>
+<span class="co">##         package."), person(given = "Chantal", family = "Quinten", email</span>
+<span class="co">##         = "seroincidence@ecdc.europa.eu", role = c("ctb")),</span>
+<span class="co">##         person(given = "Kristen", family = "Aiemjoy", email =</span>
+<span class="co">##         "kaiemjoy@ucdavis.edu", role = c("aut", "ctb")), person(given =</span>
+<span class="co">##         "Douglas Ezra", family = "Morrison", email =</span>
+<span class="co">##         "demorrison@ucdavis.edu", role = c("aut", "ctb", "cre"),</span>
+<span class="co">##         comment = "Package maintainer."))</span>
 <span class="co">## Description: Translates antibody levels measured in a (cross-sectional)</span>
 <span class="co">##         population sample into an estimate of the frequency with which</span>
 <span class="co">##         seroconversions (infections) occur in the sampled population.</span>
@@ -211,13 +212,15 @@
 <span class="co">## NeedsCompilation: yes</span>
 <span class="co">## LinkingTo: Rcpp</span>
 <span class="co">## Language: en-US</span>
-<span class="co">## Packaged: 2022-03-31 00:03:54 UTC; runner</span>
-<span class="co">## Author: Peter Teunis [aut] (Author of the method and original code.),</span>
-<span class="co">##         Jan van Eijkeren [aut] (Author of the method and original</span>
-<span class="co">##         code.), Daniel Lewandowski [com, ctb] (Creator of the R</span>
-<span class="co">##         package.), Chantal Quinten [ctb], Douglas Ezra Morrison [ctb,</span>
-<span class="co">##         cre] (Project manager and the package maintainer.)</span>
-<span class="co">## Built: R 4.1.3; x86_64-pc-linux-gnu; 2022-03-31 00:03:55 UTC; unix</span>
+<span class="co">## Packaged: 2022-03-31 05:29:06 UTC; runner</span>
+<span class="co">## Author: Peter Teunis [aut, cph] (Author of the method and original</span>
+<span class="co">##         code.), Jan van Eijkeren [ctb] (Author of the method and</span>
+<span class="co">##         original code.), Daniel Lewandowski [ctb] (Creator of the</span>
+<span class="co">##         `seroincidence` R package.), Chantal Quinten [ctb], Kristen</span>
+<span class="co">##         Aiemjoy [aut, ctb], Douglas Ezra Morrison [aut, ctb, cre]</span>
+<span class="co">##         (Package maintainer.)</span>
+<span class="co">## Maintainer: Douglas Ezra Morrison &lt;demorrison@ucdavis.edu&gt;</span>
+<span class="co">## Built: R 4.1.3; x86_64-pc-linux-gnu; 2022-03-31 05:29:08 UTC; unix</span>
 <span class="co">## RemotePkgRef: local::.</span>
 <span class="co">## RemoteType: local</span>
 <span class="co">## </span>
@@ -228,8 +231,8 @@
 <pre><code><span class="co">## </span>
 <span class="co">## To cite package 'serocalculator' in publications use:</span>
 <span class="co">## </span>
-<span class="co">##   Peter Teunis and Jan van Eijkeren (2022). serocalculator: Estimating</span>
-<span class="co">##   Infection Rates from Serological Data.</span>
+<span class="co">##   Peter Teunis, Kristen Aiemjoy and Douglas Ezra Morrison (2022).</span>
+<span class="co">##   serocalculator: Estimating Infection Rates from Serological Data.</span>
 <span class="co">##   https://github.com/UCD-SEG/serocalculator,</span>
 <span class="co">##   https://ucd-seg.github.io/serocalculator/.</span>
 <span class="co">## </span>
@@ -237,7 +240,7 @@
 <span class="co">## </span>
 <span class="co">##   @Manual{,</span>
 <span class="co">##     title = {serocalculator: Estimating Infection Rates from Serological Data},</span>
-<span class="co">##     author = {Peter Teunis and Jan {van Eijkeren}},</span>
+<span class="co">##     author = {Peter Teunis and Kristen Aiemjoy and Douglas Ezra Morrison},</span>
 <span class="co">##     year = {2022},</span>
 <span class="co">##     note = {https://github.com/UCD-SEG/serocalculator,</span>
 <span class="co">## https://ucd-seg.github.io/serocalculator/},</span>
@@ -251,7 +254,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Peter Teunis, Jan van Eijkeren, Douglas Ezra Morrison.</p>
+<p>Developed by Peter Teunis, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
 </div>
 
 <div class="pkgdown-footer-right">

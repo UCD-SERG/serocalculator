@@ -4,12 +4,11 @@ Title: Estimating Infection Rates from Serological Data
 Version: 0.1.0.9000
 Date: 2022-03-29
 Authors@R: c(
-  person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut"), comment = "Author of the method and original code."),
+  person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
   person(given = "Jan", family = "van Eijkeren", role = c("aut"), comment = "Author of the method and original code."), 
   person(given = "Daniel", family = "Lewandowski", email = "daniel@nextpagesoft.net", role = c("com", "ctb"), comment = "Creator of the R package."), 
   person(given = "Chantal", family = "Quinten", email = "seroincidence@ecdc.europa.eu", role = c("ctb")),
   person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("ctb", "cre"), comment = "Project manager and the package maintainer."))
-Maintainer: Douglas Ezra Morrison <demorrison@ucdavis.edu>
 Description: Translates antibody levels measured in a (cross-sectional)
   population sample into an estimate of the frequency with which
   seroconversions (infections) occur in the sampled population.
@@ -25,7 +24,8 @@ Suggests:
     rmarkdown,
     parallel,
     pander,
-    Hmisc
+    Hmisc,
+    pdflatex
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

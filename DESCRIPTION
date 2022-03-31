@@ -8,8 +8,8 @@ Authors@R: c(
   person(given = "Jan", family = "van Eijkeren", role = c("aut"), comment = "Author of the method and original code."), 
   person(given = "Daniel", family = "Lewandowski", email = "daniel@nextpagesoft.net", role = c("com", "ctb"), comment = "Creator of the R package."), 
   person(given = "Chantal", family = "Quinten", email = "seroincidence@ecdc.europa.eu", role = c("ctb")),
-  person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("ctb")),
-  person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("ctb", "cre"), comment = "Project manager and the package maintainer."))
+  person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("ctb", "cre")),
+  person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("ctb", "cre"), comment = "Package maintainer."))
 Description: Translates antibody levels measured in a (cross-sectional)
   population sample into an estimate of the frequency with which
   seroconversions (infections) occur in the sampled population.

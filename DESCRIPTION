@@ -25,8 +25,7 @@ Suggests:
     rmarkdown,
     parallel,
     pander,
-    Hmisc,
-    pdflatex
+    Hmisc
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

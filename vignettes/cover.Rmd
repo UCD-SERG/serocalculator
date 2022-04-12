@@ -38,7 +38,7 @@ Published | `r pkgDate`
 Authors | `r pkgAuthors`
 Maintainer | `r pkgMaintainer`
 License | `r pkgLicense`
-Installation manual | [installation.pdf](installation.pdf)
-Tutorial | [tutorial.pdf](tutorial.pdf)
-Appendix | [methodology.pdf](methodology.pdf)
+Installation manual | [installation.html](installation.html)
+Tutorial | [tutorial.html](tutorial.html)
+Appendix | [methodology.html](methodology.html)
 ECDC web site | `r pkgUrl`

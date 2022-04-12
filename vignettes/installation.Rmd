@@ -3,6 +3,8 @@ title: "Seroincidence package installation manual"
 author: "European Centre for Disease Prevention and Control (ECDC)"
 date: "`r Sys.Date()`"
 output: 
+  rmarkdown::html_vignette:
+    toc: yes
   pdf_document: 
     toc: yes
 header-includes:

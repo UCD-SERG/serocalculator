@@ -1,6 +1,8 @@
 ---
 title: "simulation"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
 vignette: >
   %\VignetteIndexEntry{simulation}
   %\VignetteEngine{knitr::rmarkdown}

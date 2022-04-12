@@ -1,6 +1,7 @@
 ---
 title: "example-analysis"
-output: rmarkdown::html_vignette
+output: rmarkdown::html_vignette:
+    toc: yes
 vignette: >
   %\VignetteIndexEntry{example-analysis}
   %\VignetteEngine{knitr::rmarkdown}

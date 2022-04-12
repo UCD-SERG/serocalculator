@@ -125,7 +125,7 @@ references:
   DOI: 10.1128/CDLI.8.2.314-319.2001  
 fontsize: 11pt
 vignette: >
-  %\VignetteIndexEntry{Seroincidence package tutorial}
+  %\VignetteIndexEntry{Serocalculator package tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

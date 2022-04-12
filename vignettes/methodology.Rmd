@@ -1,5 +1,5 @@
 ---
-title: "Seroincidence package methodology"
+title: "Serocalculator package methodology"
 author: "European Centre for Disease Prevention and Control (ECDC)"
 date: '`r Sys.Date()`'
 output: 
@@ -140,7 +140,7 @@ references:
   issue: 9
 fontsize: 11pt
 vignette: >
-  %\VignetteIndexEntry{Seroincidence package methodology}
+  %\VignetteIndexEntry{Serocalculator package methodology}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -166,7 +166,7 @@ seroresponses of arbitrary shape.
 
 # 1. A simple model for the seroresponse
 
-The current version of the seroincidence package uses the model of [@teunis_etal16withinhost] for 
+The current version of the serocalculator package uses the model of [@teunis_etal16withinhost] for 
 the shape of the seroresponse:
 $$
 \begin{array}{l@{\qquad}l}

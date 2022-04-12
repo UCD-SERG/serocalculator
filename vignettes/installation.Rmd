@@ -1,5 +1,5 @@
 ---
-title: "Seroincidence package installation manual"
+title: "Serocalculator package installation manual"
 author: "European Centre for Disease Prevention and Control (ECDC)"
 date: "`r Sys.Date()`"
 output: 
@@ -11,7 +11,7 @@ header-includes:
 - \setkeys{Gin}{height=2.8in, keepaspectratio}
   \DeclareUnicodeCharacter{2010}{-}
 vignette: >
-  %\VignetteIndexEntry{Seroincidence package installation manual}
+  %\VignetteIndexEntry{Serocalculator package installation manual}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

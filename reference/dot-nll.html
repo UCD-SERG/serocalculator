@@ -26,8 +26,8 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/cover.html">R Package - serocalculator</a>
     <a class="dropdown-item" href="../articles/example-analysis.html">example-analysis</a>
-    <a class="dropdown-item" href="../articles/installation.html">Seroincidence package installation manual</a>
-    <a class="dropdown-item" href="../articles/methodology.html">Seroincidence package methodology</a>
+    <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
+    <a class="dropdown-item" href="../articles/methodology.html">Serocalculator package methodology</a>
     <a class="dropdown-item" href="../articles/simulation.html">simulation</a>
     <a class="dropdown-item" href="../articles/tutorial.html">Serocalculator package tutorial</a>
   </div>
@@ -73,10 +73,28 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>ivc</dt>
+    <dl><dt>stratumData</dt>
+<dd><p>Data frame with cross-sectional serology data per antibody and age, and additional
+columns, for one stratum</p></dd>
+<dt>antibodies</dt>
+<dd><p>Character vector with one or more antibody names. Values must match <code>data</code>.</p></dd>
+<dt>params</dt>
+<dd><p>List of data frames of all longitudinal parameters. Each data frame contains
+Monte Carlo samples for each antibody type.</p></dd>
+<dt>censorLimits</dt>
+<dd><p>List of cutoffs for one or more named antibody types (corresponding to
+<code>stratumData</code>).</p></dd>
+<dt>ivc</dt>
 <dd><p>If `ivc = TRUE`, the biomarker data are interval-censored.</p></dd>
+<dt>m</dt>
+<dd><p>[not sure what this is]</p></dd>
+<dt>par0</dt>
+<dd><p>List of parameters for the (lognormal) distribution of antibody concentrations
+for true seronegatives (i.e. those who never seroconverted), by named antibody type
+(corresponding to <code>data</code>).</p></dd>
 <dt>start</dt>
-<dd></dd>
+<dd><p>starting value for <code>log(lambda)</code>. Value of -6 corresponds roughly to 1 day
+(log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

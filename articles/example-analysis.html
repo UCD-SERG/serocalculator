@@ -109,12 +109,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">cat.bnd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">80</span>,by<span class="op">=</span><span class="fl">5</span><span class="op">)</span>; <span class="va">n.cats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cat.bnd</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>; <span class="co"># define age categories</span>
-<span class="va">age.cat</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">raw.data</span><span class="op">$</span><span class="va">AGE</span><span class="op">)</span><span class="op">)</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cat.bnd</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> 
-<span class="op">{</span>
-  <span class="va">age.cat</span><span class="op">[</span><span class="op">(</span><span class="va">raw.data</span><span class="op">$</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="va">cat.bnd</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
-    <span class="op">&amp;</span> <span class="op">(</span><span class="va">raw.data</span><span class="op">$</span><span class="va">AGE</span> <span class="op">&lt;</span> <span class="va">cat.bnd</span><span class="op">[</span><span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">i</span>
-<span class="op">}</span>
+<span class="va">age.cat</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">raw.data</span><span class="op">$</span><span class="va">AGE</span>, breaks <span class="op">=</span> <span class="va">cat.bnd</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> |&gt;  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">clean.data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
   age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="va">raw.data</span><span class="op">$</span><span class="va">AGE</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.5</span>,
@@ -182,7 +177,7 @@
 <span class="co">#&gt; 15 </span>
 <span class="co">#&gt; 16</span>
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;  42.569   0.016  42.603</span></code></pre></div>
+<span class="co">#&gt;  50.332   0.016  50.359</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check results in log.lambda.est:</span>
 <span class="fu">pander</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pander/man/pander.html" class="external-link">pander</a></span><span class="op">(</span><span class="va">log.lambda.est</span><span class="op">)</span></code></pre></div>

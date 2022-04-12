@@ -146,9 +146,18 @@
 <p>Functionality of the <em>seroincidence</em> package is made available to the end user only once the library is loaded into the current workspace. Assuming the package is installed already (covered in <a href="installation.pdf">installation.pdf</a>) loading is achieved by running the following command in the R console (bear in mind that the text after character <code>#</code> is only a comment):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Load package "seroincidence"</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SEG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SEG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## </span>
+<span class="co">## Attaching package: 'dplyr'</span></code></pre>
+<pre><code><span class="co">## The following objects are masked from 'package:stats':</span>
+<span class="co">## </span>
+<span class="co">##     filter, lag</span></code></pre>
+<pre><code><span class="co">## The following objects are masked from 'package:base':</span>
+<span class="co">## </span>
+<span class="co">##     intersect, setdiff, setequal, union</span></code></pre>
 <p>At this moment all functions required to run the seroincidence calculation are made available. It can be checked by running:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># List all objects (functions and data) exposed by package "seroincidence".</span>
 <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="st">"package:serocalculator"</span><span class="op">)</span></code></pre></div>
 <p>Here is the resulting output:</p>
@@ -190,7 +199,7 @@
 <p>The user has a few options of providing this data to the calculator:</p>
 <p><strong>i) Using supplied sample data</strong></p>
 <p>Data set <code>campylobacterSimMediumData</code> provides an example of a cross-sectional antibody levels data for Campylobacter. It is loaded into the workspace as soon as the package is loaded, therefore it can be referenced right away. Here is a small exempt from this data set:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Show three first rows of "campylobacterSimMediumData" data.frame.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">campylobacterSimMediumData</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##         Age       IgG        IgM          IgA</span>
@@ -198,15 +207,10 @@
 <span class="co">## 2  5173.256 0.8498734 0.10667042 2.093677e-06</span>
 <span class="co">## 3 24187.164 0.1849355 1.24958865 1.652755e-01</span></code></pre>
 <p>Let us create the serology data <code>serologyData</code> based on this data set:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Assign data.frame "campylobacterDelftData" to object named "serologyData".</span>
-<span class="va">serologyData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">campylobacterSimMediumData</span>,
-                     <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-                       Age <span class="op">=</span> <span class="va">Age</span>,
-                       IgG <span class="op">=</span> <span class="va">IgG</span>,
-                       IgM <span class="op">=</span> <span class="va">IgM</span>,
-                       IgA <span class="op">=</span> <span class="va">IgA</span>,
-                       AgeCat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fl">15</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">serologyData</span> <span class="op">&lt;-</span> <span class="va">campylobacterSimMediumData</span> |&gt; 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>AgeCat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fl">15</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Print a few first observations.</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">serologyData</span><span class="op">)</span></code></pre></div>
@@ -218,7 +222,7 @@
 <span class="co">## 5 12560.687 1.0656224 0.0013906805 8.723256e-04      7</span>
 <span class="co">## 6 17083.219 0.1115373 0.4976598547 2.321977e-01     10</span></code></pre>
 <p>You can view the data also in a tabular form:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">serologyData</span><span class="op">)</span></code></pre></div>
 <p>We shall pass this object later to the calculator. Object <code>serologyData</code> must contain at least one column named <code>IgG</code>, <code>IgM</code>, or <code>IgA</code>. Additionally, column <code>Age</code> is used in the calculations if it is present. Otherwise, it is created on-the-fly and initialized to <code>NA</code> (not available). Column <code>Age</code>, if supplied, is assumed to represent age in days.</p>
 <p>Please, note that the cross-sectional data set can include extra columns allowing performing the seroincidence calculations stratified per factors available in those data. In the example above column <code>AgeCat</code> can be used as a <em>stratum</em> variable. This particular variable is created by mapping the age in days (column <code>Age</code>) into 15 categories, category 1 grouping the youngest subjects and category 15 grouping the oldest subjects.</p>
@@ -231,7 +235,7 @@
 2.144549, 0.3320178, 0.3884205
 2.957854, 0.4967764, 0.3472340</code></pre>
 <p>is a valid cross-sectional data set. Suppose this file is named <code>c:\cross-sectional-data.csv</code>. Then it can be loaded into R like this:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read content of file "C:\cross-sectional-data.csv" into object named </span>
 <span class="co"># "serologyData".</span>
 <span class="va">serologyData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"C:\\cross-sectional-data.csv"</span><span class="op">)</span></code></pre></div>
@@ -260,7 +264,7 @@
 <p>End user has three options for loading the response parameters into R session:</p>
 <p><strong>i) Using supplied data</strong></p>
 <p>There are a few longitudinal response parameter data sets provided by the package including Monte-Carlo sample of longitudinal response parameters, like <code>campylobacterDelftParams4</code>. This particular object is a list containing three data.frame objects named <code>IgG</code>, <code>IgM</code> and <code>IgA</code>. Let’s have a pick into each of these two data sets separately (notice character <code>$</code> indicating a sub-object of the parent object):</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Show first rows of data.frame "IgG" in list "campylobacterDelftParams4".</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">campylobacterDelftParams4</span><span class="op">$</span><span class="va">IgG</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##          y1        alpha yb        r         y0       mu1       t1</span>
@@ -270,7 +274,7 @@
 <span class="co">## 4  5.866064 0.0006929407  0 1.019739 0.07694126 0.5232645 8.282421</span>
 <span class="co">## 5 14.364930 0.0035222413  0 1.092096 0.05110497 0.9445758 5.969519</span>
 <span class="co">## 6  5.790477 0.0003697673  0 1.010602 0.09127834 0.7696968 5.391807</span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Show first rows of data.frame "IgM" in list "campylobacterDelftParams4".</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">campylobacterDelftParams4</span><span class="op">$</span><span class="va">IgM</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##          y1        alpha yb        r         y0       mu1       t1</span>
@@ -280,7 +284,7 @@
 <span class="co">## 4 1.1187181 0.0019154929  0 1.071340 0.09971466 0.3124635 7.737306</span>
 <span class="co">## 5 0.4222472 0.0005651563  0 1.000181 0.12935880 0.5040532 2.346977</span>
 <span class="co">## 6 4.5818356 0.0158849155  0 1.071558 0.10262796 0.6777377 5.605037</span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Show first rows of data.frame "IgA" in list "campylobacterDelftParams4".</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">campylobacterDelftParams4</span><span class="op">$</span><span class="va">IgA</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##          y1        alpha yb        r         y0       mu1        t1</span>
@@ -291,11 +295,11 @@
 <span class="co">## 5 0.3069594 0.0029306951  0 1.050954 0.07870162 0.4218624  3.226293</span>
 <span class="co">## 6 1.6315826 0.0044291436  0 1.740029 0.12264517 0.5924527  4.368299</span></code></pre>
 <p>Let us assign object <code>campylobacterDelftParams4</code> to variable <code>responseParams</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">responseParams</span> <span class="op">&lt;-</span> <span class="va">campylobacterDelftParams4</span></code></pre></div>
 <p><strong>ii) Loading from local external files</strong></p>
 <p>Alternatively, this data can be loaded from an external file. Bear in mind, that most likely your data is organized into three files, separately for antibody <code>IgG</code>, <code>IgM</code> and <code>IgA</code>. Assuming that the data is saved into csv files named <code>IgG.csv</code>, <code>IgM.csv</code> and <code>IgA.csv</code> the end user would run the following code in order to create a valid input to the calculator:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">IgGData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"IgG.csv"</span><span class="op">)</span>
 <span class="va">IgMData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"IgM.csv"</span><span class="op">)</span>
 <span class="va">IgAData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"IgA.csv"</span><span class="op">)</span>
@@ -313,7 +317,7 @@
 <code>yersiniaSSIParams4.zip</code>: longitudinal response parameters per antibody for Yersinia.</li>
 </ol>
 <p>Simply use the supplied utility function <code>getAdditionalData</code> to download this data:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">responseParams</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAdditionalData.html">getAdditionalData</a></span><span class="op">(</span><span class="st">"coxiellaIFAParams4.zip"</span><span class="op">)</span></code></pre></div>
 <p>Internet connection is needed for this function to work.</p>
 </div>
@@ -341,16 +345,13 @@
 <code>numCores</code> Number of processor cores to use for calculations when computing by <code>strata</code>. If set to more than 1 and R package <code>parallel</code> is available (installed by default), then the computations by stratum are executed in parallel. Default is 1, ie. no execution in parallel.</li>
 </ul>
 <p>Here is an example of the <em>Campylobacter</em> seroincidence calculation for three antibodies measured, stratified per <code>AgeCat</code>, and with measurements below <code>0.1</code> removed:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Prepare input data.</span>
-<span class="va">serologyData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">campylobacterSimMediumData</span>,
-                     <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-                       Age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">campylobacterSimMediumData</span><span class="op">)</span><span class="op">)</span>,
-                       IgG <span class="op">=</span> <span class="va">IgG</span>,
-                       IgM <span class="op">=</span> <span class="va">IgM</span>,
-                       IgA <span class="op">=</span> <span class="va">IgA</span>,
-                       AgeCat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fl">15</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
+<span class="va">serologyData</span> <span class="op">&lt;-</span> <span class="va">campylobacterSimMediumData</span> |&gt; 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
+    AgeCat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fl">15</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
+    Age <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
+    
 <span class="va">responseParams</span> <span class="op">&lt;-</span> <span class="va">campylobacterDelftParams4</span>
 
 <span class="va">cutOffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>IgG <span class="op">=</span> <span class="fl">0.1</span>, IgM <span class="op">=</span> <span class="fl">0.1</span>, IgA <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
@@ -370,8 +371,7 @@
   params <span class="op">=</span> <span class="va">responseParams</span>,
   censorLimits <span class="op">=</span> <span class="va">cutOffs</span>,
   par0 <span class="op">=</span> <span class="va">baseLine</span>,
-  <span class="co"># numCores = parallel::detectCores(),</span>
-  numCores <span class="op">=</span> <span class="fl">1</span>,
+  numCores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span>,
   start <span class="op">=</span> <span class="op">-</span><span class="fl">4</span><span class="op">)</span>
 
 <span class="co"># Show content of the output variable...</span>
@@ -393,7 +393,7 @@
 <span class="co">## Call summary function to obtain output results.</span></code></pre>
 <p>The most important output is subobject <code>Fits</code> containing raw results on the output incidence. Translation of these raw results is provided by a custom function <code>summary</code> explained in the following section.</p>
 <p>The cutoff argument is based on censoring of the observed serum antibody measurements <span class="citation">(Strid et al. 2001)</span>. Cut-off levels must always be specified when calling function <code>estimateSeroincidence</code> (argument <code>censorLimits</code>). Value <code>0</code> should be set for antibody measurements where no censoring is needed, for instance</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">censorLimits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>IgG <span class="op">=</span> <span class="fl">0</span>, IgM <span class="op">=</span> <span class="fl">0</span>, IgA <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p>Using different censoring levels will produce different results. Choosing higher cut-off causes the estimates of lambda to decrease. Results should be published together with the chosen cut-off values. The cut-off level of <code>0.1</code> set in the example above is a typical value, but users should set it to value reflecting the censoring level in the data.</p>
 </div>
@@ -401,7 +401,7 @@
 <h3 id="getting-a-summary-of-seroincidence">3.4. Getting a summary of seroincidence<a class="anchor" aria-label="anchor" href="#getting-a-summary-of-seroincidence"></a>
 </h3>
 <p>Output of the calculator should be passed in to function <code>summary</code> calculating output results:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">seroincidenceData</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Seroincidence estimated given the following setup:</span>
 <span class="co">## a) Antibodies   : IgG, IgM, IgA </span>
@@ -430,7 +430,7 @@
 <p>The most important sub-object of the output of the <code>summary</code> functions is <code>Results</code>, containing estimates of <code>Lambda</code> (annual incidence) together with their lower and upper bounds (<code>Lambda.lwr</code> and <code>Lambda.upr</code>, respectively). The default lower bound is 2.5% and the upper bound is 97.5% of the distribution of <code>Lambda</code>. These values can be changed (see <a href="#other-examples">Other examples</a>).</p>
 <p>Optionally, the summary function returns also <code>Deviance</code> (negative log likelihood at the estimated <code>Lambda</code>) and <code>Convergence</code> (indicator returned by function <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">stats::optim</a></code>; value of 0 indicates convergence).</p>
 <p>It may be beneficial to assign output of this function to a variable for further analysis:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Compute seroincidence summary and assign to object "seroincidenceSummary".</span>
 <span class="va">seroincidenceSummary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">seroincidenceData</span><span class="op">)</span>
 
@@ -459,7 +459,7 @@
 <h2 id="other-examples">4. Other examples<a class="anchor" aria-label="anchor" href="#other-examples"></a>
 </h2>
 <p>The following examples show the standard procedure for estimating seroincidence.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># 1. Define cross-sectional data.</span>
 <span class="va">serologyData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">campylobacterSimMediumData</span>,
                      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>

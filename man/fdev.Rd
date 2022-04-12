@@ -6,6 +6,15 @@
 \usage{
 fdev(log.lambda, csdata, lnpars, cond)
 }
+\arguments{
+\item{log.lambda}{Initial guess of incidence rate}
+
+\item{csdata}{cross-sectional sample data}
+
+\item{lnpars}{longitudinal antibody decay model parameters}
+
+\item{cond}{measurement noise parameters}
+}
 \description{
 [more description to be added here]
 }

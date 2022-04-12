@@ -148,7 +148,7 @@ of the frequency with which seroconversions (infections) occur in the sampled po
 terms: the presence of many high antibody concentrations indicates that many subjects likely 
 experienced infection recently, while mostly low concentrations indicate a low frequency of 
 infections in the sampled population. More information about ELISA methods can be found on
-[ECDC web site](`r pkgUrl`).
+[ECDC web site](https://www.ecdc.europa.eu/en/publications-data/seroincidence-calculator-tool).
 
 In order to thus interpret the measured cross-sectional antibody concentrations, characteristics of 
 the time course of the serum antibody response must be known. For any antibody detected in the 

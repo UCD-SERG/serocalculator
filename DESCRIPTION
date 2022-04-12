@@ -17,6 +17,7 @@ Description: Translates antibody levels measured in a (cross-sectional)
 Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
+    dplyr,
     Rcpp,
     stats,
     utils
@@ -25,7 +26,8 @@ Suggests:
     rmarkdown,
     parallel,
     pander,
-    Hmisc
+    Hmisc,
+    tidyverse
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

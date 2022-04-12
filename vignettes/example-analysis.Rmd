@@ -38,12 +38,7 @@ raw.data = system.file("extdata", "SimulDat.txt", package = "serocalculator") |>
 ```{r}
 
 cat.bnd = seq(0,80,by=5); n.cats = length(cat.bnd)-1; # define age categories
-age.cat = rep(NA,length(raw.data$AGE))
-for(i in 1:length(cat.bnd-1)) 
-{
-  age.cat[(raw.data$AGE >= cat.bnd[i])
-    & (raw.data$AGE < cat.bnd[i+1])] <- i
-}
+age.cat = cut(raw.data$AGE, breaks = cat.bnd, right = FALSE) |>  as.numeric()
 
 clean.data = data.frame(
   age = floor(raw.data$AGE) + 0.5,

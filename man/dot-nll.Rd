@@ -2,7 +2,7 @@
 % Please edit documentation in R/nll.R
 \name{.nll}
 \alias{.nll}
-\title{Title}
+\title{Calculate log-likelihood}
 \usage{
 .nll(
   stratumData,
@@ -24,5 +24,5 @@
 
 }
 \description{
-Title
+Calculate log-likelihood
 }

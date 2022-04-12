@@ -304,6 +304,7 @@ console (bear in mind that the text after character `#` is only a comment):
 ```{r}
 # Load package "seroincidence"
 library(serocalculator)
+library(dplyr)
 ```
 
 At this moment all functions required to run the seroincidence calculation are made available. It 
@@ -362,13 +363,8 @@ head(campylobacterSimMediumData, 3)
 Let us create the serology data `serologyData` based on this data set:
 ```{r}
 # Assign data.frame "campylobacterDelftData" to object named "serologyData".
-serologyData <- with(campylobacterSimMediumData,
-                     data.frame(
-                       Age = Age,
-                       IgG = IgG,
-                       IgM = IgM,
-                       IgA = IgA,
-                       AgeCat = cut(Age, 15, labels = FALSE)))
+serologyData <- campylobacterSimMediumData |> 
+  mutate(AgeCat = cut(Age, 15, labels = FALSE))
 
 # Print a few first observations.
 head(serologyData)
@@ -526,14 +522,11 @@ Here is an example of the *Campylobacter* seroincidence calculation for three an
 stratified per `AgeCat`, and with measurements below `0.1` removed:
 ```{r, eval=FALSE}
 # Prepare input data.
-serologyData <- with(campylobacterSimMediumData,
-                     data.frame(
-                       Age = rep(NA, nrow(campylobacterSimMediumData)),
-                       IgG = IgG,
-                       IgM = IgM,
-                       IgA = IgA,
-                       AgeCat = cut(Age, 15, labels = FALSE)))
-
+serologyData <- campylobacterSimMediumData |> 
+  mutate(
+    AgeCat = cut(Age, 15, labels = FALSE),
+    Age = NA)
+    
 responseParams <- campylobacterDelftParams4
 
 cutOffs <- list(IgG = 0.1, IgM = 0.1, IgA = 0.1)
@@ -553,8 +546,7 @@ seroincidenceData <- estimateSeroincidence(
   params = responseParams,
   censorLimits = cutOffs,
   par0 = baseLine,
-  # numCores = parallel::detectCores(),
-  numCores = 1,
+  numCores = parallel::detectCores(),
   start = -4)
 
 # Show content of the output variable...

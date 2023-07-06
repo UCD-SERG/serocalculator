@@ -24,22 +24,32 @@ library(Hmisc)
 ```{r "load data"}
 
 # load longitudinal parameter MC sample
-system.file("extdata", "pertussis-iggpt2.rda", package = "serocalculator") |> load() # output: longpar.mc
+fs::path_package(
+  "extdata", 
+  "pertussis-iggpt2.rda", 
+  package = "serocalculator") |> 
+  load() # output: longpar.mc
+
 lp = longpar.mc$IgG
 day2yr <- 365.25;
 ln.pars <- data.frame(
-  y1=lp$y1,               # peak levels
-  alpha=day2yr*lp$alpha,  # decay rate (per year)
-  d=lp$r -1);             # shape (r-1 offset from exp)
+  y1 = lp$y1,                 # peak levels
+  alpha = day2yr * lp$alpha,  # decay rate (per year)
+  d = lp$r -1);               # shape (r-1 offset from exp)
 
 #read simulated data
-raw.data = system.file("extdata", "SimulDat.txt", package = "serocalculator") |> read.table(head=TRUE)
+raw.data = fs::path_package(
+  "extdata", 
+  "SimulDat.txt", 
+  package = "serocalculator") |> 
+  read.table(head=TRUE)
 
 ```
 
 ```{r}
 
-cat.bnd = seq(0,80,by=5); n.cats = length(cat.bnd)-1; # define age categories
+cat.bnd = seq(0,80,by=5); 
+n.cats = length(cat.bnd)-1; # define age categories
 age.cat = cut(raw.data$AGE, breaks = cat.bnd, right = FALSE) |>  as.numeric()
 
 clean.data = data.frame(
@@ -56,8 +66,9 @@ cond <- data.frame(
 
 lambda = 0.015 # initial estimate: starting value
 log.lambda = log(lambda)
-log.lmin=log(lambda/10);log.lmax=log(10*lambda)   # seroincidence rate interval
-log.lambda.est=matrix(0, nrow=n.cats, ncol=6,
+log.lmin = log(lambda/10);
+log.lmax=log(10*lambda)   # seroincidence rate interval
+log.lambda.est = matrix(0, nrow=n.cats, ncol=6,
   dimnames = list(
     rep("",n.cats),
     c("","ml.est", "lwr0.05", "upr0.95",
@@ -65,7 +76,8 @@ log.lambda.est=matrix(0, nrow=n.cats, ncol=6,
 # loop over age categories
 system.time(
   for (k.cat in 1:n.cats)                       # per age category
-  { cat(k.cat,"\n")
+  { 
+    cat(k.cat,"\n")
     y.cat = as.vector(subset(clean.data,subset=clean.data$cat==as.character(k.cat),
       select="IgG"))$IgG;
     a.cat = as.vector(subset(clean.data,subset=clean.data$cat==as.character(k.cat),

@@ -27,7 +27,8 @@ Suggests:
     parallel,
     pander,
     Hmisc,
-    tidyverse
+    tidyverse,
+    fs
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

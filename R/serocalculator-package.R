@@ -19,11 +19,8 @@
 #' \code{vignette("methodology", package = "serocalculator")}
 #'
 #' @author
-#' Author: Peter Teunis \email{<p.teunis@@emory.edu>}\cr
-#' Author: Jan van Eijkeren\cr
-#' Contributor: Daniel Lewandowski \email{<daniel@@nextpagesoft.net>}\cr
-#' Contributor: Chantal Quinten \email{<seroincidence@@ecdc.europa.eu>}
-#' Maintainer: Doug Ezra Morrison \email{<demorrison@@ucdavis.edu>}
+#' Author: Peter Teunis \email{<p.teunis@emory.edu>}\cr
+#' Maintainer: Doug Ezra Morrison \email{<demorrison@ucdavis.edu>}
 #'
 #' @references
 #'

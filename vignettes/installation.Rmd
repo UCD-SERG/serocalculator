@@ -60,7 +60,7 @@ the destination location accordingly:
 include_graphics("fig/setup2.png")
 ```
 
-The **seroincidence** package is compatible with both the 32-bit and the 64-bit version of R. 
+The **serocalculator** package is compatible with both the 32-bit and the 64-bit version of R. 
 Choose the preferred platform (or both). If unsure install the 32-bit version only, however
 on compatible platforms the 64-bit version may provide better performance:
 
@@ -83,7 +83,7 @@ Graphical user interface for R interpreter will start in a new window:
 include_graphics("fig/RGui1.png")
 ```
 
-## 2.2. Installing *seroincidence* package
+## 2.2. Installing *serocalculator* package
 
 Since this is a new installation of R, the **serocalculator** package must be installed before first 
 use. The package can be installed either through a menu option in the graphical user interface (GUI) 
@@ -91,11 +91,11 @@ or with a command executed in the R console. Both options are presented:
 
 ### 2.2.1. Package installation from the graphical user interface
 
-Download the seroincidence calculator package from ECDC website: [`r pkgUrl`](`r pkgUrl`). 
+Download the serocalculator package from ECDC website: [`r pkgUrl`](`r pkgUrl`). 
 Two versions of the package are made available:
 
-* binary package (seroincidence_[version].zip) - Microsoft Windows compatible
-* Source package (seroincidence_[version].tar.gz) - cross-platform compatible (MS Windows, Linux, 
+* binary package (serocalculator_[version].zip) - Microsoft Windows compatible
+* Source package (serocalculator_[version].tar.gz) - cross-platform compatible (MS Windows, Linux, 
   MacOS)
 
 If your operating system is Windows then it is best to download the Windows binary package.
@@ -127,7 +127,7 @@ by executing one of the following commands in the *R console*:
 ```{r, include=FALSE, tidy=FALSE}
 chunkTemplate <- "```{r, eval = FALSE}
 # OPTION A
-# Install Windows binary package \"seroincidence\" directly from internet ECDC website:
+# Install Windows binary package \"serocalculator\" directly from internet ECDC website:
 install.packages(
     pkgs = \"{{pkgPath}}/
                 {{pkgBaseFileName}}.zip\",
@@ -135,11 +135,11 @@ install.packages(
 
 # OPTION B
 # Install source package directly from internet CRAN repository:
-install.packages(\"seroincidence\")
+install.packages(\"serocalculator\")
 
 # OPTION C
 # Install Windows binary package from a local file:
-#   install.packages(\"[PATH/TO/FILE/]seroincidence_[version].zip\", 
+#   install.packages(\"[PATH/TO/FILE/]serocalculator_[version].zip\", 
 #                       repos = NULL, type = \"win.binary\")
 # For instance:
 install.packages(pkgs = \"C:/{{pkgBaseFileName}}.zip\", repos = NULL, type = \"win.binary\")

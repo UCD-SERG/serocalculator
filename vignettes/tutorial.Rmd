@@ -3,9 +3,9 @@ title: "Serocalculator package tutorial"
 author: "UC Davis SeroEpidemiology Group"
 date: '`r Sys.Date()`'
 output: 
-  rmarkdown::html_vignette:
-    toc: yes
   pdf_document:
+    toc: yes
+  rmarkdown::html_vignette:
     toc: yes
 header-includes:
 - \DeclareUnicodeCharacter{2010}{-}
@@ -126,8 +126,8 @@ references:
 fontsize: 11pt
 vignette: >
   %\VignetteIndexEntry{Serocalculator package tutorial}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 <script type="text/x-mathjax-config">
@@ -181,7 +181,7 @@ of the sero–incidence calculator script
 
 # 2. The seroincidence estimator
 
-Package **seroincidence** was designed to calculate incidence of seroconversion, by using the 
+Package **serocalculator** was designed to calculate incidence of seroconversion, by using the 
 longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a 
 cross–sectional population sample is calculated, as a function of the (longitudinal) seroresponse 
 and the frequency of seroconversion (or seroincidence). Given the seroresponse, this (marginal) 
@@ -245,7 +245,7 @@ The longitudinal seroresponses are considered generic: they represent the time c
 human serum antibodies against a (specific) pathogen. Therefore, with any cross–sectional sample of 
 the same antibodies in a human population, an incidence estimate can be calculated. 
 
-Given the longitudinal response characteristics, **seroincidence** R package provide a rapid and 
+Given the longitudinal response characteristics, **serocalculator** R package provide a rapid and 
 computationally simple method for calculating seroconversion rates, as published in [@3].
 
 The methods on which the seroincidence calculator is based were developed with publicly funded 
@@ -292,13 +292,13 @@ Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
 \end{footnotesize}
 \end{table}
 
-# 3. How to use *seroincidence* package
+# 3. How to use *serocalculator* package
 
-This section provides step-by-step directions on the usage of the *seroincidence* package.
+This section provides step-by-step directions on the usage of the *serocalculator* package.
 
 ## 3.1. Loading the package
 
-Functionality of the *seroincidence* package is made available to the end user only once the library 
+Functionality of the *serocalculator* package is made available to the end user only once the library 
 is loaded into the current workspace. Assuming the package is installed already (covered in 
 [installation.pdf](installation.pdf)) loading is achieved by running the following command in the R 
 console (bear in mind that the text after character `#` is only a comment):
@@ -313,7 +313,7 @@ At this moment all functions required to run the seroincidence calculation are m
 can be checked by running:
 
 ```{r, eval=FALSE}
-# List all objects (functions and data) exposed by package "seroincidence".
+# List all objects (functions and data) exposed by package "serocalculator".
 ls("package:serocalculator")
 ```
 

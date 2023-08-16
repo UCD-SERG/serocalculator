@@ -4,7 +4,7 @@ serocalculator package
 ------------------------------------------------------------------------
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/UCD-SEG/serocalculator/workflows/R-CMD-check/badge.svg)](https://github.com/UCD-SEG/serocalculator/actions)
+[![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Antibody levels measured in a (cross–sectional) population sample can be

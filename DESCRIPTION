@@ -33,7 +33,7 @@ VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
 URL: https://github.com/UCD-SEG/serocalculator, https://ucd-seg.github.io/serocalculator/
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 NeedsCompilation: no
 LinkingTo: 
     Rcpp

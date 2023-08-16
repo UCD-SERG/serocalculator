@@ -39,7 +39,7 @@ for true seronegatives (i.e. those who never seroconverted), by named antibody t
 (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
 }
 \value{
-
+the log-likelihood of the data with the current parameter values
 }
 \description{
 Calculate log-likelihood

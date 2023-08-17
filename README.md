@@ -4,7 +4,7 @@ serocalculator package
 ------------------------------------------------------------------------
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/UCD-SEG/serocalculator/workflows/R-CMD-check/badge.svg)](https://github.com/UCD-SEG/serocalculator/actions)
+[![R-CMD-check](https://github.com/UCD-SERG/serocalculator/workflows/R-CMD-check/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions)
 <!-- badges: end -->
 
 Antibody levels measured in a (cross–sectional) population sample can be
@@ -25,5 +25,5 @@ You can install the development version from
 
 ``` r
 install.packages("devtools")
-devtools::install_github("ucd-seg/serocalculator")
+devtools::install_github("ucd-serg/serocalculator")
 ```

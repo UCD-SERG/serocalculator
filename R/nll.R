@@ -15,7 +15,7 @@
 #' @param start  starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
 #'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
 #'
-#' @return
+#' @return the log-likelihood of the data with the current parameter values
 .nll <- function(stratumData, antibodies, params, censorLimits, ivc = FALSE, m = 0, par0, start)
 {
   # Start with zero total

@@ -11,7 +11,7 @@ vignette: >
 This vignette provides users with an example analysis using the *serocalculator* package. Users will be able to determine the seroincidence of typhoid fever in the sample population using existing longitudinal antibody dynamics from ______, and a cross-sectional serosurvey from _____. 
 
 ##References
-
+(To be added)
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -21,7 +21,8 @@ knitr::opts_chunk$set(
 ```
 #Sample Analysis
 ## ##Load serocalculator package
-##Still in development as of 08/11/23
+##Still in development as of 09/01/23
+The first step in conducting this analysis is to load our necessary packages. Follow the installation instructions [add link] if you ahev not already installed *serocalculator*. 
 
 ```{r setup}
 
@@ -31,15 +32,27 @@ library(serocalculator)
 library(tidyverse)
 ```
 
-##Load longitudinal parameter mcmc data and prepare for model
+##Load data
+###Load longitudinal parameter mcmc data and prepare for model
+The next step is to load the longitudinal data modeled with Monte Carlo Markov Chain ____ (Add more here). 
+
+These data include the following variables...
+
+The code chunk below loads the data included in the *serocalculator* package. We then create two additional variables, *alpha* and *d*. *Alpha* is the ______ and *d* is the ______. Finally, we select only the variables needed for the analysis. 
 ```{r longdata}
-c.hlye.IgG <- readRDS("dmcmc_hlyeigg_09.30.rds") %>%
+c.hlye.IgG <- 
+  fs::path_package(                          
+  "extdata", 
+  "dmcmc_hlyeigg_09.30.rds", 
+  package = "serocalculator") |> 
+ readRDS()%>%
   mutate(alpha = alpha*365.25, 
          d = r-1) %>%
   select(y1, alpha, d) 
 ```
 
 ##Load simulated data (lambda = .2) and prepare for model
+The simulated data are assuming a force of infection (FOI, *lambda*) of 0.2. We have selected hlye and IgG as our target measures. From the original dataset, we rename our variables to ______. Finally, we once again limit the dataset to only the variables needed for the analysis. 
 ``` {r simdata}
 p.hlye.IgG  <- read_csv("simpophlyeigg.2.csv") %>%
   rename(y= y.smpl,
@@ -49,7 +62,7 @@ p.hlye.IgG  <- read_csv("simpophlyeigg.2.csv") %>%
 
 
 ## Conditions based on how i simulated the data
-
+Next, we must set conditions based on some assumptions and simulated data. (Add more here)
 ``` {r conditions}
 cond.hlye.IgG <- data.frame(nu = 1.027239,             # B noise
                             eps = 0.2,            # M noise
@@ -59,6 +72,9 @@ cond.hlye.IgG <- data.frame(nu = 1.027239,             # B noise
 
 
 ## Seroincidence estimation
+Finally, we are ready to begin seroincidence estimation. We define our starting value as 0.5, which will also define our initial estimate for lambda (FOI). Then we set up values for the confidence interval. 
+
+(Add explanation for each section below)
 ```{r seroinc}
 start <- .05
 
@@ -87,3 +103,4 @@ log.lambda.est <- c(exp(fit$estimate),
 
 log.lambda.est
 ```
+In our simulated data, we found that the estimated seroincidence of typhoid is ______. 

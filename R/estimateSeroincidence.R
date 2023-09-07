@@ -4,17 +4,17 @@
 #' response model.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional
-#'   columns to identify possible \code{strata}.
-#' @param antibodies Character vector with one or more antibody names. Values must match \code{data}.
-#' @param strata Character vector of strata. Values must match with \code{data}. Default = "".
+#'   columns to identify possible `strata`.
+#' @param antibodies Character vector with one or more antibody names. Values must match `data`.
+#' @param strata Character vector of strata. Values must match with `data`. Default = "".
 #' @param params List of data frames of all longitudinal parameters. Each data frame contains
 #'   Monte Carlo samples for each antibody type.
 #' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to
-#'   \code{data}).
+#'   `data`).
 #' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
 #'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
-#'   (corresponding to \code{data}).
-#' @param start A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
+#'   (corresponding to `data`).
+#' @param start A starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day
 #'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If
 #'   set to more than 1 and package \pkg{parallel} is available, then the computations are

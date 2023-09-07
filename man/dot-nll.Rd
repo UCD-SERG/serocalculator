@@ -27,9 +27,9 @@ Monte Carlo samples for each antibody type.}
 \item{censorLimits}{List of cutoffs for one or more named antibody types (corresponding to
 \code{stratumData}).}
 
-\item{ivc}{If `ivc = TRUE`, the biomarker data are interval-censored.}
+\item{ivc}{If \code{ivc = TRUE}, the biomarker data are interval-censored.}
 
-\item{m}{[not sure what this is]}
+\item{m}{\link{not sure what this is}}
 
 \item{par0}{List of parameters for the (lognormal) distribution of antibody concentrations
 for true seronegatives (i.e. those who never seroconverted), by named antibody type

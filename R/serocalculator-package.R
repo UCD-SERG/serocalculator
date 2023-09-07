@@ -14,9 +14,9 @@
 #' @details
 #' For detailed documentation type the following in the R console:
 #'
-#' \code{vignette("installation", package = "serocalculator")}
-#' \code{vignette("tutorial", package = "serocalculator")}
-#' \code{vignette("methodology", package = "serocalculator")}
+#' `vignette("installation", package = "serocalculator")`
+#' `vignette("tutorial", package = "serocalculator")`
+#' `vignette("methodology", package = "serocalculator")`
 #'
 #' @author
 #' Author: Peter Teunis \email{p.teunis@@emory.edu}
@@ -26,7 +26,7 @@
 #'
 #' @references
 #'
-#' \strong{\emph{Methods for estimating seroincidence}}
+#' ***Methods for estimating seroincidence***
 #'
 #' \itemize{
 #' \item Teunis, P. F., van Eijkeren, J. C., Ang, C. W., van Duynhoven, Y. T., Simonsen, J. B., Strid, M. A., van Pelt, W.
@@ -38,7 +38,7 @@
 #' Statistics in Medicine 28, no. 14 (June 30, 2009): 1882--95. doi:10.1002/sim.3592.
 #' }
 #'
-#' \strong{\emph{Applications}}
+#' ***Applications***
 #'
 #' \itemize{
 #'
@@ -72,7 +72,7 @@
 #' The Journal of Infection 53, no. 2 (August 1, 2006): 106--13. doi:10.1016/j.jinf.2005.10.020
 #' }
 #'
-#' \strong{\emph{Quantification of seroresponse}}
+#' ***Quantification of seroresponse***
 #'
 #' \itemize{
 #' \item de Graaf, W. F., Kretzschmar, M. E., Teunis, P. F., Diekmann, O.

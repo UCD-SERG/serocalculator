@@ -8,7 +8,7 @@
 #' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to
 #'   `stratumData`).
 #' @param ivc If `ivc = TRUE`, the biomarker data are interval-censored.
-#' @param m [not sure what this is]
+#' @param m this parameter's meaning is uncertain
 #' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
 #'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
 #'   (corresponding to `data`).

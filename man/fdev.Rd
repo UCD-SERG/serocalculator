@@ -16,5 +16,5 @@ fdev(log.lambda, csdata, lnpars, cond)
 \item{cond}{measurement noise parameters}
 }
 \description{
-\link{more description to be added here}
+more description to be added here
 }

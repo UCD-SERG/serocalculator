@@ -29,7 +29,7 @@ Monte Carlo samples for each antibody type.}
 
 \item{ivc}{If \code{ivc = TRUE}, the biomarker data are interval-censored.}
 
-\item{m}{\link{not sure what this is}}
+\item{m}{this parameter's meaning is uncertain}
 
 \item{par0}{List of parameters for the (lognormal) distribution of antibody concentrations
 for true seronegatives (i.e. those who never seroconverted), by named antibody type

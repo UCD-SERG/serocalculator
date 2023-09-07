@@ -8,7 +8,7 @@
 #' Estimating Infection Rates from Serological Data
 #'
 #' @description
-#' Translates antibody levels measured in a (cross-sectional) population sample into an
+#' This package translates antibody levels measured in a (cross-sectional) population sample into an
 #' estimate of the frequency with which seroconversions (infections) occur in the sampled population.
 #'
 #' @details
@@ -97,6 +97,7 @@
 #'
 
 ## usethis namespace: start
+#' @importFrom dplyr mutate
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end

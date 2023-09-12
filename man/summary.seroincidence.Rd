@@ -13,7 +13,7 @@
 )
 }
 \arguments{
-\item{object}{A dataframe containing output of function \code{\link{estimateSeroincidence}}.}
+\item{object}{A dataframe containing output of function \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 
@@ -24,27 +24,27 @@
 (-2*log(likelihood) at estimated seroincidence. Default = \code{TRUE}.}
 
 \item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
-help for \code{\link{optim}} for details). Default = \code{TRUE}.}
+help for \code{\link[=optim]{optim()}} for details). Default = \code{TRUE}.}
 }
 \value{
 A list with the following items:
 \describe{
 \item{\code{Results}}{Dataframe with maximum likelihood estimate of \code{lambda} (the
-  seroincidence) (column \code{Lambda}) and corresponding lower (\code{Lambda.lwr}) and upper
-  (\code{Lambda.upr} bounds.\cr
-  Optionally \code{Deviance} (Negative log likelihood (NLL) at estimated (maximum likelihood)
-  \code{lambda}) and \code{Covergence} (Convergence indicator returned by \code{\link{optim}}.
-  Value of 0 indicates convergence) columns are included.}
+seroincidence) (column \code{Lambda}) and corresponding lower (\code{Lambda.lwr}) and upper
+(\code{Lambda.upr} bounds.\cr
+Optionally \code{Deviance} (Negative log likelihood (NLL) at estimated (maximum likelihood)
+\code{lambda}) and \code{Covergence} (Convergence indicator returned by \code{\link[=optim]{optim()}}.
+Value of 0 indicates convergence) columns are included.}
 \item{\code{Antibodies}}{Character vector with names of input antibodies used in
-  \code{\link{estimateSeroincidence}}.}
-\item{\code{Strata}}{Character with names of strata used in \code{\link{estimateSeroincidence}}.}
+\code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
+\item{\code{Strata}}{Character with names of strata used in \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
 \item{\code{CensorLimits}}{List of cutoffs for each of the antibodies used in
-  \code{\link{estimateSeroincidence}}.}
+\code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
 }
 }
 \description{
 Calculate seroincidence from output of the seroincidence calculator
-\code{\link{estimateSeroincidence}}.
+\code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.
 }
 \examples{
 

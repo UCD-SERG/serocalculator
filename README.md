@@ -27,3 +27,21 @@ You can install the development version from
 install.packages("devtools")
 devtools::install_github("ucd-serg/serocalculator")
 ```
+
+**A Note for Windows Users**
+
+Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. 
+
+1. Download Rtools from https://cran.r-project.org/bin/windows/Rtools/
+2. Run the installer
+
+During the Rtools installation you may see a window asking you to “Select Additional Tasks”.
+
+Do *not* select the box for “Edit the system PATH”. devtools and RStudio should put Rtools on the PATH automatically when it is needed.
+Do select the box for “Save version information to registry”. It should be selected by default.
+
+## Getting Help
+
+If you need assistance or encounter a clear bug, please file an issue with a minimal reproducible example on [GitHub](https://github.com/UCD-SERG/serocalculator/issues). 
+
+Another great resource is **The Epidemiologist R Handbook**, which includes an introductory page on asking for help with R packages via GitHub: https://epirhandbook.com/en/getting-help.html 

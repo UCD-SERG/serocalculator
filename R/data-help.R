@@ -51,9 +51,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -80,9 +80,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -109,9 +109,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -138,9 +138,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 4000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 4000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 4000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -167,9 +167,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -196,9 +196,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -223,7 +223,7 @@ NULL
 #' pertussisIgGPTParams1
 #'
 #' @format
-#' A dataframe \code{IgG} containing 3000 rows with 7 parameters for IgG antibody.
+#' A dataframe `IgG` containing 3000 rows with 7 parameters for IgG antibody.
 #'
 #' @examples
 #'
@@ -247,7 +247,7 @@ NULL
 #' pertussisIgGPTParams2
 #'
 #' @format
-#' A dataframe \code{IgG} containing 3000 rows with 7 parameters for IgG antibody.
+#' A dataframe `IgG` containing 3000 rows with 7 parameters for IgG antibody.
 #'
 #' @examples
 #'
@@ -271,7 +271,7 @@ NULL
 #' pertussisIgGPTParams3
 #'
 #' @format
-#' A dataframe \code{IgG} containing 3000 rows with 7 parameters for IgG antibody.
+#' A dataframe `IgG` containing 3000 rows with 7 parameters for IgG antibody.
 #'
 #' @examples
 #'
@@ -295,7 +295,7 @@ NULL
 #' pertussisIgGPTParams4
 #'
 #' @format
-#' A dataframe \code{IgG} containing 3000 rows with 7 parameters for IgG antibody.
+#' A dataframe `IgG` containing 3000 rows with 7 parameters for IgG antibody.
 #'
 #' @examples
 #'
@@ -321,9 +321,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -350,9 +350,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples
@@ -379,9 +379,9 @@ NULL
 #' @format
 #' A list of three dataframes:
 #' \describe{
-#' \item{\code{IgA}}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
-#' \item{\code{IgM}}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
-#' \item{\code{IgG}}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
+#' \item{`IgA`}{A dataframe containing 3000 rows with 7 parameters for IgA antibody.}
+#' \item{`IgM`}{A dataframe containing 3000 rows with 7 parameters for IgM antibody.}
+#' \item{`IgG`}{A dataframe containing 3000 rows with 7 parameters for IgG antibody.}
 #' }
 #'
 #' @examples

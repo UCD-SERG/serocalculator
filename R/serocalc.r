@@ -2,13 +2,13 @@
 
 #' Calculate negative log-likelihood (deviance)
 #'
-#' [more description to be added here]
+#' more description to be added here
 #' @param log.lambda Initial guess of incidence rate
 #' @param csdata cross-sectional sample data
 #' @param lnpars longitudinal antibody decay model parameters
 #' @param cond measurement noise parameters
 #' @export
-#' @useDynLib serocalculator negloglik
+
 fdev <- function(log.lambda,csdata,lnpars,cond)
 {
   res <- 0; lambda <- as.double(exp(log.lambda));

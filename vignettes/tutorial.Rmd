@@ -1,20 +1,22 @@
 ---
 title: "Serocalculator package tutorial"
 author: "UC Davis SeroEpidemiology Group"
-date: '`r Sys.Date()`'
-output: 
+date: "`r Sys.Date()`"
+output:
   rmarkdown::html_vignette:
     toc: yes
+  html_document:
+    toc: yes
+    df_print: paged
   pdf_document:
     toc: yes
-header-includes:
-- \DeclareUnicodeCharacter{2010}{-}
+header-includes: "\\DeclareUnicodeCharacter{2010}{-}"
 references:
 - id: 1
   author:
   - family: de Graaf
     given: W. F.
-  - family: Kretzschmar 
+  - family: Kretzschmar
     given: M. E. E.
   - family: Teunis
     given: P. F. M.
@@ -25,9 +27,10 @@ references:
   issued:
     month: 12
     year: 2014
-  page: 1-7
-  title: 'A two-phase within-host model for immune response and its application to serological profiles of pertussis'
-  type: article-journal
+  page: "1-7"
+  title: "A two-phase within-host model for immune response and its application to
+    serological profiles of pertussis"
+  type: "article-journal"
   volume: 9
 - id: 2
   author:
@@ -49,9 +52,9 @@ references:
   issued:
     month: 6
     year: 2009
-  page: 1882-1895
-  title: 'Estimation of incidences of infectious diseases based on antibody measurements'
-  type: article-journal
+  page: "1882-1895"
+  title: Estimation of incidences of infectious diseases based on antibody measurements
+  type: "article-journal"
   volume: 28
 - id: 3
   author:
@@ -75,9 +78,9 @@ references:
   issued:
     month: 9
     year: 2012
-    page: 2240-2248
+    page: "2240-2248"
   title: 'Biomarker dynamics: estimating infection rates from serological data'
-  type: article-journal
+  type: "article-journal"
   volume: 31
 - id: 4
   author:
@@ -89,20 +92,21 @@ references:
     given: W. F.
   - family: Bonačić Marinović
     given: A.
-  - family: Kretzschmar 
-    given: M. E. E.    
+  - family: Kretzschmar
+    given: M. E. E.
   container-title: Epidemics
   DOI: 10.1016/j.epidem.2016.04.001
   issued:
     month: 9
     year: 2016
-    page: 33-39
-  title: 'Linking the seroresponse to infection to within-host heterogeneity in antibody production'
-  type: article-journal
+    page: "33-39"
+  title: "Linking the seroresponse to infection to within-host heterogeneity in antibody
+    production"
+  type: "article-journal"
   volume: 16
 - id: 5
   author:
-  - family: Strid 
+  - family: Strid
     given: M. A.
   - family: Engberg
     given: J.
@@ -114,20 +118,21 @@ references:
     given: K
   - family: Krogfelt
     given: K. A.
-  title: 'Antibody responses to Campylobacter infections determined by an enzyme--linked immunosorbent assay: 2-year follow-up study of 210 patients'
+  title: "Antibody responses to Campylobacter infections determined by an enzyme--linked
+    immunosorbent assay: 2-year follow-up study of 210 patients"
   container-title: Clinical and Vaccine Immunology
   issue: 8
   volume: 2
-  page: 314-319
+  page: "314-319"
   issued:
     year: 2001
     month: 3
-  DOI: 10.1128/CDLI.8.2.314-319.2001  
+  DOI: "10.1128/CDLI.8.2.314-319.2001"
 fontsize: 11pt
-vignette: >
-  %\VignetteIndexEntry{Serocalculator package tutorial}
-  %\VignetteEngine{knitr::rmarkdown}
+vignette: > 
+  %\VignetteIndexEntry{Serocalculator package tutorial}    
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 <script type="text/x-mathjax-config">
@@ -181,7 +186,7 @@ of the sero–incidence calculator script
 
 # 2. The seroincidence estimator
 
-Package **seroincidence** was designed to calculate incidence of seroconversion, by using the 
+Package **serocalculator** was designed to calculate incidence of seroconversion, by using the 
 longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a 
 cross–sectional population sample is calculated, as a function of the (longitudinal) seroresponse 
 and the frequency of seroconversion (or seroincidence). Given the seroresponse, this (marginal) 
@@ -245,7 +250,7 @@ The longitudinal seroresponses are considered generic: they represent the time c
 human serum antibodies against a (specific) pathogen. Therefore, with any cross–sectional sample of 
 the same antibodies in a human population, an incidence estimate can be calculated. 
 
-Given the longitudinal response characteristics, **seroincidence** R package provide a rapid and 
+Given the longitudinal response characteristics, **serocalculator** R package provide a rapid and 
 computationally simple method for calculating seroconversion rates, as published in [@3].
 
 The methods on which the seroincidence calculator is based were developed with publicly funded 
@@ -292,13 +297,13 @@ Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
 \end{footnotesize}
 \end{table}
 
-# 3. How to use *seroincidence* package
+# 3. How to use *serocalculator* package
 
-This section provides step-by-step directions on the usage of the *seroincidence* package.
+This section provides step-by-step directions on the usage of the *serocalculator* package.
 
 ## 3.1. Loading the package
 
-Functionality of the *seroincidence* package is made available to the end user only once the library 
+Functionality of the *serocalculator* package is made available to the end user only once the library 
 is loaded into the current workspace. Assuming the package is installed already (covered in 
 [installation.pdf](installation.pdf)) loading is achieved by running the following command in the R 
 console (bear in mind that the text after character `#` is only a comment):
@@ -313,7 +318,7 @@ At this moment all functions required to run the seroincidence calculation are m
 can be checked by running:
 
 ```{r, eval=FALSE}
-# List all objects (functions and data) exposed by package "seroincidence".
+# List all objects (functions and data) exposed by package "serocalculator".
 ls("package:serocalculator")
 ```
 

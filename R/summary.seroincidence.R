@@ -3,31 +3,31 @@
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
-#' \code{\link{estimateSeroincidence}}.
+#' [estimateSeroincidence()].
 #'
-#' @param object A dataframe containing output of function \code{\link{estimateSeroincidence}}.
+#' @param object A dataframe containing output of function [estimateSeroincidence()].
 #' @param ... Additional arguments affecting the summary produced.
 #' @param quantiles A vector of length 2 specifying quantiles for lower (first element) and upper
-#'   (second element) bounds of \code{lambda}. Default = \code{c(0.025, 0.975)}.
-#' @param showDeviance Logical flag (\code{FALSE}/\code{TRUE}) for reporting deviance
-#'   (-2*log(likelihood) at estimated seroincidence. Default = \code{TRUE}.
-#' @param showConvergence Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
-#'   help for \code{\link{optim}} for details). Default = \code{TRUE}.
+#'   (second element) bounds of `lambda`. Default = `c(0.025, 0.975)`.
+#' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
+#'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
+#' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
+#'   help for [optim()] for details). Default = `TRUE`.
 #'
 #' @return
 #' A list with the following items:
 #' \describe{
-#' \item{\code{Results}}{Dataframe with maximum likelihood estimate of \code{lambda} (the
-#'   seroincidence) (column \code{Lambda}) and corresponding lower (\code{Lambda.lwr}) and upper
-#'   (\code{Lambda.upr} bounds.\cr
-#'   Optionally \code{Deviance} (Negative log likelihood (NLL) at estimated (maximum likelihood)
-#'   \code{lambda}) and \code{Covergence} (Convergence indicator returned by \code{\link{optim}}.
+#' \item{`Results`}{Dataframe with maximum likelihood estimate of `lambda` (the
+#'   seroincidence) (column `Lambda`) and corresponding lower (`Lambda.lwr`) and upper
+#'   (`Lambda.upr` bounds.\cr
+#'   Optionally `Deviance` (Negative log likelihood (NLL) at estimated (maximum likelihood)
+#'   `lambda`) and `Covergence` (Convergence indicator returned by [optim()].
 #'   Value of 0 indicates convergence) columns are included.}
-#' \item{\code{Antibodies}}{Character vector with names of input antibodies used in
-#'   \code{\link{estimateSeroincidence}}.}
-#' \item{\code{Strata}}{Character with names of strata used in \code{\link{estimateSeroincidence}}.}
-#' \item{\code{CensorLimits}}{List of cutoffs for each of the antibodies used in
-#'   \code{\link{estimateSeroincidence}}.}
+#' \item{`Antibodies`}{Character vector with names of input antibodies used in
+#'   [estimateSeroincidence()].}
+#' \item{`Strata`}{Character with names of strata used in [estimateSeroincidence()].}
+#' \item{`CensorLimits`}{List of cutoffs for each of the antibodies used in
+#'   [estimateSeroincidence()].}
 #' }
 #'
 #' @examples

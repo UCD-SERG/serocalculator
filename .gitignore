@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.html
 inst/doc
 /doc/
 /Meta/

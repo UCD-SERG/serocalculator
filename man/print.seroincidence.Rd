@@ -7,12 +7,12 @@
 \method{print}{seroincidence}(x, ...)
 }
 \arguments{
-\item{x}{A list containing output of function \code{\link{estimateSeroincidence}}.}
+\item{x}{A list containing output of function \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \description{
-Custom \code{\link{print}} function to show output of the seroincidence calculator \code{\link{estimateSeroincidence}}.
+Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.
 }
 \examples{
 

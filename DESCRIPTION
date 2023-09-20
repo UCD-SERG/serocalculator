@@ -8,10 +8,9 @@ Authors@R: c(
   person(given = "Kristina", family = "Lai", role = c("aut")), 
   person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
   person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut", "cre")))
-Description: Translates antibody levels measured in a (cross-sectional)
-  population sample into an estimate of the frequency with which
-  seroconversions (infections) occur in the sampled population.
-  Forked from the "seroincidence" package v2.0.0 on CRAN (https://cran.r-project.org/web/packages/seroincidence/index.html)
+Description: Translates antibody levels measured in a cross-sectional population 
+  sample into an estimate of the frequency with which seroconversions (infections) 
+  occur in the sampled population. Forked from the "seroincidence" package v2.0.0 on CRAN.
 Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
@@ -36,3 +35,4 @@ NeedsCompilation: no
 LinkingTo: 
     Rcpp
 Language: en-US
+Roxygen: list(markdown = TRUE)

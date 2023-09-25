@@ -87,7 +87,7 @@ include_graphics("fig/RGui1.png")
 
 Since this is a new installation of R, the **serocalculator** package must be installed before first use. As of 09/20/2023, **serocalculator** is still in development. To install the development version, you must install the **devtools** package and then download **serocalculator** from GitHub. 
 
-``` {r echo = TRUE}
+```r
 install.packages("devtools")
 devtools::install_github("ucd-serg/serocalculator")
 ```

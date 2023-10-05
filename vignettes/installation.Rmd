@@ -39,9 +39,8 @@ can also be opened in other Graphical User Interfaces fo R like e.g.
 
 # 2. Installation steps
 
-R is a free software and can be downloaded from [http://cran.r-project.org/](http://cran.r-project.org/).
-Latest version as of writing this document is **R 3.5.0**. Once the appropriate, operating system 
-dependent, version is downloaded, install it on your computer following the standard procedure 
+R is a free software program and can be downloaded from [http://cran.r-project.org/](http://cran.r-project.org/).
+The latest stable-release version of R as of writing this document is **R 4.3.1**. After downloading the appropriate version for your computer's operating system, install R on your computer following the standard procedure 
 applicable to the operating system. For Windows the file to be downloaded is the so-called *base* 
 distribution: [http://cran.r-project.org/bin/windows/base/](http://cran.r-project.org/bin/windows/base/).
 

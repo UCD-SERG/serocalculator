@@ -5,9 +5,9 @@
 #'
 #' @param fileName Name of the file to download. Required.
 #' @param repoURL Web address of the remote repository of files to download from. Required.
-#'   Default = \code{"http://ecdc.europa.eu/sites/portal/files/documents"}
+#'   Default = `"http://ecdc.europa.eu/sites/portal/files/documents"`
 #' @param savePath Folder to save the downloaded and unzipped (if needed) file. File is saved only
-#'   if this argument is not \code{NULL}. Optional. Default = \code{NULL}.
+#'   if this argument is not `NULL`. Optional. Default = `NULL`.
 #'
 #' @return
 #' Data object

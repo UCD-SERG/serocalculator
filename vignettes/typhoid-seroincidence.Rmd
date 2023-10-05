@@ -54,9 +54,15 @@ c.hlye.IgG <-
 ##Load simulated data (lambda = .2) and prepare for model
 The simulated data are assuming a force of infection (FOI, *lambda*) of 0.2. We have selected hlye and IgG as our target measures. From the original dataset, we rename our variables to ______. Finally, we once again limit the dataset to only the variables needed for the analysis. 
 ``` {r simdata}
-p.hlye.IgG  <- read_csv("simpophlyeigg.2.csv") %>%
-  rename(y= y.smpl,
-         a = a.smpl) %>% 
+library(fs) # filesystem utility functions
+p.hlye.IgG  <- 
+  fs::path_package(
+    package = "serocalculator", 
+    "extdata/simpophlyeigg.2.csv") %>%
+  read_csv() %>%
+  rename(
+    y = y.smpl,
+    a = a.smpl) %>% 
   select(y, a)
 ```
 
@@ -64,10 +70,11 @@ p.hlye.IgG  <- read_csv("simpophlyeigg.2.csv") %>%
 ## Conditions based on how i simulated the data
 Next, we must set conditions based on some assumptions and simulated data. (Add more here)
 ``` {r conditions}
-cond.hlye.IgG <- data.frame(nu = 1.027239,             # B noise
-                            eps = 0.2,            # M noise
-                            y.low = 0.0,          # low cutoff
-                            y.high = 5e4); 
+cond.hlye.IgG <- data.frame(
+  nu = 1.027239,             # B noise
+  eps = 0.2,            # M noise
+  y.low = 0.0,          # low cutoff
+  y.high = 5e4); 
 ```
 
 

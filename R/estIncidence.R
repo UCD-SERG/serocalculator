@@ -51,11 +51,16 @@ incidence.age <- function(dpop, c.age, antigen_iso, start=.1){
     select(y1, alpha, d)
 
 
-  objfunc <- function(llam){
-    # add terms, e.g. for other antibodies
-    res <-
-      fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG) +
-      fdev(llam, p.hlye.IgA, c.hlye.IgA, cond.hlye.IgA)
+
+  if(length(antigen_iso)==2){
+
+    objfunc <- function(llam){
+      # add terms, e.g. for other antibodies
+      res <-
+        fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG) +
+        fdev(llam, p.hlye.IgA, c.hlye.IgA, cond.hlye.IgA)
+    }
+  } else{
 
 
   }

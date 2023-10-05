@@ -74,10 +74,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Serocalculator package installation manual</h1>
-                        <h4 data-toc-skip class="author">European Centre
-for Disease Prevention and Control (ECDC)</h4>
+                        <h4 data-toc-skip class="author">UC Davis
+Seroepidemiology Research Group (SERG)</h4>
             
-            <h4 data-toc-skip class="date">2023-09-20</h4>
+            <h4 data-toc-skip class="date">2023-10-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/HEAD/vignettes/installation.Rmd" class="external-link"><code>vignettes/installation.Rmd</code></a></small>
       <div class="d-none name"><code>installation.Rmd</code></div>
@@ -94,13 +94,13 @@ language R and end user must have access to a working installation of R
 engine. This document describes the most common setup with R installed
 locally on the user’s computer. The screenshots refer to the classical R
 interface, but the package can also be opened in other Graphical User
-Interfaces fo R like e.g.  <a href="http://www.rstudio.com/products/RStudio/" class="external-link">RStudio</a>.</p>
+Interfaces for R like e.g.  <a href="http://www.rstudio.com/products/RStudio/" class="external-link">RStudio</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation-steps">2. Installation steps<a class="anchor" aria-label="anchor" href="#installation-steps"></a>
 </h2>
 <p>R is a free software and can be downloaded from <a href="http://cran.r-project.org/" class="external-link">http://cran.r-project.org/</a>. Latest
-version as of writing this document is <strong>R 3.5.0</strong>. Once
+version as of writing this document is <strong>R 4.3.1</strong>. Once
 the appropriate, operating system dependent, version is downloaded,
 install it on your computer following the standard procedure applicable
 to the operating system. For Windows the file to be downloaded is the
@@ -135,59 +135,13 @@ for R interpreter will start in a new window:</p>
 </h3>
 <p>Since this is a new installation of R, the
 <strong>serocalculator</strong> package must be installed before first
-use. The package can be installed either through a menu option in the
-graphical user interface (GUI) or with a command executed in the R
-console. Both options are presented:</p>
-<div class="section level4">
-<h4 id="package-installation-from-the-graphical-user-interface">2.2.1. Package installation from the graphical user interface<a class="anchor" aria-label="anchor" href="#package-installation-from-the-graphical-user-interface"></a>
-</h4>
-<p>Download the serocalculator package from ECDC website: <a href="https://github.com/UCD-SERG/serocalculator,https://ucd-serg.github.io/serocalculator/">https://github.com/UCD-SERG/serocalculator,https://ucd-serg.github.io/serocalculator/</a>.
-Two versions of the package are made available:</p>
-<ul>
-<li>binary package (serocalculator_[version].zip) - Microsoft Windows
-compatible</li>
-<li>Source package (serocalculator_[version].tar.gz) - cross-platform
-compatible (MS Windows, Linux, MacOS)</li>
-</ul>
-<p>If your operating system is Windows then it is best to download the
-Windows binary package.</p>
-<p>Go to menu <em>Packages</em> and select command <em>Install
-package(s) from local files…</em>:</p>
-<p><img src="fig/RGui2.png" style="display: block; margin: auto;"></p>
-<p>Select the package file and click “Open”:</p>
-<p><img src="fig/RGui3.png" style="display: block; margin: auto;"></p>
-<p>Post-installation message should appear:</p>
-<p><img src="fig/RGui4.png" style="display: block; margin: auto;"></p>
-<p>The package is now installed in R.</p>
-</div>
-<div class="section level4">
-<h4 id="package-installation-from-r-console">2.2.2. Package installation from R console<a class="anchor" aria-label="anchor" href="#package-installation-from-r-console"></a>
-</h4>
-<p>Alternatively, installation of the package can also be performed by
-executing one of the following commands in the <em>R console</em>:</p>
+use. As of 09/20/2023, <strong>serocalculator</strong> is still in
+development. To install the development version, you must install the
+<strong>devtools</strong> package and then download
+<strong>serocalculator</strong> from GitHub.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># OPTION A</span></span>
-<span><span class="co"># Install Windows binary package "serocalculator" directly from internet ECDC website:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
-<span>    pkgs <span class="op">=</span> <span class="st">"http://ecdc.europa.eu/en/data-tools/seroincidence-calculator-tool/Documents/</span></span>
-<span><span class="st">                serocalculator_0.1.0.9000.zip"</span>,</span>
-<span>    repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"win.binary"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># OPTION B</span></span>
-<span><span class="co"># Install source package directly from internet CRAN repository:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># OPTION C</span></span>
-<span><span class="co"># Install Windows binary package from a local file:</span></span>
-<span><span class="co">#   install.packages("[PATH/TO/FILE/]serocalculator_[version].zip", </span></span>
-<span><span class="co">#                       repos = NULL, type = "win.binary")</span></span>
-<span><span class="co"># For instance:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"C:/serocalculator_0.1.0.9000.zip"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"win.binary"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># OPTION D</span></span>
-<span><span class="co"># Install source package from a local file:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"C:/serocalculator_0.1.0.9000.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
-</div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ucd-serg/serocalculator"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -240,12 +194,12 @@ following commands:</p>
 <span><span class="co">## LinkingTo: Rcpp</span></span>
 <span><span class="co">## Language: en-US</span></span>
 <span><span class="co">## Roxygen: list(markdown = TRUE)</span></span>
-<span><span class="co">## Packaged: 2023-09-20 22:10:26 UTC; runner</span></span>
+<span><span class="co">## Packaged: 2023-10-05 19:56:23 UTC; runner</span></span>
 <span><span class="co">## Author: Peter Teunis [aut, cph] (Author of the method and original</span></span>
 <span><span class="co">##         code.), Kristina Lai [aut], Kristen Aiemjoy [aut], Douglas Ezra</span></span>
 <span><span class="co">##         Morrison [aut, cre]</span></span>
 <span><span class="co">## Maintainer: Douglas Ezra Morrison &lt;demorrison@ucdavis.edu&gt;</span></span>
-<span><span class="co">## Built: R 4.3.1; x86_64-pc-linux-gnu; 2023-09-20 22:10:27 UTC; unix</span></span>
+<span><span class="co">## Built: R 4.3.1; x86_64-pc-linux-gnu; 2023-10-05 19:56:25 UTC; unix</span></span>
 <span><span class="co">## RemotePkgRef: local::.</span></span>
 <span><span class="co">## RemoteType: local</span></span>
 <span><span class="co">## </span></span>

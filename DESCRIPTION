@@ -15,8 +15,11 @@ Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
     dplyr,
+    magrittr,
     Rcpp,
+    rlang,
     stats,
+    tidyr,
     utils
 Suggests: 
     knitr,

@@ -30,7 +30,7 @@ devtools::install_github("ucd-serg/serocalculator")
 
 **A Note for Windows Users**
 
-Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. 
+Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development.
 
 1. Download Rtools from https://cran.r-project.org/bin/windows/Rtools/
 2. Run the installer

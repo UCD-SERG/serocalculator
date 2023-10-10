@@ -6,7 +6,7 @@
 \alias{serocalculator-package}
 \title{Estimating Infection Rates from Serological Data}
 \description{
-Translates antibody levels measured in a (cross-sectional) population sample into an
+This package translates antibody levels measured in a (cross-sectional) population sample into an
 estimate of the frequency with which seroconversions (infections) occur in the sampled population.
 }
 \details{
@@ -17,7 +17,7 @@ For detailed documentation type the following in the R console:
 \code{vignette("methodology", package = "serocalculator")}
 }
 \references{
-\strong{\emph{Methods for estimating seroincidence}}
+\emph{\strong{Methods for estimating seroincidence}}
 
 \itemize{
 \item Teunis, P. F., van Eijkeren, J. C., Ang, C. W., van Duynhoven, Y. T., Simonsen, J. B., Strid, M. A., van Pelt, W.
@@ -29,7 +29,7 @@ Statistics in Medicine 31, no. 20 (September 9, 2012): 2240--48. doi:10.1002/sim
 Statistics in Medicine 28, no. 14 (June 30, 2009): 1882--95. doi:10.1002/sim.3592.
 }
 
-\strong{\emph{Applications}}
+\emph{\strong{Applications}}
 
 \itemize{
 
@@ -63,7 +63,7 @@ Epidemiology and Infection 141, no. 10 (2013): 2051--57. doi:10.1017/S0950268812
 The Journal of Infection 53, no. 2 (August 1, 2006): 106--13. doi:10.1016/j.jinf.2005.10.020
 }
 
-\strong{\emph{Quantification of seroresponse}}
+\emph{\strong{Quantification of seroresponse}}
 
 \itemize{
 \item de Graaf, W. F., Kretzschmar, M. E., Teunis, P. F., Diekmann, O.

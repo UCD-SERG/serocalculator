@@ -2,9 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+.html
 inst/doc
 /doc/
 /Meta/
 docs
 src-i386
 src-x64
+..Rcheck

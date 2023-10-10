@@ -2,9 +2,9 @@
 #' Print Method for Seroincidence Object
 #'
 #' @description
-#' Custom \code{\link{print}} function to show output of the seroincidence calculator \code{\link{estimateSeroincidence}}.
+#' Custom [print()] function to show output of the seroincidence calculator [estimateSeroincidence()].
 #'
-#' @param x A list containing output of function \code{\link{estimateSeroincidence}}.
+#' @param x A list containing output of function [estimateSeroincidence()].
 #' @param ... Additional arguments affecting the summary produced.
 #'
 #' @examples

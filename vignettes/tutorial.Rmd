@@ -289,36 +289,6 @@ Table: (\#tab:model-variants-available) Models variants available by pathogen, a
 | *Bordetella pertussis*  | IgG-PT   | IU                | *| *| *| *|
 
 
-\begin{table}[!h]
-\centering
-\caption{Model variants}
-\vspace{0.3cm}
-\begin{footnotesize}
-\begin{tabular}{ccc}
- & Time to & Decay\\
-Model & Seroconversion ($t_{1}$) & parameter ($r$)\\
-1 & 0 & 1\\
-2 & 0 & $> 1$\\
-3 & $> 0$ & 1\\
-4 & $> 0$ & $> 1$\\
-\end{tabular}
-\begin{tabular}{lllcccc}
- & & & \multicolumn{4}{c}{Model}\\
-Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
-{\em Campylobacter jejuni} & IgG & ELISA (Delft) & * & & * & * \\
- & IgM & ELISA (Delft) & * & & * & * \\
- & IgA & ELISA (Delft) & * & & * & * \\
- & IgG & ELISA (SSI)   & * & * & & * \\
- & IgM & ELISA (SSI)   & * & * & & * \\
- & IgA & ELISA (SSI)   & * & * & & * \\ \hline
-{\em Salmonella} & IgG & mixed ELISA (SSI) & * & * & & * \\
- & IgM & mixed ELISA (SSI) & * & * & & * \\
- & IgA & mixed ELISA (SSI) & * & * & & * \\ \hline
-{\em Bordetella pertussis} & IgG-PT & IU    & * & * & * & * \\ \hline
-\end{tabular}
-\end{footnotesize}
-\end{table}
-
 # How to use *serocalculator* package
 
 This section provides step-by-step directions on the usage of the *serocalculator* package.

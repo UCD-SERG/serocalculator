@@ -2,7 +2,9 @@
 title: "Serocalculator package tutorial"
 author: "UC Davis SeroEpidemiology Group"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
 header-includes: "\\DeclareUnicodeCharacter{2010}{-}"
 bibliography: ../references.bib
 fontsize: 11pt

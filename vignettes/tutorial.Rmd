@@ -3,13 +3,9 @@ title: "Serocalculator package tutorial"
 author: "UC Davis SeroEpidemiology Group"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    toc: yes
-  html_document:
-    toc: yes
-    df_print: paged
-  pdf_document:
-    toc: yes
+  bookdown::html_document2:
+      base_format: rmarkdown::html_vignette
+      toc: true
 header-includes: "\\DeclareUnicodeCharacter{2010}{-}"
 references:
 - id: 1
@@ -148,7 +144,7 @@ pkgUrl <- gsub("\n", "", packageDescription(pkgName)$URL)
 
 \newpage
 
-# 1. Introduction
+# Introduction
 
 Antibody levels measured in a (cross–sectional) population sample can be translated into an estimate 
 of the frequency with which seroconversions (infections) occur in the sampled population. In simple 
@@ -184,7 +180,7 @@ presumably describing a physiological phenomenon that is similiar in any infecte
 (3) setting up and running the longitudinal model requires additional skills, not necessary for use 
 of the sero–incidence calculator script
 
-# 2. The seroincidence estimator
+# The seroincidence estimator
 
 Package **serocalculator** was designed to calculate incidence of seroconversion, by using the 
 longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a 
@@ -193,7 +189,7 @@ and the frequency of seroconversion (or seroincidence). Given the seroresponse, 
 distribution of antibody concentrations can be fitted to the cross-sectional data, by adjusting the 
 seroconversion frequency, thus providing a means to estimate the seroconversion frequency.
 
-## 2.1 Time course of serum antibodies
+## Time course of serum antibodies
 
 The seroresponse, the time course of serum antibodies following seroconversion (infection) is 
 described by means of a set of parameters describing it. These parameters may include:
@@ -218,7 +214,7 @@ Antibody decay in the serum compartment may start fast and slow down later, resu
 non–exponential decay. In [@4] this is modelled using a shape parameter, allowing gradual adjustment 
 between exponential (log–linear) and strongly non–exponential decay.
 
-## 2.2 Heterogenity
+## Heterogenity
 
 The five parameters describing the seroresponse (in round brackets names of corresponding 
 parameters used in the package, see [section 3.2.2](#longParams) for details): baseline antibody 
@@ -244,7 +240,7 @@ incidence estimates will show minor variations: if the same calculation is run t
 may differ slightly. If this variation should be smaller, the size of the Monte Carlo sample may be 
 increased. This however will slow down the calculations.
 
-## 2.3 Incidence estimation
+## Incidence estimation
 
 The longitudinal seroresponses are considered generic: they represent the time course of (specific) 
 human serum antibodies against a (specific) pathogen. Therefore, with any cross–sectional sample of 
@@ -259,13 +255,39 @@ script on which the seroincidence calculator is based. To make the functionaliti
 broadly available as possible, R was chosen as the computing platform, because it is free and open 
 source, and runs on any modern computer operating system.
 
-## 2.4 Model variants
+## Model variants
 
 The package contains longitudinal models for seroincidence calculations. Four model variants are 
 possible, depending on whether seroconversion is instantaneous ($t_{1} = 0$) or not ($t_{1} > 0$), 
 and whether decay is exponential ($r = 1$) or proceeds as a power function ($r > 1$). Power function 
 decay allows for rapid inital decay followed by a sustained period of very slow decay [@4]. 
-Available model variants are described in Table 1.
+Available model variants are described in Table \@ref(tab:model-variants) and Table \@ref(tab:model-variants-available).
+
+Table: (\#tab:model-variants) Model variants 
+
+|Model | Time to<br>Seroconversion<br>($t_{1}$) | Decay<br>parameter<br>($r$) |
+|-------|-------|-----|
+| 1     | 0     | 1   |
+| 2     | 0     | > 1 |
+| 3     | > 0   | 1   |
+| 4     | > 0   | > 1 |
+
+Table: (\#tab:model-variants-available) Models variants available by pathogen, antibody, and units:
+
+
+| Pathogen                | Antibody | Units             | 1| 2| 3| 4|
+|-------------------------|----------|-------------------|--|--|--|--|
+| *Campylobacter jejuni*  | IgG      | ELISA (Delft)     | *|  | *| *|
+|                         | IgM      | ELISA (Delft)     | *|  | *| *|
+|                         | IgA      | ELISA (Delft)     | *|  | *| *|
+|                         | IgG      | ELISA (SSI)       | *| *|  | *|
+|                         | IgM      | ELISA (SSI)       | *| *|  | *|
+|                         | IgA      | ELISA (SSI)       | *| *|  | *|
+| *Salmonella*            | IgG      | mixed ELISA (SSI) | *| *|  | *|
+|                         | IgM      | mixed ELISA (SSI) | *| *|  | *|
+|                         | IgA      | mixed ELISA (SSI) | *| *|  | *|
+| *Bordetella pertussis*  | IgG-PT   | IU                | *| *| *| *|
+
 
 \begin{table}[!h]
 \centering
@@ -297,11 +319,11 @@ Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
 \end{footnotesize}
 \end{table}
 
-# 3. How to use *serocalculator* package
+# How to use *serocalculator* package
 
 This section provides step-by-step directions on the usage of the *serocalculator* package.
 
-## 3.1. Loading the package
+## Loading the package
 
 Functionality of the *serocalculator* package is made available to the end user only once the library 
 is loaded into the current workspace. Assuming the package is installed already (covered in 
@@ -341,7 +363,7 @@ parameters from an online repository. Files available for download are `coxiella
 d) `estimateSeroincidence`: Main function of the package. Estimates seroincidence based on supplied 
 cross-section antibody levels data and longitudinal response parameters. Object class: `function`.
 
-## 3.2. Specifying input data
+## Specifying input data
 
 There are two sets of inputs to the serology calculator that must always be specified:
 
@@ -352,7 +374,7 @@ b) Longitudinal response characteristic as set of parameters `(y1, alpha, yb, r,
 
 We start with loading antibody levels measured in cross-sectional population sample.
 
-### 3.2.1. Specifying cross-sectional antibody levels data
+### Specifying cross-sectional antibody levels data
 
 The user has a few options of providing this data to the calculator:
 
@@ -418,7 +440,7 @@ Then it can be loaded into R like this:
 serologyData <- read.csv(file = "C:\\cross-sectional-data.csv")
 ```
 
-### 3.2.2. Specifying longitudinal response parameters {#longParams}
+### Specifying longitudinal response parameters {#longParams}
 
 The longitudinal response parameters set consists of the following items:
 
@@ -493,7 +515,7 @@ responseParams <- getAdditionalData("coxiellaIFAParams4.zip")
 
 Internet connection is needed for this function to work.
 
-## 3.3. Estimating seroincidence
+## Estimating seroincidence
 
 Main calculation function provided by package *serocalculator* is called `estimateSeroincidence`.
 It takes several arguments:
@@ -595,7 +617,7 @@ estimates of lambda to decrease. Results should be published together with the c
 values. The cut-off level of `0.1` set in the example above is a typical value, but users should set 
 it to value reflecting the censoring level in the data.
 
-## 3.4. Getting a summary of seroincidence
+## Getting a summary of seroincidence
 
 Output of the calculator should be passed in to function `summary` calculating output results:
 
@@ -669,7 +691,7 @@ seroincidenceSummary$Results
 As one may note it is a dataframe with six columns that can be later post-processed with custom 
 calculations.
 
-# 4. Other examples
+# Other examples
 
 The following examples show the standard procedure for estimating seroincidence.
 

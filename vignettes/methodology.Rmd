@@ -3,9 +3,9 @@ title: "Serocalculator package methodology"
 author: "European Centre for Disease Prevention and Control (ECDC)"
 date: '`r Sys.Date()`'
 output: 
-  rmarkdown::html_vignette:
-    toc: yes
   pdf_document:
+    toc: yes
+  rmarkdown::html_vignette:
     toc: yes
 header-includes:
 - \usepackage{subfigure}
@@ -141,8 +141,8 @@ references:
 fontsize: 11pt
 vignette: >
   %\VignetteIndexEntry{Serocalculator package methodology}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 <script type="text/x-mathjax-config">

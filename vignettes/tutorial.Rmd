@@ -144,17 +144,17 @@ source, and runs on any modern computer operating system.
 The package contains longitudinal models for seroincidence calculations. Four model variants are 
 possible, depending on whether seroconversion is instantaneous ($t_{1} = 0$) or not ($t_{1} > 0$), 
 and whether decay is exponential ($r = 1$) or proceeds as a power function ($r > 1$). Power function 
-decay allows for rapid inital decay followed by a sustained period of very slow decay [@4]. 
+decay allows for rapid inital decay followed by a sustained period of very slow decay [@Teunis_2016]. 
 Available model variants are described in Table \@ref(tab:model-variants) and Table \@ref(tab:model-variants-available).
 
 Table: (\#tab:model-variants) Model variants 
 
 |Model | Time to<br>Seroconversion<br>($t_{1}$) | Decay<br>parameter<br>($r$) |
-|-------|-------|-----|
-| 1     | 0     | 1   |
-| 2     | 0     | > 1 |
-| 3     | > 0   | 1   |
-| 4     | > 0   | > 1 |
+|:-:|:---:|:---:|
+| 1 | = 0 | = 1 |
+| 2 | = 0 | > 1 |
+| 3 | > 0 | = 1 |
+| 4 | > 0 | > 1 |
 
 Table: (\#tab:model-variants-available) Models variants available by pathogen, antibody, and units:
 
@@ -180,25 +180,23 @@ This section provides step-by-step directions on the usage of the *serocalculato
 ## Loading the package
 
 Functionality of the *serocalculator* package is made available to the end user only once the library 
-is loaded into the current workspace. Assuming the package is installed already (covered in 
-[installation.pdf](installation.pdf)) loading is achieved by running the following command in the R 
-console (bear in mind that the text after character `#` is only a comment):
+is loaded into the current workspace. Assuming the package is installed already^[covered in 
+`vignette("installation", package = "serocalculator")`], loading is achieved by running the following command in the R 
+console^[lines of code beginning with the symbol `#` are comments, which do not do anything]:
 
 ```{r}
 # Load package "seroincidence"
 library(serocalculator)
-library(dplyr)
 ```
 
-At this moment all functions required to run the seroincidence calculation are made available. It 
-can be checked by running:
+At this moment all functions required to run the seroincidence calculation are made available. You can check that the package loaded correctly by running:
 
 ```{r, eval=FALSE}
 # List all objects (functions and data) exposed by package "serocalculator".
 ls("package:serocalculator")
 ```
 
-Here is the resulting output:
+If the package is correctly installed and loaded, the output of `ls("package:serocalculator")` will be:
 
 ```{r, echo=FALSE}
 ls("package:serocalculator")
@@ -243,8 +241,10 @@ can be referenced right away. Here is a small exempt from this data set:
 head(campylobacterSimMediumData, 3)
 ```
 
-Let us create the serology data `serologyData` based on this data set:
-```{r}
+Let us create the serology data `serologyData` based on this data set, using the `mutate()` function from the `dplyr` package^[you may need to install `dplyr`, e.g. with `install.packages("dplyr")`]:
+
+```{r, message=FALSE}
+library(dplyr)
 # Assign data.frame "campylobacterDelftData" to object named "serologyData".
 serologyData <- campylobacterSimMediumData |> 
   mutate(AgeCat = cut(Age, 15, labels = FALSE))

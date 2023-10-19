@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: yes
+    number-sections: yes
 header-includes: "\\DeclareUnicodeCharacter{2010}{-}"
 bibliography: ../references.bib
 fontsize: 11pt
@@ -82,9 +83,9 @@ b) time to reach peak antibody concentration,
 c) magnitude of the peak concentration, and 
 d) antibody decay parameters describing the time course (shape and rate) of antibody decay. 
 
-A model description that is used for the serocalculator is described in [@Simonsen_2009; @Teunis_2012]. An alternative 
+A model description that is used for the serocalculator is described in @Simonsen_2009 and @Teunis_2012. An alternative 
 model, simplified but with improved interpretation of the underlying biological mechanisms, is given 
-in [@de_Graaf_2014] and further improved in [@Teunis_2016]. 
+in @de_Graaf_2014 and further improved in @Teunis_2016. 
 
 The current model assumes that upon exposure to an initial inoculum, pathogen concentrations 
 increase exponentially. Presence of pathogens (antigen presented to the immune system) signals an 
@@ -94,13 +95,13 @@ causes inactivation or die–off of pathogens, with a rate proportional to the s
 concentration. Ultimately, when all pathogens are removed, infection is over and the promotion of 
 antibody production stops. Then the decay phase starts, and serum antibody concentrations decrease. 
 Antibody decay in the serum compartment may start fast and slow down later, resulting in 
-non–exponential decay. In [@Teunis_2016] this is modelled using a shape parameter, allowing gradual adjustment 
+non–exponential decay. In @Teunis_2016 this is modelled using a shape parameter, allowing gradual adjustment 
 between exponential (log–linear) and strongly non–exponential decay.
 
 ## Heterogenity
 
 The five parameters describing the seroresponse (in round brackets names of corresponding 
-parameters used in the package, see [section 3.2.2](#longParams) for details): baseline antibody 
+parameters used in the package, see @sec-longParams for details): baseline antibody 
 concentration (`y0` and `yb`), time to peak (`t1`), peak antibody concentration (`y1`), decay rate 
 (`alpha`) and shape factor of the decay curve (`r`) are not fixed numbers. In a population of 
 subjects, individuals each have their own seroresponse, different from those of other subjects. 
@@ -298,7 +299,7 @@ Then it can be loaded into R like this:
 serologyData <- read.csv(file = "C:\\cross-sectional-data.csv")
 ```
 
-### Specifying longitudinal response parameters {#longParams}
+### Specifying longitudinal response parameters {#sec-longParams}
 
 The longitudinal response parameters set consists of the following items:
 

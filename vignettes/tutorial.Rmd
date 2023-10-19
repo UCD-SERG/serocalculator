@@ -2,7 +2,6 @@
 title: "Serocalculator package tutorial"
 author: "UC Davis SeroEpidemiology Group"
 date: "`r Sys.Date()`"
-output: 
   bookdown::html_document2:
       base_format: rmarkdown::html_vignette
       toc: true
@@ -144,39 +143,34 @@ source, and runs on any modern computer operating system.
 The package contains longitudinal models for seroincidence calculations. Four model variants are 
 possible, depending on whether seroconversion is instantaneous ($t_{1} = 0$) or not ($t_{1} > 0$), 
 and whether decay is exponential ($r = 1$) or proceeds as a power function ($r > 1$). Power function 
-decay allows for rapid inital decay followed by a sustained period of very slow decay [@Teunis_2016]. 
+decay allows for rapid inital decay followed by a sustained period of very slow decay [@4]. 
+Available model variants are described in Table \@ref(tab:model-variants) and Table \@ref(tab:model-variants-available).
 
-Available model variants are described in Table 1.
+Table: (\#tab:model-variants) Model variants 
 
-\begin{table}[!h]
-\centering
-\caption{Model variants}
-\vspace{0.3cm}
-\begin{footnotesize}
-\begin{tabular}{ccc}
- & Time to & Decay\\
-Model & Seroconversion ($t_{1}$) & parameter ($r$)\\
-1 & 0 & 1\\
-2 & 0 & $> 1$\\
-3 & $> 0$ & 1\\
-4 & $> 0$ & $> 1$\\
-\end{tabular}
-\begin{tabular}{lllcccc}
- & & & \multicolumn{4}{c}{Model}\\
-Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
-{\em Campylobacter jejuni} & IgG & ELISA (Delft) & * & & * & * \\
- & IgM & ELISA (Delft) & * & & * & * \\
- & IgA & ELISA (Delft) & * & & * & * \\
- & IgG & ELISA (SSI)   & * & * & & * \\
- & IgM & ELISA (SSI)   & * & * & & * \\
- & IgA & ELISA (SSI)   & * & * & & * \\ \hline
-{\em Salmonella} & IgG & mixed ELISA (SSI) & * & * & & * \\
- & IgM & mixed ELISA (SSI) & * & * & & * \\
- & IgA & mixed ELISA (SSI) & * & * & & * \\ \hline
-{\em Bordetella pertussis} & IgG-PT & IU    & * & * & * & * \\ \hline
-\end{tabular}
-\end{footnotesize}
-\end{table}
+|Model | Time to<br>Seroconversion<br>($t_{1}$) | Decay<br>parameter<br>($r$) |
+|-------|-------|-----|
+| 1     | 0     | 1   |
+| 2     | 0     | > 1 |
+| 3     | > 0   | 1   |
+| 4     | > 0   | > 1 |
+
+Table: (\#tab:model-variants-available) Models variants available by pathogen, antibody, and units:
+
+
+| Pathogen                | Antibody | Units             | 1| 2| 3| 4|
+|-------------------------|----------|-------------------|--|--|--|--|
+| *Campylobacter jejuni*  | IgG      | ELISA (Delft)     | *|  | *| *|
+|                         | IgM      | ELISA (Delft)     | *|  | *| *|
+|                         | IgA      | ELISA (Delft)     | *|  | *| *|
+|                         | IgG      | ELISA (SSI)       | *| *|  | *|
+|                         | IgM      | ELISA (SSI)       | *| *|  | *|
+|                         | IgA      | ELISA (SSI)       | *| *|  | *|
+| *Salmonella*            | IgG      | mixed ELISA (SSI) | *| *|  | *|
+|                         | IgM      | mixed ELISA (SSI) | *| *|  | *|
+|                         | IgA      | mixed ELISA (SSI) | *| *|  | *|
+| *Bordetella pertussis*  | IgG-PT   | IU                | *| *| *| *|
+
 
 # How to use *serocalculator* package
 

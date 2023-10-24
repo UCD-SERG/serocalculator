@@ -113,7 +113,7 @@ estimateSeroincidence <- function(
                         Antibodies = antibodies,
                         Strata = strata,
                         CensorLimits = censorLimits)
-  class(incidenceData) <- c("seroincidence", "list")
+  class(incidenceData) <- c("seroincidence",  class(incidenceData))
 
   return(incidenceData)
 }

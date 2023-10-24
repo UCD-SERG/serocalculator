@@ -27,7 +27,7 @@ MathJax.Hub.Config({
 
 # Introduction
 
-The revised seroincidence calculator package provides three refinements to the method for 
+The `serocalculator` package provides three refinements to the method for 
 calculating seroincidence published earlier [@Teunis_2012] and implemented in R package
 **seroincidence**, versions 1.x: (1) inclusion of infection episode with rising antibody levels, (2) 
 non--exponential decay of serum antibodies after infection, and (3) age--dependent correction for 
@@ -38,7 +38,7 @@ seroresponses of arbitrary shape.
 
 # 1. A simple model for the seroresponse
 
-The current version of the serocalculator package uses the model of [@Teunis_2016] for 
+The current version of the serocalculator package uses the model proposed in @Teunis_2016 for 
 the shape of the seroresponse:
 $$
 \begin{array}{l@{\qquad}l}

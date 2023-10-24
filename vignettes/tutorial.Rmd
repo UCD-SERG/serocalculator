@@ -81,7 +81,7 @@ described by means of a set of parameters describing it. These parameters may in
 a) baseline antibody concentration, 
 b) time to reach peak antibody concentration, 
 c) magnitude of the peak concentration, and 
-d) antibody decay parameters describing the time course (shape and rate) of antibody decay. 
+d) antibody decay parameters describing the time course (shape and rate) of antibody decay.
 
 A model description that is used for the serocalculator is described in @Simonsen_2009 and @Teunis_2012. An alternative 
 model, simplified but with improved interpretation of the underlying biological mechanisms, is given 
@@ -98,12 +98,17 @@ Antibody decay in the serum compartment may start fast and slow down later, resu
 non–exponential decay. In @Teunis_2016 this is modelled using a shape parameter, allowing gradual adjustment 
 between exponential (log–linear) and strongly non–exponential decay.
 
-## Heterogenity
+## Heterogeneity
 
-The five parameters describing the seroresponse (in round brackets names of corresponding 
-parameters used in the package, see Section \@ref(longParams) for details): baseline antibody 
-concentration (`y0` and `yb`), time to peak (`t1`), peak antibody concentration (`y1`), decay rate 
-(`alpha`) and shape factor of the decay curve (`r`) are not fixed numbers. In a population of 
+The five parameters describing the seroresponse are:
+
+* baseline antibody concentration (`y0` and `yb`^[the corresponding variable names used in the package are listed in monospace font with gray background; see Section \@ref(longParams) for details])
+* time to peak (`t1`)
+* peak antibody concentration (`y1`)
+* decay rate (`alpha`)
+* shape factor of the decay curve (`r`)
+
+These parameters are not fixed numbers. In a population of 
 subjects, individuals each have their own seroresponse, different from those of other subjects. 
 Therefore, these parameters are provided as a (joint) distribution, describing their variation among 
 individuals in the sampled population. Of course, such a distribution depends on the pathogen, the 

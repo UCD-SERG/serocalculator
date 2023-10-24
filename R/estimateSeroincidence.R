@@ -46,14 +46,14 @@
 #'
 #' @export
 estimateSeroincidence <- function(
-  data,
-  antibodies,
-  strata = "",
-  params,
-  censorLimits,
-  par0,
-  start = -6,
-  numCores = 1L)
+    data,
+    antibodies,
+    strata = "",
+    params,
+    censorLimits,
+    par0,
+    start = -6,
+    numCores = 1L)
 {
   if (!"Age" %in% names(data)) {
     data$Age <- rep(NA, nrow(data))
@@ -71,8 +71,9 @@ estimateSeroincidence <- function(
   ivc <- antibodiesData$Ivc
 
   # Split data per stratum
-  stratumDataList <- split(antibodiesData$Data,
-                           antibodiesData$Data$Stratum)
+  stratumDataList <- split(
+    antibodiesData$Data,
+    antibodiesData$Data$Stratum)
 
   # Loop over data per stratum
   if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
@@ -87,32 +88,36 @@ estimateSeroincidence <- function(
       .libPaths(libPaths)
       library(seroincidence)
     })
-    fits <- parallel::parLapplyLB(cl,
-                                  stratumDataList,
-                                  .optNll,
-                                  antibodies = antibodies,
-                                  params = params,
-                                  censorLimits = censorLimits,
-                                  ivc = ivc,
-                                  m = 0,
-                                  par0 = par0,
-                                  start = start)
+    fits <- parallel::parLapplyLB(
+      cl,
+      stratumDataList,
+      .optNll,
+      antibodies = antibodies,
+      params = params,
+      censorLimits = censorLimits,
+      ivc = ivc,
+      m = 0,
+      par0 = par0,
+      start = start)
   } else {
-    fits <- lapply(stratumDataList,
-                   .optNll,
-                   antibodies = antibodies,
-                   params = params,
-                   censorLimits = censorLimits,
-                   ivc = ivc,
-                   m = 0,
-                   par0 = par0,
-                   start = start)
+    fits <- lapply(
+      stratumDataList,
+      .optNll,
+      antibodies = antibodies,
+      params = params,
+      censorLimits = censorLimits,
+      ivc = ivc,
+      m = 0,
+      par0 = par0,
+      start = start)
   }
 
-  incidenceData <- list(Fits = fits,
-                        Antibodies = antibodies,
-                        Strata = strata,
-                        CensorLimits = censorLimits)
+  incidenceData <- list(
+    Fits = fits,
+    Antibodies = antibodies,
+    Strata = strata,
+    CensorLimits = censorLimits)
+
   class(incidenceData) <- c("seroincidence", "list")
 
   return(incidenceData)

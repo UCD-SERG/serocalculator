@@ -28,7 +28,8 @@ Suggests:
     pander,
     Hmisc,
     tidyverse,
-    fs
+    fs,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
@@ -39,3 +40,4 @@ LinkingTo:
     Rcpp
 Language: en-US
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3

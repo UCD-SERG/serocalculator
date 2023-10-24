@@ -9,6 +9,8 @@
 #' @param antigen_isos antigen-isotype(s) (a [character()] vector of one or more antigen names)
 #' @param noise_params a [data.frame()] containing columns `nu`, etc.
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
+#' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
+#' @param cond conditional noise parameters
 #'
 #' @return A [data.frame()] containing the following:
 #' * `startingval`: the starting guess for incidence rate
@@ -21,25 +23,22 @@
 #' * `iterations`: the number of iterations used
 #'
 #' @export
-#'
-#'
-#'
+
 incidence.age <- function(
     dpop,
+    dmcmc,
+    cond,
     c.age,
     antigen_isos,
     noise_params = cond |> filter(Country == "MGH"),
-    start=.1,
+    start = 0.1,
     iterlim = 100)
   {
 
   lambda = start # initial estimate: starting value
   log.lambda = log(lambda)
   log.lmin = log(lambda/10)
-  log.lmax = log(10*lambda)   # seroincidence rate interval
-
-  c <- deparse(substitute(c))
-  cat <- deparse(substitute(cat))
+  log.lmax = log(10*lambda) # seroincidence rate interval
 
   p_age = dpop %>% filter(ageCat == c.age)
   c_age = dmcmc %>% filter(ageCat == c.age)
@@ -72,32 +71,18 @@ incidence.age <- function(
   # noise parameters
   # cond.hlye.IgG
 
-  objfunc <- function(llam)
-  {
-
-    res = 0
-
-    # add terms, e.g. for other antibodies
-    for (cur_antigen in antigen_isos)
-    {
-      res = res +
-        fdev(
-          llam,
-          ps[[cur_antigen]],
-          cs[[cur_antigen]],
-          conds[[cur_antigen]])
-    }
-  }
-
+  objfunc = build_likelihood_function(
+    cross_sectional_data = ps,
+    longitudinal_parameter_samples = cs,
+    noise_params = conds)
 
   # seroincidence estimation
   fit = nlm(
-    objfunc,
-    log.lambda,
-    hessian=TRUE,
-    print.level=0,
+    f = objfunc,
+    p = log.lambda,
+    hessian = TRUE,
     iterlim = iterlim,
-    stepmax=(log.lmax-log.lmin)/4)
+    stepmax = (log.lmax - log.lmin) / 4)
 
  if(fit$iterations == iterlim)
  {

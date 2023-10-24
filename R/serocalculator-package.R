@@ -92,13 +92,21 @@
 #' Epidemiology and Infection 129, no. 3 (December 10, 2002):479. doi:10.1017/S0950268802007896.
 #' }
 #'
-#' @importFrom stats dlnorm optim pgamma plnorm
-#' @importFrom utils download.file unzip
 #'
 
 ## usethis namespace: start
+#' @importFrom dplyr filter
 #' @importFrom dplyr mutate
+#' @importFrom dplyr select
+#' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
+#' @importFrom rlang .data
+#' @importFrom rlang .env
+#' @importFrom stats dlnorm optim pgamma plnorm
+#' @importFrom stats nlm
+#' @importFrom stats qnorm
+#' @importFrom tidyr drop_na
+#' @importFrom utils download.file unzip
 #' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end
 NULL

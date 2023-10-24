@@ -303,9 +303,9 @@ serologyData <- read.csv(file = "C:\\cross-sectional-data.csv")
 
 The longitudinal response parameters set consists of the following items:
 
-- `y1`: antibody peak level (ELISA units)
+- $y_1$ (`y1`): antibody peak level (ELISA units)
 - `alpha`: antibody decay rate (1/days for the current longitudinal parameter sets)
-- `yb`: baseline antibody level at $t$ approaching infinity ($y(t->inf)$)
+- $y_0$ (`yb`): baseline antibody level at $t$ approaching infinity ($y(t->inf)$)
 - `r`: shape factor of antibody decay
 - `y0`: baseline antibody level at $t=0$ ($y(t=0)$)
 - `mu1`: initial antibody growth rate

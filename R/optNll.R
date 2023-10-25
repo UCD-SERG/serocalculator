@@ -12,10 +12,17 @@
   }
 
   # Estimate log.lambda
-  fit <- stats::optim(par = start, fn = .nll,
-                      stratumData = stratumData, antibodies = antibodies, params = params,
-                      censorLimits = censorLimits, ivc = ivc, m = 0, par0 = par0,
-                      method = "L-BFGS-B", lower = -13, upper = 0, hessian = TRUE,
-                      control = list(fnscale = 1))
+  fit <- stats::optim(
+    par = start,
+    fn = .nll,
+    stratumData = stratumData,
+    antibodies = antibodies, params = params,
+    censorLimits = censorLimits,
+    ivc = ivc,
+    m = 0,
+    par0 = par0,
+    method = "L-BFGS-B",
+    lower = -13, upper = 0, hessian = TRUE,
+    control = list(fnscale = 1))
   return(fit)
 }

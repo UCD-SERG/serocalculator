@@ -21,7 +21,7 @@ columns to identify possible \code{strata}.}
 
 \item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
 
-\item{strata}{Character vector of strata. Values must match with \code{data}. Default = "".}
+\item{strata}{Character vector of stratum-defining variables. Values must match with \code{data}. Default = "".}
 
 \item{params}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}

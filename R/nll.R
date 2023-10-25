@@ -12,7 +12,7 @@
 #' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
 #'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
 #'   (corresponding to `data`).
-#' @param start  starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day
+#' @param `log(lambda)`. natural logarithm of incidence parameter. Value of -6 corresponds roughly to 1 day
 #'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
 #'
 #' @return the log-likelihood of the data with the current parameter values
@@ -24,7 +24,7 @@
     ivc = FALSE,
     m = 0,
     par0,
-    start)
+    `log(lambda)`)
 {
   # Start with zero total
   nllTotal <- 0
@@ -40,8 +40,16 @@
                     stratumData[[antibodies[abIdx + 1]]],
                     stratumData$Age)
 
-      nllSingle <- .nllByType(data = data, param = param, censorLimit = NULL, ivc = ivc, m = m,
-                              par0 = p0, start = start, modelType = modelType)
+      nllSingle <- .nllByType(
+        data = data,
+        param = param,
+        censorLimit = NULL,
+        ivc = ivc,
+        m = m,
+        par0 = p0,
+        loglambda = `log(lambda)`,
+        modelType = modelType)
+
       if (!is.na(nllSingle)) {
         nllTotal <- nllTotal + nllSingle
       }
@@ -59,15 +67,23 @@
         stratumData[[cur_antibody]],
         stratumData$Age)
 
-      nllSingle <- .nllByType(
-        data = data,
-        param = param,
-        censorLimit = censorLimit,
-        ivc = ivc,
-        m = m,
-        par0 = p0,
-        start = start,
-        modelType = modelType)
+      nllSingle <-
+        fdev(
+          log.lambda = `log(lambda)`,
+          csdata = data,
+          lnpars = param,
+          cond = cond # need to define
+        )
+
+        # # .nllByType(
+        # data = data,
+        # param = param,
+        # censorLimit = censorLimit,
+        # ivc = ivc,
+        # m = m,
+        # par0 = p0,
+        # loglambda = `log(lambda)`,
+        # modelType = modelType)
 
       if (!is.na(nllSingle)) {
         nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion

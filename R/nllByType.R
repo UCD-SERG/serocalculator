@@ -1,4 +1,4 @@
-.nllByType <- function(data, param, censorLimit, ivc = FALSE, m = 0, par0, start, modelType)
+.nllByType <- function(data, param, censorLimit, ivc = FALSE, m = 0, par0, loglambda, modelType)
 {
   lambda <- exp(start)
   pdfModel <- switch(modelType,

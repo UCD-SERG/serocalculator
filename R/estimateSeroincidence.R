@@ -6,7 +6,7 @@
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional
 #'   columns to identify possible `strata`.
 #' @param antibodies Character vector with one or more antibody names. Values must match `data`.
-#' @param strata Character vector of strata. Values must match with `data`. Default = "".
+#' @param strata Character vector of stratum-defining variables. Values must match with `data`. Default = "".
 #' @param params List of data frames of all longitudinal parameters. Each data frame contains
 #'   Monte Carlo samples for each antibody type.
 #' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to

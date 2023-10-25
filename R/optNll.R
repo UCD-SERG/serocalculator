@@ -14,7 +14,16 @@
   }
 
   # First, check if we find numeric results...
-  res <- .nll(stratumData, antibodies, params, censorLimits, ivc, m, par0, start)
+  res <- .nll(
+    stratumData,
+    antibodies,
+    params,
+    censorLimits,
+    ivc,
+    m,
+    par0,
+    `log(lambda)` = start)
+
   if (is.na(res)) {
     return(NULL)
   }
@@ -30,7 +39,9 @@
     m = 0,
     par0 = par0,
     method = "L-BFGS-B",
-    lower = -13, upper = 0, hessian = TRUE,
+    lower = -13,
+    upper = 0,
+    hessian = TRUE,
     control = list(fnscale = 1))
   return(fit)
 }

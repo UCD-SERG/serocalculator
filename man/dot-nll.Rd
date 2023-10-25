@@ -12,7 +12,7 @@
   ivc = FALSE,
   m = 0,
   par0,
-  start
+  `log(lambda)`
 )
 }
 \arguments{
@@ -35,7 +35,7 @@ Monte Carlo samples for each antibody type.}
 for true seronegatives (i.e. those who never seroconverted), by named antibody type
 (corresponding to \code{data}).}
 
-\item{start}{starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
+\item{`log(lambda)`.}{natural logarithm of incidence parameter. Value of -6 corresponds roughly to 1 day
 (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
 }
 \value{

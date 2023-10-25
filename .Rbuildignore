@@ -8,4 +8,5 @@
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$
+^README\.Rmd$
 ^README.html$

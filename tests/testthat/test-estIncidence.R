@@ -15,7 +15,14 @@ test_that(
       fs::path_package(
         package = "serocalculator",
         "extdata/simpophlyeigg.2.csv") %>% #Load simulated cross-sectional dataset
-      read_csv() %>%
+      read_csv(
+        col_types = cols(
+          a.smpl = col_double(),
+          y.smpl = col_double(),
+          i = col_double(),
+          t = col_double()
+        )
+      ) %>%
       rename( #rename variables
         y = y.smpl,
         a = a.smpl) %>%

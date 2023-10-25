@@ -7,123 +7,7 @@ output:
       base_format: rmarkdown::html_vignette
       toc: true
 header-includes: "\\DeclareUnicodeCharacter{2010}{-}"
-references:
-- id: 1
-  author:
-  - family: de Graaf
-    given: W. F.
-  - family: Kretzschmar
-    given: M. E. E.
-  - family: Teunis
-    given: P. F. M.
-  - family: Diekmann
-    given: O.
-  container-title: Epidemics
-  DOI: 10.1016/j.epidem.2014.08.002
-  issued:
-    month: 12
-    year: 2014
-  page: "1-7"
-  title: "A two-phase within-host model for immune response and its application to
-    serological profiles of pertussis"
-  type: "article-journal"
-  volume: 9
-- id: 2
-  author:
-  - family: Simonsen
-    given: J.
-  - family: Mølbak
-    given: K.
-  - family: Falkenhorst
-    given: G.
-  - family: Krogfelt
-    given: K. A.
-  - family: Linneberg
-    given: A.
-  - family: Teunis
-    given: P. F.
-  container-title: Statistics in Medicine
-  DOI: 10.1002/sim.3592
-  issue: 14
-  issued:
-    month: 6
-    year: 2009
-  page: "1882-1895"
-  title: Estimation of incidences of infectious diseases based on antibody measurements
-  type: "article-journal"
-  volume: 28
-- id: 3
-  author:
-  - family: Teunis
-    given: P. F.
-  - family: van Eijkeren
-    given: J. C.
-  - family: Ang
-    given: C. W.
-  - family: van Duynhoven
-    given: Y. T.
-  - family: Simonsen
-    given: J. B.
-  - family: Strid
-    given: M. A.
-  - family: van Pelt
-    given: W.
-  container-title: Statistics in Medicine
-  DOI: 10.1002/sim.5322
-  issue: 208
-  issued:
-    month: 9
-    year: 2012
-    page: "2240-2248"
-  title: 'Biomarker dynamics: estimating infection rates from serological data'
-  type: "article-journal"
-  volume: 31
-- id: 4
-  author:
-  - family: Teunis
-    given: P. F.
-  - family: van Eijkeren
-    given: J. C.
-  - family: de Graaf
-    given: W. F.
-  - family: Bonačić Marinović
-    given: A.
-  - family: Kretzschmar
-    given: M. E. E.
-  container-title: Epidemics
-  DOI: 10.1016/j.epidem.2016.04.001
-  issued:
-    month: 9
-    year: 2016
-    page: "33-39"
-  title: "Linking the seroresponse to infection to within-host heterogeneity in antibody
-    production"
-  type: "article-journal"
-  volume: 16
-- id: 5
-  author:
-  - family: Strid
-    given: M. A.
-  - family: Engberg
-    given: J.
-  - family: Larsen,
-    given: L. B.
-  - family: Begtrup
-    given: K
-  - family: Mølbak
-    given: K
-  - family: Krogfelt
-    given: K. A.
-  title: "Antibody responses to Campylobacter infections determined by an enzyme--linked
-    immunosorbent assay: 2-year follow-up study of 210 patients"
-  container-title: Clinical and Vaccine Immunology
-  issue: 8
-  volume: 2
-  page: "314-319"
-  issued:
-    year: 2001
-    month: 3
-  DOI: "10.1128/CDLI.8.2.314-319.2001"
+bibliography: ../references.bib
 fontsize: 11pt
 vignette: > 
   %\VignetteIndexEntry{Serocalculator package tutorial}    
@@ -199,9 +83,9 @@ b) time to reach peak antibody concentration,
 c) magnitude of the peak concentration, and 
 d) antibody decay parameters describing the time course (shape and rate) of antibody decay. 
 
-A model description that is used for the serocalculator is described in [@2; @3]. An alternative 
+A model description that is used for the serocalculator is described in [@Simonsen_2009; @Teunis_2012]. An alternative 
 model, simplified but with improved interpretation of the underlying biological mechanisms, is given 
-in [@1] and further improved in [@4]. 
+in [@de_Graaf_2014] and further improved in [@Teunis_2016]. 
 
 The current model assumes that upon exposure to an initial inoculum, pathogen concentrations 
 increase exponentially. Presence of pathogens (antigen presented to the immune system) signals an 
@@ -211,7 +95,7 @@ causes inactivation or die–off of pathogens, with a rate proportional to the s
 concentration. Ultimately, when all pathogens are removed, infection is over and the promotion of 
 antibody production stops. Then the decay phase starts, and serum antibody concentrations decrease. 
 Antibody decay in the serum compartment may start fast and slow down later, resulting in 
-non–exponential decay. In [@4] this is modelled using a shape parameter, allowing gradual adjustment 
+non–exponential decay. In [@Teunis_2016] this is modelled using a shape parameter, allowing gradual adjustment 
 between exponential (log–linear) and strongly non–exponential decay.
 
 ## Heterogenity
@@ -233,7 +117,7 @@ decay curve.
 
 A Bayesian hierarchical framework allows for individual variation in seroresponses, so that one 
 obtains the (posterior) joint distribution of the parameters as a (Markov chain) Monte Carlo sample, 
-of all relevant parameters [@4].
+of all relevant parameters [@Teunis_2016].
 
 Note that, due to the limited number of iterations in the Monte Carlo sample, the generated 
 incidence estimates will show minor variations: if the same calculation is run twice, the outcomes 
@@ -247,7 +131,7 @@ human serum antibodies against a (specific) pathogen. Therefore, with any cross�
 the same antibodies in a human population, an incidence estimate can be calculated. 
 
 Given the longitudinal response characteristics, **serocalculator** R package provide a rapid and 
-computationally simple method for calculating seroconversion rates, as published in [@3].
+computationally simple method for calculating seroconversion rates, as published in [@Teunis_2012].
 
 The methods on which the seroincidence calculator is based were developed with publicly funded 
 research. All procedures have been published and are open to the general public, including the core 
@@ -573,7 +457,7 @@ The most important output is subobject `Fits` containing raw results on the outp
 Translation of these raw results is provided by a custom function `summary` explained in the 
 following section.
 
-The cutoff argument is based on censoring of the observed serum antibody measurements [@5]. Cut-off 
+The cutoff argument is based on censoring of the observed serum antibody measurements [@Strid_2001]. Cut-off 
 levels must always be specified when calling function `estimateSeroincidence` (argument 
 `censorLimits`). Value `0` should be set for antibody measurements where no censoring is needed, for 
 instance 

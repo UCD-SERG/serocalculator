@@ -14,6 +14,7 @@ Description: Translates antibody levels measured in a cross-sectional population
 Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
+    bookdown,
     dplyr,
     magrittr,
     Rcpp,

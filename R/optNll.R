@@ -1,4 +1,12 @@
-.optNll <- function(stratumData, antibodies, params, censorLimits, ivc = FALSE, m, par0, start)
+.optNll <- function(
+    stratumData,
+    antibodies,
+    params,
+    censorLimits,
+    ivc = FALSE,
+    m,
+    par0,
+    start)
 {
   # Any column but "Stratum" incidence can not be calculated if there are zero observations.
   if (nrow(stratumData) == 0) {

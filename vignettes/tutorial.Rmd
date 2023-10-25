@@ -404,7 +404,7 @@ It takes several arguments:
 
 Here is an example of the *Campylobacter* seroincidence calculation for three antibodies measured,
 stratified per `AgeCat`, and with measurements below `0.1` removed:
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 # Prepare input data.
 serologyData <- campylobacterSimMediumData |> 
   mutate(

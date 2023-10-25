@@ -7,10 +7,11 @@
 #' @param c.age age category
 #' @param start starting value for liklihood
 #' @param antigen_isos antigen-isotype(s) (a [character()] vector of one or more antigen names)
-#' @param noise_params a [data.frame()] containing columns `nu`, etc.
+#' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
-#' @param cond conditional noise parameters
+#' @param ... arguments passed to [stats:nlm()]
+#' @inheritDotParams stats::nlm -f -p -hessian -iterlim -stepmax
 #'
 #' @return A [data.frame()] containing the following:
 #' * `startingval`: the starting guess for incidence rate
@@ -27,25 +28,28 @@
 incidence.age <- function(
     dpop,
     dmcmc,
-    cond,
-    c.age,
+    c.age = NULL,
     antigen_isos,
-    noise_params = cond |> filter(Country == "MGH"),
+    noise_params,
     start = 0.1,
-    iterlim = 100)
-  {
+    iterlim = 100,
+    ...)
+{
 
   lambda = start # initial estimate: starting value
   log.lambda = log(lambda)
   log.lmin = log(lambda/10)
   log.lmax = log(10*lambda) # seroincidence rate interval
 
-  p_age = dpop %>% filter(ageCat == c.age)
-  c_age = dmcmc %>% filter(ageCat == c.age)
-
-  if(ageCat %in% names(cond))
+  if(!is.null(c.age))
   {
-    cond = cond %>% filter(ageCat == c.age)
+    dpop = dpop %>% filter(ageCat == c.age)
+    dmcmc = dmcmc %>% filter(ageCat == c.age)
+
+    if(ageCat %in% names(cond))
+    {
+      cond = cond %>% filter(ageCat == c.age)
+    }
   }
 
   ps = list()
@@ -54,15 +58,15 @@ incidence.age <- function(
 
   for (cur_antigen in antigen_isos)
   {
-    ps[cur_antigen] = get_xspd_one_antigen(
-      dpop = p_age,
+    ps[[cur_antigen]] = get_xspd_one_antigen(
+      dpop = dpop,
       antigen = cur_antigen)
 
-    cs[cur_antigen] = get_curve_params_one_antigen(
-      params = c_age,
+    cs[[cur_antigen]] = get_curve_params_one_antigen(
+      params = dmcmc,
       antigen = cur_antigen)
 
-    conds[cur_antigen] =
+    conds[[cur_antigen]] =
       noise_params %>%
       filter(antigen_iso == cur_antigen)
 
@@ -82,15 +86,16 @@ incidence.age <- function(
     p = log.lambda,
     hessian = TRUE,
     iterlim = iterlim,
-    stepmax = (log.lmax - log.lmin) / 4)
+    stepmax = (log.lmax - log.lmin) / 4,
+    ...)
 
- if(fit$iterations == iterlim)
- {
-   warning(
-     "Maximum iterations reached; consider increasing `iterlim` argument.")
- }
+  if(fit$iterations == iterlim)
+  {
+    warning(
+      "Maximum iterations reached; consider increasing `iterlim` argument.")
+  }
 
-  log.lambda.est = data.frame(
+  log.lambda.est = dplyr::tibble(
     startingval = start,
     ageCat = c.age,
     incidence.rate = exp(fit$estimate),

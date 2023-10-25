@@ -98,6 +98,7 @@
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
+#' @importFrom dplyr tibble
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data

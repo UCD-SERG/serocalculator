@@ -7,25 +7,55 @@ add some details here}
 \usage{
 incidence.age(
   dpop,
-  c.age,
+  dmcmc,
+  c.age = NULL,
   antigen_isos,
-  noise_params = filter(cond, Country == "MGH"),
+  noise_params,
   start = 0.1,
-  iterlim = 100
+  iterlim = 100,
+  ...
 )
 }
 \arguments{
 \item{dpop}{cross-sectional population data}
 
+\item{dmcmc}{mcmc samples from distribution of longitudinal decay curve parameters}
+
 \item{c.age}{age category}
 
 \item{antigen_isos}{antigen-isotype(s) (a \code{\link[=character]{character()}} vector of one or more antigen names)}
 
-\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc.}
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc. specifying conditional noise parameters}
 
 \item{start}{starting value for liklihood}
 
 \item{iterlim}{a positive integer specifying the maximum number of iterations to be performed before the program is terminated.}
+
+\item{...}{
+  Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
+  \describe{
+    \item{\code{typsize}}{an estimate of the size of each parameter
+    at the minimum.}
+    \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
+    \item{\code{print.level}}{this argument determines the level of printing
+    which is done during the minimization process.  The default
+    value of \code{0} means that no printing occurs, a value of \code{1}
+    means that initial and final details are printed and a value
+    of 2 means that full tracing information is printed.}
+    \item{\code{ndigit}}{the number of significant digits in the function \code{f}.}
+    \item{\code{gradtol}}{a positive scalar giving the tolerance at which the
+    scaled gradient is considered close enough to zero to
+    terminate the algorithm.  The scaled gradient is a
+    measure of the relative change in \code{f} in each direction
+    \code{p[i]} divided by the relative change in \code{p[i]}.}
+    \item{\code{steptol}}{A positive scalar providing the minimum allowable
+    relative step length.}
+    \item{\code{check.analyticals}}{a logical scalar specifying whether the
+    analytic gradients and Hessians, if they are supplied, should be
+    checked against numerical derivatives at the initial parameter
+    values. This can help detect incorrectly formulated gradients or
+    Hessians.}
+  }}
 }
 \value{
 A \code{\link[=data.frame]{data.frame()}} containing the following:

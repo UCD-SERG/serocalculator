@@ -20,6 +20,9 @@ build_likelihood_function = function(
           longitudinal_parameter_samples[[cur_antigen]],
           noise_params[[cur_antigen]])
     }
+
+    return(res)
+
   }
 
   return(likelihood_function)

@@ -14,9 +14,13 @@ Description: Translates antibody levels measured in a cross-sectional population
 Depends: R (>= 2.10)
 License: GPL-3
 Imports: 
+    bookdown,
     dplyr,
+    magrittr,
     Rcpp,
+    rlang,
     stats,
+    tidyr,
     utils
 Suggests: 
     knitr,
@@ -25,7 +29,8 @@ Suggests:
     pander,
     Hmisc,
     tidyverse,
-    fs
+    fs,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
@@ -36,3 +41,4 @@ LinkingTo:
     Rcpp
 Language: en-US
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3

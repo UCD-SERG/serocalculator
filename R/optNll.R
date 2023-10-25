@@ -1,4 +1,12 @@
-.optNll <- function(stratumData, antibodies, params, censorLimits, ivc = FALSE, m, par0, start)
+.optNll <- function(
+    stratumData,
+    antibodies,
+    params,
+    censorLimits,
+    ivc = FALSE,
+    m,
+    par0,
+    start)
 {
   # Any column but "Stratum" incidence can not be calculated if there are zero observations.
   if (nrow(stratumData) == 0) {
@@ -12,10 +20,17 @@
   }
 
   # Estimate log.lambda
-  fit <- stats::optim(par = start, fn = .nll,
-                      stratumData = stratumData, antibodies = antibodies, params = params,
-                      censorLimits = censorLimits, ivc = ivc, m = 0, par0 = par0,
-                      method = "L-BFGS-B", lower = -13, upper = 0, hessian = TRUE,
-                      control = list(fnscale = 1))
+  fit <- stats::optim(
+    par = start,
+    fn = .nll,
+    stratumData = stratumData,
+    antibodies = antibodies, params = params,
+    censorLimits = censorLimits,
+    ivc = ivc,
+    m = 0,
+    par0 = par0,
+    method = "L-BFGS-B",
+    lower = -13, upper = 0, hessian = TRUE,
+    control = list(fnscale = 1))
   return(fit)
 }

@@ -10,9 +10,6 @@ estimateSeroincidence(
   strata = "",
   lnparams,
   noise_params,
-  censorLimits,
-  par0,
-  start = -6,
   numCores = 1L,
   ...
 )
@@ -30,16 +27,6 @@ Monte Carlo samples for each antibody type.}
 
 \item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
 
-\item{censorLimits}{List of cutoffs for one or more named antibody types (corresponding to
-\code{data}).}
-
-\item{par0}{List of parameters for the (lognormal) distribution of antibody concentrations
-for true seronegatives (i.e. those who never seroconverted), by named antibody type
-(corresponding to \code{data}).}
-
-\item{start}{A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
-(log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
-
 \item{numCores}{Number of processor cores to use for calculations when computing by strata. If
 set to more than 1 and package \pkg{parallel} is available, then the computations are
 executed in parallel. Default = 1L.}
@@ -48,7 +35,7 @@ executed in parallel. Default = 1L.}
   Arguments passed on to \code{\link[=.optNll]{.optNll}}
   \describe{
     \item{\code{lambda.start}}{starting guess for incidence; only needed if \code{loglambda.start} is not used}
-    \item{\code{loglambda.start}}{starting guess for log(incidence); only needed if \code{lambda.start} is not used}
+    \item{\code{loglambda.start}}{starting guess for log(incidence); only needed if \code{lambda.start} is not used. A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)}), -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}). Default = -6.}
     \item{\code{log.lmin}}{used to determine default value of \code{stepmax}}
     \item{\code{log.lmax}}{used to determine default value of \code{stepmax}}
     \item{\code{hessian}}{if \code{TRUE}, the hessian of \code{f}

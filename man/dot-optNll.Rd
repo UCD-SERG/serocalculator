@@ -10,7 +10,7 @@
   lnparams = lnparams,
   noise_params = noise_params,
   lambda.start = exp(loglambda.start),
-  loglambda.start = log(lambda.start),
+  loglambda.start = -6,
   log.lmin = loglambda.start - log(10),
   log.lmax = loglambda.start + log(10),
   stepmax = (log.lmax - log.lmin)/4,
@@ -19,7 +19,7 @@
 )
 }
 \arguments{
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns, for one stratum}
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
 \item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
 
@@ -30,7 +30,7 @@ Monte Carlo samples for each antibody type.}
 
 \item{lambda.start}{starting guess for incidence; only needed if \code{loglambda.start} is not used}
 
-\item{loglambda.start}{starting guess for log(incidence); only needed if \code{lambda.start} is not used}
+\item{loglambda.start}{starting guess for log(incidence); only needed if \code{lambda.start} is not used. A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)}), -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}). Default = -6.}
 
 \item{log.lmin}{used to determine default value of \code{stepmax}}
 

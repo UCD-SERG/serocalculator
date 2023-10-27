@@ -7,7 +7,7 @@
 .nll(`log(lambda)`, data, antibodies, lnparams, noise_params)
 }
 \arguments{
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns, for one stratum}
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
 \item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
 

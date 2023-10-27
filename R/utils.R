@@ -38,12 +38,12 @@
   stopifnot(!missing(antibodies))
 
   if (!is.character(antibodies)) {
-    stop(.pasteN("Argument \"antibodies\" is not a character vector.",
+    stop(.pasteN("Argument `antibodies` is not a character vector.",
                  "Provide a character vector with at least one antibody name."))
   }
 
   if (all(antibodies == "")) {
-    stop(.pasteN("Argument \"antibodies\" is empty.",
+    stop(.pasteN("Argument `antibodies` is empty.",
                  "Provide a character vector with at least one antibody name."))
   }
 
@@ -53,7 +53,7 @@
 .checkCsData <- function(data, antibodies)
 {
   if (!is.data.frame(data)) {
-    stop(.pasteN("Argument \"data\" is not a dataframe.",
+    stop(.pasteN("Argument `data` is not a `data.frame()`.",
                  "Provide a dataframe with cross-sectional serology data per antibody."))
   }
 
@@ -132,25 +132,68 @@
   invisible(NULL)
 }
 
-.prepData <- function(data, antibodies, strata = "")
+.prepData <- function(data, antibodies, lnparams, noise_params, strata = "")
 {
-  ivcAb <- .checkIvc(data, antibodies)
 
   # Make stratum variable (if needed)
-  dataStrata <- .makeStrata(data, strata)
+  xs_dataStrata <- data |> .makeStrata(strata)
+  lnparamsStrata = lnparams |> .makeStrata(strata)
+  noise_params_Strata = noise_params |> .makeStrata(strata)
   levelsStrata <- levels(dataStrata$Stratum)
-  return(list(Ivc = ivcAb$Ivc,
-              Antibodies = ivcAb$Antibodies,
-              Levels = levelsStrata,
-              Data = dataStrata))
+
+  stratumDataList = list()
+
+  for (cur_stratum in levelsStrata)
+  {
+    stratumDataList[[cur_stratum]] =
+      list(
+        data = dataStrata |> filter(Stratum == cur_stratum)
+      )
+
+    if("Stratum" %in% names(lnparamsStrata))
+    {
+      stratumDataList[[cur_stratum]]$lnparams =
+        lnparamsStrata |> filter(Stratum == cur_stratum)
+
+    } else
+    {
+      stratumDataList[[cur_stratum]]$lnparams = lnparams
+    }
+
+    if("Stratum" %in% names(noise_params_Strata))
+    {
+      stratumDataList[[cur_stratum]]$noise_params =
+        noise_params_Strata |> filter(Stratum == cur_stratum)
+
+    } else
+    {
+      stratumDataList[[cur_stratum]]$noise_params = noise_params
+    }
+
+  }
+
+  return(
+    structure(
+      stratumDataList,
+      Antibodies = antibodies,
+      StratumLevels = levelsStrata
+      ))
+
 }
 
 .makeStrata <- function(data, strata = "")
 {
   dataStrata <- data
 
-  if (all(strata != "")) {
+  if (all(strata != ""))
+  {
+    if(all(strata %in% names(data)))
+    {
     dataStrata$Stratum <- interaction(dataStrata[, strata])
+    } else
+    {
+      return(dataStrata) # no stratum variable
+    }
   } else {
     dataStrata$Stratum <- factor(1)
   }

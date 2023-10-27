@@ -1,7 +1,7 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
 #' @param lambda.start starting guess for incidence; only needed if `loglambda.start` is not used
-#' @param loglambda.start starting guess for log(incidence); only needed if `lambda.start` is not used
+#' @param loglambda.start starting guess for log(incidence); only needed if `lambda.start` is not used. A starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day (`log(1/365.25)`), -4 corresponds roughly to 1 week (`log(7 / 365.25)`). Default = -6.
 #' @param log.lmin used to determine default value of `stepmax`
 #' @param log.lmax used to determine default value of `stepmax`
 #' @inheritParams .nll
@@ -9,14 +9,15 @@
 #' @inheritDotParams .nll
 #' @inheritDotParams stats::nlm
 
-#' @return
+#' @returns a [stats::nlm()] fit object
+
 .optNll <- function(
     data,
     antibodies = antibodies,
     lnparams = lnparams,
     noise_params = noise_params,
     lambda.start = exp(loglambda.start),
-    loglambda.start = log(lambda.start),
+    loglambda.start = -6,
     log.lmin = loglambda.start - log(10),
     log.lmax = loglambda.start + log(10), # seroincidence rate interval
     stepmax = (log.lmax - log.lmin) / 4,

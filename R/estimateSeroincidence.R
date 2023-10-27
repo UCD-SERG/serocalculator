@@ -7,21 +7,13 @@
 #'   columns to identify possible `strata`.
 #' @param antibodies Character vector with one or more antibody names. Values must match `data`.
 #' @param strata Character vector of stratum-defining variables. Values must match with `data`. Default = "".
-#' @param params List of data frames of all longitudinal parameters. Each data frame contains
-#'   Monte Carlo samples for each antibody type.
-#' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to
-#'   `data`).
-#' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
-#'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
-#'   (corresponding to `data`).
-#' @param start A starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day
-#'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If
 #'   set to more than 1 and package \pkg{parallel} is available, then the computations are
 #'   executed in parallel. Default = 1L.
+#' @inheritParams .optNll
+#' @inheritDotParams .optNll
 #'
-#' @return
-#' A set of lambda estimates for each strata.
+#' @return A set of lambda estimates for each strata.
 #'
 #' @examples
 #'
@@ -49,29 +41,28 @@ estimateSeroincidence <- function(
     data,
     antibodies,
     strata = "",
-    params,
-    censorLimits,
-    par0,
-    start = -6,
-    numCores = 1L)
+    lnparams,
+    noise_params,
+    numCores = 1L,
+    ...)
 {
   if (!"Age" %in% names(data)) {
     data$Age <- rep(NA, nrow(data))
   }
 
-  .errorCheck(data = data,
-              antibodies = antibodies,
-              strata = strata,
-              params = params)
-
-  antibodiesData <- .prepData(data = data,
-                              antibodies = antibodies,
-                              strata = strata)
+  .errorCheck(
+    data = data,
+    antibodies = antibodies,
+    strata = strata,
+    params = lnparams)
 
   # Split data per stratum
-  stratumDataList <- split(
-    antibodiesData$Data,
-    antibodiesData$Data$Stratum)
+  stratumDataList <- .prepData(
+    data = data,
+    antibodies = antibodies,
+    lnparams = lnparams,
+    noise_params = noise_params,
+    strata = strata)
 
   # Loop over data per stratum
   if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
@@ -84,39 +75,27 @@ estimateSeroincidence <- function(
     parallel::clusterExport(cl, c("libPaths"), envir = environment())
     parallel::clusterEvalQ(cl, {
       .libPaths(libPaths)
-      library(seroincidence)
+      library(serocalculator)
     })
     fits <- parallel::parLapplyLB(
-      cl,
-      stratumDataList,
-      .optNll,
-      antibodies = antibodies,
-      params = params,
-      censorLimits = censorLimits,
-      ivc = ivc,
-      m = 0,
-      par0 = par0,
-      start = start)
-  } else {
+      cl = cl,
+      X = stratumDataList,
+      FUN = .optNll,
+      ...)
+  } else
+  {
     fits <- lapply(
       stratumDataList,
       .optNll,
-      antibodies = antibodies,
-      params = params,
-      censorLimits = censorLimits,
-      ivc = ivc,
-      m = 0,
-      par0 = par0,
-      start = start)
+      ...)
   }
 
-  incidenceData <- list(
-    Fits = fits,
+  incidenceData <- structure(
+    fits,
     Antibodies = antibodies,
     Strata = strata,
-    CensorLimits = censorLimits)
-
-  class(incidenceData) <- c("seroincidence", "list")
+    CensorLimits = censorLimits,
+    class = c("seroincidenceList", class(fits)))
 
   return(incidenceData)
 }

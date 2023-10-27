@@ -87,6 +87,9 @@ Monte Carlo samples for each antibody type.}
     Hessians.}
   }}
 }
+\value{
+a \code{\link[stats:nlm]{stats::nlm()}} fit object
+}
 \description{
 Find the maximum likelihood estimate of the incidence rate parameter
 }

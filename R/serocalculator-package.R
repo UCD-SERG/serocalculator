@@ -97,6 +97,7 @@
 ## usethis namespace: start
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate
+#' @importFrom dplyr rename
 #' @importFrom dplyr select
 #' @importFrom dplyr tibble
 #' @importFrom magrittr %>%

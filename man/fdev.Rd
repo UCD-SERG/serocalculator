@@ -9,7 +9,7 @@ fdev(log.lambda, csdata, lnpars, cond)
 \arguments{
 \item{log.lambda}{Initial guess of incidence rate}
 
-\item{csdata}{cross-sectional sample data}
+\item{csdata}{cross-sectional sample data containing variables \code{y} and \code{a}}
 
 \item{lnpars}{longitudinal antibody decay model parameters}
 

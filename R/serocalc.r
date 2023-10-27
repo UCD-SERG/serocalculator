@@ -4,7 +4,7 @@
 #'
 #' more description to be added here
 #' @param log.lambda Initial guess of incidence rate
-#' @param csdata cross-sectional sample data
+#' @param csdata cross-sectional sample data containing variables `y` and `a`
 #' @param lnpars longitudinal antibody decay model parameters
 #' @param cond measurement noise parameters
 #' @export

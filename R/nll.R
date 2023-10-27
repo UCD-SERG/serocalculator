@@ -1,94 +1,44 @@
 #' Calculate log-likelihood
 #'
-#' @param stratumData Data frame with cross-sectional serology data per antibody and age, and additional
-#'   columns, for one stratum
+#' @param `log(lambda)` natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
+#' @param stratumData Data frame with cross-sectional serology data per antibody and age, and additional columns, for one stratum
 #' @param antibodies Character vector with one or more antibody names. Values must match `data`.
-#' @param params List of data frames of all longitudinal parameters. Each data frame contains
+#' @param lnparams List of data frames of all longitudinal parameters. Each data frame contains
 #'   Monte Carlo samples for each antibody type.
-#' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to
-#'   `stratumData`).
-#' @param ivc If `ivc = TRUE`, the biomarker data are interval-censored.
-#' @param m this parameter's meaning is uncertain
-#' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
-#'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
-#'   (corresponding to `data`).
-#' @param `log(lambda)`. natural logarithm of incidence parameter. Value of -6 corresponds roughly to 1 day
-#'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
+#' @param noise a [list()] (or [data.frame()], or [tibble()]) containing noise parameters
 #'
 #' @return the log-likelihood of the data with the current parameter values
 .nll <- function(
+    `log(lambda)`,
     stratumData,
     antibodies,
-    params,
-    censorLimits,
-    ivc = FALSE,
-    m = 0,
-    par0,
-    `log(lambda)`)
+    lnparams,
+    noise)
 {
   # Start with zero total
   nllTotal <- 0
-  if (ivc) {
-    # Loop over antibodies
-    for (abIdx in seq_along(antibodies)) {
-      antibody <- .stripNames(antibodies[abIdx])
-      param <- params[[antibody]]
-      p0 <- par0[[antibody]]
-      modelType <- .selectModel(param)
 
-      data <- cbind(stratumData[[antibodies[abIdx]]],
-                    stratumData[[antibodies[abIdx + 1]]],
-                    stratumData$Age)
+  # Loop over antibodies
+  for (cur_antibody in antibodies) {
+    antibody <- .stripNames(cur_antibody)
+    param <- lnparams[[antibody]]
 
-      nllSingle <- .nllByType(
-        data = data,
-        param = param,
-        censorLimit = NULL,
-        ivc = ivc,
-        m = m,
-        par0 = p0,
-        loglambda = `log(lambda)`,
-        modelType = modelType)
+    data <- cbind(
+      stratumData[[cur_antibody]],
+      stratumData$Age)
 
-      if (!is.na(nllSingle)) {
-        nllTotal <- nllTotal + nllSingle
-      }
+    nllSingle <-
+      fdev(
+        log.lambda = `log(lambda)`,
+        csdata = data,
+        lnpars = param,
+        cond = noise
+      )
+
+    if (!is.na(nllSingle)) {
+      nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
     }
-  } else {
-    # Loop over antibodies
-    for (cur_antibody in antibodies) {
-      antibody <- .stripNames(cur_antibody)
-      param <- params[[antibody]]
-      p0 <- par0[[antibody]]
-      censorLimit <- censorLimits[[antibody]]
-      modelType <- .selectModel(param)
 
-      data <- cbind(
-        stratumData[[cur_antibody]],
-        stratumData$Age)
-
-      nllSingle <-
-        fdev(
-          log.lambda = `log(lambda)`,
-          csdata = data,
-          lnpars = param,
-          cond = cond # need to define
-        )
-
-        # # .nllByType(
-        # data = data,
-        # param = param,
-        # censorLimit = censorLimit,
-        # ivc = ivc,
-        # m = m,
-        # par0 = p0,
-        # loglambda = `log(lambda)`,
-        # modelType = modelType)
-
-      if (!is.na(nllSingle)) {
-        nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
-      }
-    }
   }
 
   # Return total log-likelihood

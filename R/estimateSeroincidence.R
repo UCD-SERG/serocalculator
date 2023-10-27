@@ -68,8 +68,6 @@ estimateSeroincidence <- function(
                               antibodies = antibodies,
                               strata = strata)
 
-  ivc <- antibodiesData$Ivc
-
   # Split data per stratum
   stratumDataList <- split(
     antibodiesData$Data,

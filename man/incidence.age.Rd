@@ -8,9 +8,9 @@ add some details here}
 incidence.age(
   dpop,
   dmcmc,
-  c.age = NULL,
-  antigen_isos,
   noise_params,
+  c.age = NULL,
+  antigen_isos = unique(dpop$antigen_iso),
   start = 0.1,
   iterlim = 100,
   ...
@@ -21,11 +21,11 @@ incidence.age(
 
 \item{dmcmc}{mcmc samples from distribution of longitudinal decay curve parameters}
 
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc. specifying conditional noise parameters}
+
 \item{c.age}{age category}
 
 \item{antigen_isos}{antigen-isotype(s) (a \code{\link[=character]{character()}} vector of one or more antigen names)}
-
-\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc. specifying conditional noise parameters}
 
 \item{start}{starting value for liklihood}
 

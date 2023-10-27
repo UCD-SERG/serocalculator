@@ -28,9 +28,9 @@
 incidence.age <- function(
     dpop,
     dmcmc,
-    c.age = NULL,
-    antigen_isos,
     noise_params,
+    c.age = NULL,
+    antigen_isos = dpop$antigen_iso |> unique(),
     start = 0.1,
     iterlim = 100,
     ...)

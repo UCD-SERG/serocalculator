@@ -4,39 +4,19 @@
 \alias{.nll}
 \title{Calculate log-likelihood}
 \usage{
-.nll(
-  stratumData,
-  antibodies,
-  params,
-  censorLimits,
-  ivc = FALSE,
-  m = 0,
-  par0,
-  `log(lambda)`
-)
+.nll(`log(lambda)`, stratumData, antibodies, lnparams, noise)
 }
 \arguments{
-\item{stratumData}{Data frame with cross-sectional serology data per antibody and age, and additional
-columns, for one stratum}
+\item{stratumData}{Data frame with cross-sectional serology data per antibody and age, and additional columns, for one stratum}
 
 \item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
 
-\item{params}{List of data frames of all longitudinal parameters. Each data frame contains
+\item{lnparams}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}
 
-\item{censorLimits}{List of cutoffs for one or more named antibody types (corresponding to
-\code{stratumData}).}
+\item{noise}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
 
-\item{ivc}{If \code{ivc = TRUE}, the biomarker data are interval-censored.}
-
-\item{m}{this parameter's meaning is uncertain}
-
-\item{par0}{List of parameters for the (lognormal) distribution of antibody concentrations
-for true seronegatives (i.e. those who never seroconverted), by named antibody type
-(corresponding to \code{data}).}
-
-\item{`log(lambda)`.}{natural logarithm of incidence parameter. Value of -6 corresponds roughly to 1 day
-(log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
+\item{`log(lambda)`}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
 }
 \value{
 the log-likelihood of the data with the current parameter values

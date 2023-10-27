@@ -5,8 +5,8 @@
 #' more description to be added here
 #' @param log.lambda Initial guess of incidence rate
 #' @param csdata cross-sectional sample data containing variables `y` and `a`
-#' @param lnpars longitudinal antibody decay model parameters
-#' @param cond measurement noise parameters
+#' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
+#' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
 #' @export
 
 fdev <- function(

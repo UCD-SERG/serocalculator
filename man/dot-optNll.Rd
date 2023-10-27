@@ -2,20 +2,31 @@
 % Please edit documentation in R/optNll.R
 \name{.optNll}
 \alias{.optNll}
-\title{Title}
+\title{Find the maximum likelihood estimate of the incidence rate parameter}
 \usage{
 .optNll(
-  stratumData,
+  data,
+  antibodies = antibodies,
+  lnparams = lnparams,
+  noise_params = noise_params,
   lambda.start = exp(loglambda.start),
   loglambda.start = log(lambda.start),
   log.lmin = loglambda.start - log(10),
   log.lmax = loglambda.start + log(10),
   stepmax = (log.lmax - log.lmin)/4,
+  hessian = TRUE,
   ...
 )
 }
 \arguments{
-\item{stratumData}{Data frame with cross-sectional serology data per antibody and age, and additional columns, for one stratum}
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns, for one stratum}
+
+\item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
+
+\item{lnparams}{List of data frames of all longitudinal parameters. Each data frame contains
+Monte Carlo samples for each antibody type.}
+
+\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
 
 \item{lambda.start}{starting guess for incidence; only needed if \code{loglambda.start} is not used}
 
@@ -33,13 +44,12 @@
     small enough to prevent the first two of these occurrences, but should
     be larger than any anticipated reasonable step.}
 
+\item{hessian}{if \code{TRUE}, the hessian of \code{f}
+    at the minimum is returned.}
+
 \item{...}{
   Arguments passed on to \code{\link[=.nll]{.nll}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
-    \item{\code{antibodies}}{Character vector with one or more antibody names. Values must match \code{data}.}
-    \item{\code{lnparams}}{List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.}
-    \item{\code{noise}}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
     \item{\code{f}}{the function to be minimized, returning a single numeric
     value.  This should be a function with first argument a vector of
     the length of \code{p} followed by any other arguments specified by
@@ -52,8 +62,6 @@ Monte Carlo samples for each antibody type.}
     function with suitable \code{gradient} attribute and optionally a
     \code{hessian} attribute.}
     \item{\code{p}}{starting parameter values for the minimization.}
-    \item{\code{hessian}}{if \code{TRUE}, the hessian of \code{f}
-    at the minimum is returned.}
     \item{\code{typsize}}{an estimate of the size of each parameter
     at the minimum.}
     \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
@@ -80,5 +88,5 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \description{
-Title
+Find the maximum likelihood estimate of the incidence rate parameter
 }

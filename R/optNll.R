@@ -11,12 +11,16 @@
 
 #' @return
 .optNll <- function(
-    stratumData,
+    data,
+    antibodies = antibodies,
+    lnparams = lnparams,
+    noise_params = noise_params,
     lambda.start = exp(loglambda.start),
     loglambda.start = log(lambda.start),
     log.lmin = loglambda.start - log(10),
     log.lmax = loglambda.start + log(10), # seroincidence rate interval
     stepmax = (log.lmax - log.lmin) / 4,
+    hessian = TRUE,
     ...)
 {
   # Any column but "Stratum" incidence can not be calculated if there are zero observations.
@@ -26,8 +30,11 @@
 
   # First, check if we find numeric results...
   res <- .nll(
-    stratumData = stratumData,
+    data = data,
     `log(lambda)` = start,
+    antibodies = antibodies,
+    lnparams = lnparams,
+    noise_params = noise_params,
     ...)
 
   if (is.na(res)) {
@@ -38,8 +45,11 @@
   fit = nlm(
     f = .nll,
     p = start,
-    stratumData = stratumData,
-    hessian = TRUE,
+    data = data,
+    antibodies = antibodies,
+    lnparams = lnparams,
+    noise_params = noise_params,
+    hessian = hessian,
     iterlim = iterlim,
     stepmax = stepmax,
     ...)

@@ -46,7 +46,7 @@ incidence.age <- function(
     dpop = dpop %>% filter(ageCat == c.age)
     dmcmc = dmcmc %>% filter(ageCat == c.age)
 
-    if(ageCat %in% names(cond))
+    if("ageCat" %in% names(cond))
     {
       cond = cond %>% filter(ageCat == c.age)
     }

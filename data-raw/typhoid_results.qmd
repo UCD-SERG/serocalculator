@@ -135,8 +135,3 @@ typhoid_results = tibble(
 
 usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
 ```
-
-## Conclusions
-In our simulated data, we found that the estimated seroincidence of typhoid is ______. 
-
-

@@ -67,7 +67,10 @@ estimateSeroincidence <- function(
   # Loop over data per stratum
   if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
     libPaths <- .libPaths()
-    cl <- parallel::makeCluster(min(numCores, parallel::detectCores()))
+    cl <-
+      numCores |>
+      min(parallel::detectCores()) |>
+      parallel::makeCluster()
     on.exit({
       parallel::stopCluster(cl)
     })

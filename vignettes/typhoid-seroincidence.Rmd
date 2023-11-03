@@ -29,7 +29,6 @@ library(devtools)
 library(serocalculator)
 library(tidyverse)
 
-load_all()
 ```
 ## 2. Load data
 ### a. Load and prepare longitudinal parameter data

@@ -24,10 +24,11 @@ The first step in conducting this analysis is to load our necessary packages. Fo
 
 ```{r setup, message=FALSE}
 
-library(devtools)
+#library(devtools)
 #install_github("UCD-SERG/serocalculator")
 library(serocalculator)
 library(tidyverse)
+
 
 ```
 ## 2. Load data

@@ -10,7 +10,7 @@
 #' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
-#' inheritParams postprocess_fit
+#' @inheritParams postprocess_fit
 #' @inheritDotParams stats::nlm -f -p -hessian -iterlim -stepmax
 #'
 #' @return A [data.frame()] containing the following:

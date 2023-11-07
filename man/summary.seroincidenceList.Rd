@@ -24,9 +24,6 @@
 
 \item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
 help for \code{\link[=optim]{optim()}} for details). Default = \code{TRUE}.}
-
-\item{quantiles}{A vector of length 2 specifying quantiles for lower (first element) and upper
-(second element) bounds of \code{lambda}. Default = \code{c(0.025, 0.975)}.}
 }
 \value{
 A list with the following items:

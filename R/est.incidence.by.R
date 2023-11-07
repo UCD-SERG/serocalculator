@@ -19,7 +19,7 @@ est.incidence.by <- function(
     noise_params,
     strata = "",
     numCores = 1L,
-    antigen_isos = data |> pull(antigen_iso) |> unique(),
+    antigen_isos = data |> pull("antigen_iso") |> unique(),
     ...)
 {
 
@@ -31,7 +31,7 @@ est.incidence.by <- function(
 
   lnparams =
     lnparams |>
-    filter(antigen_iso %in% antigen_isos) |>
+    filter(.data$antigen_iso %in% antigen_isos) |>
     mutate(
       alpha = alpha * 365.25,
       d = r - 1)

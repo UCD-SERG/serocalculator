@@ -95,8 +95,10 @@
 #'
 
 ## usethis namespace: start
+#' @importFrom dplyr bind_rows
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate
+#' @importFrom dplyr pull
 #' @importFrom dplyr rename
 #' @importFrom dplyr select
 #' @importFrom dplyr tibble

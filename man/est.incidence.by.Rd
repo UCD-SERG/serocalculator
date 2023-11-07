@@ -10,7 +10,7 @@ est.incidence.by(
   noise_params,
   strata = "",
   numCores = 1L,
-  antigen_isos = unique(pull(data, antigen_iso)),
+  antigen_isos = unique(pull(data, "antigen_iso")),
   ...
 )
 }

@@ -7,8 +7,6 @@
 #'
 #' @param object A dataframe containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
-#' @param quantiles A vector of length 2 specifying quantiles for lower (first element) and upper
-#'   (second element) bounds of `lambda`. Default = `c(0.025, 0.975)`.
 #' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
 #' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see

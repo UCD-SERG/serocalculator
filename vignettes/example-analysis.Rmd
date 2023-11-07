@@ -38,6 +38,7 @@ ln.pars <- data.frame(
   alpha = day2yr * lp$alpha,  # decay rate (per year)
   d = lp$r -1);               # shape (r-1 offset from exp)
 
+library(readr)
 #read simulated data
 raw.data = fs::path_package(
   "extdata", 

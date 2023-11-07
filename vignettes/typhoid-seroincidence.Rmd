@@ -5,7 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Typhoid Seroincidence}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: ../references.bib
+bibliography: references.bib
 ---
 # Introduction
 

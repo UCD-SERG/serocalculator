@@ -20,7 +20,8 @@ incidence.age(
 \arguments{
 \item{dpop}{cross-sectional population data}
 
-\item{dmcmc}{mcmc samples from distribution of longitudinal decay curve parameters}
+\item{dmcmc}{mcmc samples from distribution of longitudinal decay curve parameters
+inheritParams postprocess_fit}
 
 \item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc. specifying conditional noise parameters}
 
@@ -31,8 +32,6 @@ incidence.age(
 \item{start}{starting value for incidence rate}
 
 \item{iterlim}{a positive integer specifying the maximum number of iterations to be performed before the program is terminated.}
-
-\item{coverage}{desired confidence interval coverage probability}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

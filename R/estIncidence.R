@@ -10,8 +10,7 @@
 #' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
-#' @param coverage desired confidence interval coverage probability
-#' @param ... arguments passed to [stats:nlm()]
+#' inheritParams postprocess_fit
 #' @inheritDotParams stats::nlm -f -p -hessian -iterlim -stepmax
 #'
 #' @return A [data.frame()] containing the following:
@@ -91,23 +90,19 @@ incidence.age <- function(
     stepmax = (log.lmax - log.lmin) / 4,
     ...)
 
-  if(fit$iterations == iterlim)
+  if(fit$iterations >= iterlim)
   {
     warning(
-      "Maximum iterations reached; consider increasing `iterlim` argument.")
+      "Maximum `nlm()` iterations reached; consider increasing `iterlim` argument.")
   }
 
-  alpha = 1 - coverage
-  halpha = alpha/2
-  log.lambda.est = dplyr::tibble(
-    startingval = start,
-    ageCat = c.age,
-    incidence.rate = exp(fit$estimate),
-    CI.lwr = exp(fit$estimate + qnorm(halpha)*sqrt(1/fit$hessian)),
-    CI.upr = exp(fit$estimate + qnorm(halpha)*sqrt(1/fit$hessian)),
-    coverage = coverage,
-    neg.llik = fit$minimum,
-    iterations = fit$iterations)
+  log.lambda.est =
+    fit |>
+    postprocess_fit(
+      coverage = coverage,
+      start = start
+  ) |>
+    mutate(ageCat = c.age)
 
   return(log.lambda.est)
 }

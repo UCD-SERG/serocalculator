@@ -13,7 +13,7 @@
 #'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
 #' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
 #'   help for [optim()] for details). Default = `TRUE`.
-#'
+#' @param confidence_level desired confidence interval coverage probability
 #' @return
 #' A list with the following items:
 #' \describe{
@@ -41,9 +41,16 @@
 #' }
 #'
 #' @export
-summary.seroincidence <- function(object, ..., quantiles = c(0.025, 0.975), showDeviance = TRUE,
-                                  showConvergence = TRUE)
+summary.seroincidence <- function(
+    object, ...,
+    confidence_level = .95,
+    showDeviance = TRUE,
+    showConvergence = TRUE)
 {
+
+  alpha = 1 - confidence_level
+  quantiles = c(alpha/2, 1 - alpha/2)
+
   # R CMD check warnings workaround
   hessian <- NULL
   value <- NULL
@@ -58,14 +65,19 @@ summary.seroincidence <- function(object, ..., quantiles = c(0.025, 0.975), show
   }
 
   fits <- object[["Fits"]]
-  results <- as.data.frame(t(sapply(fits, FUN = function(elem) {
-    with(elem, c(
-      Lambda.est = 365.25 * exp(par + qnorm(0.5) * sqrt(1 / hessian)),
-      Lambda.lwr = 365.25 * exp(par + qnorm(quantiles[1]) * sqrt(1 / hessian)),
-      Lambda.upr = 365.25 * exp(par + qnorm(quantiles[2]) * sqrt(1 / hessian)),
-      Deviance = 2 * value,
-      Convergence = convergence))
-  })))
+  results <-
+    fits |>
+    sapply(
+      FUN = function(elem) {
+        with(elem, c(
+          Lambda.est = 365.25 * exp(par + qnorm(0.5) * sqrt(1 / hessian)),
+          Lambda.lwr = 365.25 * exp(par + qnorm(quantiles[1]) * sqrt(1 / hessian)),
+          Lambda.upr = 365.25 * exp(par + qnorm(quantiles[2]) * sqrt(1 / hessian)),
+          Deviance = 2 * value,
+          Convergence = convergence))
+      }) |>
+    t() |>
+    as.data.frame()
 
   results$Stratum <- rownames(results)
   rownames(results) <- NULL
@@ -78,11 +90,12 @@ summary.seroincidence <- function(object, ..., quantiles = c(0.025, 0.975), show
     results$Convergence <- NULL
   }
 
-  output <- list(Results = results,
-                 Antibodies = object[["Antibodies"]],
-                 Strata = object[["Strata"]],
-                 CensorLimits = object[["CensorLimits"]],
-                 Quantiles = quantiles)
+  output <- list(
+    Results = results,
+    Antibodies = object[["Antibodies"]],
+    Strata = object[["Strata"]],
+    CensorLimits = object[["CensorLimits"]],
+    Quantiles = quantiles)
 
   class(output) <- c("summary.seroincidence", "list")
 

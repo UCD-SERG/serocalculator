@@ -5,14 +5,17 @@
 #' @param lnparams List of data frames of all longitudinal parameters. Each data frame contains
 #'   Monte Carlo samples for each antibody type.
 #' @param noise_params a [list()] (or [data.frame()], or [tibble()]) containing noise parameters
+#' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams fdev
+
 #' @return the log-likelihood of the data with the current parameter values
 .nll <- function(
     log.lambda,
     data,
     antibodies,
     lnparams,
-    noise_params)
+    noise_params,
+    ...)
 {
   # Start with zero total
   nllTotal <- 0

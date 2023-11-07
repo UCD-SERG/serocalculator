@@ -173,7 +173,7 @@
       return(dataStrata) # no stratum variable
     }
   } else {
-    dataStrata$Stratum <- factor(1)
+    dataStrata$Stratum <- factor("all data")
   }
   return(dataStrata)
 }

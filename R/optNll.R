@@ -57,7 +57,6 @@
     lnparams = lnparams,
     noise_params = noise_params,
     hessian = hessian,
-    iterlim = iterlim,
     stepmax = stepmax,
     ...)
 

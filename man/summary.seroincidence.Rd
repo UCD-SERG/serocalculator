@@ -7,7 +7,7 @@
 \method{summary}{seroincidence}(
   object,
   ...,
-  quantiles = c(0.025, 0.975),
+  confidence_level = 0.95,
   showDeviance = TRUE,
   showConvergence = TRUE
 )
@@ -17,14 +17,16 @@
 
 \item{...}{Additional arguments affecting the summary produced.}
 
-\item{quantiles}{A vector of length 2 specifying quantiles for lower (first element) and upper
-(second element) bounds of \code{lambda}. Default = \code{c(0.025, 0.975)}.}
+\item{confidence_level}{desired confidence interval coverage probability}
 
 \item{showDeviance}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting deviance
 (-2*log(likelihood) at estimated seroincidence. Default = \code{TRUE}.}
 
 \item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
 help for \code{\link[=optim]{optim()}} for details). Default = \code{TRUE}.}
+
+\item{quantiles}{A vector of length 2 specifying quantiles for lower (first element) and upper
+(second element) bounds of \code{lambda}. Default = \code{c(0.025, 0.975)}.}
 }
 \value{
 A list with the following items:

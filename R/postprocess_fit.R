@@ -16,14 +16,14 @@ postprocess_fit = function(
 
 
   alpha = 1 - coverage
-  halpha = alpha/2
+  h.alpha = alpha/2
 
   log.lambda.est = dplyr::tibble(
     startingval = start,
     incidence.rate = exp(fit$estimate),
     SE = sqrt(1/fit$hessian) |> as.vector(),
-    CI.lwr = exp(fit$estimate - qnorm(halpha)*SE),
-    CI.upr = exp(fit$estimate + qnorm(halpha)*SE),
+    CI.lwr = exp(fit$estimate - qnorm(1 - h.alpha) * SE),
+    CI.upr = exp(fit$estimate + qnorm(1 - h.alpha) * SE),
     coverage = coverage,
     log.lik = -fit$minimum,
     iterations = fit$iterations,

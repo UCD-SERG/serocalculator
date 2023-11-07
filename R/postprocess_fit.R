@@ -10,8 +10,8 @@
 #'
 postprocess_fit = function(
     fit,
-    coverage,
-    start)
+    coverage = .95,
+    start = NA)
 {
 
 

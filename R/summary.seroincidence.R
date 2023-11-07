@@ -42,7 +42,8 @@
 #'
 #' @export
 summary.seroincidenceList = summary.seroincidence <- function(
-    object, ...,
+    object,
+    ...,
     confidence_level = .95,
     showDeviance = TRUE,
     showConvergence = TRUE)
@@ -65,13 +66,13 @@ summary.seroincidenceList = summary.seroincidence <- function(
   }
 
   results <-
-    fits |>
+    object |>
     sapply(
       FUN = function(elem) {
         with(elem, c(
-          Lambda.est = 365.25 * exp(par + qnorm(0.5) * sqrt(1 / hessian)),
-          Lambda.lwr = 365.25 * exp(par + qnorm(quantiles[1]) * sqrt(1 / hessian)),
-          Lambda.upr = 365.25 * exp(par + qnorm(quantiles[2]) * sqrt(1 / hessian)),
+          Lambda.est = 365.25 * exp(estimate),
+          Lambda.lwr = 365.25 * exp(estimate + qnorm(quantiles[1]) * sqrt(1 / hessian)),
+          Lambda.upr = 365.25 * exp(estimate + qnorm(quantiles[2]) * sqrt(1 / hessian)),
           Deviance = 2 * value,
           Convergence = convergence))
       }) |>

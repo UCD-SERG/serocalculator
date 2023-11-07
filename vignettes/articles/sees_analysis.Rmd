@@ -52,6 +52,7 @@ full_data = path_package(
 
 ```{r}
 library(ggplot2)
+library(dplyr)
 full_data |> 
   filter(
     dag == "bangladesh",
@@ -118,9 +119,7 @@ est1 = incidence.age(
   antigen_isos = xs_sample$antigen_iso |> unique(),
   
   print.level = 2
-)
-
-print(est1)
+) |> print()
 
 
 ```
@@ -130,15 +129,17 @@ Now we will try the loop function:
 ```{r}
 
 est2 = estimateSeroincidence(
-  # print.level = 1,
-  start = 0.380,
+  print.level = 2,
+  lambda.start = 0.380,
   strata = "ageCat",
   data = 
     xs_sample |> 
     rename(
       a = Age,
       y = result) |> 
-    filter(Country == "Bangladesh"),
+    filter(
+      ageCat != "16+", # missing from curve_params...
+      Country == "Bangladesh"),
   
   lnparams = 
     curve_params |> 

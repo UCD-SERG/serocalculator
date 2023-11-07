@@ -20,8 +20,8 @@
     noise_params = dataList$noise_params,
     dataList = NULL,
     antigen_isos = data |> pull(antigen_iso) |> unique(),
-    lambda.start = exp(loglambda.start),
-    loglambda.start = -6,
+    lambda.start = exp(-6),
+    loglambda.start = log(lambda.start),
     log.lmin = loglambda.start - log(10),
     log.lmax = loglambda.start + log(10), # seroincidence rate interval
     stepmax = (log.lmax - log.lmin) / 4,

@@ -2,7 +2,7 @@
 
 S3method(print,seroincidenceList)
 S3method(print,summary.seroincidence)
-S3method(summary,seroincidence)
+S3method(summary,seroincidenceList)
 export(estimateSeroincidence)
 export(fdev)
 export(getAdditionalData)

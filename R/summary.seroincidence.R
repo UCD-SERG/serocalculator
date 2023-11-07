@@ -41,7 +41,7 @@
 #' }
 #'
 #' @export
-summary.seroincidence <- function(
+summary.seroincidenceList = summary.seroincidence <- function(
     object, ...,
     confidence_level = .95,
     showDeviance = TRUE,
@@ -64,7 +64,6 @@ summary.seroincidence <- function(
     stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
   }
 
-  fits <- object[["Fits"]]
   results <-
     fits |>
     sapply(
@@ -92,9 +91,8 @@ summary.seroincidence <- function(
 
   output <- list(
     Results = results,
-    Antibodies = object[["Antibodies"]],
-    Strata = object[["Strata"]],
-    CensorLimits = object[["CensorLimits"]],
+    Antibodies = attr(object, "Antibodies"),
+    Strata = attr(object, "Strata"),
     Quantiles = quantiles)
 
   class(output) <- c("summary.seroincidence", "list")

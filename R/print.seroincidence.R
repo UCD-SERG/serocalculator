@@ -24,8 +24,8 @@
 print.seroincidenceList = print.seroincidence <- function(x, ...)
 {
   cat("Seroincidence object estimated given the following setup:\n")
-  cat(paste("a) Antibodies   :", paste(x[["Antibodies"]], collapse = ", ")), "\n")
-  cat(paste("b) Strata       :", paste(x[["Strata"]], collapse = ", ")), "\n")
+  cat(paste("a) Antibodies   :", paste(attr(x, "Antibodies"), collapse = ", ")), "\n")
+  cat(paste("b) Strata       :", paste(attr(x, "Strata"), collapse = ", ")), "\n")
 
     cat("\n")
   cat("This object is a list containing the following items:\n")

@@ -5,10 +5,11 @@
 \title{Find the maximum likelihood estimate of the incidence rate parameter}
 \usage{
 .optNll(
-  data,
-  antibodies = antibodies,
-  lnparams = lnparams,
-  noise_params = noise_params,
+  data = dataList$data,
+  lnparams = dataList$lnparams,
+  noise_params = dataList$noise_params,
+  dataList = NULL,
+  antigen_isos = unique(pull(data, antigen_iso)),
   lambda.start = exp(loglambda.start),
   loglambda.start = -6,
   log.lmin = loglambda.start - log(10),
@@ -19,18 +20,20 @@
 )
 }
 \arguments{
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
-
-\item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
+\item{data}{Data frame with cross-sectional serology data per antibody and age}
 
 \item{lnparams}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}
 
 \item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
 
+\item{dataList}{Optional argument; as an alternative to passing in \code{data}, \code{lnparams}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
+
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
+
 \item{lambda.start}{starting guess for incidence; only needed if \code{loglambda.start} is not used}
 
-\item{loglambda.start}{starting guess for log(incidence); only needed if \code{lambda.start} is not used. A starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)}), -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}). Default = -6.}
+\item{loglambda.start}{starting guess for log(incidence); only needed if \code{lambda.start} is not used. A starting value for \code{log.lambda}. Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)}), -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}). Default = -6.}
 
 \item{log.lmin}{used to determine default value of \code{stepmax}}
 
@@ -50,6 +53,8 @@ Monte Carlo samples for each antibody type.}
 \item{...}{
   Arguments passed on to \code{\link[=.nll]{.nll}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
+    \item{\code{antibodies}}{Character vector with one or more antibody names. Values must match \code{data}.}
+    \item{\code{log.lambda}}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
     \item{\code{f}}{the function to be minimized, returning a single numeric
     value.  This should be a function with first argument a vector of
     the length of \code{p} followed by any other arguments specified by

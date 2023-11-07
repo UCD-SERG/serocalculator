@@ -54,66 +54,42 @@
 {
   if (!is.data.frame(data)) {
     stop(.pasteN("Argument `data` is not a `data.frame()`.",
-                 "Provide a dataframe with cross-sectional serology data per antibody."))
+                 "Provide a `data.frame()` with cross-sectional serology data per antibody."))
   }
 
   if (!is.element("Age", names(data))) {
     stop("Argument \"data\" is missing column \"Age\".")
   }
 
-  if (!all(is.element(.checkIvc(data, antibodies)$Antibodies, names(data)))) {
-    stop("Antibody names in argument \"data\" and argument \"antibodies\" do not match.")
-  }
-
   invisible(NULL)
 }
 
-.checkIvc <- function(data, antibodies) {
-  # Assume we are not dealing with interval censored data
-  ivc <- FALSE
-  if (length(intersect(names(data), antibodies)) != length(antibodies)) {
-    # Add .lo and .hi to ab names
-    antibodies <- .appendNames(antibodies)
-    # We are dealing with interval censored data
-    ivc <- TRUE
-  }
-  return(list(Ivc = ivc, Antibodies = antibodies))
-}
+.checkParams <- function(antibodies, params)
+{
 
-.checkParams <- function(antibodies, params) {
-  if (!is.list(params)) {
-    stop(.pasteN("Argument \"params\" is not a list of dataframes.",
-                 "Provide a list of three dataframes with names of the antibodies to be tested.",
-                 "Each of the dataframes should contain a Monte Carlo sample of the longitudinal",
-                 "parameters named y1, alpha, r, y0, mu1 and t1."))
+  message1 = paste(
+    "Please provide a `data.frame()` containing Monte Carlo samples of the longitudinal parameters",
+    "`y1`, `alpha`, and `r`",
+    "for each value of `antigen_iso` in `data`")
+
+
+  if (!is.data.frame(params)) {
+    stop(
+      .pasteN(
+        "Argument `params` is not a `data.frame()`.",
+        message1))
   }
 
-  if (!all(sapply(params, is.data.frame))) {
-    stop(.pasteN("Argument \"params\" is not a list of dataframes.",
-                 "Provide a list of three dataframes with names of the antibodies to be tested.",
-                 "Each of the dataframes should contain a Monte Carlo sample of the longitudinal",
-                 "parameters named y1, alpha, r, y0, mu1 and t1."))
+  if (!all(c("y1", "alpha", "r") %in% names(params)))
+  {
+    stop(
+      .pasteN(
+        "The parameter names do not match.",
+        message1))
   }
 
-  if (!all(is.element(names(params[[1]]),
-                      c("y1", "alpha", "yb", "r", "y0", "mu1", "t1")))) {
-    stop(.pasteN("The parameter names do not match.",
-                 "Provide a list of three dataframes with names of the antibodies to be tested.",
-                 "Each of the dataframes should contain a Monte Carlo sample of the longitudinal",
-                 "parameters named y1, alpha, r, y0, mu1 and t1."))
-  }
-
-  if (length(params[[1]]$y0) != length(params[[1]]$alpha) |
-      length(params[[1]]$y0) != length(params[[1]]$yb) |
-      length(params[[1]]$y0) != length(params[[1]]$r) |
-      length(params[[1]]$y0) != length(params[[1]]$y1) |
-      length(params[[1]]$y0) != length(params[[1]]$mu1) |
-      length(params[[1]]$y0) != length(params[[1]]$t1)) {
-    stop("The parameter lists \"params\" are of different length.")
-  }
-
-  if (!all(is.element(antibodies, names(params)))) {
-    stop("Antibody names in argument \"antibodies\" and argument \"params\" do not match.")
+  if (!all(antibodies %in% params$antigen_iso)) {
+    stop("Some `antigen_iso` values are missing.")
   }
 
   invisible(NULL)
@@ -122,7 +98,7 @@
 .checkStrata <- function(data, strata) {
   if (!is.character(strata)) {
     stop(.pasteN("Argument \"strata\" is not a character vector.",
-                 "Provide a character vector with strata names."))
+                 "Provide a character vector with names of stratifying variables."))
   }
 
   if (!all(is.element(strata, union("", names(data))))) {
@@ -139,7 +115,7 @@
   xs_dataStrata <- data |> .makeStrata(strata)
   lnparamsStrata = lnparams |> .makeStrata(strata)
   noise_params_Strata = noise_params |> .makeStrata(strata)
-  levelsStrata <- levels(dataStrata$Stratum)
+  levelsStrata <- levels(xs_dataStrata$Stratum)
 
   stratumDataList = list()
 
@@ -147,7 +123,9 @@
   {
     stratumDataList[[cur_stratum]] =
       list(
-        data = dataStrata |> filter(Stratum == cur_stratum)
+        data =
+          xs_dataStrata |>
+          filter(Stratum == cur_stratum)
       )
 
     if("Stratum" %in% names(lnparamsStrata))
@@ -177,7 +155,7 @@
       stratumDataList,
       Antibodies = antibodies,
       StratumLevels = levelsStrata
-      ))
+    ))
 
 }
 
@@ -189,7 +167,7 @@
   {
     if(all(strata %in% names(data)))
     {
-    dataStrata$Stratum <- interaction(dataStrata[, strata])
+      dataStrata$Stratum <- interaction(dataStrata[, strata])
     } else
     {
       return(dataStrata) # no stratum variable

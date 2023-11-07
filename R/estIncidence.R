@@ -5,11 +5,12 @@
 #'
 #' @param dpop cross-sectional population data
 #' @param c.age age category
-#' @param start starting value for liklihood
+#' @param start starting value for incidence rate
 #' @param antigen_isos antigen-isotype(s) (a [character()] vector of one or more antigen names)
 #' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
+#' @param coverage desired confidence interval coverage probability
 #' @param ... arguments passed to [stats:nlm()]
 #' @inheritDotParams stats::nlm -f -p -hessian -iterlim -stepmax
 #'
@@ -33,6 +34,7 @@ incidence.age <- function(
     antigen_isos = dpop$antigen_iso |> unique(),
     start = 0.1,
     iterlim = 100,
+    coverage = .95,
     ...)
 {
 
@@ -95,13 +97,15 @@ incidence.age <- function(
       "Maximum iterations reached; consider increasing `iterlim` argument.")
   }
 
+  alpha = 1 - coverage
+  halpha = alpha/2
   log.lambda.est = dplyr::tibble(
     startingval = start,
     ageCat = c.age,
     incidence.rate = exp(fit$estimate),
-    CI.lwr = exp(fit$estimate + qnorm(c(0.025))*sqrt(1/fit$hessian)),
-    CI.upr = exp(fit$estimate + qnorm(c(0.975))*sqrt(1/fit$hessian)),
-    coverage = .95,
+    CI.lwr = exp(fit$estimate + qnorm(halpha)*sqrt(1/fit$hessian)),
+    CI.upr = exp(fit$estimate + qnorm(halpha)*sqrt(1/fit$hessian)),
+    coverage = coverage,
     neg.llik = fit$minimum,
     iterations = fit$iterations)
 

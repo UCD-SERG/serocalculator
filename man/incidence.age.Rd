@@ -13,6 +13,7 @@ incidence.age(
   antigen_isos = unique(dpop$antigen_iso),
   start = 0.1,
   iterlim = 100,
+  coverage = 0.95,
   ...
 )
 }
@@ -27,9 +28,11 @@ incidence.age(
 
 \item{antigen_isos}{antigen-isotype(s) (a \code{\link[=character]{character()}} vector of one or more antigen names)}
 
-\item{start}{starting value for liklihood}
+\item{start}{starting value for incidence rate}
 
 \item{iterlim}{a positive integer specifying the maximum number of iterations to be performed before the program is terminated.}
+
+\item{coverage}{desired confidence interval coverage probability}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

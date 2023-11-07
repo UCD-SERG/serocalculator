@@ -394,7 +394,7 @@ It takes several arguments:
 - `par0`: List of parameters for the (lognormal) distribution of antibody concentrations for true 
   seronegatives (i.e. those who never seroconverted), by named antibody type (corresponding to 
   `data`).
-- `start` A starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day 
+- `start` A starting value for `log.lambda`. Value of -6 corresponds roughly to 1 day 
   (`log(1/365.25)`), value of -4 corresponds roughly to 1 week (`log(7/365.25)`). Users are adivised 
   to experiment with this value to confirm that convergence to the same estimate is obtained. 
   Default is -6.

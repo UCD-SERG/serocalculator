@@ -43,7 +43,7 @@ raw.data = fs::path_package(
   "extdata", 
   "SimulDat.txt", 
   package = "serocalculator") |> 
-  read_table() |> 
+  readr::read_table() |> 
   rename(AGE = '"AGE"', IgG = '"IgG"')
 
 ```

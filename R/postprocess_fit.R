@@ -19,7 +19,7 @@ postprocess_fit = function(
   h.alpha = alpha/2
 
   log.lambda.est = dplyr::tibble(
-    startingval = start,
+    est.start = start,
     incidence.rate = exp(fit$estimate),
     SE = sqrt(1/fit$hessian) |> as.vector(),
     CI.lwr = exp(fit$estimate - qnorm(1 - h.alpha) * SE),

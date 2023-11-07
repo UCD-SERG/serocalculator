@@ -14,7 +14,7 @@
 #' @inheritDotParams stats::nlm -f -p -hessian -iterlim -stepmax
 #'
 #' @return A [data.frame()] containing the following:
-#' * `startingval`: the starting guess for incidence rate
+#' * `est.start`: the starting guess for incidence rate
 #' * `ageCat`: the age category we are analyzing
 #' * `incidence.rate`: the estimated incidence rate, per person year
 #' * `CI.lwr`: lower limit of confidence interval for incidence rate

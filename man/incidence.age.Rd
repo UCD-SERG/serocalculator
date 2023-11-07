@@ -62,7 +62,7 @@ inheritParams postprocess_fit}
 \value{
 A \code{\link[=data.frame]{data.frame()}} containing the following:
 \itemize{
-\item \code{startingval}: the starting guess for incidence rate
+\item \code{est.start}: the starting guess for incidence rate
 \item \code{ageCat}: the age category we are analyzing
 \item \code{incidence.rate}: the estimated incidence rate, per person year
 \item \code{CI.lwr}: lower limit of confidence interval for incidence rate

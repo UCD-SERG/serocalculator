@@ -125,7 +125,7 @@ log.lambda.est <- c(exp(fit$estimate),
 log.lambda.est
 
 typhoid_results = tibble(
-      startingval = start,
+      est.start = start,
       incidence.rate = exp(fit$estimate),
       CI.lwr = exp(fit$estimate + qnorm(c(0.025))*sqrt(1/fit$hessian)),
       CI.upr = exp(fit$estimate + qnorm(c(0.975))*sqrt(1/fit$hessian)),

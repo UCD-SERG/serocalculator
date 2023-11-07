@@ -16,7 +16,15 @@
 #'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
 #'
 #' @return the log-likelihood of the data with the current parameter values
-.nll <- function(stratumData, antibodies, params, censorLimits, ivc = FALSE, m = 0, par0, start)
+.nll <- function(
+    stratumData,
+    antibodies,
+    params,
+    censorLimits,
+    ivc = FALSE,
+    m = 0,
+    par0,
+    start)
 {
   # Start with zero total
   nllTotal <- 0
@@ -40,17 +48,27 @@
     }
   } else {
     # Loop over antibodies
-    for (abIdx in seq_along(antibodies)) {
-      antibody <- .stripNames(antibodies[abIdx])
+    for (cur_antibody in antibodies) {
+      antibody <- .stripNames(cur_antibody)
       param <- params[[antibody]]
       p0 <- par0[[antibody]]
       censorLimit <- censorLimits[[antibody]]
       modelType <- .selectModel(param)
 
-      data <- cbind(stratumData[[antibodies[abIdx]]],
-                    stratumData$Age)
-      nllSingle <- .nllByType(data = data, param = param, censorLimit = censorLimit, ivc = ivc,
-                              m = m, par0 = p0, start = start, modelType = modelType)
+      data <- cbind(
+        stratumData[[cur_antibody]],
+        stratumData$Age)
+
+      nllSingle <- .nllByType(
+        data = data,
+        param = param,
+        censorLimit = censorLimit,
+        ivc = ivc,
+        m = m,
+        par0 = p0,
+        start = start,
+        modelType = modelType)
+
       if (!is.na(nllSingle)) {
         nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
       }

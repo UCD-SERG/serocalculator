@@ -186,8 +186,7 @@ console (bear in mind that the text after character `#` is only a comment):
 
 ```{r}
 # Load package "seroincidence"
-# library(serocalculator)
-load_all()
+library(serocalculator)
 library(dplyr)
 ```
 

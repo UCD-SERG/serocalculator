@@ -27,7 +27,7 @@ postprocess_fit = function(
     coverage = coverage,
     log.lik = -fit$minimum,
     iterations = fit$iterations,
-    code = fit$code
+    nlm.exit.code = fit$code
 
     )
 }

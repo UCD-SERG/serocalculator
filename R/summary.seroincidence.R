@@ -77,7 +77,7 @@ summary.seroincidenceList = summary.seroincidence <- function(
   }
 
   if (!showConvergence) {
-    results$code <- NULL
+    results$nlm.exit.code <- NULL
   }
 
   output <- structure(

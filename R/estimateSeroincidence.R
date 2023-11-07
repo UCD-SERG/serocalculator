@@ -23,10 +23,6 @@ estimateSeroincidence <- function(
     ...)
 {
 
-  if (!"Age" %in% names(data)) {
-    data$Age <- rep(NA, nrow(data))
-  }
-
   .errorCheck(
     data = data,
     antibodies = antigen_isos,
@@ -74,7 +70,7 @@ estimateSeroincidence <- function(
   {
     fits <- lapply(
       X = stratumDataList,
-      F = function(x) .optNll(dataList = x, ...))
+      FUN = function(x) .optNll(dataList = x, ...))
   }
 
   incidenceData <- structure(

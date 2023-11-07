@@ -57,8 +57,8 @@
                  "Provide a `data.frame()` with cross-sectional serology data per antibody."))
   }
 
-  if (!is.element("Age", names(data))) {
-    stop("Argument \"data\" is missing column \"Age\".")
+  if (!is.element("a", names(data))) {
+    stop("Argument `data` is missing column `a` (age, in years).")
   }
 
   invisible(NULL)
@@ -130,8 +130,20 @@
 
     if("Stratum" %in% names(lnparamsStrata))
     {
+      lnparams_cur_stratum =
+        lnparamsStrata |>
+        filter(Stratum == cur_stratum)
+
+      if(nrow(lnparams_cur_stratum) == 0)
+      {
+        stop(
+          "No curve parameter samples were provided for stratum: ",
+          cur_stratum
+          )
+      }
+
       stratumDataList[[cur_stratum]]$lnparams =
-        lnparamsStrata |> filter(Stratum == cur_stratum)
+        lnparams_cur_stratum
 
     } else
     {
@@ -140,8 +152,20 @@
 
     if("Stratum" %in% names(noise_params_Strata))
     {
+      noise_params_cur_stratum =
+        noise_params_Strata |>
+        filter(Stratum == cur_stratum)
+
+      if(nrow(noise_params_cur_stratum) == 0)
+      {
+        stop(
+          "No noise parameter values were provided for stratum:\n",
+          cur_stratum
+        )
+      }
+
       stratumDataList[[cur_stratum]]$noise_params =
-        noise_params_Strata |> filter(Stratum == cur_stratum)
+        noise_params_cur_stratum
 
     } else
     {

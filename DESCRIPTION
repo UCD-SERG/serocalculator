@@ -20,6 +20,7 @@ Imports:
     Rcpp,
     rlang,
     stats,
+    tibble,
     tidyr,
     utils
 Suggests: 

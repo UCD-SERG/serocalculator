@@ -4,7 +4,7 @@
 \alias{postprocess_fit}
 \title{postprocess a fitted incidence model}
 \usage{
-postprocess_fit(fit, coverage, start)
+postprocess_fit(fit, coverage = 0.95, start = NA)
 }
 \arguments{
 \item{fit}{output from \code{\link[stats:nlm]{stats::nlm()}}}
@@ -14,7 +14,7 @@ postprocess_fit(fit, coverage, start)
 \item{start}{starting value for incidence rate}
 }
 \value{
-a \code{\link[tibble:tibble]{tibble::tibble()}}
+a \code{\link[tibble:tibble]{tibble::tibble()}}; see \code{\link[stats:nlm]{stats::nlm()}} for details on \code{code} variable
 }
 \description{
 postprocess a fitted incidence model

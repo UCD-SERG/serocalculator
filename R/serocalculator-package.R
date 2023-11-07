@@ -107,6 +107,8 @@
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
+#' @importFrom tibble as_tibble
+#' @importFrom tibble tibble
 #' @importFrom tidyr drop_na
 #' @importFrom utils download.file unzip
 #' @useDynLib serocalculator, .registration = TRUE

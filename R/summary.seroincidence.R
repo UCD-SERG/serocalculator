@@ -68,35 +68,27 @@ summary.seroincidenceList = summary.seroincidence <- function(
   results <-
     object |>
     sapply(
-      FUN = function(elem) {
-        with(elem, c(
-          Lambda.est = 365.25 * exp(estimate),
-          Lambda.lwr = 365.25 * exp(estimate + qnorm(quantiles[1]) * sqrt(1 / hessian)),
-          Lambda.upr = 365.25 * exp(estimate + qnorm(quantiles[2]) * sqrt(1 / hessian)),
-          Deviance = 2 * value,
-          Convergence = convergence))
-      }) |>
-    t() |>
-    as.data.frame()
+      FUN = postprocess_fit,
+      coverage = confidence_level) |>
+    bind_rows()
 
   results$Stratum <- rownames(results)
   rownames(results) <- NULL
 
   if (!showDeviance) {
-    results$Deviance <- NULL
+    results$log.lik <- NULL
   }
 
   if (!showConvergence) {
-    results$Convergence <- NULL
+    results$code <- NULL
   }
 
-  output <- list(
-    Results = results,
+  output <- structure(
+    results,
     Antibodies = attr(object, "Antibodies"),
     Strata = attr(object, "Strata"),
-    Quantiles = quantiles)
-
-  class(output) <- c("summary.seroincidence", "list")
+    Quantiles = quantiles,
+    class = c("summary.seroincidence", "list"))
 
   return(output)
 }

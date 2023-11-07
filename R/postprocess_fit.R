@@ -5,7 +5,7 @@
 #' @param coverage desired confidence interval coverage probability
 #' @param start starting value for incidence rate
 #'
-#' @return a [tibble::tibble()]
+#' @return a [tibble::tibble()]; see [stats::nlm()] for details on `code` variable
 #' @export
 #'
 postprocess_fit = function(
@@ -25,6 +25,9 @@ postprocess_fit = function(
     CI.lwr = exp(fit$estimate + qnorm(halpha)*SE),
     CI.upr = exp(fit$estimate + qnorm(halpha)*SE),
     coverage = coverage,
-    neg.llik = fit$minimum,
-    iterations = fit$iterations)
+    log.lik = -fit$minimum,
+    iterations = fit$iterations,
+    code = fit$code
+
+    )
 }

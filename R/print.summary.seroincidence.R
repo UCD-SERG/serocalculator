@@ -27,14 +27,8 @@
 print.summary.seroincidence <- function(x, ...)
 {
   cat("Seroincidence estimated given the following setup:\n")
-  cat(paste("a) Antibodies   :", paste(x[["Antibodies"]], collapse = ", ")), "\n")
-  cat(paste("b) Strata       :", paste(x[["Strata"]], collapse = ", ")), "\n")
-  censorLimits <- x[["CensorLimits"]]
-  cat(paste("c) Censor limits:", paste(sapply(names(censorLimits), FUN = function(name) {
-    paste(name, censorLimits[name], sep = " = ")
-    }), collapse = ", "), "\n"))
-  cat(paste("d) Quantiles    :", paste(x[["Quantiles"]], collapse = ", ")), "\n")
-
+  cat(paste("a) Antibodies   :", paste(x |> attr("Antibodies"), collapse = ", ")), "\n")
+  cat(paste("b) Strata       :", paste(x |> attr("Strata"), collapse = ", ")), "\n")
   cat("\n Seroincidence estimates:\n")
-  print(x[["Results"]])
+  print(as_tibble(x))
 }

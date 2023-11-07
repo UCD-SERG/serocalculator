@@ -67,13 +67,10 @@ summary.seroincidenceList = summary.seroincidence <- function(
 
   results <-
     object |>
-    sapply(
+    lapply(
       FUN = postprocess_fit,
       coverage = confidence_level) |>
-    bind_rows()
-
-  results$Stratum <- rownames(results)
-  rownames(results) <- NULL
+    bind_rows(.id = "Stratum")
 
   if (!showDeviance) {
     results$log.lik <- NULL

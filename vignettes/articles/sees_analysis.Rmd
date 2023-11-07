@@ -1,0 +1,162 @@
+---
+title: "sees-analysis"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# library(SEES)
+# library(serocalculator)
+library(fs)
+devtools::load_all()
+```
+
+```{r}
+
+library(readr)
+xs_sample = 
+  "extdata/sees_crossSectionalPopulation_baseline_allCountries.102523.csv" |> 
+  path_package(package = "serocalculator") |> 
+  read_csv()
+
+curve_params = 
+  path_package(
+    package = "serocalculator",
+    "extdata/sees_dmcmc_09.30.2021.rds") |> 
+  readRDS()
+
+noise_params = 
+  path_package(
+    package = "serocalculator",
+    "extdata/SEES_NoiseParam.rds") |> 
+  readRDS()
+
+full_data = path_package(
+  package = "serocalculator",
+  "extdata/SEES_2022-10-24_redacted_2023-10-12.csv") |> 
+  read_csv(
+    col_types = cols(ae_diagnosis_other = col_character())
+  )
+
+
+
+
+
+
+```
+
+```{r}
+library(ggplot2)
+full_data |> 
+  filter(
+    dag == "bangladesh",
+    studyarm %in% c("pros case", "retro case"),
+    # timesince0 < 60,
+    antigen != "LPS"
+  ) |>
+  mutate(
+    .by = pid,
+    n_obs = n()) |> 
+  arrange(desc(n_obs), pid, timesince0) |> 
+  filter(
+    pid %in% unique(pid)[1:10]
+  ) |> 
+  mutate(
+    antigen_iso = paste(antigen, isotype, sep = "_")
+  ) |> 
+  ggplot(
+    aes(
+      x = timesince0,
+      y = result,
+      col = antigen_iso
+    )
+  ) +
+  geom_point() + 
+  geom_smooth() +
+  # geom_line() +
+  scale_y_log10() +
+  facet_wrap(vars(pid))
+```
+
+
+```{r}
+library(ggplot2)
+xs_sample |>
+  filter(Country == "Bangladesh") |> 
+  ggplot(aes(x = Age, y = result, col = antigen_iso)) +
+  geom_point() + 
+  geom_smooth() + 
+  scale_y_log10()
+```
+
+
+```{r}
+est1 = incidence.age(
+  start = 0.380,
+  dpop = 
+    xs_sample |> 
+    rename(
+      a = Age,
+      y = result) |> 
+    filter(Country == "Bangladesh"),
+  
+  dmcmc = 
+    curve_params |> 
+    filter(Country == "Bangladesh"),
+  
+  noise_params = 
+    noise_params |> 
+    filter(Country == "Bangladesh"),
+  
+  c.age = "<5",
+  
+  antigen_isos = xs_sample$antigen_iso |> unique(),
+  
+  print.level = 2
+)
+
+print(est1)
+
+
+```
+
+Now we will try the loop function:
+
+```{r}
+
+est2 = estimateSeroincidence(
+  # print.level = 1,
+  start = 0.380,
+  strata = "ageCat",
+  data = 
+    xs_sample |> 
+    rename(
+      a = Age,
+      y = result) |> 
+    filter(Country == "Bangladesh"),
+  
+  lnparams = 
+    curve_params |> 
+    filter(Country == "Bangladesh"),
+  
+  noise_params = 
+    noise_params |> 
+    filter(Country == "Bangladesh")
+)
+
+```
+
+```{r}
+print(est2)
+
+```
+
+```{r}
+summary(est2)
+```
+

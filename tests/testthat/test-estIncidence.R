@@ -38,7 +38,7 @@ test_that(
 
     start <- .05
 
-    fit = incidence.age(
+    fit = est.incidence(
       dpop = p.hlye.IgG,
       dmcmc = c.hlye.IgG,
       c.age = NULL,

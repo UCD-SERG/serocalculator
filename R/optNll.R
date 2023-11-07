@@ -60,5 +60,5 @@
     stepmax = stepmax,
     ...)
 
-  return(fit)
+  return(fit |> structure(lambda.start = lambda.start))
 }

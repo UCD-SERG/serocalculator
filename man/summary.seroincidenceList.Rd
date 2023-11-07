@@ -13,7 +13,7 @@
 )
 }
 \arguments{
-\item{object}{A dataframe containing output of function \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
+\item{object}{A dataframe containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 
@@ -38,21 +38,21 @@ Optionally \code{Deviance} (Negative log likelihood (NLL) at estimated (maximum 
 \code{lambda}) and \code{Covergence} (Convergence indicator returned by \code{\link[=optim]{optim()}}.
 Value of 0 indicates convergence) columns are included.}
 \item{\code{Antibodies}}{Character vector with names of input antibodies used in
-\code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
-\item{\code{Strata}}{Character with names of strata used in \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
+\code{\link[=est.incidence.by]{est.incidence.by()}}.}
+\item{\code{Strata}}{Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}.}
 \item{\code{CensorLimits}}{List of cutoffs for each of the antibodies used in
-\code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
+\code{\link[=est.incidence.by]{est.incidence.by()}}.}
 }
 }
 \description{
 Calculate seroincidence from output of the seroincidence calculator
-\code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.
+\code{\link[=est.incidence.by]{est.incidence.by()}}.
 }
 \examples{
 
 \dontrun{
 # estimate seroincidence
-seroincidence <- estimateSeroincidence(...)
+seroincidence <- est.incidence.by(...)
 
 # calculate summary statistics for the seroincidence object
 seroincidenceSummary <- summary(seroincidence)

@@ -3,9 +3,9 @@
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
-#' [estimateSeroincidence()].
+#' [est.incidence.by()].
 #'
-#' @param object A dataframe containing output of function [estimateSeroincidence()].
+#' @param object A dataframe containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
 #' @param quantiles A vector of length 2 specifying quantiles for lower (first element) and upper
 #'   (second element) bounds of `lambda`. Default = `c(0.025, 0.975)`.
@@ -24,17 +24,17 @@
 #'   `lambda`) and `Covergence` (Convergence indicator returned by [optim()].
 #'   Value of 0 indicates convergence) columns are included.}
 #' \item{`Antibodies`}{Character vector with names of input antibodies used in
-#'   [estimateSeroincidence()].}
-#' \item{`Strata`}{Character with names of strata used in [estimateSeroincidence()].}
+#'   [est.incidence.by()].}
+#' \item{`Strata`}{Character with names of strata used in [est.incidence.by()].}
 #' \item{`CensorLimits`}{List of cutoffs for each of the antibodies used in
-#'   [estimateSeroincidence()].}
+#'   [est.incidence.by()].}
 #' }
 #'
 #' @examples
 #'
 #' \dontrun{
 #' # estimate seroincidence
-#' seroincidence <- estimateSeroincidence(...)
+#' seroincidence <- est.incidence.by(...)
 #'
 #' # calculate summary statistics for the seroincidence object
 #' seroincidenceSummary <- summary(seroincidence)

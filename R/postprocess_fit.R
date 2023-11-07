@@ -11,7 +11,7 @@
 postprocess_fit = function(
     fit,
     coverage = .95,
-    start = NA)
+    start = fit |> attr("lambda.start"))
 {
 
 

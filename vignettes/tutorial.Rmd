@@ -214,7 +214,7 @@ and 1.15 ("High") (1/yr). Object class: `data.frame`.
 c) `getAdditionalData`: Utility function for downloading additional longitudinal response 
 parameters from an online repository. Files available for download are `coxiellaIFAParams4.zip` and 
 `yersiniaSSIParams4.zip`. Object class: `function`.
-d) `estimateSeroincidence`: Main function of the package. Estimates seroincidence based on supplied 
+d) `est.incidence.by`: Main function of the package. Estimates seroincidence based on supplied 
 cross-section antibody levels data and longitudinal response parameters. Object class: `function`.
 
 ## Specifying input data
@@ -371,7 +371,7 @@ Internet connection is needed for this function to work.
 
 ## Estimating seroincidence
 
-Main calculation function provided by package *serocalculator* is called `estimateSeroincidence`.
+Main calculation function provided by package *serocalculator* is called `est.incidence.by`.
 It takes several arguments:
 
 - `data`: A data frame with the cross-sectional data (see variable `serologyData` above). This may 
@@ -420,9 +420,9 @@ baseLine <- list(IgG = c(log(0.05), 1),
                  IgM = c(log(0.005), 1),
                  IgA = c(log(0.005), 1))
 
-# Assign output of function "estimateSeroincidence" to object named 
+# Assign output of function "est.incidence.by" to object named 
 # "seroincidenceData". Use all available processor cores.
-seroincidenceData <- estimateSeroincidence(
+seroincidenceData <- est.incidence.by(
   data = serologyData,
   antibodies = c("IgG", "IgM", "IgA"),
   strata = "AgeCat",
@@ -447,9 +447,9 @@ The following text should be printed.
     ## 
     ## This object is a list containing the following items:
     ## Fits         - List of outputs of "optim" function per stratum.
-    ## Antibodies   - Input parameter antibodies of function "estimateSeroincidence".
-    ## Strata       - Input parameter strata of function "estimateSeroincidence".
-    ## CensorLimits - Input parameter censorLimits of function "estimateSeroincidence".
+    ## Antibodies   - Input parameter antibodies of function "est.incidence.by".
+    ## Strata       - Input parameter strata of function "est.incidence.by".
+    ## CensorLimits - Input parameter censorLimits of function "est.incidence.by".
     ## 
     ## Call summary function to obtain output results.
 
@@ -458,7 +458,7 @@ Translation of these raw results is provided by a custom function `summary` expl
 following section.
 
 The cutoff argument is based on censoring of the observed serum antibody measurements [@Strid_2001]. Cut-off 
-levels must always be specified when calling function `estimateSeroincidence` (argument 
+levels must always be specified when calling function `est.incidence.by` (argument 
 `censorLimits`). Value `0` should be set for antibody measurements where no censoring is needed, for 
 instance 
 
@@ -569,7 +569,7 @@ baseLine <- list(IgG = c(log(0.05), 1),
                  IgA = c(log(0.005), 1))
 
 # 4a. Calculate a single seroincidence rate for all serum samples...
-seroincidenceData <- estimateSeroincidence(
+seroincidenceData <- est.incidence.by(
   data = serologyData,
   antibodies = c("IgG", "IgM", "IgA"),
   strata = "",
@@ -579,7 +579,7 @@ seroincidenceData <- estimateSeroincidence(
 
 # 4b. ...or calculate a single seroincidence rate for a single serum sample 
 # (triplet of titres)...
-seroincidenceData <- estimateSeroincidence(
+seroincidenceData <- est.incidence.by(
   data = serologyData[1, ],
   antibodies = c("IgG", "IgM", "IgA"),
   strata = "",
@@ -588,7 +588,7 @@ seroincidenceData <- estimateSeroincidence(
   par0 = baseLine)
 
 # 4c. ...or calculate a single seroincidence rate for all serum samples (only IgG)
-seroincidenceData <- estimateSeroincidence(
+seroincidenceData <- est.incidence.by(
   data = serologyData,
   antibodies = c("IgG"),
   strata = "",

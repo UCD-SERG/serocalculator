@@ -25,7 +25,7 @@
 #'
 #' @export
 
-incidence.age <- function(
+est.incidence <- function(
     dpop,
     dmcmc,
     noise_params,

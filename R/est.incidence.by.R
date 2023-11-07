@@ -13,7 +13,7 @@
 #'
 #'
 #' @export
-estimateSeroincidence <- function(
+est.incidence.by <- function(
     data,
     lnparams,
     noise_params,
@@ -51,7 +51,7 @@ estimateSeroincidence <- function(
     libPaths <- .libPaths()
     cl <-
       numCores |>
-      min(parallel::detectCores()) |>
+      min(parallel::detectCores() - 1) |>
       parallel::makeCluster()
     on.exit({
       parallel::stopCluster(cl)
@@ -61,11 +61,12 @@ estimateSeroincidence <- function(
     parallel::clusterEvalQ(cl, {
       .libPaths(libPaths)
       library(serocalculator)
+      library(dplyr)
     })
     fits <- parallel::parLapplyLB(
       cl = cl,
       X = stratumDataList,
-      FUN = function(x) .optNll(dataList = x, ...))
+      fun = function(x) .optNll(dataList = x, ...))
   } else
   {
     fits <- lapply(

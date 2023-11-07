@@ -4,7 +4,7 @@
 \alias{postprocess_fit}
 \title{postprocess a fitted incidence model}
 \usage{
-postprocess_fit(fit, coverage = 0.95, start = NA)
+postprocess_fit(fit, coverage = 0.95, start = attr(fit, "lambda.start"))
 }
 \arguments{
 \item{fit}{output from \code{\link[stats:nlm]{stats::nlm()}}}

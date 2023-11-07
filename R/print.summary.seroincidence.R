@@ -11,7 +11,7 @@
 #'
 #' \dontrun{
 #' # estimate seroincidence
-#' seroincidence <- estimateSeroincidence(...)
+#' seroincidence <- est.incidence.by(...)
 #'
 #' # calculate summary statistics for the seroincidence object
 #' seroincidenceSummary <- summary(seroincidence)

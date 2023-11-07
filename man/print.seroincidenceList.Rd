@@ -7,18 +7,18 @@
 \method{print}{seroincidenceList}(x, ...)
 }
 \arguments{
-\item{x}{A list containing output of function \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.}
+\item{x}{A list containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \description{
-Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=estimateSeroincidence]{estimateSeroincidence()}}.
+Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=est.incidence.by]{est.incidence.by()}}.
 }
 \examples{
 
 \dontrun{
 # estimate seroincidence
-seroincidence <- estimateSeroincidence(...)
+seroincidence <- est.incidence.by(...)
 
 # print the seroincidence object to the console
 print(seroincidence)

@@ -11,9 +11,9 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 # library(SEES)
-# library(serocalculator)
+library(serocalculator)
 library(fs)
-devtools::load_all()
+# devtools::load_all()
 ```
 
 ```{r}
@@ -97,21 +97,22 @@ xs_sample |>
 
 
 ```{r}
-est1 = incidence.age(
+library(dplyr)
+est1 = est.incidence(
   dpop = 
     xs_sample |> 
     rename(
       a = Age,
-      y = result) |> 
-    filter(Country == "Bangladesh"),
+      y = result) %>% 
+    dplyr::filter(Country == "Bangladesh"),
   
   dmcmc = 
     curve_params |> 
-    filter(Country == "Bangladesh"),
+    dplyr::filter(Country == "Bangladesh"),
   
   noise_params = 
     noise_params |> 
-    filter(Country == "Bangladesh"),
+    dplyr::filter(Country == "Bangladesh"),
   
   c.age = "<5",
   
@@ -125,24 +126,33 @@ Now we will try the loop function:
 
 ```{r}
 
-est2 = estimateSeroincidence(
-  strata = "ageCat",
+est2 = est.incidence.by(
+  strata = c("ageCat", "Country"),
+  lambda.start = .3,
+  print.level = 2,
+  # numCores = 2,
   data = 
     xs_sample |> 
     rename(
       a = Age,
       y = result) |> 
-    filter(
+    dplyr::filter(
       ageCat != "16+", # missing from curve_params...
-      Country == "Bangladesh"),
+      Country != "Nepal"
+      ),
   
   lnparams = 
     curve_params |> 
-    filter(Country == "Bangladesh"),
+    dplyr::filter(
+      Country != "Nepal"
+      ) |> 
+    select(-Country),
   
   noise_params = 
     noise_params |> 
-    filter(Country == "Bangladesh")
+    dplyr::filter(
+      Country != "Nepal"
+      )
 )
 
 ```
@@ -153,6 +163,6 @@ print(est2)
 ```
 
 ```{r}
-summary(est2)
+a = summary(est2)
 ```
 

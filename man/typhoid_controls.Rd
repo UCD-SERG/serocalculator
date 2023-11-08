@@ -8,7 +8,7 @@
 The measurements are in the variable \code{elisa}. Variable \code{nu} provides an estimate of a conditional noise parameter.
 }
 \usage{
-typhoid_noise_params
+typhoid_controls
 }
 \description{
 Data frame of ELISA assay results, by \code{pop} (\code{"CA Facts"}, \code{"MGH"}), \code{antigen_iso} (\code{"HlyE_IgA"}, \code{"HlyE_IgG"}), and \code{Age} (in years).

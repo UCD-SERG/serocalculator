@@ -17,7 +17,8 @@ The parameters are:
 typhoid_noise_params
 }
 \description{
-Data frame of noise parameters, by \code{Country} (\code{"MGH"}, \code{"bangladesh"}, \code{"nepal"}) and \code{antigen_iso} (\code{"HlyE_IgA"}, \code{"HlyE_IgG"}).
+Data frame of example noise parameters, by \code{Country} (\code{"MGH"}, \code{"bangladesh"}, \code{"nepal"})
+and \code{antigen_iso} (\code{"HlyE_IgA"}, \code{"HlyE_IgG"}).
 }
 \examples{
 

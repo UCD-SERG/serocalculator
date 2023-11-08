@@ -9,7 +9,7 @@
 #' Data frame of ELISA assay results, by `pop` (`"CA Facts"`, `"MGH"`), `antigen_iso` (`"HlyE_IgA"`, `"HlyE_IgG"`), and `Age` (in years).
 #'
 #' @usage
-#' typhoid_noise_params
+#' typhoid_controls
 #'
 #' @format
 #'  The measurements are in the variable `elisa`. Variable `nu` provides an estimate of a conditional noise parameter.

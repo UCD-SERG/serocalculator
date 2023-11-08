@@ -47,9 +47,9 @@ est.incidence <- function(
     dpop = dpop %>% filter(ageCat == c.age)
     dmcmc = dmcmc %>% filter(ageCat == c.age)
 
-    if("ageCat" %in% names(cond))
+    if("ageCat" %in% names(noise_params))
     {
-      cond = cond %>% filter(ageCat == c.age)
+      noise_params = noise_params %>% filter(ageCat == c.age)
     }
   }
 

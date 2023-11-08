@@ -115,23 +115,12 @@ objfunc <- function(llam){
 fit <- nlm(objfunc,log.lambda,
            hessian=TRUE,print.level=0,stepmax=(log.lmax-log.lmin)/4)
 
-
-#lambda, lower, upper, LF min
-log.lambda.est <- c(exp(fit$estimate),
-                    exp(fit$estimate + qnorm(c(0.025))*sqrt(1/fit$hessian)),
-                    exp(fit$estimate + qnorm(c(0.975))*sqrt(1/fit$hessian)),
-                    fit$minimum)
-
-log.lambda.est
-
-typhoid_results = tibble(
-      est.start = start,
-      incidence.rate = exp(fit$estimate),
-      CI.lwr = exp(fit$estimate + qnorm(c(0.025))*sqrt(1/fit$hessian)),
-      CI.upr = exp(fit$estimate + qnorm(c(0.975))*sqrt(1/fit$hessian)),
+typhoid_results = fit |> 
+  postprocess_fit(
       coverage = .95,
-      neg.llik = fit$minimum,
-      iterations = fit$iterations)
+      start = start
+  ) |>
+    mutate(ageCat = NULL)
 
 usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
 ```

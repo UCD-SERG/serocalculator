@@ -23,9 +23,9 @@
   # Loop over antibodies
   for (cur_antibody in antibodies)
   {
-    cur_data = data |> filter(antigen_iso == cur_antibody)
-    cur_lnparams <- lnparams |> filter(antigen_iso == cur_antibody)
-    cur_noise_params = noise_params |> filter(antigen_iso == cur_antibody)
+    cur_data = data |> filter(.data[["antigen_iso"]] == cur_antibody)
+    cur_lnparams <- lnparams |> filter(.data[["antigen_iso"]] == cur_antibody)
+    cur_noise_params = noise_params |> filter(.data[["antigen_iso"]] == cur_antibody)
 
     nllSingle <-
       fdev(

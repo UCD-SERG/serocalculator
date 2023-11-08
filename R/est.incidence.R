@@ -102,7 +102,9 @@ est.incidence <- function(
       coverage = coverage,
       start = start
   ) |>
-    mutate(ageCat = c.age)
+    mutate(ageCat = c.age,
+           antigen.iso = paste(collapse = "+", antigen_isos)) %>%
+    structure(noise.parameters = cond)
 
   return(log.lambda.est)
 }

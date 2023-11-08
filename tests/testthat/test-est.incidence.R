@@ -1,5 +1,5 @@
 test_that(
-  "typhoid study has correct results",
+  "est.incidence() produces expected results for typhoid data",
   {
     library(readr)
     library(dplyr)
@@ -47,6 +47,8 @@ test_that(
       start = start,
       print.level = 2,
       iterlim = 100)
+
+    # compare with `typhoid_results` from data-raw/typhoid_results.qmd
 
     expect_equal(
       object = fit,

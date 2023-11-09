@@ -95,14 +95,25 @@
 #'
 
 ## usethis namespace: start
+#' @importFrom dplyr across
+#' @importFrom dplyr all_of
+#' @importFrom dplyr any_of
 #' @importFrom dplyr bind_rows
+#' @importFrom dplyr distinct
+#' @importFrom dplyr everything
 #' @importFrom dplyr filter
+#' @importFrom dplyr inner_join
 #' @importFrom dplyr mutate
 #' @importFrom dplyr pull
+#' @importFrom dplyr relocate
 #' @importFrom dplyr rename
+#' @importFrom dplyr row_number
 #' @importFrom dplyr select
 #' @importFrom dplyr tibble
 #' @importFrom magrittr %>%
+#' @importFrom parallel clusterEvalQ
+#' @importFrom parallel clusterExport
+#' @importFrom parallel parLapplyLB
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
 #' @importFrom rlang .env
@@ -110,6 +121,7 @@
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
 #' @importFrom tibble as_tibble
+#' @importFrom tibble column_to_rownames
 #' @importFrom tibble tibble
 #' @importFrom tidyr drop_na
 #' @importFrom utils download.file unzip

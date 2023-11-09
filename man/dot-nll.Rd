@@ -4,7 +4,15 @@
 \alias{.nll}
 \title{Calculate log-likelihood}
 \usage{
-.nll(log.lambda, data, antigen_isos, curve_params, noise_params, ...)
+.nll(
+  log.lambda,
+  data,
+  antigen_isos,
+  curve_params,
+  noise_params,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{log.lambda}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
@@ -17,6 +25,8 @@
 Monte Carlo samples for each antibody type.}
 
 \item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
+
+\item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{additional arguments passed to other functions (not currently used).}
 }

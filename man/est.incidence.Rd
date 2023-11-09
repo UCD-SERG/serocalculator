@@ -14,6 +14,7 @@ est.incidence(
   start = 0.1,
   iterlim = 100,
   coverage = 0.95,
+  verbose = FALSE,
   ...
 )
 }
@@ -33,6 +34,8 @@ est.incidence(
 \item{iterlim}{a positive integer specifying the maximum number of iterations to be performed before the program is terminated.}
 
 \item{coverage}{desired confidence interval coverage probability}
+
+\item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

@@ -5,6 +5,7 @@
 #' @param curve_params List of data frames of all longitudinal parameters. Each data frame contains
 #'   Monte Carlo samples for each antibody type.
 #' @param noise_params a [list()] (or [data.frame()], or [tibble()]) containing noise parameters
+#' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams fdev
 
@@ -15,6 +16,7 @@
     antigen_isos,
     curve_params,
     noise_params,
+    verbose = FALSE,
     ...)
 {
   # Start with zero total
@@ -23,9 +25,9 @@
   # Loop over antibodies
   for (cur_antibody in antigen_isos)
   {
-    cur_data = data |> filter(.data[["antigen_iso"]] == cur_antibody)
-    cur_curve_params <- curve_params |> filter(.data[["antigen_iso"]] == cur_antibody)
-    cur_noise_params = noise_params |> filter(.data[["antigen_iso"]] == cur_antibody)
+    cur_data = data[[cur_antibody]]
+    cur_curve_params = curve_params[[cur_antibody]]
+    cur_noise_params = noise_params[[cur_antibody]]
 
     nllSingle <-
       fdev(

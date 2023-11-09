@@ -37,9 +37,16 @@ d0 <- read.csv(
   select(Country, cluster, catchment, Age, ageCat, antigen_iso, result) %>%
   mutate(cluster = factor(cluster)) %>%
   filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) |>
-  as_tibble()
+  as_tibble() |>
+  select(-cluster)
 
   sees_crossSectional_baseline_allCountries = d0
 use_data(sees_crossSectional_baseline_allCountries, overwrite =  TRUE)
-write_csv(d0, "inst/extdata/sees_crossSectional_baseline_allCountries.102523.csv")
+write_csv(
+  d0,
+  fs::path(
+          "inst/extdata",
+          paste0(
+            "sees_crossSectional_baseline_allCountries",
+            ".102523.csv")))
 

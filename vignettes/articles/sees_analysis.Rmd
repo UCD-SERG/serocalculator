@@ -11,10 +11,8 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-# library(SEES)
 library(serocalculator)
 library(fs)
-# devtools::load_all()
 ```
 
 ```{r}
@@ -35,7 +33,8 @@ noise_params =
   path_package(
     package = "serocalculator",
     "extdata/SEES_NoiseParam.rds") |> 
-  readRDS()
+  readRDS() |> 
+  rename(y.low = llod)
 
 full_data = path_package(
   package = "serocalculator",
@@ -44,18 +43,13 @@ full_data = path_package(
     col_types = cols(ae_diagnosis_other = col_character())
   )
 
-
-
-
-
-
 ```
 
 ```{r}
 library(ggplot2)
 library(dplyr)
 full_data |> 
-  filter(
+  dplyr::filter(
     dag == "bangladesh",
     studyarm %in% c("pros case", "retro case"),
     # timesince0 < 60,
@@ -65,7 +59,7 @@ full_data |>
     .by = pid,
     n_obs = n()) |> 
   arrange(desc(n_obs), pid, timesince0) |> 
-  filter(
+  dplyr::filter(
     pid %in% unique(pid)[1:10]
   ) |> 
   mutate(
@@ -89,7 +83,7 @@ full_data |>
 ```{r}
 library(ggplot2)
 xs_sample |>
-  filter(Country == "Bangladesh") |> 
+  dplyr::filter(Country == "Bangladesh") |> 
   ggplot(aes(x = Age, y = result, col = antigen_iso)) +
   geom_point() + 
   geom_smooth() + 
@@ -97,9 +91,12 @@ xs_sample |>
 ```
 
 
-```{r}
+```{r, eval = TRUE}
 library(dplyr)
 est1 = est.incidence(
+  print.level = 2,
+  start = 0.3,
+  verbose = TRUE,
   dpop = 
     xs_sample |> 
     rename(
@@ -127,11 +124,14 @@ Now we will try the loop function:
 
 ```{r}
 
+{
 est2 = est.incidence.by(
+  stepmax = 1,
+  verbose = TRUE,
   strata = c("ageCat", "Country"),
   lambda.start = .3,
   print.level = 2,
-  # numCores = 2,
+  numCores = 1,
   data = 
     xs_sample |> 
     rename(
@@ -146,8 +146,7 @@ est2 = est.incidence.by(
     curve_params |> 
     dplyr::filter(
       Country != "Nepal"
-      ) |> 
-    select(-Country),
+      ),
   
   noise_params = 
     noise_params |> 
@@ -155,6 +154,13 @@ est2 = est.incidence.by(
       Country != "Nepal"
       )
 )
+} |> system.time() -> time
+
+if(verbose)
+    {
+      message("Elapsed time for `est.incidence.by()`: ")
+      print(time)
+}
 
 ```
 
@@ -164,6 +170,6 @@ print(est2)
 ```
 
 ```{r}
-a = summary(est2)
+a = summary(est2) |> print()
 ```
 

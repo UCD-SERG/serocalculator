@@ -2,9 +2,9 @@
 #' Print Method for Seroincidence Summary Object
 #'
 #' @description
-#' Custom [print()] function to show output of the seroincidence summary [summary.seroincidence()].
+#' Custom [print()] function for "summary.seroincidence.ests" objects (constructed by [summary.seroincidence.ests()])
 #'
-#' @param x A list containing output of function [summary.seroincidence()].
+#' @param x A "summary.seroincidence.ests" object (constructed by [summary.seroincidence.ests()])
 #' @param ... Additional arguments affecting the summary produced.
 #'
 #' @examples

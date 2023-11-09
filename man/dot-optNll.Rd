@@ -9,13 +9,10 @@
   lnparams = dataList$lnparams,
   noise_params = dataList$noise_params,
   dataList = NULL,
-  antigen_isos = unique(pull(data, antigen_iso)),
-  lambda.start = exp(-6),
-  loglambda.start = log(lambda.start),
-  log.lmin = loglambda.start - log(10),
-  log.lmax = loglambda.start + log(10),
-  stepmax = (log.lmax - log.lmin)/4,
+  antigen_isos = unique(pull(data, "antigen_iso")),
+  lambda.start = 1/365.25,
   hessian = TRUE,
+  stepmax = 1,
   ...
 )
 }
@@ -31,13 +28,10 @@ Monte Carlo samples for each antibody type.}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
 
-\item{lambda.start}{starting guess for incidence; only needed if \code{loglambda.start} is not used}
+\item{lambda.start}{starting guess for incidence rate, in years/event.}
 
-\item{loglambda.start}{starting guess for log(incidence); only needed if \code{lambda.start} is not used. A starting value for \code{log.lambda}. Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)}), -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}). Default = -6.}
-
-\item{log.lmin}{used to determine default value of \code{stepmax}}
-
-\item{log.lmax}{used to determine default value of \code{stepmax}}
+\item{hessian}{if \code{TRUE}, the hessian of \code{f}
+    at the minimum is returned.}
 
 \item{stepmax}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
@@ -46,9 +40,6 @@ Monte Carlo samples for each antibody type.}
     detect divergence in the algorithm. \code{stepmax} would be chosen
     small enough to prevent the first two of these occurrences, but should
     be larger than any anticipated reasonable step.}
-
-\item{hessian}{if \code{TRUE}, the hessian of \code{f}
-    at the minimum is returned.}
 
 \item{...}{
   Arguments passed on to \code{\link[=.nll]{.nll}}, \code{\link[stats:nlm]{stats::nlm}}

@@ -50,7 +50,8 @@ cond.hlye.IgG <- data.frame(
   nu = 1.027239,             # B noise
   eps = 0.2,            # M noise
   y.low = 0.0,          # low cutoff
-  y.high = 5e4); 
+  y.high = 5e4,
+  antigen_iso = "HlyE_IgG"); 
 ```
 
 ```{r seroinc}

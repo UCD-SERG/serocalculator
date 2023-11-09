@@ -108,7 +108,8 @@
   invisible(NULL)
 }
 
-.prepData <- function(data, antibodies, lnparams, noise_params, strata = "")
+.prepData <- function(
+    data, antibodies, lnparams, noise_params, strata = "")
 {
 
   # Make stratum variable (if needed)
@@ -125,14 +126,14 @@
       list(
         data =
           xs_dataStrata |>
-          filter(Stratum == cur_stratum)
+          filter(.data[["Stratum"]] == cur_stratum)
       )
 
     if("Stratum" %in% names(lnparamsStrata))
     {
       lnparams_cur_stratum =
         lnparamsStrata |>
-        filter(Stratum == cur_stratum)
+        filter(.data[["Stratum"]] == cur_stratum)
 
       if(nrow(lnparams_cur_stratum) == 0)
       {
@@ -154,7 +155,7 @@
     {
       noise_params_cur_stratum =
         noise_params_Strata |>
-        filter(Stratum == cur_stratum)
+        filter(.data[["Stratum"]] == cur_stratum)
 
       if(nrow(noise_params_cur_stratum) == 0)
       {

@@ -8,9 +8,9 @@ Authors@R: c(
   person(given = "Kristina", family = "Lai", role = c("aut")), 
   person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
   person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut", "cre")))
-Description: Translates antibody levels measured in a cross-sectional population 
-  sample into an estimate of the frequency with which seroconversions (infections) 
-  occur in the sampled population. Forked from the "seroincidence" package v2.0.0 on CRAN.
+Description: Translates antibody levels measured in cross-sectional population 
+  samples into estimates of the frequency with which seroconversions (infections) 
+  occur in the sampled populations. Replaces the previous `seroincidence` package.
 Depends: R (>= 3.5.0)
 License: GPL-3
 Imports: 
@@ -31,7 +31,8 @@ Suggests:
     tidyverse,
     fs,
     testthat (>= 3.0.0),
-    readr
+    readr,
+    ggplot2
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

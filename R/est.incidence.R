@@ -44,12 +44,14 @@ est.incidence <- function(
 
   if(!is.null(c.age))
   {
-    dpop = dpop %>% filter(ageCat == c.age)
-    dmcmc = dmcmc %>% filter(ageCat == c.age)
+    dpop = dpop %>% filter(.data[["ageCat"]] == c.age)
+    dmcmc = dmcmc %>% filter(.data[["ageCat"]] == c.age)
 
     if("ageCat" %in% names(noise_params))
     {
-      noise_params = noise_params %>% filter(ageCat == c.age)
+      noise_params =
+        noise_params %>%
+        filter(.data[["ageCat"]] == c.age)
     }
   }
 
@@ -69,7 +71,7 @@ est.incidence <- function(
 
     conds[[cur_antigen]] =
       noise_params %>%
-      filter(antigen_iso == cur_antigen)
+      filter(.data[["antigen_iso"]] == cur_antigen)
 
   }
 

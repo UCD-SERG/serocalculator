@@ -33,8 +33,8 @@ est.incidence.by <- function(
     lnparams |>
     filter(.data$antigen_iso %in% antigen_isos) |>
     mutate(
-      alpha = alpha * 365.25,
-      d = r - 1)
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1)
   # %>%
   #   select(y1, alpha, d, antigen_iso, any_of(strata))
 

@@ -22,15 +22,15 @@ postprocess_fit = function(
     est.start = start,
     incidence.rate = exp(fit$estimate),
     SE = sqrt(1/fit$hessian) |> as.vector(),
-    CI.lwr = exp(fit$estimate - qnorm(1 - h.alpha) * SE),
-    CI.upr = exp(fit$estimate + qnorm(1 - h.alpha) * SE),
+    CI.lwr = exp(fit$estimate - qnorm(1 - h.alpha) * .data$SE),
+    CI.upr = exp(fit$estimate + qnorm(1 - h.alpha) * .data$SE),
     coverage = coverage,
     log.lik = -fit$minimum,
     iterations = fit$iterations,
     nlm.exit.code = fit$code)
 
   class(log.lambda.est) =
-    "summary.seroincidence" |>
+    "summary.seroincidence.est" |>
     union(class(log.lambda.est))
 
   return(log.lambda.est)

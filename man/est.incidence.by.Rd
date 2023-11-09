@@ -31,10 +31,7 @@ Monte Carlo samples for each antibody type.}
 \item{...}{
   Arguments passed on to \code{\link[=.optNll]{.optNll}}
   \describe{
-    \item{\code{lambda.start}}{starting guess for incidence; only needed if \code{loglambda.start} is not used}
-    \item{\code{loglambda.start}}{starting guess for log(incidence); only needed if \code{lambda.start} is not used. A starting value for \code{log.lambda}. Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)}), -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}). Default = -6.}
-    \item{\code{log.lmin}}{used to determine default value of \code{stepmax}}
-    \item{\code{log.lmax}}{used to determine default value of \code{stepmax}}
+    \item{\code{lambda.start}}{starting guess for incidence rate, in years/event.}
     \item{\code{dataList}}{Optional argument; as an alternative to passing in \code{data}, \code{lnparams}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
     \item{\code{hessian}}{if \code{TRUE}, the hessian of \code{f}
     at the minimum is returned.}

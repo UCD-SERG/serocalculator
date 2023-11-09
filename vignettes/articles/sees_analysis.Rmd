@@ -5,7 +5,8 @@ title: "sees-analysis"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
@@ -20,7 +21,7 @@ library(fs)
 
 library(readr)
 xs_sample = 
-  "extdata/sees_crossSectionalPopulation_baseline_allCountries.102523.csv" |> 
+  "extdata/sees_crossSectional_baseline_allCountries.102523.csv" |> 
   path_package(package = "serocalculator") |> 
   read_csv()
 
@@ -141,7 +142,7 @@ est2 = est.incidence.by(
       Country != "Nepal"
       ),
   
-  lnparams = 
+  curve_params = 
     curve_params |> 
     dplyr::filter(
       Country != "Nepal"

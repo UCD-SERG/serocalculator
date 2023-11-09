@@ -1,9 +1,8 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
-#' @param data Data frame with cross-sectional serology data per antibody and age
 #' @param lambda.start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
-#' @param dataList Optional argument; as an alternative to passing in `data`, `lnparams`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
+#' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @inheritParams .nll
 #' @inheritParams stats::nlm
 #' @inheritDotParams .nll
@@ -13,7 +12,7 @@
 
 .optNll <- function(
     data = dataList$data,
-    lnparams = dataList$lnparams,
+    curve_params = dataList$curve_params,
     noise_params = dataList$noise_params,
     dataList = NULL,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
@@ -31,8 +30,8 @@
   res <- .nll(
     data = data,
     log.lambda = log(lambda.start),
-    antibodies = antigen_isos,
-    lnparams = lnparams,
+    antigen_isos = antigen_isos,
+    curve_params = curve_params,
     noise_params = noise_params,
     ...)
 
@@ -46,8 +45,8 @@
     f = .nll,
     p = log(lambda.start),
     data = data,
-    antibodies = antigen_isos,
-    lnparams = lnparams,
+    antigen_isos = antigen_isos,
+    curve_params = curve_params,
     noise_params = noise_params,
     hessian = hessian,
     stepmax = stepmax,

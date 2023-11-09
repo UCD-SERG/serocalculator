@@ -4,16 +4,16 @@
 \alias{.nll}
 \title{Calculate log-likelihood}
 \usage{
-.nll(log.lambda, data, antibodies, lnparams, noise_params, ...)
+.nll(log.lambda, data, antigen_isos, curve_params, noise_params, ...)
 }
 \arguments{
 \item{log.lambda}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
 
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}.}
 
-\item{lnparams}{List of data frames of all longitudinal parameters. Each data frame contains
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}
 
 \item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}

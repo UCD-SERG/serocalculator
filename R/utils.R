@@ -109,12 +109,12 @@
 }
 
 .prepData <- function(
-    data, antibodies, lnparams, noise_params, strata = "")
+    data, antibodies, curve_params, noise_params, strata = "")
 {
 
   # Make stratum variable (if needed)
   xs_dataStrata <- data |> .makeStrata(strata)
-  lnparamsStrata = lnparams |> .makeStrata(strata)
+  curve_paramsStrata = curve_params |> .makeStrata(strata)
   noise_params_Strata = noise_params |> .makeStrata(strata)
   levelsStrata <- levels(xs_dataStrata$Stratum)
 
@@ -129,13 +129,13 @@
           filter(.data[["Stratum"]] == cur_stratum)
       )
 
-    if("Stratum" %in% names(lnparamsStrata))
+    if("Stratum" %in% names(curve_paramsStrata))
     {
-      lnparams_cur_stratum =
-        lnparamsStrata |>
+      curve_params_cur_stratum =
+        curve_paramsStrata |>
         filter(.data[["Stratum"]] == cur_stratum)
 
-      if(nrow(lnparams_cur_stratum) == 0)
+      if(nrow(curve_params_cur_stratum) == 0)
       {
         stop(
           "No curve parameter samples were provided for stratum: ",
@@ -143,12 +143,12 @@
           )
       }
 
-      stratumDataList[[cur_stratum]]$lnparams =
-        lnparams_cur_stratum
+      stratumDataList[[cur_stratum]]$curve_params =
+        curve_params_cur_stratum
 
     } else
     {
-      stratumDataList[[cur_stratum]]$lnparams = lnparams
+      stratumDataList[[cur_stratum]]$curve_params = curve_params
     }
 
     if("Stratum" %in% names(noise_params_Strata))

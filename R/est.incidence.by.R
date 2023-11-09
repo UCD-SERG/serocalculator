@@ -15,7 +15,7 @@
 #' @export
 est.incidence.by <- function(
     data,
-    lnparams,
+    curve_params,
     noise_params,
     strata = "",
     numCores = 1L,
@@ -27,10 +27,10 @@ est.incidence.by <- function(
     data = data,
     antibodies = antigen_isos,
     strata = strata,
-    params = lnparams)
+    params = curve_params)
 
-  lnparams =
-    lnparams |>
+  curve_params =
+    curve_params |>
     filter(.data$antigen_iso %in% antigen_isos) |>
     mutate(
       alpha = .data$alpha * 365.25,
@@ -42,7 +42,7 @@ est.incidence.by <- function(
   stratumDataList <- .prepData(
     data = data,
     antibodies = antigen_isos,
-    lnparams = lnparams,
+    curve_params = curve_params,
     noise_params = noise_params,
     strata = strata)
 

@@ -6,7 +6,7 @@
 \usage{
 est.incidence.by(
   data,
-  lnparams,
+  curve_params,
   noise_params,
   strata = "",
   numCores = 1L,
@@ -17,7 +17,7 @@ est.incidence.by(
 \arguments{
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
-\item{lnparams}{List of data frames of all longitudinal parameters. Each data frame contains
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}
 
 \item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
@@ -32,7 +32,7 @@ Monte Carlo samples for each antibody type.}
   Arguments passed on to \code{\link[=.optNll]{.optNll}}
   \describe{
     \item{\code{lambda.start}}{starting guess for incidence rate, in years/event.}
-    \item{\code{dataList}}{Optional argument; as an alternative to passing in \code{data}, \code{lnparams}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
+    \item{\code{dataList}}{Optional argument; as an alternative to passing in \code{data}, \code{curve_params}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
     \item{\code{hessian}}{if \code{TRUE}, the hessian of \code{f}
     at the minimum is returned.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable

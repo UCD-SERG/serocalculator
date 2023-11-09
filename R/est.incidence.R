@@ -11,7 +11,7 @@
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
 #' @inheritParams postprocess_fit
-#' @inheritDotParams stats::nlm -f -p -hessian -iterlim -stepmax
+#' @inheritDotParams stats::nlm -f -p -hessian -iterlim
 #'
 #' @return A [data.frame()] containing the following:
 #' * `est.start`: the starting guess for incidence rate
@@ -39,8 +39,6 @@ est.incidence <- function(
 
   lambda = start # initial estimate: starting value
   log.lambda = log(lambda)
-  log.lmin = log(lambda/10)
-  log.lmax = log(10*lambda) # seroincidence rate interval
 
   if(!is.null(c.age))
   {
@@ -89,7 +87,6 @@ est.incidence <- function(
     p = log.lambda,
     hessian = TRUE,
     iterlim = iterlim,
-    stepmax = (log.lmax - log.lmin) / 4,
     ...)
 
   if(fit$iterations >= iterlim)

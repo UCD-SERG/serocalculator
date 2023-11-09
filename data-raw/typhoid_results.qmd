@@ -69,8 +69,13 @@ objfunc <- function(llam){
 }
 
 
-fit <- nlm(objfunc,log.lambda,
-           hessian=TRUE,print.level=0,stepmax=(log.lmax-log.lmin)/4)
+fit <- nlm(
+  objfunc,
+  p=log.lambda,
+  hessian=TRUE,
+  print.level=0,
+  stepmax=1,
+  iterlim = 100)
 
 typhoid_results = fit |> 
   postprocess_fit(

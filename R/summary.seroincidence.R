@@ -63,7 +63,12 @@ summary.seroincidence.ests <- function(
     lapply(
       FUN = postprocess_fit,
       coverage = confidence_level) |>
-    bind_rows(.id = "Stratum")
+    inner_join(
+      object |> attr("strata"),
+      by = "Stratum",
+      relationship = "one-to-one"
+    )
+
 
   if (!showDeviance) {
     results$log.lik <- NULL
@@ -77,7 +82,7 @@ summary.seroincidence.ests <- function(
     results |>
     structure(
       Antibodies = attr(object, "Antibodies"),
-      Strata = attr(object, "Strata"),
+      Strata = attr(object, "Strata") |> ,
       Quantiles = quantiles,
       class =
         "summary.seroincidence.ests" |>

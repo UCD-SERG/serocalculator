@@ -95,11 +95,15 @@
 #'
 
 ## usethis namespace: start
+#' @importFrom dplyr across
+#' @importFrom dplyr all_of
 #' @importFrom dplyr bind_rows
+#' @importFrom dplyr distinct
 #' @importFrom dplyr filter
 #' @importFrom dplyr mutate
 #' @importFrom dplyr pull
 #' @importFrom dplyr rename
+#' @importFrom dplyr row_number
 #' @importFrom dplyr select
 #' @importFrom dplyr tibble
 #' @importFrom magrittr %>%
@@ -110,6 +114,7 @@
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
 #' @importFrom tibble as_tibble
+#' @importFrom tibble column_to_rownames
 #' @importFrom tibble tibble
 #' @importFrom tidyr drop_na
 #' @importFrom utils download.file unzip

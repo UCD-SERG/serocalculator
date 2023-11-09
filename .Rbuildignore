@@ -16,3 +16,6 @@
 ^sees_dmcmc_09.30.2021.rds$
 ^SEES_2022-10-24_redacted_2023-10-12.csv$
 ^allpopsamples_hlye.csv$
+^serocalculator\.Rcheck$
+^serocalculator.*\.tar\.gz$
+^serocalculator.*\.tgz$

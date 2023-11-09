@@ -8,3 +8,6 @@
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$
+^serocalculator\.Rcheck$
+^serocalculator.*\.tar\.gz$
+^serocalculator.*\.tgz$

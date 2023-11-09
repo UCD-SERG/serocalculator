@@ -2,7 +2,8 @@ get_strata = function(data, strata_varnames)
 {
   to_return =
     data |>
-    distinct(across(any_of(strata_varnames))) |>
+    count(across(any_of(c(strata_varnames, "antigen_iso")))) |>
+    distinct(across(any_of(c(strata_varnames, "n")))) |>
     mutate(Stratum = paste("Stratum", row_number()))
 
 }

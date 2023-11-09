@@ -89,6 +89,7 @@ est.incidence.by <- function(
         fun = function(x)
           .optNll(
             dataList = x,
+            antigen_isos = antigen_isos,
             ...)
       )
     } |> system.time() -> time
@@ -122,6 +123,7 @@ est.incidence.by <- function(
       fits[[cur_stratum]] =
         .optNll(
           dataList = stratumDataList[[cur_stratum]],
+          antigen_isos = antigen_isos,
           verbose = verbose,
           ...)
 

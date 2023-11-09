@@ -39,7 +39,7 @@
 #' }
 #'
 #' @export
-summary.seroincidenceList = summary.seroincidence <- function(
+summary.seroincidence.ests <- function(
     object,
     ...,
     confidence_level = .95,
@@ -49,11 +49,6 @@ summary.seroincidenceList = summary.seroincidence <- function(
 
   alpha = 1 - confidence_level
   quantiles = c(alpha/2, 1 - alpha/2)
-
-  # R CMD check warnings workaround
-  hessian <- NULL
-  value <- NULL
-  convergence <- NULL
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
     stop("Incorrectly specified quantiles")
@@ -78,12 +73,16 @@ summary.seroincidenceList = summary.seroincidence <- function(
     results$nlm.exit.code <- NULL
   }
 
-  output <- structure(
-    results,
-    Antibodies = attr(object, "Antibodies"),
-    Strata = attr(object, "Strata"),
-    Quantiles = quantiles,
-    class = c("summary.seroincidence", "list"))
+  output <-
+    results |>
+    structure(
+      Antibodies = attr(object, "Antibodies"),
+      Strata = attr(object, "Strata"),
+      Quantiles = quantiles,
+      class =
+        "summary.seroincidence.ests" |>
+        union(class(results))
+    )
 
   return(output)
 }

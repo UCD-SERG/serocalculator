@@ -24,7 +24,7 @@
 #' }
 #'
 #' @export
-print.summary.seroincidence <- function(x, ...)
+print.summary.seroincidence.ests <- function(x, ...)
 {
   cat("Seroincidence estimated given the following setup:\n")
   cat(paste("a) Antibodies   :", paste(x |> attr("Antibodies"), collapse = ", ")), "\n")

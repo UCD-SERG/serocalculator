@@ -21,7 +21,7 @@
 #' }
 #'
 #' @export
-print.seroincidenceList = print.seroincidence <- function(x, ...)
+print.seroincidence.ests <- function(x, ...)
 {
   cat("Seroincidence object estimated given the following setup:\n")
   cat(paste("a) Antibodies   :", paste(attr(x, "Antibodies"), collapse = ", ")), "\n")

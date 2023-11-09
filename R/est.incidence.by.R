@@ -78,7 +78,7 @@ est.incidence.by <- function(
     fits,
     Antibodies = antigen_isos,
     Strata = strata,
-    class = c("seroincidenceList", class(fits)))
+    class = "seroincidence.ests" |> union(class(fits)))
 
   return(incidenceData)
 }

@@ -79,7 +79,7 @@ typhoid_results = fit |>
   mutate(
     ageCat = NULL,
     antigen.iso = paste(collapse = "+", "HlyE_IgG")) %>%
-  structure(noise.parameters = cond)
+  structure(noise.parameters = cond.hlye.IgG)
 
 usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
 ```

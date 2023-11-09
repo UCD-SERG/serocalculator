@@ -101,10 +101,12 @@ est.incidence <- function(
     postprocess_fit(
       coverage = coverage,
       start = start
-  ) |>
-    mutate(ageCat = c.age,
-           antigen.iso = paste(collapse = "+", antigen_isos)) %>%
-    structure(noise.parameters = cond)
+    ) |>
+    mutate(
+      ageCat = c.age,
+      antigen.iso = antigen_isos |> paste(collapse = "+")) %>%
+    structure(
+      noise.parameters = noise_params)
 
   return(log.lambda.est)
 }

@@ -60,5 +60,10 @@
     stepmax = stepmax,
     ...)
 
-  return(fit |> structure(lambda.start = lambda.start))
+  fit = fit |>
+    structure(
+      class = "seroincidence.est" |> union(class(fit)),
+      lambda.start = lambda.start)
+
+  return(fit)
 }

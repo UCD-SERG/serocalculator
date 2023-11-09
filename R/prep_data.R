@@ -57,7 +57,7 @@ prep_data <- function(
   {
 
     cur_stratum_vals =
-      strata |> dplyr::filter(Stratum == cur_stratum)
+      strata |> dplyr::filter(.data$Stratum == cur_stratum)
 
     data_and_params_cur_stratum =
       list(

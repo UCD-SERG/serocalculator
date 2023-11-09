@@ -90,8 +90,9 @@ xs_sample |>
   scale_y_log10()
 ```
 
+Here we do one stratum at a time:
 
-```{r, eval = TRUE}
+```{r}
 library(dplyr)
 est1 = est.incidence(
   print.level = 2,
@@ -124,7 +125,6 @@ Now we will try the loop function:
 
 ```{r}
 
-{
 est2 = est.incidence.by(
   stepmax = 1,
   verbose = TRUE,
@@ -154,13 +154,6 @@ est2 = est.incidence.by(
       Country != "Nepal"
       )
 )
-} |> system.time() -> time
-
-if(verbose)
-    {
-      message("Elapsed time for `est.incidence.by()`: ")
-      print(time)
-}
 
 ```
 

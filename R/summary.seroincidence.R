@@ -72,7 +72,7 @@ summary.seroincidence.ests <- function(
       by = "Stratum",
       relationship = "one-to-one"
     ) |>
-    relocate(Stratum, .before = everything())
+    relocate("Stratum", .before = everything())
 
 
   if (!showDeviance) {

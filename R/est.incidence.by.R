@@ -105,6 +105,9 @@ est.incidence.by <- function(
     #   FUN = function(x) .optNll(dataList = x, verbose = verbose, ...))
 
     fits = list()
+
+    {
+
     for (cur_stratum in names(stratumDataList))
     {
       if(verbose)
@@ -122,6 +125,13 @@ est.incidence.by <- function(
           verbose = verbose,
           ...)
 
+    }
+    }  |> system.time() -> time
+
+    if(verbose)
+    {
+      message("Elapsed time for loop over strata: ")
+      print(time)
     }
   }
 

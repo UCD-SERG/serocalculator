@@ -41,12 +41,14 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/cover.html">R Package - serocalculator</a>
+    <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
     <a class="dropdown-item" href="../articles/example-analysis.html">example-analysis</a>
     <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
     <a class="dropdown-item" href="../articles/methodology.html">Serocalculator package methodology</a>
     <a class="dropdown-item" href="../articles/simulation.html">simulation</a>
     <a class="dropdown-item" href="../articles/tutorial.html">Serocalculator package tutorial</a>
+    <a class="dropdown-item" href="../articles/typhoid-controls.html">typhoid-controls</a>
+    <a class="dropdown-item" href="../articles/typhoid-seroincidence.html">Typhoid Seroincidence</a>
   </div>
 </li>
       </ul>
@@ -77,7 +79,7 @@
                         <h4 data-toc-skip class="author">UC Davis
 SeroEpidemiology Group</h4>
             
-            <h4 data-toc-skip class="date">2023-10-25</h4>
+            <h4 data-toc-skip class="date">2023-11-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/HEAD/vignettes/tutorial.Rmd" class="external-link"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="d-none name"><code>tutorial.Rmd</code></div>
@@ -422,13 +424,15 @@ calculation are made available. It can be checked by running:</p>
 <span><span class="co">##  [3] "campylobacterDelftParams4"  "campylobacterSimHighData"  </span></span>
 <span><span class="co">##  [5] "campylobacterSimLowData"    "campylobacterSimMediumData"</span></span>
 <span><span class="co">##  [7] "campylobacterSSIParams1"    "campylobacterSSIParams2"   </span></span>
-<span><span class="co">##  [9] "campylobacterSSIParams4"    "estimateSeroincidence"     </span></span>
-<span><span class="co">## [11] "fdev"                       "getAdditionalData"         </span></span>
-<span><span class="co">## [13] "pertussisIgGPTParams1"      "pertussisIgGPTParams2"     </span></span>
-<span><span class="co">## [15] "pertussisIgGPTParams3"      "pertussisIgGPTParams4"     </span></span>
-<span><span class="co">## [17] "pertussisSimHighData"       "pertussisSimLowData"       </span></span>
-<span><span class="co">## [19] "pertussisSimMediumData"     "salmonellaSSIParams1"      </span></span>
-<span><span class="co">## [21] "salmonellaSSIParams2"       "salmonellaSSIParams4"</span></span></code></pre>
+<span><span class="co">##  [9] "campylobacterSSIParams4"    "est.incidence"             </span></span>
+<span><span class="co">## [11] "est.incidence.by"           "fdev"                      </span></span>
+<span><span class="co">## [13] "getAdditionalData"          "pertussisIgGPTParams1"     </span></span>
+<span><span class="co">## [15] "pertussisIgGPTParams2"      "pertussisIgGPTParams3"     </span></span>
+<span><span class="co">## [17] "pertussisIgGPTParams4"      "pertussisSimHighData"      </span></span>
+<span><span class="co">## [19] "pertussisSimLowData"        "pertussisSimMediumData"    </span></span>
+<span><span class="co">## [21] "postprocess_fit"            "salmonellaSSIParams1"      </span></span>
+<span><span class="co">## [23] "salmonellaSSIParams2"       "salmonellaSSIParams4"      </span></span>
+<span><span class="co">## [25] "typhoid_controls"           "typhoid_noise_params"</span></span></code></pre>
 <p>We briefly describe the most important objects and functions:</p>
 <ol style="list-style-type: lower-alpha">
 <li>
@@ -448,7 +452,7 @@ Files available for download are <code>coxiellaIFAParams4.zip</code> and
 <code>yersiniaSSIParams4.zip</code>. Object class:
 <code>function</code>.</li>
 <li>
-<code>estimateSeroincidence</code>: Main function of the package.
+<code>est.incidence.by</code>: Main function of the package.
 Estimates seroincidence based on supplied cross-section antibody levels
 data and longitudinal response parameters. Object class:
 <code>function</code>.</li>
@@ -653,8 +657,7 @@ parameters per antibody for Yersinia.</li>
 <h3 id="estimating-seroincidence">Estimating seroincidence<a class="anchor" aria-label="anchor" href="#estimating-seroincidence"></a>
 </h3>
 <p>Main calculation function provided by package <em>serocalculator</em>
-is called <code>estimateSeroincidence</code>. It takes several
-arguments:</p>
+is called <code>est.incidence.by</code>. It takes several arguments:</p>
 <ul>
 <li>
 <code>data</code>: A data frame with the cross-sectional data (see
@@ -691,7 +694,7 @@ distribution of antibody concentrations for true seronegatives
 (i.e. those who never seroconverted), by named antibody type
 (corresponding to <code>data</code>).</li>
 <li>
-<code>start</code> A starting value for <code>log(lambda)</code>.
+<code>start</code> A starting value for <code>log.lambda</code>.
 Value of -6 corresponds roughly to 1 day (<code>log(1/365.25)</code>),
 value of -4 corresponds roughly to 1 week (<code>log(7/365.25)</code>).
 Users are adivised to experiment with this value to confirm that
@@ -724,9 +727,9 @@ removed:</p>
 <span>                 IgM <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.005</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                 IgA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.005</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Assign output of function "estimateSeroincidence" to object named </span></span>
+<span><span class="co"># Assign output of function "est.incidence.by" to object named </span></span>
 <span><span class="co"># "seroincidenceData". Use all available processor cores.</span></span>
-<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimateSeroincidence.html">estimateSeroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">serologyData</span>,</span>
 <span>  antibodies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IgG"</span>, <span class="st">"IgM"</span>, <span class="st">"IgA"</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="st">"AgeCat"</span>,</span>
@@ -748,9 +751,9 @@ removed:</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## This object is a list containing the following items:</span></span>
 <span><span class="co">## Fits         - List of outputs of "optim" function per stratum.</span></span>
-<span><span class="co">## Antibodies   - Input parameter antibodies of function "estimateSeroincidence".</span></span>
-<span><span class="co">## Strata       - Input parameter strata of function "estimateSeroincidence".</span></span>
-<span><span class="co">## CensorLimits - Input parameter censorLimits of function "estimateSeroincidence".</span></span>
+<span><span class="co">## Antibodies   - Input parameter antibodies of function "est.incidence.by".</span></span>
+<span><span class="co">## Strata       - Input parameter strata of function "est.incidence.by".</span></span>
+<span><span class="co">## CensorLimits - Input parameter censorLimits of function "est.incidence.by".</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Call summary function to obtain output results.</span></span></code></pre>
 <p>The most important output is subobject <code>Fits</code> containing
@@ -760,7 +763,7 @@ following section.</p>
 <p>The cutoff argument is based on censoring of the observed serum
 antibody measurements <span class="citation">(Strid et al. 2001)</span>.
 Cut-off levels must always be specified when calling function
-<code>estimateSeroincidence</code> (argument <code>censorLimits</code>).
+<code>est.incidence.by</code> (argument <code>censorLimits</code>).
 Value <code>0</code> should be set for antibody measurements where no
 censoring is needed, for instance</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -871,7 +874,7 @@ seroincidence.</p>
 <span>                 IgA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.005</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 4a. Calculate a single seroincidence rate for all serum samples...</span></span>
-<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimateSeroincidence.html">estimateSeroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">serologyData</span>,</span>
 <span>  antibodies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IgG"</span>, <span class="st">"IgM"</span>, <span class="st">"IgA"</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="st">""</span>,</span>
@@ -881,7 +884,7 @@ seroincidence.</p>
 <span></span>
 <span><span class="co"># 4b. ...or calculate a single seroincidence rate for a single serum sample </span></span>
 <span><span class="co"># (triplet of titres)...</span></span>
-<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimateSeroincidence.html">estimateSeroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">serologyData</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>,</span>
 <span>  antibodies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IgG"</span>, <span class="st">"IgM"</span>, <span class="st">"IgA"</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="st">""</span>,</span>
@@ -890,7 +893,7 @@ seroincidence.</p>
 <span>  par0 <span class="op">=</span> <span class="va">baseLine</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 4c. ...or calculate a single seroincidence rate for all serum samples (only IgG)</span></span>
-<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimateSeroincidence.html">estimateSeroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">seroincidenceData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">serologyData</span>,</span>
 <span>  antibodies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IgG"</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="st">""</span>,</span>

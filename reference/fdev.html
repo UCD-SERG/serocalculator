@@ -24,12 +24,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/cover.html">R Package - serocalculator</a>
+    <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
     <a class="dropdown-item" href="../articles/example-analysis.html">example-analysis</a>
     <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
     <a class="dropdown-item" href="../articles/methodology.html">Serocalculator package methodology</a>
     <a class="dropdown-item" href="../articles/simulation.html">simulation</a>
     <a class="dropdown-item" href="../articles/tutorial.html">Serocalculator package tutorial</a>
+    <a class="dropdown-item" href="../articles/typhoid-controls.html">typhoid-controls</a>
+    <a class="dropdown-item" href="../articles/typhoid-seroincidence.html">Typhoid Seroincidence</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -65,19 +67,19 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>log.lambda</dt>
-<dd><p>Initial guess of incidence rate</p></dd>
+<dd><p>natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).</p></dd>
 
 
 <dt>csdata</dt>
-<dd><p>cross-sectional sample data</p></dd>
+<dd><p>cross-sectional sample data containing variables <code>y</code> and <code>a</code></p></dd>
 
 
 <dt>lnpars</dt>
-<dd><p>longitudinal antibody decay model parameters</p></dd>
+<dd><p>longitudinal antibody decay model parameters <code>alpha</code>, <code>y1</code>, and <code>d</code></p></dd>
 
 
 <dt>cond</dt>
-<dd><p>measurement noise parameters</p></dd>
+<dd><p>measurement noise parameters <code>nu</code>, <code>eps</code>, <code>y.low</code>, and <code>y.high</code></p></dd>
 
 </dl></div>
 

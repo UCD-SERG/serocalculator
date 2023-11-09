@@ -10,9 +10,6 @@
     <loc>https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/articles/cover.html</loc>
-  </url>
-  <url>
     <loc>https://ucd-serg.github.io/serocalculator/articles/example-analysis.html</loc>
   </url>
   <url>
@@ -25,10 +22,19 @@
     <loc>https://ucd-serg.github.io/serocalculator/articles/methodology.html</loc>
   </url>
   <url>
+    <loc>https://ucd-serg.github.io/serocalculator/articles/sees_analysis.html</loc>
+  </url>
+  <url>
     <loc>https://ucd-serg.github.io/serocalculator/articles/simulation.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/articles/tutorial.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/articles/typhoid-controls.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/articles/typhoid-seroincidence.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/authors.html</loc>
@@ -61,7 +67,13 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/estimateSeroincidence.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/dot-optNll.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/fdev.html</loc>
@@ -85,10 +97,13 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/pertussisIgGPTParams4.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/postprocess_fit.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.ests.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.ests.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/salmonellaSSIParams1.html</loc>
@@ -103,6 +118,12 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.ests.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/typhoid_controls.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/typhoid_noise_params.html</loc>
   </url>
 </urlset>

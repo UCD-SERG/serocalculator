@@ -24,12 +24,14 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/cover.html">R Package - serocalculator</a>
+    <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
     <a class="dropdown-item" href="../articles/example-analysis.html">example-analysis</a>
     <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
     <a class="dropdown-item" href="../articles/methodology.html">Serocalculator package methodology</a>
     <a class="dropdown-item" href="../articles/simulation.html">simulation</a>
     <a class="dropdown-item" href="../articles/tutorial.html">Serocalculator package tutorial</a>
+    <a class="dropdown-item" href="../articles/typhoid-controls.html">typhoid-controls</a>
+    <a class="dropdown-item" href="../articles/typhoid-seroincidence.html">Typhoid Seroincidence</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -60,55 +62,45 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">.nll</span><span class="op">(</span></span>
-<span>  <span class="va">stratumData</span>,</span>
-<span>  <span class="va">antibodies</span>,</span>
-<span>  <span class="va">params</span>,</span>
-<span>  <span class="va">censorLimits</span>,</span>
-<span>  ivc <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  m <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  <span class="va">par0</span>,</span>
-<span>  <span class="va">start</span></span>
+<span>  <span class="va">log.lambda</span>,</span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">antigen_isos</span>,</span>
+<span>  <span class="va">curve_params</span>,</span>
+<span>  <span class="va">noise_params</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>stratumData</dt>
-<dd><p>Data frame with cross-sectional serology data per antibody and age, and additional
-columns, for one stratum</p></dd>
+    <dl><dt>log.lambda</dt>
+<dd><p>natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).</p></dd>
 
 
-<dt>antibodies</dt>
+<dt>data</dt>
+<dd><p>Data frame with cross-sectional serology data per antibody and age, and additional columns</p></dd>
+
+
+<dt>antigen_isos</dt>
 <dd><p>Character vector with one or more antibody names. Values must match <code>data</code>.</p></dd>
 
 
-<dt>params</dt>
+<dt>curve_params</dt>
 <dd><p>List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.</p></dd>
 
 
-<dt>censorLimits</dt>
-<dd><p>List of cutoffs for one or more named antibody types (corresponding to
-<code>stratumData</code>).</p></dd>
+<dt>noise_params</dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (or <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>, or <code>tibble()</code>) containing noise parameters</p></dd>
 
 
-<dt>ivc</dt>
-<dd><p>If <code>ivc = TRUE</code>, the biomarker data are interval-censored.</p></dd>
+<dt>verbose</dt>
+<dd><p>logical: if TRUE, print verbose log information to console</p></dd>
 
 
-<dt>m</dt>
-<dd><p>this parameter's meaning is uncertain</p></dd>
-
-
-<dt>par0</dt>
-<dd><p>List of parameters for the (lognormal) distribution of antibody concentrations
-for true seronegatives (i.e. those who never seroconverted), by named antibody type
-(corresponding to <code>data</code>).</p></dd>
-
-
-<dt>start</dt>
-<dd><p>starting value for <code>log(lambda)</code>. Value of -6 corresponds roughly to 1 day
-(log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.</p></dd>
+<dt>...</dt>
+<dd><p>additional arguments passed to other functions (not currently used).</p></dd>
 
 </dl></div>
     <div class="section level2">

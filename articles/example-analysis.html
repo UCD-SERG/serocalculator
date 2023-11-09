@@ -41,12 +41,14 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/cover.html">R Package - serocalculator</a>
+    <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
     <a class="dropdown-item" href="../articles/example-analysis.html">example-analysis</a>
     <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
     <a class="dropdown-item" href="../articles/methodology.html">Serocalculator package methodology</a>
     <a class="dropdown-item" href="../articles/simulation.html">simulation</a>
     <a class="dropdown-item" href="../articles/tutorial.html">Serocalculator package tutorial</a>
+    <a class="dropdown-item" href="../articles/typhoid-controls.html">typhoid-controls</a>
+    <a class="dropdown-item" href="../articles/typhoid-seroincidence.html">Typhoid Seroincidence</a>
   </div>
 </li>
       </ul>
@@ -89,7 +91,19 @@
 <span><span class="co">#&gt; Attaching package: 'Hmisc'</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     format.pval, units</span></span></code></pre></div>
+<span><span class="co">#&gt;     format.pval, units</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:Hmisc':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     src, summarize</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># load longitudinal parameter MC sample</span></span>
@@ -106,12 +120,20 @@
 <span>  alpha <span class="op">=</span> <span class="va">day2yr</span> <span class="op">*</span> <span class="va">lp</span><span class="op">$</span><span class="va">alpha</span>,  <span class="co"># decay rate (per year)</span></span>
 <span>  d <span class="op">=</span> <span class="va">lp</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span>;               <span class="co"># shape (r-1 offset from exp)</span></span>
 <span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
 <span><span class="co">#read simulated data</span></span>
 <span><span class="va">raw.data</span> <span class="op">=</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>, </span>
 <span>  <span class="st">"SimulDat.txt"</span>, </span>
 <span>  package <span class="op">=</span> <span class="st">"serocalculator"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span>head<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html" class="external-link">read_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>AGE <span class="op">=</span> <span class="st">'"AGE"'</span>, IgG <span class="op">=</span> <span class="st">'"IgG"'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; cols(</span></span>
+<span><span class="co">#&gt;   `"AGE"` = <span style="color: #00BB00;">col_double()</span>,</span></span>
+<span><span class="co">#&gt;   `"IgG"` = <span style="color: #00BB00;">col_double()</span></span></span>
+<span><span class="co">#&gt; )</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">cat.bnd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">80</span>,by<span class="op">=</span><span class="fl">5</span><span class="op">)</span>; </span>
@@ -186,7 +208,7 @@
 <span><span class="co">#&gt; 15 </span></span>
 <span><span class="co">#&gt; 16</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  55.113   0.011  55.149</span></span></code></pre></div>
+<span><span class="co">#&gt;  47.817   0.024  47.855</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># check results in log.lambda.est:</span></span>
 <span><span class="fu">pander</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pander/man/pander.html" class="external-link">pander</a></span><span class="op">(</span><span class="va">log.lambda.est</span><span class="op">)</span></span></code></pre></div>

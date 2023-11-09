@@ -115,7 +115,7 @@ est.incidence.by <- function(
         message('starting new stratum: ', cur_stratum)
         stratumDataList |>
           attr("strata") |>
-          dplyr::filter(Stratum == cur_stratum) |>
+          dplyr::filter(.data$Stratum == cur_stratum) |>
           print()
       }
 

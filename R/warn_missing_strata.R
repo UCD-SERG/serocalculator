@@ -1,4 +1,7 @@
-warn_missing_strata = function(data, strata, dataname)
+warn_missing_strata = function(
+    data,
+    strata,
+    dataname)
 {
   present_strata_vars = intersect(
     names(strata),
@@ -15,8 +18,8 @@ warn_missing_strata = function(data, strata, dataname)
     warning(
       dataname,
       " is missing some strata variables: ",
-      missing_strata |> paste(collapse = ", "),
-      "\n", dataname, "will only be stratified by: ",
+      missing_strata_vars |> paste(collapse = ", "),
+      "\n", dataname, " will only be stratified by: ",
       present_strata_vars |> paste(collapse = ","))
   }
 

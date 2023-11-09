@@ -10,6 +10,7 @@
 #' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
 #' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
+#' @param verbose logical: if TRUE, print verbose log information to console
 #' @inheritParams postprocess_fit
 #' @inheritDotParams stats::nlm -f -p -hessian -iterlim
 #'
@@ -34,6 +35,7 @@ est.incidence <- function(
     start = 0.1,
     iterlim = 100,
     coverage = .95,
+    verbose = FALSE,
     ...)
 {
 
@@ -42,14 +44,14 @@ est.incidence <- function(
 
   if(!is.null(c.age))
   {
-    dpop = dpop %>% filter(.data[["ageCat"]] == c.age)
-    dmcmc = dmcmc %>% filter(.data[["ageCat"]] == c.age)
+    dpop = dpop %>% dplyr::filter(.data[["ageCat"]] == c.age)
+    dmcmc = dmcmc %>% dplyr::filter(.data[["ageCat"]] == c.age)
 
     if("ageCat" %in% names(noise_params))
     {
       noise_params =
         noise_params %>%
-        filter(.data[["ageCat"]] == c.age)
+        dplyr::filter(.data[["ageCat"]] == c.age)
     }
   }
 
@@ -69,7 +71,7 @@ est.incidence <- function(
 
     conds[[cur_antigen]] =
       noise_params %>%
-      filter(.data[["antigen_iso"]] == cur_antigen)
+      dplyr::filter(.data[["antigen_iso"]] == cur_antigen)
 
   }
 
@@ -82,12 +84,20 @@ est.incidence <- function(
     noise_params = conds)
 
   # seroincidence estimation
-  fit = nlm(
+  {
+    fit = nlm(
     f = objfunc,
     p = log.lambda,
     hessian = TRUE,
     iterlim = iterlim,
     ...)
+  } |> system.time() -> time
+
+  if(verbose)
+  {
+    message('elapsed time: ')
+    print(time)
+  }
 
   if(fit$iterations >= iterlim)
   {

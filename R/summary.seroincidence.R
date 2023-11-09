@@ -58,16 +58,21 @@ summary.seroincidence.ests <- function(
     stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
   }
 
-  results <-
+  results =
     object |>
     lapply(
       FUN = postprocess_fit,
       coverage = confidence_level) |>
+    bind_rows(.id = "Stratum")
+
+  results =
     inner_join(
-      object |> attr("strata"),
+      object |> attr("Strata"),
+      results,
       by = "Stratum",
       relationship = "one-to-one"
-    )
+    ) |>
+    relocate(Stratum, .before = everything())
 
 
   if (!showDeviance) {
@@ -82,7 +87,7 @@ summary.seroincidence.ests <- function(
     results |>
     structure(
       Antibodies = attr(object, "Antibodies"),
-      Strata = attr(object, "Strata") |> ,
+      Strata = attr(object, "Strata") |> names(),
       Quantiles = quantiles,
       class =
         "summary.seroincidence.ests" |>

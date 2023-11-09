@@ -31,4 +31,5 @@ print.summary.seroincidence.ests <- function(x, ...)
   cat(paste("b) Strata       :", paste(x |> attr("Strata"), collapse = ", ")), "\n")
   cat("\n Seroincidence estimates:\n")
   print(as_tibble(x))
+  invisible(x)
 }

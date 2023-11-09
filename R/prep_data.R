@@ -4,8 +4,8 @@ prep_data <- function(
     curve_params,
     noise_params,
     strata_varnames = "",
-    strata_curves = NULL,
-    strata_noise = NULL)
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL)
 {
 
   if(is.null(strata_varnames) || all(strata_varnames == ""))
@@ -14,9 +14,9 @@ prep_data <- function(
       list(# est.incidence.by() expects a list.
         `all data` =
           list(
-            data = data |> select("y", "a"),
-            curve_params = curve_params |> select("y1", "alpha", "d"),
-            noise_params = noise_params |> select("nu", "eps", "y.low", "y.high")
+            data = data |> select("y", "a", "antigen_iso"),
+            curve_params = curve_params |> select("y1", "alpha", "d", "antigen_iso"),
+            noise_params = noise_params |> select("nu", "eps", "y.low", "y.high", "antigen_iso")
           )) |>
       structure(
         Antibodies = antibodies,
@@ -34,17 +34,17 @@ prep_data <- function(
 
   strata_vars_curve_params =
     warn_missing_strata(
-    data = curve_params,
-    strata = strata_curves,
-    dataname = "curve_params"
-  )
+      data = curve_params,
+      strata = strata |> select(curve_strata_varnames),
+      dataname = "curve_params"
+    )
 
   strata_vars_noise_params =
     warn_missing_strata(
-    data = noise_params,
-    strata = strata_noise,
-    dataname = "noise_params"
-  )
+      data = noise_params,
+      strata = strata |> select(noise_strata_varnames),
+      dataname = "noise_params"
+    )
 
   # xs_dataStrata <- data |> .makeStrata(strata_varnames)
   # curve_paramsStrata = curve_params |> .makeStrata(strata_varnames)
@@ -53,54 +53,68 @@ prep_data <- function(
 
   stratumDataList = list()
 
-  for (cur_stratum in rownames(strata))
+  for (cur_stratum in strata$Stratum)
   {
 
-    stratumDataList[[cur_stratum]] =
+    cur_stratum_vals =
+      strata |> dplyr::filter(Stratum == cur_stratum)
+
+    data_and_params_cur_stratum =
       list(
         data =
           data |>
           semi_join(
-            strata[cur_stratum,, drop = FALSE],
+            cur_stratum_vals,
             by = strata_varnames) |>
-          select("y", "a")
+          select("y", "a", "antigen_iso")
       )
 
     if(length(strata_vars_curve_params) == 0)
     {
-      stratumDataList[[cur_stratum]]$curve_params =
-        curve_params |> select("y1", "alpha", "d")
+      data_and_params_cur_stratum$curve_params =
+        curve_params |> select("y1", "alpha", "d", "antigen_iso")
     } else
     {
-      stratumDataList[[cur_stratum]]$curve_params =
+      data_and_params_cur_stratum$curve_params =
         curve_params |>
         semi_join(
-          strata[cur_stratum,, drop = FALSE],
+          cur_stratum_vals,
           by = strata_vars_curve_params) |>
-        select("y1", "alpha", "d")
+        select("y1", "alpha", "d", "antigen_iso")
     }
 
     if(length(strata_vars_noise_params) == 0)
     {
-      stratumDataList[[cur_stratum]]$noise_params =
-        noise_params |> select("nu", "eps", "y.low", "y.high")
+      data_and_params_cur_stratum$noise_params =
+        noise_params |> select("nu", "eps", "y.low", "y.high", "antigen_iso")
     } else
     {
-      stratumDataList[[cur_stratum]]$noise_params =
+      data_and_params_cur_stratum$noise_params =
         noise_params |>
         semi_join(
-          strata[cur_stratum,, drop = FALSE],
+          cur_stratum_vals,
           by = strata_vars_noise_params) |>
-        select("nu", "eps", "y.low", "y.high")
+        select("nu", "eps", "y.low", "y.high", "antigen_iso")
     }
 
+    stratumDataList[[cur_stratum]] =
+      data_and_params_cur_stratum |>
+      structure(
+        class = union(
+          "biomarker_data_and_params",
+          class(data_and_params_cur_stratum))
+      )
+
   }
+
+
 
   return(
     structure(
       stratumDataList,
       Antibodies = antibodies,
-      strata = strata
+      strata = strata,
+      class = c("biomarker_data_and_params.list", "list")
 
     ))
 

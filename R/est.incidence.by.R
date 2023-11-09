@@ -5,9 +5,10 @@
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
 #' @param strata Character vector of stratum-defining variables. Values must be variable names in `data`. Default = "".
-#' @param strata_curves A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
-#' @param strata_noise A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
+#' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
+#' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
+
 #' @inheritParams .optNll
 #' @inheritDotParams .optNll
 #'
@@ -20,10 +21,11 @@ est.incidence.by <- function(
     curve_params,
     noise_params,
     strata = "",
-    strata_curves = strata,
-    strata_noise = strata,
+    curve_strata_varnames = strata,
+    noise_strata_varnames = strata,
     numCores = 1L,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
+    verbose = FALSE,
     ...)
 {
 
@@ -35,10 +37,14 @@ est.incidence.by <- function(
 
   curve_params =
     curve_params |>
-    filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     mutate(
       alpha = .data$alpha * 365.25,
       d = .data$r - 1)
+
+  noise_params =
+    noise_params |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos)
   # %>%
   #   select(y1, alpha, d, antigen_iso, any_of(strata))
 
@@ -49,11 +55,16 @@ est.incidence.by <- function(
     curve_params = curve_params,
     noise_params = noise_params,
     strata_varnames = strata,
-    strata_curves = strata_curves,
-    strata_noise = strata_noise)
+    curve_strata_varnames = curve_strata_varnames,
+    noise_strata_varnames = noise_strata_varnames)
+
+  if(verbose) message("Data has been stratified.")
 
   # Loop over data per stratum
   if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
+
+    if(verbose) message("Setting up parallel processing.")
+
     libPaths <- .libPaths()
     cl <-
       numCores |>
@@ -66,18 +77,52 @@ est.incidence.by <- function(
     parallel::clusterExport(cl, c("libPaths"), envir = environment())
     parallel::clusterEvalQ(cl, {
       .libPaths(libPaths)
-      library(serocalculator)
-      library(dplyr)
+      require(serocalculator) # note - this gets out of sync when using load_all() in development
+      require(dplyr)
+
     })
-    fits <- parallel::parLapplyLB(
-      cl = cl,
-      X = stratumDataList,
-      fun = function(x) .optNll(dataList = x, ...))
+
+    {
+      fits <- parallel::parLapplyLB(
+        cl = cl,
+        X = stratumDataList,
+        fun = function(x)
+          .optNll(
+            dataList = x,
+            ...)
+      )
+    } |> system.time() -> time
+
+    if(verbose)
+    {
+      message("Elapsed time for parallelized code: ")
+      print(time)
+    }
   } else
   {
-    fits <- lapply(
-      X = stratumDataList,
-      FUN = function(x) .optNll(dataList = x, ...))
+    # fits <- lapply(
+    #   X = stratumDataList,
+    #   FUN = function(x) .optNll(dataList = x, verbose = verbose, ...))
+
+    fits = list()
+    for (cur_stratum in names(stratumDataList))
+    {
+      if(verbose)
+      {
+        message('starting new stratum: ', cur_stratum)
+        stratumDataList |>
+          attr("strata") |>
+          dplyr::filter(Stratum == cur_stratum) |>
+          print()
+      }
+
+      fits[[cur_stratum]] =
+        .optNll(
+          dataList = stratumDataList[[cur_stratum]],
+          verbose = verbose,
+          ...)
+
+    }
   }
 
   incidenceData <- structure(

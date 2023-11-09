@@ -16,6 +16,7 @@ License: GPL-3
 Imports: 
     dplyr,
     magrittr,
+    parallel,
     Rcpp,
     rlang,
     stats,
@@ -25,7 +26,6 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    parallel,
     pander,
     Hmisc,
     tidyverse,

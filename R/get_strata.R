@@ -5,5 +5,4 @@ get_strata = function(data, strata_varnames)
     distinct(across(any_of(strata_varnames))) |>
     mutate(Stratum = paste("Stratum", row_number()))
 
-  rownames(to_return) = to_return$Stratum
 }

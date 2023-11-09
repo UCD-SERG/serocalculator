@@ -32,7 +32,8 @@ Suggests:
     fs,
     testthat (>= 3.0.0),
     readr,
-    ggplot2
+    ggplot2,
+    bookdown
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

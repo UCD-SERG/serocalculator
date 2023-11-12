@@ -5,14 +5,11 @@ vignette: >
   %\VignetteIndexEntry{Typhoid Seroincidence}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: references.bib
 ---
 # Introduction
 
-This vignette provides users with an example analysis using the *serocalculator* package. Users will be able to determine the seroincidence of typhoid fever in the sample population using existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan, plus a simulated cross-sectional serosurvey. 
-
-## References
-Aiemjoy, K., Seidman, J. C., Saha, S., Munira, S. J., Islam Sajib, M. S., Sium, S. M. al, Sarkar, A., Alam, N., Zahan, F. N., Kabir, M. S., Tamrakar, D., Vaidya, K., Shrestha, R., Shakya, J., Katuwal, N., Shrestha, S., Yousafzai, M. T., Iqbal, J., Dehraj, I. F., … Andrews, J. R. (2022). Estimating typhoid incidence from community-based serosurveys: a multicohort study. The Lancet. Microbe, 3(8), e578–e587. https://doi.org/10.1016/S2666-5247(22)00114-8
-
+This vignette provides users with an example analysis using the *serocalculator* package. Users will be able to determine the seroincidence of typhoid fever in the sample population using existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan [@Aiemjoy_2022_Lancet], plus a cross-sectional serosurvey from a simulated population. 
 
 
 ```{r, include = FALSE}
@@ -23,32 +20,34 @@ knitr::opts_chunk$set(
 ```
 # Sample Analysis
 ## 1. Load packages
-The first step in conducting this analysis is to load our necessary packages. Follow the [installation instructions] https://ucd-serg.github.io/serocalculator/ if you have not already installed *serocalculator*. (Still in development as of 10/17/2023)
+The first step in conducting this analysis is to load our necessary packages. Follow the [installation instructions](https://ucd-serg.github.io/serocalculator/) if you have not already installed *serocalculator*. 
 
-```{r setup}
+```{r setup, message=FALSE}
 
 #library(devtools)
 #install_github("UCD-SERG/serocalculator")
 library(serocalculator)
 library(tidyverse)
-```
 
+
+```
 ## 2. Load data
 ### a. Load and prepare longitudinal parameter data
 The next step is to load the longitudinal data to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases.
 
 These parameters include the following:
-* y0 = baseline  
-* y1 = peak antibody responses 
-* t1 = time to peak 
-* α = decay rate
-* r = decay shape 
 
-We also create two additional variables, *alpha* and *d*. *Alpha* is the annual decay rate, which is calculated from the daily decay rate in this example. *d* is 1-r, the decay shape. _______ 
+  * $y_0$ = baseline  
+  * $y_1$ = peak antibody responses 
+  * $t_1$ = time to peak 
+  * $\alpha$ = decay rate
+  * $r$ = decay shape 
+
+We also create two additional variables: the annual decay rate, $\alpha$, which is calculated from the daily decay rate in this example, and $d$, which is the decay shape, or 1-$r$.
 
 Finally, we select only the variables needed for the analysis. 
 
-```{r longdata}
+```{r longdata, echo=FALSE, message=FALSE}
 c.hlye.IgG <- 
   fs::path_package(                          
   "extdata", 
@@ -61,16 +60,16 @@ c.hlye.IgG <-
 ```
 
 ### b. Load and prepare simulated data 
-The simulated data represent a cross-sectional serosurvey conducted in a representative sample of the general population without regard to disease status. Here, we are assuming a force of infection (FOI, *lambda*) of 0.2. This means that we assume that there will be 0.2 cases per person in the general population during the time period of interest. 
+The simulated data represents a cross-sectional serosurvey conducted in a representative sample of the general population without regard to disease status. 
 
 In this scenario, we have selected hlye and IgG as our target measures. Users may select different serologic markers depending on what is available. From the original dataset, we rename our variables to *y* and *a*. Finally, we once again limit the dataset to only the variables needed for the analysis. 
 
-``` {r simdata}
+``` {r simdata, message=FALSE}
 library(fs) # filesystem utility functions
 p.hlye.IgG  <- 
   fs::path_package(
     package = "serocalculator", 
-    "extdata/simpophlyeigg.2.csv") %>% #Load simulated cross-sectional dataset
+    "extdata/simpophlyeigg.2.csv") %>% #Load  cross-sectional dataset
   read_csv() %>%
   rename( #rename variables
     y = y.smpl,
@@ -82,54 +81,49 @@ p.hlye.IgG  <-
 ### c. Set conditions for simulated data
 Next, we must set conditions based on some assumptions about the simulated data. This will differ based on background knowledge of the cross-sectional data. 
 
-[Need more here, plus simplify variable names]
+The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies in addition to those for the target condition. This can artificially inflate quantitative antibody result. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
 
-``` {r conditions}
+``` {r conditions, message=FALSE}
 cond.hlye.IgG <- data.frame(
-  nu = 1.027239,             # B noise
-  eps = 0.2,            # M noise
+  nu = 1.027239,             # Biological noise
+  eps = 0.2,            # Measurement noise
   y.low = 0.0,          # low cutoff
-  y.high = 5e4); 
+  y.high = 5e4); # high cutoff
 ```
 
 
 ## 3. Estimate Seroincidence
-Finally, we are ready to begin seroincidence estimation. We define our starting value as 0.5, which will also define our initial estimate for lambda (FOI). Then we set up values for the confidence interval. 
-
-(Add explanation for each section below)
-[Need more information on starting estimate vs estimate mentioned for simulated data]
+Finally, we are ready to begin seroincidence estimation. We define our starting value as 0.5, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). Then we log transform $\lambda$ and set up maximum and minimum values for the confidence interval. 
 
 
 ```{r seroinc}
-start <- .05
+start <- .05 #Set starting value
 
-lambda = start # initial estimate: starting value
+lambda = start #initial estimate: starting value
 log.lambda = log(lambda)
 log.lmin=log(lambda/10)
 log.lmax=log(10*lambda) 
-
 
 
 objfunc <- function(llam){
   return(res <- fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
 }
 
-
 fit <- nlm(objfunc,log.lambda,
            hessian=TRUE,print.level=0,stepmax=(log.lmax-log.lmin)/4)
 
-
-#lambda, lower, upper, LF min
+#Calculate lambda, lower, upper, LF min
 log.lambda.est <- c(exp(fit$estimate),
                     exp(fit$estimate + qnorm(c(0.025))*sqrt(1/fit$hessian)),
                     exp(fit$estimate + qnorm(c(0.975))*sqrt(1/fit$hessian)),
                     fit$minimum)
 
-
+#Print the final results
 log.lambda.est
 ```
 
 ## Conclusions
-In our simulated data, we found that the estimated seroincidence of typhoid is ______. 
+In our simulated data, we found that the estimated seroincidence of typhoid is 0.20 (95% CI: 0.18, 0.23). 
 
 
+## References

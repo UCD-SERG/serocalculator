@@ -185,8 +185,9 @@ is loaded into the current workspace. Assuming the package is installed already 
 console (bear in mind that the text after character `#` is only a comment):
 
 ```{r}
-# Load package "seroincidence"
+# Load package "serocalculator"
 library(serocalculator)
+#load_all()
 library(dplyr)
 ```
 

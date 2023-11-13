@@ -21,7 +21,7 @@
     antigen_isos = data |> pull("antigen_iso") |> unique(),
     lambda.start = 1/365.25,
     hessian = TRUE,
-    # stepmax = 1,
+    stepmax = 1,
     verbose = FALSE,
     ...)
 {
@@ -74,7 +74,7 @@
         curve_params = curve_params,
         noise_params = noise_params,
         hessian = hessian,
-        # stepmax = stepmax,
+        stepmax = stepmax,
         verbose = verbose,
         ...)
     } |>

@@ -12,6 +12,7 @@
   antigen_isos = unique(pull(data, "antigen_iso")),
   lambda.start = 1/365.25,
   hessian = TRUE,
+  stepmax = 1,
   verbose = FALSE,
   ...
 )
@@ -32,6 +33,14 @@ Monte Carlo samples for each antibody type.}
 
 \item{hessian}{if \code{TRUE}, the hessian of \code{f}
     at the minimum is returned.}
+
+\item{stepmax}{a positive scalar which gives the maximum allowable
+    scaled step length.  \code{stepmax} is used to prevent steps which
+    would cause the optimization function to overflow, to prevent the
+    algorithm from leaving the area of interest in parameter space, or to
+    detect divergence in the algorithm. \code{stepmax} would be chosen
+    small enough to prevent the first two of these occurrences, but should
+    be larger than any anticipated reasonable step.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
@@ -65,13 +74,6 @@ Monte Carlo samples for each antibody type.}
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
-    \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
-    scaled step length.  \code{stepmax} is used to prevent steps which
-    would cause the optimization function to overflow, to prevent the
-    algorithm from leaving the area of interest in parameter space, or to
-    detect divergence in the algorithm. \code{stepmax} would be chosen
-    small enough to prevent the first two of these occurrences, but should
-    be larger than any anticipated reasonable step.}
     \item{\code{steptol}}{A positive scalar providing the minimum allowable
     relative step length.}
     \item{\code{iterlim}}{a positive integer specifying the maximum number of

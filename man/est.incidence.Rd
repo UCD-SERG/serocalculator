@@ -3,7 +3,7 @@
 \name{est.incidence}
 \alias{est.incidence}
 \title{Age specific seroincidence function
-add some details here}
+This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.}
 \usage{
 est.incidence(
   dpop,
@@ -15,6 +15,7 @@ est.incidence(
   iterlim = 100,
   coverage = 0.95,
   verbose = FALSE,
+  stepmax = 1,
   ...
 )
 }
@@ -27,11 +28,9 @@ est.incidence(
 
 \item{c.age}{age category}
 
-\item{antigen_isos}{antigen-isotype(s) (a \code{\link[=character]{character()}} vector of one or more antigen names)}
+\item{antigen_isos}{antigen isotypes: a \code{\link[=character]{character()}} vector of one or more antigen isotype names, which should match the values of the \code{antigen_iso} column in the \code{dpop} input argument}
 
 \item{start}{starting value for incidence rate}
-
-\item{iterlim}{a positive integer specifying the maximum number of iterations to be performed before the program is terminated.}
 
 \item{coverage}{desired confidence interval coverage probability}
 
@@ -63,6 +62,8 @@ est.incidence(
     be larger than any anticipated reasonable step.}
     \item{\code{steptol}}{A positive scalar providing the minimum allowable
     relative step length.}
+    \item{\code{iterlim}}{a positive integer specifying the maximum number of
+    iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the
     analytic gradients and Hessians, if they are supplied, should be
     checked against numerical derivatives at the initial parameter
@@ -85,5 +86,5 @@ A \code{\link[=data.frame]{data.frame()}} containing the following:
 }
 \description{
 Age specific seroincidence function
-add some details here
+This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 }

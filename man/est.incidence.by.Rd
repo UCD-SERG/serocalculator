@@ -44,6 +44,13 @@ Monte Carlo samples for each antibody type.}
     \item{\code{dataList}}{Optional argument; as an alternative to passing in \code{data}, \code{curve_params}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
     \item{\code{hessian}}{if \code{TRUE}, the hessian of \code{f}
     at the minimum is returned.}
+    \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
+    scaled step length.  \code{stepmax} is used to prevent steps which
+    would cause the optimization function to overflow, to prevent the
+    algorithm from leaving the area of interest in parameter space, or to
+    detect divergence in the algorithm. \code{stepmax} would be chosen
+    small enough to prevent the first two of these occurrences, but should
+    be larger than any anticipated reasonable step.}
   }}
 }
 \value{

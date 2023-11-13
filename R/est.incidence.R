@@ -1,18 +1,17 @@
 
 #
 #' Age specific seroincidence function
-#' add some details here
+#' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 #'
 #' @param dpop cross-sectional population data
 #' @param c.age age category
 #' @param start starting value for incidence rate
-#' @param antigen_isos antigen-isotype(s) (a [character()] vector of one or more antigen names)
+#' @param antigen_isos antigen isotypes: a [character()] vector of one or more antigen isotype names, which should match the values of the `antigen_iso` column in the `dpop` input argument
 #' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
-#' @param iterlim a positive integer specifying the maximum number of iterations to be performed before the program is terminated.
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @inheritParams postprocess_fit
-#' @inheritDotParams stats::nlm -f -p -hessian -iterlim
+#' @inheritDotParams stats::nlm -f -p -hessian
 #'
 #' @return A [data.frame()] containing the following:
 #' * `est.start`: the starting guess for incidence rate
@@ -36,6 +35,7 @@ est.incidence <- function(
     iterlim = 100,
     coverage = .95,
     verbose = FALSE,
+    stepmax = 1,
     ...)
 {
 
@@ -90,6 +90,7 @@ est.incidence <- function(
     p = log.lambda,
     hessian = TRUE,
     iterlim = iterlim,
+    stepmax = stepmax,
     ...)
   } |> system.time() -> time
 

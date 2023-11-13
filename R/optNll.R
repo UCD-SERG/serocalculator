@@ -7,6 +7,7 @@
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @inheritParams .nll
+#' @inheritParams stats::nlm
 #' @inheritDotParams stats::nlm -f -p -hessian
 
 #' @returns a [stats::nlm()] fit object

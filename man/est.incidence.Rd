@@ -32,9 +32,13 @@ est.incidence(
 
 \item{start}{starting value for incidence rate}
 
+\item{iterlim}{an \code{\link[=integer]{integer()}}, which provides an upper limit on the number of computational iterations used to search for the maximum likelihood estimate of incidence (passed to \code{\link[stats:nlm]{stats::nlm()}}).}
+
 \item{coverage}{desired confidence interval coverage probability}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
+
+\item{stepmax}{a \code{\link[=numeric]{numeric()}}, which limits how aggressively the \code{\link[stats:nlm]{stats::nlm()}} algorithm searches for the maximum likelihood estimate of incidence. If this function output an infinite standard error estimate, consider reducing this parameter.}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
@@ -53,17 +57,8 @@ est.incidence(
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
-    \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
-    scaled step length.  \code{stepmax} is used to prevent steps which
-    would cause the optimization function to overflow, to prevent the
-    algorithm from leaving the area of interest in parameter space, or to
-    detect divergence in the algorithm. \code{stepmax} would be chosen
-    small enough to prevent the first two of these occurrences, but should
-    be larger than any anticipated reasonable step.}
     \item{\code{steptol}}{A positive scalar providing the minimum allowable
     relative step length.}
-    \item{\code{iterlim}}{a positive integer specifying the maximum number of
-    iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the
     analytic gradients and Hessians, if they are supplied, should be
     checked against numerical derivatives at the initial parameter

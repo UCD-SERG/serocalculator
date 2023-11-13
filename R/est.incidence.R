@@ -10,7 +10,10 @@
 #' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
 #' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
 #' @param verbose logical: if TRUE, print verbose log information to console
+#' @param iterlim an [integer()], which provides an upper limit on the number of computational iterations used to search for the maximum likelihood estimate of incidence (passed to [stats::nlm()]).
+#' @param stepmax a [numeric()], which limits how aggressively the [stats::nlm()] algorithm searches for the maximum likelihood estimate of incidence. If this function output an infinite standard error estimate, consider reducing this parameter.
 #' @inheritParams postprocess_fit
+#' @inheritParams stats::nlm
 #' @inheritDotParams stats::nlm -f -p -hessian
 #'
 #' @return A [data.frame()] containing the following:

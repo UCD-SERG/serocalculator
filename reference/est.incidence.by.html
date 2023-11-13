@@ -71,8 +71,9 @@ response model.</p>
 <span>  strata <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  curve_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
 <span>  noise_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
-<span>  numCores <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">pull</span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  lambda.start <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">365.25</span>,</span>
+<span>  numCores <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -105,12 +106,16 @@ Monte Carlo samples for each antibody type.</p></dd>
 <dd><p>A subset of <code>strata</code>. Values must be variable names in <code>noise_params</code>. Default = "".</p></dd>
 
 
-<dt>numCores</dt>
-<dd><p>Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package <span class="pkg">parallel</span> is available, then the computations are executed in parallel. Default = 1L.</p></dd>
-
-
 <dt>antigen_isos</dt>
 <dd><p>Character vector with one or more antibody names. Values must match <code>data</code></p></dd>
+
+
+<dt>lambda.start</dt>
+<dd><p>starting guess for incidence rate, in years/event.</p></dd>
+
+
+<dt>numCores</dt>
+<dd><p>Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package <span class="pkg">parallel</span> is available, then the computations are executed in parallel. Default = 1L.</p></dd>
 
 
 <dt>verbose</dt>
@@ -118,15 +123,53 @@ Monte Carlo samples for each antibody type.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="dot-optNll.html">.optNll</a></code></p><dl><dt><code>lambda.start</code></dt>
-<dd><p>starting guess for incidence rate, in years/event.</p></dd>
+<dd><p>Arguments passed on to <code><a href="dot-optNll.html">.optNll</a></code>, <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm</a></code></p><dl><dt><code>stepmax</code></dt>
+<dd><p>a positive scalar which gives the maximum allowable
+    scaled step length.  <code>stepmax</code> is used to prevent steps which
+    would cause the optimization function to overflow, to prevent the
+    algorithm from leaving the area of interest in parameter space, or to
+    detect divergence in the algorithm. <code>stepmax</code> would be chosen
+    small enough to prevent the first two of these occurrences, but should
+    be larger than any anticipated reasonable step.</p></dd>
 
-    <dt><code>dataList</code></dt>
-<dd><p>Optional argument; as an alternative to passing in <code>data</code>, <code>curve_params</code>, and <code>noise_params</code> individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.</p></dd>
+    <dt><code>typsize</code></dt>
+<dd><p>an estimate of the size of each parameter
+    at the minimum.</p></dd>
 
-    <dt><code>hessian</code></dt>
-<dd><p>if <code>TRUE</code>, the hessian of <code>f</code>
-    at the minimum is returned.</p></dd>
+    <dt><code>fscale</code></dt>
+<dd><p>an estimate of the size of <code>f</code> at the minimum.</p></dd>
+
+    <dt><code>print.level</code></dt>
+<dd><p>this argument determines the level of printing
+    which is done during the minimization process.  The default
+    value of <code>0</code> means that no printing occurs, a value of <code>1</code>
+    means that initial and final details are printed and a value
+    of 2 means that full tracing information is printed.</p></dd>
+
+    <dt><code>ndigit</code></dt>
+<dd><p>the number of significant digits in the function <code>f</code>.</p></dd>
+
+    <dt><code>gradtol</code></dt>
+<dd><p>a positive scalar giving the tolerance at which the
+    scaled gradient is considered close enough to zero to
+    terminate the algorithm.  The scaled gradient is a
+    measure of the relative change in <code>f</code> in each direction
+    <code>p[i]</code> divided by the relative change in <code>p[i]</code>.</p></dd>
+
+    <dt><code>steptol</code></dt>
+<dd><p>A positive scalar providing the minimum allowable
+    relative step length.</p></dd>
+
+    <dt><code>iterlim</code></dt>
+<dd><p>a positive integer specifying the maximum number of
+    iterations to be performed before the program is terminated.</p></dd>
+
+    <dt><code>check.analyticals</code></dt>
+<dd><p>a logical scalar specifying whether the
+    analytic gradients and Hessians, if they are supplied, should be
+    checked against numerical derivatives at the initial parameter
+    values. This can help detect incorrectly formulated gradients or
+    Hessians.</p></dd>
 
   
 </dl></dd>

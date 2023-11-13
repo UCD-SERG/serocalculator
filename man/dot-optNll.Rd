@@ -11,7 +11,6 @@
   dataList = NULL,
   antigen_isos = unique(pull(data, "antigen_iso")),
   lambda.start = 1/365.25,
-  hessian = TRUE,
   stepmax = 1,
   verbose = FALSE,
   ...
@@ -31,35 +30,11 @@ Monte Carlo samples for each antibody type.}
 
 \item{lambda.start}{starting guess for incidence rate, in years/event.}
 
-\item{hessian}{if \code{TRUE}, the hessian of \code{f}
-    at the minimum is returned.}
-
-\item{stepmax}{a positive scalar which gives the maximum allowable
-    scaled step length.  \code{stepmax} is used to prevent steps which
-    would cause the optimization function to overflow, to prevent the
-    algorithm from leaving the area of interest in parameter space, or to
-    detect divergence in the algorithm. \code{stepmax} would be chosen
-    small enough to prevent the first two of these occurrences, but should
-    be larger than any anticipated reasonable step.}
-
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
-  Arguments passed on to \code{\link[=.nll]{.nll}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
   \describe{
-    \item{\code{log.lambda}}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
-    \item{\code{f}}{the function to be minimized, returning a single numeric
-    value.  This should be a function with first argument a vector of
-    the length of \code{p} followed by any other arguments specified by
-    the \code{\dots} argument.
-
-    If the function value has an attribute called \code{gradient} or
-    both \code{gradient} and \code{hessian} attributes, these will be
-    used in the calculation of updated parameter values.  Otherwise,
-    numerical derivatives are used. \code{\link[stats]{deriv}} returns a
-    function with suitable \code{gradient} attribute and optionally a
-    \code{hessian} attribute.}
-    \item{\code{p}}{starting parameter values for the minimization.}
     \item{\code{typsize}}{an estimate of the size of each parameter
     at the minimum.}
     \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
@@ -74,6 +49,13 @@ Monte Carlo samples for each antibody type.}
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
+    \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
+    scaled step length.  \code{stepmax} is used to prevent steps which
+    would cause the optimization function to overflow, to prevent the
+    algorithm from leaving the area of interest in parameter space, or to
+    detect divergence in the algorithm. \code{stepmax} would be chosen
+    small enough to prevent the first two of these occurrences, but should
+    be larger than any anticipated reasonable step.}
     \item{\code{steptol}}{A positive scalar providing the minimum allowable
     relative step length.}
     \item{\code{iterlim}}{a positive integer specifying the maximum number of

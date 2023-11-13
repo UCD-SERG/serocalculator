@@ -11,8 +11,9 @@ est.incidence.by(
   strata = "",
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  numCores = 1L,
   antigen_isos = unique(pull(data, "antigen_iso")),
+  lambda.start = 1/365.25,
+  numCores = 1L,
   verbose = FALSE,
   ...
 )
@@ -31,19 +32,31 @@ Monte Carlo samples for each antibody type.}
 
 \item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
 
-\item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
-
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
+
+\item{lambda.start}{starting guess for incidence rate, in years/event.}
+
+\item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
-  Arguments passed on to \code{\link[=.optNll]{.optNll}}
+  Arguments passed on to \code{\link[=.optNll]{.optNll}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
-    \item{\code{lambda.start}}{starting guess for incidence rate, in years/event.}
-    \item{\code{dataList}}{Optional argument; as an alternative to passing in \code{data}, \code{curve_params}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
-    \item{\code{hessian}}{if \code{TRUE}, the hessian of \code{f}
-    at the minimum is returned.}
+    \item{\code{typsize}}{an estimate of the size of each parameter
+    at the minimum.}
+    \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
+    \item{\code{print.level}}{this argument determines the level of printing
+    which is done during the minimization process.  The default
+    value of \code{0} means that no printing occurs, a value of \code{1}
+    means that initial and final details are printed and a value
+    of 2 means that full tracing information is printed.}
+    \item{\code{ndigit}}{the number of significant digits in the function \code{f}.}
+    \item{\code{gradtol}}{a positive scalar giving the tolerance at which the
+    scaled gradient is considered close enough to zero to
+    terminate the algorithm.  The scaled gradient is a
+    measure of the relative change in \code{f} in each direction
+    \code{p[i]} divided by the relative change in \code{p[i]}.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -51,6 +64,15 @@ Monte Carlo samples for each antibody type.}
     detect divergence in the algorithm. \code{stepmax} would be chosen
     small enough to prevent the first two of these occurrences, but should
     be larger than any anticipated reasonable step.}
+    \item{\code{steptol}}{A positive scalar providing the minimum allowable
+    relative step length.}
+    \item{\code{iterlim}}{a positive integer specifying the maximum number of
+    iterations to be performed before the program is terminated.}
+    \item{\code{check.analyticals}}{a logical scalar specifying whether the
+    analytic gradients and Hessians, if they are supplied, should be
+    checked against numerical derivatives at the initial parameter
+    values. This can help detect incorrectly formulated gradients or
+    Hessians.}
   }}
 }
 \value{

@@ -8,8 +8,7 @@
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @inheritParams .nll
 #' @inheritParams stats::nlm
-#' @inheritDotParams .nll
-#' @inheritDotParams stats::nlm
+#' @inheritDotParams stats::nlm -f -p -hessian
 
 #' @returns a [stats::nlm()] fit object
 #' @export
@@ -20,8 +19,7 @@
     dataList = NULL,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
     lambda.start = 1/365.25,
-    hessian = TRUE,
-    # stepmax = 1,
+    stepmax = 1,
     verbose = FALSE,
     ...)
 {
@@ -73,8 +71,8 @@
         antigen_isos = antigen_isos,
         curve_params = curve_params,
         noise_params = noise_params,
-        hessian = hessian,
-        # stepmax = stepmax,
+        hessian = TRUE,
+        stepmax = stepmax,
         verbose = verbose,
         ...)
     } |>

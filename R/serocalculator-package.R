@@ -100,6 +100,7 @@
 #' @importFrom dplyr anti_join
 #' @importFrom dplyr any_of
 #' @importFrom dplyr bind_rows
+#' @importFrom dplyr count
 #' @importFrom dplyr distinct
 #' @importFrom dplyr everything
 #' @importFrom dplyr filter

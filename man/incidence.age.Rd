@@ -7,6 +7,8 @@ add some details here}
 \usage{
 incidence.age(
   dpop,
+  dmcmc,
+  cond,
   c.age,
   antigen_isos,
   noise_params = filter(cond, Country == "MGH"),
@@ -16,6 +18,10 @@ incidence.age(
 }
 \arguments{
 \item{dpop}{cross-sectional population data}
+
+\item{dmcmc}{mcmc samples from distribution of longitudinal decay curve parameters}
+
+\item{cond}{conditional noise parameters}
 
 \item{c.age}{age category}
 

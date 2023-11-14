@@ -23,7 +23,7 @@
 #'
 #' @export
 getAdditionalData <- function(
-  fileName = dirname(filePath),
+  fileName = basename(filePath),
   filePath = file.path(repoURL, fileName),
   repoURL = "https://osf.io/download/",
   savePath = NULL)
@@ -35,7 +35,7 @@ getAdditionalData <- function(
 
   # Download
   tryCatch({
-    download.file(file.path(repoURL, fileName),
+    download.file(filePath,
                   tmpFileName,
                   mode = "wb",
                   quiet = TRUE)

@@ -1,7 +1,7 @@
 #' Get Additional Data
 #'
-#' Retrieves additional data from internet. This can be any file type, but the purpose of this
-#' function is to download data such as longitudinal response parameters from an online repository.
+#' Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. the purpose of this
+#' function is to download data such as longitudinal response parameters from an online repository or population data.
 #'
 #' @param fileName Name of the file to download. Required.
 #' @param repoURL Web address of the remote repository of files to download from. Required.
@@ -32,7 +32,8 @@ getAdditionalData <- function(
   on.exit({
     unlink(tmpFileName)
   })
-
+  #Increase timeout for big files
+  options(timeout = max(300, getOption("timeout")))
   # Download
   tryCatch({
     download.file(filePath,

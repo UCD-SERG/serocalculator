@@ -23,8 +23,9 @@
 #'
 #' @export
 getAdditionalData <- function(
-  fileName,
-  repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
+  fileName = dirname(filePath),
+  filePath = file.path(repoURL, fileName),
+  repoURL = "https://osf.io/download/",
   savePath = NULL)
 {
   tmpFileName <- file.path(tempdir(), fileName)

@@ -31,7 +31,8 @@ getAdditionalData <- function(
   on.exit({
     unlink(tmpFileName)
   })
-
+  #Increase timeout for big files
+  options(timeout = max(300, getOption("timeout")))
   # Download
   tryCatch({
     download.file(file.path(repoURL, fileName),

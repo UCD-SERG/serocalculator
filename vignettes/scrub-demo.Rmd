@@ -31,7 +31,7 @@ library(serocalculator)
 dmcmc <- readRDS("~/Dropbox/DataAnalysis/ScrubTyphus/longitudinal/v5/output/mcmc.rds") %>%
   mutate(alpha = alpha/365.25)
 
-
+#India specific LP
 dmcmc.i <- readRDS("~/Dropbox/DataAnalysis/ScrubTyphus/longitudinal/v4/output/mcmc.rds")  %>%
   mutate(alpha = alpha/365.25)
 
@@ -91,7 +91,7 @@ DT::datatable(cond)
 ### IgG (India and Nepal)
 ```{r message=FALSE, warning=FALSE}
 
-
+#Estimate seroincidence by country over all ages - IgG only 
 overall.igg <- est.incidence.by(
                 dpop %>%
                    rename(y = value,
@@ -100,13 +100,14 @@ overall.igg <- est.incidence.by(
                  cond,
                  antigen_isos = c("IgG"),
                  strata = c("country"),
-                 stepmax = 1
-                 )
+                 numCores = Inf
+                 ) 
 
-
+# Create a data frame
 df.overall.igg <- summary(overall.igg) %>%
   mutate(ageQ = "Overall")
 
+#Estimate seroincidence by country and age strata - IgG only 
 age.specific.igg <- est.incidence.by(dpop %>%
                    rename(y = value,
                           a = Age),
@@ -114,15 +115,21 @@ age.specific.igg <- est.incidence.by(dpop %>%
                  cond,
                  antigen_isos = c("IgG"),
                  strata = c("ageQ","country"),
-                  stepmax = 1)
+                 numCores = Inf,
+                 verbose = T) 
 
+
+
+# Create a data frame
 df.age.specific.igg <- summary(age.specific.igg)
 
+#combine into one data frame
 df.agecomb.igg <- rbind(df.overall.igg, df.age.specific.igg) %>%
   select(-Stratum) %>%
   select(country, ageQ, everything()) %>%
   mutate(across(where(is.numeric), round, digits = 4))
 
+#print table
 DT::datatable(df.agecomb.igg)
 
 
@@ -140,7 +147,8 @@ community.igg <- est.incidence.by(dpop %>%
                  cond,
                  antigen_isos = c("IgG"),
                  strata = c("areaunt2"),
-                  stepmax = 1)
+                  stepmax = 1,
+                 numCores = Inf)
 
 
 
@@ -170,8 +178,7 @@ overall.iggigm <- est.incidence(dpop %>%
                                             a = Age),
                  dmcmc,
                  cond,
-                 antigen_isos = c("IgG", "IgM"),
-                 stepmax = 1)
+                 antigen_isos = c("IgG", "IgM"))
 
 N <- dpop %>%  filter(country == "India") %>% select(index_id) %>% distinct() %>% summarise(n=n())
 
@@ -186,7 +193,10 @@ age.specific.iggigm <- est.incidence.by(dpop %>%
                  cond,
                  antigen_isos = c("IgG", "IgM"),
                  strata = c("ageQ"),
-                 stepmax = 1)
+                 stepmax = 1,
+                 numCores = Inf,
+                 verbose = T
+                 ) 
 
 df.age.specific.iggigm <- summary(age.specific.iggigm) %>%
   mutate(antigen_iso = "IgG + IgM") %>%
@@ -222,8 +232,7 @@ overall.i <- est.incidence(dpop %>%
                                             a = Age),
                  dmcmc.i,
                  cond,
-                 antigen_isos = c("IgG"),
-                  stepmax = 1)
+                 antigen_isos = c("IgG"))
 
 N <- dpop %>%  filter(country == "India") %>% select(index_id) %>% distinct() %>% summarise(n=n())
 
@@ -238,7 +247,8 @@ age.specific.i <- est.incidence.by(dpop %>%
                  cond,
                  antigen_isos = c("IgG"),
                  strata = c("ageQ"),
-                  stepmax = 1)
+                 numCores = Inf) %>%
+  print()
 
 df.age.specific.i <- summary(age.specific.i) %>%
   mutate(antigen_iso = "IgG") %>%

@@ -10,3 +10,6 @@ docs
 src-i386
 src-x64
 ..Rcheck
+serocalculator.Rcheck/
+serocalculator*.tar.gz
+serocalculator*.tgz

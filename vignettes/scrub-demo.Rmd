@@ -1,0 +1,260 @@
+---
+title: "Serocalculator: Scrub Typhus Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{scrub-demo}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Setup
+```{r message=FALSE, warning=FALSE}
+#load packages
+library(Hmisc)
+library(tidyverse)
+library(mixtools)
+
+
+#install_github("UCD-SERG/serocalculator", build_vignettes = T)
+library(serocalculator)
+
+#load  overall longitudinal params
+dmcmc <- readRDS("~/Dropbox/DataAnalysis/ScrubTyphus/longitudinal/v5/output/mcmc.rds") %>%
+  mutate(alpha = alpha/365.25)
+
+
+dmcmc.i <- readRDS("~/Dropbox/DataAnalysis/ScrubTyphus/longitudinal/v4/output/mcmc.rds")  %>%
+  mutate(alpha = alpha/365.25)
+
+##load population data
+#created in file "Scrub_dataPrep.R
+
+dpop <-  readRDS("~/Dropbox/DataAnalysis/ScrubTyphus/Source Data/scrub_dpop_05.02.22.AllAge.rds")  %>%
+  mutate(areaunt2 = factor(areaunt2),
+         country = as.factor(country)) %>%
+  select(index_id, country, areaunt2, Age, ageQ, IgG_result, IgM_result) %>%
+  pivot_longer(cols = c("IgG_result", "IgM_result"), names_to = "antigen_iso", values_to = "value") %>%
+  mutate(antigen_iso = factor(antigen_iso, levels = c("IgM_result", "IgG_result"), labels = c("IgM", "IgG")))
+
+```
+
+## Specify Noise Paramters
+
+```{r message=FALSE, warning=FALSE}
+
+#biologic noise
+b.noise <- dpop %>%
+  group_by(antigen_iso) %>%
+  filter(!is.na(value)) %>%
+  filter(Age<40) %>% # restrict to young ages to capture recent exposures 
+  do({
+    set.seed(54321)
+    # Fit the mixture model
+    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
+    # Assuming the first component is the lower distribution
+    lower_mu <- mixmod$mu[1]
+    lower_sigma <- sqrt(mixmod$sigma[1])
+    # Calculate the 90th percentile of the lower distribution
+    percentile75 <- qnorm(0.75, lower_mu, lower_sigma)
+    # Return the results
+    data.frame(antigen_iso = .$antigen_iso[1], percentile75 = percentile75)
+  })
+
+
+
+# define conditional parameters
+cond <- data.frame(
+  antigen_iso = c("IgG", "IgM"),
+  nu = as.numeric(c(b.noise[2,2], b.noise[1,2])),  # Biologic noise (nu)
+  eps = c(0.2, 0.2),                             # M noise (eps)
+  y.low = c(0.2, 0.2),                            # low cutoff (llod)
+  y.high = c(200, 200)) %>%                      # high cutoff (y.high)
+  mutate(across(where(is.numeric), round, digits = 2))                           
+
+
+
+DT::datatable(cond)
+
+```
+
+
+## Seroincidence estimates by age and country
+### IgG (India and Nepal)
+```{r message=FALSE, warning=FALSE}
+
+
+overall.igg <- est.incidence.by(
+                dpop %>%
+                   rename(y = value,
+                          a = Age),
+                 dmcmc,
+                 cond,
+                 antigen_isos = c("IgG"),
+                 strata = c("country"),
+                 stepmax = 1
+                 )
+
+
+df.overall.igg <- summary(overall.igg) %>%
+  mutate(ageQ = "Overall")
+
+age.specific.igg <- est.incidence.by(dpop %>%
+                   rename(y = value,
+                          a = Age),
+                 dmcmc,
+                 cond,
+                 antigen_isos = c("IgG"),
+                 strata = c("ageQ","country"),
+                  stepmax = 1)
+
+df.age.specific.igg <- summary(age.specific.igg)
+
+df.agecomb.igg <- rbind(df.overall.igg, df.age.specific.igg) %>%
+  select(-Stratum) %>%
+  select(country, ageQ, everything()) %>%
+  mutate(across(where(is.numeric), round, digits = 4))
+
+DT::datatable(df.agecomb.igg)
+
+
+```
+
+
+## Seroincidence estimates by community
+### IgG (India and Nepal)
+
+```{r message=FALSE, warning=FALSE}
+community.igg <- est.incidence.by(dpop %>%
+                   rename(y = value,
+                          a = Age),
+                 dmcmc,
+                 cond,
+                 antigen_isos = c("IgG"),
+                 strata = c("areaunt2"),
+                  stepmax = 1)
+
+
+
+df.community.igg <- summary(community.igg) %>%
+  filter(SE != "NaN") %>%
+  select(-Stratum) %>%
+  mutate(across(where(is.numeric), round, digits = 4))
+
+DT::datatable(df.community.igg)
+
+
+
+```
+
+
+
+
+
+
+## Estimate incidence
+### IgG + IgM (India only)
+```{r message=FALSE, warning=FALSE}
+
+overall.iggigm <- est.incidence(dpop %>%
+                                     filter(country == "India") %>%
+                                     rename(y = value,
+                                            a = Age),
+                 dmcmc,
+                 cond,
+                 antigen_isos = c("IgG", "IgM"),
+                 stepmax = 1)
+
+N <- dpop %>%  filter(country == "India") %>% select(index_id) %>% distinct() %>% summarise(n=n())
+
+df.overall.iggigm <- overall.iggigm %>% mutate(country = "India", ageQ = "Overall", n = N) %>% rename(antigen_iso = antigen.iso)
+
+
+age.specific.iggigm <- est.incidence.by(dpop %>%
+                                  filter(country == "India") %>%
+                                     rename(y = value,
+                                            a = Age),
+                 dmcmc,
+                 cond,
+                 antigen_isos = c("IgG", "IgM"),
+                 strata = c("ageQ"),
+                 stepmax = 1)
+
+df.age.specific.iggigm <- summary(age.specific.iggigm) %>%
+  mutate(antigen_iso = "IgG + IgM") %>%
+  select(-Stratum) %>%
+  mutate(country = "India")
+
+names(df.overall.iggigm)
+names(df.age.specific.iggigm)
+
+df.agecomb.iggigm <- rbind(df.overall.iggigm, df.age.specific.iggigm) %>%
+  select(country, ageQ, everything()) %>%
+  mutate(across(where(is.numeric), round, digits = 4))
+
+
+
+DT::datatable(df.agecomb.iggigm)
+
+
+
+```
+
+
+
+
+
+## SENSITIVITY ANALYSIS: Estimate incidence using India-specific longitudinal parameters
+### IgG + IgM (India only)
+```{r message=FALSE, warning=FALSE}
+
+overall.i <- est.incidence(dpop %>%
+                                     filter(country == "India") %>%
+                                     rename(y = value,
+                                            a = Age),
+                 dmcmc.i,
+                 cond,
+                 antigen_isos = c("IgG"),
+                  stepmax = 1)
+
+N <- dpop %>%  filter(country == "India") %>% select(index_id) %>% distinct() %>% summarise(n=n())
+
+df.overall.i <- overall.i %>% mutate(country = "India", ageQ = "Overall", n = N) %>% rename(antigen_iso = antigen.iso)
+
+
+age.specific.i <- est.incidence.by(dpop %>%
+                                  filter(country == "India") %>%
+                                     rename(y = value,
+                                            a = Age),
+                 dmcmc.i,
+                 cond,
+                 antigen_isos = c("IgG"),
+                 strata = c("ageQ"),
+                  stepmax = 1)
+
+df.age.specific.i <- summary(age.specific.i) %>%
+  mutate(antigen_iso = "IgG") %>%
+  select(-Stratum) %>%
+  mutate(country = "India")
+
+
+
+df.agecomb.i <- rbind(df.overall.i, df.age.specific.i) %>%
+  select(country, ageQ, everything()) %>%
+  mutate(across(where(is.numeric), round, digits = 4))
+
+
+
+DT::datatable(df.agecomb.i)
+
+
+```
+

@@ -4,7 +4,7 @@ ce096f7d73a14d083004dc4cd4827088 *NEWS
 2f0d05fa159c0cbaf611b95b9fb8198c *R/data-help.R
 a1522b6b5522ee3108f4c18369b9cd4d *R/deltaFunc.R
 2459fe699d9f2dee2d4096a8459a69c3 *R/densFunc.R
-59400925562a9721e63e7991ff154bcb *R/estimateSeroincidence.R
+59400925562a9721e63e7991ff154bcb *R/est.incidence.by.R
 97fa0b804650de611a334024916baaca *R/getAdditionalData.R
 f0d9baae9d10e02db385f555555931fe *R/nll.R
 3ef0eb791a21c2221dafe07457466876 *R/nllByType.R
@@ -38,7 +38,7 @@ a23cfd5e4e5e88a96e2774853f48aa65 *man/campylobacterDelftParams4.Rd
 e6415e1ea335b82a24cc3ef9aa5478bc *man/campylobacterSSIParams2.Rd
 4d2797bc3c01ab24effb7a6900ae879a *man/campylobacterSSIParams4.Rd
 f35091d97beb8e70dd2fa2f655c4321b *man/campylobacterSimLowData.Rd
-c0e69fa2dec067fa5db26cdaeab47998 *man/estimateSeroincidence.Rd
+c0e69fa2dec067fa5db26cdaeab47998 *man/est.incidence.by.Rd
 a351cb2497a6e921c2eced22d0d95c1a *man/getAdditionalData.Rd
 01c20490f1e8ed5ec32473649160c8ad *man/pertussisIgGPTParams1.Rd
 02a459fb98436acfdfb292a74947c09c *man/pertussisIgGPTParams2.Rd

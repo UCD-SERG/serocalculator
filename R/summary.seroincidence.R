@@ -3,17 +3,15 @@
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
-#' [estimateSeroincidence()].
+#' [est.incidence.by()].
 #'
-#' @param object A dataframe containing output of function [estimateSeroincidence()].
+#' @param object A dataframe containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
-#' @param quantiles A vector of length 2 specifying quantiles for lower (first element) and upper
-#'   (second element) bounds of `lambda`. Default = `c(0.025, 0.975)`.
 #' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
 #' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
 #'   help for [optim()] for details). Default = `TRUE`.
-#'
+#' @param confidence_level desired confidence interval coverage probability
 #' @return
 #' A list with the following items:
 #' \describe{
@@ -24,30 +22,33 @@
 #'   `lambda`) and `Covergence` (Convergence indicator returned by [optim()].
 #'   Value of 0 indicates convergence) columns are included.}
 #' \item{`Antibodies`}{Character vector with names of input antibodies used in
-#'   [estimateSeroincidence()].}
-#' \item{`Strata`}{Character with names of strata used in [estimateSeroincidence()].}
+#'   [est.incidence.by()].}
+#' \item{`Strata`}{Character with names of strata used in [est.incidence.by()].}
 #' \item{`CensorLimits`}{List of cutoffs for each of the antibodies used in
-#'   [estimateSeroincidence()].}
+#'   [est.incidence.by()].}
 #' }
 #'
 #' @examples
 #'
 #' \dontrun{
 #' # estimate seroincidence
-#' seroincidence <- estimateSeroincidence(...)
+#' seroincidence <- est.incidence.by(...)
 #'
 #' # calculate summary statistics for the seroincidence object
 #' seroincidenceSummary <- summary(seroincidence)
 #' }
 #'
 #' @export
-summary.seroincidence <- function(object, ..., quantiles = c(0.025, 0.975), showDeviance = TRUE,
-                                  showConvergence = TRUE)
+summary.seroincidence.ests <- function(
+    object,
+    ...,
+    confidence_level = .95,
+    showDeviance = TRUE,
+    showConvergence = TRUE)
 {
-  # R CMD check warnings workaround
-  hessian <- NULL
-  value <- NULL
-  convergence <- NULL
+
+  alpha = 1 - confidence_level
+  quantiles = c(alpha/2, 1 - alpha/2)
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
     stop("Incorrectly specified quantiles")
@@ -57,34 +58,41 @@ summary.seroincidence <- function(object, ..., quantiles = c(0.025, 0.975), show
     stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
   }
 
-  fits <- object[["Fits"]]
-  results <- as.data.frame(t(sapply(fits, FUN = function(elem) {
-    with(elem, c(
-      Lambda.est = 365.25 * exp(par + qnorm(0.5) * sqrt(1 / hessian)),
-      Lambda.lwr = 365.25 * exp(par + qnorm(quantiles[1]) * sqrt(1 / hessian)),
-      Lambda.upr = 365.25 * exp(par + qnorm(quantiles[2]) * sqrt(1 / hessian)),
-      Deviance = 2 * value,
-      Convergence = convergence))
-  })))
+  results =
+    object |>
+    lapply(
+      FUN = postprocess_fit,
+      coverage = confidence_level) |>
+    bind_rows(.id = "Stratum")
 
-  results$Stratum <- rownames(results)
-  rownames(results) <- NULL
+  results =
+    inner_join(
+      object |> attr("Strata"),
+      results,
+      by = "Stratum",
+      relationship = "one-to-one"
+    ) |>
+    relocate("Stratum", .before = everything())
+
 
   if (!showDeviance) {
-    results$Deviance <- NULL
+    results$log.lik <- NULL
   }
 
   if (!showConvergence) {
-    results$Convergence <- NULL
+    results$nlm.exit.code <- NULL
   }
 
-  output <- list(Results = results,
-                 Antibodies = object[["Antibodies"]],
-                 Strata = object[["Strata"]],
-                 CensorLimits = object[["CensorLimits"]],
-                 Quantiles = quantiles)
-
-  class(output) <- c("summary.seroincidence", "list")
+  output <-
+    results |>
+    structure(
+      Antibodies = attr(object, "Antibodies"),
+      Strata = attr(object, "Strata") |> names(),
+      Quantiles = quantiles,
+      class =
+        "summary.seroincidence.ests" |>
+        union(class(results))
+    )
 
   return(output)
 }

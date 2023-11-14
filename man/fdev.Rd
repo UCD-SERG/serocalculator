@@ -7,13 +7,13 @@
 fdev(log.lambda, csdata, lnpars, cond)
 }
 \arguments{
-\item{log.lambda}{Initial guess of incidence rate}
+\item{log.lambda}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
 
-\item{csdata}{cross-sectional sample data}
+\item{csdata}{cross-sectional sample data containing variables \code{y} and \code{a}}
 
-\item{lnpars}{longitudinal antibody decay model parameters}
+\item{lnpars}{longitudinal antibody decay model parameters \code{alpha}, \code{y1}, and \code{d}}
 
-\item{cond}{measurement noise parameters}
+\item{cond}{measurement noise parameters \code{nu}, \code{eps}, \code{y.low}, and \code{y.high}}
 }
 \description{
 more description to be added here

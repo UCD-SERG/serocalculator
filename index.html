@@ -90,24 +90,19 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ucd-serg/serocalculator"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>A Note for Windows Users</strong></p>
 <p>Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either during the <em>devtools</em> package installation, or independently if <em>devtools</em> is already installed.</p>
-<p> <em>During devtools installation:</em><br>
-   When prompted to install additional build tools, select “Yes” and Rtools will be installed.</p>
+<p><em>During devtools installation:</em></p>
+<p>When prompted to install additional build tools, select “Yes” and Rtools will be installed.</p>
 <div class="figure">
 <img src="articles/fig/Rtools1.png" alt=""><p class="caption">Click Yes to install Rtools along with the <em>devtools</em> package</p>
 </div>
-<p> <em>Independently:</em></p>
-<ol style="list-style-type: decimal">
-<li><p>Download Rtools from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link uri">https://cran.r-project.org/bin/windows/Rtools/</a></p></li>
-<li>
-<p>Run the installer</p>
-<ul>
-<li>During the Rtools installation you may see a window asking you to “Select Additional Tasks”.</li>
-<li>Do <strong>not</strong> select the box for “Edit the system PATH”. devtools and RStudio should put Rtools on the PATH automatically when it is needed.</li>
-<li>
-<strong>Do</strong> select the box for “Save version information to registry”. It should be selected by default. | ## Getting Help</li>
-</ul>
-</li>
-</ol>
+<p><em>Independently:</em> 1. Download Rtools from <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link uri">https://cran.r-project.org/bin/windows/Rtools/</a> 2. Run the installer</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> During the Rtools installation you may see a window asking you to “Select Additional Tasks”.</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Do <span class="sc">**</span>not<span class="sc">**</span> select the box <span class="cf">for</span> “Edit the system PATH”. devtools and RStudio should put Rtools on the PATH automatically when it is needed.</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> <span class="er">**</span>Do<span class="sc">**</span> select the box <span class="cf">for</span> “Save version information to registry”. It should be selected by default.</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h2>
 <p>If you need assistance or encounter a clear bug, please file an issue with a minimal reproducible example on <a href="https://github.com/UCD-SERG/serocalculator/issues" class="external-link">GitHub</a>.</p>
 <p>Another great resource is <strong>The Epidemiologist R Handbook</strong>, which includes an introductory page on asking for help with R packages via GitHub: <a href="https://epirhandbook.com/en/getting-help.html" class="external-link uri">https://epirhandbook.com/en/getting-help.html</a></p>
 </div>

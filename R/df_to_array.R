@@ -1,0 +1,56 @@
+#' Convert a data.frame (or tibble) into a multidimensional array
+#'
+#' @param df a [data.frame()] (or [tibble::tibble()]) in long format (each row contains one value for the intended array)
+#' @param dim_var_names a [character()] vector of variable names in `df`. All of these variables should be factors, or a warning will be produced.
+#' @param value_var_name a [character()]
+#' @return an [array()]
+#' @export
+#'
+#' @examples
+#' library(dplyr)
+#' library(tidyr)
+#' df = iris |>
+#'   tidyr::pivot_longer(
+#'   names_to = "parameter",
+#'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) |>
+#'   mutate(parameter = factor(parameter, levels = unique(parameter)))
+#'   df |> df_to_array(dim_var_names = c("parameter", "Species"))
+df_to_array = function(
+    df,
+    dim_var_names,
+    value_var_name = "value")
+{
+
+  stopifnot(all(dim_var_names %in% names(df)))
+  stopifnot(value_var_name |> length() == 1)
+  stopifnot(value_var_name %in% names(df))
+
+  all_factors  =
+    df |> select(dim_var_names) |> sapply(F = is.factor) |> all()
+
+  if(!all_factors)
+  {
+    warning(
+      "Some dimension variables are not factors.",
+      "\nThese dimensions will be ordered by first appearance.",
+      "\nCheck results using `dimnames()`")
+  }
+
+  df = df |>
+    mutate(
+      across(
+        all_of(dim_var_names),
+        .fns = function(x) factor(x, levels = union(levels(x), unique(x))))
+    )
+
+  xtabs_formula =
+    paste(
+      value_var_name,
+      " ~ ",
+      paste(c("obs", dim_var_names), collapse = " + ")
+    )
+
+  df |>
+    mutate(.by = all_of(dim_var_names), obs = 1:n()) |>
+    xtabs(formula(xtabs_formula), data = _)
+}

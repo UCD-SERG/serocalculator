@@ -32,7 +32,7 @@ Suggests:
     testthat (>= 3.0.0),
     readr,
     ggplot2,
-    bookdown
+    bookdown,
     parallel
 VignetteBuilder: knitr
 LazyData: true

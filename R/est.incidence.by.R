@@ -62,6 +62,13 @@ est.incidence.by <- function(
 
   if(verbose) message("Data has been stratified.")
 
+  if(numCores > 1L && !requireNamespace("parallel", quietly = TRUE))
+  {
+    warning(
+      "The `parallel` package is not installed, so `numCores > 1` has no effect.",
+      "To install `parallel`, run `install.packages('parallel')` in the console.")
+  }
+
   # Loop over data per stratum
   if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
 

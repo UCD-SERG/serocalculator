@@ -2,8 +2,8 @@
 #'
 #' @param df a [data.frame()] (or [tibble::tibble()]) in long format (each row contains one value for the intended array)
 #' @param dim_var_names a [character()] vector of variable names in `df`. All of these variables should be factors, or a warning will be produced.
-#' @param value_var_name a [character()]
-#' @return an [array()]
+#' @param value_var_name a [character()] variable containing a variable name from `df` which contains the values for the intended array.
+#' @return an [array()] with dimensions defined by the variables in `df` listed in `dim_var_names`
 #' @export
 #'
 #' @examples

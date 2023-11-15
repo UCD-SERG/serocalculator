@@ -11,10 +11,10 @@ df_to_array(df, dim_var_names, value_var_name = "value")
 
 \item{dim_var_names}{a \code{\link[=character]{character()}} vector of variable names in \code{df}. All of these variables should be factors, or a warning will be produced.}
 
-\item{value_var_name}{a \code{\link[=character]{character()}}}
+\item{value_var_name}{a \code{\link[=character]{character()}} variable containing a variable name from \code{df} which contains the values for the intended array.}
 }
 \value{
-an \code{\link[=array]{array()}}
+an \code{\link[=array]{array()}} with dimensions defined by the variables in \code{df} listed in \code{dim_var_names}
 }
 \description{
 Convert a data.frame (or tibble) into a multidimensional array

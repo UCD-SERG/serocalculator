@@ -15,12 +15,34 @@ warn_missing_strata = function(
 
   if(length(missing_strata_vars) > 0)
   {
-    warning(
-      dataname,
-      " is missing some strata variables: ",
-      missing_strata_vars |> paste(collapse = ", "),
-      "\n", dataname, " will only be stratified by: ",
-      present_strata_vars |> paste(collapse = ","))
+
+
+
+    if(length(present_strata_vars) > 0)
+    {
+
+      message =
+        c(
+          dataname,
+          " is missing some strata variables: ",
+          missing_strata_vars |> paste(collapse = ", "),
+          "\n", dataname, " will only be stratified by: ",
+          present_strata_vars |> paste(collapse = ",")
+      )
+    } else
+    {
+      message = c(
+        dataname,
+        " is missing all strata variables, and will be used unstratified.")
+    }
+
+    message2 = c(
+      "\To avoid this warning, specify the desired set of stratifying",
+      " variables in the `curve_strata_varnames` and `noise_strata_varnames`",
+      " arguments to `est.incidence.by()`"
+    )
+
+    warning(message, message2)
   }
 
   if(length(present_strata_vars) > 0)

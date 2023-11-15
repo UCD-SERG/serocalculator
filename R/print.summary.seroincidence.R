@@ -2,16 +2,16 @@
 #' Print Method for Seroincidence Summary Object
 #'
 #' @description
-#' Custom [print()] function to show output of the seroincidence summary [summary.seroincidence()].
+#' Custom [print()] function for "summary.seroincidence.ests" objects (constructed by [summary.seroincidence.ests()])
 #'
-#' @param x A list containing output of function [summary.seroincidence()].
+#' @param x A "summary.seroincidence.ests" object (constructed by [summary.seroincidence.ests()])
 #' @param ... Additional arguments affecting the summary produced.
 #'
 #' @examples
 #'
 #' \dontrun{
 #' # estimate seroincidence
-#' seroincidence <- estimateSeroincidence(...)
+#' seroincidence <- est.incidence.by(...)
 #'
 #' # calculate summary statistics for the seroincidence object
 #' seroincidenceSummary <- summary(seroincidence)
@@ -24,17 +24,12 @@
 #' }
 #'
 #' @export
-print.summary.seroincidence <- function(x, ...)
+print.summary.seroincidence.ests <- function(x, ...)
 {
   cat("Seroincidence estimated given the following setup:\n")
-  cat(paste("a) Antibodies   :", paste(x[["Antibodies"]], collapse = ", ")), "\n")
-  cat(paste("b) Strata       :", paste(x[["Strata"]], collapse = ", ")), "\n")
-  censorLimits <- x[["CensorLimits"]]
-  cat(paste("c) Censor limits:", paste(sapply(names(censorLimits), FUN = function(name) {
-    paste(name, censorLimits[name], sep = " = ")
-    }), collapse = ", "), "\n"))
-  cat(paste("d) Quantiles    :", paste(x[["Quantiles"]], collapse = ", ")), "\n")
-
+  cat(paste("a) Antibodies   :", paste(x |> attr("Antibodies"), collapse = ", ")), "\n")
+  cat(paste("b) Strata       :", paste(x |> attr("Strata"), collapse = ", ")), "\n")
   cat("\n Seroincidence estimates:\n")
-  print(x[["Results"]])
+  print(as_tibble(x))
+  invisible(x)
 }

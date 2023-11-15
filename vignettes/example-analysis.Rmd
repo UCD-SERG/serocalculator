@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(serocalculator)
 library(Hmisc)
+library(dplyr)
 ```
 
 ```{r "load data"}
@@ -37,12 +38,14 @@ ln.pars <- data.frame(
   alpha = day2yr * lp$alpha,  # decay rate (per year)
   d = lp$r -1);               # shape (r-1 offset from exp)
 
+library(readr)
 #read simulated data
 raw.data = fs::path_package(
   "extdata", 
   "SimulDat.txt", 
   package = "serocalculator") |> 
-  read.table(head=TRUE)
+  readr::read_table() |> 
+  rename(AGE = '"AGE"', IgG = '"IgG"')
 
 ```
 

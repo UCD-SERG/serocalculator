@@ -1,0 +1,91 @@
+---
+title: "typhoid_results"
+format: html
+---
+
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+
+#library(devtools)
+#install_github("UCD-SERG/serocalculator")
+library(serocalculator)
+library(tidyverse)
+```
+
+```{r longdata}
+c.hlye.IgG <- 
+  fs::path_package(                          
+    "extdata", 
+    "dmcmc_hlyeigg_09.30.rds", 
+    package = "serocalculator") |> #Load longitudinal parameters dataset
+  readRDS()%>%
+  mutate(alpha = alpha*365.25, #Create alpha and d 
+         d = r-1) %>%
+  select(y1, alpha, d) #Select only the variables needed for analysis
+```
+
+``` {r simdata}
+library(fs) # filesystem utility functions
+p.hlye.IgG  <- 
+  fs::path_package(
+    package = "serocalculator", 
+    "extdata/simpophlyeigg.2.csv") %>% #Load simulated cross-sectional dataset
+  read_csv() %>%
+  rename( #rename variables
+    y = y.smpl,
+    a = a.smpl) %>% 
+  select(y, a) #Select only the variables needed for analysis
+```
+
+``` {r conditions}
+cond.hlye.IgG <- data.frame(
+  nu = 1.027239,             # B noise
+  eps = 0.2,            # M noise
+  y.low = 0.0,          # low cutoff
+  y.high = 5e4,
+  antigen_iso = "HlyE_IgG"); 
+```
+
+```{r seroinc}
+start <- .05
+
+lambda = start # initial estimate: starting value
+log.lambda = log(lambda)
+log.lmin=log(lambda/10)
+log.lmax=log(10*lambda) 
+
+
+
+objfunc <- function(llam){
+  return(res <- fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
+}
+
+
+fit <- nlm(
+  objfunc,
+  p=log.lambda,
+  hessian=TRUE,
+  print.level=0,
+  stepmax=1,
+  iterlim = 100)
+
+typhoid_results = fit |> 
+  postprocess_fit(
+    coverage = .95,
+    start = start
+  ) |>
+  mutate(
+    ageCat = NULL,
+    antigen.iso = paste(collapse = "+", "HlyE_IgG")) %>%
+  structure(noise.parameters = cond.hlye.IgG)
+
+usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
+```

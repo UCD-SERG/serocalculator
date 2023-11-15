@@ -1,60 +1,46 @@
 #' Calculate log-likelihood
 #'
-#' @param stratumData Data frame with cross-sectional serology data per antibody and age, and additional
-#'   columns, for one stratum
-#' @param antibodies Character vector with one or more antibody names. Values must match `data`.
-#' @param params List of data frames of all longitudinal parameters. Each data frame contains
+#' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
+#' @param antigen_isos Character vector with one or more antibody names. Values must match `data`.
+#' @param curve_params List of data frames of all longitudinal parameters. Each data frame contains
 #'   Monte Carlo samples for each antibody type.
-#' @param censorLimits List of cutoffs for one or more named antibody types (corresponding to
-#'   `stratumData`).
-#' @param ivc If `ivc = TRUE`, the biomarker data are interval-censored.
-#' @param m this parameter's meaning is uncertain
-#' @param par0 List of parameters for the (lognormal) distribution of antibody concentrations
-#'   for true seronegatives (i.e. those who never seroconverted), by named antibody type
-#'   (corresponding to `data`).
-#' @param start  starting value for `log(lambda)`. Value of -6 corresponds roughly to 1 day
-#'   (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.
-#'
+#' @param noise_params a [list()] (or [data.frame()], or [tibble()]) containing noise parameters
+#' @param verbose logical: if TRUE, print verbose log information to console
+#' @param ... additional arguments passed to other functions (not currently used).
+#' @inheritParams fdev
+
 #' @return the log-likelihood of the data with the current parameter values
-.nll <- function(stratumData, antibodies, params, censorLimits, ivc = FALSE, m = 0, par0, start)
+.nll <- function(
+    log.lambda,
+    data,
+    antigen_isos,
+    curve_params,
+    noise_params,
+    verbose = FALSE,
+    ...)
 {
   # Start with zero total
   nllTotal <- 0
-  if (ivc) {
-    # Loop over antibodies
-    for (abIdx in seq_along(antibodies)) {
-      antibody <- .stripNames(antibodies[abIdx])
-      param <- params[[antibody]]
-      p0 <- par0[[antibody]]
-      modelType <- .selectModel(param)
 
-      data <- cbind(stratumData[[antibodies[abIdx]]],
-                    stratumData[[antibodies[abIdx + 1]]],
-                    stratumData$Age)
+  # Loop over antibodies
+  for (cur_antibody in antigen_isos)
+  {
+    cur_data = data[[cur_antibody]]
+    cur_curve_params = curve_params[[cur_antibody]]
+    cur_noise_params = noise_params[[cur_antibody]]
 
-      nllSingle <- .nllByType(data = data, param = param, censorLimit = NULL, ivc = ivc, m = m,
-                              par0 = p0, start = start, modelType = modelType)
-      if (!is.na(nllSingle)) {
-        nllTotal <- nllTotal + nllSingle
-      }
+    nllSingle <-
+      fdev(
+        log.lambda = log.lambda,
+        csdata = cur_data,
+        lnpars = cur_curve_params,
+        cond = cur_noise_params
+      )
+
+    if (!is.na(nllSingle)) {
+      nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
     }
-  } else {
-    # Loop over antibodies
-    for (abIdx in seq_along(antibodies)) {
-      antibody <- .stripNames(antibodies[abIdx])
-      param <- params[[antibody]]
-      p0 <- par0[[antibody]]
-      censorLimit <- censorLimits[[antibody]]
-      modelType <- .selectModel(param)
 
-      data <- cbind(stratumData[[antibodies[abIdx]]],
-                    stratumData$Age)
-      nllSingle <- .nllByType(data = data, param = param, censorLimit = censorLimit, ivc = ivc,
-                              m = m, par0 = p0, start = start, modelType = modelType)
-      if (!is.na(nllSingle)) {
-        nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
-      }
-    }
   }
 
   # Return total log-likelihood

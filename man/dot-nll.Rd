@@ -5,38 +5,30 @@
 \title{Calculate log-likelihood}
 \usage{
 .nll(
-  stratumData,
-  antibodies,
-  params,
-  censorLimits,
-  ivc = FALSE,
-  m = 0,
-  par0,
-  start
+  log.lambda,
+  data,
+  antigen_isos,
+  curve_params,
+  noise_params,
+  verbose = FALSE,
+  ...
 )
 }
 \arguments{
-\item{stratumData}{Data frame with cross-sectional serology data per antibody and age, and additional
-columns, for one stratum}
+\item{log.lambda}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
 
-\item{antibodies}{Character vector with one or more antibody names. Values must match \code{data}.}
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{params}{List of data frames of all longitudinal parameters. Each data frame contains
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}.}
+
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}
 
-\item{censorLimits}{List of cutoffs for one or more named antibody types (corresponding to
-\code{stratumData}).}
+\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
 
-\item{ivc}{If \code{ivc = TRUE}, the biomarker data are interval-censored.}
+\item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{m}{this parameter's meaning is uncertain}
-
-\item{par0}{List of parameters for the (lognormal) distribution of antibody concentrations
-for true seronegatives (i.e. those who never seroconverted), by named antibody type
-(corresponding to \code{data}).}
-
-\item{start}{starting value for \code{log(lambda)}. Value of -6 corresponds roughly to 1 day
-(log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)). Default = -6.}
+\item{...}{additional arguments passed to other functions (not currently used).}
 }
 \value{
 the log-likelihood of the data with the current parameter values

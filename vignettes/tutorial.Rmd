@@ -312,7 +312,7 @@ The longitudinal response parameters set consists of the following items:
 - `mu1`: initial antibody growth rate
 - `t1`: duration of infection
 
-Please, refer to vignette [methodology.pdf](methodology.pdf) for more details on the underlying 
+Please, refer to `vignette("methodology", package = "serocalculator")` for more details on the underlying 
 methodology.
 
 End user has three options for loading the response parameters into R session:

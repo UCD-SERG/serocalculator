@@ -38,7 +38,7 @@ getAdditionalData <- function(
   options(timeout = max(300, getOption("timeout")))
   # Download
   tryCatch({
-    download.file(filePath,
+    download.file(fileURL,
                   tmpFileName,
                   mode = "wb",
                   quiet = TRUE)

@@ -9,7 +9,9 @@ bibliography: references.bib
 ---
 # Introduction
 
-This vignette provides users with an example analysis using the *serocalculator* package. Users will be able to determine the seroincidence of typhoid fever in the sample population using existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan [@Aiemjoy_2022_Lancet], plus a cross-sectional serosurvey from a simulated population. 
+This vignette provides users with an example analysis using the *serocalculator* package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. Users will determine the seroincidence of typhoid fever in the sample population using existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan , plus a cross-sectional serosurvey from SEES, a ________. 
+
+Further details can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
 
 
 ```{r, include = FALSE}
@@ -33,7 +35,7 @@ library(tidyverse)
 ```
 ## 2. Load data
 ### a. Load and prepare longitudinal parameter data
-The next step is to load the longitudinal data to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases.
+The next step is to load the longitudinal data to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. See (REFERENCE) for more details on this process. 
 
 These parameters include the following:
 
@@ -48,7 +50,7 @@ We also create two additional variables: the annual decay rate, $\alpha$, which 
 Finally, we select only the variables needed for the analysis. 
 
 ```{r longdata, echo=FALSE, message=FALSE}
-c.hlye.IgG <- 
+c.hlye.IgG <-                             #Need to change this to pull from osf
   fs::path_package(                          
   "extdata", 
   "dmcmc_hlyeigg_09.30.rds", 
@@ -59,7 +61,7 @@ c.hlye.IgG <-
   select(y1, alpha, d) #Select only the variables needed for analysis
 ```
 
-### b. Load and prepare simulated data 
+### b. Load and prepare cross-sectional data 
 The simulated data represents a cross-sectional serosurvey conducted in a representative sample of the general population without regard to disease status. 
 
 In this scenario, we have selected hlye and IgG as our target measures. Users may select different serologic markers depending on what is available. From the original dataset, we rename our variables to *y* and *a*. Finally, we once again limit the dataset to only the variables needed for the analysis. 

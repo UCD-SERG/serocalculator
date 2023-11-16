@@ -52,5 +52,5 @@ df_to_array = function(
 
   df |>
     mutate(.by = all_of(dim_var_names), obs = 1:n()) |>
-    xtabs(formula(xtabs_formula), data = _)
+    xtabs(formula = formula(xtabs_formula))
 }

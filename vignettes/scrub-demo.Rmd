@@ -1,5 +1,6 @@
 ---
 title: "Serocalculator: Scrub Typhus Vignette"
+subtitle: "Results accompany manuscript: 'Estimating the seroincidence of scrub typhus using antibody dynamics following infection'"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{scrub-demo}
@@ -116,8 +117,7 @@ age.specific.igg <- est.incidence.by(dpop %>%
                  cond,
                  antigen_isos = c("IgG"),
                  strata = c("ageQ","country"),
-                 numCores = Inf,
-                 verbose = T) 
+                 numCores = Inf) 
 
 
 
@@ -194,10 +194,7 @@ age.specific.iggigm <- est.incidence.by(dpop %>%
                  cond,
                  antigen_isos = c("IgG", "IgM"),
                  strata = c("ageQ"),
-                 stepmax = 1,
-                 numCores = Inf,
-                 verbose = T
-                 ) 
+                 numCores = Inf) 
 
 df.age.specific.iggigm <- summary(age.specific.iggigm) %>%
   mutate(antigen_iso = "IgG + IgM") %>%

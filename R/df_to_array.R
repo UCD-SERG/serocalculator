@@ -24,6 +24,9 @@ df_to_array = function(
   stopifnot(all(dim_var_names %in% names(df)))
   stopifnot(value_var_name |> length() == 1)
   stopifnot(value_var_name %in% names(df))
+  if(is.grouped_df(df)) {
+    stop("ungroup the data frame first before running")
+  }
 
   all_factors  =
     df |> select(dim_var_names) |> sapply(F = is.factor) |> all()
@@ -47,7 +50,7 @@ df_to_array = function(
     paste(
       value_var_name,
       " ~ ",
-      paste(c("obs", dim_var_names), collapse = " + ")
+      paste(c( dim_var_names, "obs"), collapse = " + ")
     )
 
   df |>

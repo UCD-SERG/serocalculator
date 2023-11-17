@@ -1,0 +1,223 @@
+---
+title: "Generate a simulated cross-sectional sample and estimate seroincidence"
+title: "Enteric Fever using HlyE IgG and/or HlyE IgA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{simulate_xsectionalData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+ This script generates simulated seroresponses for incident infections
+ as a Poisson process with frequency `lambda'. Responses are generated for
+ antibodies given in `abs' (any subset of 1:n(), names in `antibodies').
+
+ Age range of the simulated cross-sectional record is `lifespan'.
+
+ The size of the sample is `nrep'.
+
+ Each individual is simulated separately, but different antibodies are
+ modelled jointly (see "sim-graph.r").
+
+ Longitudinal parameters are calculated for an age: `age.fx' (fixed age).
+ However, when `age.fx' is set to NA then the age at infection is used.
+
+ The boolean `renew.params' determines whether each infection uses a
+ new set of longitudinal parameters, sampled at random from the
+ posterior predictive output of  the longitudinal model. If set to FALSE
+ a parameter set is chosen at birth and kept, but:
+ 1. the baseline antibody levels (y0) are updated with the simulated level
+    (just) prior to infection, and
+ 2. when is.na(age.fx) then the selected parameter sample is updated for the
+    age when infection occurs.
+
+ There is also a variable `n.mc': when n.mc==0 then a random MC
+ sample is chosen out of the posterior set (1:4000). When `n.mc' is
+ given a value in 1:4000 then the chosen number is fixed and reused
+ in any subsequent infection. This is for diagnostic purposes.
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup}
+library(serocalculator)
+library(tidyverse)
+
+
+#load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
+dmcmc <- readRDS("~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/output/mcmc.rds")
+
+
+
+mcmcL <- dmcmc %>%
+  mutate(y1 = y1-y0) %>%
+  mutate(r = r-1) %>%
+  tidyr::pivot_longer(
+      names_to = "parameter",
+      cols = c("y0", "y1", "t1", "alpha", "r") ) |>
+      mutate(parameter = factor(parameter, levels = unique(parameter))) %>%
+  select(-Country, -ageCat) %>%
+  mutate(value = log(value)) %>%
+  filter(antigen_iso == "HlyE_IgG" | antigen_iso == "HlyE_IgA") %>%
+  droplevels()
+  
+### this process back calculates from peter's function: 
+# par.pred <- function(parnum,k.test){
+#   if(parnum==2){
+#     par1 <- exp(predpar[k.test,1,]);
+#     par2 <- exp(predpar[k.test,parnum,]);
+#     return(par1+par2);
+#   }
+#   par <- exp(predpar[k.test,parnum,]);
+#   if(parnum==5) return(par+1);
+#   return(par);
+# }
+
+
+predpar <- df_to_array(mcmcL, dim_var_names = c("antigen_iso", "parameter"))
+ 
+
+
+
+#compare to peter's array
+load("~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/output/v9na.pred.rda")
+
+
+
+
+```
+
+
+
+```{r}
+
+ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
+antibodies <- c();
+for(k.test in 1:nrow(ab.nm))
+  antibodies <- c(antibodies,paste(ab.nm[k.test,1],ab.nm[k.test,2]));
+
+antibodies <- levels(mcmcL$antigen_iso)
+
+abs <-  c(1,2);
+age.fx <- NA; # age used for longitudinal model (fixed for now)
+day2yr <- 365.25;
+lambda <- 0.2; # incidence (1/yr)
+npar <- 5; # y0, y1, t1, alpha, shape
+
+lifespan <- c(0,20); # range covered in simulations
+nrep <- 100; # cross-sectional sample size
+
+dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # noise distribution
+blims <- dlims; # baseline distribution
+
+set.seed(54321)
+csdata0 <- makecs(lambda/day2yr,n.smpl=nrep,age.rng=lifespan*day2yr,
+                 age.fx=age.fx,ablist=abs,n.mc=0,
+                 renew.params=TRUE,add.noise=TRUE);
+
+csdata0[,1] <-  csdata0[,1]/day2yr;
+
+
+```
+
+
+```{r}
+
+
+
+cond <- data.frame(
+  antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
+  nu = c(0.5, 0.5),  # Biologic noise (nu)
+  eps = c(0.2, 0.2),                             # M noise (eps)
+  y.low = c(1, 1),                            # low cutoff (llod)
+  y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+                          
+
+csdataL <- as.data.frame(csdata0) %>%
+  pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
+
+est.incidence(csdataL %>%
+                   rename(y = value,
+                          a = age), 
+              dmcmc, cond, antigen_isos = c("HlyE_IgG"))
+
+
+```
+
+
+
+## Esitmate incidence with simulated data
+```{r}
+# Calculate lambda for a simulated cross-sectional sample
+# in "./output/sim.rda".
+
+#source("C/serocalc.r"); # also loads serocalc.so
+ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"))
+
+csdata <- as.data.frame(csdata0) %>%
+  rename('HlyE IgA' = "HlyE_IgA",
+         'HlyE IgG' = "HlyE_IgG")
+
+# load longitudinal parameter MC sample
+longbase <-"~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/"
+
+source(paste(longbase,"v9na.par-extract.r",sep=""));
+day2yr <- 365.25;
+
+# read simulated cross-sectional data
+y.cs <- csdata[,2:ncol(csdata)];
+a.cs <- csdata[,1];
+
+# global parameters
+#age.fx <- 10; # age used for longitudinal model (must be fixed here)
+glob <- rbind(c(0.5,0.5),  # B noise
+              c(0.2,0.2),  # M noise
+              c(1.0,1.0),  # low cutoff
+              c(5e6,5e6)); # high cutoff
+
+lambda = 0.1 # initial estimate: starting value
+llstart = log(lambda);
+lambda.est <- c();
+log.lmin=log(lambda/10);log.lmax=log(10*lambda)   # seroincidence rate interval
+
+
+lambda.est <- NULL
+for(k.test in 1:2){
+  #cat(ab.nm[k.test,1],ab.nm[k.test,2]," ");
+  lp <- data.frame(y1=par.pred(2,k.test),           # peak levels
+                   alpha=day2yr*par.pred(4,k.test), # decay rate (per year)
+                   d=par.pred(5,k.test) - 1); # shape (r-1 offset from exp)
+  cs.data <- data.frame(y=y.cs[,k.test], a=a.cs);
+  cond <- data.frame(nu=glob[1,k.test],eps=glob[2,k.test],
+                     y.low=glob[3,k.test],y.high=glob[4,k.test]);
+  objfunc <- function(llam){
+    return(fdev(llam,cs.data,lp,cond));
+  }
+  # seroincidence estimation
+  fit = nlm(objfunc,llstart,
+            hessian=TRUE,print.level=0,stepmax = 1);
+            #stepmax=(log.lmax-log.lmin)/4);
+  llstart <- fit$estimate;
+  lambda <- c(exp(fit$estimate),
+              exp(fit$estimate + qnorm(c(0.05))*sqrt(1/fit$hessian)),
+              exp(fit$estimate + qnorm(c(0.95))*sqrt(1/fit$hessian)),
+              fit$minimum,fit$iterations);
+  lambda.est <- rbind(lambda.est,lambda);
+}
+
+
+lambda.est <- as.matrix(lambda.est);
+colnames(lambda.est) <- c("ml.est","lwr0.05", "upr0.95","LLF","N iter.");
+rownames(lambda.est) <- c(paste(ab.nm[1,1],ab.nm[1,2]),
+                          paste(ab.nm[2,1],ab.nm[2,2]));
+print(lambda.est);
+
+
+```

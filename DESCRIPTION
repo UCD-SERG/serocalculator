@@ -11,7 +11,7 @@ Authors@R: c(
 Description: Translates antibody levels measured in cross-sectional population 
   samples into estimates of the frequency with which seroconversions (infections) 
   occur in the sampled populations. Replaces the previous `seroincidence` package.
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.2.0)
 License: GPL-3
 Imports: 
     dplyr (>= 1.1.1),
@@ -21,8 +21,9 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils
+    utils,
 Suggests: 
+    parallel,
     knitr,
     rmarkdown,
     pander,
@@ -32,8 +33,7 @@ Suggests:
     testthat (>= 3.0.0),
     readr,
     ggplot2,
-    bookdown,
-    parallel
+    bookdown
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

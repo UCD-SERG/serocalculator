@@ -8,6 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+This script compares our est.incidence function with Peter's old function and also compares predpar versus the df_to_array of mcmc
 
  This script generates simulated seroresponses for incident infections
  as a Poisson process with frequency `lambda'. Responses are generated for
@@ -47,7 +48,8 @@ knitr::opts_chunk$set(
 
 
 ```{r setup}
-library(serocalculator)
+#library(serocalculator)
+devtools::load_all()
 library(tidyverse)
 
 
@@ -68,17 +70,7 @@ mcmcL <- dmcmc %>%
   filter(antigen_iso == "HlyE_IgG" | antigen_iso == "HlyE_IgA") %>%
   droplevels()
   
-### this process back calculates from peter's function: 
-# par.pred <- function(parnum,k.test){
-#   if(parnum==2){
-#     par1 <- exp(predpar[k.test,1,]);
-#     par2 <- exp(predpar[k.test,parnum,]);
-#     return(par1+par2);
-#   }
-#   par <- exp(predpar[k.test,parnum,]);
-#   if(parnum==5) return(par+1);
-#   return(par);
-# }
+
 
 
 predpar <- df_to_array(mcmcL, dim_var_names = c("antigen_iso", "parameter"))
@@ -97,6 +89,8 @@ load("~/OneDrive - University of California, Davis/Research/Serocalculator/Seroc
 
 
 ```{r}
+#set seed to reproduce results
+set.seed(54321)
 
 ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
 antibodies <- c();
@@ -117,10 +111,13 @@ nrep <- 100; # cross-sectional sample size
 dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # noise distribution
 blims <- dlims; # baseline distribution
 
-set.seed(54321)
-csdata0 <- makecs(lambda/day2yr,n.smpl=nrep,age.rng=lifespan*day2yr,
-                 age.fx=age.fx,ablist=abs,n.mc=0,
-                 renew.params=TRUE,add.noise=TRUE);
+
+csdata0 <- makecs(lambda/day2yr,
+                  n.smpl=nrep,
+                  age.rng=lifespan*day2yr,
+                  age.fx=age.fx,
+                  ablist=abs,n.mc=0,
+                  renew.params=TRUE,add.noise=TRUE);
 
 csdata0[,1] <-  csdata0[,1]/day2yr;
 
@@ -146,7 +143,7 @@ csdataL <- as.data.frame(csdata0) %>%
 est.incidence(csdataL %>%
                    rename(y = value,
                           a = age), 
-              dmcmc, cond, antigen_isos = c("HlyE_IgG"))
+              dmcmc, cond, antigen_isos = c("HlyE_IgA"))
 
 
 ```
@@ -166,9 +163,8 @@ csdata <- as.data.frame(csdata0) %>%
          'HlyE IgG' = "HlyE_IgG")
 
 # load longitudinal parameter MC sample
-longbase <-"~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/"
-
-source(paste(longbase,"v9na.par-extract.r",sep=""));
+# longbase <-"~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/"
+# source(paste(longbase,"v9na.par-extract.r",sep=""));
 day2yr <- 365.25;
 
 # read simulated cross-sectional data
@@ -204,7 +200,7 @@ for(k.test in 1:2){
   fit = nlm(objfunc,llstart,
             hessian=TRUE,print.level=0,stepmax = 1);
             #stepmax=(log.lmax-log.lmin)/4);
-  llstart <- fit$estimate;
+#  llstart <- fit$estimate;
   lambda <- c(exp(fit$estimate),
               exp(fit$estimate + qnorm(c(0.05))*sqrt(1/fit$hessian)),
               exp(fit$estimate + qnorm(c(0.95))*sqrt(1/fit$hessian)),

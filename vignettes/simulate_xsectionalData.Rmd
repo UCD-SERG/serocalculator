@@ -102,6 +102,7 @@ dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # noise distribution
 blims <- dlims; # baseline distribution
 
 
+#rename function to sim.cs
 csdata0 <- makecs(lambda/day2yr,
                   n.smpl=nrep,
                   age.rng=lifespan*day2yr,

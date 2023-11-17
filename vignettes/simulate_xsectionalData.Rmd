@@ -48,11 +48,12 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(serocalculator)
+load_all()
 library(tidyverse)
 
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
-dmcmc <- readRDS("~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/output/mcmc.rds")
+dmcmc <- readRDS("inst/extdata/mcmc.rds")
 
 
 
@@ -81,13 +82,13 @@ mcmcL <- dmcmc %>%
 # }
 
 
-predpar <- df_to_array(mcmcL, dim_var_names = c("antigen_iso", "parameter"))
+predpar_ours <- df_to_array(mcmcL, dim_var_names = c("antigen_iso", "parameter"))
  
 
 
 
 #compare to peter's array
-load("~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/output/v9na.pred.rda")
+load("inst/extdata/v9na.pred.rda")
 
 
 
@@ -143,11 +144,12 @@ cond <- data.frame(
 csdataL <- as.data.frame(csdata0) %>%
   pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
 
-est.incidence(csdataL %>%
+our_est = est.incidence(csdataL %>%
                    rename(y = value,
                           a = age), 
-              dmcmc, cond, antigen_isos = c("HlyE_IgG"))
-
+              dmcmc, cond, antigen_isos = c("HlyE_IgA"))
+print(our_est)
+print(our_est$incidence.rate)
 
 ```
 
@@ -166,9 +168,8 @@ csdata <- as.data.frame(csdata0) %>%
          'HlyE IgG' = "HlyE_IgG")
 
 # load longitudinal parameter MC sample
-longbase <-"~/OneDrive - University of California, Davis/Research/Serocalculator/Serocalculator App-Teams/Code/longitudinal model/v9na/"
-
-source(paste(longbase,"v9na.par-extract.r",sep=""));
+# longbase <-"~/OneDrive - University of California, Davis/Serocalculator App/Code/longitudinal model/v9na/"
+# source(paste(longbase,"v9na.par-extract.r",sep=""));
 day2yr <- 365.25;
 
 # read simulated cross-sectional data
@@ -204,7 +205,7 @@ for(k.test in 1:2){
   fit = nlm(objfunc,llstart,
             hessian=TRUE,print.level=0,stepmax = 1);
             #stepmax=(log.lmax-log.lmin)/4);
-  llstart <- fit$estimate;
+  # llstart <- fit$estimate;
   lambda <- c(exp(fit$estimate),
               exp(fit$estimate + qnorm(c(0.05))*sqrt(1/fit$hessian)),
               exp(fit$estimate + qnorm(c(0.95))*sqrt(1/fit$hessian)),

@@ -1,12 +1,17 @@
 #' Get Additional Data
 #'
-#' Retrieves additional data from internet. This can be any file type, but the purpose of this
-#' function is to download data such as longitudinal response parameters from an online repository.
+#' Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
+#' function is to download data such as longitudinal response parameters from an online repository or population data.
 #'
-#' @param fileName Name of the file to download. Required.
-#' @param repoURL Web address of the remote repository of files to download from. Required.
-#'   Default = `"http://ecdc.europa.eu/sites/portal/files/documents"`
-#' @param savePath Folder to save the downloaded and unzipped (if needed) file. File is saved only
+#' Data for this package is available at: https://osf.io/ne8pc/files/osfstorage
+#'
+#' you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name
+#'
+#' ***explain this option ti incrtease time to download:
+#' options(timeout = max(300, getOption("timeout")))
+#'
+#' @param fileURL Name of the file URL.
+#' @param savePath Folder directory and filename to save the downloaded and unzipped (if needed) file. File is saved only
 #'   if this argument is not `NULL`. Optional. Default = `NULL`.
 #'
 #' @return
@@ -15,26 +20,25 @@
 #' @examples
 #'
 #' \dontrun{
-#' getAdditionalData(fileName = "coxiellaIFAParams4.zip")
-#' getAdditionalData(fileName = "yersiniaSSIParams4.zip")
-#' getAdditionalData(fileName = "coxiellaIFAParams4.zip", savePath = getwd())
-#' getAdditionalData(fileName = "yersiniaSSIParams4.zip", savePath = getwd())
+#' getAdditionalData(fileURL = "https://osf.io/download/6553f989874c2e06a54e7d45/")
+#' getAdditionalData(fileURL = https://osf.io/download/6553f989874c2e06a54e7d45/", savePath = paste0(getwd(), "/", "filename.rds")
 #' }
 #'
 #' @export
 getAdditionalData <- function(
-  fileName,
-  repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
+  fileURL,
   savePath = NULL)
 {
+  fileName <- basename(fileURL)
   tmpFileName <- file.path(tempdir(), fileName)
   on.exit({
     unlink(tmpFileName)
   })
-
+  #Increase timeout for big files
+  options(timeout = max(300, getOption("timeout")))
   # Download
   tryCatch({
-    download.file(file.path(repoURL, fileName),
+    download.file(fileURL,
                   tmpFileName,
                   mode = "wb",
                   quiet = TRUE)
@@ -62,8 +66,9 @@ getAdditionalData <- function(
 
   # Store
   if (!is.null(savePath)) {
-    dir.create(savePath, showWarnings = FALSE, recursive = TRUE)
-    file.copy(tmpFileName, savePath, overwrite = TRUE, recursive = TRUE)
+    pathName <- dirname(savePath)
+    dir.create(pathName, showWarnings = FALSE, recursive = TRUE)
+    file.copy(tmpFileName, pathName, overwrite = TRUE, recursive = TRUE)
   }
 
   # Read

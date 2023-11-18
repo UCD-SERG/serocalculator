@@ -7,12 +7,13 @@
 getAdditionalData(fileURL, savePath = NULL)
 }
 \arguments{
-\item{fileURL}{Name of the file URL.}
+\item{fileURL}{URL of the file to be downloaded.}
 
 \item{savePath}{Folder directory and filename to save the downloaded and unzipped (if needed) file. File is saved only
 if this argument is not \code{NULL}. Optional. Default = \code{NULL}.}
 }
 \value{
+the R object stored in the file indicated by the \code{fileURL} input
 Data object
 }
 \description{
@@ -20,10 +21,24 @@ Retrieves additional data from internet. The data format must be .RDS or a zippe
 function is to download data such as longitudinal response parameters from an online repository or population data.
 }
 \details{
-Data for this package is available at: https://osf.io/ne8pc/files/osfstorage
+Data for this package is available at: \url{https://osf.io/ne8pc/files/osfstorage}
 
 you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name
 
-***explain this option ti incrtease time to download:
+***explain this option to increase time to download:
 options(timeout = max(300, getOption("timeout")))
+}
+\examples{
+\dontrun{
+curve_param_samples =
+  getAdditionalData(
+    fileURL = "https://osf.io/download/bhfvx")
+
+# optionally, save the data to disk
+curve_param_samples =
+  getAdditionalData(
+    fileURL = "https://osf.io/download/bhfvx",
+    savePath = "~/Downloads/curv_params.rds"))
+}
+
 }

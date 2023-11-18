@@ -29,7 +29,7 @@ df_to_array = function(
   }
 
   all_factors  =
-    df |> select(dim_var_names) |> sapply(F = is.factor) |> all()
+    df |> select(dim_var_names) |> sapply(FUN = is.factor) |> all()
 
   if(!all_factors)
   {

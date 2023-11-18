@@ -9,33 +9,33 @@ vignette: >
 ---
 
 
- This script generates simulated seroresponses for incident infections
- as a Poisson process with frequency `lambda'. Responses are generated for
- antibodies given in `abs' (any subset of 1:n(), names in `antibodies').
+This vignette shows how to simulate a cross-sectional sample of 
+seroresponses for incident infections as a Poisson process with frequency `lambda'. 
+Responses are generated for the antibodies given in the `antigen_isos` argument.
 
- Age range of the simulated cross-sectional record is `lifespan'.
+Age range of the simulated cross-sectional record is `lifespan`.
 
- The size of the sample is `nrep'.
+The size of the sample is `nrep`.
 
- Each individual is simulated separately, but different antibodies are
- modelled jointly (see "sim-graph.r").
+Each individual is simulated separately, but different antibodies are
+modelled jointly (see "sim-graph.r").
 
- Longitudinal parameters are calculated for an age: `age.fx' (fixed age).
- However, when `age.fx' is set to NA then the age at infection is used.
+Longitudinal parameters are calculated for an age: `age.fx' (fixed age).
+However, when `age.fx' is set to NA then the age at infection is used.
 
- The boolean `renew.params' determines whether each infection uses a
- new set of longitudinal parameters, sampled at random from the
- posterior predictive output of  the longitudinal model. If set to FALSE
- a parameter set is chosen at birth and kept, but:
- 1. the baseline antibody levels (y0) are updated with the simulated level
-    (just) prior to infection, and
- 2. when is.na(age.fx) then the selected parameter sample is updated for the
-    age when infection occurs.
+The boolean `renew.params' determines whether each infection uses a
+new set of longitudinal parameters, sampled at random from the
+posterior predictive output of  the longitudinal model. If set to FALSE
+a parameter set is chosen at birth and kept, but:
+1. the baseline antibody levels (y0) are updated with the simulated level
+(just) prior to infection, and
+2. when is.na(age.fx) then the selected parameter sample is updated for the
+age when infection occurs.
 
- There is also a variable `n.mc': when n.mc==0 then a random MC
- sample is chosen out of the posterior set (1:4000). When `n.mc' is
- given a value in 1:4000 then the chosen number is fixed and reused
- in any subsequent infection. This is for diagnostic purposes.
+There is also a variable `n.mc': when n.mc==0 then a random MC
+sample is chosen out of the posterior set (1:4000). When `n.mc' is
+given a value in 1:4000 then the chosen number is fixed and reused
+in any subsequent infection. This is for diagnostic purposes.
 
 
 ```{r, include = FALSE}
@@ -53,26 +53,6 @@ library(tidyverse)
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
 dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")  
-  
-
-
-mcmcL <- dmcmc %>%
-  mutate(y1 = y1-y0) %>%
-  mutate(r = r-1) %>%
-  tidyr::pivot_longer(
-      names_to = "parameter",
-      cols = c("y0", "y1", "t1", "alpha", "r") ) |>
-      mutate(parameter = factor(parameter, levels = unique(parameter))) %>%
-  select(-Country, -ageCat) %>%
-  mutate(value = log(value)) %>%
-  filter(antigen_iso == "HlyE_IgG" | antigen_iso == "HlyE_IgA") %>%
-  droplevels()
-  
-
-
-
-predpar <- df_to_array(mcmcL, dim_var_names = c("antigen_iso", "parameter"))
- 
 
 ```
 
@@ -83,12 +63,8 @@ predpar <- df_to_array(mcmcL, dim_var_names = c("antigen_iso", "parameter"))
 set.seed(54321)
 
 ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
-antibodies <- c();
-for(k.test in 1:nrow(ab.nm))
-  antibodies <- c(antibodies,paste(ab.nm[k.test,1],ab.nm[k.test,2]));
-
-antibodies <- levels(mcmcL$antigen_iso)
-
+# antibodies <- dmcmc$antigen_iso |> droplevels() |> levels()
+antibodies = c("HlyE_IgA", "HlyE_IgG")
 abs <-  c(1,2);
 age.fx <- NA; # age used for longitudinal model (fixed for now)
 day2yr <- 365.25;
@@ -101,22 +77,29 @@ nrep <- 100; # cross-sectional sample size
 dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # noise distribution
 blims <- dlims; # baseline distribution
 
+csdata0 <- sim.cs(
+  curve_params = dmcmc,
+  lambda = lambda / day2yr,
+  n.smpl = nrep,
+  age.rng = lifespan * day2yr,
+  age.fx = age.fx,
+  antigen_isos = antibodies,
+  n.mc = 0,
+  renew.params = TRUE,
+  add.noise = TRUE,
+  noise_limits = dlims,
+  baseline_limits = blims,
+  npar = npar
+)
 
-#rename function to sim.cs
-csdata0 <- makecs(lambda/day2yr,
-                  n.smpl=nrep,
-                  age.rng=lifespan*day2yr,
-                  age.fx=age.fx,
-                  ablist=abs,n.mc=0,
-                  renew.params=TRUE,add.noise=TRUE);
 
-csdata0[,1] <-  csdata0[,1]/day2yr;
-
+csdata0[, 1] <-  csdata0[, 1] / day2yr
 
 ```
 
 
-## Optional - loop over "clusters" and different lmabdas
+## Optional - loop over "clusters" and different lambdas
+
 ```{r}
 library(doParallel)
 nclus <- 10  # number of clusters 
@@ -126,16 +109,24 @@ lmbdaVec <- c(.05,.1, .15, .2, .3)
 sim.cl <- 
   foreach(l = lmbdaVec) %:% 
   foreach(n = 1:nclus, .combine = rbind) %dopar% {
-csdata <- makecs(l/day2yr,n.smpl=nrep,age.rng=lifespan*day2yr,
-                 age.fx=age.fx,ablist=abs,n.mc=0,
-                 renew.params=TRUE,add.noise=TRUE);
-csdata[,1] <-  csdata[,1]/day2yr;
-csdata1 <- csdata %>% as.data.frame() %>% mutate(cluster = n, lambda = l) 
+    csdata <- sim.cs(
+      l / day2yr,
+      n.smpl = nrep,
+      age.rng = lifespan * day2yr,
+      age.fx = age.fx,
+      antigen_isos = antibodies,
+      n.mc = 0,
+      renew.params = TRUE,
+      add.noise = TRUE,
+      curve_params = dmcmc
+    )
+    
+    csdata[, 1] <-  csdata[, 1] / day2yr
+    
+    csdata1 <- csdata %>% as.data.frame() %>% mutate(cluster = n, lambda = l) 
   }
 
-
-
-sim.df <- rbind(sim.cl[[1]], sim.cl[[2]], sim.cl[[3]], sim.cl[[4]], sim.cl[[5]])
+sim.df <- do.call(rbind, sim.cl)
 
 ```
 
@@ -150,14 +141,14 @@ cond <- data.frame(
   eps = c(0.2, 0.2),                             # M noise (eps)
   y.low = c(1, 1),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
-                          
+
 
 csdataL <- as.data.frame(csdata0) %>%
   pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
 
 est.incidence(csdataL %>%
-                   rename(y = value,
-                          a = age), 
+                rename(y = value,
+                       a = age), 
               dmcmc, cond, antigen_isos = c("HlyE_IgA"))
 
 

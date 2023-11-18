@@ -3,31 +3,37 @@
 #' Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
 #' function is to download data such as longitudinal response parameters from an online repository or population data.
 #'
-#' Data for this package is available at: https://osf.io/ne8pc/files/osfstorage
+#' Data for this package is available at: <https://osf.io/ne8pc/files/osfstorage>
 #'
 #' you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name
 #'
-#' ***explain this option ti incrtease time to download:
+#' ***explain this option to increase time to download:
 #' options(timeout = max(300, getOption("timeout")))
 #'
-#' @param fileURL Name of the file URL.
+#' @param fileURL URL of the file to be downloaded.
 #' @param savePath Folder directory and filename to save the downloaded and unzipped (if needed) file. File is saved only
 #'   if this argument is not `NULL`. Optional. Default = `NULL`.
 #'
-#' @return
+#' @return the R object stored in the file indicated by the `fileURL` input
 #' Data object
 #'
 #' @examples
-#'
 #' \dontrun{
-#' getAdditionalData(fileURL = "https://osf.io/download/6553f989874c2e06a54e7d45/")
-#' getAdditionalData(fileURL = https://osf.io/download/6553f989874c2e06a54e7d45/", savePath = paste0(getwd(), "/", "filename.rds")
+#' curve_param_samples =
+#'   getAdditionalData(
+#'     fileURL = "https://osf.io/download/bhfvx")
+#'
+#' # optionally, save the data to disk
+#' curve_param_samples =
+#'   getAdditionalData(
+#'     fileURL = "https://osf.io/download/bhfvx",
+#'     savePath = "~/Downloads/curv_params.rds"))
 #' }
 #'
 #' @export
 getAdditionalData <- function(
-  fileURL,
-  savePath = NULL)
+    fileURL,
+    savePath = NULL)
 {
   fileName <- basename(fileURL)
   tmpFileName <- file.path(tempdir(), fileName)
@@ -37,15 +43,16 @@ getAdditionalData <- function(
   #Increase timeout for big files
   options(timeout = max(300, getOption("timeout")))
   # Download
-  tryCatch({
-    download.file(fileURL,
-                  tmpFileName,
-                  mode = "wb",
-                  quiet = TRUE)
-  },
-  error = function(e) {
-    print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
-  })
+  tryCatch(
+    {
+      download.file(fileURL,
+                    tmpFileName,
+                    mode = "wb",
+                    quiet = TRUE)
+    },
+    error = function(e) {
+      print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
+    })
 
   # Unzip
   if (tolower(tools::file_ext(tmpFileName)) == "zip") {

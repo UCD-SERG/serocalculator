@@ -64,7 +64,7 @@ transf <- function(y0,par){
 
 # whenever y is below a cutoff (blims[kab,2]) substitute a random sample
 # from a baseline distribution
-baseline <- function(kab,yvec, blims){
+baseline <- function(kab,yvec, blims, ...){
   subst <- which(yvec < blims[kab,2]); k <- 1;
   while(k <= length(subst)){
     yvec[subst[k]] <- mkbaseline(kab,1, blims);
@@ -74,7 +74,7 @@ baseline <- function(kab,yvec, blims){
 }
 
 # generate random sample from baseline distribution
-mkbaseline <- function(kab,n=1, blims){
+mkbaseline <- function(kab,n=1, blims, ...){
   # yset <- rlnorm(n=1,meanlog=negpar[1],sdlog=negpar[2]);
   if(blims[kab,2]==0){
     yset <- rep(0,n);
@@ -351,7 +351,7 @@ estpart1 <- function(y0,y1,t1){
   return(c(exp(est$par[1])/(1+exp(est$par[1])),exp(est$par[2])));
 }
 
-par.pred.n <- function(parnum,k.test,nmc, predpar){
+par.pred.n <- function(parnum,k.test,nmc, predpar, ...){
   if(parnum==2){
     par1 <- exp(predpar[k.test,1,nmc]);
     par2 <- exp(predpar[k.test,parnum,nmc]);

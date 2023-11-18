@@ -110,7 +110,7 @@ sim.cl <-
   foreach(l = lmbdaVec) %:% 
   foreach(n = 1:nclus, .combine = rbind) %dopar% {
     csdata <- sim.cs(
-      l / day2yr,
+      lambda = l / day2yr,
       n.smpl = nrep,
       age.rng = lifespan * day2yr,
       age.fx = age.fx,
@@ -118,7 +118,10 @@ sim.cl <-
       n.mc = 0,
       renew.params = TRUE,
       add.noise = TRUE,
-      curve_params = dmcmc
+      curve_params = dmcmc,
+      noise_limits = dlims,
+      baseline_limits = blims,
+      npar = npar
     )
     
     csdata[, 1] <-  csdata[, 1] / day2yr

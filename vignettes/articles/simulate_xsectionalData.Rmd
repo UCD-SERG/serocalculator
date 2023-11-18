@@ -103,7 +103,8 @@ csdata0[, 1] <-  csdata0[, 1] / day2yr
 ```{r}
 library(parallel)
 library(doParallel)
-doParallel::registerDoParallel(cores = max(1, parallel::detectCores() - 1))
+n_cores = max(1, parallel::detectCores() - 1)
+doParallel::registerDoParallel(cores = n_cores)
 nclus <- 10  # number of clusters 
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .15, .2, .3)

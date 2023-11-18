@@ -208,15 +208,16 @@ simresp.tinf = function(
     y.end <- y[nrow(as.matrix(y)), ]
 
     if (renew.params)
+    {
       if (n.mc == 0)
         nmc <- sample.int(n = mcsize, size = 1)
 
-    if (!is.na(age.fx))
-      par.now <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
+      if (!is.na(age.fx))
+        par.now <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
 
-    if (is.na(age.fx))
-      par.now <- ldpar((t0 + t.next) / day2yr, ablist, nmc, predpar = predpar, ...)
-
+      if (is.na(age.fx))
+        par.now <- ldpar((t0 + t.next) / day2yr, ablist, nmc, predpar = predpar, ...)
+    }
   }
   return(list(
     t = t,

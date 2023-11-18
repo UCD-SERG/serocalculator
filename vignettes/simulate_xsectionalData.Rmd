@@ -102,6 +102,7 @@ csdata0[, 1] <-  csdata0[, 1] / day2yr
 
 ```{r}
 library(doParallel)
+registerDoParallel(cores=7)
 nclus <- 10  # number of clusters 
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .15, .2, .3)
@@ -126,10 +127,13 @@ sim.cl <-
     
     csdata[, 1] <-  csdata[, 1] / day2yr
     
-    csdata1 <- csdata %>% as.data.frame() %>% mutate(cluster = n, lambda = l) 
+    csdata1 <- csdata %>% 
+      as.data.frame() %>% 
+      mutate(cluster = n, lambda = l) 
   }
 
-sim.df <- do.call(rbind, sim.cl)
+library(dplyr)
+sim.df <- dplyr::bind_rows(sim.cl)
 
 ```
 

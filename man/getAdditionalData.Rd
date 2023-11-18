@@ -4,35 +4,26 @@
 \alias{getAdditionalData}
 \title{Get Additional Data}
 \usage{
-getAdditionalData(
-  fileName,
-  repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
-  savePath = NULL
-)
+getAdditionalData(fileURL, savePath = NULL)
 }
 \arguments{
-\item{fileName}{Name of the file to download. Required.}
+\item{fileURL}{Name of the file URL.}
 
-\item{repoURL}{Web address of the remote repository of files to download from. Required.
-Default = \code{"http://ecdc.europa.eu/sites/portal/files/documents"}}
-
-\item{savePath}{Folder to save the downloaded and unzipped (if needed) file. File is saved only
+\item{savePath}{Folder directory and filename to save the downloaded and unzipped (if needed) file. File is saved only
 if this argument is not \code{NULL}. Optional. Default = \code{NULL}.}
 }
 \value{
 Data object
 }
 \description{
-Retrieves additional data from internet. This can be any file type, but the purpose of this
-function is to download data such as longitudinal response parameters from an online repository.
+Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
+function is to download data such as longitudinal response parameters from an online repository or population data.
 }
-\examples{
+\details{
+Data for this package is available at: https://osf.io/ne8pc/files/osfstorage
 
-\dontrun{
-getAdditionalData(fileName = "coxiellaIFAParams4.zip")
-getAdditionalData(fileName = "yersiniaSSIParams4.zip")
-getAdditionalData(fileName = "coxiellaIFAParams4.zip", savePath = getwd())
-getAdditionalData(fileName = "yersiniaSSIParams4.zip", savePath = getwd())
-}
+you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name
 
+***explain this option ti incrtease time to download:
+options(timeout = max(300, getOption("timeout")))
 }

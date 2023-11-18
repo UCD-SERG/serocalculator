@@ -116,6 +116,31 @@ csdata0[,1] <-  csdata0[,1]/day2yr;
 ```
 
 
+## Optional - loop over "clusters" and different lmabdas
+```{r}
+library(doParallel)
+nclus <- 10  # number of clusters 
+nrep <- 100; # cross-sectional sample size
+lmbdaVec <- c(.05,.1, .15, .2, .3)
+
+sim.cl <- 
+  foreach(l = lmbdaVec) %:% 
+  foreach(n = 1:nclus, .combine = rbind) %dopar% {
+csdata <- makecs(l/day2yr,n.smpl=nrep,age.rng=lifespan*day2yr,
+                 age.fx=age.fx,ablist=abs,n.mc=0,
+                 renew.params=TRUE,add.noise=TRUE);
+csdata[,1] <-  csdata[,1]/day2yr;
+csdata1 <- csdata %>% as.data.frame() %>% mutate(cluster = n, lambda = l) 
+  }
+
+
+
+sim.df <- rbind(sim.cl[[1]], sim.cl[[2]], sim.cl[[3]], sim.cl[[4]], sim.cl[[5]])
+
+```
+
+
+
 ## Estimate seroincidence
 ```{r}
 

@@ -66,16 +66,13 @@ ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
 # antibodies <- dmcmc$antigen_iso |> droplevels() |> levels()
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 abs <-  c(1,2);
-age.fx <- NA; # age used for longitudinal model (fixed for now)
-day2yr <- 365.25;
 lambda <- 0.2; # incidence (1/yr)
 npar <- 5; # y0, y1, t1, alpha, shape
 
 lifespan <- c(0,20); # range covered in simulations
 nrep <- 100; # cross-sectional sample size
 
-dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # noise distribution
-blims <- dlims; # baseline distribution
+dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # biologic noise distribution
 
 csdata0 <- sim.cs(
   curve_params = dmcmc,
@@ -88,12 +85,10 @@ csdata0 <- sim.cs(
   renew.params = TRUE,
   add.noise = TRUE,
   noise_limits = dlims,
-  baseline_limits = blims,
   npar = npar
 )
 
 
-csdata0[, 1] <-  csdata0[, 1] / day2yr
 
 ```
 
@@ -126,7 +121,6 @@ sim.cl <-
       npar = npar
     )
     
-    csdata[, 1] <-  csdata[, 1] / day2yr
     
     csdata1 <- csdata %>% 
       as.data.frame() %>% 
@@ -157,7 +151,7 @@ csdataL <- as.data.frame(csdata0) %>%
 est.incidence(csdataL %>%
                 rename(y = value,
                        a = age), 
-              dmcmc, cond, antigen_isos = c("HlyE_IgA"))
+              dmcmc, cond, antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
 
 
 ```

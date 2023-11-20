@@ -26,8 +26,7 @@
 #' - `r`: shape factor of antibody decay
 
 #' @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
-#' @param noise_limits noise distribution parameters
-#' @param baseline_limits baseline noise distribution parameters
+#' @param noise_limits biologic noise distribution parameters
 #' @param npar number of longitudinal curve parameters in model
 #' @param ... additional arguments passed to `simcs.tinf()`
 #' @return a [dplyr::tibble()] containing simulated cross-sectional serosurvey data, with columns:
@@ -52,14 +51,17 @@ sim.cs <- function(
       prep_curve_params_for_array() %>%
       df_to_array(dim_var_names = c("antigen_iso", "parameter")),
     noise_limits,
-    baseline_limits,
     npar,
     ...)
 {
 
   stopifnot(length(lambda) == 1)
 
+  day2yr = 365.25
+
   ablist = 1:length(antigen_isos)
+
+  baseline_limits <- noise_limits
 
   ysim <- simcs.tinf(
     lambda = lambda,
@@ -86,6 +88,6 @@ sim.cs <- function(
   }
   colnames(ysim) <- c("age", antigen_isos)
 
-  return(ysim |> as_tibble())
+  return(ysim |> as_tibble() %>% mutate(age = round(age/day2yr, 2)))
 
 }

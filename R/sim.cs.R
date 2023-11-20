@@ -14,7 +14,7 @@
 #' * when `n.mc` = `0`, a random smaple is chosen
 #' @param renew.params whether to generate a new parameter set for each infection
 #' * `renew.params= TRUE` generates a new parameter set for each infection
-#  * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
+#' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
 #' @param curve_params a [data.frame()] with containing MCMC samples from the Bayesian distribution of longitudinal decay curve model, containing the following columns:
 #' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations

@@ -10,7 +10,7 @@ vignette: >
 
 
 This vignette shows how to simulate a cross-sectional sample of 
-seroresponses for incident infections as a Poisson process with frequency `lambda'. 
+seroresponses for incident infections as a Poisson process with frequency `lambda`. 
 Responses are generated for the antibodies given in the `antigen_isos` argument.
 
 Age range of the simulated cross-sectional record is `lifespan`.
@@ -20,20 +20,20 @@ The size of the sample is `nrep`.
 Each individual is simulated separately, but different antibodies are
 modelled jointly (see "sim-graph.r").
 
-Longitudinal parameters are calculated for an age: `age.fx' (fixed age).
-However, when `age.fx' is set to NA then the age at infection is used.
+Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
+However, when `age.fx` is set to NA then the age at infection is used.
 
-The boolean `renew.params' determines whether each infection uses a
+The boolean `renew.params` determines whether each infection uses a
 new set of longitudinal parameters, sampled at random from the
-posterior predictive output of  the longitudinal model. If set to FALSE
+posterior predictive output of  the longitudinal model. If set to `FALSE`
 a parameter set is chosen at birth and kept, but:
-1. the baseline antibody levels (y0) are updated with the simulated level
+1. the baseline antibody levels (`y0`) are updated with the simulated level
 (just) prior to infection, and
-2. when is.na(age.fx) then the selected parameter sample is updated for the
+2. when `is.na(age.fx)` then the selected parameter sample is updated for the
 age when infection occurs.
 
-There is also a variable `n.mc': when n.mc==0 then a random MC
-sample is chosen out of the posterior set (1:4000). When `n.mc' is
+There is also a variable `n.mc`: when `n.mc==0` then a random MC
+sample is chosen out of the posterior set (1:4000). When `n.mc` is
 given a value in 1:4000 then the chosen number is fixed and reused
 in any subsequent infection. This is for diagnostic purposes.
 
@@ -62,6 +62,7 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 #set seed to reproduce results
 set.seed(54321)
 
+day2yr <- 365.25
 ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
 # antibodies <- dmcmc$antigen_iso |> droplevels() |> levels()
 antibodies = c("HlyE_IgA", "HlyE_IgG")
@@ -79,7 +80,7 @@ csdata0 <- sim.cs(
   lambda = lambda / day2yr,
   n.smpl = nrep,
   age.rng = lifespan * day2yr,
-  age.fx = age.fx,
+  age.fx = NA,
   antigen_isos = antibodies,
   n.mc = 0,
   renew.params = TRUE,
@@ -98,7 +99,8 @@ csdata0 <- sim.cs(
 ```{r}
 library(parallel)
 library(doParallel)
-doParallel::registerDoParallel(cores = max(1, parallel::detectCores() - 1))
+n_cores = max(1, parallel::detectCores() - 1)
+doParallel::registerDoParallel(cores = n_cores)
 nclus <- 10  # number of clusters 
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .15, .2, .3)
@@ -110,7 +112,7 @@ sim.cl <-
       lambda = l / day2yr,
       n.smpl = nrep,
       age.rng = lifespan * day2yr,
-      age.fx = age.fx,
+      age.fx = NA,
       antigen_isos = antibodies,
       n.mc = 0,
       renew.params = TRUE,
@@ -128,8 +130,8 @@ sim.cl <-
   }
 
 library(dplyr)
-sim.df <- dplyr::bind_rows(sim.cl)
-
+sim.df <- dplyr::bind_rows(sim.cl) |> as_tibble()
+print(sim.df)
 ```
 
 

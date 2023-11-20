@@ -18,7 +18,6 @@ sim.cs(
     droplevels() \%>\% prep_curve_params_for_array() \%>\% df_to_array(dim_var_names =
     c("antigen_iso", "parameter")),
   noise_limits,
-  baseline_limits,
   npar,
   ...
 )
@@ -43,6 +42,7 @@ sim.cs(
 \item{renew.params}{whether to generate a new parameter set for each infection
 \itemize{
 \item \code{renew.params= TRUE} generates a new parameter set for each infection
+\item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
 }}
 
 \item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
@@ -60,9 +60,7 @@ sim.cs(
 
 \item{predpar}{an \code{\link[=array]{array()}} containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave \code{predpar} at its default value and provide \code{curve_params} instead.}
 
-\item{noise_limits}{noise distribution parameters}
-
-\item{baseline_limits}{baseline noise distribution parameters}
+\item{noise_limits}{biologic noise distribution parameters}
 
 \item{npar}{number of longitudinal curve parameters in model}
 

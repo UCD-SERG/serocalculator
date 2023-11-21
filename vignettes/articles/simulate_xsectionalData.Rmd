@@ -165,6 +165,7 @@ ests =
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
+    numCores = n_cores,
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,

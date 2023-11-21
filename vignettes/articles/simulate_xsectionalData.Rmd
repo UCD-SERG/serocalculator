@@ -62,18 +62,25 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 #set seed to reproduce results
 set.seed(54321)
 
-ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
-# antibodies <- dmcmc$antigen_iso %>% droplevels() %>% levels()
+# Specifcy the antibody-isotype responses to simulate
 antibodies = c("HlyE_IgA", "HlyE_IgG")
+
+## CAN WE GET RID OF THIS? MAKE IT INTERNAL?
 abs <-  c(1,2);
-lambda <- 0.2; # incidence (1/yr)
-npar <- 5; # y0, y1, t1, alpha, shape
 
-lifespan <- c(0,20); # range covered in simulations
-nrep <- 100; # cross-sectional sample size
+# incidence rate per oerson-year
+lambda <- 0.2; 
 
-dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # biologic noise distribution
+# range covered in simulations
+lifespan <- c(0,20); 
 
+# cross-sectional sample size
+nrep <- 100
+
+# biologic noise distribution
+dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1))
+
+#generate cross-sectional data
 csdata0 <- sim.cs(
   curve_params = dmcmc,
   lambda = lambda,
@@ -85,7 +92,6 @@ csdata0 <- sim.cs(
   add.noise = TRUE,
   noise_limits = dlims
 )
-
 
 
 ```
@@ -118,15 +124,22 @@ est.incidence(
 
 
 
-# Optional - loop over "clusters" and different lambdas
+# Simulate multiple clusters with different lambdas
 
 ```{r "parallel"}
 library(parallel)
 library(doParallel)
 n_cores = max(1, parallel::detectCores() - 1)
 doParallel::registerDoParallel(cores = n_cores)
+
+##SHOULDNT NEED THIS ANYMORE AS WE JUST WANT 1 CLUSTER PER LAMBDA IN THIS DEMO
+#number of clusters 
 nclus = 10;
-nrep <- 100; # cross-sectional sample size
+
+# cross-sectional sample size
+nrep <- 100
+
+#incidence rate in e
 lmbdaVec <- c(.05,.1, .15, .2, .3)
 
 sim.df <- 
@@ -179,7 +192,6 @@ summary(ests)
 
 ```{r, "graph", fig.width = 7}
 
-library(ggplot2)
 summary(ests) |> 
   ggplot(aes(x = lambda.sim, y = incidence.rate)) +
   geom_point() +

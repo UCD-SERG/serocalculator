@@ -1,6 +1,5 @@
 ---
-title: "Enteric Fever Seroincidence Tutorial"
-author: "UC Davis Seroepidemiology Research Group (SERG)"
+title: "Enteric Fever Seroincidence"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Typhoid Seroincidence}
@@ -12,9 +11,10 @@ toc: true
 ---
 # Introduction
 
-This vignette provides users with an example analysis using the **serocalculator** package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. Users will determine the seroincidence of enteric fever in a cross-sectional serosurvey from SEES, a serologic and environmental surveillance study conducted in Asia, plus existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan. 
+This vignette provides users with an example analysis using the *serocalculator* package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. Users will determine the seroincidence of enteric fever in a cross-sectional serosurvey from SEES, a serologic and environmental surveillance study conducted in Asia, plus existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan. 
 
 Further details on this study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -38,12 +38,6 @@ library(readr)
 
 ```
 ## Load data
-
-Sample datasets and pathogen-specific longitudinal antibody dynamics for **serocalculator** are housed on Open Science Framework (OSF), a publicly available data repository. The [Serocalculator Repository](https://osf.io/ne8pc/) can be called directly into the **serocalculator** package using the function `getAdditionalData`. We demonstrate this below. 
-
-### Load and prepare longitudinal paramter data
-
-
 ### a. Load and prepare longitudinal parameter data
 The next step is to load the longitudinal data to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 

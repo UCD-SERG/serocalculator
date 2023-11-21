@@ -8,7 +8,7 @@ serocalculator package
 <!-- badges: end -->
 
 
-Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. IN other words, the presence of many high antibody titres indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titres indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
+Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titres indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titres indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
 
 The **serocalculator** package was designed to use the longitudinal response characteristics using a set of modeled parameters characterizing the longitudinal response of the selected serum antibodies. 
 

@@ -151,7 +151,7 @@ sim.df <-
 
 ## Estimate incidence in each cluster
 
-```{r}
+```{r, "est-by-stratum"}
 ests = 
   sim.df %>% 
   as_tibble() %>%

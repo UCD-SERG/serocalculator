@@ -184,6 +184,7 @@ print(sim.df)
 ## Estimate incidence in each cluster
 
 ```{r, "est-by-stratum"}
+n_cores = 1
 ests = 
   sim.df %>% 
   as_tibble() %>%
@@ -201,6 +202,7 @@ ests =
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
+    verbose = TRUE,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 

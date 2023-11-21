@@ -40,7 +40,7 @@ est.incidence.by <- function(
   curve_params =
     curve_params |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    mutate(
+    dplyr::mutate(
       alpha = .data$alpha * 365.25,
       d = .data$r - 1)
 

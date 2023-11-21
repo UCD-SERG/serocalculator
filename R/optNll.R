@@ -57,12 +57,12 @@
     return(NULL)
   }
 
-  if(verbose)
+  if (verbose)
   {
     message("Initial log-likelihood: ", res)
   }
 
-  if(build_graph)
+  if (build_graph)
   {
     if(verbose) message('building likelihood graph')
     graph = graph_loglik(
@@ -104,13 +104,13 @@
   if(build_graph)
   {
     graph =
-      graph +
-      ggplot2::geom_point(
-        data = tibble(
-          x = exp(fit$estimate),
-          y = -.nll_vec(fit$estimate, ...)),
-        aes(x = x, y = y, col = "est.incidence")
-      )
+      graph |>
+      add_point_to_graph(
+        fit = fit,
+        data = data,
+        antigen_isos = antigen_isos,
+        curve_params = curve_params,
+        noise_params = noise_params)
   }
 
   fit = fit |>

@@ -101,6 +101,17 @@
     print(time)
   }
 
+  if(build_graph)
+  {
+    graph =
+      graph +
+      ggplot2::geom_point(
+        data = tibble(
+          x = exp(fit$estimate),
+          y = -.nll_vec(fit$estimate, ...)),
+        aes(x = x, y = y, col = "est.incidence")
+      )
+  }
 
   fit = fit |>
     structure(

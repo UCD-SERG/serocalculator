@@ -37,7 +37,7 @@ graph_loglik = function(
     ggplot2::ggplot(aes(x = x, y = y)) +
     ggplot2::geom_point() +
     ggplot2::geom_line() +
-    ggplot2::xlab("lambda (events/person-year)") +
+    ggplot2::xlab("incidence rate (events per person:year)") +
     ggplot2::ylab("log(likelihood)") +
     ggplot2::theme_bw() +
     ggplot2::geom_point(
@@ -45,6 +45,8 @@ graph_loglik = function(
         x = lambda.start,
         y = -.nll_vec(lambda.start |> log(), ...)),
       aes(x = x, y = y, col = "lambda.start")
-    )
+    ) +
+    ggplot2::labs(col = "") +
+    ggplot2::theme(legend.position="bottom")
 
 }

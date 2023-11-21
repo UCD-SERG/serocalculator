@@ -152,6 +152,8 @@ n_cores = max(1, parallel::detectCores() - 1)
 print(n_cores)
 ```
 
+In the preceding code chunk, we have determined that we can use `r n_cores` CPU cores to run computations in parallel.
+
 ```{r "do-parallel"}
 
 doParallel::registerDoParallel(cores = n_cores)

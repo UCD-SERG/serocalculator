@@ -1,0 +1,193 @@
+---
+title: "Generate a simulated cross-sectional sample and estimate seroincidence"
+subtitle: "Enteric Fever using HlyE IgG and/or HlyE IgA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{simulate_xsectionalData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+This vignette shows how to simulate a cross-sectional sample of 
+seroresponses for incident infections as a Poisson process with frequency `lambda`. 
+Responses are generated for the antibodies given in the `antigen_isos` argument.
+
+Age range of the simulated cross-sectional record is `lifespan`.
+
+The size of the sample is `nrep`.
+
+Each individual is simulated separately, but different antibodies are
+modelled jointly (see "sim-graph.r").
+
+Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
+However, when `age.fx` is set to NA then the age at infection is used.
+
+The boolean `renew.params` determines whether each infection uses a
+new set of longitudinal parameters, sampled at random from the
+posterior predictive output of  the longitudinal model. If set to `FALSE`
+a parameter set is chosen at birth and kept, but:
+1. the baseline antibody levels (`y0`) are updated with the simulated level
+(just) prior to infection, and
+2. when `is.na(age.fx)` then the selected parameter sample is updated for the
+age when infection occurs.
+
+There is also a variable `n.mc`: when `n.mc==0` then a random MC
+sample is chosen out of the posterior set (1:4000). When `n.mc` is
+given a value in 1:4000 then the chosen number is fixed and reused
+in any subsequent infection. This is for diagnostic purposes.
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup}
+library(serocalculator)
+library(tidyverse)
+
+
+#load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
+dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")  
+
+```
+
+
+## Simulate cross-sectional data
+```{r}
+#set seed to reproduce results
+set.seed(54321)
+
+ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
+# antibodies <- dmcmc$antigen_iso %>% droplevels() %>% levels()
+antibodies = c("HlyE_IgA", "HlyE_IgG")
+abs <-  c(1,2);
+lambda <- 0.2; # incidence (1/yr)
+npar <- 5; # y0, y1, t1, alpha, shape
+
+lifespan <- c(0,20); # range covered in simulations
+nrep <- 100; # cross-sectional sample size
+
+dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # biologic noise distribution
+
+csdata0 <- sim.cs(
+  curve_params = dmcmc,
+  lambda = lambda,
+  n.smpl = nrep,
+  age.rng = lifespan,
+  antigen_isos = antibodies,
+  n.mc = 0,
+  renew.params = TRUE,
+  add.noise = TRUE,
+  noise_limits = dlims
+)
+
+
+
+```
+
+## Estimate seroincidence
+```{r}
+
+cond <- data.frame(
+  antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
+  nu = c(0.5, 0.5),  # Biologic noise (nu)
+  eps = c(0.2, 0.2),                             # M noise (eps)
+  y.low = c(1, 1),                            # low cutoff (llod)
+  y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+
+
+csdataL <- as.data.frame(csdata0) %>%
+  pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
+
+est.incidence(
+  csdataL %>%
+    rename(y = value,
+           a = age), 
+  dmcmc, 
+  cond, 
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+
+
+```
+
+
+
+
+# Optional - loop over "clusters" and different lambdas
+
+```{r "parallel"}
+library(parallel)
+library(doParallel)
+n_cores = max(1, parallel::detectCores() - 1)
+doParallel::registerDoParallel(cores = n_cores)
+nclus = 10;
+nrep <- 100; # cross-sectional sample size
+lmbdaVec <- c(.05,.1, .15, .2, .3)
+
+sim.df <- 
+  foreach(l = lmbdaVec, .combine = bind_rows) %:%
+  foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
+    sim.cs(
+      lambda = l,
+      n.smpl = nrep,
+      age.rng = lifespan,
+      antigen_isos = antibodies,
+      n.mc = 0,
+      renew.params = TRUE,
+      add.noise = TRUE,
+      curve_params = dmcmc,
+      noise_limits = dlims,
+      baseline_limits = blims
+    ) %>% 
+      mutate(lambda.sim = l, cluster = n) 
+  }
+print(sim.df)
+```
+
+## Estimate incidence in each cluster
+
+```{r, "est-by-stratum"}
+ests = 
+  sim.df %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value") %>%
+  rename(
+    y = value,
+    a = age) %>% 
+  est.incidence.by(
+    curve_params = dmcmc,
+    noise_params = cond,
+    numCores = n_cores,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+summary(ests)
+```
+
+## plot distribution of estimates by simulated incidence rate
+
+```{r, "graph", fig.width = 7}
+
+library(ggplot2)
+summary(ests) |> 
+  ggplot(aes(x = lambda.sim, y = incidence.rate)) +
+  geom_point() +
+  xlab("Simulated incidence rate") +
+  ylab("Estimated incidence rate") +
+  theme_bw() +
+  geom_abline(aes(intercept = 0, slope = 1, col = "x=y")) +
+  expand_limits(x = 0,y = 0) +
+  labs(col = "")
+```
+

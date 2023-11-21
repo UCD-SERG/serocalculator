@@ -1,47 +1,58 @@
 #' Get Additional Data
 #'
-#' Retrieves additional data from internet. This can be any file type, but the purpose of this
-#' function is to download data such as longitudinal response parameters from an online repository.
+#' Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
+#' function is to download data such as longitudinal response parameters from an online repository or population data.
 #'
-#' @param fileName Name of the file to download. Required.
-#' @param repoURL Web address of the remote repository of files to download from. Required.
-#'   Default = `"http://ecdc.europa.eu/sites/portal/files/documents"`
-#' @param savePath Folder to save the downloaded and unzipped (if needed) file. File is saved only
+#' Data for this package is available at: <https://osf.io/ne8pc/files/osfstorage>
+#'
+#' you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name
+#'
+#' ***explain this option to increase time to download:
+#' options(timeout = max(300, getOption("timeout")))
+#'
+#' @param fileURL URL of the file to be downloaded.
+#' @param savePath Folder directory and filename to save the downloaded and unzipped (if needed) file. File is saved only
 #'   if this argument is not `NULL`. Optional. Default = `NULL`.
 #'
-#' @return
+#' @return the R object stored in the file indicated by the `fileURL` input
 #' Data object
 #'
 #' @examples
-#'
 #' \dontrun{
-#' getAdditionalData(fileName = "coxiellaIFAParams4.zip")
-#' getAdditionalData(fileName = "yersiniaSSIParams4.zip")
-#' getAdditionalData(fileName = "coxiellaIFAParams4.zip", savePath = getwd())
-#' getAdditionalData(fileName = "yersiniaSSIParams4.zip", savePath = getwd())
+#' curve_param_samples =
+#'   getAdditionalData(
+#'     fileURL = "https://osf.io/download/bhfvx")
+#'
+#' # optionally, save the data to disk
+#' curve_param_samples =
+#'   getAdditionalData(
+#'     fileURL = "https://osf.io/download/bhfvx",
+#'     savePath = "~/Downloads/curv_params.rds"))
 #' }
 #'
 #' @export
 getAdditionalData <- function(
-  fileName,
-  repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
-  savePath = NULL)
+    fileURL,
+    savePath = NULL)
 {
+  fileName <- basename(fileURL)
   tmpFileName <- file.path(tempdir(), fileName)
   on.exit({
     unlink(tmpFileName)
   })
-
+  #Increase timeout for big files
+  options(timeout = max(300, getOption("timeout")))
   # Download
-  tryCatch({
-    download.file(file.path(repoURL, fileName),
-                  tmpFileName,
-                  mode = "wb",
-                  quiet = TRUE)
-  },
-  error = function(e) {
-    print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
-  })
+  tryCatch(
+    {
+      download.file(fileURL,
+                    tmpFileName,
+                    mode = "wb",
+                    quiet = TRUE)
+    },
+    error = function(e) {
+      print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
+    })
 
   # Unzip
   if (tolower(tools::file_ext(tmpFileName)) == "zip") {
@@ -62,8 +73,9 @@ getAdditionalData <- function(
 
   # Store
   if (!is.null(savePath)) {
-    dir.create(savePath, showWarnings = FALSE, recursive = TRUE)
-    file.copy(tmpFileName, savePath, overwrite = TRUE, recursive = TRUE)
+    pathName <- dirname(savePath)
+    dir.create(pathName, showWarnings = FALSE, recursive = TRUE)
+    file.copy(tmpFileName, pathName, overwrite = TRUE, recursive = TRUE)
   }
 
   # Read

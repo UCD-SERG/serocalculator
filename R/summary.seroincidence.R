@@ -14,19 +14,17 @@
 #' @param confidence_level desired confidence interval coverage probability
 #' @return
 #' A list with the following items:
-#' \describe{
-#' \item{`Results`}{[dplyr::tibble()] with columns:
-#' * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
-#' *  `CI.lwr` lower confidence bound for lambda
-#'  * `CI.upr` upper confidence bound for lambda
-#'  * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
-#'   `lambda`)
-#'   * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence code returned by [stats::nlm()].
-#'   Value of 0 indicates convergence) columns are included.}
-#' \item{`Antibodies`}{Character vector with names of input antibodies used in
-#'   [est.incidence.by()].}
-#' \item{`Strata`}{Character with names of strata used in [est.incidence.by()].}
-#' }
+#'
+#' * `Results` a [dplyr::tibble()] with columns:
+#'    * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
+#'    *  `CI.lwr` lower confidence bound for lambda
+#'    * `CI.upr` upper confidence bound for lambda
+#'    * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
+#'    `lambda`)
+#'    * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
+#' * `Antibodies` Character vector with names of input antibodies used in [est.incidence.by()]
+#' * `Strata` Character with names of strata used in [est.incidence.by()]
+#'
 #'
 #' @examples
 #'
@@ -81,7 +79,7 @@ summary.seroincidence.ests <- function(
 
   if (showConvergence) {
     results = results |>
-      relocate(nlm.exit.code, .after = everything())
+      relocate("nlm.exit.code", .after = everything())
   } else
   {
     results$nlm.exit.code <- NULL

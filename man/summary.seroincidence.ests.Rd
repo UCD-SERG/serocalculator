@@ -27,20 +27,18 @@ help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
 }
 \value{
 A list with the following items:
-\describe{
-\item{\code{Results}}{\code{\link[dplyr:reexports]{dplyr::tibble()}} with columns:
+\itemize{
+\item \code{Results} a \code{\link[dplyr:reexports]{dplyr::tibble()}} with columns:
 \itemize{
 \item \code{incidence.rate} maximum likelihood estimate of \code{lambda} (seroincidence)
 \item \code{CI.lwr} lower confidence bound for lambda
 \item \code{CI.upr} upper confidence bound for lambda
 \item \code{Deviance} (included if \code{showDeviance = TRUE}) Negative log likelihood (NLL) at estimated (maximum likelihood)
 \code{lambda})
-\item \code{nlm.exit.code} (included if \code{showConvergence = TRUE}) Convergence code returned by \code{\link[stats:nlm]{stats::nlm()}}.
-Value of 0 indicates convergence) columns are included.}
-\item{\code{Antibodies}}{Character vector with names of input antibodies used in
-\code{\link[=est.incidence.by]{est.incidence.by()}}.}
-\item{\code{Strata}}{Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}.}
+\item \code{nlm.exit.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
 }
+\item \code{Antibodies} Character vector with names of input antibodies used in \code{\link[=est.incidence.by]{est.incidence.by()}}
+\item \code{Strata} Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 }
 }
 \description{

@@ -92,6 +92,11 @@ sim.cs <- function(
   }
   colnames(ysim) <- c("age", antigen_isos)
 
-  return(ysim |> as_tibble() %>% mutate(age = round(age/day2yr, 2)))
+  to_return =
+    ysim |>
+    as_tibble() %>%
+    mutate(age = round(.data$age / day2yr, 2))
+
+  return(to_return)
 
 }

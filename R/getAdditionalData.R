@@ -5,9 +5,9 @@
 #'
 #' Data for this package is available at: <https://osf.io/ne8pc/files/osfstorage>
 #'
-#' you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name
+#' You can save the data into your chosen directory using the optional savePath argument. Specify the file path and the file name.
 #'
-#' ***explain this option to increase time to download:
+#' Large datasets may timeout. If so, you can increase the download time by updating the maximum timeout time in the code below. (Ex: increase from 300 to 1000) 
 #' options(timeout = max(300, getOption("timeout")))
 #'
 #' @param fileURL URL of the file to be downloaded.

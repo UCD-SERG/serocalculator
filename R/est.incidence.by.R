@@ -10,7 +10,8 @@
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
 #' @inheritParams .optNll
-#' @inheritDotParams .optNll
+#' @inheritDotParams .optNll -dataList
+#' @inheritDotParams stats::nlm -f -p -hessian
 #'
 #' @return A set of lambda estimates for each strata.
 #'
@@ -23,8 +24,9 @@ est.incidence.by <- function(
     strata = "",
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    numCores = 1L,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
+    lambda.start = 1/365.25,
+    numCores = 1L,
     verbose = FALSE,
     ...)
 {
@@ -89,6 +91,8 @@ est.incidence.by <- function(
         fun = function(x)
           .optNll(
             dataList = x,
+            lambda.start = lambda.start,
+            antigen_isos = antigen_isos,
             ...)
       )
     } |> system.time() -> time
@@ -121,7 +125,9 @@ est.incidence.by <- function(
 
       fits[[cur_stratum]] =
         .optNll(
+          lambda.start = lambda.start,
           dataList = stratumDataList[[cur_stratum]],
+          antigen_isos = antigen_isos,
           verbose = verbose,
           ...)
 

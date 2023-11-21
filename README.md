@@ -106,12 +106,12 @@ citation("serocalculator")
 
 
 #### During devtools installation:
+
 When prompted to install additional build tools, select "Yes" and Rtools will be installed. 
 
 ![Click Yes to install Rtools along with the *devtools* package][id]
 
 [id]: vignettes/fig/Rtools1.png
-
 
 #### Independently:
 
@@ -121,7 +121,6 @@ When prompted to install additional build tools, select "Yes" and Rtools will be
     * During the Rtools installation you may see a window asking you to “Select Additional Tasks”.
     * Do **not** select the box for “Edit the system PATH”. devtools and RStudio should put Rtools on the PATH automatically when it is needed.
     * **Do** select the box for “Save version information to registry”. It should be selected by default.
-
 
 ## Getting Help
 

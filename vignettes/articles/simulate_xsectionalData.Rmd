@@ -62,7 +62,6 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 #set seed to reproduce results
 set.seed(54321)
 
-day2yr <- 365.25
 ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
 # antibodies <- dmcmc$antigen_iso |> droplevels() |> levels()
 antibodies = c("HlyE_IgA", "HlyE_IgG")
@@ -77,16 +76,15 @@ dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # biologic noise distribution
 
 csdata0 <- sim.cs(
   curve_params = dmcmc,
-  lambda = lambda / day2yr,
+  lambda = lambda,
   n.smpl = nrep,
-  age.rng = lifespan * day2yr,
+  age.rng = lifespan,
   age.fx = NA,
   antigen_isos = antibodies,
   n.mc = 0,
   renew.params = TRUE,
   add.noise = TRUE,
-  noise_limits = dlims,
-  npar = npar
+  noise_limits = dlims
 )
 
 
@@ -96,7 +94,7 @@ csdata0 <- sim.cs(
 
 ## Optional - loop over "clusters" and different lambdas
 
-```{r}
+```{r "parallel"}
 library(parallel)
 library(doParallel)
 n_cores = max(1, parallel::detectCores() - 1)
@@ -109,9 +107,9 @@ sim.cl <-
   foreach(l = lmbdaVec) %:% 
   foreach(n = 1:nclus, .combine = rbind) %dopar% {
     csdata <- sim.cs(
-      lambda = l / day2yr,
+      lambda = l,
       n.smpl = nrep,
-      age.rng = lifespan * day2yr,
+      age.rng = lifespan,
       age.fx = NA,
       antigen_isos = antibodies,
       n.mc = 0,
@@ -119,8 +117,7 @@ sim.cl <-
       add.noise = TRUE,
       curve_params = dmcmc,
       noise_limits = dlims,
-      baseline_limits = blims,
-      npar = npar
+      baseline_limits = blims
     )
     
     

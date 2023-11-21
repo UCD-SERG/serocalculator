@@ -79,7 +79,8 @@ mkbaseline <- function(kab,n=1, blims, ...){
   if(blims[kab,2]==0){
     yset <- rep(0,n);
   }else{
-    yset <- runif(n=n,min=blims[kab,1],max=blims[kab,2]);
+    yset <- runif(n = n, min = blims[kab, 1], max = blims[kab, 2])
+
   }
   return(yset);
 }

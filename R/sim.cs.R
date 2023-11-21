@@ -4,9 +4,9 @@
 #' Makes a cross-sectional data set (age, y(t) set)
 #'  and adds noise, if desired.
 
-#' @param lambda a [numeric()] scalar indicating the incidence rate (in events per person-day)
+#' @param lambda a [numeric()] scalar indicating the incidence rate (in events per person-years)
 #' @param n.smpl number of samples to simulate
-#' @param age.rng age range of sampled individuals
+#' @param age.rng age range of sampled individuals, in years
 #' @param age.fx specify the curve parameters to use by age (does nothing at present?)
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `curve_params`.
 #' @param n.mc how many mcmc samples to use:
@@ -27,7 +27,6 @@
 
 #' @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 #' @param noise_limits biologic noise distribution parameters
-#' @param npar number of longitudinal curve parameters in model
 #' @param ... additional arguments passed to `simcs.tinf()`
 #' @return a [dplyr::tibble()] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
@@ -51,13 +50,17 @@ sim.cs <- function(
       prep_curve_params_for_array() %>%
       df_to_array(dim_var_names = c("antigen_iso", "parameter")),
     noise_limits,
-    npar,
+
     ...)
 {
 
   stopifnot(length(lambda) == 1)
 
   day2yr = 365.25
+  lambda = lambda / day2yr
+  age.rng = age.rng * day2yr
+  npar = dimnames(predpar)$parameter |> length()
+
 
   ablist = 1:length(antigen_isos)
 
@@ -79,7 +82,8 @@ sim.cs <- function(
 
   if (add.noise) {
     for (k.ab in 1:(ncol(ysim) - 1)) {
-      ysim[, 1 + k.ab] <- ysim[, 1 + k.ab] +
+      ysim[, 1 + k.ab] <-
+        ysim[, 1 + k.ab] +
         runif(n = nrow(ysim),
               min = noise_limits[k.ab, 1],
               max = noise_limits[k.ab, 2])

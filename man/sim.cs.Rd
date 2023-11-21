@@ -18,16 +18,15 @@ sim.cs(
     droplevels() \%>\% prep_curve_params_for_array() \%>\% df_to_array(dim_var_names =
     c("antigen_iso", "parameter")),
   noise_limits,
-  npar,
   ...
 )
 }
 \arguments{
-\item{lambda}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate (in events per person-day)}
+\item{lambda}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate (in events per person-years)}
 
 \item{n.smpl}{number of samples to simulate}
 
-\item{age.rng}{age range of sampled individuals}
+\item{age.rng}{age range of sampled individuals, in years}
 
 \item{age.fx}{specify the curve parameters to use by age (does nothing at present?)}
 
@@ -61,8 +60,6 @@ sim.cs(
 \item{predpar}{an \code{\link[=array]{array()}} containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave \code{predpar} at its default value and provide \code{curve_params} instead.}
 
 \item{noise_limits}{biologic noise distribution parameters}
-
-\item{npar}{number of longitudinal curve parameters in model}
 
 \item{...}{additional arguments passed to \code{simcs.tinf()}}
 }

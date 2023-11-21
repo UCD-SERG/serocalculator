@@ -1,6 +1,5 @@
 ---
-title: "Enteric Fever Seroincidence Tutorial"
-author: "UC Davis Seroepidemiology Research Group (SERG)"
+title: "Enteric Fever Seroincidence"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Typhoid Seroincidence}
@@ -12,30 +11,10 @@ toc: true
 ---
 # Introduction
 
-Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In simple 
-terms: the presence of many high antibody concentrations indicates that many subjects likely experienced infection recently, while mostly low concentrations indicate a low frequency of infections in the sampled population. 
-
-In order to thus interpret the measured cross-sectional antibody concentrations, characteristics of the time course of the serum antibody response must be known. For any antibody detected in the cross–sectional sample, a quantitative description of its dynamics following infection 
-(seroconversion to an elevated concentration, followed by a gradual decrease) must be available. In published studies, this information on the time course of the serum antibody response has been obtained from follow–up data in subjects who had a symptomatic episode following infection. The 
-onset of symptoms thus provided a proxy for the time that infection occurred. Care must be taken that longitudinal and cross–sectional measurements of antibody concentrations are calibrated on the 
-same scale (or, preferably, expressed in identical units).
-
-The time course of the serum antibody response to infection is assumed generic: anyone infected by the same pathogen is expected to produce a response similar to those seen in the symptomatic cohort used for the follow–up study. Thus, the strategy is to set up a longitudinal model from a follow–up study once, and use the thus obtained information to analyze many different cross–sectional data sets.
-
-Note that it must be assumed that such variation in the time course of antibody concentrations among individuals as observed in the longitudinal cohort is the same as in the population where the cross-sectional sample was taken, where this variation cannot be observed.
-
-Analysis of longitudinal data and estimation of the required parameters is separated from the estimation of seroincidences, because (1) there are few longitudinal data sets available and they are difficult (and expensive) to obtain, (2) such longitudinal models may be considered *generic*, presumably describing a physiological phenomenon that is similiar in any infected individual, and (3) setting up and running the longitudinal model requires additional skills, not necessary for use of the sero–incidence calculator script.
-
-# The seroincidence estimator
-
-The package **serocalculator** was designed to calculate incidence of seroconversion, by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated, as a function of the longitudinal seroresponse 
-and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data, by adjusting the seroconversion frequency, thus providing a means to estimate the seroconversion frequency.
-
-# Vignette
-
-This vignette provides users with an example analysis using the **serocalculator** package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. Users will determine the seroincidence of enteric fever in a cross-sectional serosurvey from SEES, a serologic and environmental surveillance study conducted in Asia, plus existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan. 
+This vignette provides users with an example analysis using the *serocalculator* package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. Users will determine the seroincidence of enteric fever in a cross-sectional serosurvey from SEES, a serologic and environmental surveillance study conducted in Asia, plus existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan. 
 
 Further details on this study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -45,7 +24,7 @@ knitr::opts_chunk$set(
 ```
 # Sample Analysis
 ## Load packages
-The first step in conducting this analysis is to load our necessary packages. 
+The first step in conducting this analysis is to load our necessary packages. Follow the [installation instructions](https://ucd-serg.github.io/serocalculator/) if you have not already installed *serocalculator*. 
 
 ```{r setup, message=FALSE}
 
@@ -59,27 +38,6 @@ library(readr)
 
 ```
 ## Load data
-
-
-
-### Pulling data from Open Science Framework (OSF)
-
-Sample datasets and pathogen-specific longitudinal antibody dynamics for **serocalculator** are housed on Open Science Framework (OSF), a publicly available data repository. The [Serocalculator Repository](https://osf.io/ne8pc/) can be called directly into the **serocalculator** package using the function `getAdditionalData`. 
-
-To import the provided datasets into your R environment, we will need to identify the "id" of the appropriate dataset. 
-
-We demonstrate this below. 
-
-```{r getdata}
-getAdditionalData(fileURL = "https://osf.io/download/6553f989874c2e06a54e7d45/")
-
-
-```
-
-
-### Load and prepare longitudinal paramter data
-
-
 ### a. Load and prepare longitudinal parameter data
 The next step is to load the longitudinal data to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 

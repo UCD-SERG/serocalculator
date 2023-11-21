@@ -21,6 +21,7 @@
     lambda.start = 1/365.25,
     stepmax = 1,
     verbose = FALSE,
+    build_graph = TRUE,
     ...)
 {
 
@@ -61,6 +62,22 @@
     message("Initial log-likelihood: ", res)
   }
 
+  if(build_graph)
+  {
+    if(verbose) message('building likelihood graph')
+    graph = graph_loglik(
+      lambda.start = lambda.start,
+      data = data,
+      antigen_isos = antigen_isos,
+      curve_params = curve_params,
+      noise_params = noise_params
+    )
+  } else
+  {
+    graph = NULL
+  }
+
+
   # Estimate log.lambda
   time =
     {
@@ -84,10 +101,12 @@
     print(time)
   }
 
+
   fit = fit |>
     structure(
       class = "seroincidence.est" |> union(class(fit)),
-      lambda.start = lambda.start)
+      lambda.start = lambda.start,
+      ll_graph = graph)
 
   return(fit)
 }

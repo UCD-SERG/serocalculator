@@ -104,10 +104,11 @@ cond <- data.frame(
 csdataL <- as.data.frame(csdata0) %>%
   pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
 
-est.incidence(
+est1 = est.incidence(
   csdataL %>%
-    rename(y = value,
-           a = age), 
+    rename(
+      y = value,
+      a = age), 
   dmcmc, 
   cond, 
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
@@ -115,15 +116,44 @@ est.incidence(
 
 ```
 
+```{r}
+
+ll = function(x)
+{
+  
+  Vectorize(serocalculator:::.nll, vectorize.args = "log.lambda")(
+  log.lambda = x,
+  data = csdataL |> rename(y = value, a = age) |> split(~antigen_iso),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  curve_params = dmcmc |> 
+    mutate(
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1) |> split(~antigen_iso) ,
+  noise_params = cond |> split(~antigen_iso),
+  verbose = TRUE
+)
+}
+
+x = union(seq(.001, .01, by = .001), c(.00001, .01, .015, .02, .03, seq(.04, .5, by = .01))) |> sort()
+y = ll(x |> log())
+plot(-y~x, type = 'b')
+abline(v = est1$incidence.rate, col = 'red')
+```
 
 
 
 # Optional - loop over "clusters" and different lambdas
 
-```{r "parallel"}
+```{r "init-parallel"}
 library(parallel)
 library(doParallel)
 n_cores = max(1, parallel::detectCores() - 1)
+# n_cores = 1
+print(n_cores)
+```
+
+```{r "do-parallel"}
+
 doParallel::registerDoParallel(cores = n_cores)
 nclus = 10;
 nrep <- 100; # cross-sectional sample size
@@ -173,6 +203,33 @@ ests =
   )
 
 summary(ests)
+```
+
+
+```{r}
+
+ests_l_0.3 = 
+  sim.df %>% 
+  filter(lambda.sim == .3) |> 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value") %>%
+  rename(
+    y = value,
+    a = age) %>% 
+  est.incidence.by(
+    curve_params = dmcmc,
+    noise_params = cond,
+    numCores = n_cores,
+    stepmax = 6,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
 ```
 
 ## plot distribution of estimates by simulated incidence rate

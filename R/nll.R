@@ -46,3 +46,5 @@
   # Return total log-likelihood
   return(nllTotal)
 }
+
+.nll_vec = Vectorize(.nll, vectorize.args = "log.lambda")

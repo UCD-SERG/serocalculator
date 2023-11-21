@@ -118,7 +118,7 @@ est.incidence(
 
 
 
-## Optional - loop over "clusters" and different lambdas
+# Optional - loop over "clusters" and different lambdas
 
 ```{r "parallel"}
 library(parallel)
@@ -146,7 +146,7 @@ sim.df <-
     ) %>% 
       mutate(lambda.sim = l, cluster = n) 
   }
-
+print(sim.df)
 ```
 
 ## Estimate incidence in each cluster
@@ -177,7 +177,7 @@ summary(ests)
 
 ## plot distribution of estimates by simulated incidence rate
 
-```{r}
+```{r, "graph", fig.width = 7}
 
 library(ggplot2)
 summary(ests) |> 

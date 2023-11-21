@@ -1,5 +1,5 @@
 #' @title
-#' Summary Method for Seroincidence Object
+#' Summary Method for `"seroincidence.ests"` Objects
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
@@ -10,22 +10,22 @@
 #' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
 #' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
-#'   help for [optim()] for details). Default = `TRUE`.
+#'   help for [optim()] for details). Default = `FALSE`.
 #' @param confidence_level desired confidence interval coverage probability
 #' @return
 #' A list with the following items:
 #' \describe{
-#' \item{`Results`}{Dataframe with maximum likelihood estimate of `lambda` (the
-#'   seroincidence) (column `Lambda`) and corresponding lower (`Lambda.lwr`) and upper
-#'   (`Lambda.upr` bounds.\cr
-#'   Optionally `Deviance` (Negative log likelihood (NLL) at estimated (maximum likelihood)
-#'   `lambda`) and `Covergence` (Convergence indicator returned by [optim()].
+#' \item{`Results`}{[dplyr::tibble()] with columns:
+#' * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
+#' *  `CI.lwr` lower confidence bound for lambda
+#'  * `CI.upr` upper confidence bound for lambda
+#'  * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
+#'   `lambda`)
+#'   * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence code returned by [stats::nlm()].
 #'   Value of 0 indicates convergence) columns are included.}
 #' \item{`Antibodies`}{Character vector with names of input antibodies used in
 #'   [est.incidence.by()].}
 #' \item{`Strata`}{Character with names of strata used in [est.incidence.by()].}
-#' \item{`CensorLimits`}{List of cutoffs for each of the antibodies used in
-#'   [est.incidence.by()].}
 #' }
 #'
 #' @examples
@@ -41,10 +41,10 @@
 #' @export
 summary.seroincidence.ests <- function(
     object,
-    ...,
     confidence_level = .95,
     showDeviance = TRUE,
-    showConvergence = TRUE)
+    showConvergence = FALSE,
+    ...)
 {
 
   alpha = 1 - confidence_level
@@ -79,7 +79,11 @@ summary.seroincidence.ests <- function(
     results$log.lik <- NULL
   }
 
-  if (!showConvergence) {
+  if (showConvergence) {
+    results = results |>
+      relocate(nlm.exit.code, .after = everything())
+  } else
+  {
     results$nlm.exit.code <- NULL
   }
 

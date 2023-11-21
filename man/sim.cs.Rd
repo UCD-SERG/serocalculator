@@ -32,10 +32,10 @@ sim.cs(
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
 
-\item{n.mc}{how many mcmc samples to use:
+\item{n.mc}{how many MCMC samples to use:
 \itemize{
 \item when \code{n.mc} is in \code{1:4000} a fixed posterior sample is used
-\item when \code{n.mc} = \code{0}, a random smaple is chosen
+\item when \code{n.mc} = \code{0}, a random sample is chosen
 }}
 
 \item{renew.params}{whether to generate a new parameter set for each infection

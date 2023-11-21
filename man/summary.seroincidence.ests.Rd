@@ -2,20 +2,18 @@
 % Please edit documentation in R/summary.seroincidence.R
 \name{summary.seroincidence.ests}
 \alias{summary.seroincidence.ests}
-\title{Summary Method for Seroincidence Object}
+\title{Summary Method for \code{"seroincidence.ests"} Objects}
 \usage{
 \method{summary}{seroincidence.ests}(
   object,
-  ...,
   confidence_level = 0.95,
   showDeviance = TRUE,
-  showConvergence = TRUE
+  showConvergence = FALSE,
+  ...
 )
 }
 \arguments{
 \item{object}{A dataframe containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
-
-\item{...}{Additional arguments affecting the summary produced.}
 
 \item{confidence_level}{desired confidence interval coverage probability}
 
@@ -23,22 +21,26 @@
 (-2*log(likelihood) at estimated seroincidence. Default = \code{TRUE}.}
 
 \item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
-help for \code{\link[=optim]{optim()}} for details). Default = \code{TRUE}.}
+help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
+
+\item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
 A list with the following items:
 \describe{
-\item{\code{Results}}{Dataframe with maximum likelihood estimate of \code{lambda} (the
-seroincidence) (column \code{Lambda}) and corresponding lower (\code{Lambda.lwr}) and upper
-(\code{Lambda.upr} bounds.\cr
-Optionally \code{Deviance} (Negative log likelihood (NLL) at estimated (maximum likelihood)
-\code{lambda}) and \code{Covergence} (Convergence indicator returned by \code{\link[=optim]{optim()}}.
+\item{\code{Results}}{\code{\link[dplyr:reexports]{dplyr::tibble()}} with columns:
+\itemize{
+\item \code{incidence.rate} maximum likelihood estimate of \code{lambda} (seroincidence)
+\item \code{CI.lwr} lower confidence bound for lambda
+\item \code{CI.upr} upper confidence bound for lambda
+\item \code{Deviance} (included if \code{showDeviance = TRUE}) Negative log likelihood (NLL) at estimated (maximum likelihood)
+\code{lambda})
+\item \code{nlm.exit.code} (included if \code{showConvergence = TRUE}) Convergence code returned by \code{\link[stats:nlm]{stats::nlm()}}.
 Value of 0 indicates convergence) columns are included.}
 \item{\code{Antibodies}}{Character vector with names of input antibodies used in
 \code{\link[=est.incidence.by]{est.incidence.by()}}.}
 \item{\code{Strata}}{Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}.}
-\item{\code{CensorLimits}}{List of cutoffs for each of the antibodies used in
-\code{\link[=est.incidence.by]{est.incidence.by()}}.}
+}
 }
 }
 \description{

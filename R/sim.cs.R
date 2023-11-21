@@ -9,9 +9,9 @@
 #' @param age.rng age range of sampled individuals, in years
 #' @param age.fx specify the curve parameters to use by age (does nothing at present?)
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `curve_params`.
-#' @param n.mc how many mcmc samples to use:
+#' @param n.mc how many MCMC samples to use:
 #' * when `n.mc` is in `1:4000` a fixed posterior sample is used
-#' * when `n.mc` = `0`, a random smaple is chosen
+#' * when `n.mc` = `0`, a random sample is chosen
 #' @param renew.params whether to generate a new parameter set for each infection
 #' * `renew.params= TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0

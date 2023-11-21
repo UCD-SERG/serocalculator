@@ -63,7 +63,7 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 set.seed(54321)
 
 ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
-# antibodies <- dmcmc$antigen_iso |> droplevels() |> levels()
+# antibodies <- dmcmc$antigen_iso %>% droplevels() %>% levels()
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 abs <-  c(1,2);
 lambda <- 0.2; # incidence (1/yr)
@@ -79,7 +79,6 @@ csdata0 <- sim.cs(
   lambda = lambda,
   n.smpl = nrep,
   age.rng = lifespan,
-  age.fx = NA,
   antigen_isos = antibodies,
   n.mc = 0,
   renew.params = TRUE,
@@ -90,48 +89,6 @@ csdata0 <- sim.cs(
 
 
 ```
-
-
-## Optional - loop over "clusters" and different lambdas
-
-```{r "parallel"}
-library(parallel)
-library(doParallel)
-n_cores = max(1, parallel::detectCores() - 1)
-doParallel::registerDoParallel(cores = n_cores)
-nclus <- 10  # number of clusters 
-nrep <- 100; # cross-sectional sample size
-lmbdaVec <- c(.05,.1, .15, .2, .3)
-
-sim.cl <- 
-  foreach(l = lmbdaVec) %:% 
-  foreach(n = 1:nclus, .combine = rbind) %dopar% {
-    csdata <- sim.cs(
-      lambda = l,
-      n.smpl = nrep,
-      age.rng = lifespan,
-      age.fx = NA,
-      antigen_isos = antibodies,
-      n.mc = 0,
-      renew.params = TRUE,
-      add.noise = TRUE,
-      curve_params = dmcmc,
-      noise_limits = dlims,
-      baseline_limits = blims
-    )
-    
-    
-    csdata1 <- csdata %>% 
-      as.data.frame() %>% 
-      mutate(cluster = n, lambda = l) 
-  }
-
-library(dplyr)
-sim.df <- dplyr::bind_rows(sim.cl) |> as_tibble()
-print(sim.df)
-```
-
-
 
 ## Estimate seroincidence
 ```{r}
@@ -147,11 +104,89 @@ cond <- data.frame(
 csdataL <- as.data.frame(csdata0) %>%
   pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
 
-est.incidence(csdataL %>%
-                rename(y = value,
-                       a = age), 
-              dmcmc, cond, antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+est.incidence(
+  csdataL %>%
+    rename(y = value,
+           a = age), 
+  dmcmc, 
+  cond, 
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
 
 
+```
+
+
+
+
+## Optional - loop over "clusters" and different lambdas
+
+```{r "parallel"}
+library(parallel)
+library(doParallel)
+n_cores = max(1, parallel::detectCores() - 1)
+doParallel::registerDoParallel(cores = n_cores)
+nclus = 10;
+nrep <- 100; # cross-sectional sample size
+lmbdaVec <- c(.05,.1, .15, .2, .3)
+
+sim.df <- 
+  foreach(l = lmbdaVec, .combine = bind_rows) %:%
+  foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
+    sim.cs(
+      lambda = l,
+      n.smpl = nrep,
+      age.rng = lifespan,
+      antigen_isos = antibodies,
+      n.mc = 0,
+      renew.params = TRUE,
+      add.noise = TRUE,
+      curve_params = dmcmc,
+      noise_limits = dlims,
+      baseline_limits = blims
+    ) %>% 
+      mutate(lambda.sim = l, cluster = n) 
+  }
+
+```
+
+## Estimate incidence in each cluster
+
+```{r}
+ests = 
+  sim.df %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value") %>%
+  rename(
+    y = value,
+    a = age) %>% 
+  est.incidence.by(
+    curve_params = dmcmc,
+    noise_params = cond,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+summary(ests)
+```
+
+## plot distribution of estimates by simulated incidence rate
+
+```{r}
+
+library(ggplot2)
+summary(ests) |> 
+  ggplot(aes(x = lambda.sim, y = incidence.rate)) +
+  geom_point() +
+  xlab("Simulated incidence rate") +
+  ylab("Estimated incidence rate") +
+  theme_bw() +
+  geom_abline(aes(intercept = 0, slope = 1, col = "x=y")) +
+  expand_limits(x = 0,y = 0) +
+  labs(col = "")
 ```
 

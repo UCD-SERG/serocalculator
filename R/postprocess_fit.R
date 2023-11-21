@@ -27,7 +27,7 @@ postprocess_fit = function(
     coverage = coverage,
     log.lik = -fit$minimum,
     iterations = fit$iterations,
-    nlm.exit.code = fit$code)
+    nlm.exit.code = nlm_exit_codes[fit$code])
 
   class(log.lambda.est) =
     "summary.seroincidence.est" |>

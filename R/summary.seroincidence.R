@@ -42,6 +42,7 @@ summary.seroincidence.ests <- function(
     confidence_level = .95,
     showDeviance = TRUE,
     showConvergence = FALSE,
+    plot_logliks = FALSE,
     ...)
 {
 

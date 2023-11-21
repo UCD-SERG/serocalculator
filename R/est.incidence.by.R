@@ -110,29 +110,39 @@ est.incidence.by <- function(
 
     fits = list()
 
-    {
+    { # time progress
 
-    for (cur_stratum in names(stratumDataList))
-    {
-      if(verbose)
+      for (cur_stratum in names(stratumDataList))
       {
-        message('starting new stratum: ', cur_stratum)
-        stratumDataList |>
+        cur_stratum_vars =
+          stratumDataList |>
           attr("strata") |>
-          dplyr::filter(.data$Stratum == cur_stratum) |>
-          print()
+          dplyr::filter(.data$Stratum == cur_stratum)
+
+        stratum_string =
+          paste(
+            names(cur_stratum_vars),
+            cur_stratum_vars,
+            sep = ": ") |>
+          paste(collapse = ", ")
+
+        if(verbose)
+        {
+          message('starting new stratum: ', cur_stratum)
+          print(cur_stratum_vars)
+        }
+
+        fits[[cur_stratum]] =
+          .optNll(
+            lambda.start = lambda.start,
+            dataList = stratumDataList[[cur_stratum]],
+            antigen_isos = antigen_isos,
+            verbose =  verbose,
+            ...) |>
+          structure(stratum_string = stratum_string)
+
       }
-
-      fits[[cur_stratum]] =
-        .optNll(
-          lambda.start = lambda.start,
-          dataList = stratumDataList[[cur_stratum]],
-          antigen_isos = antigen_isos,
-          verbose = verbose,
-          ...)
-
-    }
-    }  |> system.time() -> time
+    } |> system.time() -> time
 
     if(verbose)
     {

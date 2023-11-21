@@ -3,8 +3,9 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   sees_analysis: sees_analysis.html
+  simulate_xsectionalData: simulate_xsectionalData.html
   installation: installation.html
-last_built: 2023-11-21T02:59Z
+last_built: 2023-11-21T17:05Z
 urls:
   reference: https://ucd-serg.github.io/serocalculator/reference
   article: https://ucd-serg.github.io/serocalculator/articles

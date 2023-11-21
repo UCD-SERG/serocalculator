@@ -19,6 +19,9 @@
     <loc>https://ucd-serg.github.io/serocalculator/articles/sees_analysis.html</loc>
   </url>
   <url>
+    <loc>https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.html</loc>
+  </url>
+  <url>
     <loc>https://ucd-serg.github.io/serocalculator/authors.html</loc>
   </url>
   <url>
@@ -44,6 +47,9 @@
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterSimLowData.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc>
@@ -98,6 +104,9 @@
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/sim.cs.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.ests.html</loc>

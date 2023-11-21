@@ -42,6 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
+    <a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a>
     <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
   </div>
 </li>
@@ -100,7 +101,7 @@
 <span>    package <span class="op">=</span> <span class="st">"serocalculator"</span>,</span>
 <span>    <span class="st">"extdata/SEES_NoiseParam.rds"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">rename</span><span class="op">(</span>y.low <span class="op">=</span> <span class="va">llod</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>y.low <span class="op">=</span> <span class="va">llod</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">full_data</span> <span class="op">=</span> <span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span></span>
 <span>  package <span class="op">=</span> <span class="st">"serocalculator"</span>,</span>

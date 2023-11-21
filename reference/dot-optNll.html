@@ -25,6 +25,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
+    <a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a>
     <a class="dropdown-item" href="../articles/installation.html">Serocalculator package installation manual</a>
   </div>
 </li>
@@ -60,7 +61,7 @@
 <span>  curve_params <span class="op">=</span> <span class="va">dataList</span><span class="op">$</span><span class="va">curve_params</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">dataList</span><span class="op">$</span><span class="va">noise_params</span>,</span>
 <span>  dataList <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu">pull</span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  lambda.start <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">365.25</span>,</span>
 <span>  stepmax <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -80,7 +81,7 @@ Monte Carlo samples for each antibody type.</p></dd>
 
 
 <dt>noise_params</dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (or <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>, or <code>tibble()</code>) containing noise parameters</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (or <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>, or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>) containing noise parameters</p></dd>
 
 
 <dt>dataList</dt>

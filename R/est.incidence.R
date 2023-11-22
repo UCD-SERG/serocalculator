@@ -1,54 +1,37 @@
-
-#
-#' Age specific seroincidence function
+#' Find the maximum likelihood estimate of the incidence rate parameter
+#'
 #' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
-#'
-#' @param dpop cross-sectional population data
-#' @param c.age age category
-#' @param start starting value for incidence rate
-#' @param antigen_isos antigen isotypes: a [character()] vector of one or more antigen isotype names, which should match the values of the `antigen_iso` column in the `dpop` input argument
-#' @param noise_params a [data.frame()] containing columns `nu`, etc. specifying conditional noise parameters
-#' @param dmcmc mcmc samples from distribution of longitudinal decay curve parameters
-#' @param verbose logical: if TRUE, print verbose log information to console
-#' @param iterlim an [integer()], which provides an upper limit on the number of computational iterations used to search for the maximum likelihood estimate of incidence (passed to [stats::nlm()]).
-#' @param stepmax a [numeric()], which limits how aggressively the [stats::nlm()] algorithm searches for the maximum likelihood estimate of incidence. If this function output an infinite standard error estimate, consider reducing this parameter.
-#' @inheritParams postprocess_fit
+#' @inheritParams .nll
 #' @inheritParams stats::nlm
-#' @inheritDotParams stats::nlm -f -p -hessian
-#'
-#' @return A [data.frame()] containing the following:
-#' * `est.start`: the starting guess for incidence rate
-#' * `ageCat`: the age category we are analyzing
-#' * `incidence.rate`: the estimated incidence rate, per person year
-#' * `CI.lwr`: lower limit of confidence interval for incidence rate
-#' * `CI.upr`: upper limit of confidence interval for incidence rate
-#' * `coverage`: coverage probability
-#' * `neg.llik`: negative log-likelihood
-#' * `iterations`: the number of iterations used
-#'
-#' @export
+#' @param lambda.start starting guess for incidence rate, in years/event.
+#' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
+#' @param c.age age category to subset data by (optional)
+#' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
+#' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
+#' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
 
+#' @inheritDotParams stats::nlm -f -p -hessian
+
+#' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda.start`, `antigen_isos`, and `ll_graph`
+#' @export
 est.incidence <- function(
-    dpop,
-    dmcmc,
-    noise_params,
-    c.age = NULL,
-    antigen_isos = dpop$antigen_iso |> unique(),
-    start = 0.1,
-    iterlim = 100,
-    coverage = .95,
-    verbose = FALSE,
+    data = dataList$data,
+    curve_params = dataList$curve_params,
+    noise_params = dataList$noise_params,
+    dataList = NULL,
+    antigen_isos = data |> pull("antigen_iso") |> unique(),
+    lambda.start = 1/365.25,
     stepmax = 1,
+    verbose = FALSE,
+    build_graph = TRUE,
+    print_graph = build_graph & verbose,
+    c.age = NULL,
     ...)
 {
-
-  lambda = start # initial estimate: starting value
-  log.lambda = log(lambda)
-
   if(!is.null(c.age))
   {
-    dpop = dpop %>% dplyr::filter(.data[["ageCat"]] == c.age)
-    dmcmc = dmcmc %>% dplyr::filter(.data[["ageCat"]] == c.age)
+    data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
+    curve_params = curve_params %>% dplyr::filter(.data[["ageCat"]] == c.age)
 
     if("ageCat" %in% names(noise_params))
     {
@@ -57,69 +40,121 @@ est.incidence <- function(
         dplyr::filter(.data[["ageCat"]] == c.age)
     }
   }
+  curve_params = curve_params |>
+    dplyr::mutate(
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1)
 
-  ps = list()
-  cs = list()
-  conds = list()
-
-  for (cur_antigen in antigen_isos)
-  {
-    ps[[cur_antigen]] = get_xspd_one_antigen(
-      dpop = dpop,
-      antigen = cur_antigen)
-
-    cs[[cur_antigen]] = get_curve_params_one_antigen(
-      params = dmcmc,
-      antigen = cur_antigen)
-
-    conds[[cur_antigen]] =
-      noise_params %>%
-      dplyr::filter(.data[["antigen_iso"]] == cur_antigen)
-
+  # incidence can not be calculated if there are zero observations.
+  if (nrow(data) == 0) {
+    stop("No data provided.")
   }
-
-  # noise parameters
-  # cond.hlye.IgG
-
-  objfunc = build_likelihood_function(
-    cross_sectional_data = ps,
-    longitudinal_parameter_samples = cs,
-    noise_params = conds)
-
-  # seroincidence estimation
-  {
-    fit = nlm(
-    f = objfunc,
-    p = log.lambda,
-    hessian = TRUE,
-    iterlim = iterlim,
-    stepmax = stepmax,
-    ...)
-  } |> system.time() -> time
 
   if(verbose)
   {
-    message('elapsed time: ')
+    message("nrow(curve_params) = ", nrow(curve_params))
+  }
+
+  if(nrow(noise_params) != length(antigen_isos))
+    stop("too many rows of noise parameters.")
+
+  data = data |> split(~antigen_iso)
+  curve_params = curve_params |> split(~antigen_iso)
+  noise_params = noise_params |> split(~antigen_iso)
+
+  # First, check if we find numeric results...
+  res <- .nll(
+    data = data,
+    log.lambda = log(lambda.start),
+    antigen_isos = antigen_isos,
+    curve_params = curve_params,
+    noise_params = noise_params,
+    verbose = verbose,
+    ...)
+
+  if (is.na(res)) {
+    warning("Could not calculate the log-likelihood with starting parameter value.")
+    return(NULL)
+  }
+
+  if (verbose)
+  {
+    message("Initial log-likelihood: ", res)
+  }
+
+  if (build_graph)
+  {
+    if(verbose) message('building likelihood graph')
+    graph = graph_loglik(
+      lambda.start = lambda.start,
+      data = data,
+      antigen_isos = antigen_isos,
+      curve_params = curve_params,
+      noise_params = noise_params
+    )
+    if(print_graph) print(graph)
+
+  } else
+  {
+    graph = NULL
+  }
+
+
+  if(verbose) message('about to call `nlm()`')
+  # Estimate log.lambda
+  time =
+    {
+      fit = nlm(
+        f = .nll,
+        p = log(lambda.start),
+        data = data,
+        antigen_isos = antigen_isos,
+        curve_params = curve_params,
+        noise_params = noise_params,
+        hessian = TRUE,
+        stepmax = stepmax,
+        verbose = verbose,
+        ...)
+    } |>
+    system.time()
+
+  code_text = nlm_exit_codes[fit$code]
+  if(verbose || fit$code %in% 3:5)
+  {
+    message(
+      '`nlm()` completed with the following exit code:\n')
+    cat(code_text)
+    if(fit$code %in% 3:5)
+      warning("`nlm()` may not have reached the maximum likelihood estimate.")
+  }
+
+  if(verbose)
+  {
+    message('\nElapsed time: ')
     print(time)
   }
 
-  if(fit$iterations >= iterlim)
+  if(build_graph)
   {
-    warning(
-      "Maximum `nlm()` iterations reached; consider increasing `iterlim` argument.")
+    graph =
+      graph |>
+      add_point_to_graph(
+        fit = fit,
+        data = data,
+        antigen_isos = antigen_isos,
+        curve_params = curve_params,
+        noise_params = noise_params)
+
+    if(print_graph) print(graph)
+
   }
 
-  log.lambda.est =
-    fit |>
-    postprocess_fit(
-      coverage = coverage,
-      start = start
-    ) |>
-    mutate(
-      ageCat = c.age,
-      antigen.iso = antigen_isos |> paste(collapse = "+")) %>%
+  fit = fit |>
     structure(
-      noise.parameters = noise_params)
+      class = union("seroincidence", class(fit)),
+      lambda.start = lambda.start,
+      antigen_isos = antigen_isos,
+      ll_graph = graph)
 
-  return(log.lambda.est)
+  return(fit)
 }

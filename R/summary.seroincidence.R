@@ -1,5 +1,5 @@
 #' @title
-#' Summary Method for `"seroincidence.ests"` Objects
+#' Summary Method for `"seroincidence.by"` Objects
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
@@ -13,16 +13,15 @@
 #'   help for [optim()] for details). Default = `FALSE`.
 #' @param confidence_level desired confidence interval coverage probability
 #' @return
-#' A list with the following items:
-#'
-#' * `Results` a [dplyr::tibble()] with columns:
-#'    * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
-#'    *  `CI.lwr` lower confidence bound for lambda
-#'    * `CI.upr` upper confidence bound for lambda
-#'    * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
+#' A `summary.seroincidence.by` object, which is a [dplyr::tibble], with the following columns:
+#'  * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
+#'  *  `CI.lwr` lower confidence bound for lambda
+#'  * `CI.upr` upper confidence bound for lambda
+#'  * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
 #'    `lambda`)
 #'    * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
-#' * `Antibodies` Character vector with names of input antibodies used in [est.incidence.by()]
+#' The object also has the following metadata (accessible through [base::attr()]):
+#' * `antigen_isos` Character vector with names of input antigen isotypes used in [est.incidence.by()]
 #' * `Strata` Character with names of strata used in [est.incidence.by()]
 #'
 #'
@@ -37,11 +36,11 @@
 #' }
 #'
 #' @export
-summary.seroincidence.ests <- function(
+summary.seroincidence.by <- function(
     object,
     confidence_level = .95,
     showDeviance = TRUE,
-    showConvergence = FALSE,
+    showConvergence = TRUE,
     ...)
 {
 
@@ -59,7 +58,7 @@ summary.seroincidence.ests <- function(
   results =
     object |>
     lapply(
-      FUN = postprocess_fit,
+      FUN = summary.seroincidence,
       coverage = confidence_level) |>
     bind_rows(.id = "Stratum")
 
@@ -85,14 +84,16 @@ summary.seroincidence.ests <- function(
     results$nlm.exit.code <- NULL
   }
 
+
+
   output <-
     results |>
     structure(
-      Antibodies = attr(object, "Antibodies"),
-      Strata = attr(object, "Strata") |> names(),
+      antigen_isos = attr(object, "antigen_isos"),
+      Strata = attr(object, "Strata") |> attr("strata_vars"),
       Quantiles = quantiles,
       class =
-        "summary.seroincidence.ests" |>
+        "summary.seroincidence.by" |>
         union(class(results))
     )
 

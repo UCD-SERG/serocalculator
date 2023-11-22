@@ -12,27 +12,6 @@ toc: true
 ---
 # Introduction
 
-Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In simple 
-terms: the presence of many high antibody concentrations indicates that many subjects likely experienced infection recently, while mostly low concentrations indicate a low frequency of infections in the sampled population. 
-
-In order to thus interpret the measured cross-sectional antibody concentrations, characteristics of the time course of the serum antibody response must be known. For any antibody detected in the cross–sectional sample, a quantitative description of its dynamics following infection 
-(seroconversion to an elevated concentration, followed by a gradual decrease) must be available. In published studies, this information on the time course of the serum antibody response has been obtained from follow–up data in subjects who had a symptomatic episode following infection. The 
-onset of symptoms thus provided a proxy for the time that infection occurred. Care must be taken that longitudinal and cross–sectional measurements of antibody concentrations are calibrated on the 
-same scale (or, preferably, expressed in identical units).
-
-The time course of the serum antibody response to infection is assumed generic: anyone infected by the same pathogen is expected to produce a response similar to those seen in the symptomatic cohort used for the follow–up study. Thus, the strategy is to set up a longitudinal model from a follow–up study once, and use the thus obtained information to analyze many different cross–sectional data sets.
-
-Note that it must be assumed that such variation in the time course of antibody concentrations among individuals as observed in the longitudinal cohort is the same as in the population where the cross-sectional sample was taken, where this variation cannot be observed.
-
-Analysis of longitudinal data and estimation of the required parameters is separated from the estimation of seroincidences, because (1) there are few longitudinal data sets available and they are difficult (and expensive) to obtain, (2) such longitudinal models may be considered *generic*, presumably describing a physiological phenomenon that is similiar in any infected individual, and (3) setting up and running the longitudinal model requires additional skills, not necessary for use of the sero–incidence calculator script.
-
-# The seroincidence estimator
-
-The package **serocalculator** was designed to calculate incidence of seroconversion, by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated, as a function of the longitudinal seroresponse 
-and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data, by adjusting the seroconversion frequency, thus providing a means to estimate the seroconversion frequency.
-
-# Vignette
-
 This vignette provides users with an example analysis using the **serocalculator** package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. Users will determine the seroincidence of enteric fever in a cross-sectional serosurvey from SEES, a serologic and environmental surveillance study conducted in Asia, plus existing longitudinal antibody dynamics collected from Bangladesh, Ghana, Nepal, and Pakistan. 
 
 Further details on this study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
@@ -49,18 +28,14 @@ The first step in conducting this analysis is to load our necessary packages.
 
 ```{r setup, message=FALSE}
 
-#library(devtools)
-#install_github("UCD-SERG/serocalculator")
 library(serocalculator)
 library(tidyverse)
 library(ggplot2)
 library(readr)
-
+library(osfr)
 
 ```
 ## Load data
-
-
 
 ### Pulling data from Open Science Framework (OSF)
 
@@ -70,12 +45,52 @@ To import the provided datasets into your R environment, we will need to identif
 
 We demonstrate this below. 
 
-```{r getdata}
+```{r getdata, eval=FALSE}
+#Won't work unless I'm on the right branch!
+
 getAdditionalData(fileURL = "https://osf.io/download/6553f989874c2e06a54e7d45/")
+
+data = getAdditionalData(fileURL = "https://osf.io/download/ne8pc")
 
 
 ```
 
+```{r osftry}
+
+longmcmc_project <-osf_retrieve_node("https://osf.io/ne8pc/")#Reference the Serocalculator repository on OSF 
+longmcmc_files <- osf_ls_files(longmcmc_project) #Select the Curve Parameters folder
+
+?osf_open
+
+osf_open("ne8pc")
+
+test_file <- osf_retrieve_file("6553f132f6ce3c092f504f91")
+osf_open(test_file)
+
+
+longmcmc_files  
+
+longmcmc_project
+
+
+
+#pipes
+longosf<- osf_retrieve_node("https://osf.io/ne8pc")# %>%#Reference the Serocalculator repository on OSF 
+
+
+
+longosf
+
+
+osf_ls_files(longosf)
+#Select the Enteric Fever folder
+
+#Create components for eath pathogen?
+#Created a test commponent, but can I access the folders without them being in a component?
+https://osf.io/9gnv7/
+
+
+```
 
 ### Load and prepare longitudinal paramter data
 

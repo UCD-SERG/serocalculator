@@ -3,7 +3,6 @@
 #'
 #' @param object a [list()], outputted by [stats::nlm()] or [serocalculator::find.MLE()]
 #' @param coverage desired confidence interval coverage probability
-#' @param start starting value for incidence rate
 #' @param ... unused
 #' @return a [tibble::tibble()]; see [stats::nlm()] for details on `code` variable
 #' @export
@@ -11,11 +10,10 @@
 summary.seroincidence.est = function(
     object,
     coverage = .95,
-    start = object |> attr("lambda.start"),
-    antigen_isos = object |> attr("antigen_isos"),
     ...)
 {
-
+  start = object |> attr("lambda.start")
+  antigen_isos = object |> attr("antigen_isos")
 
   alpha = 1 - coverage
   h.alpha = alpha/2

@@ -2,7 +2,7 @@
 #' Print Method for `seroincidence.est` Object
 #'
 #' @description
-#' Custom [print()] function to show output of the seroincidence calculator [find_MLE()].
+#' Custom [print()] function to show output of the seroincidence calculator [find.MLE()].
 #'
 #' @param x A list containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.

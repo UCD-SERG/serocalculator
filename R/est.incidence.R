@@ -111,10 +111,12 @@ est.incidence <- function(
 
   log.lambda.est =
     fit |>
-    summary.seroincidence.est(
-      coverage = coverage,
-      start = start,
+    structure(
+      lambda.start = start,
       antigen_isos = antigen_isos
+    ) |>
+    summary.seroincidence.est(
+      coverage = coverage
     ) |>
     mutate(
       ageCat = c.age) %>%

@@ -12,7 +12,7 @@
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \description{
-Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=find_MLE]{find_MLE()}}.
+Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=find.MLE]{find.MLE()}}.
 }
 \examples{
 

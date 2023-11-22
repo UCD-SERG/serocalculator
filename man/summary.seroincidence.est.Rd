@@ -4,20 +4,12 @@
 \alias{summary.seroincidence.est}
 \title{summarize a fitted incidence model}
 \usage{
-\method{summary}{seroincidence.est}(
-  object,
-  coverage = 0.95,
-  start = attr(object, "lambda.start"),
-  antigen_isos = attr(object, "antigen_isos"),
-  ...
-)
+\method{summary}{seroincidence.est}(object, coverage = 0.95, ...)
 }
 \arguments{
 \item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=find.MLE]{find.MLE()}}}
 
 \item{coverage}{desired confidence interval coverage probability}
-
-\item{start}{starting value for incidence rate}
 
 \item{...}{unused}
 }

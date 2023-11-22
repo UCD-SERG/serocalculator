@@ -157,7 +157,7 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 ```{r "do-parallel"}
 
 doParallel::registerDoParallel(cores = n_cores)
-nclus = 10;
+nclus = 2;
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .15, .2, .3)
 
@@ -241,6 +241,7 @@ ests_l_0.3 =
     verbose = TRUE
   )
 
+plot.seroincidence.ests(ests_l_0.3)
 ```
 
 ## plot distribution of estimates by simulated incidence rate

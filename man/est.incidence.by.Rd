@@ -13,6 +13,7 @@ est.incidence.by(
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),
   lambda.start = 1/365.25,
+  build_graph = TRUE,
   numCores = 1L,
   verbose = FALSE,
   ...
@@ -36,6 +37,8 @@ Monte Carlo samples for each antibody type.}
 
 \item{lambda.start}{starting guess for incidence rate, in years/event.}
 
+\item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
+
 \item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
@@ -43,6 +46,7 @@ Monte Carlo samples for each antibody type.}
 \item{...}{
   Arguments passed on to \code{\link[=.optNll]{.optNll}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
+    \item{\code{print_graph}}{whether to display the graph as soon as it is created}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -76,7 +80,7 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \value{
-A set of lambda estimates for each strata.
+An object of class \code{"seroincidence.ests"}: a list of \verb{"seroincidence.est} objects from \code{\link[=.optNll]{.optNll()}}, one for each stratum, with some meta-data attributes.
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal

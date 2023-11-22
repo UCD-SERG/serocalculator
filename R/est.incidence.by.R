@@ -13,7 +13,7 @@
 #' @inheritDotParams .optNll -dataList
 #' @inheritDotParams stats::nlm -f -p -hessian
 #'
-#' @return A set of lambda estimates for each strata.
+#' @return An object of class `"seroincidence.ests"`: a list of `"seroincidence.est` objects from [.optNll()], one for each stratum, with some meta-data attributes.
 #'
 #'
 #' @export
@@ -103,6 +103,7 @@ est.incidence.by <- function(
             lambda.start = lambda.start,
             antigen_isos = antigen_isos,
             build_graph = build_graph,
+            verbose = FALSE,
             ...)
       )
     } |> system.time() -> time

@@ -1,3 +1,10 @@
+#' Plot `seroincidence.ests` log-likelihoods
+#'
+#' @param object a '"seroincidence.ests"' object (from [est.incidence.by()])
+#'
+#' @return a [ggplot2::ggplot()] object
+#' @export
+#'
 plot.seroincidence.ests = function(object)
 {
 
@@ -13,11 +20,21 @@ plot.seroincidence.ests = function(object)
   requireNamespace("ggpubr", quietly = FALSE)
   labels = sapply(object, FUN = attr, which = "stratum_string")
   figs = lapply(object, FUN = attr, which = "ll_graph")
-  figure <- ggpubr::ggarrange(
-    figs,
-    labels = c("A", "B", "C"),
-    ncol = length(figs) |> sqrt() |> ceiling(),
-    nrow = length(figs) |> sqrt() |> ceiling())
 
+  for (i in 1:length(figs))
+  {
+    figs[[i]] = figs[[i]] + ggplot2::ggtitle(labels[i])
+  }
+
+  ncol = length(figs) |> sqrt() |> ceiling()
+  nrow = ceiling(length(figs)/ncol)
+  figure <- do.call(
+    what = function(...) ggpubr::ggarrange(
+      ...,
+      ncol = ncol,
+      nrow = nrow),
+    args = figs)
+
+  return(figure)
 
 }

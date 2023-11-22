@@ -14,6 +14,7 @@
   stepmax = 1,
   verbose = FALSE,
   build_graph = TRUE,
+  print_graph = build_graph & verbose,
   ...
 )
 }
@@ -40,6 +41,10 @@ Monte Carlo samples for each antibody type.}
     be larger than any anticipated reasonable step.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
+
+\item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
+
+\item{print_graph}{whether to display the graph as soon as it is created}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

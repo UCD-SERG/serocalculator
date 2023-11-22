@@ -35,7 +35,8 @@ Suggests:
     testthat (>= 3.0.0),
     readr,
     bookdown,
-    doParallel
+    doParallel,
+    printr
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

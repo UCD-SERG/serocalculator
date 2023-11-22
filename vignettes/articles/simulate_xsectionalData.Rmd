@@ -58,7 +58,7 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 
 
 ## Simulate cross-sectional data
-```{r}
+```{r "sim.cs"}
 #set seed to reproduce results
 set.seed(54321)
 
@@ -90,9 +90,9 @@ csdata0 <- sim.cs(
 
 ## Estimate seroincidence
 
-We need to provide longitudinal antibody decay parameters and noise parameters for the analysis; here, we will manually input them:
+We need to provide noise parameters for the analysis; here, we define them directly in our code:
 
-```{r}
+```{r "noise"}
 cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
@@ -104,7 +104,7 @@ cond <- data.frame(
 
 We also need to turn the data to a long format for analysis:
 
-```{r}
+```{r "long-format"}
 csdataL <- 
   csdata0 %>% 
   as_tibble() %>%
@@ -116,7 +116,7 @@ csdataL <-
 
 Now we can estimate incidence:
 
-```{r}
+```{r "est.incidence"}
 est1 = est.incidence(
   data = csdataL %>%
     rename(
@@ -131,7 +131,7 @@ est1 = est.incidence(
 
 We can extract summary statistics with `summary()`:
 
-```{r}
+```{r "summary.est.incidence"}
 summary(est1)
 ```
 

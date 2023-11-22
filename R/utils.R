@@ -96,8 +96,8 @@
 }
 
 .checkStrata <- function(data, strata) {
-  if (!is.character(strata) && !is.null(strata)) {
-    stop(.pasteN("Argument `strata` is not a character vector or NULL.",
+  if (!is.character(strata)) {
+    stop(.pasteN("Argument `strata` is not a character vector.",
                  "Provide a character vector with names of stratifying variables."))
   }
 

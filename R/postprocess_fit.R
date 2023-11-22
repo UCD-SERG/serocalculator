@@ -28,7 +28,7 @@ summary.seroincidence.est = function(
     log.lik = -object$minimum,
     iterations = object$iterations,
     antigen.isos = antigen_isos |> paste(collapse = "+"),
-    nlm.exit.code = nlm_exit_codes[object$code]) |>
+    nlm.exit.code = object$code |> factor(levels = 1:5, labels = nlm_exit_codes)) |>
     structure(
       graph = object |> attr("ll_graph")
     )

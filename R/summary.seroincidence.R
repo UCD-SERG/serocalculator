@@ -21,7 +21,7 @@
 #'    `lambda`)
 #'    * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
 #' The object also has the following metadata (accessible through [base::attr()]):
-#' * `antigen_isos` Character vector with names of input antibodies used in [est.incidence.by()]
+#' * `antigen_isos` Character vector with names of input antigen isotypes used in [est.incidence.by()]
 #' * `Strata` Character with names of strata used in [est.incidence.by()]
 #'
 #'

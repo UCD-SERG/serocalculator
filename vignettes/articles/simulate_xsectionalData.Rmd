@@ -41,7 +41,8 @@ in any subsequent infection. This is for diagnostic purposes.
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7
 )
 ```
 
@@ -157,9 +158,9 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 ```{r "do-parallel"}
 
 doParallel::registerDoParallel(cores = n_cores)
-nclus = 10;
+nclus = 5;
 nrep <- 100; # cross-sectional sample size
-lmbdaVec <- c(.05,.1, .15, .2, .3)
+lmbdaVec <- c(.05,.1, .2, .3)
 sim.df <- 
   foreach(l = lmbdaVec, .combine = bind_rows) %:%
   foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
@@ -221,18 +222,42 @@ summary(ests)
 Make sure to check the exit codes:
 
 ```{r}
-summary(ests) |> select(lambda.sim, cluster, nlm.exit.code)
+summary(ests) |> count(lambda.sim, nlm.exit.code)
 ```
 
-The simulations with `lambda.sim = 0.3` had convergence problems (codes 3-5).
+Codes 3-5 may indicate non-convergence. It may help to look at the 
+log-likelihood curves for those simulations:
 
-We can also look at graphs of the log-likelihood for each cluster:
+```{r}
+problem_sims = 
+  summary(ests) |> 
+  pull(nlm.exit.code) |> 
+  as.numeric() |> 
+  is.element(3:5) |> 
+  which() |> 
+  print()
 
-```{r, fig.width = 7}
-plot(ests)
+# these are the simulations that had issues:
+strata(ests)[problem_sims, ]
 ```
 
-We can see that the log-likelihoods are very flat for the simulations with `lambda.sim = 0.3`; no wonder we had problems!
+We can plot the likelihood for a single simulated cluster by extracting that simulation from `ests` and calling `plot()`:
+
+```{r}
+ests[[problem_sims[1]]] |> plot()
+```
+
+It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a much sharper log-likelihood curve, which made it easier to maximize:
+
+```{r}
+ests[[1]] |> plot()
+```
+
+We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
+
+```{r}
+plot(ests[16:20])
+```
 
 ## Addressing convergence issues
 
@@ -267,22 +292,21 @@ summary(ests_l_0.3) |> select(nlm.exit.code)
 
 ```
 
-Now `nlm()` converged properly. Let's replace the old fits with these revised fits^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]:
+Now `nlm()` converged properly. Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
 
 ```{r}
+
 to_replace = 
   which(ests |> strata() |> pull(lambda.sim) == 0.3)
 ests[to_replace] = ests_l_0.3
-summary(ests) |> count(nlm.exit.code)
-```
 
-Now all strata converged.
+```
 
 ## plot distribution of estimates by simulated incidence rate
 
 Finally, we can look at our simulation results:
 
-```{r, "graph", fig.width = 7}
+```{r, "graph"}
 
 library(ggplot2)
 summary(ests) |> plot(xvar = 'lambda.sim')

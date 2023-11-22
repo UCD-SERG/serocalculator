@@ -37,7 +37,7 @@ A \code{summary.seroincidence.ests} object, which is a \link[dplyr:reexports]{dp
 \item \code{nlm.exit.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
 The object also has the following metadata (accessible through \code{\link[base:attr]{base::attr()}}):
 }
-\item \code{antigen_isos} Character vector with names of input antibodies used in \code{\link[=est.incidence.by]{est.incidence.by()}}
+\item \code{antigen_isos} Character vector with names of input antigen isotypes used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 \item \code{Strata} Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 }
 }

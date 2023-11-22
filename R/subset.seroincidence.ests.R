@@ -9,5 +9,6 @@
 `[.seroincidence.ests` <- function(x,i,...) {
   r <- NextMethod("[")
   mostattributes(r) <- attributes(x)
+  names(r) = names(x)[i]
   r
 }

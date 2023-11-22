@@ -17,7 +17,7 @@ plot.seroincidence.ests = function(x, ...)
     figure = NULL
   }
 
-  labels = x |> attr("Strata") |> pull("Stratum")
+  labels = names(x)
   figs = lapply(x, FUN = attr, which = "ll_graph")
 
   for (i in 1:length(figs))

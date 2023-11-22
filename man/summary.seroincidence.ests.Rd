@@ -9,6 +9,7 @@
   confidence_level = 0.95,
   showDeviance = TRUE,
   showConvergence = FALSE,
+  plot_logliks = FALSE,
   ...
 )
 }

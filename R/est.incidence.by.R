@@ -26,6 +26,7 @@ est.incidence.by <- function(
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
     lambda.start = 1/365.25,
+    build_graph = TRUE,
     numCores = 1L,
     verbose = FALSE,
     ...)
@@ -60,12 +61,20 @@ est.incidence.by <- function(
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames)
 
-  if(verbose) message("Data has been stratified.")
+  strata_table = stratumDataList |> attr("strata")
+
+  if(verbose)
+  {
+    message("Data has been stratified.")
+    message('Here are the strata that will be analyzed:')
+    print(strata_table)
+  }
 
   # Loop over data per stratum
-  if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
-
+  if (numCores > 1L)
+  {
     if(verbose) message("Setting up parallel processing.")
+    requireNamespace("parallel", quietly = FALSE)
 
     libPaths <- .libPaths()
     cl <-
@@ -93,6 +102,7 @@ est.incidence.by <- function(
             dataList = x,
             lambda.start = lambda.start,
             antigen_isos = antigen_isos,
+            build_graph = build_graph,
             ...)
       )
     } |> system.time() -> time
@@ -115,8 +125,7 @@ est.incidence.by <- function(
       for (cur_stratum in names(stratumDataList))
       {
         cur_stratum_vars =
-          stratumDataList |>
-          attr("strata") |>
+          strata_table |>
           dplyr::filter(.data$Stratum == cur_stratum)
 
         stratum_string =
@@ -137,6 +146,7 @@ est.incidence.by <- function(
             lambda.start = lambda.start,
             dataList = stratumDataList[[cur_stratum]],
             antigen_isos = antigen_isos,
+            build_graph = build_graph,
             verbose =  verbose,
             ...) |>
           structure(stratum_string = stratum_string)
@@ -154,7 +164,8 @@ est.incidence.by <- function(
   incidenceData <- structure(
     fits,
     Antibodies = antigen_isos,
-    Strata = stratumDataList |> attr("strata"),
+    Strata = strata_table,
+    graphs_included = build_graph,
     class = "seroincidence.ests" |> union(class(fits)))
 
   return(incidenceData)

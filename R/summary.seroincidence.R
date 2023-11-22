@@ -12,6 +12,7 @@
 #' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
 #'   help for [optim()] for details). Default = `FALSE`.
 #' @param confidence_level desired confidence interval coverage probability
+#' @param plot_likelihoods whether to plot the log-likelihood curves (they can also be extracted from the fits)
 #' @return
 #' A list with the following items:
 #'
@@ -42,7 +43,7 @@ summary.seroincidence.ests <- function(
     confidence_level = .95,
     showDeviance = TRUE,
     showConvergence = FALSE,
-    plot_logliks = FALSE,
+    plot_likelihoods = FALSE,
     ...)
 {
 
@@ -86,16 +87,44 @@ summary.seroincidence.ests <- function(
     results$nlm.exit.code <- NULL
   }
 
+  if(plot_likelihoods)
+  {
+    if(!attr(object,"graphs_included"))
+    {
+
+      warning(
+        "Graphs cannot be extracted from the `seroincidence.ests` object.",
+        "`build_graph` was not `TRUE` in the call to `est.incidence.by()`")
+      figure = NULL
+    } else
+    {
+      requireNamespace("ggpubr", quietly = FALSE)
+      labels = sapply(object, FUN = attr, which = "stratum_string")
+      figs = lapply(object, FUN = attr, which = "ll_graph")
+      figure <- ggpubr::ggarrange(
+        figs,
+        labels = c("A", "B", "C"),
+        ncol = length(figs) |> sqrt() |> ceiling(),
+        nrow = length(figs) |> sqrt() |> ceiling())
+    }
+  } else
+  {
+    figure = NULL
+  }
+
   output <-
     results |>
     structure(
       Antibodies = attr(object, "Antibodies"),
       Strata = attr(object, "Strata") |> names(),
       Quantiles = quantiles,
+      figure = figure,
       class =
         "summary.seroincidence.ests" |>
         union(class(results))
     )
+
+  #todo: write plot.summary.seroincidence.ests
 
   return(output)
 }

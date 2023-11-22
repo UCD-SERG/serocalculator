@@ -1,7 +1,7 @@
 
 #' postprocess a fitted incidence model
 #'
-#' @param fit output from [stats::nlm()]
+#' @param fit a [list()], outputted by [stats::nlm()] or [serocalculator::.optNLL()]
 #' @param coverage desired confidence interval coverage probability
 #' @param start starting value for incidence rate
 #'
@@ -27,7 +27,10 @@ postprocess_fit = function(
     coverage = coverage,
     log.lik = -fit$minimum,
     iterations = fit$iterations,
-    nlm.exit.code = nlm_exit_codes[fit$code])
+    nlm.exit.code = nlm_exit_codes[fit$code]) |>
+    structure(
+      graph = fit |> attr("ll_graph")
+    )
 
   class(log.lambda.est) =
     "summary.seroincidence.est" |>

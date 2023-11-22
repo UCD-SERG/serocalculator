@@ -62,3 +62,12 @@
   # Return total log-likelihood
   return(nllTotal)
 }
+
+#' Calculate log-likelihood (vectorized)
+#' @details
+#' Same as [.nll()], except vectorized for the `log.lambda` argument.
+#'
+#' @inheritParams .nll
+
+#' @return the log-likelihood of the data with the current parameter values
+.nll_vec = Vectorize(serocalculator:::.nll, vectorize.args = "log.lambda")

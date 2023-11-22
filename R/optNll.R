@@ -1,11 +1,10 @@
-# .optNll = function(x,...) x[[1]] |> filter(antigen_iso  == "HlyE_IgA") |> head()
-
-
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
 #' @param lambda.start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
+#' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
+#' @param print_graph whether to display the graph as soon as it is created
 #' @inheritParams .nll
 #' @inheritParams stats::nlm
 #' @inheritDotParams stats::nlm -f -p -hessian
@@ -22,6 +21,7 @@
     stepmax = 1,
     verbose = FALSE,
     build_graph = TRUE,
+    print_graph = build_graph & verbose,
     ...)
 {
 
@@ -72,12 +72,15 @@
       curve_params = curve_params,
       noise_params = noise_params
     )
+    if(print_graph) print(graph)
+
   } else
   {
     graph = NULL
   }
 
 
+  if(verbose) message('about to call `nlm()`')
   # Estimate log.lambda
   time =
     {
@@ -111,6 +114,9 @@
         antigen_isos = antigen_isos,
         curve_params = curve_params,
         noise_params = noise_params)
+
+    if(print_graph) print(graph)
+
   }
 
   fit = fit |>

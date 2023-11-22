@@ -13,6 +13,7 @@
   lambda.start = 1/365.25,
   stepmax = 1,
   verbose = FALSE,
+  build_graph = TRUE,
   ...
 )
 }

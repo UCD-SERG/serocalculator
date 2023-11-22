@@ -23,38 +23,38 @@
   return(abNames)
 }
 
-.errorCheck <- function(data, antibodies, strata, params)
+.errorCheck <- function(data, antigen_isos, strata, params)
 {
-  .checkAntibodies(antibodies = antibodies)
-  .checkCsData(data = data, antibodies = antibodies)
+  .checkAntibodies(antigen_isos = antigen_isos)
+  .checkCsData(data = data, antigen_isos = antigen_isos)
   .checkStrata(data = data, strata = strata)
-  .checkParams(antibodies = antibodies, params = params)
+  .checkParams(antigen_isos = antigen_isos, params = params)
 
   invisible(NULL)
 }
 
-.checkAntibodies <- function(antibodies)
+.checkAntibodies <- function(antigen_isos)
 {
-  stopifnot(!missing(antibodies))
+  stopifnot(!missing(antigen_isos))
 
-  if (!is.character(antibodies)) {
-    stop(.pasteN("Argument `antibodies` is not a character vector.",
+  if (!is.character(antigen_isos)) {
+    stop(.pasteN("Argument `antigen_isos` is not a character vector.",
                  "Provide a character vector with at least one antibody name."))
   }
 
-  if (all(antibodies == "")) {
-    stop(.pasteN("Argument `antibodies` is empty.",
+  if (all(antigen_isos == "")) {
+    stop(.pasteN("Argument `antigen_isos` is empty.",
                  "Provide a character vector with at least one antibody name."))
   }
 
   invisible(NULL)
 }
 
-.checkCsData <- function(data, antibodies)
+.checkCsData <- function(data, antigen_isos)
 {
   if (!is.data.frame(data)) {
     stop(.pasteN("Argument `data` is not a `data.frame()`.",
-                 "Provide a `data.frame()` with cross-sectional serology data per antibody."))
+                 "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
   if (!is.element("a", names(data))) {
@@ -64,7 +64,7 @@
   invisible(NULL)
 }
 
-.checkParams <- function(antibodies, params)
+.checkParams <- function(antigen_isos, params)
 {
 
   message1 = paste(
@@ -88,7 +88,7 @@
         message1))
   }
 
-  if (!all(antibodies %in% params$antigen_iso)) {
+  if (!all(antigen_isos %in% params$antigen_iso)) {
     stop("Some `antigen_iso` values are missing.")
   }
 
@@ -97,7 +97,7 @@
 
 .checkStrata <- function(data, strata) {
   if (!is.character(strata)) {
-    stop(.pasteN("Argument \"strata\" is not a character vector.",
+    stop(.pasteN("Argument `strata` is not a character vector.",
                  "Provide a character vector with names of stratifying variables."))
   }
 

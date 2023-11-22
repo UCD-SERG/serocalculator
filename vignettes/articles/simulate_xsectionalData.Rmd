@@ -41,7 +41,8 @@ in any subsequent infection. This is for diagnostic purposes.
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7
 )
 ```
 
@@ -58,7 +59,7 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 
 
 ## Simulate cross-sectional data
-```{r}
+```{r "sim.cs"}
 #set seed to reproduce results
 set.seed(54321)
 
@@ -86,13 +87,13 @@ csdata0 <- sim.cs(
   noise_limits = dlims
 )
 
-
-
 ```
 
 ## Estimate seroincidence
-```{r}
 
+We need to provide noise parameters for the analysis; here, we define them directly in our code:
+
+```{r "noise"}
 cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
@@ -100,38 +101,79 @@ cond <- data.frame(
   y.low = c(1, 1),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
+```
 
-csdataL <- as.data.frame(csdata0) %>%
-  pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
+We also need to turn the data to a long format for analysis:
 
-est.incidence(
-  csdataL %>%
-    rename(y = value,
-           a = age), 
-  dmcmc, 
-  cond, 
+```{r "long-format"}
+csdataL <- 
+  csdata0 %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value")
+```
+
+Now we can estimate incidence:
+
+```{r "est.incidence"}
+est1 = est.incidence(
+  data = csdataL %>%
+    rename(
+      y = value,
+      a = age),
+  curve_params = dmcmc,
+  noise_params = cond,
+  build_graph = TRUE,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
-
 
 ```
 
+We can extract summary statistics with `summary()`:
 
+```{r "summary.est.incidence"}
+summary(est1)
+```
+
+We can plot the log-likelihood curve with `plot()`:
+
+```{r}
+plot(est1)
+```
 
 
 # Optional - loop over "clusters" and different lambdas
 
-```{r "parallel"}
+```{r "init-parallel"}
 library(parallel)
 library(doParallel)
+library(doRNG) # for reproducible results
+library(rngtools)
 n_cores = max(1, parallel::detectCores() - 1)
-doParallel::registerDoParallel(cores = n_cores)
-nclus = 10;
-nrep <- 100; # cross-sectional sample size
-lmbdaVec <- c(.05,.1, .15, .2, .3)
+# n_cores = 1
+print(n_cores)
+```
 
+In the preceding code chunk, we have determined that we can use `r n_cores` CPU cores to run computations in parallel.
+
+```{r "do-parallel"}
+
+doParallel::registerDoParallel(cores = n_cores)
+nclus = 5;
+nrep <- 100; # cross-sectional sample size
+lmbdaVec <- c(.05,.1, .2, .3)
+n_lambda = length(lmbdaVec)
+rng <- RNGseq(n_lambda * nclus, 1234)
 sim.df <- 
-  foreach(l = lmbdaVec, .combine = bind_rows) %:%
-  foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
+  foreach(i = 1:length(lmbdaVec), 
+          .combine = bind_rows) %:%
+  foreach(n = 1:nclus,  
+          r = rng[(i - 1) * nclus + 1:nclus], 
+          .combine = bind_rows) %dopar% 
+  {
+    l = lmbdaVec[i]
+    rngtools::setRNG(r)
     sim.cs(
       lambda = l,
       n.smpl = nrep,
@@ -152,7 +194,7 @@ print(sim.df)
 ## Estimate incidence in each cluster
 
 ```{r, "est-by-stratum"}
-ests = 
+ests =
   sim.df %>% 
   as_tibble() %>%
   pivot_longer(
@@ -169,25 +211,109 @@ ests =
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
+    verbose = FALSE,
+    build_graph = TRUE, # adds time to runs
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+```
+
+We can extract a table listing the strata, using the `strata()` method:
+
+```{r}
+strata(ests)
+```
+
+`summary(ests)` produces a `tibble()` with some extra meta-data:
+
+```{r}
+summary(ests)
+```
+
+Make sure to check the exit codes (codes 3-5 indicate possible non-convergence):
+
+```{r}
+
+# these are the simulations that had issues:
+problem_strata = 
+  summary(ests) |> 
+  pull(nlm.exit.code) |> 
+  as.numeric() |> 
+  is.element(3:5) |> 
+  which() |> 
+  print()
+
+summary(ests)[problem_strata, c("Stratum", "lambda.sim", "nlm.exit.code")]
+```
+
+It may help to look at the log-likelihood curves for those simulations.
+We can plot the likelihood for a single simulated cluster by extracting that simulation from `ests` and calling `plot()`:
+
+```{r}
+ests[[problem_strata[1]]] |> plot()
+```
+
+It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a much sharper log-likelihood curve, which made it easier to maximize:
+
+```{r}
+ests[[1]] |> plot()
+```
+
+We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
+
+```{r "plot-multiple", fig.height = 7}
+plot(ests[problem_strata])
+```
+
+## Addressing convergence issues
+
+The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small, as noted in the `nlm.exit.code` column of the output from `summary(ests)`. Let's try a bigger value of `stepmax` for those datasets:
+
+```{r "redo-fits"}
+
+ests_l_0.3 = 
+  sim.df %>% 
+  filter(lambda.sim == .3) |> 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value") %>%
+  rename(
+    y = value,
+    a = age) %>% 
+  est.incidence.by(
+    curve_params = dmcmc,
+    noise_params = cond,
+    numCores = n_cores,
+    stepmax = 10,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    build_graph = TRUE,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-summary(ests)
+summary(ests_l_0.3) |> select(nlm.exit.code)
+
+```
+
+Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
+
+```{r "replace-fits"}
+
+to_replace = 
+  which(ests |> strata() |> pull(lambda.sim) == 0.3)
+ests[to_replace] = ests_l_0.3
+
 ```
 
 ## plot distribution of estimates by simulated incidence rate
 
-```{r, "graph", fig.width = 7}
+Finally, we can look at our simulation results:
+
+```{r, "graph"}
 
 library(ggplot2)
-summary(ests) |> 
-  ggplot(aes(x = lambda.sim, y = incidence.rate)) +
-  geom_point() +
-  xlab("Simulated incidence rate") +
-  ylab("Estimated incidence rate") +
-  theme_bw() +
-  geom_abline(aes(intercept = 0, slope = 1, col = "x=y")) +
-  expand_limits(x = 0,y = 0) +
-  labs(col = "")
+summary(ests) |> plot(xvar = 'lambda.sim')
 ```
 

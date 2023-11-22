@@ -15,6 +15,8 @@ Depends: R (>= 3.5.0)
 License: GPL-3
 Imports: 
     dplyr (>= 1.1.1),
+    ggplot2,
+    ggpubr,
     magrittr,
     parallel,
     Rcpp,
@@ -32,9 +34,11 @@ Suggests:
     fs,
     testthat (>= 3.0.0),
     readr,
-    ggplot2,
     bookdown,
-    doParallel
+    doParallel,
+    printr,
+    doRNG,
+    rngtools
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

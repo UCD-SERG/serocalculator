@@ -44,7 +44,7 @@ Monte Carlo samples for each antibody type.}
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
-  Arguments passed on to \code{\link[=.optNll]{.optNll}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link[=find_MLE]{find_MLE}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
     \item{\code{print_graph}}{whether to display the graph as soon as it is created}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
@@ -80,7 +80,7 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \value{
-An object of class \code{"seroincidence.ests"}: a list of \verb{"seroincidence.est} objects from \code{\link[=.optNll]{.optNll()}}, one for each stratum, with some meta-data attributes.
+An object of class \code{"seroincidence.ests"}: a list of \verb{"seroincidence.est} objects from \code{\link[=find_MLE]{find_MLE()}}, one for each stratum, with some meta-data attributes.
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal

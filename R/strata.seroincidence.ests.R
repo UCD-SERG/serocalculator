@@ -12,7 +12,7 @@ strata <- function(x) {
 
 #' Extract information about strata from a `seroincidence.ests` object
 #'
-#' @param object a `seroincidence.ests` object (from [est.incidence.by()])
+#' @param x a `seroincidence.ests` object (from [est.incidence.by()])
 #'
 #' @return a [dplyr::tibble()] with strata in rows
 #' @export

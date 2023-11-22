@@ -7,7 +7,7 @@
 postprocess_fit(fit, coverage = 0.95, start = attr(fit, "lambda.start"))
 }
 \arguments{
-\item{fit}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=.optNLL]{.optNLL()}}}
+\item{fit}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=find_MLE]{find_MLE()}}}
 
 \item{coverage}{desired confidence interval coverage probability}
 

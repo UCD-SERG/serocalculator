@@ -1,7 +1,7 @@
 #' Plot `seroincidence.ests` log-likelihoods
 #'
-#' @param object a '"seroincidence.ests"' object (from [est.incidence.by()])
-#'
+#' @param x a '"seroincidence.ests"' object (from [est.incidence.by()])
+#' @param ... unused
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #'

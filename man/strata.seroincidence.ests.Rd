@@ -7,7 +7,7 @@
 \method{strata}{seroincidence.ests}(x)
 }
 \arguments{
-\item{object}{a \code{seroincidence.ests} object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
+\item{x}{a \code{seroincidence.ests} object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
 }
 \value{
 a \code{\link[dplyr:reexports]{dplyr::tibble()}} with strata in rows

@@ -4,10 +4,12 @@
 \alias{plot.seroincidence.ests}
 \title{Plot \code{seroincidence.ests} log-likelihoods}
 \usage{
-\method{plot}{seroincidence.ests}(object)
+\method{plot}{seroincidence.ests}(x, ...)
 }
 \arguments{
-\item{object}{a '"seroincidence.ests"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
+\item{x}{a '"seroincidence.ests"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
+
+\item{...}{unused}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

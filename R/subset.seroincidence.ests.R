@@ -1,7 +1,8 @@
 #' Extract or replace parts of a `seroincidence.ests` object
 #'
-#' @inheritParams base::`[`
-#'
+#' @param x the object to subset/replace elements of
+#' @param i the indices to subset/replace
+#' @param ... passed to `[.list`
 #' @returns the subset specified
 #' @export
 #'

@@ -6,6 +6,13 @@
 \usage{
 \method{[}{seroincidence.ests}(x, i, ...)
 }
+\arguments{
+\item{x}{the object to subset/replace elements of}
+
+\item{i}{the indices to subset/replace}
+
+\item{...}{passed to \verb{[.list}}
+}
 \value{
 the subset specified
 }

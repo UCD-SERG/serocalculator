@@ -2,9 +2,9 @@
 #' Print Method for Seroincidence Summary Object
 #'
 #' @description
-#' Custom [print()] function for "summary.seroincidence.ests" objects (constructed by [summary.seroincidence.ests()])
+#' Custom [print()] function for "summary.seroincidence.by" objects (constructed by [summary.seroincidence.by()])
 #'
-#' @param x A "summary.seroincidence.ests" object (constructed by [summary.seroincidence.ests()])
+#' @param x A "summary.seroincidence.by" object (constructed by [summary.seroincidence.by()])
 #' @param ... Additional arguments affecting the summary produced.
 #'
 #' @examples
@@ -24,7 +24,7 @@
 #' }
 #'
 #' @export
-print.summary.seroincidence.ests <- function(x, ...)
+print.summary.seroincidence.by <- function(x, ...)
 {
   cat("Seroincidence estimated given the following setup:\n")
   cat(paste("a) Antigen isotypes   :", paste(x |> attr("antigen_isos"), collapse = ", ")), "\n")

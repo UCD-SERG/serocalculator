@@ -1,5 +1,5 @@
 #' @title
-#' Print Method for `seroincidence.est` Object
+#' Print Method for `seroincidence` Object
 #'
 #' @description
 #' Custom [print()] function to show output of the seroincidence calculator [est.incidence()].
@@ -21,9 +21,9 @@
 #' }
 #'
 #' @export
-print.seroincidence.est <- function(x, ...)
+print.seroincidence <- function(x, ...)
 {
-  cat("`seroincidence.est` object estimated given the following setup:\n")
+  cat("`seroincidence` object estimated given the following setup:\n")
   cat(paste("a) `antigen_isos`: ", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")
   cat(paste("b) `lambda.start`: ", attr(x, "lambda.start"), "\n"))
   cat("Call the `summary()` function to obtain output results.\n")

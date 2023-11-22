@@ -78,7 +78,7 @@ fit <- nlm(
   iterlim = 100)
 
 typhoid_results = fit |> 
-  summary.seroincidence.est(
+  summary.seroincidence(
     coverage = .95,
     start = start
   ) |>

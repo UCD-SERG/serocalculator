@@ -1,5 +1,5 @@
 #' @title
-#' Summary Method for `"seroincidence.ests"` Objects
+#' Summary Method for `"seroincidence.by"` Objects
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
@@ -13,7 +13,7 @@
 #'   help for [optim()] for details). Default = `FALSE`.
 #' @param confidence_level desired confidence interval coverage probability
 #' @return
-#' A `summary.seroincidence.ests` object, which is a [dplyr::tibble], with the following columns:
+#' A `summary.seroincidence.by` object, which is a [dplyr::tibble], with the following columns:
 #'  * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
 #'  *  `CI.lwr` lower confidence bound for lambda
 #'  * `CI.upr` upper confidence bound for lambda
@@ -36,7 +36,7 @@
 #' }
 #'
 #' @export
-summary.seroincidence.ests <- function(
+summary.seroincidence.by <- function(
     object,
     confidence_level = .95,
     showDeviance = TRUE,
@@ -58,7 +58,7 @@ summary.seroincidence.ests <- function(
   results =
     object |>
     lapply(
-      FUN = summary.seroincidence.est,
+      FUN = summary.seroincidence,
       coverage = confidence_level) |>
     bind_rows(.id = "Stratum")
 
@@ -93,7 +93,7 @@ summary.seroincidence.ests <- function(
       Strata = attr(object, "Strata") |> attr("strata_vars"),
       Quantiles = quantiles,
       class =
-        "summary.seroincidence.ests" |>
+        "summary.seroincidence.by" |>
         union(class(results))
     )
 

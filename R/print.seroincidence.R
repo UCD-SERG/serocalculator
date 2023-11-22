@@ -1,5 +1,5 @@
 #' @title
-#' Print Method for `seroincidence.ests` Object
+#' Print Method for `seroincidence.by` Object
 #'
 #' @description
 #' Custom [print()] function to show output of the seroincidence calculator [est.incidence.by()].
@@ -21,14 +21,14 @@
 #' }
 #'
 #' @export
-print.seroincidence.ests <- function(x, ...)
+print.seroincidence.by <- function(x, ...)
 {
-  cat("`seroincidence.ests` object estimated given the following setup:\n")
+  cat("`seroincidence.by` object estimated given the following setup:\n")
   cat(paste("a) Antigen isotypes   :", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")
   cat(paste("b) Strata       :", paste(attr(x, "Strata") |>  attr("strata_vars"), collapse = ", ")), "\n")
 
     cat("\n")
-  cat("This object is a list of `seroincidence.est` objects, with added meta-data attributes:")
+  cat("This object is a list of `seroincidence` objects, with added meta-data attributes:")
   cat("`antigen_isos`   - Character vector of antigen isotypes used in analysis.\n")
   cat("`Strata`       - Input parameter strata of function `est.incidence.by()`\n")
   cat("\n")

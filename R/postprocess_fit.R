@@ -7,7 +7,7 @@
 #' @return a [tibble::tibble()]; see [stats::nlm()] for details on `code` variable
 #' @export
 #'
-summary.seroincidence.est = function(
+summary.seroincidence = function(
     object,
     coverage = .95,
     ...)
@@ -34,7 +34,7 @@ summary.seroincidence.est = function(
     )
 
   class(log.lambda.est) =
-    "summary.seroincidence.est" |>
+    "summary.seroincidence" |>
     union(class(log.lambda.est))
 
   return(log.lambda.est)

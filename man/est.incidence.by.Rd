@@ -81,7 +81,7 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \value{
-An object of class \code{"seroincidence.ests"}: a list of \verb{"seroincidence.est} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+An object of class \code{"seroincidence.by"}: a list of \verb{"seroincidence} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal

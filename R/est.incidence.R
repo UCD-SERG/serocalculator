@@ -151,7 +151,7 @@ est.incidence <- function(
 
   fit = fit |>
     structure(
-      class = union("seroincidence.est", class(fit)),
+      class = union("seroincidence", class(fit)),
       lambda.start = lambda.start,
       antigen_isos = antigen_isos,
       ll_graph = graph)

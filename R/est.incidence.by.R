@@ -13,7 +13,7 @@
 #' @inheritDotParams est.incidence -dataList
 #' @inheritDotParams stats::nlm -f -p -hessian
 #'
-#' @return An object of class `"seroincidence.ests"`: a list of `"seroincidence.est` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
+#' @return An object of class `"seroincidence.by"`: a list of `"seroincidence` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
 #'
 #'
 #' @export
@@ -147,7 +147,7 @@ est.incidence.by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.ests" |> union(class(fits)))
+    class = "seroincidence.by" |> union(class(fits)))
 
   return(incidenceData)
 }

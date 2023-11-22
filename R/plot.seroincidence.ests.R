@@ -1,18 +1,18 @@
-#' Plot `seroincidence.ests` log-likelihoods
+#' Plot `seroincidence.by` log-likelihoods
 #'
-#' @param x a '"seroincidence.ests"' object (from [est.incidence.by()])
+#' @param x a '"seroincidence.by"' object (from [est.incidence.by()])
 #' @param ... unused
 #' @return aan object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #'
-plot.seroincidence.ests = function(x, ...)
+plot.seroincidence.by = function(x, ...)
 {
 
   if(!attr(x,"graphs_included"))
   {
 
     stop(
-      "Graphs cannot be extracted from the `seroincidence.ests` object.",
+      "Graphs cannot be extracted from the `seroincidence.by` object.",
       "`build_graph` was not `TRUE` in the call to `est.incidence.by()`")
     figure = NULL
   }

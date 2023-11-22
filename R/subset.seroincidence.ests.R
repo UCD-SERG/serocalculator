@@ -1,4 +1,4 @@
-#' Extract or replace parts of a `seroincidence.ests` object
+#' Extract or replace parts of a `seroincidence.by` object
 #'
 #' @param x the object to subset/replace elements of
 #' @param i the indices to subset/replace
@@ -6,7 +6,7 @@
 #' @returns the subset specified
 #' @export
 #'
-`[.seroincidence.ests` <- function(x,i,...) {
+`[.seroincidence.by` <- function(x,i,...) {
   r <- NextMethod("[")
   mostattributes(r) <- attributes(x)
   names(r) = names(x)[i]

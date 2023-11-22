@@ -46,7 +46,7 @@ Monte Carlo samples for each antibody type.}
 \item{...}{
   Arguments passed on to \code{\link[=find.MLE]{find.MLE}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
-    \item{\code{c.age}}{age category}
+    \item{\code{c.age}}{age category to subset data by (optional)}
     \item{\code{print_graph}}{whether to display the graph as soon as it is created}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which

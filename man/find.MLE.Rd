@@ -47,7 +47,7 @@ Monte Carlo samples for each antibody type.}
 
 \item{print_graph}{whether to display the graph as soon as it is created}
 
-\item{c.age}{age category}
+\item{c.age}{age category to subset data by (optional)}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

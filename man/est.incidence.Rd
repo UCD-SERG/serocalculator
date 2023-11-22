@@ -78,7 +78,7 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \value{
-a \code{\link[stats:nlm]{stats::nlm()}} fit object
+a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}} fit object with extra meta-data attributes \code{lambda.start}, \code{antigen_isos}, and \code{ll_graph}
 }
 \description{
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.

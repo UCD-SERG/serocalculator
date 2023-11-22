@@ -12,7 +12,7 @@
 
 #' @inheritDotParams stats::nlm -f -p -hessian
 
-#' @returns a [stats::nlm()] fit object
+#' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda.start`, `antigen_isos`, and `ll_graph`
 #' @export
 est.incidence <- function(
     data = dataList$data,

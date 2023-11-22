@@ -91,7 +91,7 @@ summary.seroincidence.ests <- function(
     results |>
     structure(
       Antibodies = attr(object, "Antibodies"),
-      Strata = attr(object, "Strata") |> names(),
+      Strata = attr(object, "Strata") |> attr("strata_vars"),
       Quantiles = quantiles,
       class =
         "summary.seroincidence.ests" |>

@@ -110,7 +110,7 @@
 
   if(verbose)
   {
-    message('elapsed time: ')
+    message('\nElapsed time: ')
     print(time)
   }
 

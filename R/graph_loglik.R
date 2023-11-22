@@ -1,6 +1,7 @@
 graph_loglik = function(
-  lambda.start = .1,
-  ...,
+    lambda.start = .1,
+    ...,
+    x.max = .6,
     x =
       c(
         lambda.start,
@@ -8,7 +9,8 @@ graph_loglik = function(
         .0001,
         seq(.001, .01, by = .001),
         c(.01, .015, .02, .025, .03),
-        seq(.04, .5, by = .01)) |>
+        seq(.04, .1, by = .01),
+        seq(.2, x.max, by = .1)) |>
       unique() |>
       sort())
 {
@@ -34,7 +36,7 @@ graph_loglik = function(
     x = x,
     y = -.nll_vec(x |> log(), ...)
   ) |>
-    ggplot2::ggplot(aes(x = x, y = y)) +
+    ggplot2::ggplot(ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_point() +
     ggplot2::geom_line() +
     ggplot2::xlab("incidence rate (events per person:year)") +

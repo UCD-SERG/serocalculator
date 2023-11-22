@@ -18,6 +18,8 @@ get_strata = function(data, strata_varnames)
     stop("The data contain multiple strata with the same value of the `Stratum` variable. Please disambiguate.")
   }
 
+  attr(to_return, "strata_vars") = strata_varnames
+
   return(to_return)
 
 }

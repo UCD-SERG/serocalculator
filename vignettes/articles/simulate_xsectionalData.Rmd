@@ -116,32 +116,6 @@ est1 = est.incidence(
 
 ```
 
-```{r}
-
-ll = function(x)
-{
-  
-  Vectorize(serocalculator:::.nll, vectorize.args = "log.lambda")(
-  log.lambda = x,
-  data = csdataL |> rename(y = value, a = age) |> split(~antigen_iso),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  curve_params = dmcmc |> 
-    mutate(
-      alpha = .data$alpha * 365.25,
-      d = .data$r - 1) |> split(~antigen_iso) ,
-  noise_params = cond |> split(~antigen_iso),
-  verbose = TRUE
-)
-}
-
-x = union(seq(.001, .01, by = .001), c(.00001, .01, .015, .02, .03, seq(.04, .5, by = .01))) |> sort()
-y = ll(x |> log())
-plot(-y~x, type = 'b')
-abline(v = est1$incidence.rate, col = 'red')
-```
-
-
-
 # Optional - loop over "clusters" and different lambdas
 
 ```{r "init-parallel"}
@@ -160,7 +134,7 @@ doParallel::registerDoParallel(cores = n_cores)
 nclus = 2;
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .15, .2, .3)
-
+lmbdaVec = c(.05, .3)
 sim.df <- 
   foreach(l = lmbdaVec, .combine = bind_rows) %:%
   foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
@@ -201,7 +175,7 @@ ests =
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
-    verbose = TRUE,
+    verbose = FALSE,
     build_graph = TRUE, # adds time to runs
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
@@ -209,10 +183,27 @@ ests =
 summary(ests)
 ```
 
+(`summary(ests)` produces a `tibble()` with some extra meta-data.)
 
-## deal with the `lambda.sim = 0.3` case
+Make sure to check the exit codes:
 
-The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small. Let's try a bigger value of `stepmax` for those datasets:
+```{r}
+summary(ests) |> select(lambda.sim, cluster, nlm.exit.code)
+```
+
+The simulations with `lambda.sim = 0.3` had convergence problems (codes 3-5).
+
+We can also look at graphs of the log-likelihood for each cluster:
+
+```{r}
+plot(ests)
+```
+
+We can see that the log-likelihoods are very flat for the simulations with `lambda.sim = 0.3`; no wonder we had problems!
+
+## Addressing convergence issues
+
+The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small, as noted in the `nlm.exit.code` column of the output from `summary(ests)`. Let's try a bigger value of `stepmax` for those datasets:
 
 ```{r}
 
@@ -236,18 +227,31 @@ ests_l_0.3 =
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     build_graph = TRUE,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-    verbose = TRUE
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
+summary(ests_l_0.3) |> select(nlm.exit.code)
 
 ```
 
+Now `nlm()` converged properly. Let's replace the old fits with these revised fits^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]:
+
+```{r}
+to_replace = 
+  which(ests |> strata() |> pull(lambda.sim) == 0.3)
+ests[to_replace] = ests_l_0.3
+summary(ests) |> select(nlm.exit.code)
+```
+
+Now all strata converged.
+
 ## plot distribution of estimates by simulated incidence rate
+
+Finally, we can look at our simulation results:
 
 ```{r, "graph", fig.width = 7}
 
 library(ggplot2)
-summary(ests) |> plot()
+summary(ests) |> plot(xvar = 'lambda.sim')
 ```
 

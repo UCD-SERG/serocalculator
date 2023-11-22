@@ -33,6 +33,6 @@ print.seroincidence.ests <- function(x, ...)
   cat("Antibodies   - Input parameter antibodies of function \"est.incidence.by\".\n")
   cat("Strata       - Input parameter strata of function `est.incidence.by()`\n")
   cat("\n")
-  cat("Call summary function to obtain output results.\n")
+  cat("Call the `summary()` function to obtain output results.\n")
   invisible(x)
 }

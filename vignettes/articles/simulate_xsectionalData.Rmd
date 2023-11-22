@@ -66,20 +66,17 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 # Specify the antibody-isotype responses to simulate
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 
-## CAN WE GET RID OF THIS? MAKE IT INTERNAL?
-abs <-  c(1,2);
-
-# incidence rate per person-year
+# simulated incidence rate per person-year
 lambda <- 0.2; 
 
 # range covered in simulations
 lifespan <- c(0,20); 
 
 # cross-sectional sample size
-nrep <- 100
+nrep <- 1000
 
 # biologic noise distribution
-dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1))
+dlims <- rbind(c(0.01, 0.5),c(0.01, 0.5))
 
 #generate cross-sectional data
 csdata0 <- sim.cs(
@@ -105,7 +102,7 @@ We need to provide noise parameters for the analysis; here, we define them direc
 cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
-  eps = c(0, 0),                             # M noise (eps)
+  eps = c(0.2, 0.2),                             # M noise (eps)
   y.low = c(1, 1),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
@@ -133,8 +130,10 @@ est1 = est.incidence(
       a = age),
   curve_params = dmcmc,
   noise_params = cond,
-  build_graph = TRUE,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+  lambda.start = .1,
+  build_graph = F,
+  verbose = T,
+  antigen_isos = c("HlyE_IgG"))
 
 ```
 

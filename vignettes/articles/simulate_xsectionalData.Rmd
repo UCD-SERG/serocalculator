@@ -207,7 +207,7 @@ ests =
   )
 ```
 
-We can extract the table of strata with the `strata()` method:
+We can extract a table listing the strata, using the `strata()` method:
 
 ```{r}
 strata(ests)
@@ -219,17 +219,12 @@ strata(ests)
 summary(ests)
 ```
 
-Make sure to check the exit codes:
+Make sure to check the exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r}
-summary(ests) |> count(lambda.sim, nlm.exit.code)
-```
 
-Codes 3-5 may indicate non-convergence. It may help to look at the 
-log-likelihood curves for those simulations:
-
-```{r}
-problem_sims = 
+# these are the simulations that had issues:
+problem_strata = 
   summary(ests) |> 
   pull(nlm.exit.code) |> 
   as.numeric() |> 
@@ -237,14 +232,14 @@ problem_sims =
   which() |> 
   print()
 
-# these are the simulations that had issues:
-strata(ests)[problem_sims, ]
+summary(ests)[problem_strata, c("Stratum", "lambda.sim", "nlm.exit.code")]
 ```
 
+It may help to look at the log-likelihood curves for those simulations.
 We can plot the likelihood for a single simulated cluster by extracting that simulation from `ests` and calling `plot()`:
 
 ```{r}
-ests[[problem_sims[1]]] |> plot()
+ests[[problem_strata[1]]] |> plot()
 ```
 
 It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a much sharper log-likelihood curve, which made it easier to maximize:
@@ -255,15 +250,15 @@ ests[[1]] |> plot()
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
 
-```{r}
-plot(ests[16:20])
+```{r "plot-multiple", fig.height = 7}
+plot(ests[problem_strata])
 ```
 
 ## Addressing convergence issues
 
 The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small, as noted in the `nlm.exit.code` column of the output from `summary(ests)`. Let's try a bigger value of `stepmax` for those datasets:
 
-```{r}
+```{r "redo-fits"}
 
 ests_l_0.3 = 
   sim.df %>% 
@@ -292,9 +287,9 @@ summary(ests_l_0.3) |> select(nlm.exit.code)
 
 ```
 
-Now `nlm()` converged properly. Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
+Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
 
-```{r}
+```{r "replace-fits"}
 
 to_replace = 
   which(ests |> strata() |> pull(lambda.sim) == 0.3)

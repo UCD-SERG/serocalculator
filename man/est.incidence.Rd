@@ -6,11 +6,11 @@
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.}
 \usage{
 est.incidence(
-  dpop,
-  dmcmc,
+  data,
+  curve_params,
   noise_params,
   c.age = NULL,
-  antigen_isos = unique(dpop$antigen_iso),
+  antigen_isos = unique(data$antigen_iso),
   start = 0.1,
   iterlim = 100,
   coverage = 0.95,
@@ -20,15 +20,15 @@ est.incidence(
 )
 }
 \arguments{
-\item{dpop}{cross-sectional population data}
+\item{data}{cross-sectional population data}
 
-\item{dmcmc}{mcmc samples from distribution of longitudinal decay curve parameters}
+\item{curve_params}{mcmc samples from distribution of longitudinal decay curve parameters}
 
 \item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc. specifying conditional noise parameters}
 
 \item{c.age}{age category}
 
-\item{antigen_isos}{antigen isotypes: a \code{\link[=character]{character()}} vector of one or more antigen isotype names, which should match the values of the \code{antigen_iso} column in the \code{dpop} input argument}
+\item{antigen_isos}{antigen isotypes: a \code{\link[=character]{character()}} vector of one or more antigen isotype names, which should match the values of the \code{antigen_iso} column in the \code{data} input argument}
 
 \item{start}{starting value for incidence rate}
 

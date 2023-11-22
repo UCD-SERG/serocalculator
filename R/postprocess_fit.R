@@ -1,17 +1,19 @@
 
-#' postprocess a fitted incidence model
+#' summarize a fitted incidence model
 #'
-#' @param fit a [list()], outputted by [stats::nlm()] or [serocalculator::find_MLE()]
+#' @param object a [list()], outputted by [stats::nlm()] or [serocalculator::find.MLE()]
 #' @param coverage desired confidence interval coverage probability
 #' @param start starting value for incidence rate
-#'
+#' @param ... unused
 #' @return a [tibble::tibble()]; see [stats::nlm()] for details on `code` variable
 #' @export
 #'
-postprocess_fit = function(
-    fit,
+summary.seroincidence.est = function(
+    object,
     coverage = .95,
-    start = fit |> attr("lambda.start"))
+    start = object |> attr("lambda.start"),
+    antigen_isos = object |> attr("antigen_isos"),
+    ...)
 {
 
 
@@ -20,16 +22,17 @@ postprocess_fit = function(
 
   log.lambda.est = dplyr::tibble(
     est.start = start,
-    incidence.rate = exp(fit$estimate),
-    SE = sqrt(1/fit$hessian) |> as.vector(),
-    CI.lwr = exp(fit$estimate - qnorm(1 - h.alpha) * .data$SE),
-    CI.upr = exp(fit$estimate + qnorm(1 - h.alpha) * .data$SE),
+    incidence.rate = exp(object$estimate),
+    SE = sqrt(1/object$hessian) |> as.vector(),
+    CI.lwr = exp(object$estimate - qnorm(1 - h.alpha) * .data$SE),
+    CI.upr = exp(object$estimate + qnorm(1 - h.alpha) * .data$SE),
     coverage = coverage,
-    log.lik = -fit$minimum,
-    iterations = fit$iterations,
-    nlm.exit.code = nlm_exit_codes[fit$code]) |>
+    log.lik = -object$minimum,
+    iterations = object$iterations,
+    antigen.isos = antigen_isos |> paste(collapse = "+"),
+    nlm.exit.code = nlm_exit_codes[object$code]) |>
     structure(
-      graph = fit |> attr("ll_graph")
+      graph = object |> attr("ll_graph")
     )
 
   class(log.lambda.est) =

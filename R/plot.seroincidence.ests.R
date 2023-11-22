@@ -2,7 +2,7 @@
 #'
 #' @param x a '"seroincidence.ests"' object (from [est.incidence.by()])
 #' @param ... unused
-#' @return a [ggplot2::ggplot()] object
+#' @return aan object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #'
 plot.seroincidence.ests = function(x, ...)

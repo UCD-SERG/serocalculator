@@ -12,7 +12,7 @@
 \item{...}{unused}
 }
 \value{
-a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
+aan object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
 }
 \description{
 Plot \code{seroincidence.ests} log-likelihoods

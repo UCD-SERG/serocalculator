@@ -1,5 +1,5 @@
 #' @title
-#' Print Method for Seroincidence Object
+#' Print Method for `seroincidence.ests` Object
 #'
 #' @description
 #' Custom [print()] function to show output of the seroincidence calculator [est.incidence.by()].
@@ -23,8 +23,8 @@
 #' @export
 print.seroincidence.ests <- function(x, ...)
 {
-  cat("Seroincidence object estimated given the following setup:\n")
-  cat(paste("a) Antibodies   :", paste(attr(x, "Antibodies"), collapse = ", ")), "\n")
+  cat("`seroincidence.ests` object estimated given the following setup:\n")
+  cat(paste("a) Antigen isotypes   :", paste(attr(x, "Antibodies"), collapse = ", ")), "\n")
   cat(paste("b) Strata       :", paste(attr(x, "Strata") |> names(), collapse = ", ")), "\n")
 
     cat("\n")

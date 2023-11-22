@@ -12,7 +12,7 @@
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param iterlim an [integer()], which provides an upper limit on the number of computational iterations used to search for the maximum likelihood estimate of incidence (passed to [stats::nlm()]).
 #' @param stepmax a [numeric()], which limits how aggressively the [stats::nlm()] algorithm searches for the maximum likelihood estimate of incidence. If this function output an infinite standard error estimate, consider reducing this parameter.
-#' @inheritParams postprocess_fit
+#' @inheritParams summary.seroincidence.est
 #' @inheritParams stats::nlm
 #' @inheritDotParams stats::nlm -f -p -hessian
 #'
@@ -111,13 +111,13 @@ est.incidence <- function(
 
   log.lambda.est =
     fit |>
-    postprocess_fit(
+    summary.seroincidence.est(
       coverage = coverage,
-      start = start
+      start = start,
+      antigen_isos = antigen_isos
     ) |>
     mutate(
-      ageCat = c.age,
-      antigen.iso = antigen_isos |> paste(collapse = "+")) %>%
+      ageCat = c.age) %>%
     structure(
       noise.parameters = noise_params)
 

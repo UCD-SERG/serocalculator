@@ -1,17 +1,19 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
+#' @inheritParams .nll
+#' @inheritParams stats::nlm
 #' @param lambda.start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
+#' @param c.age age category to subset data by (optional)
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
 #' @param print_graph whether to display the graph as soon as it is created
-#' @inheritParams .nll
-#' @inheritParams stats::nlm
+
 #' @inheritDotParams stats::nlm -f -p -hessian
 
 #' @returns a [stats::nlm()] fit object
 #' @export
-find_MLE <- function(
+find.MLE <- function(
     data = dataList$data,
     curve_params = dataList$curve_params,
     noise_params = dataList$noise_params,
@@ -22,8 +24,25 @@ find_MLE <- function(
     verbose = FALSE,
     build_graph = TRUE,
     print_graph = build_graph & verbose,
+    c.age = NULL,
     ...)
 {
+  if(!is.null(c.age))
+  {
+    data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
+    curve_params = curve_params %>% dplyr::filter(.data[["ageCat"]] == c.age)
+
+    if("ageCat" %in% names(noise_params))
+    {
+      noise_params =
+        noise_params %>%
+        dplyr::filter(.data[["ageCat"]] == c.age)
+    }
+  }
+  curve_params = curve_params |>
+    dplyr::mutate(
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1)
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(data) == 0) {
@@ -131,8 +150,9 @@ find_MLE <- function(
 
   fit = fit |>
     structure(
-      class = "seroincidence.est" |> union(class(fit)),
+      class = union("seroincidence.est", class(fit)),
       lambda.start = lambda.start,
+      antigen_isos = antigen_isos,
       ll_graph = graph)
 
   return(fit)

@@ -59,7 +59,7 @@ summary.seroincidence.ests <- function(
   results =
     object |>
     lapply(
-      FUN = postprocess_fit,
+      FUN = summary.seroincidence.est,
       coverage = confidence_level) |>
     bind_rows(.id = "Stratum")
 

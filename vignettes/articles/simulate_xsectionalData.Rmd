@@ -109,7 +109,7 @@ csdataL <-
   csdata0 %>% 
   as_tibble() %>%
   pivot_longer(
-    cols= c("HlyE_IgG", "HlyE_IgA"), 
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value")
 ```
@@ -117,17 +117,30 @@ csdataL <-
 Now we can estimate incidence:
 
 ```{r}
-est1 = est.incidence(
-  csdataL %>%
+est1 = find.MLE(
+  data = csdataL %>%
     rename(
       y = value,
-      a = age), 
-  dmcmc, 
-  cond, 
+      a = age),
+  curve_params = dmcmc,
+  noise_params = cond,
+  build_graph = TRUE,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
 
-
 ```
+
+We can extract summary statistics with `summary()`:
+
+```{r}
+summary(est1)
+```
+
+We can plot the log-likelihood curve with `plot()`:
+
+```{r}
+plot(est1)
+```
+
 
 # Optional - loop over "clusters" and different lambdas
 

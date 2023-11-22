@@ -225,9 +225,6 @@ ggplot(sim.df, aes(x=as.factor(cluster), y= HlyE_IgG)) +
   facet_wrap(~lambda.sim) + 
   theme_linedraw()
 
-
-
-
 ```
 
 ## Estimate incidence in each cluster
@@ -281,73 +278,36 @@ Solutions to codes 3-5:
 * 4: increase the `iterlim` argument to `est.incidence()`/`est.incidence.by()`
 * 5: increase the `stepmax` argument to `est.incidence()`/`est.incidence.by()`
 
-It may help to look at the log-likelihood curves for those simulations.
+We can extract the indices of problematic strata, if there are any:
+```{r}
+problem_strata = 
+  summary(ests) |> 
+  pull(nlm.exit.code) |> 
+  as.numeric() |> 
+  is.element(3:5) |> 
+  which() |> 
+  print()
+```
+
+Looks like we are ok!
+
+
 We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
 ests[problem_strata[1]] |> plot()
 ```
 
-It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a steeper log-likelihood curve, which made it easier to maximize:
-
-```{r}
-ests[1] |> plot()
-```
-
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
 
 ```{r "plot-multiple"}
-plot(ests[problem_strata])
+plot(ests[1:5])
 ```
 
 The `log_x` argument also works here:
 
 ```{r "plot-multiple-log"}
-plot(ests[problem_strata], log_x = TRUE)
-```
-
-
-## Addressing convergence issues
-
-The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small, as noted in the `nlm.exit.code` column of the output from `summary(ests)`. Let's try a bigger value of `stepmax` for those datasets:
-
-```{r "redo-fits"}
-
-ests_l_0.3 = 
-  sim.df %>% 
-  filter(lambda.sim == .3) |> 
-  as_tibble() %>%
-  pivot_longer(
-    cols = c("HlyE_IgG", "HlyE_IgA"), 
-    names_to = "antigen_iso", 
-    values_to = "value") %>%
-  rename(
-    y = value,
-    a = age) %>% 
-  est.incidence.by(
-    curve_params = dmcmc,
-    noise_params = cond,
-    numCores = n_cores,
-    stepmax = 10,
-    strata = c("lambda.sim", "cluster"),
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL,
-    build_graph = TRUE,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  )
-
-summary(ests_l_0.3) |> select(nlm.exit.code)
-
-```
-
-Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
-
-```{r "replace-fits"}
-
-to_replace = 
-  which(ests |> strata() |> pull(lambda.sim) == 0.3)
-ests[to_replace] = ests_l_0.3
-
+plot(ests[1:5], log_x = TRUE)
 ```
 
 ## plot distribution of estimates by simulated incidence rate

@@ -9,11 +9,11 @@
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
-#' @inheritParams find.MLE
-#' @inheritDotParams find.MLE -dataList
+#' @inheritParams est.incidence
+#' @inheritDotParams est.incidence -dataList
 #' @inheritDotParams stats::nlm -f -p -hessian
 #'
-#' @return An object of class `"seroincidence.ests"`: a list of `"seroincidence.est` objects from [find.MLE()], one for each stratum, with some meta-data attributes.
+#' @return An object of class `"seroincidence.ests"`: a list of `"seroincidence.est` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
 #'
 #'
 #' @export
@@ -86,7 +86,7 @@ est.incidence.by <- function(
         cl = cl,
         X = stratumDataList,
         fun = function(x)
-          find.MLE(
+          est.incidence(
             dataList = x,
             lambda.start = lambda.start,
             antigen_isos = antigen_isos,
@@ -105,7 +105,7 @@ est.incidence.by <- function(
   {
     # fits <- lapply(
     #   X = stratumDataList,
-    #   FUN = function(x) find.MLE(dataList = x, verbose = verbose, ...))
+    #   FUN = function(x) est.incidence(dataList = x, verbose = verbose, ...))
 
     fits = list()
 
@@ -124,7 +124,7 @@ est.incidence.by <- function(
         }
 
         fits[[cur_stratum]] =
-          find.MLE(
+          est.incidence(
             lambda.start = lambda.start,
             dataList = stratumDataList[[cur_stratum]],
             antigen_isos = antigen_isos,

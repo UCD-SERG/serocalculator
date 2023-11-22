@@ -7,7 +7,7 @@
 \method{plot}{seroincidence.est}(x, ...)
 }
 \arguments{
-\item{x}{\code{seroincidence.est} object (from \code{\link[=find.MLE]{find.MLE()}})}
+\item{x}{\code{seroincidence.est} object (from \code{\link[=est.incidence]{est.incidence()}})}
 
 \item{...}{unused}
 }

@@ -2,43 +2,52 @@
 % Please edit documentation in R/est.incidence.R
 \name{est.incidence}
 \alias{est.incidence}
-\title{Age specific seroincidence function
-This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.}
+\title{Find the maximum likelihood estimate of the incidence rate parameter}
 \usage{
 est.incidence(
-  data,
-  curve_params,
-  noise_params,
-  c.age = NULL,
-  antigen_isos = unique(data$antigen_iso),
-  start = 0.1,
-  iterlim = 100,
-  coverage = 0.95,
-  verbose = FALSE,
+  data = dataList$data,
+  curve_params = dataList$curve_params,
+  noise_params = dataList$noise_params,
+  dataList = NULL,
+  antigen_isos = unique(pull(data, "antigen_iso")),
+  lambda.start = 1/365.25,
   stepmax = 1,
+  verbose = FALSE,
+  build_graph = TRUE,
+  print_graph = build_graph & verbose,
+  c.age = NULL,
   ...
 )
 }
 \arguments{
-\item{data}{cross-sectional population data}
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{curve_params}{mcmc samples from distribution of longitudinal decay curve parameters}
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
+Monte Carlo samples for each antibody type.}
 
-\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} containing columns \code{nu}, etc. specifying conditional noise parameters}
+\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
 
-\item{c.age}{age category}
+\item{dataList}{Optional argument; as an alternative to passing in \code{data}, \code{curve_params}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
 
-\item{antigen_isos}{antigen isotypes: a \code{\link[=character]{character()}} vector of one or more antigen isotype names, which should match the values of the \code{antigen_iso} column in the \code{data} input argument}
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
 
-\item{start}{starting value for incidence rate}
+\item{lambda.start}{starting guess for incidence rate, in years/event.}
 
-\item{iterlim}{an \code{\link[=integer]{integer()}}, which provides an upper limit on the number of computational iterations used to search for the maximum likelihood estimate of incidence (passed to \code{\link[stats:nlm]{stats::nlm()}}).}
-
-\item{coverage}{desired confidence interval coverage probability}
+\item{stepmax}{a positive scalar which gives the maximum allowable
+    scaled step length.  \code{stepmax} is used to prevent steps which
+    would cause the optimization function to overflow, to prevent the
+    algorithm from leaving the area of interest in parameter space, or to
+    detect divergence in the algorithm. \code{stepmax} would be chosen
+    small enough to prevent the first two of these occurrences, but should
+    be larger than any anticipated reasonable step.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{stepmax}{a \code{\link[=numeric]{numeric()}}, which limits how aggressively the \code{\link[stats:nlm]{stats::nlm()}} algorithm searches for the maximum likelihood estimate of incidence. If this function output an infinite standard error estimate, consider reducing this parameter.}
+\item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
+
+\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
+
+\item{c.age}{age category to subset data by (optional)}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
@@ -59,6 +68,8 @@ est.incidence(
     \code{p[i]} divided by the relative change in \code{p[i]}.}
     \item{\code{steptol}}{A positive scalar providing the minimum allowable
     relative step length.}
+    \item{\code{iterlim}}{a positive integer specifying the maximum number of
+    iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the
     analytic gradients and Hessians, if they are supplied, should be
     checked against numerical derivatives at the initial parameter
@@ -67,19 +78,8 @@ est.incidence(
   }}
 }
 \value{
-A \code{\link[=data.frame]{data.frame()}} containing the following:
-\itemize{
-\item \code{est.start}: the starting guess for incidence rate
-\item \code{ageCat}: the age category we are analyzing
-\item \code{incidence.rate}: the estimated incidence rate, per person year
-\item \code{CI.lwr}: lower limit of confidence interval for incidence rate
-\item \code{CI.upr}: upper limit of confidence interval for incidence rate
-\item \code{coverage}: coverage probability
-\item \code{neg.llik}: negative log-likelihood
-\item \code{iterations}: the number of iterations used
-}
+a \code{\link[stats:nlm]{stats::nlm()}} fit object
 }
 \description{
-Age specific seroincidence function
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 }

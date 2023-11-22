@@ -7,7 +7,7 @@
 \method{summary}{seroincidence.est}(object, coverage = 0.95, ...)
 }
 \arguments{
-\item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=find.MLE]{find.MLE()}}}
+\item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est.incidence]{est.incidence()}}}
 
 \item{coverage}{desired confidence interval coverage probability}
 

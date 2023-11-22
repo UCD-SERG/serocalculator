@@ -1,7 +1,7 @@
 
 #' summarize a fitted incidence model
 #'
-#' @param object a [list()], outputted by [stats::nlm()] or [serocalculator::find.MLE()]
+#' @param object a [list()], outputted by [stats::nlm()] or [serocalculator::est.incidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param ... unused
 #' @return a [tibble::tibble()]; see [stats::nlm()] for details on `code` variable

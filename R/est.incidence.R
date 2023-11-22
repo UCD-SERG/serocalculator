@@ -1,5 +1,6 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
+#' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 #' @inheritParams .nll
 #' @inheritParams stats::nlm
 #' @param lambda.start starting guess for incidence rate, in years/event.
@@ -7,13 +8,13 @@
 #' @param c.age age category to subset data by (optional)
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
-#' @param print_graph whether to display the log-likelihood curve graph in the course of running `find.MLE()`
+#' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
 
 #' @inheritDotParams stats::nlm -f -p -hessian
 
 #' @returns a [stats::nlm()] fit object
 #' @export
-find.MLE <- function(
+est.incidence <- function(
     data = dataList$data,
     curve_params = dataList$curve_params,
     noise_params = dataList$noise_params,

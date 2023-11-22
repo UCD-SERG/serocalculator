@@ -117,7 +117,7 @@ csdataL <-
 Now we can estimate incidence:
 
 ```{r}
-est1 = find.MLE(
+est1 = est.incidence(
   data = csdataL %>%
     rename(
       y = value,

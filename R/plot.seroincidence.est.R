@@ -1,6 +1,6 @@
 #' Plot the log-likelihood curve for the incidence rate estimate
 #'
-#' @param x `seroincidence.est` object (from [find.MLE()])
+#' @param x `seroincidence.est` object (from [est.incidence()])
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()]
@@ -14,7 +14,7 @@ plot.seroincidence.est = function(x, ...)
   {
     warning(
       "Graphs cannot be extracted from the `seroincidence.est` object.",
-      "`build_graph` was not `TRUE` in the call to `find.MLE()`")
+      "`build_graph` was not `TRUE` in the call to `est.incidence()`")
     figure = NULL
   }
 

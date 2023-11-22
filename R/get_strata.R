@@ -9,7 +9,8 @@ get_strata = function(data, strata_varnames)
   {
     to_return =
       to_return |>
-      mutate(Stratum = paste("Stratum", row_number()))
+      mutate(Stratum = paste("Stratum", row_number())) |>
+      dplyr::relocate("Stratum", .before = everything())
 
   }
 
@@ -17,6 +18,8 @@ get_strata = function(data, strata_varnames)
   {
     stop("The data contain multiple strata with the same value of the `Stratum` variable. Please disambiguate.")
   }
+
+  attr(to_return, "strata_vars") = strata_varnames
 
   return(to_return)
 

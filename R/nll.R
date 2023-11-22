@@ -22,12 +22,28 @@
   # Start with zero total
   nllTotal <- 0
 
-  # Loop over antibodies
+  # Loop over antigen_isos
   for (cur_antibody in antigen_isos)
   {
-    cur_data = data[[cur_antibody]]
-    cur_curve_params = curve_params[[cur_antibody]]
-    cur_noise_params = noise_params[[cur_antibody]]
+
+    # the inputs can be lists, after `split(~antigen_ios)`
+    # this gives some speedups compared to running filter() every time .nll() is called
+    if(!is.data.frame(data))
+    {
+      cur_data = data[[cur_antibody]]
+      cur_curve_params = curve_params[[cur_antibody]]
+      cur_noise_params = noise_params[[cur_antibody]]
+    } else
+    {
+      cur_data =
+        data |> dplyr::filter(.data$antigen_iso == cur_antibody)
+
+      cur_curve_params =
+        curve_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+
+      cur_noise_params =
+        noise_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+    }
 
     nllSingle <-
       fdev(
@@ -46,3 +62,12 @@
   # Return total log-likelihood
   return(nllTotal)
 }
+
+#' Calculate log-likelihood (vectorized)
+#' @details
+#' Same as [.nll()], except vectorized for the `log.lambda` argument.
+#'
+#' @inheritParams .nll
+
+#' @return the log-likelihood of the data with the current parameter values
+.nll_vec = Vectorize(serocalculator:::.nll, vectorize.args = "log.lambda")

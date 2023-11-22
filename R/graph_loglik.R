@@ -1,0 +1,54 @@
+graph_loglik = function(
+    lambda.start = .1,
+    ...,
+    x.max = .6,
+    x =
+      c(
+        lambda.start,
+        .00001,
+        .0001,
+        seq(.001, .01, by = .001),
+        c(.01, .015, .02, .025, .03),
+        seq(.04, .1, by = .01),
+        seq(.2, x.max, by = .1)) |>
+      unique() |>
+      sort())
+{
+
+  # ll = function(x)
+  # {
+  #
+  #
+  #   nll_vec(
+  #     log.lambda = x,
+  #     data = csdataL |> rename(y = value, a = age) |> split(~antigen_iso),
+  #     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  #     curve_params = dmcmc |>
+  #       mutate(
+  #         alpha = .data$alpha * 365.25,
+  #         d = .data$r - 1) |> split(~antigen_iso) ,
+  #     noise_params = cond |> split(~antigen_iso),
+  #     verbose = TRUE
+  #   )
+  # }
+
+  tibble(
+    x = x,
+    y = -.nll_vec(x |> log(), ...)
+  ) |>
+    ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::xlab("incidence rate (events per person:year)") +
+    ggplot2::ylab("log(likelihood)") +
+    ggplot2::theme_bw() +
+    ggplot2::geom_point(
+      data = tibble(
+        x = lambda.start,
+        y = -.nll_vec(lambda.start |> log(), ...)),
+      ggplot2::aes(x = .data$x, y = .data$y, col = "lambda.start")
+    ) +
+    ggplot2::labs(col = "") +
+    ggplot2::theme(legend.position="bottom")
+
+}

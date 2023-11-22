@@ -17,7 +17,7 @@
 #'  * `nlm.exit.code`: information about convergence of the likelihood maximization procedure performed by `nlm()` (see "Value" section of [stats::nlm()], component `code`); codes 3-5 indicate issues:
 #'    * 1: relative gradient is close to zero, current iterate is probably solution.
 #'    * 2: successive iterates within tolerance, current iterate is probably solution.
-#'    * 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or `steptol` is too large.
+#'    * 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or `stepmin` in [est.incidence()] (a.k.a., `steptol` in [stats::nlm()]) is too large.
 #'    * 4: iteration limit exceeded; increase `iterlim`.
 #'    * 5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small.
 #' @export
@@ -32,6 +32,9 @@ summary.seroincidence = function(
 
   alpha = 1 - coverage
   h.alpha = alpha/2
+  hessian = object$hessian
+  if(hessian < 0)
+    warning("`nlm()` produced a negative hessian; something is wrong with the numerical derivatives.")
 
   log.lambda.est = tibble::tibble(
     est.start = start,

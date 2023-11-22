@@ -29,7 +29,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 \itemize{
 \item 1: relative gradient is close to zero, current iterate is probably solution.
 \item 2: successive iterates within tolerance, current iterate is probably solution.
-\item 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or \code{steptol} is too large.
+\item 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or \code{stepmin} in \code{\link[=est.incidence]{est.incidence()}} (a.k.a., \code{steptol} in \code{\link[stats:nlm]{stats::nlm()}}) is too large.
 \item 4: iteration limit exceeded; increase \code{iterlim}.
 \item 5: maximum step size \code{stepmax} exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or \code{stepmax} is too small.
 }

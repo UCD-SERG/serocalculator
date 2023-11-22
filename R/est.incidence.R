@@ -103,7 +103,12 @@ est.incidence <- function(
       curve_params = curve_params,
       noise_params = noise_params
     )
-    if(print_graph) print(graph)
+    if(print_graph)
+      print(
+        graph +
+          ggplot2::scale_x_continuous(
+            trans = "log10",
+            labels = scales::label_comma()))
 
   } else
   {

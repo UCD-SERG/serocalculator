@@ -148,6 +148,7 @@ plot(est1)
 ```{r "init-parallel"}
 library(parallel)
 library(doParallel)
+library(doRNG)
 n_cores = max(1, parallel::detectCores() - 1)
 # n_cores = 1
 print(n_cores)
@@ -163,7 +164,7 @@ nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .2, .3)
 sim.df <- 
   foreach(l = lmbdaVec, .combine = bind_rows) %:%
-  foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
+  foreach(n = 1:nclus,  .combine = bind_rows) %dorng% {
     sim.cs(
       lambda = l,
       n.smpl = nrep,

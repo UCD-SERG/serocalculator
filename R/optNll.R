@@ -98,6 +98,16 @@
     } |>
     system.time()
 
+  code_text = nlm_exit_codes[fit$code]
+  if(verbose || fit$code %in% 3:5)
+  {
+    message(
+      '`nlm()` completed with the following exit code:\n')
+    cat(code_text)
+    if(fit$code %in% 3:5)
+      warning("`nlm()` may not have reached the maximum likelihood estimate.")
+  }
+
   if(verbose)
   {
     message('elapsed time: ')

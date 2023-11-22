@@ -14,7 +14,7 @@ add_point_to_graph = function(
     graph +
     ggplot2::geom_point(
       data = point_data,
-      aes(x = x, y = y, col = label)
+      ggplot2::aes(x = x, y = y, col = label)
     )
 
 }

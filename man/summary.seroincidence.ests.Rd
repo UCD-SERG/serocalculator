@@ -8,7 +8,7 @@
   object,
   confidence_level = 0.95,
   showDeviance = TRUE,
-  showConvergence = FALSE,
+  showConvergence = TRUE,
   ...
 )
 }

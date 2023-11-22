@@ -184,7 +184,6 @@ print(sim.df)
 ## Estimate incidence in each cluster
 
 ```{r, "est-by-stratum"}
-n_cores = 1
 ests =
   sim.df %>% 
   as_tibble() %>%
@@ -203,7 +202,7 @@ ests =
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     verbose = TRUE,
-    build_graph = FALSE, # adds time to runs
+    build_graph = TRUE, # adds time to runs
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
@@ -211,9 +210,9 @@ summary(ests)
 ```
 
 
-## deal with stepmax
+## deal with the `lambda.sim = 0.3` case
 
-lambda == 0.3 was having issues: 
+The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small. Let's try a bigger value of `stepmax` for those datasets:
 
 ```{r}
 
@@ -232,7 +231,7 @@ ests_l_0.3 =
     curve_params = dmcmc,
     noise_params = cond,
     numCores = n_cores,
-    stepmax = 6,
+    stepmax = 10,
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
@@ -241,7 +240,7 @@ ests_l_0.3 =
     verbose = TRUE
   )
 
-plot.seroincidence.ests(ests_l_0.3)
+
 ```
 
 ## plot distribution of estimates by simulated incidence rate
@@ -249,14 +248,6 @@ plot.seroincidence.ests(ests_l_0.3)
 ```{r, "graph", fig.width = 7}
 
 library(ggplot2)
-summary(ests) |> 
-  ggplot(aes(x = lambda.sim, y = incidence.rate)) +
-  geom_point() +
-  xlab("Simulated incidence rate") +
-  ylab("Estimated incidence rate") +
-  theme_bw() +
-  geom_abline(aes(intercept = 0, slope = 1, col = "x=y")) +
-  expand_limits(x = 0,y = 0) +
-  labs(col = "")
+summary(ests) |> plot()
 ```
 

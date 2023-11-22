@@ -44,7 +44,7 @@ graph_loglik = function(
       data = tibble(
         x = lambda.start,
         y = -.nll_vec(lambda.start |> log(), ...)),
-      aes(x = x, y = y, col = "lambda.start")
+      ggplot2::aes(x = x, y = y, col = "lambda.start")
     ) +
     ggplot2::labs(col = "") +
     ggplot2::theme(legend.position="bottom")

@@ -22,7 +22,7 @@
   # Start with zero total
   nllTotal <- 0
 
-  # Loop over antibodies
+  # Loop over antigen_isos
   for (cur_antibody in antigen_isos)
   {
 

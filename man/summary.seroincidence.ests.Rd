@@ -26,18 +26,18 @@ help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
-A list with the following items:
-\itemize{
-\item \code{Results} a \code{\link[dplyr:reexports]{dplyr::tibble()}} with columns:
+A \code{summary.seroincidence.ests} object, which is a \link[dplyr:reexports]{dplyr::tibble}, with the following columns:
 \itemize{
 \item \code{incidence.rate} maximum likelihood estimate of \code{lambda} (seroincidence)
 \item \code{CI.lwr} lower confidence bound for lambda
 \item \code{CI.upr} upper confidence bound for lambda
 \item \code{Deviance} (included if \code{showDeviance = TRUE}) Negative log likelihood (NLL) at estimated (maximum likelihood)
 \code{lambda})
+\itemize{
 \item \code{nlm.exit.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
+The object also has the following metadata (accessible through \code{\link[base:attr]{base::attr()}}):
 }
-\item \code{Antibodies} Character vector with names of input antibodies used in \code{\link[=est.incidence.by]{est.incidence.by()}}
+\item \code{antigen_isos} Character vector with names of input antibodies used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 \item \code{Strata} Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 }
 }

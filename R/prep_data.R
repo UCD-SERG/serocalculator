@@ -1,6 +1,6 @@
 prep_data <- function(
     data,
-    antibodies,
+    antigen_isos,
     curve_params,
     noise_params,
     strata_varnames = "",
@@ -27,7 +27,7 @@ prep_data <- function(
         `all data` = all_data
         ) |>
       structure(
-        Antibodies = antibodies,
+        antigen_isos = antigen_isos,
         strata = tibble(Stratum = NA)
       )
 
@@ -121,7 +121,7 @@ prep_data <- function(
   return(
     structure(
       stratumDataList,
-      Antibodies = antibodies,
+      antigen_isos = antigen_isos,
       strata = strata,
       class = c("biomarker_data_and_params.list", "list")
 

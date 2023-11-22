@@ -23,7 +23,7 @@
   return(abNames)
 }
 
-.errorCheck <- function(data, antibodies, strata, params)
+.errorCheck <- function(data, antigen_isos, strata, params)
 {
   .checkAntibodies(antibodies = antibodies)
   .checkCsData(data = data, antibodies = antibodies)

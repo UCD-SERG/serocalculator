@@ -273,7 +273,7 @@ Now `nlm()` converged properly. Let's replace the old fits with these revised fi
 to_replace = 
   which(ests |> strata() |> pull(lambda.sim) == 0.3)
 ests[to_replace] = ests_l_0.3
-summary(ests) |> select(nlm.exit.code)
+summary(ests) |> count(nlm.exit.code)
 ```
 
 Now all strata converged.

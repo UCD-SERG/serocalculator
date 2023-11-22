@@ -34,14 +34,14 @@ est.incidence.by <- function(
 
   .errorCheck(
     data = data,
-    antibodies = antigen_isos,
+    antigen_isos = antigen_isos,
     strata = strata,
     params = curve_params)
 
   # Split data per stratum
   stratumDataList <- prep_data(
     data = data,
-    antibodies = antigen_isos,
+    antigen_isos = antigen_isos,
     curve_params = curve_params,
     noise_params = noise_params,
     strata_varnames = strata,
@@ -144,7 +144,7 @@ est.incidence.by <- function(
 
   incidenceData <- structure(
     fits,
-    Antibodies = antigen_isos,
+    antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
     class = "seroincidence.ests" |> union(class(fits)))

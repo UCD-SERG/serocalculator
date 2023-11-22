@@ -148,7 +148,8 @@ plot(est1)
 ```{r "init-parallel"}
 library(parallel)
 library(doParallel)
-library(doRNG)
+library(doRNG) # for reproducible results
+library(rngtools)
 n_cores = max(1, parallel::detectCores() - 1)
 # n_cores = 1
 print(n_cores)
@@ -162,9 +163,17 @@ doParallel::registerDoParallel(cores = n_cores)
 nclus = 5;
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .2, .3)
+n_lambda = length(lmbdaVec)
+rng <- RNGseq(n_lambda * nclus, 1234)
 sim.df <- 
-  foreach(l = lmbdaVec, .combine = bind_rows) %:%
-  foreach(n = 1:nclus,  .combine = bind_rows) %dorng% {
+  foreach(i = 1:length(lmbdaVec), 
+          .combine = bind_rows) %:%
+  foreach(n = 1:nclus,  
+          r = rng[(l - 1) * nclus + 1:nclus], 
+          .combine = bind_rows) %dopar% 
+  {
+    l = lmbdaVec[i]
+    rngtools::setRNG(r)
     sim.cs(
       lambda = l,
       n.smpl = nrep,

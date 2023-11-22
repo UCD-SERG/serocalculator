@@ -37,7 +37,8 @@ Suggests:
     bookdown,
     doParallel,
     printr,
-    doRNG
+    doRNG,
+    rngtools
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

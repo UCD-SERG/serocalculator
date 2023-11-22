@@ -11,7 +11,7 @@
 
 #' @returns a [stats::nlm()] fit object
 #' @export
-.optNll <- function(
+find_MLE <- function(
     data = dataList$data,
     curve_params = dataList$curve_params,
     noise_params = dataList$noise_params,

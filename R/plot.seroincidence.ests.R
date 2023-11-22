@@ -5,10 +5,10 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #'
-plot.seroincidence.ests = function(object)
+plot.seroincidence.ests = function(x, ...)
 {
 
-  if(!attr(object,"graphs_included"))
+  if(!attr(x,"graphs_included"))
   {
 
     stop(
@@ -17,9 +17,8 @@ plot.seroincidence.ests = function(object)
     figure = NULL
   }
 
-  requireNamespace("ggpubr", quietly = FALSE)
-  labels = sapply(object, FUN = attr, which = "stratum_string")
-  figs = lapply(object, FUN = attr, which = "ll_graph")
+  labels = x |> attr("Strata") |> pull("Stratum")
+  figs = lapply(x, FUN = attr, which = "ll_graph")
 
   for (i in 1:length(figs))
   {

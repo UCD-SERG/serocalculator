@@ -9,11 +9,11 @@
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
-#' @inheritParams .optNll
-#' @inheritDotParams .optNll -dataList
+#' @inheritParams find_MLE
+#' @inheritDotParams find_MLE -dataList
 #' @inheritDotParams stats::nlm -f -p -hessian
 #'
-#' @return An object of class `"seroincidence.ests"`: a list of `"seroincidence.est` objects from [.optNll()], one for each stratum, with some meta-data attributes.
+#' @return An object of class `"seroincidence.ests"`: a list of `"seroincidence.est` objects from [find_MLE()], one for each stratum, with some meta-data attributes.
 #'
 #'
 #' @export
@@ -80,7 +80,8 @@ est.incidence.by <- function(
     cl <-
       numCores |>
       min(parallel::detectCores() - 1) |>
-      parallel::makeCluster()
+      parallel::makeCluster() |>
+      suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
     })
@@ -98,7 +99,7 @@ est.incidence.by <- function(
         cl = cl,
         X = stratumDataList,
         fun = function(x)
-          .optNll(
+          find_MLE(
             dataList = x,
             lambda.start = lambda.start,
             antigen_isos = antigen_isos,
@@ -117,7 +118,7 @@ est.incidence.by <- function(
   {
     # fits <- lapply(
     #   X = stratumDataList,
-    #   FUN = function(x) .optNll(dataList = x, verbose = verbose, ...))
+    #   FUN = function(x) find_MLE(dataList = x, verbose = verbose, ...))
 
     fits = list()
 
@@ -129,13 +130,6 @@ est.incidence.by <- function(
           strata_table |>
           dplyr::filter(.data$Stratum == cur_stratum)
 
-        stratum_string =
-          paste(
-            names(cur_stratum_vars),
-            cur_stratum_vars,
-            sep = ": ") |>
-          paste(collapse = ", ")
-
         if(verbose)
         {
           message('starting new stratum: ', cur_stratum)
@@ -143,14 +137,13 @@ est.incidence.by <- function(
         }
 
         fits[[cur_stratum]] =
-          .optNll(
+          find_MLE(
             lambda.start = lambda.start,
             dataList = stratumDataList[[cur_stratum]],
             antigen_isos = antigen_isos,
             build_graph = build_graph,
             verbose =  verbose,
-            ...) |>
-          structure(stratum_string = stratum_string)
+            ...)
 
       }
     } |> system.time() -> time

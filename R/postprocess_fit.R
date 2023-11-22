@@ -1,7 +1,7 @@
 
 #' postprocess a fitted incidence model
 #'
-#' @param fit a [list()], outputted by [stats::nlm()] or [serocalculator::.optNLL()]
+#' @param fit a [list()], outputted by [stats::nlm()] or [serocalculator::find_MLE()]
 #' @param coverage desired confidence interval coverage probability
 #' @param start starting value for incidence rate
 #'

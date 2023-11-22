@@ -8,11 +8,12 @@
 #' @export
 #'
 plot.summary.seroincidence.ests = function(
-    object,
+    x,
     xvar,
-    alpha = .9)
+    alpha = .9,
+    ...)
 {
-  object |>
+  x |>
   ggplot2::ggplot(ggplot2::aes(x = get(xvar), y = incidence.rate)) +
     ggplot2::geom_point(alpha = alpha) +
     ggplot2::xlab(xvar) +

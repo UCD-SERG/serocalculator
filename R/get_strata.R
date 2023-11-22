@@ -9,7 +9,8 @@ get_strata = function(data, strata_varnames)
   {
     to_return =
       to_return |>
-      mutate(Stratum = paste("Stratum", row_number()))
+      mutate(Stratum = paste("Stratum", row_number())) |>
+      dplyr::relocate("Stratum", .before = everything())
 
   }
 

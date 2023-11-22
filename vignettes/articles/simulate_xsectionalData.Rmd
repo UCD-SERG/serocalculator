@@ -86,13 +86,13 @@ csdata0 <- sim.cs(
   noise_limits = dlims
 )
 
-
-
 ```
 
 ## Estimate seroincidence
-```{r}
 
+We need to provide longitudinal antibody decay parameters and noise parameters for the analysis; here, we will manually input them:
+
+```{r}
 cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
@@ -100,10 +100,23 @@ cond <- data.frame(
   y.low = c(1, 1),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
+```
 
-csdataL <- as.data.frame(csdata0) %>%
-  pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
+We also need to turn the data to a long format for analysis:
 
+```{r}
+csdataL <- 
+  csdata0 %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols= c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value")
+```
+
+Now we can estimate incidence:
+
+```{r}
 est1 = est.incidence(
   csdataL %>%
     rename(
@@ -131,10 +144,9 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 ```{r "do-parallel"}
 
 doParallel::registerDoParallel(cores = n_cores)
-nclus = 2;
+nclus = 10;
 nrep <- 100; # cross-sectional sample size
 lmbdaVec <- c(.05,.1, .15, .2, .3)
-lmbdaVec = c(.05, .3)
 sim.df <- 
   foreach(l = lmbdaVec, .combine = bind_rows) %:%
   foreach(n = 1:nclus,  .combine = bind_rows) %dopar% {
@@ -179,11 +191,19 @@ ests =
     build_graph = TRUE, # adds time to runs
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
-
-summary(ests)
 ```
 
-(`summary(ests)` produces a `tibble()` with some extra meta-data.)
+We can extract the table of strata with the `strata()` method:
+
+```{r}
+strata(ests)
+```
+
+`summary(ests)` produces a `tibble()` with some extra meta-data:
+
+```{r}
+summary(ests)
+```
 
 Make sure to check the exit codes:
 
@@ -195,7 +215,7 @@ The simulations with `lambda.sim = 0.3` had convergence problems (codes 3-5).
 
 We can also look at graphs of the log-likelihood for each cluster:
 
-```{r}
+```{r, fig.width = 7}
 plot(ests)
 ```
 

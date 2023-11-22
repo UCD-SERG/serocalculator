@@ -7,7 +7,7 @@
 #' @param c.age age category to subset data by (optional)
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
-#' @param print_graph whether to display the graph as soon as it is created
+#' @param print_graph whether to display the log-likelihood curve graph in the course of running `find.MLE()`
 
 #' @inheritDotParams stats::nlm -f -p -hessian
 

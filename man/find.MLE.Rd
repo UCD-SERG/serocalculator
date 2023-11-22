@@ -45,7 +45,7 @@ Monte Carlo samples for each antibody type.}
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
-\item{print_graph}{whether to display the graph as soon as it is created}
+\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{find.MLE()}}
 
 \item{c.age}{age category to subset data by (optional)}
 

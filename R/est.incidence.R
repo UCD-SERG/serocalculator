@@ -21,7 +21,7 @@ est.incidence <- function(
     dataList = NULL,
     antigen_isos = data$antigen_iso |> unique(),
     lambda.start = 0.1,
-    stepmin = 0,
+    stepmin = 1e-8,
     stepmax = 3,
     verbose = FALSE,
     build_graph = TRUE,

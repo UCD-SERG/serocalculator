@@ -295,7 +295,7 @@ Looks like we are ok!
 We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
-ests[problem_strata[1]] |> plot()
+plot(ests[1:5])
 ```
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):

@@ -11,7 +11,7 @@ est.incidence(
   dataList = NULL,
   antigen_isos = unique(data$antigen_iso),
   lambda.start = 0.1,
-  stepmin = 0,
+  stepmin = 1e-08,
   stepmax = 3,
   verbose = FALSE,
   build_graph = TRUE,

@@ -8,6 +8,11 @@
 plot.seroincidence.by = function(x, ...)
 {
 
+  if(length(x) == 0)
+  {
+    stop("The input doesn't contain any fits. Did subsetting go wrong?")
+  }
+
   if(!attr(x,"graphs_included"))
   {
 

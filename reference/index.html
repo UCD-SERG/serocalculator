@@ -105,15 +105,14 @@
         <dd>Calculate log-likelihood</dd>
       </dl><dl><dt>
           
-          <code><a href="dot-optNll.html">.optNll()</a></code> 
+          <code><a href="dot-nll_vec.html">.nll_vec()</a></code> 
         </dt>
-        <dd>Find the maximum likelihood estimate of the incidence rate parameter</dd>
+        <dd>Calculate log-likelihood (vectorized)</dd>
       </dl><dl><dt>
           
           <code><a href="est.incidence.html">est.incidence()</a></code> 
         </dt>
-        <dd>Age specific seroincidence function
-This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.</dd>
+        <dd>Find the maximum likelihood estimate of the incidence rate parameter</dd>
       </dl><dl><dt>
           
           <code><a href="est.incidence.by.html">est.incidence.by()</a></code> 
@@ -151,17 +150,32 @@ This function models seroincidence using maximum likelihood estimation; that is,
         <dd>Pertussis IgG-PT Response Parameters Data for Model 4</dd>
       </dl><dl><dt>
           
-          <code><a href="postprocess_fit.html">postprocess_fit()</a></code> 
+          <code><a href="plot.seroincidence.html">plot(<i>&lt;seroincidence&gt;</i>)</a></code> 
         </dt>
-        <dd>postprocess a fitted incidence model</dd>
+        <dd>Plot the log-likelihood curve for the incidence rate estimate</dd>
       </dl><dl><dt>
           
-          <code><a href="print.seroincidence.ests.html">print(<i>&lt;seroincidence.ests&gt;</i>)</a></code> 
+          <code><a href="plot.seroincidence.by.html">plot(<i>&lt;seroincidence.by&gt;</i>)</a></code> 
         </dt>
-        <dd>Print Method for Seroincidence Object</dd>
+        <dd>Plot <code>seroincidence.by</code> log-likelihoods</dd>
       </dl><dl><dt>
           
-          <code><a href="print.summary.seroincidence.ests.html">print(<i>&lt;summary.seroincidence.ests&gt;</i>)</a></code> 
+          <code><a href="plot.summary.seroincidence.by.html">plot(<i>&lt;summary.seroincidence.by&gt;</i>)</a></code> 
+        </dt>
+        <dd>Plot method for <code>summary.seroincidence.by</code> objects</dd>
+      </dl><dl><dt>
+          
+          <code><a href="print.seroincidence.html">print(<i>&lt;seroincidence&gt;</i>)</a></code> 
+        </dt>
+        <dd>Print Method for <code>seroincidence</code> Object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="print.seroincidence.by.html">print(<i>&lt;seroincidence.by&gt;</i>)</a></code> 
+        </dt>
+        <dd>Print Method for <code>seroincidence.by</code> Object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="print.summary.seroincidence.by.html">print(<i>&lt;summary.seroincidence.by&gt;</i>)</a></code> 
         </dt>
         <dd>Print Method for Seroincidence Summary Object</dd>
       </dl><dl><dt>
@@ -191,9 +205,29 @@ This function models seroincidence using maximum likelihood estimation; that is,
         <dd>Simulate a cross-sectional serosurvey with noise</dd>
       </dl><dl><dt>
           
-          <code><a href="summary.seroincidence.ests.html">summary(<i>&lt;seroincidence.ests&gt;</i>)</a></code> 
+          <code><a href="strata.html">strata()</a></code> 
         </dt>
-        <dd>Summary Method for <code>"seroincidence.ests"</code> Objects</dd>
+        <dd>Extract strata from an object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="strata.seroincidence.by.html">strata(<i>&lt;seroincidence.by&gt;</i>)</a></code> 
+        </dt>
+        <dd>Extract information about strata from a <code>seroincidence.by</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="sub-.seroincidence.by.html">`[`(<i>&lt;seroincidence.by&gt;</i>)</a></code> 
+        </dt>
+        <dd>Extract or replace parts of a <code>seroincidence.by</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="summary.seroincidence.html">summary(<i>&lt;seroincidence&gt;</i>)</a></code> 
+        </dt>
+        <dd>summarize a fitted incidence model</dd>
+      </dl><dl><dt>
+          
+          <code><a href="summary.seroincidence.by.html">summary(<i>&lt;seroincidence.by&gt;</i>)</a></code> 
+        </dt>
+        <dd>Summary Method for <code>"seroincidence.by"</code> Objects</dd>
       </dl><dl><dt>
           
           <code><a href="typhoid_controls.html">typhoid_controls</a></code> 

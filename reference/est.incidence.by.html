@@ -67,6 +67,7 @@ response model.</p>
 <span>  noise_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  lambda.start <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">365.25</span>,</span>
+<span>  build_graph <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  numCores <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -108,6 +109,10 @@ Monte Carlo samples for each antibody type.</p></dd>
 <dd><p>starting guess for incidence rate, in years/event.</p></dd>
 
 
+<dt>build_graph</dt>
+<dd><p>whether to graph the log-likelihood function across a range of incidence rates (lambda values)</p></dd>
+
+
 <dt>numCores</dt>
 <dd><p>Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package <span class="pkg">parallel</span> is available, then the computations are executed in parallel. Default = 1L.</p></dd>
 
@@ -117,7 +122,13 @@ Monte Carlo samples for each antibody type.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="dot-optNll.html">.optNll</a></code>, <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm</a></code></p><dl><dt><code>stepmax</code></dt>
+<dd><p>Arguments passed on to <code><a href="est.incidence.html">est.incidence</a></code>, <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm</a></code></p><dl><dt><code>c.age</code></dt>
+<dd><p>age category to subset data by (optional)</p></dd>
+
+    <dt><code>print_graph</code></dt>
+<dd><p>whether to display the log-likelihood curve graph in the course of running <code><a href="est.incidence.html">est.incidence()</a></code></p></dd>
+
+    <dt><code>stepmax</code></dt>
 <dd><p>a positive scalar which gives the maximum allowable
     scaled step length.  <code>stepmax</code> is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -173,7 +184,7 @@ Monte Carlo samples for each antibody type.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A set of lambda estimates for each strata.</p>
+<p>An object of class <code>"seroincidence.by"</code>: a list of <code>"seroincidence</code> objects from <code><a href="est.incidence.html">est.incidence()</a></code>, one for each stratum, with some meta-data attributes.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

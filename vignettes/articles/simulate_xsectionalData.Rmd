@@ -169,7 +169,7 @@ sim.df <-
   foreach(i = 1:length(lmbdaVec), 
           .combine = bind_rows) %:%
   foreach(n = 1:nclus,  
-          r = rng[(l - 1) * nclus + 1:nclus], 
+          r = rng[(i - 1) * nclus + 1:nclus], 
           .combine = bind_rows) %dopar% 
   {
     l = lmbdaVec[i]

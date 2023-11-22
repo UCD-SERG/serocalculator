@@ -12,7 +12,7 @@ est.incidence.by(
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),
-  lambda.start = 1/365.25,
+  lambda.start = 0.1,
   build_graph = TRUE,
   numCores = 1L,
   verbose = FALSE,
@@ -48,6 +48,7 @@ Monte Carlo samples for each antibody type.}
   \describe{
     \item{\code{c.age}}{age category to subset data by (optional)}
     \item{\code{print_graph}}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
+    \item{\code{stepmin}}{A positive scalar providing the minimum allowable relative step length.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -58,19 +59,12 @@ Monte Carlo samples for each antibody type.}
     \item{\code{typsize}}{an estimate of the size of each parameter
     at the minimum.}
     \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
-    \item{\code{print.level}}{this argument determines the level of printing
-    which is done during the minimization process.  The default
-    value of \code{0} means that no printing occurs, a value of \code{1}
-    means that initial and final details are printed and a value
-    of 2 means that full tracing information is printed.}
     \item{\code{ndigit}}{the number of significant digits in the function \code{f}.}
     \item{\code{gradtol}}{a positive scalar giving the tolerance at which the
     scaled gradient is considered close enough to zero to
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
-    \item{\code{steptol}}{A positive scalar providing the minimum allowable
-    relative step length.}
     \item{\code{iterlim}}{a positive integer specifying the maximum number of
     iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the

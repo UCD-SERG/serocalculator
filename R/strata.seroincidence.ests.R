@@ -14,7 +14,7 @@ strata <- function(x) {
 #'
 #' @param x a `seroincidence.by` object (from [est.incidence.by()])
 #'
-#' @return a [dplyr::tibble()] with strata in rows
+#' @return a [tibble::tibble()] with strata in rows
 #' @export
 #'
 strata.seroincidence.by = function(x)

@@ -9,7 +9,11 @@
 \arguments{
 \item{x}{a '"seroincidence.by"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
 
-\item{...}{unused}
+\item{...}{
+  Arguments passed on to \code{\link[=plot.seroincidence]{plot.seroincidence}}
+  \describe{
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+  }}
 }
 \value{
 aan object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.

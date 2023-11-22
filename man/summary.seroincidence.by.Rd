@@ -26,7 +26,7 @@ help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
-A \code{summary.seroincidence.by} object, which is a \link[dplyr:reexports]{dplyr::tibble}, with the following columns:
+A \code{summary.seroincidence.by} object, which is a \link[tibble:tibble]{tibble::tibble}, with the following columns:
 \itemize{
 \item \code{incidence.rate} maximum likelihood estimate of \code{lambda} (seroincidence)
 \item \code{CI.lwr} lower confidence bound for lambda

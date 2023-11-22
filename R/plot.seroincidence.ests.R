@@ -1,7 +1,7 @@
 #' Plot `seroincidence.by` log-likelihoods
 #'
 #' @param x a '"seroincidence.by"' object (from [est.incidence.by()])
-#' @param ... unused
+#' @inheritDotParams plot.seroincidence
 #' @return aan object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #'
@@ -12,13 +12,13 @@ plot.seroincidence.by = function(x, ...)
   {
 
     stop(
-      "Graphs cannot be extracted from the `seroincidence.by` object.",
+      "Graphs cannot be extracted; ",
       "`build_graph` was not `TRUE` in the call to `est.incidence.by()`")
     figure = NULL
   }
 
   labels = names(x)
-  figs = lapply(x, FUN = attr, which = "ll_graph")
+  figs = lapply(x, FUN = plot.seroincidence, ...)
 
   for (i in 1:length(figs))
   {

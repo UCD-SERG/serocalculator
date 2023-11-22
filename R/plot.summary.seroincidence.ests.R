@@ -11,7 +11,7 @@
 plot.summary.seroincidence.by = function(
     x,
     xvar,
-    alpha = .9,
+    alpha = .7,
     ...)
 {
   x |>

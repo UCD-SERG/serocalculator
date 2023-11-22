@@ -4,7 +4,22 @@
 #' @param object a [list()], outputted by [stats::nlm()] or [serocalculator::est.incidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param ... unused
-#' @return a [tibble::tibble()]; see [stats::nlm()] for details on `code` variable
+#' @return a [tibble::tibble()] containing the following:
+#' * `est.start`: the starting guess for incidence rate
+#' * `ageCat`: the age category we are analyzing
+#' * `incidence.rate`: the estimated incidence rate, per person year
+#' * `CI.lwr`: lower limit of confidence interval for incidence rate
+#' * `CI.upr`: upper limit of confidence interval for incidence rate
+#' * `coverage`: coverage probability
+#' * `neg.llik`: negative log-likelihood
+#' * `iterations`: the number of iterations used
+#'  * `antigen_isos`: a list of antigen isotypes used in the analysis
+#'  * `nlm.exit.code`: information about convergence of the likelihood maximization procedure performed by `nlm()` (see "Value" section of [stats::nlm()], component `code`); codes 3-5 indicate issues:
+#'    * 1: relative gradient is close to zero, current iterate is probably solution.
+#'    * 2: successive iterates within tolerance, current iterate is probably solution.
+#'    * 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or `steptol` is too large.
+#'    * 4: iteration limit exceeded; increase `iterlim`.
+#'    * 5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small.
 #' @export
 #'
 summary.seroincidence = function(
@@ -18,7 +33,7 @@ summary.seroincidence = function(
   alpha = 1 - coverage
   h.alpha = alpha/2
 
-  log.lambda.est = dplyr::tibble(
+  log.lambda.est = tibble::tibble(
     est.start = start,
     incidence.rate = exp(object$estimate),
     SE = sqrt(1/object$hessian) |> as.vector(),
@@ -28,10 +43,7 @@ summary.seroincidence = function(
     log.lik = -object$minimum,
     iterations = object$iterations,
     antigen.isos = antigen_isos |> paste(collapse = "+"),
-    nlm.exit.code = object$code |> factor(levels = 1:5, labels = nlm_exit_codes)) |>
-    structure(
-      graph = object |> attr("ll_graph")
-    )
+    nlm.exit.code = object$code |> factor(levels = 1:5, labels = nlm_exit_codes))
 
   class(log.lambda.est) =
     "summary.seroincidence" |>

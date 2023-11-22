@@ -10,7 +10,7 @@
 \item{x}{a \code{seroincidence.by} object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
 }
 \value{
-a \code{\link[dplyr:reexports]{dplyr::tibble()}} with strata in rows
+a \code{\link[tibble:tibble]{tibble::tibble()}} with strata in rows
 }
 \description{
 Extract information about strata from a \code{seroincidence.by} object

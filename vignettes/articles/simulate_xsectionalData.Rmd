@@ -42,7 +42,8 @@ in any subsequent infection. This is for diagnostic purposes.
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7
+  fig.width = 7,
+  fig.height = 7
 )
 ```
 
@@ -61,19 +62,19 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 ## Simulate cross-sectional data
 ```{r "sim.cs"}
 #set seed to reproduce results
-#set.seed(54321)
+set.seed(54321)
 
 # Specify the antibody-isotype responses to simulate
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 # simulated incidence rate per person-year
-lambda <- 0.2; 
+lambda <- 0.1; 
 
 # range covered in simulations
 lifespan <- c(0,20); 
 
 # cross-sectional sample size
-nrep <- 1000
+nrep <- 100
 
 # biologic noise distribution
 dlims <- rbind(c(0.01, 0.5),c(0.01, 0.5))
@@ -108,7 +109,7 @@ cond <- data.frame(
 
 ```
 
-We also need to turn the data to a long format for analysis:
+We also need to convert the data to a long format for analysis:
 
 ```{r "long-format"}
 csdataL <- 
@@ -123,6 +124,7 @@ csdataL <-
 Now we can estimate incidence:
 
 ```{r "est.incidence"}
+
 est1 = est.incidence(
   data = csdataL %>%
     rename(
@@ -131,9 +133,11 @@ est1 = est.incidence(
   curve_params = dmcmc,
   noise_params = cond,
   lambda.start = .1,
-  build_graph = F,
+  stepmax = 1,
+  build_graph = T,
   verbose = T,
-  antigen_isos = c("HlyE_IgG"))
+  antigen_isos = antibodies)
+
 
 ```
 
@@ -149,6 +153,12 @@ We can plot the log-likelihood curve with `plot()`:
 plot(est1)
 ```
 
+We can set the x-axis to a logarithmic scale, if desired:
+
+```{r}
+
+plot(est1, log_x = TRUE)
+```
 
 # Simulate multiple clusters with different lambdas
 
@@ -261,37 +271,41 @@ summary(ests)
 Make sure to check the exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r}
-
-# these are the simulations that had issues:
-problem_strata = 
-  summary(ests) |> 
-  pull(nlm.exit.code) |> 
-  as.numeric() |> 
-  is.element(3:5) |> 
-  which() |> 
-  print()
-
-summary(ests)[problem_strata, c("Stratum", "lambda.sim", "nlm.exit.code")]
+library(DT)
+summary(ests) |> select(Stratum, nlm.exit.code) |> datatable()
 ```
+
+Solutions to codes 3-5:
+
+* 3: decrease the `stepmin` argument to `est.incidence()`/`est.incidence.by()`
+* 4: increase the `iterlim` argument to `est.incidence()`/`est.incidence.by()`
+* 5: increase the `stepmax` argument to `est.incidence()`/`est.incidence.by()`
 
 It may help to look at the log-likelihood curves for those simulations.
-We can plot the likelihood for a single simulated cluster by extracting that simulation from `ests` and calling `plot()`:
+We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
-ests[[problem_strata[1]]] |> plot()
+ests[problem_strata[1]] |> plot()
 ```
 
-It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a much sharper log-likelihood curve, which made it easier to maximize:
+It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a steeper log-likelihood curve, which made it easier to maximize:
 
 ```{r}
-ests[[1]] |> plot()
+ests[1] |> plot()
 ```
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
 
-```{r "plot-multiple", fig.height = 7}
+```{r "plot-multiple"}
 plot(ests[problem_strata])
 ```
+
+The `log_x` argument also works here:
+
+```{r "plot-multiple-log"}
+plot(ests[problem_strata], log_x = TRUE)
+```
+
 
 ## Addressing convergence issues
 

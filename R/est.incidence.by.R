@@ -11,7 +11,7 @@
 
 #' @inheritParams est.incidence
 #' @inheritDotParams est.incidence -dataList
-#' @inheritDotParams stats::nlm -f -p -hessian
+#' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return An object of class `"seroincidence.by"`: a list of `"seroincidence` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
 #'
@@ -25,7 +25,7 @@ est.incidence.by <- function(
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
-    lambda.start = 1/365.25,
+    lambda.start = 0.1,
     build_graph = TRUE,
     numCores = 1L,
     verbose = FALSE,

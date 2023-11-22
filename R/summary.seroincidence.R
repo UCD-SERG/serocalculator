@@ -13,7 +13,7 @@
 #'   help for [optim()] for details). Default = `FALSE`.
 #' @param confidence_level desired confidence interval coverage probability
 #' @return
-#' A `summary.seroincidence.by` object, which is a [dplyr::tibble], with the following columns:
+#' A `summary.seroincidence.by` object, which is a [tibble::tibble], with the following columns:
 #'  * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
 #'  *  `CI.lwr` lower confidence bound for lambda
 #'  * `CI.upr` upper confidence bound for lambda

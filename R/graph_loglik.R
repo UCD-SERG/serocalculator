@@ -32,7 +32,7 @@ graph_loglik = function(
   #   )
   # }
 
-  tibble(
+  plot1 = tibble(
     x = x,
     y = -.nll_vec(x |> log(), ...)
   ) |>
@@ -51,4 +51,5 @@ graph_loglik = function(
     ggplot2::labs(col = "") +
     ggplot2::theme(legend.position="bottom")
 
+  return(plot1)
 }

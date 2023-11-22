@@ -28,7 +28,7 @@
 #' @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 #' @param noise_limits biologic noise distribution parameters
 #' @param ... additional arguments passed to `simcs.tinf()`
-#' @return a [dplyr::tibble()] containing simulated cross-sectional serosurvey data, with columns:
+#' @return a [tibble::tibble()] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
 #' * one column for each element in the `antigen_iso` input argument
 #' @export

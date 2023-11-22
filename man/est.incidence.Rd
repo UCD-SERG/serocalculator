@@ -9,9 +9,10 @@ est.incidence(
   curve_params = dataList$curve_params,
   noise_params = dataList$noise_params,
   dataList = NULL,
-  antigen_isos = unique(pull(data, "antigen_iso")),
-  lambda.start = 1/365.25,
-  stepmax = 1,
+  antigen_isos = unique(data$antigen_iso),
+  lambda.start = 0.1,
+  stepmin = 0,
+  stepmax = 3,
   verbose = FALSE,
   build_graph = TRUE,
   print_graph = build_graph & verbose,
@@ -32,6 +33,8 @@ Monte Carlo samples for each antibody type.}
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
 
 \item{lambda.start}{starting guess for incidence rate, in years/event.}
+
+\item{stepmin}{A positive scalar providing the minimum allowable relative step length.}
 
 \item{stepmax}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
@@ -55,19 +58,12 @@ Monte Carlo samples for each antibody type.}
     \item{\code{typsize}}{an estimate of the size of each parameter
     at the minimum.}
     \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
-    \item{\code{print.level}}{this argument determines the level of printing
-    which is done during the minimization process.  The default
-    value of \code{0} means that no printing occurs, a value of \code{1}
-    means that initial and final details are printed and a value
-    of 2 means that full tracing information is printed.}
     \item{\code{ndigit}}{the number of significant digits in the function \code{f}.}
     \item{\code{gradtol}}{a positive scalar giving the tolerance at which the
     scaled gradient is considered close enough to zero to
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
-    \item{\code{steptol}}{A positive scalar providing the minimum allowable
-    relative step length.}
     \item{\code{iterlim}}{a positive integer specifying the maximum number of
     iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the

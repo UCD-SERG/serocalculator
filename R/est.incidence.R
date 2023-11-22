@@ -9,8 +9,8 @@
 #' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
-
-#' @inheritDotParams stats::nlm -f -p -hessian
+#' @param stepmin A positive scalar providing the minimum allowable relative step length.
+#' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda.start`, `antigen_isos`, and `ll_graph`
 #' @export
@@ -19,9 +19,10 @@ est.incidence <- function(
     curve_params = dataList$curve_params,
     noise_params = dataList$noise_params,
     dataList = NULL,
-    antigen_isos = data |> pull("antigen_iso") |> unique(),
-    lambda.start = 1/365.25,
-    stepmax = 1,
+    antigen_isos = data$antigen_iso |> unique(),
+    lambda.start = 0.1,
+    stepmin = 0,
+    stepmax = 3,
     verbose = FALSE,
     build_graph = TRUE,
     print_graph = build_graph & verbose,
@@ -40,10 +41,20 @@ est.incidence <- function(
         dplyr::filter(.data[["ageCat"]] == c.age)
     }
   }
+  data = data |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::select("y", "a", "antigen_iso") |>
+    drop_na()
+
   curve_params = curve_params |>
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
-      d = .data$r - 1)
+      d = .data$r - 1) |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::select("y1", "alpha", "d", "antigen_iso")
+
+  noise_params = noise_params |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(data) == 0) {
@@ -113,20 +124,22 @@ est.incidence <- function(
         noise_params = noise_params,
         hessian = TRUE,
         stepmax = stepmax,
+        steptol = stepmin,
         verbose = verbose,
+        print.level = ifelse(verbose, 2, 0),
         ...)
     } |>
     system.time()
 
   code_text = nlm_exit_codes[fit$code]
-  if(verbose || fit$code %in% 3:5)
+  message1 = '\n`nlm()` completed with the following exit code:\n'
+  if(fit$code %in% 3:5)
   {
-    message(
-      '`nlm()` completed with the following exit code:\n')
-    cat(code_text)
-    if(fit$code %in% 3:5)
-      warning("`nlm()` may not have reached the maximum likelihood estimate.")
+    warning("`nlm()` may not have reached the maximum likelihood estimate.", message1, code_text)
+
   }
+
+
 
   if(verbose)
   {

@@ -1,4 +1,4 @@
-serocalculator package
+serocalculator
 =====================
 
 ------------------------------------------------------------------------
@@ -14,61 +14,19 @@ The **serocalculator** package was designed to use the longitudinal response cha
 
 ## Installing R
 
-Package **serocalculator** is written in R and the end user must have access to a working installation of R engine. This document describes the most common setup with R installed 
-locally on the user's computer. We recommend installing base R and a Graphical User Interfaces for R like e.g. 
-[RStudio](http://www.rstudio.com/products/RStudio/).
+The **serocalculator** package is written in R, a free, open-source software program. The end user of this package must have access to a working installation of the R software. We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI) for R such as [RStudio](http://www.rstudio.com/products/RStudio/).
 
-R is a free software program and can be downloaded from [http://cran.r-project.org/](http://cran.r-project.org/).
-After downloading the appropriate version for your computer's operating system, install R on your computer following the standard procedure applicable to the operating system. For Windows the file to be downloaded is the so-called *base* distribution: [http://cran.r-project.org/bin/windows/base/](http://cran.r-project.org/bin/windows/base/).
+If you need to download and install R and/or RStudio, we recommend following the tutorial below from *Hands On Programming in R* by Garrett Grolemund:
 
-### R Installation Instructions
+**Installing R and RStudio**: https://rstudio-education.github.io/hopr/starting.html
 
-Start the R installer and follow the presented steps:
+## Installing the Serocalculator Package
 
-![][setup1]
-
-[setup1]: vignettes/fig/setup1.png
-
-It is advised to have R installed in folder that does not contain spaces, therefore please adjust 
-the destination location accordingly:
-
-![][setup2]
-
-[setup2]: vignettes/fig/setup2.png
-
-The **serocalculator** package is compatible with both the 32-bit and the 64-bit version of R. 
-Choose the preferred platform (or both). If unsure, install the 32-bit version only, however
-on compatible devices the 64-bit version may provide better performance:
-
-![][setup3]
-
-[setup3]: vignettes/fig/setup3.png
+The **serocalculator** package must be installed in R before first use. As of November 21, 2023, **serocalculator** is still in development. To install the development version, you must install the **devtools** R package and then download **serocalculator** from [GitHub](https://github.com/). Enter the code below into the R console to install both packages:
 
 
-It is advised to select *Registry entries* in the next step for best experience:
-
-![][setup4]
-
-[setup4]: vignettes/fig/setup4.png
-
-
-R interpreter, when installed on Windows, can be invoked from the start menu folder named **R**.
-
-Start the preferred version of R (if both the 32-bit: *R i386* and the 64-bit: *x64* are installed). Graphical user interface for R interpreter will start in a new window:
-
-
-![][RGui1]
-
-[RGui1]: vignettes/fig/RGui1.png
-
-
-## Installing the Serocalculator R Package
-
-Since this is a new installation of R, the **serocalculator** package must be installed before first use. As of November 21, 2023, **serocalculator** is still in development. To install the development version, you must install the **devtools** package and then download **serocalculator** from [GitHub](https://github.com/). 
-
-
-```{eval=FALSE}
-# install package "devtools"
+```r{eval=FALSE}
+# Install the devtools package and the development version of serocalculator
 install.packages("devtools")
 devtools::install_github("ucd-serg/serocalculator")
 
@@ -76,8 +34,7 @@ devtools::install_github("ucd-serg/serocalculator")
 
 ### Post-installation
 
-Successful installation can be confirmed by loading the package into the RStudio workspace 
-and exploring help files and manuals distributed with the package:
+Successful installation can be confirmed by loading the package into the RStudio workspaceand exploring help files and manuals distributed with the package:
 
 ```r{eval=FALSE}
 # Load package "seroincidence".
@@ -87,7 +44,7 @@ library(serocalculator)
 ?serocalculator
 
 # Show tutorial for the package.
-vignette(topic = "entericfevertutorial", package = "serocalculator")
+vignette(topic = "tutorial", package = "serocalculator")
 ```
 
 Additionally, most package details can be found when executing the following commands:
@@ -102,7 +59,7 @@ citation("serocalculator")
 
 ### A Note for Windows Users
 
-  Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either during the  *devtools* package installation, or independently if *devtools* is already installed. 
+Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either during the  *devtools* package installation, or independently if *devtools* is already installed. 
 
 
 #### During devtools installation:
@@ -111,7 +68,7 @@ When prompted to install additional build tools, select "Yes" and Rtools will be
 
 ![Click Yes to install Rtools along with the *devtools* package][id]
 
-[id]: vignettes/fig/Rtools1.png
+[id]: man/figures/Rtools1.png
 
 #### Independently:
 

@@ -41,62 +41,14 @@ library(osfr)
 
 Sample datasets and pathogen-specific longitudinal antibody dynamics for **serocalculator** are housed on Open Science Framework (OSF), a publicly available data repository. The [Serocalculator Repository](https://osf.io/ne8pc/) can be called directly into the **serocalculator** package using the function `getAdditionalData`. 
 
-To import the provided datasets into your R environment, we will need to identify the "id" of the appropriate dataset. 
-
-We demonstrate this below. 
-
-```{r getdata, eval=FALSE}
-#Won't work unless I'm on the right branch!
-
-getAdditionalData(fileURL = "https://osf.io/download/6553f989874c2e06a54e7d45/")
-
-data = getAdditionalData(fileURL = "https://osf.io/download/ne8pc")
-
-
-```
-
-```{r osftry}
-
-longmcmc_project <-osf_retrieve_node("https://osf.io/ne8pc/")#Reference the Serocalculator repository on OSF 
-longmcmc_files <- osf_ls_files(longmcmc_project) #Select the Curve Parameters folder
-
-?osf_open
-
-osf_open("ne8pc")
-
-test_file <- osf_retrieve_file("6553f132f6ce3c092f504f91")
-osf_open(test_file)
-
-
-longmcmc_files  
-
-longmcmc_project
+To import the provided datasets into your R environment, we will need to identify the "id" of the appropriate dataset. The most common use of this will be to import the longitudinal Monte Carlo Markov Chain parameters (dmcmc). We demonstrate this below. 
 
 
 
-#pipes
-longosf<- osf_retrieve_node("https://osf.io/ne8pc")# %>%#Reference the Serocalculator repository on OSF 
 
+### Load and prepare longitudinal parameter data
 
-
-longosf
-
-
-osf_ls_files(longosf)
-#Select the Enteric Fever folder
-
-#Create components for eath pathogen?
-#Created a test commponent, but can I access the folders without them being in a component?
-https://osf.io/9gnv7/
-
-
-```
-
-### Load and prepare longitudinal paramter data
-
-
-### a. Load and prepare longitudinal parameter data
-The next step is to load the longitudinal data to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
+The first step is to load the longitudinal data to set the antibody decay parameters. We use the function `getAdditionalData` to pull existing Enteric fever parameters from the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
 These parameters include the following:
 
@@ -110,71 +62,140 @@ We also create two additional variables: the annual decay rate, $\alpha$, which 
 
 Finally, we select only the variables needed for the analysis. 
 
-```{r longdata, echo=FALSE, message=FALSE}
+```{r longdata, echo=FALSE, message=FALSE, eval=FALSE}
 c.hlye.IgG <-                             #Need to change this to pull from osf
   fs::path_package(                          
   "extdata", 
-  "dmcmc_hlyeigg_09.30.rds", 
+  "SEES_mcmc_unstratified_df.rds", 
   package = "serocalculator") |> #Load longitudinal parameters dataset
  readRDS()%>%
   mutate(alpha = alpha*365.25, #Create alpha and d 
-         d = r-1) %>%
-  select(y1, alpha, d) #Select only the variables needed for analysis
+         d = r-1) #%>%
+ # select(y1, alpha, d) #Select only the variables needed for analysis
+```
+
+```{r curve, echo=FALSE, message=FALSE}
+#Import longitudinal antibody parameters from OSF
+#This is the URL for Enteric Fever Curve Parameters called "SEES_mcmc_unstratified_df.rds"
+
+curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
+
+
 ```
 
 ### Load and prepare cross-sectional data 
-The simulated data represents a cross-sectional serosurvey conducted in a representative sample of the general population without regard to disease status. 
+We will use a subset of results from the SEES dataset as our cross-sectional data. Ideally, this will be a representative sample of the general population without regard to disease status. 
 
-In this scenario, we have selected hlye and IgG as our target measures. Users may select different serologic markers depending on what is available. From the original dataset, we rename our variables to *y* and *a*. Finally, we once again limit the dataset to only the variables needed for the analysis. 
+In this scenario, we have selected **hlyE** as our target antigen and **IgG** and **IgA** as our target isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to *y* and *a*, respectively. Finally, we once again limit the dataset to only the variables needed for the analysis. 
 
-``` {r simdata, message=FALSE}
+``` {r simdata, message=FALSE, eval=FALSE}
 library(fs) # filesystem utility functions
 p.hlye.IgG  <- 
   fs::path_package(
     package = "serocalculator", 
-    "extdata/simpophlyeigg.2.csv") %>% #Load  cross-sectional dataset
+    "extdata/simpophlyeigg.2.csv") %>% #Load cross-sectional dataset
   read_csv() %>%
   rename( #rename variables
     y = y.smpl,
-    a = a.smpl) %>% 
-  select(y, a) #Select only the variables needed for analysis
+    a = a.smpl) %>%
+  mutate(antigen_iso==c("HlyE_IgG")
+ # select(y, a) #Select only the variables needed for analysis
+```
+
+```{r data, message = FALSE}
+#Load the cross-sectional data
+
+data = path_package(
+  package = "serocalculator",
+  "extdata/SEES_2022-10-24_redacted_2023-10-12.csv") |> 
+  read_csv(
+    col_types = cols(ae_diagnosis_other = col_character())
+  ) %>%
+  rename(antigen_iso = antiso) %>%
+  rename(a = consent_age) %>%
+  rename(y = result)
+
+
 ```
 
 
-### Set conditions for simulated data (Should this section be deleted?)
+### Set conditions for simulated data (Should this section be deleted in favor of importing parameters?)
 Next, we must set conditions based on some assumptions about the simulated data. This will differ based on background knowledge of the cross-sectional data. 
 
-The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies in addition to those for the target condition. This can artificially inflate quantitative antibody result. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
+The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies in addition to those for the target condition. This can artificially inflate quantitative antibody results. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
 
-``` {r conditions, message=FALSE}
+``` {r conditions, message=FALSE, eval=FALSE}
 cond.hlye.IgG <- data.frame(
   nu = 1.027239,             # Biological noise
   eps = 0.2,            # Measurement noise
   y.low = 0.0,          # low cutoff
-  y.high = 5e4); # high cutoff
+  y.high = 5e4,# high cutoff
+  antigen_iso=c("HlyE_IgG")); 
 ```
-## 3. Visualize antibody data
+
+``` {r noise, message=FALSE}
+noise_param <- data.frame(
+  nu = 1.027239,             # Biological noise
+  eps = 0.2,            # Measurement noise
+  y.low = 0.0,          # low cutoff
+  y.high = 5e4, # high cutoff
+  antigen_iso=c("HlyE_IgG")); 
+```
+## Visualize antibody data
 Get to know your cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. We have selected HlyE as the antigen of interest, and both IgA and IgG as the isotypes of interest. Here, we will look at the distribution of HlyE IgA and HlyE IgG. 
+
+# Need to update the files and graphs to show by antigen isotype pair
 ```{r hist}
 #Graph your data as a histogram
-hist.hlye.IgG <- ggplot(p.hlye.IgG, aes(x=y)) + geom_histogram(binwidth=5, color = "#000000", fill = "#009999")+  theme_test() + ggtitle("Distribution of Cross-sectional Antibody Responses") 
+histogram <- ggplot(data, aes(x=y)) + geom_histogram(binwidth=5, color = "#000000", fill = "#009999")+  theme_test() + ggtitle("Distribution of Cross-sectional Antibody Responses") 
 
-hist.hlye.IgG
+histogram
 ```
 
 Here, we see that our data is highly skewed with the majority of responses on the lower end of our data, but there is a long tail stretching to over 300. Let's get a better look at the distribution by log transforming our *y* response. We will also need to update the bin width. 
 
 ```{r loghist}
 #Let's log transform your data to better visualize the distribution. We will also need to update the bin width. 
-loghist.hlye.IgG <- ggplot(p.hlye.IgG, aes(x=y)) + geom_histogram(binwidth=0.1, color = "#000000", fill = "#009999") +scale_x_log10() +ggtitle("Distribution of Cross-sectional Antibody Responses (Log transformed)") + xlab("Log(y)")
+loghistogram <- ggplot(data, aes(x=y)) + geom_histogram(binwidth=0.1, color = "#000000", fill = "#009999") +scale_x_log10() +ggtitle("Distribution of Cross-sectional Antibody Responses (Log transformed)") + xlab("Log(result)")
 
-loghist.hlye.IgG
+loghistogram
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 ## Estimate Seroincidence 
 Finally, we are ready to begin seroincidence estimation. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the age-specific incidence, respectively.
+```{r fxntest}
+
+esttest = est.incidence.by(
+  stepmax = 1,
+  verbose = TRUE,
+  lambda.start=.3,
+  numCores = 1,
+  strata = c("edu_current"),
+  data = data,
+  curve_params = curve_param, 
+  noise_params = cond.hlye.IgG
+)
+
+summary(esttest)
+
+#Using est.incidence (no strata)
+esttest = est.incidence(
+  stepmax = 1,
+  verbose = TRUE,
+  start=.3,
+  dpop = data,
+  dmcmc = curve_param, 
+  noise_params = cond.hlye.IgG
+)
+
+
+esttest
+
+```
+
+
 
 ### Overall Seroincidence
 We define our starting value as 0.5, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). Then we log transform $\lambda$ and set up maximum and minimum values for the confidence interval. 

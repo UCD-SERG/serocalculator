@@ -43,7 +43,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 7,
-  fig.height = 7
+  fig.height = 5
 )
 ```
 
@@ -51,7 +51,6 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(serocalculator)
 library(tidyverse)
-
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
 dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")  
@@ -135,7 +134,7 @@ est1 = est.incidence(
   lambda.start = .1,
   stepmax = 1,
   build_graph = T,
-  verbose = T,
+  # verbose = T, # print updates as the function runs
   antigen_isos = antibodies)
 
 
@@ -272,10 +271,31 @@ library(DT)
 summary(ests) |> DT::datatable()
 ```
 
+We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
+
+```{r}
+plot(ests[1])
+```
+
+We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
+
+```{r "plot-multiple", fig.height = 7}
+plot(ests[1:5])
+```
+
+The `log_x` argument also works here:
+
+```{r "plot-multiple-log", fig.height = 7}
+plot(ests[1:5], log_x = TRUE)
+```
+
+### `nlm()` convergence codes
+
 Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r}
-summary(ests) |> 
+summary(ests) |>
+  as_tibble() |> # removes extra meta-data
   select(Stratum, nlm.convergence.code) |> 
   filter(nlm.convergence.code > 2) 
 ```
@@ -294,26 +314,13 @@ problem_strata =
   print()
 ```
 
-Looks like we are ok!
+A few clusters had problems; let's take a look:
 
-
-We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
-
-```{r}
-plot(ests[1])
+```{r, fig.height = 7}
+plot(ests[problem_strata])
 ```
 
-We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
-
-```{r "plot-multiple"}
-plot(ests[1:5])
-```
-
-The `log_x` argument also works here:
-
-```{r "plot-multiple-log"}
-plot(ests[1:5], log_x = TRUE)
-```
+We should probably re-run those clusters, adjusting the `nlm()` settings appropriately.
 
 ## plot distribution of estimates by simulated incidence rate
 

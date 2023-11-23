@@ -48,7 +48,7 @@ summary.seroincidence = function(
     log.lik = -object$minimum,
     iterations = object$iterations,
     antigen.isos = antigen_isos |> paste(collapse = "+"),
-    nlm.convergence.code = object$code
+    nlm.convergence.code = object$code |> factor(levels = 1:5, ordered = TRUE)
     #|> factor(levels = 1:5, labels = nlm_exit_codes)
     )
 

@@ -119,6 +119,13 @@ csdataL <-
     cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value")
+library(ggbeeswarm)
+ggplot(csdataL, aes(x=as.factor(antigen_iso), y= value)) +
+  geom_beeswarm(size=.3, color = "grey") + 
+  geom_boxplot(outlier.colour = NA) + 
+  scale_y_log10() + 
+  # facet_wrap(~lambda.sim) + 
+  theme_linedraw()
 ```
 
 We can estimate incidence with `est.incidence()`:
@@ -209,16 +216,15 @@ sim.df <-
       renew.params = TRUE,
       add.noise = TRUE,
       curve_params = dmcmc,
-      noise_limits = dlims,
-      baseline_limits = blims
+      noise_limits = dlims
     ) %>% 
       mutate(lambda.sim = l, cluster = n) 
   }
 print(sim.df)
 
 library(ggbeeswarm)
-ggplot(sim.df, aes(x=as.factor(cluster), y= HlyE_IgG)) +
-  geom_beeswarm(size=.3, color = "grey") + 
+ggplot(sim.df, aes(x = as.factor(cluster), y= HlyE_IgG)) +
+  geom_beeswarm(size= .3, color = "grey") + 
   geom_boxplot(outlier.colour = NA) + 
   scale_y_log10() + 
   facet_wrap(~lambda.sim) + 
@@ -239,6 +245,14 @@ ests =
   rename(
     y = value,
     a = age) %>% 
+  filter(lambda.sim == 0.05, cluster == 1) |>
+  # est.incidence(
+  #   curve_params = dmcmc,
+  #   noise_params = cond,
+  #   verbose = TRUE,
+  #   build_graph = TRUE, # slows down the function substantially
+  #   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # )
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
@@ -250,6 +264,7 @@ ests =
     build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
+
 ```
 
 We can extract a table listing the strata, using the `strata()` method:

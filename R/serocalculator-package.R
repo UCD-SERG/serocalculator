@@ -115,6 +115,7 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
 #' @importFrom dplyr tibble
+#' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
 #' @importFrom magrittr %>%
 #' @importFrom parallel clusterEvalQ

@@ -82,7 +82,7 @@ est.incidence <- function(
   # First, check if we find numeric results...
   res <- .nll(
     data = data,
-    lambda = lambda.start,
+    log.lambda = log(lambda.start),
     antigen_isos = antigen_isos,
     curve_params = curve_params,
     noise_params = noise_params,
@@ -128,7 +128,7 @@ est.incidence <- function(
     {
       fit = nlm(
         f = .nll,
-        p = lambda.start,
+        p = log(lambda.start),
         data = data,
         antigen_isos = antigen_isos,
         curve_params = curve_params,

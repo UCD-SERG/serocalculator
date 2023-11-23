@@ -4,9 +4,11 @@
 \alias{.nll}
 \title{Calculate negative log-likelihood}
 \usage{
-.nll(...)
+.nll(log.lambda, ...)
 }
 \arguments{
+\item{log.lambda}{log.lambda}
+
 \item{...}{
   Arguments passed on to \code{\link[=llik]{llik}}
   \describe{
@@ -16,7 +18,6 @@
 Monte Carlo samples for each antibody type.}
     \item{\code{noise_params}}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
     \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
-    \item{\code{lambda}}{incidence parameter, in events per person-year}
   }}
 }
 \value{

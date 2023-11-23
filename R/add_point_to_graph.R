@@ -3,8 +3,8 @@ add_point_to_graph = function(
  fit,
  name = "est.incidence",
  point_data = tibble(
-   x = fit$estimate,
-   y = llik(fit$estimate, ...),
+   x = fit$estimate |> exp(),
+   y = llik(.data$x, ...),
    label = "est.incidence"),
  ...
 )

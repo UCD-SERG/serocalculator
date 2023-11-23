@@ -68,8 +68,11 @@ llik <- Vectorize(
 #' Calculate negative log-likelihood
 #' @details
 #' Same as [.nll()], except negated
-#'
-#' @inheritDotParams llik
+#' @param log.lambda log.lambda
+#' @inheritDotParams llik -lambda
 
 #' @return the negative log-likelihood of the data with the current parameter values
-.nll = function(...) -llik(...)
+.nll = function(log.lambda, ...)
+{
+  -llik(lambda = exp(log.lambda),...)
+}

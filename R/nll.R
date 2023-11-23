@@ -10,8 +10,8 @@
 #' @inheritParams fdev
 #' @export
 #' @return the log-likelihood of the data with the current parameter values
-llik <- Vectorize(
-  vectorize.args = "lambda",
+llik <- (
+  # vectorize.args = "lambda",
   function(
     lambda,
     data,
@@ -55,7 +55,8 @@ llik <- Vectorize(
           cond = cur_noise_params
         )
 
-      if (!is.na(nllSingle)) {
+      # if (!is.na(nllSingle))  # not meaningful for vectorized fdev()
+      {
         nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
       }
 

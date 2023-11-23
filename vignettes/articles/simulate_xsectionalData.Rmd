@@ -245,9 +245,6 @@ ests =
     cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value") %>%
-  rename(
-    y = value,
-    a = age) %>% 
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
@@ -344,11 +341,11 @@ summary(ests) |> plot(xvar = 'lambda.sim')
 
 ## extra (remove?)
 
-We can calculate the likelihood of the data, for a given value of the incidence rate (`lambda`):
+We can calculate the log-likelihood of the data as a function of the incidence rate, even without running `est.incidence()`.
 
 ```{r}
-llik(
-  lambda = 0.1,
+
+graph_loglik(
   data = csdataL,
   curve_params = 
     dmcmc |> # llik() is a lower-level function, it assumes this transformation is already done
@@ -356,6 +353,8 @@ llik(
     alpha = .data$alpha * 365.25,
     d = .data$r - 1),
   noise_params = cond,
-  antigen_isos = antibodies
+  antigen_isos = antibodies,
+  log_x = TRUE
 )
+
 ```

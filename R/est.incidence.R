@@ -104,7 +104,7 @@ est.incidence <- function(
     if(verbose) message('building likelihood graph')
     graph = graph_loglik(
       highlight_points = lambda.start,
-      hightlight_point_names = "lambda.start",
+      highlight_point_names = "lambda.start",
       data = data,
       antigen_isos = antigen_isos,
       curve_params = curve_params,

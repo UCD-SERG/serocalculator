@@ -12,7 +12,7 @@ graph_loglik = function(
     ...,
     x = 10^seq(-3, 1, by = .1),
     highlight_points = NULL,
-    highlight_point_names = NULL,
+    highlight_point_names = "highlight_points",
     log_x = FALSE)
 {
 
@@ -31,10 +31,7 @@ graph_loglik = function(
 
   if(!is.null(highlight_points))
   {
-    if(is.null(highlight_point_names))
-    {
-      highlight_point_names = "`highlight_points`"
-    }
+
     plot1 = plot1 +
       ggplot2::geom_point(
         data = tibble(

@@ -333,7 +333,7 @@ A few clusters had problems; let's take a look:
 plot(ests[problem_strata], log_x = TRUE)
 ```
 
-We should probably re-run those clusters, adjusting the `nlm()` settings appropriately.
+Visually, it looks like we approximately reached the MLE, but we should probably re-run those clusters, adjusting the `nlm()` settings appropriately, to be sure.
 
 ## plot distribution of estimates by simulated incidence rate
 

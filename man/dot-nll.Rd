@@ -2,37 +2,34 @@
 % Please edit documentation in R/nll.R
 \name{.nll}
 \alias{.nll}
-\title{Calculate log-likelihood}
+\title{Calculate negative log-likelihood (vectorized)}
 \usage{
-.nll(
-  log.lambda,
-  data,
-  antigen_isos,
-  curve_params,
-  noise_params,
-  verbose = FALSE,
-  ...
-)
+.nll(...)
 }
 \arguments{
-\item{log.lambda}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
-
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
-
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}.}
-
-\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
+\item{...}{
+  Arguments passed on to \code{\link[=llik]{llik}}
+  \describe{
+    \item{\code{data}}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
+    \item{\code{antigen_isos}}{Character vector with one or more antibody names. Values must match \code{data}.}
+    \item{\code{curve_params}}{List of data frames of all longitudinal parameters. Each data frame contains
 Monte Carlo samples for each antibody type.}
-
-\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
-
-\item{verbose}{logical: if TRUE, print verbose log information to console}
-
-\item{...}{additional arguments passed to other functions (not currently used).}
+    \item{\code{noise_params}}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
+    \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
+    \item{\code{log.lambda}}{natural logarithm of incidence parameter, in log(events per person-year).
+\itemize{
+\item Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)})
+\item Value of -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}).
+}}
+    \item{\code{lambda}}{incidence parameter, in events per person-year}
+  }}
 }
 \value{
-the log-likelihood of the data with the current parameter values
+the negative log-likelihood of the data with the current parameter values
 }
 \description{
-Calculate log-likelihood
+Calculate negative log-likelihood (vectorized)
+}
+\details{
+Same as \code{\link[=.nll]{.nll()}}, except negated
 }

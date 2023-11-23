@@ -67,7 +67,7 @@ set.seed(54321)
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 # simulated incidence rate per person-year
-lambda <- 0.1; 
+lambda <- 0.2;
 
 # range covered in simulations
 lifespan <- c(0,20); 
@@ -120,7 +120,27 @@ csdataL <-
     values_to = "value")
 ```
 
-Now we can estimate incidence:
+We can calculate the likelihood of the data, for a given value of the incidence rate (`lambda`):
+
+```{r}
+llik(
+  lambda = 0.1,
+  data = csdataL %>%
+    rename(
+      y = value,
+      a = age),
+  curve_params = dmcmc |> dplyr::mutate(
+    alpha = .data$alpha * 365.25,
+    d = .data$r - 1),
+  noise_params = cond,
+  antigen_isos = antibodies
+)
+```
+
+
+We can estimate incidence with `est.incidence()`. 
+The argument `verbose = TRUE` prints our progress as we search for 
+the value of `lambda` that maximizes the likelihood of the data.
 
 ```{r "est.incidence"}
 
@@ -132,11 +152,10 @@ est1 = est.incidence(
   curve_params = dmcmc,
   noise_params = cond,
   lambda.start = .1,
-  stepmax = 1,
   build_graph = T,
-  # verbose = T, # print updates as the function runs
+  verbose = T, # print updates as the function runs
+  print_graph = F,
   antigen_isos = antibodies)
-
 
 ```
 

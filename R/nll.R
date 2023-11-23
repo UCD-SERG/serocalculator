@@ -1,4 +1,4 @@
-#' Calculate log-likelihood
+#' Calculate  log-likelihood
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`.
@@ -8,10 +8,11 @@
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams fdev
-
+#' @export
 #' @return the log-likelihood of the data with the current parameter values
-.nll <- function(
-    log.lambda,
+llik <- function(
+    log.lambda = log(lambda),
+    lambda = exp(log.lambda),
     data,
     antigen_isos,
     curve_params,
@@ -60,14 +61,24 @@
   }
 
   # Return total log-likelihood
-  return(nllTotal)
+  return(-nllTotal)
 }
+
+#' Calculate negative log-likelihood (vectorized)
+#' @details
+#' Same as [.nll()], except negated
+#'
+#' @inheritDotParams llik
+
+#' @return the negative log-likelihood of the data with the current parameter values
+.nll = function(...) -llik(...)
 
 #' Calculate log-likelihood (vectorized)
 #' @details
-#' Same as [.nll()], except vectorized for the `log.lambda` argument.
+#' Same as [llik()], except vectorized for the `log.lambda` argument.
 #'
-#' @inheritParams .nll
+#' @inheritParams llik
 
 #' @return the log-likelihood of the data with the current parameter values
-.nll_vec = Vectorize(serocalculator:::.nll, vectorize.args = "log.lambda")
+llik_vec = Vectorize(llik, vectorize.args = "log.lambda")
+

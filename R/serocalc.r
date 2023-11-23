@@ -3,14 +3,19 @@
 #' Calculate negative log-likelihood (deviance)
 #'
 #' more description to be added here
-#' @param log.lambda natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).
+#' @param log.lambda natural logarithm of incidence parameter, in log(events per person-year).
+#' * Value of -6 corresponds roughly to 1 day (`log(1/365.25)`)
+#' * Value of -4 corresponds roughly to 1 week (`log(7 / 365.25)`).
+#' @param lambda incidence parameter, in events per person-year
+
 #' @param csdata cross-sectional sample data containing variables `y` and `a`
 #' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
 #' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
 #' @export
 
 fdev <- function(
-    log.lambda,
+    log.lambda = log(lambda),
+    lambda = exp(log.lambda),
     csdata,
     lnpars,
     cond)

@@ -22,11 +22,6 @@ est.incidence.by(
 \arguments{
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
-\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.}
-
-\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
-
 \item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}. Default = "".}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
@@ -40,8 +35,6 @@ Monte Carlo samples for each antibody type.}
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
 \item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
-
-\item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
   Arguments passed on to \code{\link[=est.incidence]{est.incidence}}, \code{\link[stats:nlm]{stats::nlm}}

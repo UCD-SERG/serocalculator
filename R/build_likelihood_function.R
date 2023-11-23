@@ -15,10 +15,10 @@ build_likelihood_function = function(
     {
       res = res +
         fdev(
-          llam,
-          cross_sectional_data[[cur_antigen]],
-          longitudinal_parameter_samples[[cur_antigen]],
-          noise_params[[cur_antigen]])
+          log.lambda = llam,
+          csdata = cross_sectional_data[[cur_antigen]],
+          lnpars = longitudinal_parameter_samples[[cur_antigen]],
+          cond = noise_params[[cur_antigen]])
     }
 
     return(res)

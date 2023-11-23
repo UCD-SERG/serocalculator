@@ -45,7 +45,8 @@ summary.seroincidence = function(
   to_return = tibble::tibble(
     est.start = start,
     incidence.rate = exp(log.lambda),
-    SE2 = sqrt(var.log.lambda * (incidence.rate^2)), # delta method
+    SE = se.log.lambda * incidence.rate, # delta method:
+    # https://en.wikipedia.org/wiki/Delta_method#Univariate_delta_method
     CI.lwr = exp(log.lambda - qnorm(1 - h.alpha) * se.log.lambda),
     CI.upr = exp(log.lambda + qnorm(1 - h.alpha) * se.log.lambda),
     coverage = coverage,

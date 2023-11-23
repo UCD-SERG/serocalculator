@@ -1,12 +1,14 @@
 add_point_to_graph = function(
- graph,
- fit,
- name = "est.incidence",
- point_data = tibble(
-   x = fit$estimate |> exp(),
-   y = llik(.data$x, ...),
-   label = "est.incidence"),
- ...
+    graph,
+    fit,
+    name = "est.incidence",
+    point_data =
+      tibble(
+        x = fit$estimate |> exp(),
+        y = llik(.data$x, ...),
+        label = "est.incidence" |> factor(levels = c("lambda.start", "est.incidence"))
+      ),
+    ...
 )
 {
 

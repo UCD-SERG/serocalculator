@@ -29,7 +29,10 @@ graph_loglik = function(
       data = tibble(
         x = lambda.start,
         y = llik(lambda = lambda.start, ...)),
-      ggplot2::aes(x = .data$x, y = .data$y, col = "lambda.start")
+      ggplot2::aes(
+        x = .data$x,
+        y = .data$y,
+        col = "lambda.start" |> factor(levels = c("lambda.start", "est.incidence")))
     ) +
     ggplot2::labs(col = "") +
     ggplot2::theme(legend.position="bottom")

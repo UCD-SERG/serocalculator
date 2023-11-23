@@ -119,6 +119,12 @@ csdataL <-
     cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value")
+
+```
+
+We can plot the distribution of the antibodies:
+
+```{r}
 library(ggbeeswarm)
 ggplot(csdataL, aes(x=as.factor(antigen_iso), y= value)) +
   geom_beeswarm(size=.3, color = "grey") + 
@@ -142,7 +148,7 @@ est1 = est.incidence(
   lambda.start = .1,
   build_graph = T,
   verbose = T, # print updates as the function runs
-  print_graph = F,
+  print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
   antigen_isos = antibodies)
 
 ```
@@ -245,18 +251,10 @@ ests =
   rename(
     y = value,
     a = age) %>% 
-  filter(lambda.sim == 0.05, cluster == 1) |>
-  # est.incidence(
-  #   curve_params = dmcmc,
-  #   noise_params = cond,
-  #   verbose = TRUE,
-  #   build_graph = TRUE, # slows down the function substantially
-  #   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  # )
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
-    numCores = 1,
+    numCores = nclus,
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
@@ -332,7 +330,7 @@ problem_strata =
 A few clusters had problems; let's take a look:
 
 ```{r, fig.height = 7}
-plot(ests[problem_strata])
+plot(ests[problem_strata], log_x = TRUE)
 ```
 
 We should probably re-run those clusters, adjusting the `nlm()` settings appropriately.

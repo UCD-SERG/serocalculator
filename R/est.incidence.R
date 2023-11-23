@@ -32,7 +32,10 @@ est.incidence <- function(
   if(!is.null(c.age))
   {
     data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
-    curve_params = curve_params %>% dplyr::filter(.data[["ageCat"]] == c.age)
+    curve_params =
+      curve_params %>%
+      ungroup() %>%
+      dplyr::filter(.data[["ageCat"]] == c.age)
 
     if("ageCat" %in% names(noise_params))
     {
@@ -44,17 +47,20 @@ est.incidence <- function(
   data = data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     dplyr::select("y", "a", "antigen_iso") |>
-    drop_na()
+    tidyr::drop_na()
 
   curve_params = curve_params |>
+    ungroup() %>%
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
       d = .data$r - 1) |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select("y1", "alpha", "d", "antigen_iso")
+    dplyr::select("y1", "alpha", "d", "antigen_iso") |>
+    droplevels()
 
   noise_params = noise_params |>
-    dplyr::filter(.data$antigen_iso %in% antigen_isos)
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    droplevels()
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(data) == 0) {

@@ -18,7 +18,7 @@ Age range of the simulated cross-sectional record is `lifespan`.
 The size of the sample is `nrep`.
 
 Each individual is simulated separately, but different antibodies are
-modelled jointly (see "sim-graph.r").
+modelled jointly.
 
 Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
 However, when `age.fx` is set to NA then the age at infection is used.
@@ -53,7 +53,8 @@ library(serocalculator)
 library(tidyverse)
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
-dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")  
+dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k") |> 
+  ungroup()
 
 ```
 

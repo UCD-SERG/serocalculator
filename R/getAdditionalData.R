@@ -27,7 +27,7 @@
 #' curve_param_samples =
 #'   getAdditionalData(
 #'     fileURL = "https://osf.io/download/bhfvx",
-#'     savePath = "~/Downloads/curv_params.rds"))
+#'     savePath = "~/Downloads/curv_params.rds")
 #' }
 #'
 #' @export

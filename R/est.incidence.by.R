@@ -113,6 +113,7 @@ est.incidence.by <- function(
 
       for (cur_stratum in names(stratumDataList))
       {
+
         cur_stratum_vars =
           strata_table |>
           dplyr::filter(.data$Stratum == cur_stratum)

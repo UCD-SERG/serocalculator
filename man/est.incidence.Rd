@@ -14,13 +14,20 @@ est.incidence(
   stepmin = 1e-08,
   stepmax = 3,
   verbose = FALSE,
-  build_graph = TRUE,
+  build_graph = FALSE,
   print_graph = build_graph & verbose,
   c.age = NULL,
   ...
 )
 }
 \arguments{
+\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
+
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
+Monte Carlo samples for each antibody type.}
+
+\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
+
 \item{dataList}{Optional argument; as an alternative to passing in \code{data}, \code{curve_params}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
@@ -36,6 +43,8 @@ est.incidence(
     detect divergence in the algorithm. \code{stepmax} would be chosen
     small enough to prevent the first two of these occurrences, but should
     be larger than any anticipated reasonable step.}
+
+\item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/nll.R
 \name{.nll}
 \alias{.nll}
-\title{Calculate negative log-likelihood (vectorized)}
+\title{Calculate negative log-likelihood}
 \usage{
 .nll(...)
 }
@@ -16,11 +16,6 @@
 Monte Carlo samples for each antibody type.}
     \item{\code{noise_params}}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
     \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
-    \item{\code{log.lambda}}{natural logarithm of incidence parameter, in log(events per person-year).
-\itemize{
-\item Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)})
-\item Value of -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}).
-}}
     \item{\code{lambda}}{incidence parameter, in events per person-year}
   }}
 }
@@ -28,7 +23,7 @@ Monte Carlo samples for each antibody type.}
 the negative log-likelihood of the data with the current parameter values
 }
 \description{
-Calculate negative log-likelihood (vectorized)
+Calculate negative log-likelihood
 }
 \details{
 Same as \code{\link[=.nll]{.nll()}}, except negated

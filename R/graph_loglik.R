@@ -17,7 +17,7 @@ graph_loglik = function(
 
   plot1 = tibble(
     x = x,
-    y = llik_vec(x |> log(), ...)
+    y = llik(lambda = x, ...)
   ) |>
     ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
     ggplot2::geom_point() +
@@ -28,7 +28,7 @@ graph_loglik = function(
     ggplot2::geom_point(
       data = tibble(
         x = lambda.start,
-        y = llik_vec(lambda.start |> log(), ...)),
+        y = llik(lambda = lambda.start, ...)),
       ggplot2::aes(x = .data$x, y = .data$y, col = "lambda.start")
     ) +
     ggplot2::labs(col = "") +

@@ -10,61 +10,62 @@
 #' @inheritParams fdev
 #' @export
 #' @return the log-likelihood of the data with the current parameter values
-llik <- function(
-    log.lambda = log(lambda),
-    lambda = exp(log.lambda),
+llik <- Vectorize(
+  vectorize.args = "lambda",
+  function(
+    lambda,
     data,
     antigen_isos,
     curve_params,
     noise_params,
     verbose = FALSE,
     ...)
-{
-  # Start with zero total
-  nllTotal <- 0
-
-  # Loop over antigen_isos
-  for (cur_antibody in antigen_isos)
   {
+    # Start with zero total
+    nllTotal <- 0
 
-    # the inputs can be lists, after `split(~antigen_ios)`
-    # this gives some speedups compared to running filter() every time .nll() is called
-    if(!is.data.frame(data))
+    # Loop over antigen_isos
+    for (cur_antibody in antigen_isos)
     {
-      cur_data = data[[cur_antibody]]
-      cur_curve_params = curve_params[[cur_antibody]]
-      cur_noise_params = noise_params[[cur_antibody]]
-    } else
-    {
-      cur_data =
-        data |> dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      cur_curve_params =
-        curve_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+      # the inputs can be lists, after `split(~antigen_ios)`
+      # this gives some speedups compared to running filter() every time .nll() is called
+      if(!is.data.frame(data))
+      {
+        cur_data = data[[cur_antibody]]
+        cur_curve_params = curve_params[[cur_antibody]]
+        cur_noise_params = noise_params[[cur_antibody]]
+      } else
+      {
+        cur_data =
+          data |> dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      cur_noise_params =
-        noise_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+        cur_curve_params =
+          curve_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+
+        cur_noise_params =
+          noise_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+      }
+
+      nllSingle <-
+        fdev(
+          lambda = lambda,
+          csdata = cur_data,
+          lnpars = cur_curve_params,
+          cond = cur_noise_params
+        )
+
+      if (!is.na(nllSingle)) {
+        nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
+      }
+
     }
 
-    nllSingle <-
-      fdev(
-        log.lambda = log.lambda,
-        csdata = cur_data,
-        lnpars = cur_curve_params,
-        cond = cur_noise_params
-      )
+    # Return total log-likelihood
+    return(-nllTotal)
+  })
 
-    if (!is.na(nllSingle)) {
-      nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
-    }
-
-  }
-
-  # Return total log-likelihood
-  return(-nllTotal)
-}
-
-#' Calculate negative log-likelihood (vectorized)
+#' Calculate negative log-likelihood
 #' @details
 #' Same as [.nll()], except negated
 #'
@@ -72,13 +73,3 @@ llik <- function(
 
 #' @return the negative log-likelihood of the data with the current parameter values
 .nll = function(...) -llik(...)
-
-#' Calculate log-likelihood (vectorized)
-#' @details
-#' Same as [llik()], except vectorized for the `log.lambda` argument.
-#'
-#' @inheritParams llik
-
-#' @return the log-likelihood of the data with the current parameter values
-llik_vec = Vectorize(llik, vectorize.args = "log.lambda")
-

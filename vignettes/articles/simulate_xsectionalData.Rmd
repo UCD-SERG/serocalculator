@@ -120,24 +120,6 @@ csdataL <-
     values_to = "value")
 ```
 
-We can calculate the likelihood of the data, for a given value of the incidence rate (`lambda`):
-
-```{r}
-llik(
-  lambda = 0.1,
-  data = csdataL %>%
-    rename(
-      y = value,
-      a = age),
-  curve_params = dmcmc |> dplyr::mutate(
-    alpha = .data$alpha * 365.25,
-    d = .data$r - 1),
-  noise_params = cond,
-  antigen_isos = antibodies
-)
-```
-
-
 We can estimate incidence with `est.incidence()`:
 
 ```{r "est.incidence"}
@@ -259,12 +241,12 @@ ests =
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
-    numCores = n_cores,
+    numCores = 1,
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
-    verbose = FALSE,
-    build_graph = TRUE, # adds time to runs
+    verbose = TRUE,
+    build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 ```
@@ -349,3 +331,21 @@ summary(ests) |> plot(xvar = 'lambda.sim')
 
 ```
 
+## extra (remove?)
+
+We can calculate the likelihood of the data, for a given value of the incidence rate (`lambda`):
+
+```{r}
+llik(
+  lambda = 0.1,
+  data = csdataL %>%
+    rename(
+      y = value,
+      a = age),
+  curve_params = dmcmc |> dplyr::mutate(
+    alpha = .data$alpha * 365.25,
+    d = .data$r - 1),
+  noise_params = cond,
+  antigen_isos = antibodies
+)
+```

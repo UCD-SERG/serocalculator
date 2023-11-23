@@ -38,12 +38,12 @@ summary.seroincidence = function(
       "`nlm()` produced a negative hessian; something is wrong with the numerical derivatives.",
       "\nThe standard error of the incidence rate estimate cannot be calculated.")
 
-  log.lambda.est = tibble::tibble(
+  to_return = tibble::tibble(
     est.start = start,
-    incidence.rate = exp(object$estimate),
+    incidence.rate = object$estimate,
     SE = sqrt(1/object$hessian) |> as.vector(),
-    CI.lwr = exp(object$estimate - qnorm(1 - h.alpha) * .data$SE),
-    CI.upr = exp(object$estimate + qnorm(1 - h.alpha) * .data$SE),
+    CI.lwr = object$estimate - qnorm(1 - h.alpha) * .data$SE,
+    CI.upr = object$estimate + qnorm(1 - h.alpha) * .data$SE,
     coverage = coverage,
     log.lik = -object$minimum,
     iterations = object$iterations,
@@ -52,9 +52,9 @@ summary.seroincidence = function(
     #|> factor(levels = 1:5, labels = nlm_exit_codes)
     )
 
-  class(log.lambda.est) =
+  class(to_return) =
     "summary.seroincidence" |>
-    union(class(log.lambda.est))
+    union(class(to_return))
 
-  return(log.lambda.est)
+  return(to_return)
 }

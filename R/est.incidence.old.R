@@ -40,9 +40,6 @@ est.incidence2 <- function(
     ...)
 {
 
-  lambda = lambda.start # initial estimate: starting value
-  log.lambda = log(lambda)
-
   if(!is.null(c.age))
   {
     data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
@@ -88,7 +85,7 @@ est.incidence2 <- function(
     longitudinal_parameter_samples = cs,
     noise_params = conds)
 
-  res = objfunc(log.lambda)
+  res = objfunc(lambda.start)
   if (verbose)
   {
     message("Initial log-likelihood: ", res)
@@ -97,7 +94,7 @@ est.incidence2 <- function(
   {
     fit = nlm(
       f = objfunc,
-      p = log.lambda,
+      p = lambda.start,
       hessian = TRUE,
       iterlim = iterlim,
       stepmax = stepmax,
@@ -117,7 +114,7 @@ est.incidence2 <- function(
       "Maximum `nlm()` iterations reached; consider increasing `iterlim` argument.")
   }
 
-  log.lambda.est =
+  lambda.est =
     fit |>
     structure(
       lambda.start = lambda.start,
@@ -131,5 +128,5 @@ est.incidence2 <- function(
     structure(
       noise.parameters = noise_params)
 
-  return(log.lambda.est)
+  return(lambda.est)
 }

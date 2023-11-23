@@ -5,8 +5,7 @@
 \title{Calculate  log-likelihood}
 \usage{
 llik(
-  log.lambda = log(lambda),
-  lambda = exp(log.lambda),
+  lambda,
   data,
   antigen_isos,
   curve_params,
@@ -16,12 +15,6 @@ llik(
 )
 }
 \arguments{
-\item{log.lambda}{natural logarithm of incidence parameter, in log(events per person-year).
-\itemize{
-\item Value of -6 corresponds roughly to 1 day (\code{log(1/365.25)})
-\item Value of -4 corresponds roughly to 1 week (\code{log(7 / 365.25)}).
-}}
-
 \item{lambda}{incidence parameter, in events per person-year}
 
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}

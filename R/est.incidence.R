@@ -1,7 +1,7 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
 #' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
-#' @inheritParams .nll
+#' @inheritParams llik
 #' @inheritParams stats::nlm
 #' @param lambda.start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
@@ -24,7 +24,7 @@ est.incidence <- function(
     stepmin = 1e-8,
     stepmax = 3,
     verbose = FALSE,
-    build_graph = TRUE,
+    build_graph = FALSE,
     print_graph = build_graph & verbose,
     c.age = NULL,
     ...)
@@ -76,7 +76,7 @@ est.incidence <- function(
   # First, check if we find numeric results...
   res <- .nll(
     data = data,
-    log.lambda = log(lambda.start),
+    lambda = lambda.start,
     antigen_isos = antigen_isos,
     curve_params = curve_params,
     noise_params = noise_params,
@@ -90,7 +90,7 @@ est.incidence <- function(
 
   if (verbose)
   {
-    message("Initial log-likelihood: ", res)
+    message("Initial negative log-likelihood: ", res)
   }
 
   if (build_graph)
@@ -117,12 +117,12 @@ est.incidence <- function(
 
 
   if(verbose) message('about to call `nlm()`')
-  # Estimate log.lambda
+  # Estimate lambda
   time =
     {
       fit = nlm(
         f = .nll,
-        p = log(lambda.start),
+        p = lambda.start,
         data = data,
         antigen_isos = antigen_isos,
         curve_params = curve_params,

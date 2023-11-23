@@ -5,7 +5,7 @@
 #' more description to be added here
 #' @param lambda incidence parameter, in events per person-year
 
-#' @param csdata cross-sectional sample data containing variables `y` and `a`
+#' @param csdata cross-sectional sample data containing variables `value` and `age`
 #' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
 #' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
 #' @export
@@ -18,9 +18,9 @@ fdev <- function(
 {
   res <- 0;
   lambda <- as.double(lambda);
-  y <- as.double(csdata$y);
-  a <- as.double(csdata$a);
-  nsubj <- as.integer(length(y));
+  y <- as.double(csdata$"value");
+  a <- as.double(csdata$"age");
+  nsubj <- as.integer(nrow(csdata));
   y1 <- as.double(lnpars$y1);
   alpha <- as.double(lnpars$alpha);
   d <- as.double(lnpars$d);

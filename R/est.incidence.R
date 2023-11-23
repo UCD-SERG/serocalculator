@@ -46,7 +46,7 @@ est.incidence <- function(
   }
   data = data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select("y", "a", "antigen_iso") |>
+    dplyr::select("value", "age", "antigen_iso") |>
     tidyr::drop_na()
 
   curve_params = curve_params |>

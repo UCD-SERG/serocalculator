@@ -9,7 +9,7 @@ fdev(lambda, csdata, lnpars, cond)
 \arguments{
 \item{lambda}{incidence parameter, in events per person-year}
 
-\item{csdata}{cross-sectional sample data containing variables \code{y} and \code{a}}
+\item{csdata}{cross-sectional sample data containing variables \code{value} and \code{age}}
 
 \item{lnpars}{longitudinal antibody decay model parameters \code{alpha}, \code{y1}, and \code{d}}
 

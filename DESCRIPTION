@@ -15,7 +15,6 @@ Depends: R (>= 3.5.0)
 License: GPL-3
 Imports: 
     dplyr (>= 1.1.1),
-    DT,
     ggplot2,
     ggpubr,
     magrittr,
@@ -41,7 +40,8 @@ Suggests:
     printr,
     doRNG,
     rngtools,
-    ggbeeswarm
+    ggbeeswarm,
+    DT
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

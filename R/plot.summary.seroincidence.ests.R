@@ -15,12 +15,17 @@ plot.summary.seroincidence.by = function(
     ...)
 {
   x |>
-  ggplot2::ggplot(ggplot2::aes(x = get(xvar), y = .data$incidence.rate)) +
-    ggplot2::geom_point(alpha = alpha) +
+  ggplot2::ggplot(ggplot2::aes(
+    x = get(xvar),
+    y = .data$incidence.rate)) +
+    ggplot2::geom_point(
+      aes(col = .data$nlm.convergence.code |> as.character()),
+      alpha = alpha) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_bw() +
-    ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1, col = "x=y")) +
+    ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1)) +
     ggplot2::expand_limits(x = 0,y = 0) +
-    ggplot2::labs(col = "")
+    ggplot2::labs(col = "`nlm()` convergence code") +
+    ggplot2::theme(legend.position="bottom")
 }

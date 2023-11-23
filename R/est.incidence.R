@@ -137,14 +137,15 @@ est.incidence <- function(
     system.time()
 
   code_text = nlm_exit_codes[fit$code]
-  message1 = '\n`nlm()` completed with the following exit code:\n'
+  message1 = '\n`nlm()` completed with the following convergence code:\n'
   if(fit$code %in% 3:5)
   {
-    warning("`nlm()` may not have reached the maximum likelihood estimate.", message1, code_text)
+    warning(
+      "`nlm()` may not have reached the maximum likelihood estimate.",
+      message1,
+      code_text)
 
   }
-
-
 
   if(verbose)
   {
@@ -163,7 +164,15 @@ est.incidence <- function(
         curve_params = curve_params,
         noise_params = noise_params)
 
-    if(print_graph) print(graph)
+    if(print_graph)
+    {
+      print(
+        graph +
+          ggplot2::scale_x_continuous(
+            trans = "log10",
+            labels = scales::label_comma()))
+
+    }
 
   }
 

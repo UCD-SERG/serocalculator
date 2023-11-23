@@ -19,7 +19,7 @@
 #'  * `CI.upr` upper confidence bound for lambda
 #'  * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
 #'    `lambda`)
-#'    * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
+#'    * `nlm.convergence.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
 #' The object also has the following metadata (accessible through [base::attr()]):
 #' * `antigen_isos` Character vector with names of input antigen isotypes used in [est.incidence.by()]
 #' * `Strata` Character with names of strata used in [est.incidence.by()]
@@ -78,10 +78,10 @@ summary.seroincidence.by <- function(
 
   if (showConvergence) {
     results = results |>
-      relocate("nlm.exit.code", .after = everything())
+      relocate("nlm.convergence.code", .after = everything())
   } else
   {
-    results$nlm.exit.code <- NULL
+    results$nlm.convergence.code <- NULL
   }
 
 

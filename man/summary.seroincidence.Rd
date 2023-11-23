@@ -25,7 +25,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 \item \code{neg.llik}: negative log-likelihood
 \item \code{iterations}: the number of iterations used
 \item \code{antigen_isos}: a list of antigen isotypes used in the analysis
-\item \code{nlm.exit.code}: information about convergence of the likelihood maximization procedure performed by \code{nlm()} (see "Value" section of \code{\link[stats:nlm]{stats::nlm()}}, component \code{code}); codes 3-5 indicate issues:
+\item \code{nlm.convergence.code}: information about convergence of the likelihood maximization procedure performed by \code{nlm()} (see "Value" section of \code{\link[stats:nlm]{stats::nlm()}}, component \code{code}); codes 3-5 indicate issues:
 \itemize{
 \item 1: relative gradient is close to zero, current iterate is probably solution.
 \item 2: successive iterates within tolerance, current iterate is probably solution.

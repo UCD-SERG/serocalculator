@@ -253,40 +253,6 @@ ests =
   )
 ```
 
-```{r}
-s20 = 
-  sim.df %>% 
-  as_tibble() %>%
-  pivot_longer(
-    cols = c("HlyE_IgG", "HlyE_IgA"), 
-    names_to = "antigen_iso", 
-    values_to = "value") %>%
-  rename(
-    y = value,
-    a = age) |> 
-  filter(lambda.sim == 0.1, cluster == 10) |> 
-  # est.incidence(
-  #   curve_params = dmcmc,
-  #   noise_params = cond,
-  #   build_graph = TRUE,
-  #   verbose = TRUE,
-  #   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  # )
-  est.incidence.by(
-    curve_params = dmcmc,
-    noise_params = cond,
-    numCores = n_cores,
-    # numCores = 1,
-    strata = c("lambda.sim", "cluster"),
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL,
-    verbose = FALSE,
-    build_graph = TRUE, # adds time to runs
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  )
-```
-
-
 We can extract a table listing the strata, using the `strata()` method:
 
 ```{r}
@@ -299,27 +265,32 @@ strata(ests)
 summary(ests)
 ```
 
-Make sure to check the exit codes (codes 3-5 indicate possible non-convergence):
+We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
 library(DT)
-summary(ests) |> select(Stratum, nlm.exit.code) |> datatable()
+summary(ests) |> DT::datatable()
 ```
 
-Solutions to codes 3-5:
+Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
+
+```{r}
+summary(ests) |> 
+  select(Stratum, nlm.convergence.code) |> 
+  filter(nlm.convergence.code > 2) 
+```
+
+Solutions to `nlm()` exit codes 3-5:
 
 * 3: decrease the `stepmin` argument to `est.incidence()`/`est.incidence.by()`
 * 4: increase the `iterlim` argument to `est.incidence()`/`est.incidence.by()`
 * 5: increase the `stepmax` argument to `est.incidence()`/`est.incidence.by()`
 
 We can extract the indices of problematic strata, if there are any:
+
 ```{r}
 problem_strata = 
-  summary(ests) |> 
-  pull(nlm.exit.code) |> 
-  as.numeric() |> 
-  is.element(3:5) |> 
-  which() |> 
+  which(summary(ests)$nlm.convergence.code > 2) |> 
   print()
 ```
 
@@ -329,7 +300,7 @@ Looks like we are ok!
 We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
-plot(ests[1:5])
+plot(ests[1])
 ```
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):

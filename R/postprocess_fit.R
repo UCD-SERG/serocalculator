@@ -14,7 +14,7 @@
 #' * `neg.llik`: negative log-likelihood
 #' * `iterations`: the number of iterations used
 #'  * `antigen_isos`: a list of antigen isotypes used in the analysis
-#'  * `nlm.exit.code`: information about convergence of the likelihood maximization procedure performed by `nlm()` (see "Value" section of [stats::nlm()], component `code`); codes 3-5 indicate issues:
+#'  * `nlm.convergence.code`: information about convergence of the likelihood maximization procedure performed by `nlm()` (see "Value" section of [stats::nlm()], component `code`); codes 3-5 indicate issues:
 #'    * 1: relative gradient is close to zero, current iterate is probably solution.
 #'    * 2: successive iterates within tolerance, current iterate is probably solution.
 #'    * 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or `stepmin` in [est.incidence()] (a.k.a., `steptol` in [stats::nlm()]) is too large.
@@ -34,7 +34,9 @@ summary.seroincidence = function(
   h.alpha = alpha/2
   hessian = object$hessian
   if(hessian < 0)
-    warning("`nlm()` produced a negative hessian; something is wrong with the numerical derivatives.")
+    warning(
+      "`nlm()` produced a negative hessian; something is wrong with the numerical derivatives.",
+      "\nThe standard error of the incidence rate estimate cannot be calculated.")
 
   log.lambda.est = tibble::tibble(
     est.start = start,
@@ -46,7 +48,9 @@ summary.seroincidence = function(
     log.lik = -object$minimum,
     iterations = object$iterations,
     antigen.isos = antigen_isos |> paste(collapse = "+"),
-    nlm.exit.code = object$code |> factor(levels = 1:5, labels = nlm_exit_codes))
+    nlm.convergence.code = object$code
+    #|> factor(levels = 1:5, labels = nlm_exit_codes)
+    )
 
   class(log.lambda.est) =
     "summary.seroincidence" |>

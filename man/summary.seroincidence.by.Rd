@@ -34,7 +34,7 @@ A \code{summary.seroincidence.by} object, which is a \link[tibble:tibble]{tibble
 \item \code{Deviance} (included if \code{showDeviance = TRUE}) Negative log likelihood (NLL) at estimated (maximum likelihood)
 \code{lambda})
 \itemize{
-\item \code{nlm.exit.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
+\item \code{nlm.convergence.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
 The object also has the following metadata (accessible through \code{\link[base:attr]{base::attr()}}):
 }
 \item \code{antigen_isos} Character vector with names of input antigen isotypes used in \code{\link[=est.incidence.by]{est.incidence.by()}}

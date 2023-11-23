@@ -138,9 +138,7 @@ llik(
 ```
 
 
-We can estimate incidence with `est.incidence()`. 
-The argument `verbose = TRUE` prints our progress as we search for 
-the value of `lambda` that maximizes the likelihood of the data.
+We can estimate incidence with `est.incidence()`:
 
 ```{r "est.incidence"}
 

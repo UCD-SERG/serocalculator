@@ -14,14 +14,13 @@
 #' @export
 
 fdev <- function(
-    log.lambda = log(lambda),
-    lambda = exp(log.lambda),
+    lambda,
     csdata,
     lnpars,
     cond)
 {
   res <- 0;
-  lambda <- as.double(exp(log.lambda));
+  lambda <- as.double(lambda);
   y <- as.double(csdata$y);
   a <- as.double(csdata$a);
   nsubj <- as.integer(length(y));

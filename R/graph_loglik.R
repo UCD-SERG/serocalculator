@@ -10,7 +10,7 @@
 #'
 graph_loglik = function(
     ...,
-    x = 10^seq(-3, 1, by = .1),
+    x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,
     highlight_point_names = "highlight_points",
     log_x = FALSE)
@@ -21,7 +21,7 @@ graph_loglik = function(
     y = llik(lambda = x, ...)
   ) |>
     ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
-    ggplot2::geom_point() +
+    # ggplot2::geom_point() +
     ggplot2::geom_line() +
     ggplot2::xlab("incidence rate (events per person:year)") +
     ggplot2::ylab("log(likelihood)") +

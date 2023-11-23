@@ -6,9 +6,9 @@
 \usage{
 graph_loglik(
   ...,
-  x = 10^seq(-3, 1, by = 0.1),
+  x = 10^seq(-3, 0, by = 0.1),
   highlight_points = NULL,
-  highlight_point_names = NULL,
+  highlight_point_names = "highlight_points",
   log_x = FALSE
 )
 }

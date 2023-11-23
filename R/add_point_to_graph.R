@@ -6,7 +6,7 @@ add_point_to_graph = function(
       tibble(
         x = fit$estimate |> exp(),
         y = llik(.data$x, ...),
-        label = "est.incidence" |> factor(levels = c("lambda.start", "est.incidence"))
+        label = "est.incidence"
       ),
     ...
 )

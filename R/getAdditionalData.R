@@ -7,7 +7,7 @@
 #'
 #' You can save the data into your chosen directory using the optional savePath argument. Specify the file path and the file name.
 #'
-#' Large datasets may timeout. If so, you can increase the download time by updating the maximum timeout time in the code below. (Ex: increase from 300 to 1000) 
+#' Large datasets may timeout. If so, you can increase the download time by updating the maximum timeout time in the code below. (Ex: increase from 300 to 1000)
 #' ```options(timeout = max(300, getOption("timeout")))```
 #'
 #' @param fileURL URL of the file to be downloaded.
@@ -27,7 +27,7 @@
 #' curve_param_samples =
 #'   getAdditionalData(
 #'     fileURL = "https://osf.io/download/bhfvx",
-#'     savePath = "~/Downloads/curv_params.rds"))
+#'     savePath = "~/Downloads/curv_params.rds")
 #' }
 #'
 #' @export

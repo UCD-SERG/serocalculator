@@ -180,26 +180,9 @@ esttest = est.incidence(
   start=.3,
   data = data,
   curve_param = curve_param, 
-  noise_param = typhoid_noise_params
+  noise_param = noise_param
 )
 
-
-esttest
-
-```
-
-```{r by}
-
-esttest = est.incidence.by(
-  stepmax = 1,
-  verbose = TRUE,
-  lambda.start=.3,
-  numCores = 1,
-  strata = c("sex"),
-  data = data,
-  curve_params = curve_param, 
-  noise_params = cond.hlye.IgG
-)
 
 esttest
 
@@ -237,6 +220,27 @@ log.lambda.est
 ```
 
 ### Age-Specific Seroincidence
+
+```{r by}
+
+esttest = est.incidence.by(
+  stepmax = 1,
+  verbose = TRUE,
+  lambda.start=.3,
+  numCores = 1,
+  strata = c("sex"),
+  data = data,
+  curve_params = curve_param, 
+  noise_params = cond.hlye.IgG
+)
+
+summary(data)
+
+esttest
+
+```
+
+
 
 ## Conclusions
 In our simulated data, we found that the estimated seroincidence of enteric fever is 0.20 (95% CI: 0.18, 0.23). 

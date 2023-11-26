@@ -111,9 +111,7 @@ csdataL <- as.data.frame(csdata0) %>%
   pivot_longer(cols= c("HlyE_IgG", "HlyE_IgA"), names_to = "antigen_iso", values_to = "value")
 
 est.incidence(
-  csdataL %>%
-    rename(y = value,
-           a = age), 
+  csdataL, 
   dmcmc, 
   cond, 
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
@@ -184,9 +182,6 @@ ests =
     cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value") %>%
-  rename(
-    y = value,
-    a = age) %>% 
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,

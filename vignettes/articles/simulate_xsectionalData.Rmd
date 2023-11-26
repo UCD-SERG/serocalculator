@@ -1,0 +1,319 @@
+---
+title: "Generate a simulated cross-sectional sample and estimate seroincidence"
+subtitle: "Enteric Fever using HlyE IgG and/or HlyE IgA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{simulate_xsectionalData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+This vignette shows how to simulate a cross-sectional sample of 
+seroresponses for incident infections as a Poisson process with frequency `lambda`. 
+Responses are generated for the antibodies given in the `antigen_isos` argument.
+
+Age range of the simulated cross-sectional record is `lifespan`.
+
+The size of the sample is `nrep`.
+
+Each individual is simulated separately, but different antibodies are
+modelled jointly (see "sim-graph.r").
+
+Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
+However, when `age.fx` is set to NA then the age at infection is used.
+
+The boolean `renew.params` determines whether each infection uses a
+new set of longitudinal parameters, sampled at random from the
+posterior predictive output of  the longitudinal model. If set to `FALSE`
+a parameter set is chosen at birth and kept, but:
+1. the baseline antibody levels (`y0`) are updated with the simulated level
+(just) prior to infection, and
+2. when `is.na(age.fx)` then the selected parameter sample is updated for the
+age when infection occurs.
+
+There is also a variable `n.mc`: when `n.mc==0` then a random MC
+sample is chosen out of the posterior set (1:4000). When `n.mc` is
+given a value in 1:4000 then the chosen number is fixed and reused
+in any subsequent infection. This is for diagnostic purposes.
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7
+)
+```
+
+
+```{r setup}
+library(serocalculator)
+library(tidyverse)
+
+
+#load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
+dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")  
+
+```
+
+
+## Simulate cross-sectional data
+```{r "sim.cs"}
+#set seed to reproduce results
+set.seed(54321)
+
+ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
+# antibodies <- dmcmc$antigen_iso %>% droplevels() %>% levels()
+antibodies = c("HlyE_IgA", "HlyE_IgG")
+abs <-  c(1,2);
+lambda <- 0.2; # incidence (1/yr)
+npar <- 5; # y0, y1, t1, alpha, shape
+
+lifespan <- c(0,20); # range covered in simulations
+nrep <- 100; # cross-sectional sample size
+
+dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # biologic noise distribution
+
+csdata0 <- sim.cs(
+  curve_params = dmcmc,
+  lambda = lambda,
+  n.smpl = nrep,
+  age.rng = lifespan,
+  antigen_isos = antibodies,
+  n.mc = 0,
+  renew.params = TRUE,
+  add.noise = TRUE,
+  noise_limits = dlims
+)
+
+```
+
+## Estimate seroincidence
+
+We need to provide noise parameters for the analysis; here, we define them directly in our code:
+
+```{r "noise"}
+cond <- data.frame(
+  antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
+  nu = c(0.5, 0.5),  # Biologic noise (nu)
+  eps = c(0.2, 0.2),                             # M noise (eps)
+  y.low = c(1, 1),                            # low cutoff (llod)
+  y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+
+```
+
+We also need to turn the data to a long format for analysis:
+
+```{r "long-format"}
+csdataL <- 
+  csdata0 %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value")
+```
+
+Now we can estimate incidence:
+
+```{r "est.incidence"}
+est1 = est.incidence(
+  data = csdataL %>%
+    rename(
+      y = value,
+      a = age),
+  curve_params = dmcmc,
+  noise_params = cond,
+  build_graph = TRUE,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+
+```
+
+We can extract summary statistics with `summary()`:
+
+```{r "summary.est.incidence"}
+summary(est1)
+```
+
+We can plot the log-likelihood curve with `plot()`:
+
+```{r}
+plot(est1)
+```
+
+
+# Optional - loop over "clusters" and different lambdas
+
+```{r "init-parallel"}
+library(parallel)
+library(doParallel)
+library(doRNG) # for reproducible results
+library(rngtools)
+n_cores = max(1, parallel::detectCores() - 1)
+# n_cores = 1
+print(n_cores)
+```
+
+In the preceding code chunk, we have determined that we can use `r n_cores` CPU cores to run computations in parallel.
+
+```{r "do-parallel"}
+
+doParallel::registerDoParallel(cores = n_cores)
+nclus = 5;
+nrep <- 100; # cross-sectional sample size
+lmbdaVec <- c(.05,.1, .2, .3)
+n_lambda = length(lmbdaVec)
+rng <- RNGseq(n_lambda * nclus, 1234)
+sim.df <- 
+  foreach(i = 1:length(lmbdaVec), 
+          .combine = bind_rows) %:%
+  foreach(n = 1:nclus,  
+          r = rng[(i - 1) * nclus + 1:nclus], 
+          .combine = bind_rows) %dopar% 
+  {
+    l = lmbdaVec[i]
+    rngtools::setRNG(r)
+    sim.cs(
+      lambda = l,
+      n.smpl = nrep,
+      age.rng = lifespan,
+      antigen_isos = antibodies,
+      n.mc = 0,
+      renew.params = TRUE,
+      add.noise = TRUE,
+      curve_params = dmcmc,
+      noise_limits = dlims,
+      baseline_limits = blims
+    ) %>% 
+      mutate(lambda.sim = l, cluster = n) 
+  }
+print(sim.df)
+```
+
+## Estimate incidence in each cluster
+
+```{r, "est-by-stratum"}
+ests =
+  sim.df %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value") %>%
+  rename(
+    y = value,
+    a = age) %>% 
+  est.incidence.by(
+    curve_params = dmcmc,
+    noise_params = cond,
+    numCores = n_cores,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    verbose = FALSE,
+    build_graph = TRUE, # adds time to runs
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+```
+
+We can extract a table listing the strata, using the `strata()` method:
+
+```{r}
+strata(ests)
+```
+
+`summary(ests)` produces a `tibble()` with some extra meta-data:
+
+```{r}
+summary(ests)
+```
+
+Make sure to check the exit codes (codes 3-5 indicate possible non-convergence):
+
+```{r}
+
+# these are the simulations that had issues:
+problem_strata = 
+  summary(ests) |> 
+  pull(nlm.exit.code) |> 
+  as.numeric() |> 
+  is.element(3:5) |> 
+  which() |> 
+  print()
+
+summary(ests)[problem_strata, c("Stratum", "lambda.sim", "nlm.exit.code")]
+```
+
+It may help to look at the log-likelihood curves for those simulations.
+We can plot the likelihood for a single simulated cluster by extracting that simulation from `ests` and calling `plot()`:
+
+```{r}
+ests[[problem_strata[1]]] |> plot()
+```
+
+It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a much sharper log-likelihood curve, which made it easier to maximize:
+
+```{r}
+ests[[1]] |> plot()
+```
+
+We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
+
+```{r "plot-multiple", fig.height = 7}
+plot(ests[problem_strata])
+```
+
+## Addressing convergence issues
+
+The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small, as noted in the `nlm.exit.code` column of the output from `summary(ests)`. Let's try a bigger value of `stepmax` for those datasets:
+
+```{r "redo-fits"}
+
+ests_l_0.3 = 
+  sim.df %>% 
+  filter(lambda.sim == .3) |> 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value") %>%
+  rename(
+    y = value,
+    a = age) %>% 
+  est.incidence.by(
+    curve_params = dmcmc,
+    noise_params = cond,
+    numCores = n_cores,
+    stepmax = 10,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    build_graph = TRUE,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+summary(ests_l_0.3) |> select(nlm.exit.code)
+
+```
+
+Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
+
+```{r "replace-fits"}
+
+to_replace = 
+  which(ests |> strata() |> pull(lambda.sim) == 0.3)
+ests[to_replace] = ests_l_0.3
+
+```
+
+## plot distribution of estimates by simulated incidence rate
+
+Finally, we can look at our simulation results:
+
+```{r, "graph"}
+
+library(ggplot2)
+summary(ests) |> plot(xvar = 'lambda.sim')
+```
+

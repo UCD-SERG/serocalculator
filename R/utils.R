@@ -35,7 +35,6 @@
 
 .checkAntibodies <- function(antigen_isos)
 {
-  stopifnot(!missing(antigen_isos))
 
   if (!is.character(antigen_isos)) {
     stop(.pasteN("Argument `antigen_isos` is not a character vector.",

@@ -1,45 +1,85 @@
 #' Estimate Seroincidence
 #'
+#' @description
 #' Function to estimate seroincidences based on cross-section serology data and longitudinal
 #' response model.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
-#' @param strata Character vector of stratum-defining variables. Values must be variable names in `data`. Default = "".
+#' @param strata Character vector of stratum-defining variables. Values must be variable names in `data`.
 #' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
+#' @details
+#'
+#' If `strata` is left empty, a warning will be produced, recommending that you use `est.incidence()` for unstratified analyses, and then the data will be passed to `est.incidence()`. If for some reason you want to use `est.incidence.by()` with no strata instead of calling `est.incidence()`, you may use `NA`, `NULL`, or "" as the `strata` argument to avoid that warning.
+#'
+#'
 #' @inheritParams est.incidence
 #' @inheritDotParams est.incidence
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
-#' @return An object of class `"seroincidence.by"`: a list of `"seroincidence` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
-#'
+#' @return
+#' * if `strata` has meaningful inputs:
+#' An object of class `"seroincidence.by"`; i.e., a list of `"seroincidence"` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
+#' * if `strata` is missing, `NULL`, `NA`, or `""`:
+#' An object of class `"seroincidence"`.
 #'
 #' @export
 est.incidence.by <- function(
     data,
     curve_params,
     noise_params,
-    strata = "",
+    strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
     lambda.start = 0.1,
-    build_graph = TRUE,
+    build_graph = FALSE,
     numCores = 1L,
     verbose = FALSE,
     ...)
 {
 
+  if(missing(strata))
+  {
+    warning(
+      "The `strata` argument to `est.incidence.by()` is missing.",
+      "\n\n  If you do not want to stratify your data, ",
+      "consider using the `est.incidence()` function to simplify your code and avoid this warning.",
+      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.\n")
+  }
+
+  strata_is_empty =
+    missing(strata) ||
+    is.null(strata) ||
+    setequal(strata, NA) ||
+    setequal(strata, "")
+
+  if(strata_is_empty)
+  {
+    to_return =
+      est.incidence(
+        data = data,
+        curve_params = curve_params,
+        noise_params = noise_params,
+        lambda.start = lambda.start,
+        antigen_isos = antigen_isos,
+        build_graph = build_graph,
+        verbose = verbose,
+        ...)
+    return(to_return)
+  }
+
+  .checkStrata(data = data, strata = strata)
+
   .errorCheck(
     data = data,
     antigen_isos = antigen_isos,
-    strata = strata,
-    params = curve_params)
+    curve_params = curve_params)
 
   # Split data per stratum
-  stratumDataList <- prep_data(
+  stratumDataList <- stratify_data(
     data = data,
     antigen_isos = antigen_isos,
     curve_params = curve_params,

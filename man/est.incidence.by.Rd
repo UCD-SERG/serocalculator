@@ -8,12 +8,12 @@ est.incidence.by(
   data,
   curve_params,
   noise_params,
-  strata = "",
+  strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),
   lambda.start = 0.1,
-  build_graph = TRUE,
+  build_graph = FALSE,
   numCores = 1L,
   verbose = FALSE,
   ...
@@ -22,7 +22,16 @@ est.incidence.by(
 \arguments{
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
-\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.}
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\itemize{
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
+\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
+\item \code{y1}: antibody peak level (ELISA units)
+\item \code{t1}: duration of infection
+\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
+\item \code{r}: shape factor of antibody decay
+}}
 
 \item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
 \itemize{
@@ -33,7 +42,7 @@ est.incidence.by(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}. Default = "".}
+\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
@@ -81,9 +90,17 @@ est.incidence.by(
   }}
 }
 \value{
-An object of class \code{"seroincidence.by"}: a list of \verb{"seroincidence} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+\itemize{
+\item if \code{strata} has meaningful inputs:
+An object of class \code{"seroincidence.by"}; i.e., a list of \code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+\item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
+An object of class \code{"seroincidence"}.
+}
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal
 response model.
+}
+\details{
+If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
 }

@@ -8,7 +8,7 @@ est.incidence.by(
   data,
   curve_params,
   noise_params,
-  strata = "",
+  strata = NULL,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),

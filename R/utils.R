@@ -23,12 +23,11 @@
   return(abNames)
 }
 
-.errorCheck <- function(data, antigen_isos, strata, params)
+.errorCheck <- function(data, antigen_isos, curve_params)
 {
   .checkAntibodies(antigen_isos = antigen_isos)
   .checkCsData(data = data, antigen_isos = antigen_isos)
-  .checkStrata(data = data, strata = strata)
-  .checkParams(antigen_isos = antigen_isos, params = params)
+  .checkParams(antigen_isos = antigen_isos, params = curve_params)
 
   invisible(NULL)
 }
@@ -41,7 +40,7 @@
                  "Provide a character vector with at least one antibody name."))
   }
 
-  if (all(antigen_isos == "")) {
+  if (setequal(antigen_isos, "")) {
     stop(.pasteN("Argument `antigen_isos` is empty.",
                  "Provide a character vector with at least one antibody name."))
   }

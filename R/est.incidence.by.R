@@ -21,7 +21,7 @@ est.incidence.by <- function(
     data,
     curve_params,
     noise_params,
-    strata = "",
+    strata = NULL,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
@@ -32,14 +32,35 @@ est.incidence.by <- function(
     ...)
 {
 
+  if(is.null(strata) || set.equal(strata, "") || is.na(strata))
+  {
+    warning(
+      "The `strata` argument to `est.incidence.by()` is empty (NULL, \"\", or NA).",
+      "\n  If you do not want to stratify your data, ",
+      "\n  consider using the `est.incidence()` function to simplify your code.")
+
+    to_return =
+      est.incidence(
+        data = data,
+        curve_params = curve_params,
+        noise_params = noise_params,
+        lambda.start = lambda.start,
+        antigen_isos = antigen_isos,
+        build_graph = build_graph,
+        verbose = verbose,
+        ...)
+    return(to_return)
+  }
+
+  .checkStrata(data = data, strata = strata)
+
   .errorCheck(
     data = data,
     antigen_isos = antigen_isos,
-    strata = strata,
-    params = curve_params)
+    curve_params = curve_params)
 
   # Split data per stratum
-  stratumDataList <- prep_data(
+  stratumDataList <- stratify_data(
     data = data,
     antigen_isos = antigen_isos,
     curve_params = curve_params,

@@ -1,4 +1,7 @@
-#' Calculate  log-likelihood
+#' Calculate log-likelihood
+#'
+#' @details
+#' Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (`lambda`) value.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`.
@@ -68,7 +71,7 @@ llik <- (
 
 #' Calculate negative log-likelihood
 #' @details
-#' Same as [.nll()], except negated
+#' Same as [llik()], except negated
 #' @param log.lambda log.lambda
 #' @inheritDotParams llik -lambda
 

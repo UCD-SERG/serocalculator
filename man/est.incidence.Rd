@@ -5,10 +5,9 @@
 \title{Find the maximum likelihood estimate of the incidence rate parameter}
 \usage{
 est.incidence(
-  data = dataList$data,
-  curve_params = dataList$curve_params,
-  noise_params = dataList$noise_params,
-  dataList = NULL,
+  data,
+  curve_params,
+  noise_params,
   antigen_isos = unique(data$antigen_iso),
   lambda.start = 0.1,
   stepmin = 1e-08,
@@ -27,8 +26,6 @@ est.incidence(
 Monte Carlo samples for each antibody type.}
 
 \item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
-
-\item{dataList}{Optional argument; as an alternative to passing in \code{data}, \code{curve_params}, and \code{noise_params} individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
 

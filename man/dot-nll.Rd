@@ -27,5 +27,5 @@ the negative log-likelihood of the data with the current parameter values
 Calculate negative log-likelihood
 }
 \details{
-Same as \code{\link[=.nll]{.nll()}}, except negated
+Same as \code{\link[=llik]{llik()}}, except negated
 }

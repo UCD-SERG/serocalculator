@@ -2,7 +2,7 @@
 % Please edit documentation in R/nll.R
 \name{llik}
 \alias{llik}
-\title{Calculate  log-likelihood}
+\title{Calculate log-likelihood}
 \usage{
 llik(
   lambda,
@@ -34,5 +34,8 @@ Monte Carlo samples for each antibody type.}
 the log-likelihood of the data with the current parameter values
 }
 \description{
-Calculate  log-likelihood
+Calculate log-likelihood
+}
+\details{
+Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (\code{lambda}) value.
 }

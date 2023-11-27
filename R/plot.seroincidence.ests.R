@@ -1,6 +1,6 @@
 #' Plot `seroincidence.by` log-likelihoods
-#' @details
-#' Plots log-likelihood curves by stratum
+#' @description
+#' Plots log-likelihood curves by stratum, for `seroincidence.by` objects
 #' @param x a '"seroincidence.by"' object (from [est.incidence.by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams plot.seroincidence

@@ -1,11 +1,18 @@
 #' Calculate log-likelihood
 #'
-#' @details
+#' @description
 #' Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (`lambda`) value.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
 #' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `data`.
-#' @param curve_params List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.
+#' @param curve_params a [data.frame()] containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+#' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations
+#' - `iter`: an [integer()] vector indicating MCMC sampling iterations
+#' - `y0`: baseline antibody level at $t=0$ ($y(t=0)$)
+#' - `y1`: antibody peak level (ELISA units)
+#' - `t1`: duration of infection
+#' - `alpha`: antibody decay rate (1/days for the current longitudinal parameter sets)
+#' - `r`: shape factor of antibody decay
 #' @param noise_params a [data.frame()] (or [tibble::tibble()]) containing the following variables, specifying noise parameters for each antigen isotype:
 #' * `antigen_iso`: antigen isotype whose noise parameters are being specified on each row
 #' * `nu`: biological noise
@@ -75,7 +82,7 @@ llik <- (
   })
 
 #' Calculate negative log-likelihood
-#' @details
+#' @description
 #' Same as [llik()], except negated and requiring lambda on log scale (used in combination with `nlm()`, to ensure that the optimization search doesn't stray into negative values of `lambda`).
 #' @param log.lambda natural logarithm of incidence rate
 #' @inheritDotParams llik -lambda

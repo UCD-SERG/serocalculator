@@ -152,20 +152,6 @@ est1 = est.incidence(
 
 ```
 
-```{r}
-est2 = est.incidence.by(
-  data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  strata = NULL,
-  lambda.start = .1,
-  build_graph = T,
-  verbose = T, # print updates as the function runs
-  print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
-  antigen_isos = antibodies)
-```
-
-
 We can extract summary statistics with `summary()`:
 
 ```{r "summary.est.incidence"}

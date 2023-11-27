@@ -16,14 +16,7 @@
 #' * `renew.params= TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
-#' @param curve_params a [data.frame()] with containing MCMC samples from the Bayesian distribution of longitudinal decay curve model, containing the following columns:
-#' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations
-#' - `iter`: an [integer()] vector indicating MCMC sampling iterations
-#' - `y0`: baseline antibody level at $t=0$ ($y(t=0)$)
-#' - `y1`: antibody peak level (ELISA units)
-#' - `t1`: duration of infection
-#' - `alpha`: antibody decay rate (1/days for the current longitudinal parameter sets)
-#' - `r`: shape factor of antibody decay
+#' @inheritParams llik
 
 #' @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 #' @param noise_limits biologic noise distribution parameters

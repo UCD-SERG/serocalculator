@@ -14,7 +14,16 @@
   \describe{
     \item{\code{data}}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
     \item{\code{antigen_isos}}{Character vector listing one or more antigen isotypes. Values must match \code{data}.}
-    \item{\code{curve_params}}{List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.}
+    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\itemize{
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
+\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
+\item \code{y1}: antibody peak level (ELISA units)
+\item \code{t1}: duration of infection
+\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
+\item \code{r}: shape factor of antibody decay
+}}
     \item{\code{noise_params}}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
 \itemize{
 \item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row

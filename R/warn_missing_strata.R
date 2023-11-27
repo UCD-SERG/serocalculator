@@ -54,7 +54,7 @@ warn_missing_strata = function(
     message2 = c(
       "\n\nTo avoid this warning, specify the desired set of stratifying",
       " variables in the `curve_strata_varnames` and `noise_strata_varnames`",
-      " arguments to `est.incidence.by()`"
+      " arguments to `est.incidence.by()`.\n"
     )
 
     warning(message, message2)

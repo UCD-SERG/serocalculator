@@ -35,7 +35,7 @@ est.incidence.by <- function(
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
     lambda.start = 0.1,
-    build_graph = TRUE,
+    build_graph = FALSE,
     numCores = 1L,
     verbose = FALSE,
     ...)

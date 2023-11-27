@@ -50,7 +50,13 @@ est.incidence.by <- function(
       "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.\n")
   }
 
-  if(missing(strata) || is.na(strata) || is.null(strata) || setequal(strata, ""))
+  strata_is_empty =
+    missing(strata) ||
+    is.null(strata) ||
+    setequal(strata, NA) ||
+    setequal(strata, "")
+
+  if(strata_is_empty)
   {
     to_return =
       est.incidence(

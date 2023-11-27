@@ -52,9 +52,6 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll_vec.html</loc>
-  </url>
-  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.html</loc>
   </url>
   <url>
@@ -67,7 +64,13 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/getAdditionalData.html</loc>
   </url>
   <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/graph_loglik.html</loc>
+  </url>
+  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/llik.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/pertussisIgGPTParams1.html</loc>

@@ -82,14 +82,26 @@ Data object</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Data for this package is available at: <a href="https://osf.io/ne8pc/files/osfstorage" class="external-link">https://osf.io/ne8pc/files/osfstorage</a></p>
-<p>you can save the data into your chosen directory using the optional savePath argument. specify the file path and the file name</p>
-<p>***explain this option to increase time to download:
-options(timeout = max(300, getOption("timeout")))</p>
+<p>You can save the data into your chosen directory using the optional savePath argument. Specify the file path and the file name.</p>
+<p>Large datasets may timeout. If so, you can increase the download time by updating the maximum timeout time in the code below. (Ex: increase from 300 to 1000)
+<code>options(timeout = max(300, getOption("timeout")))</code></p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">curve_param_samples</span> <span class="op">=</span></span></span>
+<span class="r-in"><span>  <span class="fu">getAdditionalData</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/bhfvx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># optionally, save the data to disk</span></span></span>
+<span class="r-in"><span><span class="va">curve_param_samples</span> <span class="op">=</span></span></span>
+<span class="r-in"><span>  <span class="fu">getAdditionalData</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/bhfvx"</span>,</span></span>
+<span class="r-in"><span>    savePath <span class="op">=</span> <span class="st">"~/Downloads/curv_params.rds"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

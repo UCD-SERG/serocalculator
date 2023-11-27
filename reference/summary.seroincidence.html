@@ -45,7 +45,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>summarize a fitted incidence model</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/HEAD/R/postprocess_fit.R" class="external-link"><code>R/postprocess_fit.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/HEAD/R/summary.seroincidence.R" class="external-link"><code>R/summary.seroincidence.R</code></a></small>
       <div class="d-none name"><code>summary.seroincidence.Rd</code></div>
     </div>
 
@@ -77,8 +77,22 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>; see <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code> for details on <code>code</code> variable</p>
-    </div>
+<p>a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code> containing the following:</p><ul><li><p><code>est.start</code>: the starting guess for incidence rate</p></li>
+<li><p><code>ageCat</code>: the age category we are analyzing</p></li>
+<li><p><code>incidence.rate</code>: the estimated incidence rate, per person year</p></li>
+<li><p><code>CI.lwr</code>: lower limit of confidence interval for incidence rate</p></li>
+<li><p><code>CI.upr</code>: upper limit of confidence interval for incidence rate</p></li>
+<li><p><code>coverage</code>: coverage probability</p></li>
+<li><p><code>neg.llik</code>: negative log-likelihood</p></li>
+<li><p><code>iterations</code>: the number of iterations used</p></li>
+<li><p><code>antigen_isos</code>: a list of antigen isotypes used in the analysis</p></li>
+<li><p><code>nlm.convergence.code</code>: information about convergence of the likelihood maximization procedure performed by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> (see "Value" section of <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>, component <code>code</code>); codes 3-5 indicate issues:</p><ul><li><p>1: relative gradient is close to zero, current iterate is probably solution.</p></li>
+<li><p>2: successive iterates within tolerance, current iterate is probably solution.</p></li>
+<li><p>3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or <code>stepmin</code> in <code><a href="est.incidence.html">est.incidence()</a></code> (a.k.a., <code>steptol</code> in <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>) is too large.</p></li>
+<li><p>4: iteration limit exceeded; increase <code>iterlim</code>.</p></li>
+<li><p>5: maximum step size <code>stepmax</code> exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or <code>stepmax</code> is too small.</p></li>
+</ul></li>
+</ul></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

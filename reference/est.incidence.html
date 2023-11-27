@@ -56,15 +56,15 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">est.incidence</span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">dataList</span><span class="op">$</span><span class="va">data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">dataList</span><span class="op">$</span><span class="va">curve_params</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">dataList</span><span class="op">$</span><span class="va">noise_params</span>,</span>
-<span>  dataList <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  lambda.start <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">365.25</span>,</span>
-<span>  stepmax <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">curve_params</span>,</span>
+<span>  <span class="va">noise_params</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">antigen_iso</span><span class="op">)</span>,</span>
+<span>  lambda.start <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  stepmin <span class="op">=</span> <span class="fl">1e-08</span>,</span>
+<span>  stepmax <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  build_graph <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  print_graph <span class="op">=</span> <span class="va">build_graph</span> <span class="op">&amp;</span> <span class="va">verbose</span>,</span>
 <span>  c.age <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -78,16 +78,16 @@
 
 
 <dt>curve_params</dt>
-<dd><p>List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.</p></dd>
+<dd><p>List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.</p></dd>
 
 
 <dt>noise_params</dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (or <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>, or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>) containing noise parameters</p></dd>
-
-
-<dt>dataList</dt>
-<dd><p>Optional argument; as an alternative to passing in <code>data</code>, <code>curve_params</code>, and <code>noise_params</code> individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p></li>
+<li><p><code>nu</code>: biological noise</p></li>
+<li><p><code>eps</code>: measurement noise</p></li>
+<li><p><code>y.low</code>: lower limit of detection for the current antigen isotype</p></li>
+<li><p><code>y.high</code>: upper limit of detection for the current antigen isotype</p></li>
+</ul></dd>
 
 
 <dt>antigen_isos</dt>
@@ -96,6 +96,10 @@ Monte Carlo samples for each antibody type.</p></dd>
 
 <dt>lambda.start</dt>
 <dd><p>starting guess for incidence rate, in years/event.</p></dd>
+
+
+<dt>stepmin</dt>
+<dd><p>A positive scalar providing the minimum allowable relative step length.</p></dd>
 
 
 <dt>stepmax</dt>
@@ -132,13 +136,6 @@ Monte Carlo samples for each antibody type.</p></dd>
     <dt><code>fscale</code></dt>
 <dd><p>an estimate of the size of <code>f</code> at the minimum.</p></dd>
 
-    <dt><code>print.level</code></dt>
-<dd><p>this argument determines the level of printing
-    which is done during the minimization process.  The default
-    value of <code>0</code> means that no printing occurs, a value of <code>1</code>
-    means that initial and final details are printed and a value
-    of 2 means that full tracing information is printed.</p></dd>
-
     <dt><code>ndigit</code></dt>
 <dd><p>the number of significant digits in the function <code>f</code>.</p></dd>
 
@@ -148,10 +145,6 @@ Monte Carlo samples for each antibody type.</p></dd>
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in <code>f</code> in each direction
     <code>p[i]</code> divided by the relative change in <code>p[i]</code>.</p></dd>
-
-    <dt><code>steptol</code></dt>
-<dd><p>A positive scalar providing the minimum allowable
-    relative step length.</p></dd>
 
     <dt><code>iterlim</code></dt>
 <dd><p>a positive integer specifying the maximum number of

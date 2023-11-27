@@ -66,7 +66,7 @@ response model.</p>
 <span>  curve_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
 <span>  noise_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  lambda.start <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">365.25</span>,</span>
+<span>  lambda.start <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  build_graph <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  numCores <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -81,12 +81,16 @@ response model.</p>
 
 
 <dt>curve_params</dt>
-<dd><p>List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.</p></dd>
+<dd><p>List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.</p></dd>
 
 
 <dt>noise_params</dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (or <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>, or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code>) containing noise parameters</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p></li>
+<li><p><code>nu</code>: biological noise</p></li>
+<li><p><code>eps</code>: measurement noise</p></li>
+<li><p><code>y.low</code>: lower limit of detection for the current antigen isotype</p></li>
+<li><p><code>y.high</code>: upper limit of detection for the current antigen isotype</p></li>
+</ul></dd>
 
 
 <dt>strata</dt>
@@ -128,6 +132,9 @@ Monte Carlo samples for each antibody type.</p></dd>
     <dt><code>print_graph</code></dt>
 <dd><p>whether to display the log-likelihood curve graph in the course of running <code><a href="est.incidence.html">est.incidence()</a></code></p></dd>
 
+    <dt><code>stepmin</code></dt>
+<dd><p>A positive scalar providing the minimum allowable relative step length.</p></dd>
+
     <dt><code>stepmax</code></dt>
 <dd><p>a positive scalar which gives the maximum allowable
     scaled step length.  <code>stepmax</code> is used to prevent steps which
@@ -144,13 +151,6 @@ Monte Carlo samples for each antibody type.</p></dd>
     <dt><code>fscale</code></dt>
 <dd><p>an estimate of the size of <code>f</code> at the minimum.</p></dd>
 
-    <dt><code>print.level</code></dt>
-<dd><p>this argument determines the level of printing
-    which is done during the minimization process.  The default
-    value of <code>0</code> means that no printing occurs, a value of <code>1</code>
-    means that initial and final details are printed and a value
-    of 2 means that full tracing information is printed.</p></dd>
-
     <dt><code>ndigit</code></dt>
 <dd><p>the number of significant digits in the function <code>f</code>.</p></dd>
 
@@ -160,10 +160,6 @@ Monte Carlo samples for each antibody type.</p></dd>
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in <code>f</code> in each direction
     <code>p[i]</code> divided by the relative change in <code>p[i]</code>.</p></dd>
-
-    <dt><code>steptol</code></dt>
-<dd><p>A positive scalar providing the minimum allowable
-    relative step length.</p></dd>
 
     <dt><code>iterlim</code></dt>
 <dd><p>a positive integer specifying the maximum number of

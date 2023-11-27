@@ -47,7 +47,7 @@ est.incidence.by()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Summary Method for <code>"seroincidence.by"</code> Objects</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/HEAD/R/summary.seroincidence.R" class="external-link"><code>R/summary.seroincidence.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/HEAD/R/summary.seroincidence.by.R" class="external-link"><code>R/summary.seroincidence.by.R</code></a></small>
       <div class="d-none name"><code>summary.seroincidence.by.Rd</code></div>
     </div>
 
@@ -96,11 +96,11 @@ help for <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A <code>summary.seroincidence.by</code> object, which is a <a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::tibble</a>, with the following columns:</p><ul><li><p><code>incidence.rate</code> maximum likelihood estimate of <code>lambda</code> (seroincidence)</p></li>
+<p>A <code>summary.seroincidence.by</code> object, which is a <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble</a>, with the following columns:</p><ul><li><p><code>incidence.rate</code> maximum likelihood estimate of <code>lambda</code> (seroincidence)</p></li>
 <li><p><code>CI.lwr</code> lower confidence bound for lambda</p></li>
 <li><p><code>CI.upr</code> upper confidence bound for lambda</p></li>
 <li><p><code>Deviance</code> (included if <code>showDeviance = TRUE</code>) Negative log likelihood (NLL) at estimated (maximum likelihood)
-<code>lambda</code>)</p><ul><li><p><code>nlm.exit.code</code> (included if <code>showConvergence = TRUE</code>) Convergence information returned by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>
+<code>lambda</code>)</p><ul><li><p><code>nlm.convergence.code</code> (included if <code>showConvergence = TRUE</code>) Convergence information returned by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>
 The object also has the following metadata (accessible through <code><a href="https://rdrr.io/r/base/attr.html" class="external-link">base::attr()</a></code>):</p></li>
 </ul></li>
 <li><p><code>antigen_isos</code> Character vector with names of input antigen isotypes used in <code><a href="est.incidence.by.html">est.incidence.by()</a></code></p></li>

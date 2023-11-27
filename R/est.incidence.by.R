@@ -38,7 +38,7 @@ est.incidence.by <- function(
       "The `strata` argument to `est.incidence.by()` is missing.",
       "\n\n  If you do not want to stratify your data, ",
       "consider using the `est.incidence()` function to simplify your code and avoid this warning.",
-      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.")
+      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.\n")
   }
 
   if(missing(strata) || is.na(strata) || is.null(strata) || setequal(strata, ""))

@@ -13,7 +13,7 @@ est.incidence.by(
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),
   lambda.start = 0.1,
-  build_graph = TRUE,
+  build_graph = FALSE,
   numCores = 1L,
   verbose = FALSE,
   ...

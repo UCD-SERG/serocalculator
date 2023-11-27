@@ -64,7 +64,7 @@ sim.cs(
 \item{...}{additional arguments passed to \code{simcs.tinf()}}
 }
 \value{
-a \code{\link[dplyr:reexports]{dplyr::tibble()}} containing simulated cross-sectional serosurvey data, with columns:
+a \code{\link[tibble:tibble]{tibble::tibble()}} containing simulated cross-sectional serosurvey data, with columns:
 \itemize{
 \item \code{age}: age (in days)
 \item one column for each element in the \code{antigen_iso} input argument

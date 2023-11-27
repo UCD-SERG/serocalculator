@@ -20,6 +20,7 @@ Imports:
     magrittr,
     Rcpp,
     rlang,
+    scales,
     stats,
     tibble,
     tidyr,
@@ -39,7 +40,9 @@ Suggests:
     printr,
     doRNG,
     rngtools,
-    osfr
+    osfr,
+    ggbeeswarm,
+    DT
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

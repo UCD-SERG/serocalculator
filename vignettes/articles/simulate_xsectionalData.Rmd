@@ -18,7 +18,7 @@ Age range of the simulated cross-sectional record is `lifespan`.
 The size of the sample is `nrep`.
 
 Each individual is simulated separately, but different antibodies are
-modelled jointly (see "sim-graph.r").
+modelled jointly.
 
 Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
 However, when `age.fx` is set to NA then the age at infection is used.
@@ -42,7 +42,8 @@ in any subsequent infection. This is for diagnostic purposes.
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7
+  fig.width = 7,
+  fig.height = 5
 )
 ```
 
@@ -50,10 +51,11 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(serocalculator)
 library(tidyverse)
-
+library(ggbeeswarm) # for plotting
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
-dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")  
+dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k") |> 
+  ungroup()
 
 ```
 
@@ -63,18 +65,22 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k")
 #set seed to reproduce results
 set.seed(54321)
 
-ab.nm <- rbind(c("HlyE","IgA"),c("HlyE","IgG"));
-# antibodies <- dmcmc$antigen_iso %>% droplevels() %>% levels()
+# Specify the antibody-isotype responses to simulate
 antibodies = c("HlyE_IgA", "HlyE_IgG")
-abs <-  c(1,2);
-lambda <- 0.2; # incidence (1/yr)
-npar <- 5; # y0, y1, t1, alpha, shape
 
-lifespan <- c(0,20); # range covered in simulations
-nrep <- 100; # cross-sectional sample size
+# simulated incidence rate per person-year
+lambda <- 0.2;
 
-dlims <- rbind(c(1e-2,5e-1),c(1e-2,5e-1)); # biologic noise distribution
+# range covered in simulations
+lifespan <- c(0,20); 
 
+# cross-sectional sample size
+nrep <- 100
+
+# biologic noise distribution
+dlims <- rbind(c(0.01, 0.5),c(0.01, 0.5))
+
+#generate cross-sectional data
 csdata0 <- sim.cs(
   curve_params = dmcmc,
   lambda = lambda,
@@ -86,6 +92,7 @@ csdata0 <- sim.cs(
   add.noise = TRUE,
   noise_limits = dlims
 )
+
 
 ```
 
@@ -103,7 +110,7 @@ cond <- data.frame(
 
 ```
 
-We also need to turn the data to a long format for analysis:
+We also need to convert the data to a long format for analysis:
 
 ```{r "long-format"}
 csdataL <- 
@@ -113,20 +120,35 @@ csdataL <-
     cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value")
+
 ```
 
-Now we can estimate incidence:
+We can plot the distribution of the antibody responses in the simulated data. 
+
+```{r}
+
+
+ggplot(csdataL, aes(x=as.factor(antigen_iso), y= value)) +
+  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso), show.legend = F) + 
+  geom_boxplot(outlier.colour = NA, fill = NA) + 
+  scale_y_log10() + 
+  theme_linedraw() + 
+  labs(x="antigen - isotype")
+```
+
+We can estimate incidence with `est.incidence()`:
 
 ```{r "est.incidence"}
+
 est1 = est.incidence(
-  data = csdataL %>%
-    rename(
-      y = value,
-      a = age),
+  data = csdataL,
   curve_params = dmcmc,
   noise_params = cond,
-  build_graph = TRUE,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+  lambda.start = .1,
+  build_graph = T,
+  verbose = T, # print updates as the function runs
+  print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
+  antigen_isos = antibodies)
 
 ```
 
@@ -142,8 +164,14 @@ We can plot the log-likelihood curve with `plot()`:
 plot(est1)
 ```
 
+We can set the x-axis to a logarithmic scale, if desired:
 
-# Optional - loop over "clusters" and different lambdas
+```{r}
+
+plot(est1, log_x = TRUE)
+```
+
+# Simulate multiple clusters with different lambdas
 
 ```{r "init-parallel"}
 library(parallel)
@@ -160,11 +188,21 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 ```{r "do-parallel"}
 
 doParallel::registerDoParallel(cores = n_cores)
-nclus = 5;
-nrep <- 100; # cross-sectional sample size
-lmbdaVec <- c(.05,.1, .2, .3)
+
+#number of clusters 
+nclus = 10;
+
+# cross-sectional sample size
+nrep <- 100
+
+#incidence rate in e
+lmbdaVec <- c(.05,.1, .15, .2, .3)
+
 n_lambda = length(lmbdaVec)
+
+#trying to reproduce results using parallel
 rng <- RNGseq(n_lambda * nclus, 1234)
+
 sim.df <- 
   foreach(i = 1:length(lmbdaVec), 
           .combine = bind_rows) %:%
@@ -183,12 +221,27 @@ sim.df <-
       renew.params = TRUE,
       add.noise = TRUE,
       curve_params = dmcmc,
-      noise_limits = dlims,
-      baseline_limits = blims
+      noise_limits = dlims
     ) %>% 
       mutate(lambda.sim = l, cluster = n) 
   }
+
 print(sim.df)
+```
+
+We can plot the distributions of the simulated responses 
+```{r}
+
+sim.df.l <- sim.df %>%
+  pivot_longer(cols = c("HlyE_IgG", "HlyE_IgA"), values_to = c("value"), names_to = c("antigen_iso"))
+
+ggplot(sim.df.l, aes(x = as.factor(cluster), y= value)) +
+  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso)) + 
+  geom_boxplot(outlier.colour = NA, fill = NA) + 
+  scale_y_log10() + 
+  facet_wrap(~antigen_iso + lambda.sim, nrow = 2) + 
+  theme_linedraw()
+
 ```
 
 ## Estimate incidence in each cluster
@@ -201,9 +254,6 @@ ests =
     cols = c("HlyE_IgG", "HlyE_IgA"), 
     names_to = "antigen_iso", 
     values_to = "value") %>%
-  rename(
-    y = value,
-    a = age) %>% 
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
@@ -211,10 +261,11 @@ ests =
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
-    verbose = FALSE,
-    build_graph = TRUE, # adds time to runs
+    verbose = TRUE,
+    build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
+
 ```
 
 We can extract a table listing the strata, using the `strata()` method:
@@ -229,83 +280,63 @@ strata(ests)
 summary(ests)
 ```
 
-Make sure to check the exit codes (codes 3-5 indicate possible non-convergence):
+We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
-
-# these are the simulations that had issues:
-problem_strata = 
-  summary(ests) |> 
-  pull(nlm.exit.code) |> 
-  as.numeric() |> 
-  is.element(3:5) |> 
-  which() |> 
-  print()
-
-summary(ests)[problem_strata, c("Stratum", "lambda.sim", "nlm.exit.code")]
+library(DT)
+summary(ests) |> DT::datatable()
 ```
 
-It may help to look at the log-likelihood curves for those simulations.
-We can plot the likelihood for a single simulated cluster by extracting that simulation from `ests` and calling `plot()`:
+We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
-ests[[problem_strata[1]]] |> plot()
-```
-
-It's not surprising that this simulation struggled to converge; the likelihood is very flat near the top. In contrast, the first simulation had a much sharper log-likelihood curve, which made it easier to maximize:
-
-```{r}
-ests[[1]] |> plot()
+plot(ests[1])
 ```
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
 
 ```{r "plot-multiple", fig.height = 7}
-plot(ests[problem_strata])
+plot(ests[1:5])
 ```
 
-## Addressing convergence issues
+The `log_x` argument also works here:
 
-The simulations where `lambda.sim = 0.3` had issues due to the `stepmax` argument passed through `est.incidence.by()` to `nlm()` being too small, as noted in the `nlm.exit.code` column of the output from `summary(ests)`. Let's try a bigger value of `stepmax` for those datasets:
-
-```{r "redo-fits"}
-
-ests_l_0.3 = 
-  sim.df %>% 
-  filter(lambda.sim == .3) |> 
-  as_tibble() %>%
-  pivot_longer(
-    cols = c("HlyE_IgG", "HlyE_IgA"), 
-    names_to = "antigen_iso", 
-    values_to = "value") %>%
-  rename(
-    y = value,
-    a = age) %>% 
-  est.incidence.by(
-    curve_params = dmcmc,
-    noise_params = cond,
-    numCores = n_cores,
-    stepmax = 10,
-    strata = c("lambda.sim", "cluster"),
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL,
-    build_graph = TRUE,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  )
-
-summary(ests_l_0.3) |> select(nlm.exit.code)
-
+```{r "plot-multiple-log", fig.height = 7}
+plot(ests[1:5], log_x = TRUE)
 ```
 
-Let's replace the old fits with these revised fits:^[we could rerun all strata, but maybe `stepmax = 10` would be too large for the other strata]
+### `nlm()` convergence codes
 
-```{r "replace-fits"}
+Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
 
-to_replace = 
-  which(ests |> strata() |> pull(lambda.sim) == 0.3)
-ests[to_replace] = ests_l_0.3
-
+```{r}
+summary(ests) |>
+  as_tibble() |> # removes extra meta-data
+  select(Stratum, nlm.convergence.code) |> 
+  filter(nlm.convergence.code > 2) 
 ```
+
+Solutions to `nlm()` exit codes 3-5:
+
+* 3: decrease the `stepmin` argument to `est.incidence()`/`est.incidence.by()`
+* 4: increase the `iterlim` argument to `est.incidence()`/`est.incidence.by()`
+* 5: increase the `stepmax` argument to `est.incidence()`/`est.incidence.by()`
+
+We can extract the indices of problematic strata, if there are any:
+
+```{r}
+problem_strata = 
+  which(summary(ests)$nlm.convergence.code > 2) |> 
+  print()
+```
+
+A few clusters had problems; let's take a look:
+
+```{r, fig.height = 7}
+plot(ests[problem_strata], log_x = TRUE)
+```
+
+Visually, it looks like we approximately reached the MLE, but we should probably re-run those clusters, adjusting the `nlm()` settings appropriately, to be sure.
 
 ## plot distribution of estimates by simulated incidence rate
 
@@ -313,7 +344,26 @@ Finally, we can look at our simulation results:
 
 ```{r, "graph"}
 
-library(ggplot2)
 summary(ests) |> plot(xvar = 'lambda.sim')
+
 ```
 
+## extra (remove?)
+
+We can calculate the log-likelihood of the data as a function of the incidence rate, even without running `est.incidence()`.
+
+```{r}
+
+graph_loglik(
+  data = csdataL,
+  curve_params = 
+    dmcmc |> # llik() is a lower-level function, it assumes this transformation is already done
+    dplyr::mutate(
+    alpha = .data$alpha * 365.25,
+    d = .data$r - 1),
+  noise_params = cond,
+  antigen_isos = antibodies,
+  log_x = TRUE
+)
+
+```

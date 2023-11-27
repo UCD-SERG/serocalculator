@@ -7,7 +7,7 @@
 .nll(log.lambda, ...)
 }
 \arguments{
-\item{log.lambda}{log.lambda}
+\item{log.lambda}{natural logarithm of incidence rate}
 
 \item{...}{
   Arguments passed on to \code{\link[=llik]{llik}}
@@ -33,5 +33,5 @@ the negative log-likelihood of the data with the current parameter values
 Calculate negative log-likelihood
 }
 \details{
-Same as \code{\link[=llik]{llik()}}, except negated
+Same as \code{\link[=llik]{llik()}}, except negated and requiring lambda on log scale (used in combination with \code{nlm()}, to ensure that the optimization search doesn't stray into negative values of \code{lambda}).
 }

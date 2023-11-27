@@ -38,7 +38,8 @@ Suggests:
     doParallel,
     printr,
     doRNG,
-    rngtools
+    rngtools,
+    osfr
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

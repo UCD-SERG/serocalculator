@@ -61,6 +61,9 @@ We also create two additional variables: the annual decay rate, $\alpha$, which 
 
 
 ```{r longdata, echo=FALSE, message=FALSE, eval=FALSE}
+
+# NOTE only use this code when not using OSF and GetAdditionalData
+
 c.hlye.IgG <-                             #Need to change this to pull from osf
   fs::path_package(                          
   "extdata", 
@@ -75,7 +78,7 @@ c.hlye.IgG <-                             #Need to change this to pull from osf
 #Import longitudinal antibody parameters from OSF
 #This is the URL for Enteric Fever Curve Parameters called "SEES_mcmc_unstratified_df.rds"
 
-curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/") %>%
+curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
   
 
 ```
@@ -83,7 +86,7 @@ curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/") %>%
 ### Load and prepare cross-sectional data 
 We will use a subset of results from the SEES dataset as our cross-sectional data. Ideally, this will be a representative sample of the general population without regard to disease status. Here, we will limit our analysis to cross-sectional data from Pakistan. 
 
-In this scenario, we have selected **hlyE** as our target antigen and **IgG** and **IgA** as our target isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to *y* and *a*, respectively. Finally, we once again limit the dataset to only the variables needed for the analysis. 
+In this scenario, we will limit our analysis to data from Pakistan. We have selected hemolysin E (**HlyE**) as our target antigen and **IgG** and **IgA** as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to *y* and *a*, respectively. Finally, we once again limit the dataset to only the variables needed for the analysis. 
 
 ```{r data, message = FALSE}
 #Load the cross-sectional data
@@ -94,13 +97,13 @@ data = path_package(
   read_csv(
     col_types = cols(ae_diagnosis_other = col_character())
   ) %>%
+  filter(dag==c("pakistan")) %>% 
   mutate(antigen_iso = (paste(antigen,isotype, sep="_"))) %>%
+  filter(antigen_iso==c("HlyE_IgG", "HlyE_IgA")) %>% 
   rename(a = consent_age) %>%
   rename(y = result)%>%
-  filter(dag==c("pakistan")) %>% 
-  select(dag, antigen_iso, a, y, sex, ageScat)%>%
-  filter(antigen_iso==c("HlyE_IgG", "HlyE_IgA")) 
-
+  select(dag, antigen_iso, a, y, sex, ageScat)
+  
   
 ```
 

@@ -40,8 +40,5 @@ llik(
 the log-likelihood of the data with the current parameter values
 }
 \description{
-Calculate log-likelihood
-}
-\details{
 Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (\code{lambda}) value.
 }

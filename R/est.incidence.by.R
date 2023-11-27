@@ -1,20 +1,29 @@
 #' Estimate Seroincidence
 #'
+#' @description
 #' Function to estimate seroincidences based on cross-section serology data and longitudinal
 #' response model.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
-#' @param strata Character vector of stratum-defining variables. Values must be variable names in `data`. Default = "".
+#' @param strata Character vector of stratum-defining variables. Values must be variable names in `data`.
 #' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
+#' @details
+#'
+#' If `strata` is left empty, a warning will be produced, recommending that you use `est.incidence()` for unstratified analyses, and then the data will be passed to `est.incidence()`. If for some reason you want to use `est.incidence.by()` with no strata instead of calling `est.incidence()`, you may use `NA`, `NULL`, or "" as the `strata` argument to avoid that warning.
+#'
+#'
 #' @inheritParams est.incidence
 #' @inheritDotParams est.incidence
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
-#' @return An object of class `"seroincidence.by"`: a list of `"seroincidence` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
-#'
+#' @return
+#' * if `strata` has meaningful inputs:
+#' An object of class `"seroincidence.by"`; i.e., a list of `"seroincidence"` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
+#' * if `strata` is missing, `NULL`, `NA`, or `""`:
+#' An object of class `"seroincidence"`.
 #'
 #' @export
 est.incidence.by <- function(

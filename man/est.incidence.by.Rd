@@ -8,7 +8,7 @@ est.incidence.by(
   data,
   curve_params,
   noise_params,
-  strata = NULL,
+  strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),
@@ -33,7 +33,7 @@ est.incidence.by(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}. Default = "".}
+\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
@@ -81,9 +81,17 @@ est.incidence.by(
   }}
 }
 \value{
-An object of class \code{"seroincidence.by"}: a list of \verb{"seroincidence} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+\itemize{
+\item if \code{strata} has meaningful inputs:
+An object of class \code{"seroincidence.by"}; i.e., a list of \code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+\item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
+An object of class \code{"seroincidence"}.
+}
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal
 response model.
+}
+\details{
+If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
 }

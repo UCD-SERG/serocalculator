@@ -57,8 +57,8 @@
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
-  if (!is.element("a", names(data))) {
-    stop("Argument `data` is missing column `a` (age, in years).")
+  if (!is.element("age", names(data))) {
+    stop("Argument `data` is missing column `age` (age, in years).")
   }
 
   invisible(NULL)

@@ -1,9 +1,9 @@
-get_xspd_one_antigen = function(dpop, antigen)
+get_xspd_one_antigen = function(data, antigen)
 {
 
-  dpop %>%
+  data %>%
     dplyr::filter(.data$antigen_iso %in% .env$antigen) %>%
-    select("y", "a") %>%
+    select("value", "age") %>%
     drop_na()
 
 }

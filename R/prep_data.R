@@ -12,7 +12,7 @@ prep_data <- function(
   {
     all_data =
       list(
-        data = data |> select("y", "a", "antigen_iso"),
+        data = data |> select("value", "age", "antigen_iso"),
         curve_params = curve_params |> select("y1", "alpha", "r", "antigen_iso"),
         noise_params = noise_params |> select("nu", "eps", "y.low", "y.high", "antigen_iso")
       ) |>
@@ -74,7 +74,7 @@ prep_data <- function(
           semi_join(
             cur_stratum_vals,
             by = strata_varnames) |>
-          select("y", "a", "antigen_iso")
+          select("value", "age", "antigen_iso")
       )
 
     if(length(strata_vars_curve_params) == 0)

@@ -4,16 +4,25 @@
 \alias{plot.seroincidence.by}
 \title{Plot \code{seroincidence.by} log-likelihoods}
 \usage{
-\method{plot}{seroincidence.by}(x, ...)
+\method{plot}{seroincidence.by}(x, ncol = min(3, length(x)), ...)
 }
 \arguments{
 \item{x}{a '"seroincidence.by"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
 
-\item{...}{unused}
+\item{ncol}{number of columns to use for panel of plots}
+
+\item{...}{
+  Arguments passed on to \code{\link[=plot.seroincidence]{plot.seroincidence}}
+  \describe{
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+  }}
 }
 \value{
 aan object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
 }
 \description{
 Plot \code{seroincidence.by} log-likelihoods
+}
+\details{
+Plots log-likelihood curves by stratum
 }

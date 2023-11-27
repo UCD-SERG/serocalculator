@@ -1,101 +1,65 @@
-#' @title
-#' Summary Method for `"seroincidence.by"` Objects
+
+#' summarize a fitted incidence model
 #'
-#' @description
-#' Calculate seroincidence from output of the seroincidence calculator
-#' [est.incidence.by()].
-#'
-#' @param object A dataframe containing output of function [est.incidence.by()].
-#' @param ... Additional arguments affecting the summary produced.
-#' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
-#'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
-#' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
-#'   help for [optim()] for details). Default = `FALSE`.
-#' @param confidence_level desired confidence interval coverage probability
-#' @return
-#' A `summary.seroincidence.by` object, which is a [dplyr::tibble], with the following columns:
-#'  * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
-#'  *  `CI.lwr` lower confidence bound for lambda
-#'  * `CI.upr` upper confidence bound for lambda
-#'  * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
-#'    `lambda`)
-#'    * `nlm.exit.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
-#' The object also has the following metadata (accessible through [base::attr()]):
-#' * `antigen_isos` Character vector with names of input antigen isotypes used in [est.incidence.by()]
-#' * `Strata` Character with names of strata used in [est.incidence.by()]
-#'
-#'
-#' @examples
-#'
-#' \dontrun{
-#' # estimate seroincidence
-#' seroincidence <- est.incidence.by(...)
-#'
-#' # calculate summary statistics for the seroincidence object
-#' seroincidenceSummary <- summary(seroincidence)
-#' }
-#'
+#' @param object a [list()], outputted by [stats::nlm()] or [est.incidence()]
+#' @param coverage desired confidence interval coverage probability
+#' @param ... unused
+#' @return a [tibble::tibble()] containing the following:
+#' * `est.start`: the starting guess for incidence rate
+#' * `ageCat`: the age category we are analyzing
+#' * `incidence.rate`: the estimated incidence rate, per person year
+#' * `CI.lwr`: lower limit of confidence interval for incidence rate
+#' * `CI.upr`: upper limit of confidence interval for incidence rate
+#' * `coverage`: coverage probability
+#' * `neg.llik`: negative log-likelihood
+#' * `iterations`: the number of iterations used
+#'  * `antigen_isos`: a list of antigen isotypes used in the analysis
+#'  * `nlm.convergence.code`: information about convergence of the likelihood maximization procedure performed by `nlm()` (see "Value" section of [stats::nlm()], component `code`); codes 3-5 indicate issues:
+#'    * 1: relative gradient is close to zero, current iterate is probably solution.
+#'    * 2: successive iterates within tolerance, current iterate is probably solution.
+#'    * 3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or `stepmin` in [est.incidence()] (a.k.a., `steptol` in [stats::nlm()]) is too large.
+#'    * 4: iteration limit exceeded; increase `iterlim`.
+#'    * 5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small.
 #' @export
-summary.seroincidence.by <- function(
+#'
+summary.seroincidence = function(
     object,
-    confidence_level = .95,
-    showDeviance = TRUE,
-    showConvergence = TRUE,
+    coverage = .95,
     ...)
 {
+  start = object |> attr("lambda.start")
+  antigen_isos = object |> attr("antigen_isos")
 
-  alpha = 1 - confidence_level
-  quantiles = c(alpha/2, 1 - alpha/2)
+  alpha = 1 - coverage
+  h.alpha = alpha/2
+  hessian = object$hessian
+  if(hessian < 0)
+    warning(
+      "`nlm()` produced a negative hessian; something is wrong with the numerical derivatives.",
+      "\nThe standard error of the incidence rate estimate cannot be calculated.")
 
-  if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
-    stop("Incorrectly specified quantiles")
-  }
+  log.lambda = object$estimate
+  var.log.lambda = 1/object$hessian |> as.vector()
+  se.log.lambda = sqrt(var.log.lambda)
 
-  if (quantiles[1] > quantiles[2]) {
-    stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
-  }
-
-  results =
-    object |>
-    lapply(
-      FUN = summary.seroincidence,
-      coverage = confidence_level) |>
-    bind_rows(.id = "Stratum")
-
-  results =
-    inner_join(
-      object |> attr("Strata"),
-      results,
-      by = "Stratum",
-      relationship = "one-to-one"
-    ) |>
-    relocate("Stratum", .before = everything())
-
-
-  if (!showDeviance) {
-    results$log.lik <- NULL
-  }
-
-  if (showConvergence) {
-    results = results |>
-      relocate("nlm.exit.code", .after = everything())
-  } else
-  {
-    results$nlm.exit.code <- NULL
-  }
-
-
-
-  output <-
-    results |>
-    structure(
-      antigen_isos = attr(object, "antigen_isos"),
-      Strata = attr(object, "Strata") |> attr("strata_vars"),
-      Quantiles = quantiles,
-      class =
-        "summary.seroincidence.by" |>
-        union(class(results))
+  to_return = tibble::tibble(
+    est.start = start,
+    incidence.rate = exp(log.lambda),
+    SE = se.log.lambda * .data$incidence.rate, # delta method:
+    # https://en.wikipedia.org/wiki/Delta_method#Univariate_delta_method
+    CI.lwr = exp(log.lambda - qnorm(1 - h.alpha) * se.log.lambda),
+    CI.upr = exp(log.lambda + qnorm(1 - h.alpha) * se.log.lambda),
+    coverage = coverage,
+    log.lik = -object$minimum,
+    iterations = object$iterations,
+    antigen.isos = antigen_isos |> paste(collapse = "+"),
+    nlm.convergence.code = object$code |> factor(levels = 1:5, ordered = TRUE)
+    #|> factor(levels = 1:5, labels = nlm_exit_codes)
     )
 
-  return(output)
+  class(to_return) =
+    "summary.seroincidence" |>
+    union(class(to_return))
+
+  return(to_return)
 }

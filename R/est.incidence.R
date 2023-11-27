@@ -1,29 +1,28 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
 #' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
-#' @inheritParams .nll
+#' @inheritParams llik
 #' @inheritParams stats::nlm
 #' @param lambda.start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
 #' @param c.age age category to subset data by (optional)
-#' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
-
-#' @inheritDotParams stats::nlm -f -p -hessian
+#' @param stepmin A positive scalar providing the minimum allowable relative step length.
+#' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda.start`, `antigen_isos`, and `ll_graph`
 #' @export
 est.incidence <- function(
-    data = dataList$data,
-    curve_params = dataList$curve_params,
-    noise_params = dataList$noise_params,
-    dataList = NULL,
-    antigen_isos = data |> pull("antigen_iso") |> unique(),
-    lambda.start = 1/365.25,
-    stepmax = 1,
+    data,
+    curve_params,
+    noise_params,
+    antigen_isos = data$antigen_iso |> unique(),
+    lambda.start = 0.1,
+    stepmin = 1e-8,
+    stepmax = 3,
     verbose = FALSE,
-    build_graph = TRUE,
+    build_graph = FALSE,
     print_graph = build_graph & verbose,
     c.age = NULL,
     ...)
@@ -31,7 +30,10 @@ est.incidence <- function(
   if(!is.null(c.age))
   {
     data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
-    curve_params = curve_params %>% dplyr::filter(.data[["ageCat"]] == c.age)
+    curve_params =
+      curve_params %>%
+      ungroup() %>%
+      dplyr::filter(.data[["ageCat"]] == c.age)
 
     if("ageCat" %in% names(noise_params))
     {
@@ -40,10 +42,23 @@ est.incidence <- function(
         dplyr::filter(.data[["ageCat"]] == c.age)
     }
   }
+  data = data |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::select("value", "age", "antigen_iso") |>
+    tidyr::drop_na()
+
   curve_params = curve_params |>
+    ungroup() %>%
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
-      d = .data$r - 1)
+      d = .data$r - 1) |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::select("y1", "alpha", "d", "antigen_iso") |>
+    droplevels()
+
+  noise_params = noise_params |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    droplevels()
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(data) == 0) {
@@ -79,20 +94,26 @@ est.incidence <- function(
 
   if (verbose)
   {
-    message("Initial log-likelihood: ", res)
+    message("Initial negative log-likelihood: ", res)
   }
 
   if (build_graph)
   {
     if(verbose) message('building likelihood graph')
     graph = graph_loglik(
-      lambda.start = lambda.start,
+      highlight_points = lambda.start,
+      highlight_point_names = "lambda.start",
       data = data,
       antigen_isos = antigen_isos,
       curve_params = curve_params,
       noise_params = noise_params
     )
-    if(print_graph) print(graph)
+    if(print_graph)
+      print(
+        graph +
+          ggplot2::scale_x_continuous(
+            trans = "log10",
+            labels = scales::label_comma()))
 
   } else
   {
@@ -101,7 +122,7 @@ est.incidence <- function(
 
 
   if(verbose) message('about to call `nlm()`')
-  # Estimate log.lambda
+  # Estimate lambda
   time =
     {
       fit = nlm(
@@ -113,19 +134,22 @@ est.incidence <- function(
         noise_params = noise_params,
         hessian = TRUE,
         stepmax = stepmax,
+        steptol = stepmin,
         verbose = verbose,
+        print.level = ifelse(verbose, 2, 0),
         ...)
     } |>
     system.time()
 
   code_text = nlm_exit_codes[fit$code]
-  if(verbose || fit$code %in% 3:5)
+  message1 = '\n`nlm()` completed with the following convergence code:\n'
+  if(fit$code %in% 3:5)
   {
-    message(
-      '`nlm()` completed with the following exit code:\n')
-    cat(code_text)
-    if(fit$code %in% 3:5)
-      warning("`nlm()` may not have reached the maximum likelihood estimate.")
+    warning(
+      "`nlm()` may not have reached the maximum likelihood estimate.",
+      message1,
+      code_text)
+
   }
 
   if(verbose)
@@ -145,7 +169,15 @@ est.incidence <- function(
         curve_params = curve_params,
         noise_params = noise_params)
 
-    if(print_graph) print(graph)
+    if(print_graph)
+    {
+      print(
+        graph +
+          ggplot2::scale_x_continuous(
+            trans = "log10",
+            labels = scales::label_comma()))
+
+    }
 
   }
 

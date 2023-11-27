@@ -33,6 +33,8 @@ library(tidyverse)
 library(ggplot2)
 library(readr)
 library(osfr)
+library(fs)
+
 
 ```
 ## Load data
@@ -111,14 +113,14 @@ data = path_package(
   read_csv(
     col_types = cols(ae_diagnosis_other = col_character())
   ) %>%
-  rename(antigen_iso = antiso) %>%
+  mutate(antigen_iso = (paste(antigen,isotype, sep="_"))) %>%
   rename(a = consent_age) %>%
   rename(y = result)%>%
-  filter(antigen_iso==c("HlyE IgG", "HlyE IgA")) %>%
   filter(dag==c("pakistan")) %>% 
-  select(dag, antigen_iso, a, y, sex, ageScat)
+  select(dag, antigen_iso, a, y, sex, ageScat)%>%
+  filter(antigen_iso==c("HlyE_IgG", "HlyE_IgA")) 
 
-
+  
 ```
 
 
@@ -143,6 +145,15 @@ noise_param <- data.frame(
   y.low = 0.0,          # low cutoff
   y.high = 5e4, # high cutoff
   antigen_iso=c("HlyE_IgG")); 
+
+Pak_noise_param <- typhoid_noise_params %>%
+  filter(Country=="pakistan") %>%
+  mutate(y.low==c(0.0))
+
+y.low <-c("0.0")
+
+#How do I create a new variable and set the value to 0?
+
 ```
 ## Visualize antibody data
 Get to know your cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. We have selected HlyE as the antigen of interest, and both IgA and IgG as the isotypes of interest. Here, we will look at the distribution of HlyE IgA and HlyE IgG. 
@@ -171,8 +182,6 @@ Finally, we are ready to begin seroincidence estimation. We will conduct two sep
 ```{r fxntest}
 
 
-typhoid_noise_params <- typhoid_noise_params
-
 #Using est.incidence (no strata)
 esttest = est.incidence(
   stepmax = 1,
@@ -180,7 +189,7 @@ esttest = est.incidence(
   start=.3,
   data = data,
   curve_param = curve_param, 
-  noise_param = noise_param
+  noise_param = Pak_noise_param
 )
 
 
@@ -231,7 +240,7 @@ esttest = est.incidence.by(
   strata = c("sex"),
   data = data,
   curve_params = curve_param, 
-  noise_params = cond.hlye.IgG
+  noise_params = Pak_noise_param
 )
 
 summary(data)

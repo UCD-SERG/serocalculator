@@ -2,7 +2,7 @@
 % Please edit documentation in R/nll.R
 \name{llik}
 \alias{llik}
-\title{Calculate  log-likelihood}
+\title{Calculate log-likelihood}
 \usage{
 llik(
   lambda,
@@ -19,12 +19,18 @@ llik(
 
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}.}
+\item{antigen_isos}{Character vector listing one or more antigen isotypes. Values must match \code{data}.}
 
-\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.}
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.}
 
-\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+\itemize{
+\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
+\item \code{nu}: biological noise
+\item \code{eps}: measurement noise
+\item \code{y.low}: lower limit of detection for the current antigen isotype
+\item \code{y.high}: upper limit of detection for the current antigen isotype
+}}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
@@ -34,5 +40,8 @@ Monte Carlo samples for each antibody type.}
 the log-likelihood of the data with the current parameter values
 }
 \description{
-Calculate  log-likelihood
+Calculate log-likelihood
+}
+\details{
+Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (\code{lambda}) value.
 }

@@ -51,6 +51,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(serocalculator)
 library(tidyverse)
+library(ggbeeswarm) # for plotting
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
 dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k") |> 
@@ -122,16 +123,17 @@ csdataL <-
 
 ```
 
-We can plot the distribution of the antibodies:
+We can plot the distribution of the antibody responses in the simulated data. 
 
 ```{r}
-library(ggbeeswarm)
+
+
 ggplot(csdataL, aes(x=as.factor(antigen_iso), y= value)) +
-  geom_beeswarm(size=.3, color = "grey") + 
-  geom_boxplot(outlier.colour = NA) + 
+  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso), show.legend = F) + 
+  geom_boxplot(outlier.colour = NA, fill = NA) + 
   scale_y_log10() + 
-  # facet_wrap(~lambda.sim) + 
-  theme_linedraw()
+  theme_linedraw() + 
+  labs(x="antigen - isotype")
 ```
 
 We can estimate incidence with `est.incidence()`:
@@ -223,14 +225,21 @@ sim.df <-
     ) %>% 
       mutate(lambda.sim = l, cluster = n) 
   }
-print(sim.df)
 
-library(ggbeeswarm)
-ggplot(sim.df, aes(x = as.factor(cluster), y= HlyE_IgG)) +
-  geom_beeswarm(size= .3, color = "grey") + 
-  geom_boxplot(outlier.colour = NA) + 
+print(sim.df)
+```
+
+We can plot the distributions of the simulated responses 
+```{r}
+
+sim.df.l <- sim.df %>%
+  pivot_longer(cols = c("HlyE_IgG", "HlyE_IgA"), values_to = c("value"), names_to = c("antigen_iso"))
+
+ggplot(sim.df.l, aes(x = as.factor(cluster), y= value)) +
+  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso)) + 
+  geom_boxplot(outlier.colour = NA, fill = NA) + 
   scale_y_log10() + 
-  facet_wrap(~lambda.sim) + 
+  facet_wrap(~antigen_iso + lambda.sim, nrow = 2) + 
   theme_linedraw()
 
 ```
@@ -248,7 +257,7 @@ ests =
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
-    numCores = nclus,
+    numCores = n_cores,
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,

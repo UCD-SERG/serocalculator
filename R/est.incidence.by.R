@@ -10,7 +10,7 @@
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
 #' @inheritParams est.incidence
-#' @inheritDotParams est.incidence -dataList
+#' @inheritDotParams est.incidence
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return An object of class `"seroincidence.by"`: a list of `"seroincidence` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
@@ -57,6 +57,13 @@ est.incidence.by <- function(
     print(strata_table)
   }
 
+  if(numCores > 1L && !requireNamespace("parallel", quietly = TRUE))
+  {
+    warning(
+      "The `parallel` package is not installed, so `numCores > 1` has no effect.",
+      "To install `parallel`, run `install.packages('parallel')` in the console.")
+  }
+
   # Loop over data per stratum
   if (numCores > 1L)
   {
@@ -86,13 +93,15 @@ est.incidence.by <- function(
         cl = cl,
         X = stratumDataList,
         fun = function(x)
-          est.incidence(
-            dataList = x,
-            lambda.start = lambda.start,
-            antigen_isos = antigen_isos,
-            build_graph = build_graph,
-            verbose = FALSE,
-            ...)
+          do.call(
+            what = est.incidence,
+            args = c(
+              x,
+              lambda.start = lambda.start,
+              antigen_isos = antigen_isos,
+              build_graph = build_graph,
+              verbose = FALSE,
+              ...))
       )
     } |> system.time() -> time
 
@@ -124,14 +133,16 @@ est.incidence.by <- function(
           print(cur_stratum_vars)
         }
 
-        fits[[cur_stratum]] =
-          est.incidence(
+        fits[[cur_stratum]] = do.call(
+          what = est.incidence,
+          args = c(
+            stratumDataList[[cur_stratum]],
             lambda.start = lambda.start,
-            dataList = stratumDataList[[cur_stratum]],
             antigen_isos = antigen_isos,
             build_graph = build_graph,
-            verbose =  verbose,
-            ...)
+            verbose = verbose,
+            ...))
+
 
       }
     } |> system.time() -> time

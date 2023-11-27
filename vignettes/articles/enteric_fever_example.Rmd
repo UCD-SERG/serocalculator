@@ -45,9 +45,6 @@ Sample datasets and pathogen-specific longitudinal antibody dynamics for **seroc
 
 To import the provided datasets into your R environment, we will need to identify the "id" of the appropriate dataset. The most common use of this will be to import the longitudinal Monte Carlo Markov Chain parameters (dmcmc). We demonstrate this below. 
 
-
-
-
 ### Load and prepare longitudinal parameter data
 
 The first step is to load the longitudinal data to set the antibody decay parameters. We use the function `getAdditionalData` to pull existing Enteric fever parameters from the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
@@ -62,7 +59,6 @@ These parameters include the following:
 
 We also create two additional variables: the annual decay rate, $\alpha$, which is calculated from the daily decay rate in this example, and $d$, which is the decay shape, or 1-$r$.
 
-Finally, we select only the variables needed for the analysis. 
 
 ```{r longdata, echo=FALSE, message=FALSE, eval=FALSE}
 c.hlye.IgG <-                             #Need to change this to pull from osf
@@ -72,16 +68,15 @@ c.hlye.IgG <-                             #Need to change this to pull from osf
   package = "serocalculator") |> #Load longitudinal parameters dataset
  readRDS()%>%
   mutate(alpha = alpha*365.25, #Create alpha and d 
-         d = r-1) #%>%
- # select(y1, alpha, d) #Select only the variables needed for analysis
+         d = r-1) 
 ```
 
 ```{r curve, echo=FALSE, message=FALSE}
 #Import longitudinal antibody parameters from OSF
 #This is the URL for Enteric Fever Curve Parameters called "SEES_mcmc_unstratified_df.rds"
 
-curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
-
+curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/") %>%
+  
 
 ```
 
@@ -89,20 +84,6 @@ curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
 We will use a subset of results from the SEES dataset as our cross-sectional data. Ideally, this will be a representative sample of the general population without regard to disease status. Here, we will limit our analysis to cross-sectional data from Pakistan. 
 
 In this scenario, we have selected **hlyE** as our target antigen and **IgG** and **IgA** as our target isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to *y* and *a*, respectively. Finally, we once again limit the dataset to only the variables needed for the analysis. 
-
-``` {r simdata, message=FALSE, eval=FALSE}
-library(fs) # filesystem utility functions
-p.hlye.IgG  <- 
-  fs::path_package(
-    package = "serocalculator", 
-    "extdata/simpophlyeigg.2.csv") %>% #Load cross-sectional dataset
-  read_csv() %>%
-  rename( #rename variables
-    y = y.smpl,
-    a = a.smpl) %>%
-  mutate(antigen_iso==c("HlyE_IgG")
- # select(y, a) #Select only the variables needed for analysis
-```
 
 ```{r data, message = FALSE}
 #Load the cross-sectional data
@@ -139,20 +120,10 @@ cond.hlye.IgG <- data.frame(
 ```
 
 ``` {r noise, message=FALSE}
-noise_param <- data.frame(
-  nu = 1.027239,             # Biological noise
-  eps = 0.2,            # Measurement noise
-  y.low = 0.0,          # low cutoff
-  y.high = 5e4, # high cutoff
-  antigen_iso=c("HlyE_IgG")); 
 
 Pak_noise_param <- typhoid_noise_params %>%
   filter(Country=="pakistan") %>%
-  mutate(y.low==c(0.0))
-
-y.low <-c("0.0")
-
-#How do I create a new variable and set the value to 0?
+  rename(y.low = llod)
 
 ```
 ## Visualize antibody data
@@ -179,6 +150,10 @@ Once log transformed, our data looks much more normally distributed. In most cas
 
 ## Estimate Seroincidence 
 Finally, we are ready to begin seroincidence estimation. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the age-specific incidence, respectively.
+
+### Overall Seroincidence
+We define our starting value as 0.5, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). Then we log transform $\lambda$ and set up maximum and minimum values for the confidence interval. 
+
 ```{r fxntest}
 
 
@@ -197,37 +172,6 @@ esttest
 
 ```
 
-
-### Overall Seroincidence
-We define our starting value as 0.5, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). Then we log transform $\lambda$ and set up maximum and minimum values for the confidence interval. 
-
-
-```{r seroinc}
-start <- .05 #Set starting value
-
-lambda = start #initial estimate: starting value
-log.lambda = log(lambda)
-log.lmin=log(lambda/10)
-log.lmax=log(10*lambda) 
-
-
-objfunc <- function(llam){
-  return(res <- fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
-}
-
-fit <- nlm(objfunc,log.lambda,
-           hessian=TRUE,print.level=0,stepmax=(log.lmax-log.lmin)/4)
-
-#Calculate lambda, lower, upper, LF min
-log.lambda.est <- c(exp(fit$estimate),
-                    exp(fit$estimate + qnorm(c(0.025))*sqrt(1/fit$hessian)),
-                    exp(fit$estimate + qnorm(c(0.975))*sqrt(1/fit$hessian)),
-                    fit$minimum)
-
-#Print the final results
-log.lambda.est
-```
-
 ### Age-Specific Seroincidence
 
 ```{r by}
@@ -243,12 +187,9 @@ esttest = est.incidence.by(
   noise_params = Pak_noise_param
 )
 
-summary(data)
-
 esttest
 
 ```
-
 
 
 ## Conclusions

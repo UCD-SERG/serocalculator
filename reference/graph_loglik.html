@@ -74,7 +74,14 @@
 <dd><p>Character vector listing one or more antigen isotypes. Values must match <code>data</code>.</p></dd>
 
     <dt><code>curve_params</code></dt>
-<dd><p>List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype combinations</p></li>
+<li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
+<li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
+<li><p><code>y1</code>: antibody peak level (ELISA units)</p></li>
+<li><p><code>t1</code>: duration of infection</p></li>
+<li><p><code>alpha</code>: antibody decay rate (1/days for the current longitudinal parameter sets)</p></li>
+<li><p><code>r</code>: shape factor of antibody decay</p></li>
+</ul></dd>
 
     <dt><code>noise_params</code></dt>
 <dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p></li>

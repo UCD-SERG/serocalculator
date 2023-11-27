@@ -62,12 +62,12 @@ response model.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">curve_params</span>,</span>
 <span>  <span class="va">noise_params</span>,</span>
-<span>  strata <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  <span class="va">strata</span>,</span>
 <span>  curve_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
 <span>  noise_strata_varnames <span class="op">=</span> <span class="va">strata</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  lambda.start <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span>  build_graph <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  numCores <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -81,7 +81,14 @@ response model.</p>
 
 
 <dt>curve_params</dt>
-<dd><p>List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype combinations</p></li>
+<li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
+<li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
+<li><p><code>y1</code>: antibody peak level (ELISA units)</p></li>
+<li><p><code>t1</code>: duration of infection</p></li>
+<li><p><code>alpha</code>: antibody decay rate (1/days for the current longitudinal parameter sets)</p></li>
+<li><p><code>r</code>: shape factor of antibody decay</p></li>
+</ul></dd>
 
 
 <dt>noise_params</dt>
@@ -94,7 +101,7 @@ response model.</p>
 
 
 <dt>strata</dt>
-<dd><p>Character vector of stratum-defining variables. Values must be variable names in <code>data</code>. Default = "".</p></dd>
+<dd><p>Character vector of stratum-defining variables. Values must be variable names in <code>data</code>.</p></dd>
 
 
 <dt>curve_strata_varnames</dt>
@@ -180,7 +187,14 @@ response model.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An object of class <code>"seroincidence.by"</code>: a list of <code>"seroincidence</code> objects from <code><a href="est.incidence.html">est.incidence()</a></code>, one for each stratum, with some meta-data attributes.</p>
+<ul><li><p>if <code>strata</code> has meaningful inputs:
+An object of class <code>"seroincidence.by"</code>; i.e., a list of <code>"seroincidence"</code> objects from <code><a href="est.incidence.html">est.incidence()</a></code>, one for each stratum, with some meta-data attributes.</p></li>
+<li><p>if <code>strata</code> is missing, <code>NULL</code>, <code>NA</code>, or <code>""</code>:
+An object of class <code>"seroincidence"</code>.</p></li>
+</ul></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>If <code>strata</code> is left empty, a warning will be produced, recommending that you use <code><a href="est.incidence.html">est.incidence()</a></code> for unstratified analyses, and then the data will be passed to <code><a href="est.incidence.html">est.incidence()</a></code>. If for some reason you want to use <code>est.incidence.by()</code> with no strata instead of calling <code><a href="est.incidence.html">est.incidence()</a></code>, you may use <code>NA</code>, <code>NULL</code>, or "" as the <code>strata</code> argument to avoid that warning.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

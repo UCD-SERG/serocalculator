@@ -4,10 +4,15 @@
 #' Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (`lambda`) value.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
-#' @param antigen_isos Character vector with one or more antibody names. Values must match `data`.
-#' @param curve_params List of data frames of all longitudinal parameters. Each data frame contains
-#'   Monte Carlo samples for each antibody type.
-#' @param noise_params a [list()] (or [data.frame()], or [tibble()]) containing noise parameters
+#' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `data`.
+#' @param curve_params List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.
+#' @param noise_params a [data.frame()] (or [tibble::tibble()]) containing the following variables, specifying noise parameters for each antigen isotype:
+#' * `antigen_iso`: antigen isotype whose noise parameters are being specified on each row
+#' * `nu`: biological noise
+#' * `eps`: measurement noise
+#' * `y.low`: lower limit of detection for the current antigen isotype
+#' * `y.high`: upper limit of detection for the current antigen isotype
+#'
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams fdev

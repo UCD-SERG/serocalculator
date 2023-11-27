@@ -16,6 +16,7 @@ get_strata = function(data, strata_varnames)
   }
 
   to_return =
+    to_return |>
     dplyr::summarize(
       .by = all_of(strata_varnames),
       n = min(n)

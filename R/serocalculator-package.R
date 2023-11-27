@@ -105,7 +105,9 @@
 #' @importFrom dplyr everything
 #' @importFrom dplyr filter
 #' @importFrom dplyr inner_join
+#' @importFrom dplyr is.grouped_df
 #' @importFrom dplyr mutate
+#' @importFrom dplyr n
 #' @importFrom dplyr pull
 #' @importFrom dplyr relocate
 #' @importFrom dplyr rename
@@ -113,20 +115,23 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
 #' @importFrom dplyr tibble
+#' @importFrom dplyr ungroup
+#' @importFrom ggplot2 aes
 #' @importFrom magrittr %>%
-#' @importFrom parallel clusterEvalQ
-#' @importFrom parallel clusterExport
-#' @importFrom parallel parLapplyLB
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
 #' @importFrom rlang .env
 #' @importFrom stats dlnorm optim pgamma plnorm
+#' @importFrom stats formula
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
+#' @importFrom stats runif
+#' @importFrom stats xtabs
 #' @importFrom tibble as_tibble
 #' @importFrom tibble column_to_rownames
 #' @importFrom tibble tibble
 #' @importFrom tidyr drop_na
+#' @importFrom tidyr pivot_longer
 #' @importFrom utils download.file unzip
 #' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end

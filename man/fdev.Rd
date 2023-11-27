@@ -4,12 +4,12 @@
 \alias{fdev}
 \title{Calculate negative log-likelihood (deviance)}
 \usage{
-fdev(log.lambda, csdata, lnpars, cond)
+fdev(lambda, csdata, lnpars, cond)
 }
 \arguments{
-\item{log.lambda}{natural logarithm of incidence parameter, in log(years). Value of -6 corresponds roughly to 1 day (log(1/365.25)), -4 corresponds roughly to 1 week (log(7 / 365.25)).}
+\item{lambda}{incidence parameter, in events per person-year}
 
-\item{csdata}{cross-sectional sample data containing variables \code{y} and \code{a}}
+\item{csdata}{cross-sectional sample data containing variables \code{value} and \code{age}}
 
 \item{lnpars}{longitudinal antibody decay model parameters \code{alpha}, \code{y1}, and \code{d}}
 

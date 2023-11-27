@@ -9,11 +9,11 @@
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
-#' @inheritParams .optNll
-#' @inheritDotParams .optNll -dataList
-#' @inheritDotParams stats::nlm -f -p -hessian
+#' @inheritParams est.incidence
+#' @inheritDotParams est.incidence
+#' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
-#' @return A set of lambda estimates for each strata.
+#' @return An object of class `"seroincidence.by"`: a list of `"seroincidence` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
 #'
 #'
 #' @export
@@ -25,7 +25,8 @@ est.incidence.by <- function(
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
-    lambda.start = 1/365.25,
+    lambda.start = 0.1,
+    build_graph = TRUE,
     numCores = 1L,
     verbose = FALSE,
     ...)
@@ -33,45 +34,48 @@ est.incidence.by <- function(
 
   .errorCheck(
     data = data,
-    antibodies = antigen_isos,
+    antigen_isos = antigen_isos,
     strata = strata,
     params = curve_params)
-
-  curve_params =
-    curve_params |>
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    mutate(
-      alpha = .data$alpha * 365.25,
-      d = .data$r - 1)
-
-  noise_params =
-    noise_params |>
-    dplyr::filter(.data$antigen_iso %in% antigen_isos)
-  # %>%
-  #   select(y1, alpha, d, antigen_iso, any_of(strata))
 
   # Split data per stratum
   stratumDataList <- prep_data(
     data = data,
-    antibodies = antigen_isos,
+    antigen_isos = antigen_isos,
     curve_params = curve_params,
     noise_params = noise_params,
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames)
 
-  if(verbose) message("Data has been stratified.")
+  strata_table = stratumDataList |> attr("strata")
+
+  if(verbose)
+  {
+    message("Data has been stratified.")
+    message('Here are the strata that will be analyzed:')
+    print(strata_table)
+  }
+
+  if(numCores > 1L && !requireNamespace("parallel", quietly = TRUE))
+  {
+    warning(
+      "The `parallel` package is not installed, so `numCores > 1` has no effect.",
+      "To install `parallel`, run `install.packages('parallel')` in the console.")
+  }
 
   # Loop over data per stratum
-  if (numCores > 1L && requireNamespace("parallel", quietly = TRUE)) {
-
+  if (numCores > 1L)
+  {
     if(verbose) message("Setting up parallel processing.")
+    requireNamespace("parallel", quietly = FALSE)
 
     libPaths <- .libPaths()
     cl <-
       numCores |>
       min(parallel::detectCores() - 1) |>
-      parallel::makeCluster()
+      parallel::makeCluster() |>
+      suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
     })
@@ -89,11 +93,15 @@ est.incidence.by <- function(
         cl = cl,
         X = stratumDataList,
         fun = function(x)
-          .optNll(
-            dataList = x,
-            lambda.start = lambda.start,
-            antigen_isos = antigen_isos,
-            ...)
+          do.call(
+            what = est.incidence,
+            args = c(
+              x,
+              lambda.start = lambda.start,
+              antigen_isos = antigen_isos,
+              build_graph = build_graph,
+              verbose = FALSE,
+              ...))
       )
     } |> system.time() -> time
 
@@ -106,33 +114,38 @@ est.incidence.by <- function(
   {
     # fits <- lapply(
     #   X = stratumDataList,
-    #   FUN = function(x) .optNll(dataList = x, verbose = verbose, ...))
+    #   FUN = function(x) est.incidence(dataList = x, verbose = verbose, ...))
 
     fits = list()
 
-    {
+    { # time progress
 
-    for (cur_stratum in names(stratumDataList))
-    {
-      if(verbose)
+      for (cur_stratum in names(stratumDataList))
       {
-        message('starting new stratum: ', cur_stratum)
-        stratumDataList |>
-          attr("strata") |>
-          dplyr::filter(.data$Stratum == cur_stratum) |>
-          print()
+
+        cur_stratum_vars =
+          strata_table |>
+          dplyr::filter(.data$Stratum == cur_stratum)
+
+        if(verbose)
+        {
+          message('starting new stratum: ', cur_stratum)
+          print(cur_stratum_vars)
+        }
+
+        fits[[cur_stratum]] = do.call(
+          what = est.incidence,
+          args = c(
+            stratumDataList[[cur_stratum]],
+            lambda.start = lambda.start,
+            antigen_isos = antigen_isos,
+            build_graph = build_graph,
+            verbose = verbose,
+            ...))
+
+
       }
-
-      fits[[cur_stratum]] =
-        .optNll(
-          lambda.start = lambda.start,
-          dataList = stratumDataList[[cur_stratum]],
-          antigen_isos = antigen_isos,
-          verbose = verbose,
-          ...)
-
-    }
-    }  |> system.time() -> time
+    } |> system.time() -> time
 
     if(verbose)
     {
@@ -143,9 +156,10 @@ est.incidence.by <- function(
 
   incidenceData <- structure(
     fits,
-    Antibodies = antigen_isos,
-    Strata = stratumDataList |> attr("strata"),
-    class = "seroincidence.ests" |> union(class(fits)))
+    antigen_isos = antigen_isos,
+    Strata = strata_table,
+    graphs_included = build_graph,
+    class = "seroincidence.by" |> union(class(fits)))
 
   return(incidenceData)
 }

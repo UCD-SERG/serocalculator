@@ -25,27 +25,6 @@
     <loc>https://ucd-serg.github.io/serocalculator/index.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterDelftParams1.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterDelftParams3.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterDelftParams4.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterSSIParams1.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterSSIParams2.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterSSIParams4.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/campylobacterSimLowData.html</loc>
-  </url>
-  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc>
   </url>
   <url>
@@ -73,18 +52,6 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/llik.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/pertussisIgGPTParams1.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/pertussisIgGPTParams2.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/pertussisIgGPTParams3.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/pertussisIgGPTParams4.html</loc>
-  </url>
-  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/plot.seroincidence.by.html</loc>
   </url>
   <url>
@@ -101,15 +68,6 @@
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/salmonellaSSIParams1.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/salmonellaSSIParams2.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/salmonellaSSIParams4.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc>

@@ -6,7 +6,6 @@
 #' @param lambda.start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
 #' @param c.age age category to subset data by (optional)
-#' @param dataList Optional argument; as an alternative to passing in `data`, `curve_params`, and `noise_params` individually, you may create a list containing these three elements (with these names) and pass that in instead. This option may be useful for parallel processing across strata.
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
 #' @param stepmin A positive scalar providing the minimum allowable relative step length.
@@ -15,10 +14,9 @@
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda.start`, `antigen_isos`, and `ll_graph`
 #' @export
 est.incidence <- function(
-    data = dataList$data,
-    curve_params = dataList$curve_params,
-    noise_params = dataList$noise_params,
-    dataList = NULL,
+    data,
+    curve_params,
+    noise_params,
     antigen_isos = data$antigen_iso |> unique(),
     lambda.start = 0.1,
     stepmin = 1e-8,

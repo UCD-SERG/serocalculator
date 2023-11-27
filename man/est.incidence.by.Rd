@@ -12,7 +12,8 @@ est.incidence.by(
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
   antigen_isos = unique(pull(data, "antigen_iso")),
-  lambda.start = 1/365.25,
+  lambda.start = 0.1,
+  build_graph = TRUE,
   numCores = 1L,
   verbose = FALSE,
   ...
@@ -21,10 +22,16 @@ est.incidence.by(
 \arguments{
 \item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
-\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.}
+\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains Monte Carlo samples for each antibody type.}
 
-\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+\itemize{
+\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
+\item \code{nu}: biological noise
+\item \code{eps}: measurement noise
+\item \code{y.low}: lower limit of detection for the current antigen isotype
+\item \code{y.high}: upper limit of detection for the current antigen isotype
+}}
 
 \item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}. Default = "".}
 
@@ -36,13 +43,18 @@ Monte Carlo samples for each antibody type.}
 
 \item{lambda.start}{starting guess for incidence rate, in years/event.}
 
+\item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
+
 \item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
-  Arguments passed on to \code{\link[=.optNll]{.optNll}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link[=est.incidence]{est.incidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
+    \item{\code{c.age}}{age category to subset data by (optional)}
+    \item{\code{print_graph}}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
+    \item{\code{stepmin}}{A positive scalar providing the minimum allowable relative step length.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -53,19 +65,12 @@ Monte Carlo samples for each antibody type.}
     \item{\code{typsize}}{an estimate of the size of each parameter
     at the minimum.}
     \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
-    \item{\code{print.level}}{this argument determines the level of printing
-    which is done during the minimization process.  The default
-    value of \code{0} means that no printing occurs, a value of \code{1}
-    means that initial and final details are printed and a value
-    of 2 means that full tracing information is printed.}
     \item{\code{ndigit}}{the number of significant digits in the function \code{f}.}
     \item{\code{gradtol}}{a positive scalar giving the tolerance at which the
     scaled gradient is considered close enough to zero to
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
-    \item{\code{steptol}}{A positive scalar providing the minimum allowable
-    relative step length.}
     \item{\code{iterlim}}{a positive integer specifying the maximum number of
     iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the
@@ -76,7 +81,7 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \value{
-A set of lambda estimates for each strata.
+An object of class \code{"seroincidence.by"}: a list of \verb{"seroincidence} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal

@@ -98,14 +98,14 @@ est1 = est.incidence(
   print.level = 2,
   start = 0.3,
   verbose = TRUE,
-  dpop = 
+  data = 
     xs_sample |> 
     rename(
       a = Age,
       y = result) %>% 
     dplyr::filter(Country == "Bangladesh"),
   
-  dmcmc = 
+  curve_params = 
     curve_params |> 
     dplyr::filter(Country == "Bangladesh"),
   

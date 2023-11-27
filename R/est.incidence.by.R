@@ -21,7 +21,7 @@ est.incidence.by <- function(
     data,
     curve_params,
     noise_params,
-    strata = NULL,
+    strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
     antigen_isos = data |> pull("antigen_iso") |> unique(),
@@ -32,13 +32,17 @@ est.incidence.by <- function(
     ...)
 {
 
-  if(is.null(strata) || set.equal(strata, "") || is.na(strata))
+  if(missing(strata))
   {
     warning(
-      "The `strata` argument to `est.incidence.by()` is empty (NULL, \"\", or NA).",
-      "\n  If you do not want to stratify your data, ",
-      "\n  consider using the `est.incidence()` function to simplify your code.")
+      "The `strata` argument to `est.incidence.by()` is missing.",
+      "\n\n  If you do not want to stratify your data, ",
+      "consider using the `est.incidence()` function to simplify your code and avoid this warning.",
+      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.")
+  }
 
+  if(missing(strata) || is.na(strata) || is.null(strata) || setequal(strata, ""))
+  {
     to_return =
       est.incidence(
         data = data,

@@ -27,6 +27,7 @@ est.incidence <- function(
     c.age = NULL,
     ...)
 {
+  # possibly subset by `c.age`
   if(!is.null(c.age))
   {
     data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
@@ -42,6 +43,12 @@ est.incidence <- function(
         dplyr::filter(.data[["ageCat"]] == c.age)
     }
   }
+
+  .errorCheck(
+    data = data,
+    antigen_isos = antigen_isos,
+    curve_params = curve_params)
+
   data = data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     dplyr::select("value", "age", "antigen_iso") |>

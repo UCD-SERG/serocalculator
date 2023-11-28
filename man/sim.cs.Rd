@@ -46,7 +46,7 @@ sim.cs(
 
 \item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} with containing MCMC samples from the Bayesian distribution of longitudinal decay curve model, containing the following columns:
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations

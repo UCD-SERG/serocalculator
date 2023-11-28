@@ -24,6 +24,7 @@ library(ggplot2)
 typhoid_controls |> 
   ggplot(aes(x = Age, y = elisa, col = antigen_iso)) +
    geom_point() + 
-   geom_smooth()
+   geom_smooth() +
+  facet_wrap(~antigen_iso)
 ```
 

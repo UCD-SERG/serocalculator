@@ -134,6 +134,46 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 # Modeling $p(Y=y|T=t)$
 
+## A simple model for the seroresponse
+
+The current version of the serocalculator package uses the model proposed in @Teunis_2016 for 
+the shape of the seroresponse:
+$$
+\begin{array}{l@{\qquad}l}
+\text{Infection/colonization episode} & \text{Waning immunity episode}\\
+b^{\prime}(t) = \mu_{0}b(t) - cy(t) & b(t) = 0 \\
+y^{\prime}(t) = \mu y(t) & y^{\prime}(t) = -\alpha y(t)^r \\
+\end{array}
+$$
+
+With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen concentration 
+$b(0) = b_{0}$. The serum antibody response $y(t)$ can be written as
+$$
+y(t) = y_{+}(t) + y_{-}(t)
+$$
+where
+\begin{align*}
+y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\le t <t_{1}]\\
+y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
+\end{align*}
+Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the (unobservable) growth rate $\mu$ can 
+be written as 
+$$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\linewidth]{fig/response.pdf}
+\caption{\label{response_graph}The antibody level at $t=0$ is $y_{0}$; the rising branch ends at 
+$t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any antibody level 
+$y_{0} \le y(t) < y_{1}$ occurs twice.}
+\end{figure}
+
+Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$, 
+log concentrations decrease rapidly after infection has terminated, but decay then slows down and 
+low antibody concentrations are maintained for a long period. When $r$ approaches 1, exponential 
+decay is restored.
+
+
 ## Biological noise
 
 When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).
@@ -163,46 +203,8 @@ methods use a specific parametric model, as proposed in [@de_Graaf_2014] and aug
 [@Teunis_2016], the methods used to calculate the likelihood function allow 
 seroresponses of arbitrary shape.
 
-# 1. A simple model for the seroresponse
 
-The current version of the serocalculator package uses the model proposed in @Teunis_2016 for 
-the shape of the seroresponse:
-$$
-\begin{array}{l@{\qquad}l}
-\text{Infection/colonization episode} & \text{Waning immunity episode}\\
-b^{\prime}(t) = \mu_{0}b(t) - cy(t) & b(t) = 0 \\
-y^{\prime}(t) = \mu y(t) & y^{\prime}(t) = -\nu y(t)^r \\
-\end{array}
-$$
-
-With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen concentration 
-$b(0) = b_{0}$. The serum antibody response $y(t)$ can be written as
-$$
-y(t) = y_{+}(t) + y_{-}(t)
-$$
-where
-\begin{align*}
-y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\le t <t_{1}]\\
-y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\nu(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
-\end{align*}
-Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the (unobservable) growth rate $\mu$ can 
-be written as 
-$$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.6\linewidth]{fig/response.pdf}
-\caption{\label{response_graph}The antibody level at $t=0$ is $y_{0}$; the rising branch ends at 
-$t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any antibody level 
-$y_{0} \le y(t) < y_{1}$ occurs twice.}
-\end{figure}
-
-Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$, 
-log concentrations decrease rapidly after infection has terminated, but decay then slows down and 
-low antibody concentrations are maintained for a long period. When $r$ approaches 1, exponential 
-decay is restored.
-
-# 2. Backward recurrence time
+# Backward recurrence time
 
 Considering the (fundamental) uniform distribution $u_{f}$ of sampling within a given interval, the 
 interval length distribution $p(\Delta t)$ and the distribution of (cross--sectionally) sampled 
@@ -246,12 +248,12 @@ $$
 where
 \begin{align*}
 \tau_{+}(y) & = \displaystyle{\frac{1}{\mu}} \log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right) [0\le \tau<t_{1}]\\
-\tau_{-}(y) & = \left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}}\right)[t_{1}\le \tau < \infty]
+\tau_{-}(y) & = \left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)[t_{1}\le \tau < \infty]
 \end{align*}
 with corresponding derivatives
 $$
 \frac{\text{d}\tau_{+}}{\text{d}y} = \frac{1}{\mu y_{+}} \quad \text{ and } \quad
-\frac{\text{d}\tau_{-}}{\text{d}y} = - \frac{1}{\nu y_{-}^{r}}
+\frac{\text{d}\tau_{-}}{\text{d}y} = - \frac{1}{\alpha y_{-}^{r}}
 $$
 
 Now, consider the probability that an antibody level $y^{\prime}$, corresponding to a time since 
@@ -261,7 +263,7 @@ P(y^{\prime} \le y) & = P\left(y_{0} \le y_{+}(\tau^{\prime})\le y_{+}(\tau) \ve
                         \le y_{-}(\tau) \le t_{1}\right) + [y_{1} < y]\\
                     & = P\left(0 \le \tau^{\prime}\le \frac{1}{\mu} 
                         \log\left(\frac{y_{+}}{y_{0}}\right)\right)\\
-                    &   \qquad {} + P\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)} \le 
+                    &   \qquad {} + P\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)} \le 
                         \tau^{\prime} < \infty\right) + [y_{1} < y]
 \end{align*}
 
@@ -279,7 +281,7 @@ So that
 \begin{equation}\label{rho_y}
 \begin{aligned}
 \rho_{+}(y_{+}) & = \displaystyle{\frac{1}{\mu y_{+}}} u\left(\displaystyle{\frac{1}{\mu}}\log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right)\right)\\
-\rho_{-}(y_{-}) & = \displaystyle{\frac{1}{\nu y_{-}^{r}}} u\left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}}\right)
+\rho_{-}(y_{-}) & = \displaystyle{\frac{1}{\alpha y_{-}^{r}}} u\left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)
 \end{aligned}
 \end{equation}
 when $[y_{0} \le y < y_{1}]$ there are two contributions to the density, one from the rising and one 
@@ -308,15 +310,15 @@ Combining equations \eqref{rho_y} and \eqref{bwrectime_pdf} the marginal density
 \end{equation}
 and
 \begin{align}\label{margdist_y_decay}
-\rho_{-}(y_{-}) & = [0< y_{-} \le y_{1}] \frac{\lambda}{\nu y_{-}^{r}(m+1)} 
-                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)} \nonumber\\
+\rho_{-}(y_{-}) & = [0< y_{-} \le y_{1}] \frac{\lambda}{\alpha y_{-}^{r}(m+1)} 
+                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)} \nonumber\\
                 &   \qquad {} \times\sum_{j=0}^{m}\frac{\lambda^{j}}{j!}\left(t_{1}+
-                    \frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)^{j}
+                    \frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)^{j}
 \end{align}
 where $\rho_{+}$ and $\rho_{-}$ refer to the contributions of the rising and decaying part of the 
 seroresponse to the density of $y$.
 
-The within--host parameters $\boldsymbol{\theta} = (y_{0}, y_{1}, t_{1}, \nu, r)$ vary among 
+The within--host parameters $\boldsymbol{\theta} = (y_{0}, y_{1}, t_{1}, \alpha, r)$ vary among 
 responses of individual subjects. Heterogeneity in these parameters may be described by their joint 
 distribution, which can be used to calculate the marginal distribution $\rho(y)$ 
 [@Teunis_2012]. Since a Monte Carlo sample of the posterior joint distribution is 
@@ -394,14 +396,14 @@ while the cumulative distribution of antibody levels $y$ is
 \begin{align*}
 P(y^{\prime} \le y) & = U\left(\frac{1}{\mu}\log\left(\frac{y}{y_{0}} \right)\right) [y_{0}\le y < y_{1}] +\\
                     &   \qquad {} \left(1-U\left(t_{1}+\frac{y^{-(r-1)}-y_{1}^{-(r-1)}}
-                        {\nu(r-1)}\right)\right) [y\le y_{1}] + [y_{1} < y]
+                        {\alpha(r-1)}\right)\right) [y\le y_{1}] + [y_{1} < y]
 \end{align*}
 so that
 \begin{align*}
 R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}P_{j} \left(\frac{1}{\mu}\log
          \left(\frac{y}{y_{0}}\right)\vert\lambda\right) [y_{0} \le y < y_{1}]\\
      &   \qquad {} + \left(1 - \frac{1}{m+1}\sum_{j=0}^{m}P_{j}\left(t_{1}+
-         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\vert\lambda\right)\right)[y \le y_{1}]\\
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\vert\lambda\right)\right)[y \le y_{1}]\\
      &   \qquad {} + [y_{1} < y]
 \end{align*}
 
@@ -410,7 +412,7 @@ Using equation \eqref{pm_cumul} this can be written in terms of incomplete gamma
 R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}  \left(1-\frac{\Gamma\left(j+1,\frac{\lambda}{\mu}
          \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
      &   \qquad {} + \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \left(1-\frac{\Gamma\left(j+1,\lambda\left(t_{1} +
-         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)\right)}{j!}\right)\right)[y < y_{1}]\\
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!}\right)\right)[y < y_{1}]\\
      &   \qquad {} + [y_{1} < y]
 \end{align*}
 or
@@ -418,7 +420,7 @@ or
 R(y) & = \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\frac{\lambda}{\mu} 
          \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
      &   \qquad {} + \frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\lambda\left(t_{1} + 
-         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\nu(r-1)}\right)\right)}{j!} [y < y_{1}]\\
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!} [y < y_{1}]\\
      &   \qquad {} + [y_{1} < y]
 \end{align*}
 

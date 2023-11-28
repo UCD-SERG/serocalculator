@@ -1,4 +1,4 @@
-prep_data <- function(
+stratify_data <- function(
     data,
     antigen_isos,
     curve_params,

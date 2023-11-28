@@ -163,7 +163,7 @@ Using the function `est.incidence`, we define our starting value as 0.2, which w
 esttest = est.incidence(
   stepmax = 1,
   verbose = TRUE,
-  start=.2,
+  lambda.start=.2,
   data = pop_data %>% filter(Country == "Pakistan"),
   curve_param = curve_param, 
   noise_param = noise_param %>% filter(Country == "Pakistan"),

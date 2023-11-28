@@ -74,9 +74,12 @@ warn_missing_strata = function(
 
     if(nrow(missing_strata) > 0)
     {
-      message("The following strata are missing in ", dataname, ":")
+      message(
+        "The following strata variables are present in `",
+        dataname,
+        "`, but the following specific combinations of those strata are missing:")
       print(missing_strata)
-      stop("Missing strata in `", dataname, "`.\n\n")
+      stop("Missing strata levels in `", dataname, "`.\n\n")
     }
   }
 

@@ -65,9 +65,11 @@ $$
 \end{aligned}
 $$
 
-Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$:
+Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.
 
 ![Example log(likelihood) curve](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png){width=80%}
+
+The standard error of the estimate is approximately equal to the inverse of the rate of curvature^[2nd derivative, aka Hessian] in the log-likelihood function, at the maximum (more curvature -> maximum is easier to determine -> less standard error).
 
 ## The plot thickens
 
@@ -116,18 +118,35 @@ If we know $p(Y=y|T=t)$, then we can maximize $p(Y=y)$ over $\lambda$ to find th
 
 Now, the big problem becomes modeling $p(Y=y|T=t)$.
 
+## Finding the MLE numerically
+
+A secondary problem is that the likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
+
+$$
+\begin{aligned}
+\log\mathcal{L}(\lambda) 
+&= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+&= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
+\end{aligned}
+$$
+
+The derivative of this expression doesn't come out cleanly, so we will use a *numerical method*^[specifically, a Newton-type algorithm, implemented by `stats::nlm()`] to find the MLE and corresponding standard error.
+
 # Innovations in the `serocalculator` package
 
 ## Biological noise
 
 When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).
 
-We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren't actually the ones we are looking for (overcount, false positives).
+We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren't actually the ones we are looking for (overcount, false positives, cross-reactivity).
 
-We are more concerned about overcount 
+We are more concerned about overcount (cross-reactivity) than undercount. For a given antibody, we can do some analytical work beforehand to estimate the distribution of overcounts, and add that to our model $p(Y=y|T=t)$.
 
 ## Measurement noise
 
+There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
+
+## Other details
 
 The `serocalculator` package provides three refinements to the method for 
 calculating seroincidence published earlier [@Teunis_2012] and implemented in R package

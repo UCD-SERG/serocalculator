@@ -17,7 +17,7 @@ llik(
 \arguments{
 \item{lambda}{incidence parameter, in events per person-year}
 
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
+\item{data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
 
 \item{antigen_isos}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
 

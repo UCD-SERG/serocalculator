@@ -16,7 +16,7 @@
 \item{...}{
   Arguments passed on to \code{\link[=llik]{llik}}
   \describe{
-    \item{\code{data}}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
+    \item{\code{data}}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
     \item{\code{antigen_isos}}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
     \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{

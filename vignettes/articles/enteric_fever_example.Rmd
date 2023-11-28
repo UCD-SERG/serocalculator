@@ -3,10 +3,10 @@ title: "Enteric Fever Example"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Typhoid Seroincidence}
+  %\VignetteIndexEntry{Enteric Fever Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: ../references.bib
+bibliography: references.bib
 
 
 ---
@@ -14,13 +14,39 @@ bibliography: ../references.bib
 
 This vignette provides users with an example analysis using the **serocalculator** package by reproducing an analysis in [@Aiemjoy_2022_Lancet]. 
 
-++ describe more about the method here using the old package vignette as a guide 
+## Methods
 
-Users will determine the seroincidence of enteric fever in cross-sectional serserveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. 
+The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in [@Simonsen_2009;@Teunis_2012], and further developed by subsequent publications [@de_Graaf_2014] and [@Teunis_2016]. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.
 
-Longitudinal antibody responses were modelled from 1420 blood culture-confirmed enteric fever cases enrolled in Bangladesh, Nepal and Pakistan. 
+### A Proxy for Infection 
+ 
+While the exact time of infection is impossible to measure in an individual, antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In simple terms: the presence of many high antibody concentrations indicates that many subjects likely experienced infection recently, while mostly low concentrations indicate a low frequency of infections in the sampled population.
 
-Further details on this study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
+In order to interpret the measured cross-sectional antibody concentrations in terms of incidence, we must define the antibody dynamic over time to understand the generalized antibody response at different times since infection. For any antibody detected in the cross–sectional sample, a quantitative description of its dynamics following infection (seroconversion to an elevated concentration, followed by a gradual decrease) must be available. In published studies, this information on the time course of the serum antibody response has been obtained from longitudinal follow–up data in subjects who had a symptomatic episode following infection. 
+
+In this case, the onset of symptoms then provides a proxy for the time that infection occurred. 
+
+### Assumptions and Cautions
+Care must be taken that longitudinal and cross–sectional measurements of antibody concentrations are calibrated on the same scale (or, preferably, expressed in identical units). Ideally they will be obtained using the same diagnostic test. 
+
+The time course of the serum antibody response to infection is assumed generic: anyone infected by the same pathogen is expected to produce a response similar to those seen in the symptomatic cohort used for the follow–up study. Thus, the strategy is to set up a longitudinal model from a follow–up study once, and use the thus obtained information to analyze many different cross–sectional data sets.
+
+Note that it must be assumed that such variation in the time course of antibody concentrations among individuals as observed in the longitudinal cohort is the same as in the population where the cross-sectional sample was taken, where this variation cannot be observed.
+
+Analysis of longitudinal data and estimation of the required parameters is separated from the 
+estimation of seroincidences, because (1) there are few longitudinal data sets available and they 
+are difficult (and expensive) to obtain, (2) such longitudinal models may be considered *generic*, presumably describing a physiological phenomenon that is similiar in any infected individual, and 
+(3) setting up and running the longitudinal model requires additional skills, not necessary for use of this package.
+
+#### The seroincidence estimator
+
+The **serocalculator** package was designed to calculate the incidence of seroconversion, by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated, as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data, by adjusting the seroconversion frequency, thus providing a means to estimate the seroconversion frequency.
+
+## Example: Enteric Fever
+
+Users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
+
+Further details on this published study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -37,8 +63,6 @@ The first step in conducting this analysis is to load our necessary packages.
 library(serocalculator)
 library(tidyverse)
 library(ggplot2)
-library(readr)
-library(fs)
 
 ```
 ## Load data
@@ -81,8 +105,6 @@ In this scenario, we will limit our analysis to data from Pakistan. We have sele
 pop_data <- getAdditionalData(fileURL ="https://osf.io/download//n6cp3/") %>%
   rename(value = result,
          age = Age)
-
-
   
 ```
 

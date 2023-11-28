@@ -20,22 +20,16 @@ library(fs)
 library(readr)
 library(dplyr)
 xs_sample = 
-  "extdata/sees_crossSectional_baseline_allCountries.102523.csv" |> 
-  path_package(package = "serocalculator") |> 
-  read_csv()
+  getAdditionalData(
+    fileName = "n6cp3",
+    repoURL = "https://osf.io/download")
 
-curve_params = 
-  path_package(
-    package = "serocalculator",
-    "extdata/sees_dmcmc_09.30.2021.rds") |> 
-  readRDS()
+curve_params = url("https://osf.io/download/bhfvx") |> readRDS()
 
 noise_params = 
-  path_package(
-    package = "serocalculator",
-    "extdata/SEES_NoiseParam.rds") |> 
-  readRDS() |> 
-  rename(y.low = llod)
+    getAdditionalData(
+    fileName = "hqy4v",
+    repoURL = "https://osf.io/download")
 
 full_data = path_package(
   package = "serocalculator",
@@ -153,7 +147,8 @@ est2 = est.incidence.by(
     noise_params |> 
     dplyr::filter(
       Country != "Nepal"
-      )
+      ) |> 
+    rename(y.low = llod)
 )
 
 ```

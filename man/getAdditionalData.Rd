@@ -7,7 +7,8 @@
 getAdditionalData(
   fileName,
   repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
-  savePath = NULL
+  savePath = NULL,
+  quiet = TRUE
 )
 }
 \arguments{

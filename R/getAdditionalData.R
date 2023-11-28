@@ -25,7 +25,8 @@
 getAdditionalData <- function(
   fileName,
   repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
-  savePath = NULL)
+  savePath = NULL,
+  quiet = TRUE)
 {
   tmpFileName <- file.path(tempdir(), fileName)
   on.exit({
@@ -37,7 +38,7 @@ getAdditionalData <- function(
     download.file(file.path(repoURL, fileName),
                   tmpFileName,
                   mode = "wb",
-                  quiet = TRUE)
+                  quiet = quiet)
   },
   error = function(e) {
     print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")

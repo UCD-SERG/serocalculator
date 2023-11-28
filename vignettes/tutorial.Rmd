@@ -1,6 +1,6 @@
 ---
 title: "Serocalculator package tutorial"
-author: "UC Davis SeroEpidemiology Group"
+author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
 date: "`r Sys.Date()`"
 output:
   bookdown::html_document2:
@@ -101,8 +101,9 @@ between exponential (log–linear) and strongly non–exponential decay.
 ## Heterogeneity
 
 The five parameters describing the seroresponse are:
+^[the corresponding variable names used in the package are listed in monospace font with gray background; see Section \@ref(longParams) for details]
 
-* baseline antibody concentration (`y0` and `yb`^[the corresponding variable names used in the package are listed in monospace font with gray background; see Section \@ref(longParams) for details])
+* baseline antibody concentration (`y0`)
 * time to peak (`t1`)
 * peak antibody concentration (`y1`)
 * decay rate (`alpha`)

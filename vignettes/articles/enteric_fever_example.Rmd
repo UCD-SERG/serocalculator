@@ -75,7 +75,7 @@ These parameters include the following:
 We also create an additional variables $d$, which is the decay shape, or 1-$r$.
 
 
-```{r curve, echo=FALSE, message=FALSE}
+```{r curve, message=FALSE}
 #Import longitudinal antibody parameters from OSF
 
 curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")

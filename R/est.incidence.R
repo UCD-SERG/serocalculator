@@ -90,7 +90,7 @@ est.incidence <- function(
   if (build_graph)
   {
     if(verbose) message('building likelihood graph')
-    graph = plot.loglik(
+    graph = graph.loglik(
       highlight_points = lambda_start,
       highlight_point_names = "lambda_start",
       data = pop_data,

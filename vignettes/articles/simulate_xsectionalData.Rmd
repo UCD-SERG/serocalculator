@@ -348,7 +348,7 @@ We can calculate the log-likelihood of the data as a function of the incidence r
 
 ```{r}
 
-lik_HlyE_IgA = plot.loglik(
+lik_HlyE_IgA = graph.loglik(
   pop_data = csdataL,
   curve_params = 
     dmcmc |> # llik() is a lower-level function, it assumes this transformation is already done
@@ -361,7 +361,7 @@ lik_HlyE_IgA = plot.loglik(
 ) |> 
   print()
 
-lik_HlyE_IgG = plot.loglik(
+lik_HlyE_IgG = graph.loglik(
   pop_data = csdataL,
   curve_params = 
     dmcmc |> # llik() is a lower-level function, it assumes this transformation is already done
@@ -374,7 +374,7 @@ lik_HlyE_IgG = plot.loglik(
 ) |> 
   print()
 
-lik_both = plot.loglik(
+lik_both = graph.loglik(
   pop_data = csdataL,
   curve_params = 
     dmcmc |> # llik() is a lower-level function, it assumes this transformation is already done

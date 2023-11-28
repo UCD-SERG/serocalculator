@@ -8,7 +8,7 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #'
-plot.loglik = function(
+graph.loglik = function(
     ...,
     x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,

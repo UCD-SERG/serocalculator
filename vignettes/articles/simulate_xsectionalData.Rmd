@@ -75,7 +75,7 @@ lambda <- 0.2;
 lifespan <- c(0,20); 
 
 # cross-sectional sample size
-nrep <- 100
+nrep <- 1000
 
 # biologic noise distribution
 dlims <- rbind(c(0.01, 0.5),c(0.01, 0.5))
@@ -96,9 +96,44 @@ csdata0 <- sim.cs(
 
 ```
 
+We also need to convert the data to a long format for analysis:
+
+```{r "long-format"}
+csdataL <- 
+  csdata0 %>% 
+  as_tibble() %>%
+  pivot_longer(
+    cols = c("HlyE_IgG", "HlyE_IgA"), 
+    names_to = "antigen_iso", 
+    values_to = "value")
+```
+
+We can plot the distribution of the antibody responses in the simulated data. 
+
+```{r}
+
+ggplot(csdataL, aes(x= value, fill = antigen_iso)) +
+  geom_histogram() + 
+  scale_x_log10() + 
+  theme_linedraw() + 
+  facet_wrap(~antigen_iso)
+
+
+ggplot(csdataL, aes(x=age, y= value, color = antigen_iso)) +
+  geom_point(size= .8, alpha = .8) + 
+  geom_smooth(method = "lm") + 
+  scale_y_log10() + 
+  theme_linedraw() 
+
+
+```
+
+
 ## Estimate seroincidence
 
 We need to provide noise parameters for the analysis; here, we define them directly in our code:
+
++understand m noise - where is this inputted? 
 
 ```{r "noise"}
 cond <- data.frame(
@@ -110,31 +145,6 @@ cond <- data.frame(
 
 ```
 
-We also need to convert the data to a long format for analysis:
-
-```{r "long-format"}
-csdataL <- 
-  csdata0 %>% 
-  as_tibble() %>%
-  pivot_longer(
-    cols = c("HlyE_IgG", "HlyE_IgA"), 
-    names_to = "antigen_iso", 
-    values_to = "value")
-
-```
-
-We can plot the distribution of the antibody responses in the simulated data. 
-
-```{r}
-
-
-ggplot(csdataL, aes(x=as.factor(antigen_iso), y= value)) +
-  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso), show.legend = F) + 
-  geom_boxplot(outlier.colour = NA, fill = NA) + 
-  scale_y_log10() + 
-  theme_linedraw() + 
-  labs(x="antigen - isotype")
-```
 
 We can estimate incidence with `est.incidence()`:
 

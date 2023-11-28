@@ -116,7 +116,7 @@ $$
 
 If we know $p(Y=y|T=t)$, then we can maximize $p(Y=y)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
 
-Now, the big problem becomes modeling $p(Y=y|T=t)$.
+Now, the big problem becomes modeling $p(Y=y|T=t)$ (see next section).
 
 ## Finding the MLE numerically
 
@@ -132,7 +132,7 @@ $$
 
 The derivative of this expression doesn't come out cleanly, so we will use a *numerical method*^[specifically, a Newton-type algorithm, implemented by `stats::nlm()`] to find the MLE and corresponding standard error.
 
-# Innovations in the `serocalculator` package
+# Modeling $p(Y=y|T=t)$
 
 ## Biological noise
 
@@ -146,7 +146,7 @@ We are more concerned about overcount (cross-reactivity) than undercount. For a 
 
 There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
 
-## Other details
+## Other innovations in the `serocalculator` package
 
 The `serocalculator` package provides three refinements to the method for 
 calculating seroincidence published earlier [@Teunis_2012] and implemented in R package

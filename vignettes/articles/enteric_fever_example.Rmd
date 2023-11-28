@@ -22,9 +22,7 @@ The **serocalculator** R package provides a rapid and computationally simple met
  
 While the exact time of infection is impossible to measure in an individual, antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In simple terms: the presence of many high antibody concentrations indicates that many subjects likely experienced infection recently, while mostly low concentrations indicate a low frequency of infections in the sampled population.
 
-In order to interpret the measured cross-sectional antibody concentrations in terms of incidence, we must define the antibody dynamic over time to understand the generalized antibody response at different times since infection. For any antibody detected in the cross–sectional sample, a quantitative description of its dynamics following infection (seroconversion to an elevated concentration, followed by a gradual decrease) must be available. In published studies, this information on the time course of the serum antibody response has been obtained from longitudinal follow–up data in subjects who had a symptomatic episode following infection. 
-
-In this case, the onset of symptoms then provides a proxy for the time that infection occurred. 
+In order to interpret the measured cross-sectional antibody concentrations in terms of incidence, we must define the antibody dynamic over time to understand the generalized antibody response at different times since infection. This dynamic must be quantified over time to include an initial increase in serum antibody concentration when seroconversion occurs, followed by a gradual decrease as antibodies wane. In published studies, this information on the time course of the serum antibody response has been obtained from longitudinal follow–up data in cases who had a symptomatic episode following infection. In this case, the onset of symptoms then provides a proxy for the time that infection occurred. 
 
 ### Assumptions and Cautions
 Care must be taken that longitudinal and cross–sectional measurements of antibody concentrations are calibrated on the same scale (or, preferably, expressed in identical units). Ideally they will be obtained using the same diagnostic test. 
@@ -38,13 +36,13 @@ estimation of seroincidences, because (1) there are few longitudinal data sets a
 are difficult (and expensive) to obtain, (2) such longitudinal models may be considered *generic*, presumably describing a physiological phenomenon that is similiar in any infected individual, and 
 (3) setting up and running the longitudinal model requires additional skills, not necessary for use of this package.
 
-#### The seroincidence estimator
+### The seroincidence estimator
 
 The **serocalculator** package was designed to calculate the incidence of seroconversion, by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated, as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data, by adjusting the seroconversion frequency, thus providing a means to estimate the seroconversion frequency.
 
 ## Example: Enteric Fever
 
-Users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
+In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
 
 Further details on this published study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
 
@@ -98,9 +96,10 @@ curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
 ### Load and prepare cross-sectional data 
 We will use a subset of results from the SEES dataset as our cross-sectional data. Ideally, this will be a representative sample of the general population without regard to disease status. Here, we will limit our analysis to cross-sectional data from Pakistan. 
 
-In this scenario, we will limit our analysis to data from Pakistan. We have selected hemolysin E (**HlyE**) as our target antigen and **IgG** and **IgA** as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to *y* and *a*, respectively. Finally, we once again limit the dataset to only the variables needed for the analysis. 
+In this scenario, we will limit our analysis to data from Pakistan. We have selected hemolysin E (**HlyE**) as our target antigen and **IgG** and **IgA** as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to the names required by **serocalculator**. Finally, we once again limit the dataset to only the variables needed for the analysis. 
 
 ```{r data, message = FALSE}
+#Import cross-sectional data from OSF
 
 pop_data <- getAdditionalData(fileURL ="https://osf.io/download//n6cp3/") %>%
   rename(value = result,
@@ -127,12 +126,9 @@ ggplot(pop_data, aes(x = value)) +
   ) +
   facet_wrap(~Country + antigen_iso, nrow = 3)
 
-# Save the plot with a specified width
-#ggsave("output_plot.html", plot = histogram, width = 5, height = 3, units = "in", device = "html")
-
 ```
 
-Here, we see that our data is highly skewed with the majority of responses on the lower end of our data, but there is a long tail stretching to over 200. Let's get a better look at the distribution by log transforming our *y* response. We will also need to update the bin width. 
+Here, we see that our data is highly skewed with the majority of responses on the lower end of our data, but there is a long tail stretching to over 200. Let's get a better look at the distribution by log transforming our antibody response value. We will also need to update the bin width. 
 
 ```{r loghist, message = FALSE}
 #Let's log transform your data to better visualize the distribution. We will also need to update the bin width. 
@@ -158,10 +154,11 @@ Once log transformed, our data looks much more normally distributed. In most cas
 
 Next, we must set conditions based on some assumptions about the simulated data. This will differ based on background knowledge of the cross-sectional data. 
 
-The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
+The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. We also need to rename our lower bound for y. 
 
 
 ``` {r noise, message=FALSE}
+#Import noise parameters from OSF
 
 noise_param <- getAdditionalData(fileURL ="https://osf.io/download//hqy4v/") %>%
   rename(y.low = llod)

@@ -53,7 +53,7 @@ Suppose we measure disease antibody levels $Y$ for a simple random sample of a p
 
 For a given member of the sample, let $T$ denote the time since they were last exposed to typhoid. We don't get to observe $T$ - it is a "latent variable". Instead, we only observe $Y$.
 
-If we assume the incidence rate is constant, then the probability that our individual was *last* infected $t$ days ago (i.e., $p(T=t)$) can be calculated as the probability of being infected at time $t$ (i.e., the incidence rate at time $t$, $\lambda$) times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
+If we assume the incidence rate is constant, then the probability that our individual was *last* infected $t$ days ago (i.e., $p(T=t)$) is equal to the probability of being infected at time $t$ (i.e., the incidence rate at time $t$, $\lambda$) times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
 
 If we could observe $T$ for each individual in our sample, we could compute the likelihood of the data:
 
@@ -65,7 +65,11 @@ $$
 \end{aligned}
 $$
 
-Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.
+Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$:
+
+![Example log(likelihood) curve](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png){width=80%}
+
+## The plot thickens
 
 Unfortunately, we don't observe $T$; we only observe antibody levels $Y$. So things get a little more complicated.
 

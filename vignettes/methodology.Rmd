@@ -29,9 +29,15 @@ MathJax.Hub.Config({
 
 The `serocalculator` package provides three refinements to the method for 
 calculating seroincidence published earlier [@Teunis_2012] and implemented in R package
-**seroincidence**, versions 1.x: (1) inclusion of infection episode with rising antibody levels, (2) 
-non--exponential decay of serum antibodies after infection, and (3) age--dependent correction for 
-subjects who have never seroconverted. It is important to note that, although the implemented 
+`seroincidence`, versions 1.x: 
+
+(1) inclusion of infection episode with rising antibody levels, 
+
+(2) non--exponential decay of serum antibodies after infection, and 
+
+(3) age--dependent correction for subjects who have never seroconverted. 
+
+It is important to note that, although the implemented 
 methods use a specific parametric model, as proposed in [@de_Graaf_2014] and augmented in 
 [@Teunis_2016], the methods used to calculate the likelihood function allow 
 seroresponses of arbitrary shape.

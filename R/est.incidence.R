@@ -3,53 +3,36 @@
 #' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 #' @inheritParams llik
 #' @inheritParams stats::nlm
-#' @param lambda.start starting guess for incidence rate, in years/event.
-#' @param antigen_isos Character vector with one or more antibody names. Values must match `data`
-#' @param c.age age category to subset data by (optional)
+#' @param pop_data Data frame with cross-sectional serology data per antibody and age, and additional columns
+#' @param lambda_start starting guess for incidence rate, in years/event.
+#' @param antigen_isos Character vector with one or more antibody names. Values must match `pop_data`
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
 #' @param stepmin A positive scalar providing the minimum allowable relative step length.
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
-#' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda.start`, `antigen_isos`, and `ll_graph`
+#' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda_start`, `antigen_isos`, and `ll_graph`
 #' @export
 est.incidence <- function(
-    data,
+    pop_data,
     curve_params,
     noise_params,
-    antigen_isos = data$antigen_iso |> unique(),
-    lambda.start = 0.1,
+    antigen_isos = pop_data$antigen_iso |> unique(),
+    lambda_start = 0.1,
     stepmin = 1e-8,
     stepmax = 3,
     verbose = FALSE,
     build_graph = FALSE,
     print_graph = build_graph & verbose,
-    c.age = NULL,
     ...)
 {
-  # possibly subset by `c.age`
-  if(!is.null(c.age))
-  {
-    data = data %>% dplyr::filter(.data[["ageCat"]] == c.age)
-    curve_params =
-      curve_params %>%
-      ungroup() %>%
-      dplyr::filter(.data[["ageCat"]] == c.age)
-
-    if("ageCat" %in% names(noise_params))
-    {
-      noise_params =
-        noise_params %>%
-        dplyr::filter(.data[["ageCat"]] == c.age)
-    }
-  }
 
   .errorCheck(
-    data = data,
+    data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = curve_params)
 
-  data = data |>
+  pop_data = pop_data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     dplyr::select("value", "age", "antigen_iso") |>
     tidyr::drop_na()
@@ -68,7 +51,7 @@ est.incidence <- function(
     droplevels()
 
   # incidence can not be calculated if there are zero observations.
-  if (nrow(data) == 0) {
+  if (nrow(pop_data) == 0) {
     stop("No data provided.")
   }
 
@@ -80,14 +63,14 @@ est.incidence <- function(
   if(nrow(noise_params) != length(antigen_isos))
     stop("too many rows of noise parameters.")
 
-  data = data |> split(~antigen_iso)
+  pop_data = pop_data |> split(~antigen_iso)
   curve_params = curve_params |> split(~antigen_iso)
   noise_params = noise_params |> split(~antigen_iso)
 
   # First, check if we find numeric results...
   res <- .nll(
-    data = data,
-    log.lambda = log(lambda.start),
+    data = pop_data,
+    log.lambda = log(lambda_start),
     antigen_isos = antigen_isos,
     curve_params = curve_params,
     noise_params = noise_params,
@@ -107,10 +90,10 @@ est.incidence <- function(
   if (build_graph)
   {
     if(verbose) message('building likelihood graph')
-    graph = graph_loglik(
-      highlight_points = lambda.start,
-      highlight_point_names = "lambda.start",
-      data = data,
+    graph = plot.loglik(
+      highlight_points = lambda_start,
+      highlight_point_names = "lambda_start",
+      data = pop_data,
       antigen_isos = antigen_isos,
       curve_params = curve_params,
       noise_params = noise_params
@@ -134,8 +117,8 @@ est.incidence <- function(
     {
       fit = nlm(
         f = .nll,
-        p = log(lambda.start),
-        data = data,
+        p = log(lambda_start),
+        data = pop_data,
         antigen_isos = antigen_isos,
         curve_params = curve_params,
         noise_params = noise_params,
@@ -171,7 +154,7 @@ est.incidence <- function(
       graph |>
       add_point_to_graph(
         fit = fit,
-        data = data,
+        data = pop_data,
         antigen_isos = antigen_isos,
         curve_params = curve_params,
         noise_params = noise_params)
@@ -191,7 +174,7 @@ est.incidence <- function(
   fit = fit |>
     structure(
       class = union("seroincidence", class(fit)),
-      lambda.start = lambda.start,
+      lambda_start = lambda_start,
       antigen_isos = antigen_isos,
       ll_graph = graph)
 

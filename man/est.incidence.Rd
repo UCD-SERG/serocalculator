@@ -5,22 +5,21 @@
 \title{Find the maximum likelihood estimate of the incidence rate parameter}
 \usage{
 est.incidence(
-  data,
+  pop_data,
   curve_params,
   noise_params,
-  antigen_isos = unique(data$antigen_iso),
-  lambda.start = 0.1,
+  antigen_isos = unique(pop_data$antigen_iso),
+  lambda_start = 0.1,
   stepmin = 1e-08,
   stepmax = 3,
   verbose = FALSE,
   build_graph = FALSE,
   print_graph = build_graph & verbose,
-  c.age = NULL,
   ...
 )
 }
 \arguments{
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
+\item{pop_data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -42,9 +41,9 @@ est.incidence(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 
-\item{lambda.start}{starting guess for incidence rate, in years/event.}
+\item{lambda_start}{starting guess for incidence rate, in years/event.}
 
 \item{stepmin}{A positive scalar providing the minimum allowable relative step length.}
 
@@ -61,8 +60,6 @@ est.incidence(
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
 \item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
-
-\item{c.age}{age category to subset data by (optional)}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
@@ -86,7 +83,7 @@ est.incidence(
   }}
 }
 \value{
-a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}} fit object with extra meta-data attributes \code{lambda.start}, \code{antigen_isos}, and \code{ll_graph}
+a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}} fit object with extra meta-data attributes \code{lambda_start}, \code{antigen_isos}, and \code{ll_graph}
 }
 \description{
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.

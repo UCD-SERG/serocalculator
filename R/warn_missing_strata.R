@@ -4,14 +4,14 @@
 #' @param strata a [data.frame()] showing the strata levels that are expected to be in the dataset
 #' @param dataname the name of the dataset, for use in warning messages if some strata are missing.
 #'
-#' @return a [character()] vector of the subset of stratifying variables that are present in `data`
+#' @return a [character()] vector of the subset of stratifying variables that are present in `pop_data`
 #'
 #' @examples
 #' \dontrun{
 #' expected_strata = data.frame(Species = "banana", type = "orchid")
-#' warn_missing_strata(iris, expected_strata, dataname = "iris")
+#' warn.missing.strata(iris, expected_strata, dataname = "iris")
 #' }
-warn_missing_strata = function(
+warn.missing.strata = function(
     data,
     strata,
     dataname)

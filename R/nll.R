@@ -4,7 +4,7 @@
 #' Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (`lambda`) value.
 #'
 #' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
-#' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `data`.
+#' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `pop_data`.
 #' @param curve_params a [data.frame()] containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 #' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations
 #' - `iter`: an [integer()] vector indicating MCMC sampling iterations
@@ -23,7 +23,6 @@
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams fdev
-#' @export
 #' @return the log-likelihood of the data with the current parameter values
 llik <- (
   # vectorize.args = "lambda",

@@ -163,8 +163,8 @@ Using the function `est.incidence`, we define our starting value as 0.2, which w
 esttest = est.incidence(
   stepmax = 1,
   verbose = TRUE,
-  lambda.start=.2,
-  data = pop_data %>% filter(Country == "Pakistan"),
+  lambda_start=.2,
+  pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_param = curve_param, 
   noise_param = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -182,9 +182,9 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 estbytest = est.incidence.by(
   stepmax = 1,
   verbose = TRUE,
-  lambda.start=.3,
+  lambda_start=.3,
   strata = c("catchment"),
-  data = pop_data %>% filter(Country == "Pakistan"),
+  pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
   build_graph = FALSE

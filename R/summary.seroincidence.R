@@ -27,7 +27,7 @@ summary.seroincidence = function(
     coverage = .95,
     ...)
 {
-  start = object |> attr("lambda.start")
+  start = object |> attr("lambda_start")
   antigen_isos = object |> attr("antigen_isos")
 
   alpha = 1 - coverage

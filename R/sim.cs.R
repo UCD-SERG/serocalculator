@@ -18,7 +18,6 @@
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
 #' @inheritParams llik
 
-#' @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 #' @param noise_limits biologic noise distribution parameters
 #' @param ... additional arguments passed to `simcs.tinf()`
 #' @return a [tibble::tibble()] containing simulated cross-sectional serosurvey data, with columns:
@@ -36,16 +35,20 @@ sim.cs <- function(
     renew.params = FALSE,
     add.noise = FALSE,
     curve_params,
-    predpar =
-      curve_params %>%
-      filter(.data$antigen_iso %in% antigen_isos) %>%
-      droplevels() %>%
-      prep_curve_params_for_array() %>%
-      df_to_array(dim_var_names = c("antigen_iso", "parameter")),
     noise_limits,
 
     ...)
 {
+
+
+# @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
+
+  predpar =
+    curve_params %>%
+    filter(.data$antigen_iso %in% antigen_isos) %>%
+    droplevels() %>%
+    prep_curve_params_for_array() %>%
+    df_to_array(dim_var_names = c("antigen_iso", "parameter"))
 
   stopifnot(length(lambda) == 1)
 

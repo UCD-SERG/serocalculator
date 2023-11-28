@@ -14,9 +14,6 @@ sim.cs(
   renew.params = FALSE,
   add.noise = FALSE,
   curve_params,
-  predpar = curve_params \%>\% filter(.data$antigen_iso \%in\% antigen_isos) \%>\%
-    droplevels() \%>\% prep_curve_params_for_array() \%>\% df_to_array(dim_var_names =
-    c("antigen_iso", "parameter")),
   noise_limits,
   ...
 )
@@ -56,8 +53,6 @@ sim.cs(
 \item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
 \item \code{r}: shape factor of antibody decay
 }}
-
-\item{predpar}{an \code{\link[=array]{array()}} containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave \code{predpar} at its default value and provide \code{curve_params} instead.}
 
 \item{noise_limits}{biologic noise distribution parameters}
 

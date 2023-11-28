@@ -25,6 +25,7 @@ xs_sample =
     repoURL = "https://osf.io/download")
 
 curve_params = url("https://osf.io/download/bhfvx") |> readRDS()
+data1 = read.csv("https://osf.io/download/swxq7/")
 
 noise_params = 
     getAdditionalData(

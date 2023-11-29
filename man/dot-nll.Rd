@@ -41,3 +41,4 @@ the negative log-likelihood of the data with the current parameter values
 \description{
 Same as \code{\link[=llik]{llik()}}, except negated and requiring lambda on log scale (used in combination with \code{nlm()}, to ensure that the optimization search doesn't stray into negative values of \code{lambda}).
 }
+\keyword{internal}

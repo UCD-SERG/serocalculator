@@ -13,9 +13,9 @@
 #'   names_to = "parameter",
 #'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) |>
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
-#'   df |> serocalculator:::df_to_array(dim_var_names = c("parameter", "Species"))
-#'
-df_to_array = function(
+#'   df |> serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+#' @keywords internal
+df.to.array = function(
     df,
     dim_var_names,
     value_var_name = "value")

@@ -48,7 +48,7 @@ sim.cs <- function(
     filter(.data$antigen_iso %in% antigen_isos) %>%
     droplevels() %>%
     prep_curve_params_for_array() %>%
-    df_to_array(dim_var_names = c("antigen_iso", "parameter"))
+    df.to.array(dim_var_names = c("antigen_iso", "parameter"))
 
   stopifnot(length(lambda) == 1)
 

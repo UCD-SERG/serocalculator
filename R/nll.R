@@ -24,6 +24,7 @@
 #' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams fdev
 #' @return the log-likelihood of the data with the current parameter values
+#' @keywords internal
 llik <- (
   # vectorize.args = "lambda",
   function(
@@ -87,6 +88,7 @@ llik <- (
 #' @inheritDotParams llik -lambda
 
 #' @return the negative log-likelihood of the data with the current parameter values
+#' @keywords internal
 .nll = function(log.lambda, ...)
 {
   -llik(lambda = exp(log.lambda),...)

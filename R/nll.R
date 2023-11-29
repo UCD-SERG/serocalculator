@@ -3,7 +3,7 @@
 #' @description
 #' Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (`lambda`) value.
 #'
-#' @param data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns
+#' @param pop_data a [data.frame()] with cross-sectional serology data per antibody and age, and additional columns
 #' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `pop_data`.
 #' @param curve_params a [data.frame()] containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 #' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations
@@ -25,11 +25,9 @@
 #' @inheritParams fdev
 #' @return the log-likelihood of the data with the current parameter values
 #' @keywords internal
-llik <- (
-  # vectorize.args = "lambda",
-  function(
+llik <- function(
     lambda,
-    data,
+    pop_data,
     antigen_isos,
     curve_params,
     noise_params,
@@ -45,15 +43,15 @@ llik <- (
 
       # the inputs can be lists, after `split(~antigen_ios)`
       # this gives some speedups compared to running filter() every time .nll() is called
-      if(!is.data.frame(data))
+      if(!is.data.frame(pop_data))
       {
-        cur_data = data[[cur_antibody]]
+        cur_data = pop_data[[cur_antibody]]
         cur_curve_params = curve_params[[cur_antibody]]
         cur_noise_params = noise_params[[cur_antibody]]
       } else
       {
         cur_data =
-          data |> dplyr::filter(.data$antigen_iso == cur_antibody)
+          pop_data |> dplyr::filter(.data$antigen_iso == cur_antibody)
 
         cur_curve_params =
           curve_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
@@ -73,13 +71,13 @@ llik <- (
       # if (!is.na(nllSingle))  # not meaningful for vectorized fdev()
       {
         nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
-      }
+        }
 
     }
 
     # Return total log-likelihood
     return(-nllTotal)
-  })
+  }
 
 #' Calculate negative log-likelihood
 #' @description

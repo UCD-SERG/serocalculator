@@ -84,7 +84,7 @@
 <li><p><code>CI.lwr</code>: lower limit of confidence interval for incidence rate</p></li>
 <li><p><code>CI.upr</code>: upper limit of confidence interval for incidence rate</p></li>
 <li><p><code>coverage</code>: coverage probability</p></li>
-<li><p><code>neg.llik</code>: negative log-likelihood</p></li>
+<li><p><code>log.lik</code>: log-likelihood of the data used in the call to <code><a href="est.incidence.html">est.incidence()</a></code>, evaluated at the maximum-likelihood estimate of lambda (i.e., at <code>incidence.rate</code>)</p></li>
 <li><p><code>iterations</code>: the number of iterations used</p></li>
 <li><p><code>antigen_isos</code>: a list of antigen isotypes used in the analysis</p></li>
 <li><p><code>nlm.convergence.code</code>: information about convergence of the likelihood maximization procedure performed by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> (see "Value" section of <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>, component <code>code</code>); codes 3-5 indicate issues:</p><ul><li><p>1: relative gradient is close to zero, current iterate is probably solution.</p></li>

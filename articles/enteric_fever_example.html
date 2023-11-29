@@ -308,8 +308,8 @@ to be included in the estimate.</p>
 <span><span class="va">esttest</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.html">est.incidence</a></span><span class="op">(</span></span>
 <span>  stepmax <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  start<span class="op">=</span><span class="fl">.2</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">pop_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  lambda_start<span class="op">=</span><span class="fl">.2</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  curve_param <span class="op">=</span> <span class="va">curve_param</span>, </span>
 <span>  noise_param <span class="op">=</span> <span class="va">noise_param</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
@@ -318,41 +318,41 @@ to be included in the estimate.</p>
 <span><span class="co">#&gt; Step:</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.302585</span></span>
+<span><span class="co">#&gt; [1] -1.609438</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2406.658</span></span>
+<span><span class="co">#&gt; [1] 2418.839</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -111.148</span></span>
+<span><span class="co">#&gt; [1] 166.7471</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 1</span></span>
 <span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.2803075</span></span>
+<span><span class="co">#&gt; [1] -0.4125334</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.022278</span></span>
+<span><span class="co">#&gt; [1] -2.021971</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2388.675</span></span>
+<span><span class="co">#&gt; [1] 2388.671</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -13.68536</span></span>
+<span><span class="co">#&gt; [1] -13.56744</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 2</span></span>
 <span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.0393598</span></span>
+<span><span class="co">#&gt; [1] 0.03104033</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.982918</span></span>
+<span><span class="co">#&gt; [1] -1.990931</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2388.437</span></span>
+<span><span class="co">#&gt; [1] 2388.436</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 1.671546</span></span>
+<span><span class="co">#&gt; [1] -1.488097</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 3</span></span>
 <span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] -0.004284178</span></span>
+<span><span class="co">#&gt; [1] 0.003823966</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.987202</span></span>
+<span><span class="co">#&gt; [1] -1.987107</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
 <span><span class="co">#&gt; [1] 2388.434</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -0.01982881</span></span>
+<span><span class="co">#&gt; [1] 0.01760283</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 4</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
@@ -360,19 +360,19 @@ to be included in the estimate.</p>
 <span><span class="co">#&gt; Function Value</span></span>
 <span><span class="co">#&gt; [1] 2388.434</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -2.791894e-05</span></span>
+<span><span class="co">#&gt; [1] -2.059594e-05</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Relative gradient close to zero.</span></span>
 <span><span class="co">#&gt; Current iterate is probably solution.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  17.149   0.000  17.151</span></span>
+<span><span class="co">#&gt;   17.12    0.00   17.12</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">esttest</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
 <span><span class="co">#&gt;   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.137 0.006<span style="text-decoration: underline;">90</span>  0.124  0.151     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">388.</span>          4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.2          0.137 0.006<span style="text-decoration: underline;">90</span>  0.124  0.151     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">388.</span>          4</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -387,17 +387,17 @@ stratification variable.</p>
 <span><span class="va">estbytest</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  stepmax <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  lambda.start<span class="op">=</span><span class="fl">.3</span>,</span>
+<span>  lambda_start<span class="op">=</span><span class="fl">.3</span>,</span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">pop_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">curve_param</span>, </span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise_param</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in warn_missing_strata(data = curve_params, strata = select(strata, : curve_params is missing all strata variables, and will be used unstratified.</span></span>
+<span><span class="co">#&gt; Warning in warn.missing.strata(data = curve_params, strata = select(strata, : curve_params is missing all strata variables, and will be used unstratified.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
-<span><span class="co">#&gt; Warning in warn_missing_strata(data = noise_params, strata = select(strata, : noise_params is missing all strata variables, and will be used unstratified.</span></span>
+<span><span class="co">#&gt; Warning in warn.missing.strata(data = noise_params, strata = select(strata, : noise_params is missing all strata variables, and will be used unstratified.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
 <span><span class="co">#&gt;     Stratum catchment   n</span></span>
@@ -447,7 +447,7 @@ stratification variable.</p>
 <span><span class="co">#&gt; Current iterate is probably solution.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   8.173   0.000   8.173 </span></span>
+<span><span class="co">#&gt;   8.129   0.000   8.129 </span></span>
 <span><span class="co">#&gt;     Stratum catchment   n</span></span>
 <span><span class="co">#&gt; 1 Stratum 2       kgh 200</span></span>
 <span><span class="co">#&gt; iteration = 0</span></span>
@@ -502,9 +502,9 @@ stratification variable.</p>
 <span><span class="co">#&gt; Current iterate is probably solution.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   6.781   0.000   6.781 </span></span>
+<span><span class="co">#&gt;    6.76    0.00    6.76 </span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  16.384   0.000  16.384</span></span>
+<span><span class="co">#&gt;  16.340   0.000  16.341</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">estbytest</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>

@@ -199,10 +199,10 @@ simulated data.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">est1</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.html">est.incidence</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">csdataL</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  lambda.start <span class="op">=</span> <span class="fl">.1</span>,</span>
+<span>  lambda_start <span class="op">=</span> <span class="fl">.1</span>,</span>
 <span>  build_graph <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">T</span>, <span class="co"># print updates as the function runs</span></span>
 <span>  print_graph <span class="op">=</span> <span class="cn">F</span>, <span class="co"># display the log-likelihood curve while `est.incidence()` is running</span></span>
@@ -274,7 +274,7 @@ simulated data.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Elapsed time:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   4.116   0.000   4.116</span></span></code></pre></div>
+<span><span class="co">#&gt;   4.081   0.000   4.081</span></span></code></pre></div>
 <p>We can extract summary statistics with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
@@ -398,7 +398,7 @@ cores to run computations in parallel.</p>
 <span>  <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>    numCores <span class="op">=</span> <span class="va">n_cores</span>,</span>
+<span>    num_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
 <span>    strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span>
 <span>    curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -425,28 +425,10 @@ cores to run computations in parallel.</p>
 <span><span class="co">#&gt; Setting up parallel processing.</span></span>
 <span><span class="co">#&gt; Elapsed time for parallelized code:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.430   0.120 323.319</span></span></code></pre></div>
-<p>We can extract a table listing the strata, using the
-<code><a href="../reference/strata.html">strata()</a></code> method:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/strata.html">strata</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 4</span></span></span>
-<span><span class="co">#&gt;    Stratum    lambda.sim cluster     n</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Stratum 1        0.05       1   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Stratum 2        0.05       2   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Stratum 3        0.05       3   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Stratum 4        0.05       4   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Stratum 5        0.05       5   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Stratum 6        0.05       6   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Stratum 7        0.05       7   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Stratum 8        0.05       8   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Stratum 9        0.05       9   100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Stratum 10       0.05      10   100</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   0.458   0.076 323.386</span></span></code></pre></div>
 <p><code>summary(ests)</code> produces a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> with some
 extra meta-data:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
 <span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
@@ -474,7 +456,7 @@ extra meta-data:</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 <p>We can explore the summary table interactively using
 <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable()</a></code></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT" class="external-link">DT</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
@@ -484,16 +466,16 @@ extra meta-data:</p>
 <script type="application/json" data-for="htmlwidget-4d12c20f5c2182c1503e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["Stratum 1","Stratum 2","Stratum 3","Stratum 4","Stratum 5","Stratum 6","Stratum 7","Stratum 8","Stratum 9","Stratum 10","Stratum 11","Stratum 12","Stratum 13","Stratum 14","Stratum 15","Stratum 16","Stratum 17","Stratum 18","Stratum 19","Stratum 20","Stratum 21","Stratum 22","Stratum 23","Stratum 24","Stratum 25","Stratum 26","Stratum 27","Stratum 28","Stratum 29","Stratum 30","Stratum 31","Stratum 32","Stratum 33","Stratum 34","Stratum 35","Stratum 36","Stratum 37","Stratum 38","Stratum 39","Stratum 40","Stratum 41","Stratum 42","Stratum 43","Stratum 44","Stratum 45","Stratum 46","Stratum 47","Stratum 48","Stratum 49","Stratum 50"],[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.05704408511686442,0.06066396028358628,0.05215470064630743,0.06245377068187212,0.06777685260542102,0.05112452972194798,0.05321093239221036,0.04692453357312351,0.04447042597863812,0.04370902202332797,0.1007522469674772,0.1445139280136635,0.09831348531537076,0.1365295171736692,0.102686996014182,0.1169373217533029,0.1236129607688336,0.1067668705840774,0.1367899321963525,0.1156475837770444,0.1789982973488358,0.2009317244257242,0.1839669130963298,0.1443823004299538,0.1693560242893659,0.170025031505875,0.2037611687476963,0.2307563936907528,0.18906849777386,0.2109988250476258,0.237545904713907,0.2186917509205258,0.2273771260123343,0.2423418222372817,0.1884127481790557,0.2522700153347117,0.2261109426065713,0.2198741492065815,0.2111979652143945,0.3160451103538525,0.4532248431806861,0.3540191692963724,0.3415270953585172,0.3649222303410204,0.4285077059196405,0.3242278797230386,0.2965231091108971,0.3828460317861705,0.3146554118681448,0.291168716308306],[0.00808049814628203,0.008138358409012043,0.007445658787011197,0.008184798515490392,0.008799260568161792,0.007466117906675795,0.007233862009935341,0.006812275714328899,null,0.006578541679807141,0.01142735965886233,0.0156139048621747,0.01120799810678567,0.01439877349619439,0.01177375876440219,0.01384692624278645,0.01380279749737295,0.01225683474326764,0.01525852181575383,0.01278386527848816,0.01910147034491224,0.02086457549896052,0.02628605484146307,0.01524163439835182,0.01808061048348104,0.01792723510792175,0.02083852690717702,0.02460258240987734,0.01882235049051611,0.02127513553248834,0.0243854506388133,0.02215068516957034,0.02391858210613505,0.02459256706748018,0.01938783996161268,0.02552571337067755,0.02347344392377851,0.02287635299371128,0.02165023655038899,0.03357777806811946,0.04764167203130892,0.03782467370194918,0.03663583992724623,0.03969585281544682,0.04482776108483366,0.03276387607238383,0.0306139871191503,0.03979831612354771,0.03563679162523088,0.0454871442261752],[0.04321503650542133,0.04663779709792918,0.0394253037410515,0.04830649661840961,0.05254997525348273,0.03839915413805321,0.04076454944463188,0.03530422331476432,null,0.03254308760802745,0.08066982692399088,0.1169343857407407,0.07862738983527795,0.1110341389423188,0.08201993750063911,0.09271705249221206,0.09931563968497104,0.08525475137085689,0.1099271733795895,0.093120094917909,0.1452160136155218,0.1639307717868393,0.1390324112437824,0.1173970966192829,0.1373806485428435,0.1382812178176669,0.1667514331492411,0.1872410573558093,0.155553376252531,0.1731621163692722,0.1942525923411789,0.179314967413306,0.1850145800133101,0.1986320952410757,0.1540000584420781,0.2068890832494136,0.1844824614430897,0.1793133649887658,0.1727554339544609,0.2566340858399356,0.368839892508282,0.2871318457260432,0.2767682104864038,0.2948543370785605,0.3490690340716417,0.265971276067524,0.2422020393647648,0.3122759072215273,0.2520176986612218,0.2143718537040629],[0.07529850510277493,0.078908445644658,0.06899408606644745,0.08074428380089561,0.08741586893121363,0.06806706027673072,0.06945749099702701,0.06236964431771964,null,0.05870612614411268,0.1258341024898944,0.1785982391547476,0.1229284275505603,0.1678790796888036,0.1285616579546219,0.1474845980461263,0.1538545602536101,0.1337070892944247,0.1702171080636276,0.1436248926212845,0.2206395125169414,0.2462841932641742,0.2434239959691852,0.1775703937981491,0.2087736756764233,0.209055949859305,0.2489850498152442,0.2843848137856589,0.2298046992720448,0.2571030263717591,0.2904880504618451,0.2667155040686045,0.2794393686698073,0.29567003627489,0.230515261068788,0.3076052135639014,0.2771328936447646,0.2696098056736982,0.2581949492972739,0.3892098411310702,0.5569157855438457,0.4364878855996782,0.4214384183033032,0.4516407508755202,0.5260244711217433,0.3952446277056198,0.3630273075627302,0.4693640484740968,0.392861409114781,0.395477390766342],[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],[-372.1152022802894,-362.0776871034597,-329.4521169694935,-360.8726626477913,-350.8544194334197,-257.9826382593942,-309.454207836288,-288.3031752077979,-320.2250443154152,-253.6138585577025,-475.9075953320682,-494.8518287700178,-453.8613931208273,-537.7339217137771,-418.0534541237583,-431.4119350834197,-519.9655061299246,-489.2438125889937,-483.0588623833879,-533.0803039914683,-583.8593156970725,-584.9411132421712,-608.0279743312572,-530.840120004881,-643.0066972623393,-614.7399704693551,-613.1884748816249,-682.4665589743256,-555.581735619512,-632.8727486629091,-691.0112695929529,-635.7859548343104,-704.4303870555758,-630.658725864185,-573.0977830923155,-687.2246919088589,-693.9581755897939,-609.3739649696493,-661.8309473629481,-696.2480738342338,-874.3161743760933,-782.0258969086366,-713.6400724275675,-697.8042795460126,-781.9042490001798,-697.7439483555047,-671.7079073045304,-752.0298643652945,-830.7900414785586,-709.6900474938641],[5,5,6,5,5,6,6,6,9,6,1,4,2,4,2,4,4,3,4,6,5,5,7,4,4,4,5,7,5,5,9,4,5,4,4,4,5,5,4,4,6,3,4,4,4,4,4,4,9,8],["HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA"],["1","1","1","1","1","1","1","1","3","1","1","1","1","1","1","1","1","1","1","2","1","1","3","1","1","1","1","3","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","2"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Stratum<\/th>\n      <th>lambda.sim<\/th>\n      <th>cluster<\/th>\n      <th>n<\/th>\n      <th>est.start<\/th>\n      <th>incidence.rate<\/th>\n      <th>SE<\/th>\n      <th>CI.lwr<\/th>\n      <th>CI.upr<\/th>\n      <th>coverage<\/th>\n      <th>log.lik<\/th>\n      <th>iterations<\/th>\n      <th>antigen.isos<\/th>\n      <th>nlm.convergence.code<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>We can plot the likelihood for a single simulated cluster by
 subsetting that simulation in <code>ests</code> and calling
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>We can also plot log-likelihood curves for several clusters at once
 (your computer might struggle to plot many at once):</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulate_xsectionalData_files/figure-html/plot-multiple-1.png" width="672"></p>
 <p>The <code>log_x</code> argument also works here:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulate_xsectionalData_files/figure-html/plot-multiple-log-1.png" width="672"></p>
 <div class="section level4">
@@ -502,7 +484,7 @@ subsetting that simulation in <code>ests</code> and calling
 </h4>
 <p>Make sure to check the <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> exit codes (codes 3-5
 indicate possible non-convergence):</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># removes extra meta-data</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Stratum</span>, <span class="va">nlm.convergence.code</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -530,7 +512,7 @@ indicate possible non-convergence):</p>
 </ul>
 <p>We can extract the indices of problematic strata, if there are
 any:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">problem_strata</span> <span class="op">=</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span><span class="op">$</span><span class="va">nlm.convergence.code</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -539,9 +521,9 @@ any:</p>
 <span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
 <span><span class="co">#&gt; [1]  9 23 28</span></span></code></pre></div>
 <p>A few clusters had problems; let’s take a look:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="va">problem_strata</span><span class="op">]</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>Visually, it looks like we approximately reached the MLE, but we
 should probably re-run those clusters, adjusting the <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code>
 settings appropriately, to be sure.</p>
@@ -551,7 +533,7 @@ settings appropriately, to be sure.</p>
 <h3 id="plot-distribution-of-estimates-by-simulated-incidence-rate">plot distribution of estimates by simulated incidence rate<a class="anchor" aria-label="anchor" href="#plot-distribution-of-estimates-by-simulated-incidence-rate"></a>
 </h3>
 <p>Finally, we can look at our simulation results:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>xvar <span class="op">=</span> <span class="st">'lambda.sim'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
@@ -564,20 +546,51 @@ settings appropriately, to be sure.</p>
 </h3>
 <p>We can calculate the log-likelihood of the data as a function of the
 incidence rate, even without running <code><a href="../reference/est.incidence.html">est.incidence()</a></code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/graph_loglik.html">graph_loglik</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">csdataL</span>,</span>
+<span><span class="va">lik_HlyE_IgA</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
 <span>  curve_params <span class="op">=</span> </span>
-<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span> <span class="co"># llik() is a lower-level function, it assumes this transformation is already done</span></span>
+<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    alpha <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fl">365.25</span>,</span>
 <span>    d <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
 <span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">lik_HlyE_IgG</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
+<span>  curve_params <span class="op">=</span> </span>
+<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    alpha <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fl">365.25</span>,</span>
+<span>    d <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>,</span>
+<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-2.png" width="672"></p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">lik_both</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
+<span>  curve_params <span class="op">=</span> </span>
+<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    alpha <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fl">365.25</span>,</span>
+<span>    d <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-3.png" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

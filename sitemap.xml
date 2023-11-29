@@ -28,7 +28,7 @@
     <loc>https://ucd-serg.github.io/serocalculator/index.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/df.to.array.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc>
@@ -46,7 +46,7 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/getAdditionalData.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/graph_loglik.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/graph.loglik.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/index.html</loc>
@@ -94,12 +94,6 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.html</loc>
   </url>
   <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/typhoid_controls.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/typhoid_noise_params.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/warn_missing_strata.html</loc>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/warn.missing.strata.html</loc>
   </url>
 </urlset>

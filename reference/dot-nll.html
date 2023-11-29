@@ -66,11 +66,11 @@
 
 
 <dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="llik.html">llik</a></code></p><dl><dt><code>data</code></dt>
-<dd><p>Data frame with cross-sectional serology data per antibody and age, and additional columns</p></dd>
+<dd><p>Arguments passed on to <code><a href="llik.html">llik</a></code></p><dl><dt><code>pop_data</code></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with cross-sectional serology data per antibody and age, and additional columns</p></dd>
 
     <dt><code>antigen_isos</code></dt>
-<dd><p>Character vector listing one or more antigen isotypes. Values must match <code>data</code>.</p></dd>
+<dd><p>Character vector listing one or more antigen isotypes. Values must match <code>pop_data</code>.</p></dd>
 
     <dt><code>curve_params</code></dt>
 <dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype combinations</p></li>

@@ -93,7 +93,7 @@ est.incidence <- function(
     graph = graph.loglik(
       highlight_points = lambda_start,
       highlight_point_names = "lambda_start",
-      data = pop_data,
+      pop_data = pop_data,
       antigen_isos = antigen_isos,
       curve_params = curve_params,
       noise_params = noise_params

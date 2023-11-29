@@ -4,7 +4,6 @@
 #' @param dim_var_names a [character()] vector of variable names in `df`. All of these variables should be factors, or a warning will be produced.
 #' @param value_var_name a [character()] variable containing a variable name from `df` which contains the values for the intended array.
 #' @return an [array()] with dimensions defined by the variables in `df` listed in `dim_var_names`
-#' @export
 #'
 #' @examples
 #' library(dplyr)
@@ -14,8 +13,9 @@
 #'   names_to = "parameter",
 #'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) |>
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
-#'   df |> df_to_array(dim_var_names = c("parameter", "Species"))
-df_to_array = function(
+#'   df |> serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+#' @keywords internal
+df.to.array = function(
     df,
     dim_var_names,
     value_var_name = "value")

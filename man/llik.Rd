@@ -6,7 +6,7 @@
 \usage{
 llik(
   lambda,
-  data,
+  pop_data,
   antigen_isos,
   curve_params,
   noise_params,
@@ -17,9 +17,9 @@ llik(
 \arguments{
 \item{lambda}{incidence parameter, in events per person-year}
 
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns}
+\item{pop_data}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{antigen_isos}{Character vector listing one or more antigen isotypes. Values must match \code{data}.}
+\item{antigen_isos}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -51,3 +51,4 @@ the log-likelihood of the data with the current parameter values
 \description{
 Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (\code{lambda}) value.
 }
+\keyword{internal}

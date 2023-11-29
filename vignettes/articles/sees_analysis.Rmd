@@ -98,7 +98,7 @@ est1 = est.incidence(
   print.level = 2,
   start = 0.3,
   verbose = TRUE,
-  data = 
+  pop_data = 
     xs_sample |> 
     rename(
       a = Age,
@@ -129,10 +129,10 @@ est2 = est.incidence.by(
   stepmax = 1,
   verbose = TRUE,
   strata = c("ageCat", "Country"),
-  lambda.start = .3,
+  lambda_start = .3,
   print.level = 2,
-  numCores = 1,
-  data = 
+  num_cores = 1,
+  pop_data = 
     xs_sample |> 
     rename(
       a = Age,

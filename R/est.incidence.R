@@ -154,7 +154,7 @@ est.incidence <- function(
       graph |>
       add_point_to_graph(
         fit = fit,
-        data = pop_data,
+        pop_data = pop_data,
         antigen_isos = antigen_isos,
         curve_params = curve_params,
         noise_params = noise_params)

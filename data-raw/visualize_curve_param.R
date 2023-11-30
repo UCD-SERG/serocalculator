@@ -62,6 +62,16 @@ ggplot() +
 
 
 
+# ggplot() +
+#   geom_line(data = serocourse.all, aes(x= t, y = res, group = iter)) +
+#   facet_wrap(~antigen_iso, ncol=2) +
+#   scale_y_log10(limits = c(0.9, 2000), breaks = c(1, 10, 100, 1000), minor_breaks = NULL) +
+#   theme_minimal()  +
+#   theme(axis.line=element_line()) +
+#   labs(x="Days since fever onset", y="ELISA units")
+
+
+
 
 
 

@@ -80,10 +80,10 @@ est.incidence.by <- function(
 
   # Split data per stratum
   stratumDataList <- stratify_data(
-    data = data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params,
-    noise_params = noise_params,
+    data = data |> filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = curve_params |> filter(.data$antigen_iso %in% antigen_isos),
+    noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames)

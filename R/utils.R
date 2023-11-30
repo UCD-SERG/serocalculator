@@ -51,12 +51,12 @@
 .checkCsData <- function(data, antigen_isos)
 {
   if (!is.data.frame(data)) {
-    stop(.pasteN("Argument `data` is not a `data.frame()`.",
+    stop(.pasteN("Argument `pop_data` is not a `data.frame()`.",
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
   if (!is.element("age", names(data))) {
-    stop("Argument `data` is missing column `age` (age, in years).")
+    stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
   invisible(NULL)
@@ -68,7 +68,7 @@
   message1 = paste(
     "Please provide a `data.frame()` containing Monte Carlo samples of the longitudinal parameters",
     "`y1`, `alpha`, and `r`",
-    "for each value of `antigen_iso` in `data`")
+    "for each value of `antigen_iso` in `pop_data`")
 
 
   if (!is.data.frame(params)) {

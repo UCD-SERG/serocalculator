@@ -12,7 +12,7 @@ stratify_data <- function(
   {
     all_data =
       list(
-        data = data |> select("value", "age", "antigen_iso"),
+        pop_data = data |> select("value", "age", "antigen_iso"),
         curve_params = curve_params |> select("y1", "alpha", "r", "antigen_iso"),
         noise_params = noise_params |> select("nu", "eps", "y.low", "y.high", "antigen_iso")
       ) |>
@@ -41,14 +41,14 @@ stratify_data <- function(
   strata = data |> get_strata(strata_varnames)
 
   strata_vars_curve_params =
-    warn_missing_strata(
+    warn.missing.strata(
       data = curve_params,
       strata = strata |> select(curve_strata_varnames),
       dataname = "curve_params"
     )
 
   strata_vars_noise_params =
-    warn_missing_strata(
+    warn.missing.strata(
       data = noise_params,
       strata = strata |> select(noise_strata_varnames),
       dataname = "noise_params"
@@ -69,7 +69,7 @@ stratify_data <- function(
 
     data_and_params_cur_stratum =
       list(
-        data =
+        pop_data =
           data |>
           semi_join(
             cur_stratum_vals,

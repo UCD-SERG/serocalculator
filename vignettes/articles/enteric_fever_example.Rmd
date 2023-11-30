@@ -76,8 +76,20 @@ We also create an additional variables $d$, which is the decay shape, or 1-$r$.
 
 
 ###Add a section on data format - shape of data and namnes of the variables
+Data needs to be long + include a package resource for wide to long 
 
+For cure paraeters, data should be in the wide formate with coumns for th eparameters (y0, y1, t1, alpha, r) and each row is an iteration of the posterior distribution ofr each antigen isotye.Column names need to have the same naming convention (create table or list of what this should be) --> all case sensitive. 
 
+The population data should be long with a row for every result for each antigen isotype. So the same individual will have mroe than 1 row if they hae results for more than 1 antigen iso. 
+- Antgen ISO, value, age (all lower case)
+
+Noise paramter should be a dataframe with (all are datafraes) with a row for each antgen isotype and colums fornoise parameters need to be named the same.
+ylow = lower limit of detection of assay
+nu = biologic noise
+yhigh is upper limit of detestion of the assay
+eps is the mmeasurement noise
+
+Doesn't have to be country specific, could enter overall parameters.
 ```{r curve, message=FALSE}
 
 #Import longitudinal antibody parameters from OSF
@@ -131,7 +143,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 ggplot(pop_data, aes(x = value)) +
   #geom_histogram(binwidth = 0.05, color = "#000000", fill = "#009999", alpha = 0.7) +
-  geom_histogram(aes(fill = Country), alpha = .7, color = "black") +
+  geom_density(aes(fill = Country), alpha = .7, color = "black") +
   scale_x_log10() +
   theme_minimal() +
   labs(
@@ -139,12 +151,19 @@ ggplot(pop_data, aes(x = value)) +
     x = "Log10(Antibody Response Value)",
     y = "Frequency"
   ) +
-  facet_wrap(~Country + antigen_iso, nrow = 3)
+  facet_wrap(~ antigen_iso, nrow = 3)
 ```
 
 ### ADD: PLOT RESPONSES BY AGE (AGE ON X AXIS, LOG-ANTIBODY RESPONSE ON THE Y AXIS)
-
-
+Let's take a look at how Ab responses change by age.
+```{r}
+ggplot(data=pop_data, aes(x=age, y=value, color=Country)) + 
+         geom_point(size=.6, alpha=.7)+
+         geom_smooth(method=lm, se=FALSE)+
+         scale_y_log10() +
+         theme_bw()
+```
+how results change by age. If slope is steeper, you have ahigher incidence. highest burden is in banglades . Nepal has a slightly higher incidence in older group (higher slope)
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
@@ -165,7 +184,8 @@ noise_param <- getAdditionalData(fileURL ="https://osf.io/download//hqy4v/") %>%
 ```
 
 
-## ADD++: Plot the biologic noise parameter onto the distribution of antibody responses for each country (as a vertical line)
+## ADD++: Plot the biologic noise parameter onto the distribution of antibody responses for each country (as a vertical line) 
+### [don't need it now... could add vertical line for where nosie falls -- not right now!)]
 
 
 ## Estimate Seroincidence 
@@ -195,7 +215,8 @@ summary(est1)
 
 
 ###+ ADD: COMPARE CONFIDENCE INTERVALS USING SINGLE ANTIGEN-ISOTYPE AND USING ONE
-
+ACTIVITY: (Could ask participants to do the same thing but just one antigen alone and compare how it is together --> and check if the confidence interval are more wide or more narrow) Could also change to different country. 
+- will be wider if just use one. 
 
 
 ### Stratified Seroincidence
@@ -211,28 +232,49 @@ est1 = est.incidence.by(
   data = pop_data %>% filter(Country == "Pakistan"),
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   build_graph = FALSE
 )
 
-summary(est1)
+est1df<- summary(est1)
 
 
-#lets get this working
+#lets get this working --> not working yet... shows dulicates by 
 estbyC = est.incidence.by(
-  #verbose = TRUE,
+  verbose = TRUE,
   lambda.start=.2,
   strata = c("Country"),
   data = pop_data, 
   curve_params = curve_param, 
   noise_params = noise_param,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  built_graph=FALSE
 )
 
 
 ```
+(Note that the strata missing warning is not bad -- will just give overall results)
 
+Walk through first examoke on catchment and then on own have them estimate incidence by country (have them write code)-- I will have a separate RMD that is just my notes. 
 
 ## ADD plot seroincidence estimates
+(Try to get est incidence by country)
+```{r}
+bar plot with catchment 
+
+#Save summary(est1) as a dataframe
+
+est1df<- summary(est1)
+
+#Create barplot
+ggplot(est1df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
+  geom_bar(stat = "identity") +
+  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
+  labs(x="Enteric fever seroincience rate per 1000 person years") +
+  theme_bw()
+
+#rescale incidence rate by 1000
+```
 
 ## Conclusions
 In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 13.7 per 100 persons (95% CI: 12.4, 15.1). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [18.6 per 100 persons (95% CI: 16.0, 21.5) vs. 11.1 per 100 persons (95% CI: 9.7, 12.7). 

@@ -1,5 +1,3 @@
-Development version
-================
+# serocalculator (development version)
 
-Changes:
 * Forking from the seroincidence package and adding Teunis et al 2020 approach.

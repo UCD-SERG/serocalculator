@@ -1,7 +1,7 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 0.1.0.9000
+Version: 0.3.0
 Date: 2022-03-29
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
@@ -17,6 +17,7 @@ Imports:
     dplyr (>= 1.1.1),
     ggplot2,
     ggpubr,
+    lifecycle,
     magrittr,
     Rcpp,
     rlang,
@@ -24,7 +25,7 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils,
+    utils
 Suggests: 
     parallel,
     knitr,

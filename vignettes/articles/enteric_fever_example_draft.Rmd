@@ -67,9 +67,9 @@ Each dataset has specific formatting and variable name requirements.
 
 We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
-*Format Specifications*: Data should be imported as a "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must *exactly* match follow the naming conventions:
+*Formatting Specifications*: Data should be imported as a "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must *exactly* match follow the naming conventions:
 
-Curve Parameter Variable Names
+
 Column Name    |  Description
 -------------- |  -----------
     y0         |  Baseline antibody concentration
@@ -78,15 +78,6 @@ Column Name    |  Description
     alpha      |  Antibody decay rate
     r          |  Antibody decay shape
 *Note that variable names are case-sensitive*
-
-
-### Data Formatting and Variable Naming
-Before we begin, please note the following requirements for formatting each dataset and naming variables:
-* Curve Parameters: longitudinal antibody dynamics data should be "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must follow the naming conventions here (y0, y1, t1, alpha, r).
-
-* Population data: cross-sectional population data should be a "long" dataframe with one column for each variable and one row for each antigen isotype resulted for an individual. So the same individual will have more than one row if they ave results for more than one antigen isotype. 
-
-* Noise parameters: the noise parameters should be a datafrae with one row for each antigen isotype and one column for each noise parameter (y.low, nu, y.high, and eps). In this example the noise parameters are country-specific, but you could also use overall noise parameters. 
 
 
 ```{r curve, message=FALSE}
@@ -105,7 +96,7 @@ We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* 
 
 *Formatting Specifications*: Cross-sectional population data should be a "long" dataframe with one column for each variable and one row for each antigen isotype resulted for an individual. So the same individual will have more than one row if they have results for more than one antigen isotype. The dataframe can have additional variables, but the two below are required: 
 
-Population Data Variable Names 
+
 Column Name | Description
 ----------- | -----------
 value       | Quantitative antibody response
@@ -159,6 +150,7 @@ ggplot(pop_data, aes(x = value)) +
   ) +
   facet_wrap(~ antigen_iso, nrow = 3)
 ```
+
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 Let's also take a look at how antibody responses change by age.
@@ -188,7 +180,7 @@ The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to ot
 
 *Formatting Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
 
-Noise Parameter Variable Names
+
 Column Name | Description
 ----------- | -----------
     y.low   | Lower limit of detection of the antibody assay
@@ -212,10 +204,10 @@ Finally, we are ready to begin seroincidence estimation. We will conduct two sep
 Using the function `est.incidence`, we define our starting value as 0.2, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). We filter to Pakistan and define the datasets for our cross-sectional data (data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate.
 
 ```{r est, message= FALSE}
+
 #Using est.incidence (no strata)
+
 est1 = est.incidence(
-  #verbose = TRUE, # print output 
-#  lambda.start=.1,  #.1 per person-year, starting value for incidence estimation where to start the maximum likelihood 
   data = pop_data %>% filter(Country == "Pakistan"),
   curve_param = curve_param, 
   noise_param = noise_param %>% filter(Country == "Pakistan"),
@@ -239,8 +231,8 @@ est2 = est.incidence.by(
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  numCores = 2 #Allow for parallel processing to decrease runtime 
-#  build_graph = FALSE
+  numCores = 2, #Allow for parallel processing to decrease runtime 
+  build_graph = FALSE
 )
 
 summary(est2)
@@ -251,8 +243,7 @@ We are given a warning that "curve_params is missing all strata variables, and w
 
 Let's visualize our seroincidence estimates by strata.
 
-## ADD plot seroincidence estimates
-(Try to get est incidence by country)Walk through first examoke on catchment and then on own have them estimate incidence by country (have them write code)-- I will have a separate RMD that is just my notes. 
+
 ```{r}
 #Plot seroincidence estimates
 
@@ -263,14 +254,17 @@ est2df<- summary(est2)
 ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
   geom_bar(stat = "identity") +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
-  labs(x="Enteric fever seroincience rate per 1000 person-years",
-       y="Catchment area") +
-  theme_bw()
+  labs(
+      x="Enteric fever seroincience rate per 1000 person-years",
+      ) +
+  theme_bw() 
+
+  
 
 ```
 
 ## Conclusions
-In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 15.3 per 100 person-years (95% CI: 13.9, 16.9). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [20.4 per 100 person-years (95% CI: 17.6, 23.7) vs. 12.5 per 100 person-years (95% CI: 10.9, 14.3). 
+In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143). 
 
 
 ## References

@@ -107,6 +107,7 @@
 #' @importFrom dplyr tibble
 #' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
+#' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data

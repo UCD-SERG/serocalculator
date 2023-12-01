@@ -72,11 +72,11 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 Curve Parameter Variable Names
 Column Name    |  Description
 -------------- |  -----------
-y0             |  Baseline antibody concentration
-y1             |  Peak antibody concentration
-t1             |  Time to peak antibody concentration
-alpha          |  Antibody decay rate
-r              |  Antibody decay shape
+    y0         |  Baseline antibody concentration
+    y1         |  Peak antibody concentration
+    t1         |  Time to peak antibody concentration
+    alpha      |  Antibody decay rate
+    r          |  Antibody decay shape
 *Note that variable names are case-sensitive*
 
 
@@ -88,21 +88,7 @@ Before we begin, please note the following requirements for formatting each data
 
 * Noise parameters: the noise parameters should be a datafrae with one row for each antigen isotype and one column for each noise parameter (y.low, nu, y.high, and eps). In this example the noise parameters are country-specific, but you could also use overall noise parameters. 
 
-###Add a section on data format - shape of data and namnes of the variables
-Data needs to be long + include a package resource for wide to long 
 
-For cure paraeters, data should be in the wide formate with coumns for th eparameters (y0, y1, t1, alpha, r) and each row is an iteration of the posterior distribution ofr each antigen isotye.Column names need to have the same naming convention (create table or list of what this should be) --> all case sensitive. 
-
-The population data should be long with a row for every result for each antigen isotype. So the same individual will have mroe than 1 row if they hae results for more than 1 antigen iso. 
-- Antgen ISO, value, age (all lower case)
-
-Noise paramter should be a dataframe with (all are datafraes) with a row for each antgen isotype and colums fornoise parameters need to be named the same.
-ylow = lower limit of detection of assay
-nu = biologic noise
-yhigh is upper limit of detestion of the assay
-eps is the mmeasurement noise
-
-Doesn't have to be country specific, could enter overall parameters.
 ```{r curve, message=FALSE}
 
 #Import longitudinal antibody parameters from OSF
@@ -130,9 +116,9 @@ age         | Numeric age
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-pop_data <- getAdditionalData(fileURL ="https://osf.io/download//n6cp3/") %>%
+pop_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
   rename(value = result,
-         age = Age)
+         age = Age) #rename variables
 
 ```
 
@@ -191,7 +177,7 @@ ggplot(data=pop_data, aes(x=age, y=value, color=Country)) +
           )
 
 ```
-In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope)
+In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).
 
 
 ### Load noise parameters
@@ -200,29 +186,24 @@ Next, we must set conditions based on some assumptions about the data and error 
 
 The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
 
-*Formating Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
+*Formatting Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
 
 Noise Parameter Variable Names
 Column Name | Description
 ----------- | -----------
-y.low       | Lower limit of detection of the antibody assay
-nu          | Biologic noise
-y.high      | Upper limit of detection of the antibody assay
-eps         | Measurement noise
+    y.low   | Lower limit of detection of the antibody assay
+    nu      | Biologic noise
+    y.high  | Upper limit of detection of the antibody assay
+    eps     | Measurement noise
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}
 #Import noise parameters from OSF
 
-noise_param <- getAdditionalData(fileURL ="https://osf.io/download//hqy4v/") %>%
+noise_param <- url("https://osf.io/download//hqy4v/") %>% readRDS() %>%
   rename(y.low = llod) #rename lower bound
 
 ```
-
-
-## ADD++: Plot the biologic noise parameter onto the distribution of antibody responses for each country (as a vertical line) 
-### [don't need it now... could add vertical line for where nosie falls -- not right now!)]
-
 
 ## Estimate Seroincidence 
 Finally, we are ready to begin seroincidence estimation. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
@@ -242,18 +223,7 @@ est1 = est.incidence(
 )
 
 summary(est1)
-
-#help understanding the function and summary
-?est.incidence
-?summary.seroincidence
-
 ```
-What would happen if we limit the analysis to only one isotype? Or if we use a different country?
-
-###+ ADD: COMPARE CONFIDENCE INTERVALS USING SINGLE ANTIGEN-ISOTYPE AND USING ONE
-ACTIVITY: (Could ask participants to do the same thing but just one antigen alone and compare how it is together --> and check if the confidence interval are more wide or more narrow) Could also change to different country. 
-- will be wider if just use one. 
-
 
 ### Stratified Seroincidence
 We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their population dataset.
@@ -261,7 +231,7 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 ```{r estby}
 #Using est.incidence.by (strata)
 
-est1 = est.incidence.by(
+est2 = est.incidence.by(
 #  verbose = TRUE,
 #  lambda.start=.3,
   strata = c("catchment"),
@@ -273,20 +243,7 @@ est1 = est.incidence.by(
 #  build_graph = FALSE
 )
 
-summary(est1)
-
-
-#lets get this working --> not working yet... shows dulicates by country
-estbyC = est.incidence.by(
-  verbose = TRUE,
-  lambda.start=.2,
-  strata = c("Country"),
-  data = pop_data, 
-  curve_params = curve_param, 
-  noise_params = noise_param,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  built_graph=FALSE
-)
+summary(est2)
 
 ```
 
@@ -300,10 +257,10 @@ Let's visualize our seroincidence estimates by strata.
 #Plot seroincidence estimates
 
 #Save summary(est1) as a dataframe
-est1df<- summary(est1)
+est2df<- summary(est2)
 
 #Create barplot (rescale incidence rate and CIs)
-ggplot(est1df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
+ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
   geom_bar(stat = "identity") +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
   labs(x="Enteric fever seroincience rate per 1000 person-years",

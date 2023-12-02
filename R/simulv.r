@@ -1,6 +1,6 @@
 #  Utility functions: interface with C lib simul.so
 
-dyn.load(paste(basepath,"C/simulv.so",sep=""));
+#dyn.load(paste(basepath,"C/simulv.so",sep=""));
 
 a <- function(initvec,parvec){
   res <- 0;

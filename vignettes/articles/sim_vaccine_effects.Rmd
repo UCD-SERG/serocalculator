@@ -1,0 +1,355 @@
+---
+title: "VaccineEffects_Sim"
+output: html_document
+date: "2023-12-02"
+---
+In "simulv.c" at the bottom the function "srespinterv" generates
+simulated cross-sectional antibody levels for a subject of "age" years
+old at time of sampling. Please take a look at that function and the
+comments, see if you can find anything wrong.
+
+The rationale is:
+
+1. Intervention consists of a change in lambda (from lambda1 to
+lambda2), at a time defined by a number of years in the past, from
+time of sampling. That means that each simulated subject experiences
+intervention at a different age (calculated as age_interv). Everyone
+is assumed to be intervened (vaccinated) at the same time.
+
+2. At the time of intervention, infection pressure changes
+abruptly. When intervention occurs during a current interval (happens
+once for any subject) the simulation is reset: the new interval
+(replacing the one generated with lambda1) equals the time from start
+of the interval (i.e. time of most recent infection) to the time of
+intervention **plus** a new (random) interval generated with
+post-intervention lambda2. I think this is correct because of the
+renewal property of Poisson processes (absence of memory).
+
+The file "simulv.c" can replace the old one (and also "simulv.h" and
+"simulv.r"): all functions are still there. The new simulation code is
+called from a new function mkabsmplinterv() in "simfunc.r".
+
+The R script "simul/estim-interv.r" runs this new function:
+lam.init is the pre-intervention lambda
+lam.interv is the post-intervention lambda
+tau.interv is the time (years from sampling date) of intervention
+
+A couple of  quick checks:
+When tau.interv is set to 0 (no intervention) lam.init is estimated
+When tau.interv is set to max.age (or higher) lam.interv is estimated
+
+Please note that the function that generates the cross-sectional
+sample needs time parameters in days instead of years (hence the
+lambda/day2yr and tau.interv*day2yr).
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(doParallel)
+registerDoParallel(cores=detectCores()-1)
+
+
+#Import longitudinal antibody parameters from OSF
+curve_param = url("https://osf.io/download/rtw5k/") %>% readRDS() 
+
+#reformat as array
+ predpar <-
+    curve_param %>%
+    #filter(.data$antigen_iso %in% antigen_isos) %>%
+    droplevels() %>%
+    prep_curve_params_for_array() %>%
+    df.to.array(dim_var_names = c("antigen_iso", "parameter"))
+
+
+ntest <- 2
+
+# if(!any(objects()=="predpar")) # check if parameters loaded
+#   source("initpar.r"); # if not: do it now (takes a little time)
+source("~/Dropbox/DataAnalysis/EntericFever/Simulation-Inference/TyphoidSim_V2/simul/simfunc.r"); # load internal and external functions
+
+
+/Users/kristenaiemjoy/Dropbox/DataAnalysis/EntericFever/Simulation-Inference/TyphoidSim_V2/simul
+
+
+ktest <- 2 ; # antigen/isotype (there are 7)
+ab.nm <- c("HlyE IgA", "HlyE IgG");
+iv.mc <- initvec(ktest); # (y0, b0)
+pv.mc <- parmvec(ktest); # (mu0, mu1, c1, alpha, shape)
+y0.pred <- iv.mc[1,]; b0.pred <- iv.mc[2,];
+mu0.pred <- pv.mc[1,]; mu1.pred <- pv.mc[2,]; c1.pred <- pv.mc[3,];
+alpha.pred <- pv.mc[4,]; shape.pred <- pv.mc[5,];
+
+
+basevec <- c(-1,0.5); # based on north american controls (1.07 for HlyE IgG)
+
+
+
+day2yr <- 365.25;
+
+
+lam.ref <- .2; # best guess
+lam.init <- lam.ref/day2yr;
+int.effect <- 2.5 #60% Total Effect
+#int.effect <- 1.5 
+lam.interv <- lam.init/int.effect
+cat("lambda (ref)=",lam.ref,"\n");
+ # incidence 1/day
+
+# define global parameters for serocalculator
+ln.pars <- longpars(ktest); # longitudinal  parameters for scalcv3
+lnn <- qlnorm(p=0.98,meanlog=basevec[1],sdlog=basevec[2]);
+
+
+cond0 <- data.frame(nu=lnn,             # B noise
+                    eps=0,            # M noise
+                    y.low=0.0,          # low cutoff
+                    y.high=5e4);        # high cutof
+
+
+
+tau.interv <- 10; # years since start intervention
+
+
+#Iterations
+iter <- 40
+
+
+
+ min.age <- 0
+ max.age <- 4.99; # maximum nr years of circulation ("age" of subjects)
+ n.ref <- 100; # cross-sectional sample size
+
+
+buildPOP <- function(n.ref, min.age, max.age){
+sim.pop.BL <- 
+  foreach(i = 1:iter)  %dopar% {
+    a.smpl <- mkagsmpl(nsmp=n.ref,minim=min.age,maxim=max.age);     # make age sample
+    y.smpl <- mkabsmplinterv(nsmp=n.ref,lam1=lam.init,
+                             tau_interv=1,lam2=lam.interv,
+                             asmp=a.smpl,   # and corresponding
+                             nmc=nmc,iv=iv.mc,pv=pv.mc,bv=basevec); # antibody sample
+    cs <- cbind(a.smpl, y.smpl, i)
+  }
+
+sim.pop.BL.df <- reshape2::melt(sim.pop.BL)    %>%
+  pivot_wider(names_from = Var2, values_from = value) %>%
+  select(-Var1, -L1)  %>%
+  as.data.frame() %>%
+  ungroup() %>%
+  mutate(t=0) 
+
+sim.pop <- 
+  foreach(i = 1:iter) %:% 
+  foreach(t = 1:tau.interv, .combine = rbind) %dopar% {
+    a.smpl <- mkagsmpl(nsmp=n.ref,minim=min.age,maxim=max.age);     # make age sample
+    y.smpl <- mkabsmplinterv(nsmp=n.ref,lam1=lam.init,
+                             tau_interv=t*day2yr,lam2=lam.interv,
+                             asmp=a.smpl,   # and corresponding
+                             nmc=nmc,iv=iv.mc,pv=pv.mc,bv=basevec); # antibody sample
+    cs <- cbind(a.smpl, y.smpl, t, i)
+  }
+
+
+
+
+
+
+sim.pop.df <- reshape2::melt(sim.pop)    %>%
+  pivot_wider(names_from = Var2, values_from = value) %>%
+  select(-Var1, -L1) %>%
+  as.data.frame() %>%
+  rbind(., sim.pop.BL.df) %>%
+  mutate(i = factor(i)) %>%
+  mutate(t = factor(t)) %>%
+  mutate(ID = 1:n()) %>%
+  mutate(ID = as.factor(ID))
+
+return(sim.pop.df)
+}
+
+
+P1 <- buildPOP(200, 0, 4.99)
+P2 <- buildPOP(200, 5, 14.99)
+P3 <- buildPOP(150, 15, 25)
+
+
+sim.pop.df <- rbind(P1, P2, P3) 
+
+#write_csv(sim.pop.df, "HlyE.IgG.pop.sim.N1400.csv")
+
+totalN <- sim.pop.df  %>% filter(i ==1 & t==0) %>%
+  summarise(n= n())
+
+
+totalN$n
+
+##visualize
+library(ggdark)
+
+P0 <- buildPOP(400, 0, 4.99)
+P0 <- buildPOP(400, 5, 14.99)
+
+p0plot <- P0 %>% group_by(i, t) %>%
+  summarise(popmean = mean(log10(y.smpl)))
+
+
+
+  ggplot(p0plot, aes(x=t,y=i,fill=popmean))+
+  geom_tile() +
+  scale_fill_viridis(name="Log 10 IgG",option ="C") +
+  theme_bw() +
+    theme(legend.position = "bottom") + 
+    labs(y = "Cluster", x = "Time sincie intervention (in years)", title = "Age: 5-15", caption = "starting lambda = .2") 
+
+
+
+
+
+
+#### overall
+
+IncInterv <- 
+  foreach(iter = levels(sim.pop.df$i)) %:% 
+  foreach(time = levels(sim.pop.df$t), .combine = rbind) %dopar% {
+    temp <- sim.pop.df %>% filter(i == iter & t == time)
+    lam.est <- scalcv3(lam.init=lam.ref,asmp=temp$a.smpl,ysmp=temp$y.smpl,bv=cond0);
+    res <- cbind(est = lam.est[1], lwr = lam.est[2], upr =lam.est[3], iter , time)
+    return(res)
+  }
+
+dIinterv <- reshape2:: melt(IncInterv) %>%
+  pivot_wider(names_from = Var2, values_from = value) %>%
+  select(-Var1, -L1) %>%
+  mutate(est = as.numeric(est),
+         upr = as.numeric(upr),
+         lwr=as.numeric(lwr)) %>%
+  mutate(time = factor(as.numeric(time)))
+
+
+
+ggplot(dIinterv , aes(x=time, y = est)) +
+  geom_boxplot(size=.5, outlier.color = NA) +
+  geom_jitter(alpha = .2, size=.5) +
+  geom_hline(aes(yintercept = lam.ref/int.effect), color = "red") +
+  labs(title = ab.nm[ktest], caption = paste("sample size = ", totalN$n, "; Max age =", max.age, "; starting lambda=", lam.ref, " ; iterations=", iter, " ; bnoise =", round(lnn, 2),  sep=""), subtitle = paste("intervention effect = ",  round((1-1/int.effect)*100,0), "%", sep=""),x = "Time Since Intervention", y = "lambda") +
+  theme_linedraw()
+
+
+
+# 1 year effect
+dPower <- dIinterv  %>% filter(time==0 | time==1) %>%
+  pivot_wider(names_from = time, values_from = c(est, lwr, upr), id_cols =iter) %>%
+  mutate(overlap = ifelse(upr_1 >= est_0, 1, 0),
+         Overlaping_CI = factor(overlap, labels = c("No", "Yes")),
+         diff = lwr_0-upr_1)
+
+
+
+
+  dIinterv1 <- dIinterv %>% 
+    merge(., dPower, by = c("iter")) 
+
+
+
+ ggplot(dIinterv1  %>% filter(time==0 | time==1), aes(y=reorder(iter, diff), x = est)) + 
+  geom_linerange(aes(xmin = lwr, xmax=upr, linetype = time, color = factor(overlap))) + 
+  geom_point(size=.5) + 
+  #geom_line(aes(group = iter), position = position_dodge(1.5), color  = "grey", alpha = .2) +
+  theme_linedraw() + 
+  scale_color_manual(values = c("black", "red")) +
+  labs(caption = paste("sample size = ", totalN$n, 
+                       #"; Max age =", max.age, 
+                       "; starting lambda=", lam.ref, 
+                       " ; iterations=", iter, 
+                       #" ; bnoise =", round(lnn, 2),  
+                       sep=""),
+       subtitle =paste("Power=", (1-mean(dPower$overlap))*100, "%", sep=""),
+       title = "Detecting intervention effect after 1 year",
+       y = "Simulation", 
+       x = "lambda")  +
+    theme(axis.text.y = element_blank())
+
+
+
+
+dPower2 <- dIinterv  %>% filter(time==0 | time==2) %>%
+  pivot_wider(names_from = time, values_from = c(est, lwr, upr), id_cols =iter) %>%
+  mutate(overlap = ifelse(upr_2 >= est_0, 1, 0),
+         #Overlaping_CI = factor(overlap, labels = c("No", "Yes")),
+         diff = lwr_0-upr_2)
+
+
+
+dIinterv2 <- dIinterv %>% 
+  merge(., dPower2, by = c("iter")) 
+
+
+
+B <- ggplot(dIinterv2  %>% filter(time==0 | time==2), aes(y=reorder(iter, diff), x = est)) + 
+  geom_linerange(aes(xmin = lwr, xmax=upr, linetype = time, color = factor(overlap))) + 
+  geom_point(size=.5) + 
+  #geom_line(aes(group = iter), position = position_dodge(1.5), color  = "grey", alpha = .2) +
+  theme_linedraw() + 
+  scale_color_manual(values = c("black", "red")) +
+  labs(caption = paste("sample size = ", totalN$n, 
+                       #"; Max age =", max.age, 
+                       "; starting lambda=", lam.ref, 
+                       " ; iterations=", iter, 
+                       #" ; bnoise =", round(lnn, 2), 
+                       #"; intervention effect = ",  round((1-1/int.effect)*100,0), "%",
+                       sep=""),
+       subtitle =paste("Power=", (1-mean(dPower2$overlap))*100, "%", sep=""),
+       title = "Detecting intervention effect after 2 years",
+       y = "Simulation", 
+       x = "lambda")  +
+  theme(axis.text.y = element_blank())
+
+
+
+ 
+ 
+ # 
+ # dPower3 <- dIinterv  %>% filter(time==0 | time==3) %>%
+ #   pivot_wider(names_from = time, values_from = c(est, lwr, upr), id_cols =iter) %>%
+ #   mutate(overlap = ifelse(upr_3 >= est_0, 1, 0),
+ #          #Overlaping_CI = factor(overlap, labels = c("No", "Yes")),
+ #          diff = lwr_0-upr_3)
+ # 
+ # 
+ # 
+ # dIinterv3 <- dIinterv %>% 
+ #   merge(., dPower3, by = c("iter")) 
+ # 
+ # 
+ # ggplot(dIinterv3  %>% filter(time==0 | time==3), aes(y=reorder(iter, diff), x = est)) + 
+ #   geom_linerange(aes(xmin = lwr, xmax=upr, linetype = time, color = factor(overlap))) + 
+ #   geom_point(size=.5) + 
+ #   #geom_line(aes(group = iter), position = position_dodge(1.5), color  = "grey", alpha = .2) +
+ #   theme_linedraw() + 
+ #   scale_color_manual(values = c("black", "red")) +
+ #   labs(caption = paste("sample size = ", totalN$n, 
+ #                        #"; Max age =", max.age, 
+ #                        "; starting lambda=", lam.ref, 
+ #                        " ; iterations=", iter, 
+ #                        #" ; bnoise =", round(lnn, 2), 
+ #                        #"; intervention effect = ",  round((1-1/int.effect)*100,0), "%",
+ #                        sep=""),
+ #        subtitle =paste("Power=", (1-mean(dPower3$overlap))*100, "%", sep=""),
+ #        title = "Detecting intervention effect after 2 years",
+ #        y = "Simulation", 
+ #        x = "lambda")  +
+ #   theme(axis.text.y = element_blank())
+ # 
+
+library(gridExtra)
+grid.arrange(A, B, nrow=1)
+
+ggsave
+
+
+
+```

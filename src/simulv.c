@@ -3,8 +3,10 @@
 #include <Rinternals.h>
 #include <Rmath.h>
 #include "simulv.h"
-#include "ks.c"
-#include "ad.c"
+#include "ks.h"
+#include "ad.h"
+// #include "ks.c"
+// #include "ad.c"
 
 #define MAXINF 25 /* maximum nr past infections accounted for */
 

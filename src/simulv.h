@@ -89,18 +89,8 @@ double drndadarenew (double *logyobs, int nobs, int nsim, double *age,
                      double *mu0, double *mu1, double *c, double *alpha,
                      double *shape, double *bsl);
 
-int *ivector(long nl, long nh);
-void free_ivector(int *v, long nl, long nh);
-double *dvector(long nl, long nh);
-void free_dvector(double *v, long nl, long nh);
-void prerr(char error_text[]);
-void sort(double *arr, int n);
-double probks(double alam);
-double ksdevtwo(double *data1, int n1, double *data2, int n2);
-double ksprobtwo(double *data1, int n1, double *data2, int n2);
-double kpdevtwo(double *data1, int n1, double *data2, int n2);
 
-double adstattwo(double *obs, int nobs, double *sim, int nsim);
+
 
 /* Utility functions for calls from R */
 void ar (double *res, double *iv, double *pv){

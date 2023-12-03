@@ -1,4 +1,7 @@
 #include <math.h>
+// #include "simulv.h"
+#include "ks.h"
+#include "ad.h"
 
 /* Given an array obs[1..n1], containing observed data and an array       */
 /* sim[1..n2] with simulated data this function returns the A-D           */

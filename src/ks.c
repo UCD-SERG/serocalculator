@@ -1,6 +1,10 @@
 /* Modified  from Numerical Recipes in C */
 /* Consider license. Rewrite if needed   */
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+// #include "simulv.h"
+#include "ks.h"
 #define SWAP(a,b) temp=(a);(a)=(b);(b)=temp;
 #define NR_END 1
 #define FREE_ARG char*

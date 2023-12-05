@@ -35,10 +35,10 @@
 .checkAntibodies <- function(antigen_isos)
 {
 
-  if (!is.character(antigen_isos)) {
+  if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
     stop(
       paste0(
-        'Argument `antigen_isos` should be a `character()` vector, but ',
+        'In `est.incidence()`, the argument `antigen_isos` should be a `character()` or `factor()` variable, but ',
         'currently, `class(antigen_isos) == "', class(antigen_isos), '"`.',
         '\nPlease provide a character vector with at least one antibody name.'))
   }

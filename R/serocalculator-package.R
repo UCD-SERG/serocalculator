@@ -97,6 +97,7 @@
 #' @importFrom dplyr is.grouped_df
 #' @importFrom dplyr mutate
 #' @importFrom dplyr n
+#' @importFrom dplyr n_distinct
 #' @importFrom dplyr pull
 #' @importFrom dplyr relocate
 #' @importFrom dplyr rename

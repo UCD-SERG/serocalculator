@@ -269,7 +269,7 @@ est1 = est.incidence.by(
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  numCores = 2 #Allow for parallel processing to decrease runtime 
+  num_cores = 2 #Allow for parallel processing to decrease runtime 
 #  build_graph = FALSE
 )
 
@@ -281,10 +281,10 @@ estbyC = est.incidence.by(
   verbose = TRUE,
   lambda.start=.2,
   strata = c("Country"),
-  data = pop_data, 
+  pop_data = pop_data, 
   curve_params = curve_param, 
   noise_params = noise_param,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   built_graph=FALSE
 )
 

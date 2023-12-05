@@ -227,14 +227,14 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 #Using est.incidence.by (strata)
 
 est2 = est.incidence.by(
-#  verbose = TRUE,
+ # verbose = TRUE,
 #  lambda.start=.3,
   strata = c("catchment"),
   pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  numCores = 8, #Allow for parallel processing to decrease runtime 
+  num_cores = 8, #Allow for parallel processing to decrease runtime 
   build_graph = FALSE
 )
 

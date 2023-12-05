@@ -108,13 +108,31 @@ est.incidence.by <- function(
   # Loop over data per stratum
   if (num_cores > 1L)
   {
-    if(verbose) message("Setting up parallel processing.")
+
+    if(num_cores > (parallel::detectCores() - 1))
+    {
+      num_cores =
+        num_cores |>
+        min(parallel::detectCores() - 1)
+
+      warning(
+        "This computer appears to have ",
+        parallel::detectCores(),
+        " cores available. `est.incidence.by()` has reduced its `num_cores` argument to ",
+        num_cores,
+        " to avoid destabilizing the computer."
+      )
+    }
+
+    if(verbose)
+    {
+      message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
+    }
     requireNamespace("parallel", quietly = FALSE)
 
     libPaths <- .libPaths()
     cl <-
       num_cores |>
-      min(parallel::detectCores() - 1) |>
       parallel::makeCluster() |>
       suppressMessages()
     on.exit({
@@ -138,12 +156,15 @@ est.incidence.by <- function(
             what = est.incidence,
             args = c(
               x,
-              lambda_start = lambda_start,
-              antigen_isos = antigen_isos,
-              build_graph = build_graph,
-              print_graph = FALSE,
-              verbose = FALSE,
-              ...))
+              list(
+                lambda_start = lambda_start,
+                antigen_isos = antigen_isos,
+                build_graph = build_graph,
+                print_graph = FALSE,
+                verbose = FALSE,
+                ...)
+            )
+          )
       )
     } |> system.time() -> time
 
@@ -175,16 +196,20 @@ est.incidence.by <- function(
           print(cur_stratum_vars)
         }
 
-        fits[[cur_stratum]] = do.call(
-          what = est.incidence,
-          args = c(
-            stratumDataList[[cur_stratum]],
-            lambda_start = lambda_start,
-            antigen_isos = antigen_isos,
-            build_graph = build_graph,
-            print_graph = print_graph,
-            verbose = verbose,
-            ...))
+        fits[[cur_stratum]] =
+          do.call(
+            what = est.incidence,
+            args = c(
+              stratumDataList[[cur_stratum]],
+              list(
+                lambda_start = lambda_start,
+                antigen_isos = antigen_isos,
+                build_graph = build_graph,
+                print_graph = print_graph,
+                verbose = verbose,
+                ...)
+            )
+          )
 
 
       }

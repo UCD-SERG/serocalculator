@@ -36,8 +36,11 @@
 {
 
   if (!is.character(antigen_isos)) {
-    stop(.pasteN("Argument `antigen_isos` is not a character vector.",
-                 "Provide a character vector with at least one antibody name."))
+    stop(
+      paste0(
+        'Argument `antigen_isos` should be a `character()` vector, but ',
+        'currently, `class(antigen_isos) == "', class(antigen_isos), '"`.',
+        '\nPlease provide a character vector with at least one antibody name.'))
   }
 
   if (setequal(antigen_isos, "")) {

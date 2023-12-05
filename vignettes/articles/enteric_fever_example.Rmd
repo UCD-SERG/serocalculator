@@ -235,7 +235,7 @@ Using the function `est.incidence`, we define our starting value as 0.2, which w
 est1 = est.incidence(
   #verbose = TRUE, # print output 
 #  lambda.start=.1,  #.1 per person-year, starting value for incidence estimation where to start the maximum likelihood 
-  data = pop_data %>% filter(Country == "Pakistan"),
+  pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_param = curve_param, 
   noise_param = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")

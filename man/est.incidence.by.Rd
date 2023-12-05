@@ -5,22 +5,23 @@
 \title{Estimate Seroincidence}
 \usage{
 est.incidence.by(
-  data,
+  pop_data,
   curve_params,
   noise_params,
   strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  antigen_isos = unique(pull(data, "antigen_iso")),
-  lambda.start = 0.1,
+  antigen_isos = unique(pull(pop_data, "antigen_iso")),
+  lambda_start = 0.1,
   build_graph = FALSE,
-  numCores = 1L,
+  num_cores = 1L,
   verbose = FALSE,
+  print_graph = FALSE,
   ...
 )
 }
 \arguments{
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
+\item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -42,27 +43,27 @@ est.incidence.by(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}.}
+\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
 \item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 
-\item{lambda.start}{starting guess for incidence rate, in years/event.}
+\item{lambda_start}{starting guess for incidence rate, in years/event.}
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
-\item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
+\item{num_cores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
+
+\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
 
 \item{...}{
   Arguments passed on to \code{\link[=est.incidence]{est.incidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
-    \item{\code{c.age}}{age category to subset data by (optional)}
-    \item{\code{print_graph}}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
     \item{\code{stepmin}}{A positive scalar providing the minimum allowable relative step length.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which

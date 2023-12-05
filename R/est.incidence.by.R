@@ -4,11 +4,11 @@
 #' Function to estimate seroincidences based on cross-section serology data and longitudinal
 #' response model.
 #'
-#' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
-#' @param strata Character vector of stratum-defining variables. Values must be variable names in `data`.
+#' @param pop_data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
+#' @param strata Character vector of stratum-defining variables. Values must be variable names in `pop_data`.
 #' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
-#' @param numCores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
+#' @param num_cores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
 #' @details
 #'
@@ -27,17 +27,18 @@
 #'
 #' @export
 est.incidence.by <- function(
-    data,
+    pop_data,
     curve_params,
     noise_params,
     strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    antigen_isos = data |> pull("antigen_iso") |> unique(),
-    lambda.start = 0.1,
+    antigen_isos = pop_data |> pull("antigen_iso") |> unique(),
+    lambda_start = 0.1,
     build_graph = FALSE,
-    numCores = 1L,
+    num_cores = 1L,
     verbose = FALSE,
+    print_graph = FALSE,
     ...)
 {
 
@@ -60,10 +61,10 @@ est.incidence.by <- function(
   {
     to_return =
       est.incidence(
-        data = data,
+        pop_data = pop_data,
         curve_params = curve_params,
         noise_params = noise_params,
-        lambda.start = lambda.start,
+        lambda_start = lambda_start,
         antigen_isos = antigen_isos,
         build_graph = build_graph,
         verbose = verbose,
@@ -71,19 +72,19 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  .checkStrata(data = data, strata = strata)
+  .checkStrata(data = pop_data, strata = strata)
 
   .errorCheck(
-    data = data,
+    data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = curve_params)
 
   # Split data per stratum
   stratumDataList <- stratify_data(
-    data = data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params,
-    noise_params = noise_params,
+    data = pop_data |> filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = curve_params |> filter(.data$antigen_iso %in% antigen_isos),
+    noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames)
@@ -97,22 +98,22 @@ est.incidence.by <- function(
     print(strata_table)
   }
 
-  if(numCores > 1L && !requireNamespace("parallel", quietly = TRUE))
+  if(num_cores > 1L && !requireNamespace("parallel", quietly = TRUE))
   {
     warning(
-      "The `parallel` package is not installed, so `numCores > 1` has no effect.",
+      "The `parallel` package is not installed, so `num_cores > 1` has no effect.",
       "To install `parallel`, run `install.packages('parallel')` in the console.")
   }
 
   # Loop over data per stratum
-  if (numCores > 1L)
+  if (num_cores > 1L)
   {
     if(verbose) message("Setting up parallel processing.")
     requireNamespace("parallel", quietly = FALSE)
 
     libPaths <- .libPaths()
     cl <-
-      numCores |>
+      num_cores |>
       min(parallel::detectCores() - 1) |>
       parallel::makeCluster() |>
       suppressMessages()
@@ -137,9 +138,10 @@ est.incidence.by <- function(
             what = est.incidence,
             args = c(
               x,
-              lambda.start = lambda.start,
+              lambda_start = lambda_start,
               antigen_isos = antigen_isos,
               build_graph = build_graph,
+              print_graph = FALSE,
               verbose = FALSE,
               ...))
       )
@@ -177,9 +179,10 @@ est.incidence.by <- function(
           what = est.incidence,
           args = c(
             stratumDataList[[cur_stratum]],
-            lambda.start = lambda.start,
+            lambda_start = lambda_start,
             antigen_isos = antigen_isos,
             build_graph = build_graph,
+            print_graph = print_graph,
             verbose = verbose,
             ...))
 

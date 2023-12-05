@@ -265,7 +265,7 @@ est1 = est.incidence.by(
 #  verbose = TRUE,
 #  lambda.start=.3,
   strata = c("catchment"),
-  data = pop_data %>% filter(Country == "Pakistan"),
+  pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),

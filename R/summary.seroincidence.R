@@ -11,7 +11,7 @@
 #' * `CI.lwr`: lower limit of confidence interval for incidence rate
 #' * `CI.upr`: upper limit of confidence interval for incidence rate
 #' * `coverage`: coverage probability
-#' * `neg.llik`: negative log-likelihood
+#' * `log.lik`: log-likelihood of the data used in the call to `est.incidence()`, evaluated at the maximum-likelihood estimate of lambda (i.e., at `incidence.rate`)
 #' * `iterations`: the number of iterations used
 #'  * `antigen_isos`: a list of antigen isotypes used in the analysis
 #'  * `nlm.convergence.code`: information about convergence of the likelihood maximization procedure performed by `nlm()` (see "Value" section of [stats::nlm()], component `code`); codes 3-5 indicate issues:
@@ -27,7 +27,7 @@ summary.seroincidence = function(
     coverage = .95,
     ...)
 {
-  start = object |> attr("lambda.start")
+  start = object |> attr("lambda_start")
   antigen_isos = object |> attr("antigen_isos")
 
   alpha = 1 - coverage

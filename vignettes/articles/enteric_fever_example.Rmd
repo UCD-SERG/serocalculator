@@ -1,5 +1,5 @@
 ---
-title: "Enteric Fever Example"
+title: "Enteric Fever Seroincidence Vignette"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
 output: rmarkdown::html_vignette
 vignette: >
@@ -12,9 +12,9 @@ bibliography: references.bib
 ---
 ## Introduction
 
-This vignette provides users with an example analysis using the [**serocalculator**](https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.html) package by reproducing an analysis in @Aiemjoy_2022_Lancet. We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. 
+This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. 
 
-https://github.com/UCD-SERG/serocalculator
+
 
 ## Methods
 
@@ -42,6 +42,8 @@ Further details on this published study can be found here: https://doi.org/10.10
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  fig.height=4, fig.width=7,
+  message = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -49,11 +51,12 @@ knitr::opts_chunk$set(
 
 
 ### Load packages
-The first step in conducting this analysis is to load our necessary packages. 
+The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
 #devtools::install_github("ucd-serg/serocalculator")
 library(serocalculator)
+#install.packages("tidyverse)
 library(tidyverse)
 ```
 
@@ -67,42 +70,19 @@ Each dataset has specific formatting and variable name requirements.
 
 We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
-*Format Specifications*: Data should be imported as a "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must *exactly* match follow the naming conventions:
+*Formatting Specifications*: Data should be imported as a "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must *exactly* match follow the naming conventions:
 
-Curve Parameter Variable Names
+
 Column Name    |  Description
 -------------- |  -----------
-y0             |  Baseline antibody concentration
-y1             |  Peak antibody concentration
-t1             |  Time to peak antibody concentration
-alpha          |  Antibody decay rate
-r              |  Antibody decay shape
+    y0         |  Baseline antibody concentration
+    y1         |  Peak antibody concentration
+    t1         |  Time to peak antibody concentration
+    alpha      |  Antibody decay rate
+    r          |  Antibody decay shape
 *Note that variable names are case-sensitive*
 
 
-### Data Formatting and Variable Naming
-Before we begin, please note the following requirements for formatting each dataset and naming variables:
-* Curve Parameters: longitudinal antibody dynamics data should be "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must follow the naming conventions here (y0, y1, t1, alpha, r).
-
-* Population data: cross-sectional population data should be a "long" dataframe with one column for each variable and one row for each antigen isotype resulted for an individual. So the same individual will have more than one row if they ave results for more than one antigen isotype. 
-
-* Noise parameters: the noise parameters should be a datafrae with one row for each antigen isotype and one column for each noise parameter (y.low, nu, y.high, and eps). In this example the noise parameters are country-specific, but you could also use overall noise parameters. 
-
-###Add a section on data format - shape of data and namnes of the variables
-Data needs to be long + include a package resource for wide to long 
-
-For cure paraeters, data should be in the wide formate with coumns for th eparameters (y0, y1, t1, alpha, r) and each row is an iteration of the posterior distribution ofr each antigen isotye.Column names need to have the same naming convention (create table or list of what this should be) --> all case sensitive. 
-
-The population data should be long with a row for every result for each antigen isotype. So the same individual will have mroe than 1 row if they hae results for more than 1 antigen iso. 
-- Antgen ISO, value, age (all lower case)
-
-Noise paramter should be a dataframe with (all are datafraes) with a row for each antgen isotype and colums fornoise parameters need to be named the same.
-ylow = lower limit of detection of assay
-nu = biologic noise
-yhigh is upper limit of detestion of the assay
-eps is the mmeasurement noise
-
-Doesn't have to be country specific, could enter overall parameters.
 ```{r curve, message=FALSE}
 
 #Import longitudinal antibody parameters from OSF
@@ -119,7 +99,7 @@ We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* 
 
 *Formatting Specifications*: Cross-sectional population data should be a "long" dataframe with one column for each variable and one row for each antigen isotype resulted for an individual. So the same individual will have more than one row if they have results for more than one antigen isotype. The dataframe can have additional variables, but the two below are required: 
 
-Population Data Variable Names 
+
 Column Name | Description
 ----------- | -----------
 value       | Quantitative antibody response
@@ -130,9 +110,9 @@ age         | Numeric age
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-pop_data <- getAdditionalData(fileURL ="https://osf.io/download//n6cp3/") %>%
+pop_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
   rename(value = result,
-         age = Age)
+         age = Age) #rename variables
 
 ```
 
@@ -141,7 +121,7 @@ pop_data <- getAdditionalData(fileURL ="https://osf.io/download//n6cp3/") %>%
 
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
-```{r hist, message = FALSE}
+```{r hist}
 #Create histograms
 
 ggplot(pop_data, aes(x = value)) +
@@ -173,6 +153,7 @@ ggplot(pop_data, aes(x = value)) +
   ) +
   facet_wrap(~ antigen_iso, nrow = 3)
 ```
+
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 Let's also take a look at how antibody responses change by age.
@@ -191,7 +172,7 @@ ggplot(data=pop_data, aes(x=age, y=value, color=Country)) +
           )
 
 ```
-In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope)
+In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).
 
 
 ### Load noise parameters
@@ -200,60 +181,44 @@ Next, we must set conditions based on some assumptions about the data and error 
 
 The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
 
-*Formating Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
+*Formatting Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
 
-Noise Parameter Variable Names
+
 Column Name | Description
 ----------- | -----------
-y.low       | Lower limit of detection of the antibody assay
-nu          | Biologic noise
-y.high      | Upper limit of detection of the antibody assay
-eps         | Measurement noise
+    y.low   | Lower limit of detection of the antibody assay
+    nu      | Biologic noise
+    y.high  | Upper limit of detection of the antibody assay
+    eps     | Measurement noise
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}
 #Import noise parameters from OSF
 
-noise_param <- getAdditionalData(fileURL ="https://osf.io/download//hqy4v/") %>%
+noise_param <- url("https://osf.io/download//hqy4v/") %>% readRDS() %>%
   rename(y.low = llod) #rename lower bound
 
 ```
 
-
-## ADD++: Plot the biologic noise parameter onto the distribution of antibody responses for each country (as a vertical line) 
-### [don't need it now... could add vertical line for where nosie falls -- not right now!)]
-
-
 ## Estimate Seroincidence 
-Finally, we are ready to begin seroincidence estimation. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
+Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
 
 ### Overall Seroincidence
 Using the function `est.incidence`, we define our starting value as 0.2, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). We filter to Pakistan and define the datasets for our cross-sectional data (data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate.
 
 ```{r est, message= FALSE}
+
 #Using est.incidence (no strata)
+
 est1 = est.incidence(
-  #verbose = TRUE, # print output 
-#  lambda.start=.1,  #.1 per person-year, starting value for incidence estimation where to start the maximum likelihood 
-  data = pop_data %>% filter(Country == "Pakistan"),
+  pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_param = curve_param, 
   noise_param = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 
 summary(est1)
-
-#help understanding the function and summary
-?est.incidence
-?summary.seroincidence
-
 ```
-What would happen if we limit the analysis to only one isotype? Or if we use a different country?
-
-###+ ADD: COMPARE CONFIDENCE INTERVALS USING SINGLE ANTIGEN-ISOTYPE AND USING ONE
-ACTIVITY: (Could ask participants to do the same thing but just one antigen alone and compare how it is together --> and check if the confidence interval are more wide or more narrow) Could also change to different country. 
-- will be wider if just use one. 
-
 
 ### Stratified Seroincidence
 We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their population dataset.
@@ -261,32 +226,19 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 ```{r estby}
 #Using est.incidence.by (strata)
 
-est1 = est.incidence.by(
-#  verbose = TRUE,
+est2 = est.incidence.by(
+ # verbose = TRUE,
 #  lambda.start=.3,
   strata = c("catchment"),
-  data = pop_data %>% filter(Country == "Pakistan"),
+  pop_data = pop_data %>% filter(Country == "Pakistan"),
   curve_params = curve_param, 
   noise_params = noise_param %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  numCores = 2 #Allow for parallel processing to decrease runtime 
-#  build_graph = FALSE
+  num_cores = 8, #Allow for parallel processing to decrease runtime 
+  build_graph = FALSE
 )
 
-summary(est1)
-
-
-#lets get this working --> not working yet... shows dulicates by country
-estbyC = est.incidence.by(
-  verbose = TRUE,
-  lambda.start=.2,
-  strata = c("Country"),
-  data = pop_data, 
-  curve_params = curve_param, 
-  noise_params = noise_param,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  built_graph=FALSE
-)
+summary(est2)
 
 ```
 
@@ -294,26 +246,28 @@ We are given a warning that "curve_params is missing all strata variables, and w
 
 Let's visualize our seroincidence estimates by strata.
 
-## ADD plot seroincidence estimates
-(Try to get est incidence by country)Walk through first examoke on catchment and then on own have them estimate incidence by country (have them write code)-- I will have a separate RMD that is just my notes. 
+
 ```{r}
 #Plot seroincidence estimates
 
 #Save summary(est1) as a dataframe
-est1df<- summary(est1)
+est2df <- summary(est2)
 
 #Create barplot (rescale incidence rate and CIs)
-ggplot(est1df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
+ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
   geom_bar(stat = "identity") +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
-  labs(x="Enteric fever seroincience rate per 1000 person-years",
-       y="Catchment area") +
-  theme_bw()
+  labs(
+      x="Enteric fever seroincience rate per 1000 person-years",
+      ) +
+  theme_bw() 
+
+  
 
 ```
 
 ## Conclusions
-In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 15.3 per 100 person-years (95% CI: 13.9, 16.9). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [20.4 per 100 person-years (95% CI: 17.6, 23.7) vs. 12.5 per 100 person-years (95% CI: 10.9, 14.3). 
+In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143). 
 
 
 ## References

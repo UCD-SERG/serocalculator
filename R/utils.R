@@ -35,9 +35,12 @@
 .checkAntibodies <- function(antigen_isos)
 {
 
-  if (!is.character(antigen_isos)) {
-    stop(.pasteN("Argument `antigen_isos` is not a character vector.",
-                 "Provide a character vector with at least one antibody name."))
+  if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
+    stop(
+      paste0(
+        'In `est.incidence()`, the argument `antigen_isos` should be a `character()` or `factor()` variable, but ',
+        'currently, `class(antigen_isos) == "', class(antigen_isos), '"`.',
+        '\nPlease provide a character vector with at least one antibody name.'))
   }
 
   if (setequal(antigen_isos, "")) {
@@ -51,12 +54,12 @@
 .checkCsData <- function(data, antigen_isos)
 {
   if (!is.data.frame(data)) {
-    stop(.pasteN("Argument `data` is not a `data.frame()`.",
+    stop(.pasteN("Argument `pop_data` is not a `data.frame()`.",
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
   if (!is.element("age", names(data))) {
-    stop("Argument `data` is missing column `age` (age, in years).")
+    stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
   invisible(NULL)
@@ -68,7 +71,7 @@
   message1 = paste(
     "Please provide a `data.frame()` containing Monte Carlo samples of the longitudinal parameters",
     "`y1`, `alpha`, and `r`",
-    "for each value of `antigen_iso` in `data`")
+    "for each value of `antigen_iso` in `pop_data`")
 
 
   if (!is.data.frame(params)) {

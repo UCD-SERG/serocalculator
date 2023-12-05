@@ -22,7 +22,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 \item \code{CI.lwr}: lower limit of confidence interval for incidence rate
 \item \code{CI.upr}: upper limit of confidence interval for incidence rate
 \item \code{coverage}: coverage probability
-\item \code{neg.llik}: negative log-likelihood
+\item \code{log.lik}: log-likelihood of the data used in the call to \code{est.incidence()}, evaluated at the maximum-likelihood estimate of lambda (i.e., at \code{incidence.rate})
 \item \code{iterations}: the number of iterations used
 \item \code{antigen_isos}: a list of antigen isotypes used in the analysis
 \item \code{nlm.convergence.code}: information about convergence of the likelihood maximization procedure performed by \code{nlm()} (see "Value" section of \code{\link[stats:nlm]{stats::nlm()}}, component \code{code}); codes 3-5 indicate issues:

@@ -4,7 +4,6 @@
 #' @param x an object
 #'
 #' @return the strata of `x`
-#' @keywords internal
 #'
 strata <- function(x) {
   UseMethod("strata")

@@ -1,4 +1,4 @@
-get_strata = function(data, strata_varnames)
+count.strata = function(data, strata_varnames)
 {
   to_return =
     data |>
@@ -6,7 +6,7 @@ get_strata = function(data, strata_varnames)
 
   uneven_counts =
     to_return |>
-    filter(
+    dplyr::filter(
       .by = all_of(strata_varnames),
       n_distinct(n) > 1)
 

@@ -72,13 +72,13 @@ antibodies = c("HlyE_IgA", "HlyE_IgG")
 lambda <- 0.2;
 
 # range covered in simulations
-lifespan <- c(0,20); 
+lifespan <- c(0, 20); 
 
 # cross-sectional sample size
-nrep <- 100
+nrep <- 1000
 
 # biologic noise distribution
-dlims <- rbind(c(0.01, 0.5),c(0.01, 0.5))
+dlims <- rbind(c(0, 0.5),c(0, 0.5))
 
 #generate cross-sectional data
 csdata0 <- sim.cs(
@@ -104,7 +104,7 @@ We need to provide noise parameters for the analysis; here, we define them direc
 cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
-  eps = c(0.2, 0.2),                             # M noise (eps)
+  eps = c(0, 0),                             # M noise (eps)
   y.low = c(1, 1),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 

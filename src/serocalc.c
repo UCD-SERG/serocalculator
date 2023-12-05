@@ -201,6 +201,7 @@ double dnsM (double lambda, double y, double age, double eps, double step,
     Nstep = dint((zmax - zmin)/step) + 1;
     dz = (zmax - zmin)/Nstep;
     integ = 0;
+    /* riemann integral over possible true underlying values: */
     for(kstep = 1; kstep <= Nstep; kstep++){
       z = zmin + (kstep - 0.5)*dz;
       integ = integ + dz*dnsF(lambda,z,age,Pa,EXPla,A,k,d)/z;

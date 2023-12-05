@@ -1,3 +1,5 @@
+# serocalculator 0.3.2
+
 # serocalculator 0.3.1
 
 Rolled back required R version from 4.2 to 4.1

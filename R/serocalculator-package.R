@@ -84,6 +84,7 @@
 #'
 
 ## usethis namespace: start
+#' @importFrom doParallel registerDoParallel
 #' @importFrom dplyr across
 #' @importFrom dplyr all_of
 #' @importFrom dplyr anti_join
@@ -106,12 +107,17 @@
 #' @importFrom dplyr semi_join
 #' @importFrom dplyr tibble
 #' @importFrom dplyr ungroup
+#' @importFrom foreach %:%
+#' @importFrom foreach %dopar%
+#' @importFrom foreach foreach
 #' @importFrom ggplot2 aes
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
 #' @importFrom rlang .env
+#' @importFrom rngtools RNGseq
+#' @importFrom rngtools setRNG
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats formula
 #' @importFrom stats nlm

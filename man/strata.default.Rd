@@ -10,7 +10,10 @@
 \item{x}{any R object}
 }
 \value{
-a \code{\link[tibble:tibble]{tibble::tibble()}} with strata in rows, or \code{NULL} if \code{x} does not have a \code{"strata"} attribute
+\itemize{
+\item a \code{\link[tibble:tibble]{tibble::tibble()}} with strata in rows, or
+\item \code{NULL} if \code{x} does not have a \code{"strata"} attribute
+}
 }
 \description{
 Extract the \code{Strata} attribute from an object, if present

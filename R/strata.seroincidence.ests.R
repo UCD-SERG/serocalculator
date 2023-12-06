@@ -13,7 +13,9 @@ strata <- function(x) {
 #'
 #' @param x any R object
 #'
-#' @return a [tibble::tibble()] with strata in rows, or `NULL` if `x` does not have a `"strata"` attribute
+#' @return
+#' * a [tibble::tibble()] with strata in rows, or
+#' * `NULL` if `x` does not have a `"strata"` attribute
 #' @export
 #'
 strata.default = function(x)

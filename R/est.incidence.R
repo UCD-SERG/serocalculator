@@ -27,6 +27,12 @@ est.incidence <- function(
     ...)
 {
 
+  if(verbose > 1)
+  {
+    message('inputs to `est.incidence()`:')
+    print(environment() |> as.list())
+  }
+
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,

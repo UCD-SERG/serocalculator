@@ -75,7 +75,7 @@ lambda <- 0.2;
 lifespan <- c(0, 20); 
 
 # cross-sectional sample size
-nrep <- 1000
+nrep <- 100
 
 # biologic noise distribution
 dlims <- rbind(c(0, 0.5),c(0, 0.5))
@@ -105,8 +105,9 @@ cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
   eps = c(0, 0),                             # M noise (eps)
-  # y.low = c(1, 1),                            # low cutoff (llod)
-  y.low = c(0, 0),                            # low cutoff (llod)
+  y.low = c(1, 1),                            # low cutoff (llod)
+  # y.low = c(0, 0),                            # low cutoff (llod)
+  # y.low = c(.5, .5),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
 ```
@@ -176,9 +177,6 @@ plot(est1, log_x = TRUE)
 
 ```{r "init-parallel"}
 library(parallel)
-library(doParallel)
-library(doRNG) # for reproducible results
-library(rngtools)
 n_cores = max(1, parallel::detectCores() - 1)
 # n_cores = 1
 print(n_cores)
@@ -199,33 +197,22 @@ nrep <- 100
 #incidence rate in e
 lmbdaVec <- c(.05,.1, .15, .2, .3)
 
-n_lambda = length(lmbdaVec)
-
-#trying to reproduce results using parallel
-rng <- RNGseq(n_lambda * nclus, 1234)
-
-sim.df <- 
-  foreach(i = 1:length(lmbdaVec), 
-          .combine = bind_rows) %:%
-  foreach(n = 1:nclus,  
-          r = rng[(i - 1) * nclus + 1:nclus], 
-          .combine = bind_rows) %dopar% 
-  {
-    l = lmbdaVec[i]
-    rngtools::setRNG(r)
-    sim.cs(
-      lambda = l,
-      n.smpl = nrep,
-      age.rng = lifespan,
-      antigen_isos = antibodies,
-      n.mc = 0,
-      renew.params = TRUE,
-      add.noise = TRUE,
-      curve_params = dmcmc,
-      noise_limits = dlims
-    ) %>% 
-      mutate(lambda.sim = l, cluster = n) 
-  }
+sim.df = 
+  sim.cs.multi(
+    # verbose = TRUE,
+    rng_seed = 1234,
+    n_cores = n_cores,
+    lambdas = lmbdaVec,
+    nclus = nclus,
+    n.smpl = nrep,
+    age.rng = lifespan,
+    antigen_isos = antibodies,
+    n.mc = 0,
+    renew.params = TRUE,
+    add.noise = TRUE,
+    curve_params = dmcmc,
+    noise_limits = dlims
+  )
 
 print(sim.df)
 ```
@@ -263,7 +250,7 @@ ests =
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     verbose = TRUE,
-    build_graph = TRUE, # slows down the function substantially
+    build_graph = FALSE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     # antigen_isos = "HlyE_IgA"
   )
@@ -355,8 +342,8 @@ lik_HlyE_IgA = graph.loglik(
   curve_params = 
     dmcmc |> 
     dplyr::mutate(
-    alpha = .data$alpha * 365.25,
-    d = .data$r - 1),
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1),
   noise_params = cond,
   antigen_isos = "HlyE_IgA",
   log_x = TRUE
@@ -368,8 +355,8 @@ lik_HlyE_IgG = graph.loglik(
   curve_params = 
     dmcmc |> 
     dplyr::mutate(
-    alpha = .data$alpha * 365.25,
-    d = .data$r - 1),
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1),
   noise_params = cond,
   antigen_isos = "HlyE_IgG",
   log_x = TRUE
@@ -381,8 +368,8 @@ lik_both = graph.loglik(
   curve_params = 
     dmcmc |>
     dplyr::mutate(
-    alpha = .data$alpha * 365.25,
-    d = .data$r - 1),
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1),
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   log_x = TRUE

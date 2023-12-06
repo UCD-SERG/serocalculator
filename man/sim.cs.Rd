@@ -5,9 +5,9 @@
 \title{Simulate a cross-sectional serosurvey with noise}
 \usage{
 sim.cs(
-  lambda,
-  n.smpl,
-  age.rng,
+  lambda = 0.1,
+  n.smpl = 100,
+  age.rng = c(0, 20),
   age.fx = NA,
   antigen_isos,
   n.mc = 0,

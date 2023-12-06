@@ -61,7 +61,7 @@ library(tidyverse)
 
 Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
 
-Each dataset has specific formatting and variable name requirements.
+Note that each dataset has specific formatting and variable name requirements.
 
 #### Load and prepare longitudinal parameter data
 
@@ -118,11 +118,10 @@ xs_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
 
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
-```{r hist, message = FALSE}
-#Create histograms
+```{r plots, message = FALSE}
+#Create plots
 
 ggplot(xs_data, aes(x = value)) +
-  #geom_histogram(binwidth = 5, color = "#000000", fill = "#009999", alpha = 0.7) +
   geom_density(aes(fill = Country), alpha = .7, color = "black") +
   theme_minimal() +
   labs(
@@ -136,7 +135,7 @@ ggplot(xs_data, aes(x = value)) +
 
 We see that across countries, our data is highly skewed with the majority of responses on the lower end of our data with long tails. Let's get a better look at the distribution by log transforming our antibody response value. 
 
-```{r loghist, message = FALSE}
+```{r logplot, message = FALSE}
 #Create log transformed histograms
 
 ggplot(xs_data, aes(x = value)) +
@@ -154,7 +153,7 @@ ggplot(xs_data, aes(x = value)) +
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 Let's also take a look at how antibody responses change by age.
-```{r}
+```{r plotage}
 #Plot antibody responses by age
 
 ggplot(data=xs_data, aes(x=age, y=value, color=Country)) + 
@@ -174,7 +173,7 @@ In this plot, a steeper slope indicates a higher incidence. We can see that the 
 
 ### Load noise parameters
 
-Next, we must set conditions based on some assumptions about the data and error that may need to be accounted for. This will differ based on background knowledge of the data. 
+Next, we must set conditions based on some assumptions about the data and errors that may need to be accounted for. This will differ based on background knowledge of the data. 
 
 The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
 
@@ -201,7 +200,7 @@ noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() %>%
 Finally, we are ready to begin seroincidence estimation. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
 
 ### Overall Seroincidence
-Using the function `est.incidence`, we define our starting value as 0.2, which will also define our initial estimate for the force of infection (FOI, $\lambda$ ("lambda")). We filter to Pakistan and define the datasets for our cross-sectional data (data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate.
+Using the function `est.incidence`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
 
 ```{r est, message= FALSE}
 
@@ -217,8 +216,9 @@ est1 = est.incidence(
 summary(est1)
 ```
 
+
 ### Stratified Seroincidence
-We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their population dataset.
+We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their cross-sectional population dataset.
 
 ```{r estby}
 #Using est.incidence.by (strata)
@@ -229,8 +229,7 @@ est2 = est.incidence.by(
   curve_params = curve, 
   noise_params = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  numCores = 2, #Allow for parallel processing to decrease run time 
-  build_graph = FALSE
+  numCores = 2 #Allow for parallel processing to decrease run time 
   )
 
 summary(est2)
@@ -250,13 +249,13 @@ est2df<- summary(est2)
 
 #Create barplot (rescale incidence rate and CIs)
 ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", show.legend = FALSE) +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
   labs(
-      x="Enteric fever seroincience rate per 1000 person-years",
+      title= "Enteric Fever Seroincidence by Catchment",
+        x="Seroincience rate per 1000 person-years",
       ) +
   theme_bw() 
-
   
 
 ```
@@ -264,5 +263,8 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
 ## Conclusions
 In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143). 
 
+
+## Acknowledgements
+Special thanks to collaborators and participants at Aga Khan University  (Karachi, Pakistan).  
 
 ## References

@@ -15,6 +15,8 @@ sim.cs(
   add.noise = FALSE,
   curve_params,
   noise_limits,
+  format = "wide",
+  verbose = FALSE,
   ...
 )
 }
@@ -37,7 +39,7 @@ sim.cs(
 
 \item{renew.params}{whether to generate a new parameter set for each infection
 \itemize{
-\item \code{renew.params= TRUE} generates a new parameter set for each infection
+\item \code{renew.params = TRUE} generates a new parameter set for each infection
 \item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
 }}
 
@@ -56,10 +58,22 @@ sim.cs(
 
 \item{noise_limits}{biologic noise distribution parameters}
 
-\item{...}{additional arguments passed to \code{simcs.tinf()}}
+\item{format}{a \code{\link[=character]{character()}} variable, containing either:
+\itemize{
+\item \code{"long"} (one measurement per row) or
+\item \code{"wide"} (one serum sample per row)
+}}
+
+\item{verbose}{logical: if TRUE, print verbose log information to console}
+
+\item{...}{
+  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
-a \code{\link[tibble:tibble]{tibble::tibble()}} containing simulated cross-sectional serosurvey data, with columns:
+a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey data, with columns:
 \itemize{
 \item \code{age}: age (in days)
 \item one column for each element in the \code{antigen_iso} input argument

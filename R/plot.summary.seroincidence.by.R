@@ -25,7 +25,6 @@ plot.summary.seroincidence.by = function(
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_bw() +
-    ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1)) +
     ggplot2::expand_limits(x = 0, y = 0) +
     ggplot2::labs(col = "`nlm()` convergence code") +
     ggplot2::theme(legend.position="bottom")

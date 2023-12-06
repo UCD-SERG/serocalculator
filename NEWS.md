@@ -1,3 +1,5 @@
+* `sim.cs()` now has `format` argument to specify long or wide format for output.
+
 # serocalculator 0.3.2
 
 Fixed bug in passing `antigen_isos` from `est.incidence.by()` to `est.incidence()`.

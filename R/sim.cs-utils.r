@@ -1,10 +1,26 @@
-# take a random sample from longitudinal parameter set
-# given age at infection, for a  list of antibodies (ablist in 1:7) and
-# nmc in 1:4000
-ldpar <- function(age,ablist,nmc,npar,...){
-  spar <- array(NA,dim=c(2+npar,length(ablist))); # 2 additional parameters
+#' @title extract a row from longitudinal parameter set
+#' @description
+#'  take a random sample from longitudinal parameter set
+#' given age at infection, for a  list of antibodies (ablist in 1:7) and
+#' nmc in 1:4000
+#' @param age age
+ldpar <- function(age,ablist,nmc,npar,...)
+{
+  dimnames1 = list(
+    params = c("y0","b0","mu0","mu1","c1","alpha","shape_r"),
+    antigen_isos = ablist
+  )
+  spar <- array(
+    NA,
+    dim = c(
+      2+npar, # 2 additional parameters
+      length(ablist)),
+    dimnames = dimnames1);
+
   for(k.test in 1:length(ablist))
-    spar[,k.test] <- simpar(age,ablist[k.test],nmc, ...);
+  {
+    spar[,k.test] <- simpar(age,ablist[k.test], nmc, ...);
+  }
   return(spar); # parameter vector: c(y0,b0,mu0,mu1,c1,alpha,shape)
 }
 
@@ -31,16 +47,22 @@ ag <- function(t,par) {
 
 # kinetics of the antibody (ab) response (power function decay)
 ab <- function(t,par,...) {
-  t1 <- t1func(par); y1 <- y1func(par);
-  y0 <- par[1,]; mu1 <- par[4,];
-  alpha <- par[6,]; shape <- par[7,];
+  t1 <- t1func(par);
+  y1 <- y1func(par);
+  y0 <- par["y0",];
+  mu1 <- par["mu1",];
+  alpha <- par["alpha",];
+  shape <- par["shape_r",];
   yt <- array(0,dim=c(length(t),ncol(par)));
   for(k in 1:ncol(par)){
     u <- (t <= t1[k]); d <- (t > t1[k]);
     yt[u,k] <- y0[k] * exp(mu1[k] * t[u]);
     if(shape[k]!=1)
+    {
+      # this is a version of Eq 14 from Teunis et al 2014, factoring in the first y1 term
       yt[d,k] <- (y1[k]^(1 - shape[k]) -
                     (1-shape[k]) * alpha[k] * (t[d] - t1[k]))^(1/(1 - shape[k]));
+    }
     if(shape[k]==1) yt[d,k] <- y1[k] * exp(-alpha[k] * t[d]);
     yt[,k] <- baseline(k,yt[,k], ...);
   }
@@ -49,14 +71,20 @@ ab <- function(t,par,...) {
 
 # symptomatic (1) or asymptomatic (0) seroconversion?
 symp <- function(par){
-  y0 <- par[1,]; b0 <- par[2,]; mu0 <- par[3,]; c1 <- par[5,];
+  y0 <- par["y0",];
+  b0 <- par["b0",];
+  mu0 <- par["mu0",];
+  c1 <- par["c1",];
   ymin <- mu0*b0/c1;
   return(as.numeric(y0 <= ymin));
 }
 
 # the function f() linking pre- and post- antibody levels
 transf <- function(y0,par){
-  b0 <- par[2,]; mu0 <- par[3,]; mu1 <- par[4,]; c1 <- par[5,];
+  b0 <- par["b0",];
+  mu0 <- par["mu0",];
+  mu1 <- par["mu1",];
+  c1 <- par["c1",];
   cc1 <- mu1/(mu1-mu0);
   cc2 <- (mu1-mu0)*b0/c1;
   return(y0*(1+cc2/y0)^cc1);
@@ -73,7 +101,17 @@ baseline <- function(kab,yvec, blims, ...){
   return(yvec);
 }
 
-# generate random sample from baseline distribution
+#
+#' @title generate random sample from baseline distribution
+#'
+#' @param kab index for which row of antibody baseline limits to read from `blims`
+#' @param n number of observations
+#' @param blims range of possible baseline antibody levels
+#' @param ... not currently used
+#'
+#' @return a [numeric()] vector
+#' @export
+#'
 mkbaseline <- function(kab,n=1, blims, ...){
   # yset <- rlnorm(n=1,meanlog=negpar[1],sdlog=negpar[2]);
   if(blims[kab,2]==0){
@@ -85,22 +123,31 @@ mkbaseline <- function(kab,n=1, blims, ...){
   return(yset);
 }
 
-# simulate kinetics of y over interval t = (0,t.end) given
-# seroconversion rate lambda (1/days),
-# parameter estimates for fixed age (age.fx in years) or not
-# when age.fx = NA then age at infection is used.
-# responses calculated  for list of antibodies ablist (1:7, may be any subset)
-# a posterior sample may be selected n.mc (1:4000), or not
-# when n.mc = 0 a posterior sample is chosen at random.
-# At infection, a new parameter sample may be generated (renew.params = TRUE)
-# when renew.params = FALSE, a sample is generated at birth and kept,
-# but baseline y0 are carried over from prior infections.
-# This function returns a list with:
-# t = times (in days, birth at day 0),
-# b = bacteria level, for each antibody signal (not used; probably meaningless),
-# y = antibody level, for each antibody signal
-# smp = whether an infection involves a big jump or a small jump
-# t.inf = times when infections have occurred.
+#' @title simulate antibody kinetics of y over a time interval
+#' @param t.end end of time interval (beginning is time 0) in days(?)
+#' @param predpar an [array()] with dimensions:
+#' * `antigen_iso`
+#' * `parameter`
+#' * `obs`
+#' @param lambda seroconversion rate (1/days),
+#' @param age.fx parameter estimates for fixed age (age.fx in years) or not.
+#' when age.fx = NA then age at infection is used.
+#' @param ablist responses calculated  for list of antibodies (1:7, may be any subset)
+#' @param n.mc a posterior sample may be selected (1:4000), or not
+#' when n.mc = 0 a posterior sample is chosen at random.
+#' @param renew.params At infection, a new parameter sample may be generated (when `renew.params = TRUE`).
+#' Otherwise (when `renew.params = FALSE`), a sample is generated at birth and kept,
+#' but baseline y0 are carried over from prior infections.
+#' @param ... additional arguments passed to [ldpar()], [mkbaseline()], and [ab()]
+#' @inheritDotParams ldpar
+#' @inheritDotParams ab
+#' @inheritDotParams mkbaseline
+#' @returns This function returns a [list()] with:
+#' * t = times (in days, birth at day 0),
+#' * b = bacteria level, for each antibody signal (not used; probably meaningless),
+#' * y = antibody level, for each antibody signal
+#' * smp = whether an infection involves a big jump or a small jump
+#' * t.inf = times when infections have occurred.
 simresp.tinf = function(
     lambda,
     t.end,
@@ -183,7 +230,7 @@ simresp.tinf = function(
       # b0 <- runif(n=1,min=1,max=200); not implemented
       par.now[1, ] <- y.end
       # y0 = y at end of prior episode
-    }
+    } # note: the renew.params == TRUE case is handled many lines below
     t.next <- -log(runif(1, 0, 1)) / lambda
     if (t0 <= t.end & t0 + t.next > t.end)
       t.next <- t.end - t0
@@ -212,6 +259,7 @@ simresp.tinf = function(
       if (n.mc == 0)
         nmc <- sample.int(n = mcsize, size = 1)
 
+      # DM: it might be possible to remove these lines and remove the !renew.params condition near the top of the while() loop
       if (!is.na(age.fx))
         par.now <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
 
@@ -229,16 +277,23 @@ simresp.tinf = function(
 
 }
 
-# collect cross-sectional data (age, y(t) set)
-# seroconversion rate lambda (1/days)
-# number of samples n.smpl (= nr of simulated records)
-# age range for output age.rng = c(lowest, highest)
-# age.fx for parameter sample (age.fx = NA for age at infection)
-# antibody set ablist in 1:7
-# when n.mc is in 1:4000 a fixed posterior sample is used,
-# when n.mc = 0 a random smaple is chosen
-# renew.params = TRUE generates a new parameter set for each infection
-# renew.params = FALSE keeps the one selected at birth, but updates baseline y0
+#' collect cross-sectional data (age, y(t) set)
+#'
+#' @param lambda seroconversion rate (in events/person-day)
+#' @param n.smpl number of samples n.smpl (= nr of simulated records)
+#' @param age.rng age range to use for simulating data, in days
+#' @param age.fx age.fx for parameter sample (age.fx = NA for age at infection)
+#' @param ablist antibody set; subset of 1:7
+#' @param n.mc
+#' * when `n.mc` is in 1:4000 a fixed posterior sample is used
+#' * when n.mc = 0 a random smaple is chosen
+#' @param renew.params
+#' * `renew.params = TRUE` generates a new parameter set for each infection
+#' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
+#' @param ... arguments passed to [simresp.tinf()]
+#'
+#' @return an [array()]
+#'
 simcs.tinf <- function(
     lambda,
     n.smpl,
@@ -259,7 +314,8 @@ simcs.tinf <- function(
   # if(en.days>30000) en.days <- 30000;
   y.smpl <- array(NA, dim = c(n.smpl, length(ablist) + 1))
   # y and age
-  for (k.smpl in 1:n.smpl) {
+  for (k.smpl in 1:n.smpl)
+  {
     resp <-
       simresp.tinf(
         lambda,
@@ -322,8 +378,13 @@ ltpar <- function(k.test, ...) {
 
   alpha.mc    <- par.pred(4,k.test, ...);
   shape.mc    <- par.pred(5,k.test, ...);
-  return(data.frame("y1"=y1.mc,"alpha"=alpha.mc,"r"=shape.mc,
-                    "y0"=y0.mc,"t1"=t1.mc));
+  return(
+    data.frame(
+      "y1"=y1.mc,
+      "alpha"=alpha.mc,
+      "r"=shape.mc,
+      "y0"=y0.mc,
+      "t1"=t1.mc));
 }
 
 # Generate longitudinal parameter sample for the simulation model
@@ -359,7 +420,7 @@ par.pred.n <- function(parnum,k.test,nmc, predpar, ...){
     return(par1+par2);
   }
   par <- exp(predpar[k.test,parnum,nmc]);
-  if(parnum==5) return(par+1);
+  if(parnum==5) return(par+1); # this step converts d to r
   return(par);
 }
 
@@ -374,6 +435,14 @@ simpar <- function(age,k.test,nmc, ...){
   mu1.mc <- mu1fn(y0.mc,y1.mc,t1.mc);
   mu0.mc <- mu0fn(sp[1],y0.mc,y1.mc,t1.mc);
   c1.mc  <- sp[2];
-  return(c(y0.mc,b0.mc,mu0.mc,mu1.mc,c1.mc,alpha.mc,shape.mc));
+  to_return = c(
+    y0 = y0.mc,
+    b0 = b0.mc,
+    mu0 = mu0.mc,
+    mu1 = mu1.mc,
+    c1 = c1.mc,
+    alpha = alpha.mc,
+    r = shape.mc)
+  return(to_return);
 }
 

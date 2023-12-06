@@ -18,7 +18,7 @@ https://github.com/UCD-SERG/serocalculator
 
 ## Methods
 
-The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed by subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.
+The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.
 
 ### A Proxy for Infection 
  
@@ -241,7 +241,7 @@ summary(est2)
 
 ```
 
-We are given a warning that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
+We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
 
 Let's visualize our seroincidence estimates by strata.
 
@@ -257,18 +257,21 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
   geom_bar(stat = "identity", show.legend = FALSE) +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
   labs(
-      title= "Enteric Fever Seroincidence by Catchment",
+      title= "Enteric Fever Seroincidence by Catchment Area",
         x="Seroincience rate per 1000 person-years",
+        y="Catchment"
       ) +
-  theme_bw() 
+  theme_bw() +
+  theme(axis.text.y = element_text(size=11),
+        axis.text.x = element_text(size=11))
 
 ```
 
 ## Conclusions
-In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143). 
+In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)]. 
 
 
 ## Acknowledgements
-Special thanks to collaborators and participants at Aga Khan University  (Karachi, Pakistan).  
+Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan).  
 
 ## References

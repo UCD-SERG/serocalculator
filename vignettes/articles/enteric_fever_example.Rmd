@@ -1,9 +1,9 @@
 ---
-title: "Enteric Fever Example"
+title: "Enteric Fever Seroincidence Vignette"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Enteric Fever Example}
+  %\VignetteIndexEntry{Enteric Fever Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
@@ -12,9 +12,7 @@ bibliography: references.bib
 ---
 ## Introduction
 
-This vignette provides users with an example analysis using the [**serocalculator**](https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.html) package by reproducing an analysis in @Aiemjoy_2022_Lancet. We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. 
-
-https://github.com/UCD-SERG/serocalculator
+This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan.
 
 ## Methods
 
@@ -42,6 +40,8 @@ Further details on this published study can be found here: https://doi.org/10.10
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  fig.height=4, fig.width=7,
+  message = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -49,11 +49,12 @@ knitr::opts_chunk$set(
 
 
 ### Load packages
-The first step in conducting this analysis is to load our necessary packages. 
+The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
 #devtools::install_github("ucd-serg/serocalculator")
 library(serocalculator)
+#install.packages("tidyverse)
 library(tidyverse)
 ```
 
@@ -99,8 +100,8 @@ We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* 
 
 Column Name | Description
 ----------- | -----------
-value       | Quantitative antibody response
-age         | Numeric age
+  value     | Quantitative antibody response
+  age       | Numeric age
 *Note that variable names are case sensitive*
 
 
@@ -118,7 +119,7 @@ xs_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
 
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
-```{r plots, message = FALSE}
+```{r plots}
 #Create plots
 
 ggplot(xs_data, aes(x = value)) +
@@ -201,12 +202,12 @@ noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() %>%
 ```
 
 ## Estimate Seroincidence 
-Finally, we are ready to begin seroincidence estimation. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
+Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
 
 ### Overall Seroincidence
 Using the function `est.incidence`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
 
-```{r est, message= FALSE}
+```{r est}
 
 #Using est.incidence (no strata)
 
@@ -235,7 +236,7 @@ est2 = est.incidence.by(
   curve_params = curve, 
   noise_params = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  numCores = 2 #Allow for parallel processing to decrease run time 
+  numCores = 8 #Allow for parallel processing to decrease run time 
   )
 
 summary(est2)
@@ -250,7 +251,7 @@ Let's visualize our seroincidence estimates by strata.
 ```{r}
 #Plot seroincidence estimates
 
-#Save summary(est1) as a dataframe
+#Save summary(est2) as a dataframe
 est2df<- summary(est2)
 
 #Create barplot (rescale incidence rate and CIs)

@@ -63,12 +63,12 @@ Pathogen-specific sample datasets, noise parameters, and longitudinal antibody d
 
 Note that each dataset has specific formatting and variable name requirements.
 
+
 #### Load and prepare longitudinal parameter data
 
 We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
 *Formatting Specifications*: Data should be imported as a "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must *exactly* match follow the naming conventions:
-
 
 Column Name    |  Description
 -------------- |  -----------
@@ -153,7 +153,9 @@ ggplot(xs_data, aes(x = value)) +
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 Let's also take a look at how antibody responses change by age.
+
 ```{r plotage}
+
 #Plot antibody responses by age
 
 ggplot(data=xs_data, aes(x=age, y=value, color=Country)) + 
@@ -174,6 +176,7 @@ In this plot, a steeper slope indicates a higher incidence. We can see that the 
 ### Load noise parameters
 
 Next, we must set conditions based on some assumptions about the data and errors that may need to be accounted for. This will differ based on background knowledge of the data. 
+
 
 The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
 
@@ -218,7 +221,9 @@ summary(est1)
 
 
 ### Stratified Seroincidence
+
 We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their cross-sectional population dataset.
+
 
 ```{r estby}
 #Using est.incidence.by (strata)
@@ -256,7 +261,6 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
         x="Seroincience rate per 1000 person-years",
       ) +
   theme_bw() 
-  
 
 ```
 

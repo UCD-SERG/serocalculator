@@ -132,13 +132,13 @@ We need to provide noise parameters for the analysis; here, we define them direc
 library(tibble)
 cond <- tibble(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-  nu = c(0.5, 0.5),  
-    # Biologic noise (nu)
+  nu = c(0.5, 0.5),                          # Biologic noise (nu)
   eps = c(0, 0),                             # M noise (eps)
-  y.low = c(1, 1),                            # low cutoff (llod)
+  y.low = c(1, 1),                           # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
 ```
+
 
 ## Visualize data
 
@@ -200,7 +200,7 @@ lik_HlyE_IgA = graph.loglik(
   antigen_isos = "HlyE_IgA",
   log_x = TRUE
 )
-  
+
 lik_HlyE_IgG = graph.loglik(
   previous_plot = lik_HlyE_IgA,
   pop_data = csdataL,
@@ -357,9 +357,9 @@ summary(ests) |>
       "CI.lwr",
       "CI.upr",
       "log.lik"
-      )
+    )
   )
-  
+
 ```
 
 

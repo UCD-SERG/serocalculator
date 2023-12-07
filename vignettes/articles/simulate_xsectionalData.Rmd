@@ -270,8 +270,20 @@ We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
 library(DT)
-summary(ests) |> DT::datatable()
+summary(ests) |> 
+  DT::datatable() |>
+  DT::formatRound(
+    columns = c(
+      "incidence.rate",
+      "SE",
+      "CI.lwr",
+      "CI.upr",
+      "log.lik"
+      )
+  )
+  
 ```
+
 
 We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 

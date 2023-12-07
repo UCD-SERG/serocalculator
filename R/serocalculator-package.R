@@ -111,6 +111,7 @@
 #' @importFrom foreach %dopar%
 #' @importFrom foreach foreach
 #' @importFrom ggplot2 aes
+#' @importFrom ggplot2 autoplot
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp

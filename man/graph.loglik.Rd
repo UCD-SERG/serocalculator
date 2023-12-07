@@ -5,20 +5,21 @@
 \title{Graph log-likelihood of data}
 \usage{
 graph.loglik(
-  ...,
+  pop_data,
+  curve_params,
+  noise_params,
+  antigen_isos,
   x = 10^seq(-3, 0, by = 0.1),
   highlight_points = NULL,
   highlight_point_names = "highlight_points",
-  log_x = FALSE
+  log_x = FALSE,
+  ...
 )
 }
 \arguments{
-\item{...}{
-  Arguments passed on to \code{\link[=llik]{llik}}
-  \describe{
-    \item{\code{pop_data}}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
-    \item{\code{antigen_isos}}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
-    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\item{pop_data}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
+
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
@@ -28,7 +29,8 @@ graph.loglik(
 \item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
 \item \code{r}: shape factor of antibody decay
 }}
-    \item{\code{noise_params}}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
 \itemize{
 \item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
 \item \code{nu}: biological noise
@@ -36,9 +38,8 @@ graph.loglik(
 \item \code{y.low}: lower limit of detection for the current antigen isotype
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
-    \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
-    \item{\code{lambda}}{incidence parameter, in events per person-year}
-  }}
+
+\item{antigen_isos}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
 
 \item{x}{sequence of lambda values to graph}
 
@@ -47,6 +48,12 @@ graph.loglik(
 \item{highlight_point_names}{labels for highlighted points}
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+
+\item{...}{
+  Arguments passed on to \code{\link[=llik]{llik}}
+  \describe{
+    \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
+  }}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}

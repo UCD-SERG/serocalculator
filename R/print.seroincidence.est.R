@@ -27,6 +27,6 @@ print.seroincidence <- function(x, ...)
   cat(paste("a) `antigen_isos`: ", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")
   cat(paste("b) `lambda_start`: ", attr(x, "lambda_start"), "\n"))
   cat("Call the `summary()` function to obtain output results.\n")
-  cat("Call the `plot()` function to graph the log-likelihood curve.\n")
+  cat("Call the `autoplot()` function to graph the log-likelihood curve.\n")
   invisible(x)
 }

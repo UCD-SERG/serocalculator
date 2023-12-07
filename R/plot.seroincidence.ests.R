@@ -3,11 +3,11 @@
 #' Plots log-likelihood curves by stratum, for `seroincidence.by` objects
 #' @param x a '"seroincidence.by"' object (from [est.incidence.by()])
 #' @param ncol number of columns to use for panel of plots
-#' @inheritDotParams plot.seroincidence
+#' @inheritDotParams autoplot.seroincidence
 #' @return aan object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #'
-plot.seroincidence.by = function(x, ncol = min(3, length(x)), ...)
+autoplot.seroincidence.by = function(x, ncol = min(3, length(x)), ...)
 {
 
   if(length(x) == 0)
@@ -25,7 +25,7 @@ plot.seroincidence.by = function(x, ncol = min(3, length(x)), ...)
   }
 
   labels = names(x)
-  figs = lapply(x, FUN = plot.seroincidence, ...)
+  figs = lapply(x, FUN = autoplot.seroincidence, ...)
 
   for (i in 1:length(figs))
   {

@@ -11,6 +11,7 @@ sim.cs.multi(
   rng_seed = 1234,
   renew.params = TRUE,
   add.noise = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -30,6 +31,8 @@ sim.cs.multi(
 }}
 
 \item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
+
+\item{verbose}{whether to report verbose information}
 
 \item{...}{
   Arguments passed on to \code{\link[=sim.cs]{sim.cs}}

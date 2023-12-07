@@ -59,6 +59,9 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k") |>
 
 ```
 
+## visualize antibody decay model
+
+We can visualize the model using
 
 ## Simulate cross-sectional data
 ```{r "sim.cs"}
@@ -72,7 +75,7 @@ antibodies = c("HlyE_IgA", "HlyE_IgG")
 lambda <- 0.2;
 
 # range covered in simulations
-lifespan <- c(0, 20); 
+lifespan <- c(0, 10); 
 
 # cross-sectional sample size
 nrep <- 100
@@ -160,17 +163,17 @@ We can extract summary statistics with `summary()`:
 summary(est1)
 ```
 
-We can plot the log-likelihood curve with `plot()`:
+We can plot the log-likelihood curve with `autoplot()`:
 
 ```{r}
-plot(est1)
+autoplot(est1)
 ```
 
 We can set the x-axis to a logarithmic scale, if desired:
 
 ```{r}
 
-plot(est1, log_x = TRUE)
+autoplot(est1, log_x = TRUE)
 ```
 
 # Simulate multiple clusters with different lambdas
@@ -195,7 +198,7 @@ nclus = 10;
 nrep <- 100
 
 #incidence rate in e
-lmbdaVec <- c(.05,.1, .15, .2, .3)
+lmbdaVec <- c(.05,.1, .15, .2)
 
 sim.df = 
   sim.cs.multi(
@@ -250,7 +253,7 @@ ests =
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     verbose = TRUE,
-    build_graph = FALSE, # slows down the function substantially
+    build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     # antigen_isos = "HlyE_IgA"
   )
@@ -273,19 +276,19 @@ summary(ests) |> DT::datatable()
 We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
-plot(ests[1])
+autoplot(ests[1])
 ```
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
 
 ```{r "plot-multiple", fig.height = 7}
-plot(ests[1:5])
+autoplot(ests[1:5])
 ```
 
 The `log_x` argument also works here:
 
 ```{r "plot-multiple-log", fig.height = 7}
-plot(ests[1:5], log_x = TRUE)
+autoplot(ests[1:5], log_x = TRUE)
 ```
 
 ### `nlm()` convergence codes
@@ -313,13 +316,16 @@ problem_strata =
   print()
 ```
 
-A few clusters had problems; let's take a look:
+If any clusters had problems, we can take a look:
 
 ```{r, fig.height = 7}
-plot(ests[problem_strata], log_x = TRUE)
+if(length(problem_strata) > 0)
+{
+  autoplot(ests[problem_strata], log_x = TRUE)
+}
 ```
 
-Visually, it looks like we approximately reached the MLE, but we should probably re-run those clusters, adjusting the `nlm()` settings appropriately, to be sure.
+If any of the fits don't appear to be at the maximum likelihood, we should re-run those clusters, adjusting the `nlm()` settings appropriately, to be sure.
 
 ## plot distribution of estimates by simulated incidence rate
 
@@ -327,23 +333,19 @@ Finally, we can look at our simulation results:
 
 ```{r, "graph"}
 
-summary(ests) |> plot(xvar = 'lambda.sim')
+summary(ests) |> autoplot(xvar = 'lambda.sim')
 
 ```
 
-## extra (remove?)
+## graph log(likelihood)
 
-We can calculate the log-likelihood of the data as a function of the incidence rate, even without running `est.incidence()`.
+We can graph the log-likelihood of the data as a function of the incidence rate, even without running `est.incidence()`.
 
 ```{r}
 
 lik_HlyE_IgA = graph.loglik(
   pop_data = csdataL,
-  curve_params = 
-    dmcmc |> 
-    dplyr::mutate(
-      alpha = .data$alpha * 365.25,
-      d = .data$r - 1),
+  curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgA",
   log_x = TRUE

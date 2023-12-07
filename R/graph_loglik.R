@@ -4,21 +4,38 @@
 #' @param x sequence of lambda values to graph
 #' @param highlight_point_names labels for highlighted points
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
-#' @inheritDotParams llik
+#' @inheritParams llik
+#' @inheritDotParams llik -lambda
 #' @return a [ggplot2::ggplot()]
 #' @export
 #'
 graph.loglik = function(
-    ...,
+  pop_data,
+  curve_params,
+  noise_params,
+  antigen_isos,
     x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,
     highlight_point_names = "highlight_points",
-    log_x = FALSE)
+    log_x = FALSE,
+  ...)
 {
+
+  curve_params =
+    curve_params |>
+    dplyr::mutate(
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1)
 
   plot1 = tibble(
     x = x |> sort(),
-    y = llik(lambda = x, ...)
+    y = llik(
+      pop_data = pop_data,
+      curve_params = curve_params,
+      noise_params = noise_params,
+      antigen_isos = antigen_isos,
+      lambda = x,
+      ...)
   ) |>
     ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
     # ggplot2::geom_point() +
@@ -36,7 +53,13 @@ graph.loglik = function(
       ggplot2::geom_point(
         data = tibble(
           x = highlight_points,
-          y = llik(lambda = highlight_points, ...)),
+          y = llik(
+            pop_data = pop_data,
+            curve_params = curve_params,
+            noise_params = noise_params,
+            antigen_isos = antigen_isos,
+            lambda = highlight_points,
+            ...)),
         ggplot2::aes(
           x = .data$x,
           y = .data$y,

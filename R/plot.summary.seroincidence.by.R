@@ -8,7 +8,7 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #'
-plot.summary.seroincidence.by = function(
+autoplot.summary.seroincidence.by = function(
     x,
     xvar,
     alpha = .7,

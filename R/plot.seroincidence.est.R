@@ -7,7 +7,8 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #'
-plot.seroincidence = function(x, log_x = FALSE, ...)
+autoplot.seroincidence =
+  function(x, log_x = FALSE, ...)
 {
   to_return = attr(x, "ll_graph")
 

@@ -1,3 +1,7 @@
+# serocalculator 0.3.3
+
+`plot()` methods have been renamed to `autoplot()`, matching general convention for `ggplot2`-based graphics.
+
 # serocalculator 0.3.2
 
 Fixed bug in passing `antigen_isos` from `est.incidence.by()` to `est.incidence()`.

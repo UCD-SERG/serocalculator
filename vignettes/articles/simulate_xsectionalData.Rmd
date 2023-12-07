@@ -85,7 +85,9 @@ nrep <- 100
 
 # biologic noise distribution
 dlims <- rbind(c(0, 0.5),c(0, 0.5))
+```
 
+```{r}
 #generate cross-sectional data
 csdata <- sim.cs(
   verbose = 2,

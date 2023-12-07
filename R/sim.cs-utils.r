@@ -1,27 +1,35 @@
 #' @title extract a row from longitudinal parameter set
 #' @description
 #'  take a random sample from longitudinal parameter set
-#' given age at infection, for a  list of antibodies (ablist in 1:7) and
-#' nmc in 1:4000
-#' @param age age
-ldpar <- function(age,ablist,nmc,npar,...)
+#' given age at infection, for a  list of antibodies
+#'
+#' @param age age at infection
+#' @param antigen_isos antigen isotypes
+#' @param nmc mcmc sample to use
+#' @param ... passed to `simpar()`
+#' @param npar number of parameters
+#'
+#' @returns an array of parameters:
+#'  c(y0,b0,mu0,mu1,c1,alpha,shape)
+ldpar <- function(
+    age,antigen_isos,nmc,npar,...)
 {
   dimnames1 = list(
     params = c("y0","b0","mu0","mu1","c1","alpha","shape_r"),
-    antigen_isos = ablist
+    antigen_iso = antigen_isos
   )
   spar <- array(
     NA,
     dim = c(
       2+npar, # 2 additional parameters
-      length(ablist)),
+      length(antigen_isos)),
     dimnames = dimnames1);
 
-  for(k.test in 1:length(ablist))
+  for(k.test in antigen_isos)
   {
-    spar[,k.test] <- simpar(age,ablist[k.test], nmc, ...);
+    spar[,k.test] <- simpar(age, k.test, nmc, ...);
   }
-  return(spar); # parameter vector: c(y0,b0,mu0,mu1,c1,alpha,shape)
+  return(spar);
 }
 
 # calculate a few additional variables needed for the simulation
@@ -125,14 +133,14 @@ mkbaseline <- function(kab,n=1, blims, ...){
 
 #' @title simulate antibody kinetics of y over a time interval
 #' @param t.end end of time interval (beginning is time 0) in days(?)
-#' @param predpar an [array()] with dimensions:
+#' @param predpar an [array()] with dimensions named:
 #' * `antigen_iso`
 #' * `parameter`
 #' * `obs`
 #' @param lambda seroconversion rate (1/days),
 #' @param age.fx parameter estimates for fixed age (age.fx in years) or not.
 #' when age.fx = NA then age at infection is used.
-#' @param ablist responses calculated  for list of antibodies (1:7, may be any subset)
+#' @param antigen_isos antigen isotypes
 #' @param n.mc a posterior sample may be selected (1:4000), or not
 #' when n.mc = 0 a posterior sample is chosen at random.
 #' @param renew.params At infection, a new parameter sample may be generated (when `renew.params = TRUE`).
@@ -152,7 +160,7 @@ simresp.tinf = function(
     lambda,
     t.end,
     age.fx,
-    ablist,
+    antigen_isos,
     n.mc = 0,
     renew.params,
     predpar,
@@ -166,7 +174,7 @@ simresp.tinf = function(
   if (n.mc == 0)
     nmc <- sample.int(n = mcsize, size = 1)
 
-  n.ab <- length(ablist)
+  n.ab <- length(antigen_isos)
 
   t0 <- 0
   t <- c()
@@ -179,10 +187,10 @@ simresp.tinf = function(
   #set.seed(975313579)
   t.next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
   if (!is.na(age.fx))
-    mcpar <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
+    mcpar <- ldpar(age.fx, antigen_isos, nmc, predpar = predpar, ...)
 
   if (is.na(age.fx))
-    mcpar <- ldpar(t.next / day2yr, ablist, nmc, predpar = predpar, ...)
+    mcpar <- ldpar(t.next / day2yr, antigen_isos, nmc, predpar = predpar, ...)
 
   par.now <- mcpar
 
@@ -221,10 +229,10 @@ simresp.tinf = function(
 
     if (!renew.params) {
       if (!is.na(age.fx))
-        par.now <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
+        par.now <- ldpar(age.fx, antigen_isos, nmc, predpar = predpar, ...)
 
       if (is.na(age.fx))
-        par.now <- ldpar(t0 / day2yr, ablist, nmc, predpar = predpar, ...)
+        par.now <- ldpar(t0 / day2yr, antigen_isos, nmc, predpar = predpar, ...)
 
       b0 <- b.inf
       # b0 <- runif(n=1,min=1,max=200); not implemented
@@ -261,10 +269,10 @@ simresp.tinf = function(
     }
       # DM: it might be possible to remove these lines and remove the !renew.params condition near the top of the while() loop
       if (!is.na(age.fx))
-        par.now <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
+        par.now <- ldpar(age.fx, antigen_isos, nmc, predpar = predpar, ...)
 
       if (is.na(age.fx))
-        par.now <- ldpar((t0 + t.next) / day2yr, ablist, nmc, predpar = predpar, ...)
+        par.now <- ldpar((t0 + t.next) / day2yr, antigen_isos, nmc, predpar = predpar, ...)
 
   }
   return(list(
@@ -283,7 +291,8 @@ simresp.tinf = function(
 #' @param n.smpl number of samples n.smpl (= nr of simulated records)
 #' @param age.rng age range to use for simulating data, in days
 #' @param age.fx age.fx for parameter sample (age.fx = NA for age at infection)
-#' @param ablist antibody set; subset of 1:7
+#' @param antigen_isos Character vector with one or more antibody names. Values must match `curve_params`.
+
 #' @param n.mc
 #' * when `n.mc` is in 1:4000 a fixed posterior sample is used
 #' * when n.mc = 0 a random smaple is chosen
@@ -299,7 +308,7 @@ simcs.tinf <- function(
     n.smpl,
     age.rng,
     age.fx = NA,
-    ablist,
+    antigen_isos,
     n.mc = 0,
     renew.params = FALSE,
     ...)
@@ -312,7 +321,12 @@ simcs.tinf <- function(
     st.days <- 1
 
   # if(en.days>30000) en.days <- 30000;
-  y.smpl <- array(NA, dim = c(n.smpl, length(ablist) + 1))
+  y.smpl <- array(
+    NA,
+    dim = c(n.smpl, length(antigen_isos) + 1),
+    dimnames = list(
+      obs = 1:n.smpl,
+      var = c("age", antigen_isos)))
   # y and age
   for (k.smpl in 1:n.smpl)
   {
@@ -321,7 +335,7 @@ simcs.tinf <- function(
         lambda,
         t.end = en.days,
         age.fx = age.fx,
-        ablist = ablist,
+        antigen_isos = antigen_isos,
         n.mc = n.mc,
         renew.params = renew.params,
         ...
@@ -424,6 +438,7 @@ par.pred.n <- function(parnum,k.test,nmc, predpar, ...){
   return(par);
 }
 
+# age doesn't seem to be used?
 simpar <- function(age,k.test,nmc, ...){
   y0.mc       <- par.pred.n(1,k.test,nmc, ...);
   b0.mc       <- 1;

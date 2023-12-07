@@ -23,7 +23,7 @@
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
 #' @param ... additional arguments passed to `simcs.tinf()`
-#' @inheritDotParams simcs.tinf -ablist
+#' @inheritDotParams simcs.tinf
 #' @inheritParams llik # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
@@ -69,8 +69,6 @@ sim.cs <- function(
   npar = dimnames(predpar)$parameter |> length()
 
 
-  ablist = 1:length(antigen_isos)
-
   baseline_limits <- noise_limits
 
   ysim <- simcs.tinf(
@@ -78,7 +76,7 @@ sim.cs <- function(
     n.smpl = n.smpl,
     age.rng = age.rng,
     age.fx = age.fx,
-    ablist = ablist,
+    antigen_isos = antigen_isos,
     n.mc = n.mc,
     renew.params = renew.params,
     predpar = predpar,

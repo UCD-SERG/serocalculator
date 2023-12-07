@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="serocalculator">
-<title>Enteric Fever Example • serocalculator</title>
+<title>Enteric Fever Seroincidence Vignette • serocalculator</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Enteric Fever Example">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Enteric Fever Seroincidence Vignette">
 <meta property="og:description" content="serocalculator">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -41,7 +41,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Example</a>
+    <a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a>
     <a class="dropdown-item" href="../articles/sees_analysis.html">sees-analysis</a>
     <a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a>
   </div>
@@ -73,7 +73,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Enteric Fever Example</h1>
+      <img src="" class="logo" alt=""><h1>Enteric Fever Seroincidence Vignette</h1>
                         <h4 data-toc-skip class="author">UC Davis
 Seroepidemiology Research Group (SERG)</h4>
             
@@ -87,11 +87,12 @@ Seroepidemiology Research Group (SERG)</h4>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette provides users with an example analysis using the
-<strong>serocalculator</strong> package by reproducing an analysis in
-<span class="citation">Aiemjoy et al. (2022)</span>. We review the
-methods underlying the analysis and then walk through an example of
-enteric fever incidence in Pakistan.</p>
+<p>This vignette provides users with an example analysis using the <a href="https://github.com/UCD-SERG/serocalculator" class="external-link"><strong>serocalculator</strong></a>
+package by reproducing the analysis for: <a href="https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext" class="external-link"><strong>Estimating
+typhoid incidence from community-based serosurveys: a multicohort
+study</strong></a> (<span class="citation">Aiemjoy et al.
+(2022)</span>). We review the methods underlying the analysis and then
+walk through an example of enteric fever incidence in Pakistan.</p>
 </div>
 <div class="section level2">
 <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a>
@@ -100,7 +101,7 @@ enteric fever incidence in Pakistan.</p>
 computationally simple method for calculating seroconversion rates, as
 originally published in <span class="citation">Simonsen et al.
 (2009)</span> and <span class="citation">Teunis et al. (2012)</span>,
-and further developed by subsequent publications by <span class="citation">deGraaf et al. (2014)</span>, <span class="citation">Teunis et al. (2016)</span>, and <span class="citation">Teunis and Eijkeren (2020)</span>. In short,
+and further developed in subsequent publications by <span class="citation">deGraaf et al. (2014)</span>, <span class="citation">Teunis et al. (2016)</span>, and <span class="citation">Teunis and Eijkeren (2020)</span>. In short,
 longitudinal seroresponses from confirmed cases with a known symptom
 onset date are assumed to represent the time course of human serum
 antibodies against a specific pathogen. Therefore, by using these
@@ -157,11 +158,13 @@ from the same countries.</p>
 <h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h3>
 <p>The first step in conducting this analysis is to load our necessary
-packages.</p>
+packages. If you haven’t installed already, you will need to do so
+before loading.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#devtools::install_github("ucd-serg/serocalculator")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
+<span><span class="co">#install.packages("tidyverse)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="load-data">Load data<a class="anchor" aria-label="anchor" href="#load-data"></a>
@@ -169,9 +172,10 @@ packages.</p>
 <p>Pathogen-specific sample datasets, noise parameters, and longitudinal
 antibody dynamics for <strong>serocalculator</strong> are available on
 the <a href="https://osf.io/ne8pc/" class="external-link">Serocalculator Repository</a> on
-Open Science Framework (OSF). We use the function
-<code>getAdditionalData</code> to pull this data into our R
+Open Science Framework (OSF). We will pull this data directly into our R
 environment.</p>
+<p>Note that each dataset has specific formatting and variable name
+requirements.</p>
 <div class="section level4">
 <h4 id="load-and-prepare-longitudinal-parameter-data">Load and prepare longitudinal parameter data<a class="anchor" aria-label="anchor" href="#load-and-prepare-longitudinal-parameter-data"></a>
 </h4>
@@ -180,27 +184,44 @@ antibody decay parameters. In this example, these parameters were
 modeled with Bayesian hierarchical models to fit two-phase
 power-function decay models to the longitudinal antibody responses among
 confirmed enteric fever cases.</p>
-<p>These parameters include the following:</p>
-<ul>
-<li>
-<span class="math inline">\(y_0\)</span> = baseline antibody
-response</li>
-<li>
-<span class="math inline">\(y_1\)</span> = peak antibody
-responses</li>
-<li>
-<span class="math inline">\(t_1\)</span> = time to peak</li>
-<li>
-<span class="math inline">\(\alpha\)</span> = decay rate in years
-(may need to be rescaled)</li>
-<li>
-<span class="math inline">\(r\)</span> = decay shape</li>
-</ul>
-<p>We also create an additional variables <span class="math inline">\(d\)</span>, which is the decay shape, or 1-<span class="math inline">\(r\)</span>.</p>
+<p><em>Formatting Specifications</em>: Data should be imported as a
+“wide” dataframe with one column for each parameter and one row for each
+iteration of the posterior distribution for each antigen isotype. Column
+names must <em>exactly</em> match follow the naming conventions:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>y0</td>
+<td>Baseline antibody concentration</td>
+</tr>
+<tr class="even">
+<td>y1</td>
+<td>Peak antibody concentration</td>
+</tr>
+<tr class="odd">
+<td>t1</td>
+<td>Time to peak antibody concentration</td>
+</tr>
+<tr class="even">
+<td>alpha</td>
+<td>Antibody decay rate</td>
+</tr>
+<tr class="odd">
+<td>r</td>
+<td>Antibody decay shape</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that variable names are case-sensitive</em></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Import longitudinal antibody parameters from OSF</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Import longitudinal antibody parameters from OSF</span></span>
 <span></span>
-<span><span class="va">curve_param</span> <span class="op">=</span> <span class="fu"><a href="../reference/getAdditionalData.html">getAdditionalData</a></span><span class="op">(</span>fileURL <span class="op">=</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">curve</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="load-and-prepare-cross-sectional-data">Load and prepare cross-sectional data<a class="anchor" aria-label="anchor" href="#load-and-prepare-cross-sectional-data"></a>
@@ -216,12 +237,35 @@ Users may select different serologic markers depending on what is
 available in your data. From the original dataset, we rename our result
 and age variables to the names required by
 <strong>serocalculator</strong>.</p>
+<p><em>Formatting Specifications</em>: Cross-sectional population data
+should be a “long” dataframe with one column for each variable and one
+row for each antigen isotype resulted for an individual. So the same
+individual will have more than one row if they have results for more
+than one antigen isotype. The dataframe can have additional variables,
+but the two below are required:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>value</td>
+<td>Quantitative antibody response</td>
+</tr>
+<tr class="even">
+<td>age</td>
+<td>Numeric age</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that variable names are case sensitive</em></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Import cross-sectional data from OSF</span></span>
-<span></span>
-<span><span class="va">pop_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAdditionalData.html">getAdditionalData</a></span><span class="op">(</span>fileURL <span class="op">=</span><span class="st">"https://osf.io/download//n6cp3/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Import cross-sectional data from OSF and rename required variables</span></span>
+<span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download//n6cp3/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>value <span class="op">=</span> <span class="va">result</span>,</span>
-<span>         age <span class="op">=</span> <span class="va">Age</span><span class="op">)</span></span></code></pre></div>
+<span>         age <span class="op">=</span> <span class="va">Age</span><span class="op">)</span> <span class="co">#rename variables</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="visualize-antibody-data">Visualize antibody data<a class="anchor" aria-label="anchor" href="#visualize-antibody-data"></a>
@@ -231,29 +275,28 @@ distribution of quantitative antibody responses. Here, we will look at
 the distribution of our selected antigen and isotype pairs, HlyE IgA and
 HlyE IgG, across participating countries.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Create histograms</span></span>
+<code class="sourceCode R"><span><span class="co">#Create plots</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">pop_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co">#geom_histogram(binwidth = 5, color = "#000000", fill = "#009999", alpha = 0.7) +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Country</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.7</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">xs_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Country</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.6</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Distribution of Cross-sectional Antibody Responses"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">"Antibody Response Value"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Frequency"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Country</span> <span class="op">+</span> <span class="va">antigen_iso</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="enteric_fever_example_files/figure-html/hist-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">antigen_iso</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/plots-1.png" width="672"></p>
 <p>We see that across countries, our data is highly skewed with the
 majority of responses on the lower end of our data with long tails.
 Let’s get a better look at the distribution by log transforming our
-antibody response value. We will also need to update the bin width.</p>
+antibody response value.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Create log transformed histograms</span></span>
+<code class="sourceCode R"><span><span class="co">#Create log transformed plots</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">pop_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co">#geom_histogram(binwidth = 0.05, color = "#000000", fill = "#009999", alpha = 0.7) +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Country</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.7</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">xs_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Country</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.6</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
@@ -261,121 +304,116 @@ antibody response value. We will also need to update the bin width.</p>
 <span>    x <span class="op">=</span> <span class="st">"Log10(Antibody Response Value)"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Frequency"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Country</span> <span class="op">+</span> <span class="va">antigen_iso</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">antigen_iso</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Transformation introduced infinite values in continuous x-axis</span></span>
-<span><span class="co">#&gt; Warning: Removed 18 rows containing non-finite values (`stat_bin()`).</span></span></code></pre></div>
-<p><img src="enteric_fever_example_files/figure-html/loghist-1.png" width="700"></p>
+<span><span class="co">#&gt; Warning: Removed 18 rows containing non-finite values</span></span>
+<span><span class="co">#&gt; (`stat_density()`).</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/logplot-1.png" width="672"></p>
 <p>Once log transformed, our data looks much more normally distributed.
 In most cases, log transformation will be the best way to visualize
 serologic data.</p>
+<p>Let’s also take a look at how antibody responses change by age.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Plot antibody responses by age</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">xs_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">age</span>, y<span class="op">=</span><span class="va">value</span>, color<span class="op">=</span><span class="va">Country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">.6</span>, alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span><span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="va">lm</span>, se<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>            title <span class="op">=</span> <span class="st">"Quantitative Antibody Responses by Age"</span>,</span>
+<span>            x <span class="op">=</span> <span class="st">"Age"</span>,</span>
+<span>            y <span class="op">=</span> <span class="st">"Value"</span></span>
+<span>          <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Transformation introduced infinite values in continuous y-axis</span></span>
+<span><span class="co">#&gt; Transformation introduced infinite values in continuous y-axis</span></span>
+<span><span class="co">#&gt; Warning: Removed 18 rows containing non-finite values (`stat_smooth()`).</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/plotage-1.png" width="672">
+In this plot, a steeper slope indicates a higher incidence. We can see
+that the highest burden is in Bangladesh. Nepal has a slightly higher
+incidence in the older group (higher slope).</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="load-noise-parameters">Load noise parameters<a class="anchor" aria-label="anchor" href="#load-noise-parameters"></a>
 </h3>
 <p>Next, we must set conditions based on some assumptions about the data
-and error that may need to obe accounted for. This will differ based on
+and errors that may need to be accounted for. This will differ based on
 background knowledge of the data.</p>
 <p>The biological noise, <span class="math inline">\(\nu\)</span>
 (“nu”), represents error from cross-reactivity to other antibodies.
 Measurement noise, <span class="math inline">\(\varepsilon\)</span>
 (“epsilon”), represents error from the laboratory testing process.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p><em>Formatting Specifications</em>: Noise parameter data should be a
+dataframe with one row for each antigen isotype and columns for each
+noise parameter below.</p>
+<table class="table">
+<thead><tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>y.low</td>
+<td>Lower limit of detection of the antibody assay</td>
+</tr>
+<tr class="even">
+<td>nu</td>
+<td>Biologic noise</td>
+</tr>
+<tr class="odd">
+<td>y.high</td>
+<td>Upper limit of detection of the antibody assay</td>
+</tr>
+<tr class="even">
+<td>eps</td>
+<td>Measurement noise</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that variable names are case-sensitive.</em></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Import noise parameters from OSF</span></span>
 <span></span>
-<span><span class="va">noise_param</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAdditionalData.html">getAdditionalData</a></span><span class="op">(</span>fileURL <span class="op">=</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>y.low <span class="op">=</span> <span class="va">llod</span><span class="op">)</span> <span class="co">#rename lower bound</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="estimate-seroincidence">Estimate Seroincidence<a class="anchor" aria-label="anchor" href="#estimate-seroincidence"></a>
 </h2>
-<p>Finally, we are ready to begin seroincidence estimation. We will
-conduct two separate analyses using two distinct functions,
+<p>Now we are ready to begin estimating seroincidence. We will conduct
+two separate analyses using two distinct functions,
 <code>est.incidence</code> and <code>est.incidence.by</code>, to
 calculate the overall seroincidence and the stratified seroincidence,
 respectively.</p>
 <div class="section level3">
 <h3 id="overall-seroincidence">Overall Seroincidence<a class="anchor" aria-label="anchor" href="#overall-seroincidence"></a>
 </h3>
-<p>Using the function <code>est.incidence</code>, we define our starting
-value as 0.2, which will also define our initial estimate for the force
-of infection (FOI, <span class="math inline">\(\lambda\)</span>
-(“lambda”)). We filter to Pakistan and define the datasets for our
-cross-sectional data (data), longitudinal parameters (curve_param), and
-noise parameters (noise_param). We also define the antigen-isotype pairs
-to be included in the estimate.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Using est.incidence (no strata)</span></span>
+<p>Using the function <code>est.incidence</code>, we filter to sites in
+Pakistan and define the datasets for our cross-sectional data
+(pop_data), longitudinal parameters (curve_param), and noise parameters
+(noise_param). We also define the antigen-isotype pairs to be included
+in the estimate (antigen_isos). Here, we have chosen to use two antigen
+isotypes, but users can add additional pairs if available.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Using est.incidence (no strata)</span></span>
 <span></span>
-<span><span class="va">esttest</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.html">est.incidence</a></span><span class="op">(</span></span>
-<span>  stepmax <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  lambda_start<span class="op">=</span><span class="fl">.2</span>,</span>
-<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
-<span>  curve_param <span class="op">=</span> <span class="va">curve_param</span>, </span>
-<span>  noise_param <span class="op">=</span> <span class="va">noise_param</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span><span class="va">est1</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.html">est.incidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  curve_param <span class="op">=</span> <span class="va">curve</span>, </span>
+<span>  noise_param <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; iteration = 0</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.609438</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2434.836</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 112.9062</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 1</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] -0.3013201</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.910758</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2420.488</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -14.00558</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 2</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.03325271</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.877505</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2420.236</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -1.099217</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 3</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.002832087</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.874673</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2420.234</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 0.01306674</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 4</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.874706</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 2420.234</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -1.358391e-05</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Relative gradient close to zero.</span></span>
-<span><span class="co">#&gt; Current iterate is probably solution.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  17.416   0.001  17.417</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">esttest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
 <span><span class="co">#&gt;   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.2          0.153 0.007<span style="text-decoration: underline;">74</span>  0.139  0.169     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">420.</span>          4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.153 0.007<span style="text-decoration: underline;">74</span>  0.139  0.169     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">420.</span>          5</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -383,181 +421,77 @@ to be included in the estimate.</p>
 </h3>
 <p>We can also produce stratified seroincidence estimates. Here we
 stratify by catchment area within Pakistan, but users can select any
-stratification variable.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+stratification variable in their cross-sectional population dataset.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Using est.incidence.by (strata)</span></span>
 <span></span>
-<span><span class="va">estbytest</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
-<span>  stepmax <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  lambda_start<span class="op">=</span><span class="fl">.3</span>,</span>
+<span><span class="va">est2</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span>
-<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curve_param</span>, </span>
-<span>  noise_params <span class="op">=</span> <span class="va">noise_param</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
-<span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">curve</span>, </span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  numCores <span class="op">=</span> <span class="fl">8</span> <span class="co">#Allow for parallel processing to decrease run time </span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in warn.missing.strata(data = curve_params, strata = select(strata, : curve_params is missing all strata variables, and will be used unstratified.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
 <span><span class="co">#&gt; Warning in warn.missing.strata(data = noise_params, strata = select(strata, : noise_params is missing all strata variables, and will be used unstratified.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 3</span></span></span>
-<span><span class="co">#&gt;   Stratum   catchment     n</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
-<span><span class="co">#&gt;   Stratum   catchment     n</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294</span></span>
-<span><span class="co">#&gt; iteration = 0</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.203973</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1453.51</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 241.4326</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 1</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] -1</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.203973</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1357.35</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -25.56654</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 2</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.09575513</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.108218</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1355.804</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -6.473402</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 3</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.03246515</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.075753</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1355.704</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 0.3352425</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 4</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] -0.001598512</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.077351</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1355.703</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -0.003983894</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 5</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -2.077332</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1355.703</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -2.955276e-06</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Relative gradient close to zero.</span></span>
-<span><span class="co">#&gt; Current iterate is probably solution.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  11.343   0.004  11.348 </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
-<span><span class="co">#&gt;   Stratum   catchment     n</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 2 kgh         200</span></span>
-<span><span class="co">#&gt; iteration = 0</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.203973</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1066.923</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 73.03752</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 1</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] -0.4114013</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.615374</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1053.236</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -4.498946</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 2</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.02387099</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.591503</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1053.178</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -0.3483076</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 3</span></span>
-<span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.002003173</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.5895</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1053.177</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 0.002194632</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; iteration = 4</span></span>
-<span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.589512</span></span>
-<span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 1053.177</span></span>
-<span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -1.716554e-06</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Relative gradient close to zero.</span></span>
-<span><span class="co">#&gt; Current iterate is probably solution.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   6.817   0.000   6.817 </span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  19.627   0.004  19.631</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">estbytest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
-<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgA, HlyE_IgG </span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
 <span><span class="co">#&gt; b) Strata       : catchment </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Seroincidence estimates:</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 13</span></span></span>
 <span><span class="co">#&gt;   Stratum   catchment     n est.start incidence.rate      SE CI.lwr CI.upr</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294       0.3          0.125 0.008<span style="text-decoration: underline;">60</span>  0.109  0.143</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.3          0.204 0.015<span style="text-decoration: underline;">4</span>   0.176  0.237</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294       0.1          0.125 0.008<span style="text-decoration: underline;">60</span>  0.109  0.143</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.1          0.204 0.015<span style="text-decoration: underline;">4</span>   0.176  0.237</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
+<p>We are warned that “curve_params is missing all strata variables, and
+will be used unstratified.” This can be ignored, as the unstratified
+parameters will simply give us the overall seroincidence estimate.</p>
+<p>Let’s visualize our seroincidence estimates by strata.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Plot seroincidence estimates</span></span>
+<span></span>
+<span><span class="co">#Save summary(est2) as a dataframe</span></span>
+<span><span class="va">est2df</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Create barplot (rescale incidence rate and CIs)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">est2df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">catchment</span>, x<span class="op">=</span><span class="va">incidence.rate</span><span class="op">*</span><span class="fl">1000</span>, fill<span class="op">=</span><span class="va">catchment</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span><span class="va">CI.lwr</span><span class="op">*</span><span class="fl">1000</span>, xmax<span class="op">=</span><span class="va">CI.upr</span><span class="op">*</span><span class="fl">1000</span>, width<span class="op">=</span><span class="fl">.05</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>      title<span class="op">=</span> <span class="st">"Enteric Fever Seroincidence by Catchment Area"</span>,</span>
+<span>        x<span class="op">=</span><span class="st">"Seroincience rate per 1000 person-years"</span>,</span>
+<span>        y<span class="op">=</span><span class="st">"Catchment"</span></span>
+<span>      <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">11</span><span class="op">)</span>,</span>
+<span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
 </h2>
 <p>In our data, we find that the overall estimated seroincidence of
-enteric fever in Pakistan is 13.7 per 100 persons (95% CI: 12.4, 15.1).
-When stratified by catchment area, we find that area KGH has a higher
-incidence rate than area AKU [18.6 per 100 persons (95% CI: 16.0, 21.5)
-vs. 11.1 per 100 persons (95% CI: 9.7, 12.7).</p>
+enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139,
+169). When stratified by catchment area, we find that area KGH has a
+higher incidence rate than area AKU [204 per 1000 person-years (95% CI:
+176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)].</p>
+</div>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>Special thanks to our collaborators at Aga Khan University (Karachi,
+Pakistan).</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

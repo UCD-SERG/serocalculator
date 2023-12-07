@@ -136,6 +136,7 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
 #' @importFrom utils download.file unzip
+#' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end
 NULL

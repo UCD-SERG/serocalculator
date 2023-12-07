@@ -8,13 +8,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' curve_param = readRDS(url("https://osf.io/download/rtw5k/"))
-#' plot1 = graph.curve.params(curve_param)
+#' curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
+#' plot1 = graph.curve.params(curve_params)
 #' print(plot1)
 #' }
 graph.curve.params = function(
     curve_params,
-    antigen_isos = unique(curve_param$antigen_iso),
+    antigen_isos = unique(curve_params$antigen_iso),
     verbose = FALSE)
 {
 
@@ -24,7 +24,7 @@ graph.curve.params = function(
       paste(antigen_isos, collapse = ", "))
 
   curve_params = curve_params |>
-    dplyr::filter(antigen_iso %in% antigen_isos)
+    dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   day2yr <- 365.25
 

@@ -6,7 +6,7 @@
 \usage{
 graph.curve.params(
   curve_params,
-  antigen_isos = unique(curve_param$antigen_iso),
+  antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE
 )
 }
@@ -25,8 +25,8 @@ Graph estimated antibody decay curve
 }
 \examples{
 \dontrun{
-curve_param = readRDS(url("https://osf.io/download/rtw5k/"))
-plot1 = graph.curve.params(curve_param)
+curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
+plot1 = graph.curve.params(curve_params)
 print(plot1)
 }
 }

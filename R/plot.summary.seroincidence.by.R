@@ -12,6 +12,7 @@ plot.summary.seroincidence.by = function(
     x,
     xvar,
     alpha = .7,
+    shape = c(1,19),
     ...)
 {
   x |>
@@ -21,6 +22,7 @@ plot.summary.seroincidence.by = function(
         y = .data$incidence.rate)) +
     ggplot2::geom_point(
       aes(col = .data$nlm.convergence.code),
+      shape = shape,
       alpha = alpha) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +

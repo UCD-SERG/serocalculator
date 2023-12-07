@@ -29,12 +29,17 @@ dT <- data.frame(t=tx2) %>%
   slice(rep(1:n(), each = nrow(d)))
 
 
-serocourse.all <- cbind(d, dT)  %>% pivot_longer(cols = starts_with("time"), values_to = "t") %>% select(-name)  %>%
+serocourse.all <- cbind(d, dT)  %>%
+  pivot_longer(
+    cols = starts_with("time"),
+    values_to = "t") %>%
+  select(-name)  %>%
   rowwise() %>%
   mutate(res = ab(t,y0,y1,t1,alpha,r))
 
 
-serocourse.sum <- serocourse.all %>% group_by(antigen_iso, t) %>%
+serocourse.sum <- serocourse.all %>%
+  group_by(antigen_iso, t) %>%
   summarise(res.med  = quantile(res, 0.5),
             res.low  = quantile(res, 0.025),
             res.high = quantile(res, 0.975),

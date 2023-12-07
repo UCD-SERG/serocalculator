@@ -360,37 +360,71 @@ summary(ests) |> autoplot(xvar = 'lambda.sim')
 
 ```
 
-## graph log(likelihood)
+## calculate log(likelihood) directly
 
-We can graph the log-likelihood of the data as a function of the incidence rate, even without running `est.incidence()`.
+We can calculate the log-likelihood of the data as a function of the incidence rate directly:
 
 ```{r}
 
-lik_HlyE_IgA = graph.loglik(
+ll_A = llik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = "HlyE_IgA",
+  lambda = 0.1) |> print()
+
+ll_G = llik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = "HlyE_IgG",
+  lambda = 0.1) |> print()
+
+ll_AG = llik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = c("HlyE_IgG","HlyE_IgA"),
+  lambda = 0.1) |> print()
+
+print(ll_A + ll_G)
+
+
+```
+
+## graph log-likelihood
+
+We can also graph the log-likelihoods, even without finding the MLEs, using `graph.loglik()`:
+
+```{r}
+
+graph.loglik(
   pop_data = csdataL,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgA",
   log_x = TRUE
-) |> 
-  print()
-
+)
+  
 lik_HlyE_IgG = graph.loglik(
+  previous_plot = lik_HlyE_IgA,
   pop_data = csdataL,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgG",
   log_x = TRUE
-) |> 
-  print()
+)
 
 lik_both = graph.loglik(
+  previous_plot = lik_HlyE_IgG,
   pop_data = csdataL,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   log_x = TRUE
-) |> 
-  print()
+)
+
+print(lik_both)
 
 ```
+

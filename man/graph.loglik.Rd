@@ -13,6 +13,8 @@ graph.loglik(
   highlight_points = NULL,
   highlight_point_names = "highlight_points",
   log_x = FALSE,
+  previous_plot = NULL,
+  curve_label = paste(antigen_isos, collapse = " + "),
   ...
 )
 }
@@ -48,6 +50,10 @@ graph.loglik(
 \item{highlight_point_names}{labels for highlighted points}
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+
+\item{previous_plot}{if not NULL, the current data is added to the existing graph}
+
+\item{curve_label}{if not NULL, add a label for the curve}
 
 \item{...}{
   Arguments passed on to \code{\link[=llik]{llik}}

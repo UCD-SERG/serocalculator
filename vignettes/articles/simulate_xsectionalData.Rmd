@@ -113,8 +113,6 @@ cond <- data.frame(
   nu = c(0.5, 0.5),  # Biologic noise (nu)
   eps = c(0, 0),                             # M noise (eps)
   y.low = c(1, 1),                            # low cutoff (llod)
-  # y.low = c(0, 0),                            # low cutoff (llod)
-  # y.low = c(.5, .5),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
 ```

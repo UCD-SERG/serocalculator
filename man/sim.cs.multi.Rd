@@ -7,7 +7,7 @@
 sim.cs.multi(
   nclus = 10,
   lambdas = c(0.05, 0.1, 0.15, 0.2, 0.3),
-  n_cores = max(1, parallel::detectCores() - 1),
+  num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
   renew.params = TRUE,
   add.noise = TRUE,
@@ -20,7 +20,7 @@ sim.cs.multi(
 
 \item{lambdas}{#incidence rate, in events/person*year}
 
-\item{n_cores}{number of cores to use for parallel computations}
+\item{num_cores}{number of cores to use for parallel computations}
 
 \item{rng_seed}{starting seed for random number generator, passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 

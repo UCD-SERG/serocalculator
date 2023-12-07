@@ -3,7 +3,7 @@
 #' @param nclus  number of clusters
 #' @param rng_seed starting seed for random number generator, passed to [rngtools::RNGseq()]
 #' @param lambdas #incidence rate, in events/person*year
-#' @param n_cores number of cores to use for parallel computations
+#' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
 #' @param ... arguments passed to [sim.cs()]
 #' @inheritParams sim.cs
@@ -15,7 +15,7 @@
 sim.cs.multi = function(
     nclus = 10,
     lambdas = c(.05,.1, .15, .2, .3),
-    n_cores = max(1, parallel::detectCores() - 1),
+    num_cores = max(1, parallel::detectCores() - 1),
     rng_seed = 1234,
     renew.params = TRUE,
     add.noise = TRUE,
@@ -39,7 +39,7 @@ sim.cs.multi = function(
     }
   }
 
-  doParallel::registerDoParallel(cores = n_cores)
+  doParallel::registerDoParallel(cores = num_cores)
 
   n_lambda = length(lambdas)
 

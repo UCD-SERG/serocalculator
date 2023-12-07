@@ -368,11 +368,7 @@ lik_HlyE_IgA = graph.loglik(
 
 lik_HlyE_IgG = graph.loglik(
   pop_data = csdataL,
-  curve_params = 
-    dmcmc |> 
-    dplyr::mutate(
-      alpha = .data$alpha * 365.25,
-      d = .data$r - 1),
+  curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgG",
   log_x = TRUE
@@ -381,11 +377,7 @@ lik_HlyE_IgG = graph.loglik(
 
 lik_both = graph.loglik(
   pop_data = csdataL,
-  curve_params = 
-    dmcmc |>
-    dplyr::mutate(
-      alpha = .data$alpha * 365.25,
-      d = .data$r - 1),
+  curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   log_x = TRUE

@@ -47,6 +47,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Simulate a single dataset
+
+## load model parameters
 
 ```{r setup}
 library(serocalculator)
@@ -78,6 +81,7 @@ graph.curve.params(
 
 
 ## Simulate cross-sectional data
+
 ```{r "sim.cs"}
 #set seed to reproduce results
 set.seed(54321)
@@ -112,7 +116,7 @@ csdata0 <- sim.cs(
 
 ```
 
-## Estimate seroincidence
+## Noise parameters
 
 We need to provide noise parameters for the analysis; here, we define them directly in our code:
 
@@ -139,6 +143,8 @@ csdataL <-
 
 ```
 
+## Visualize data
+
 We can plot the distribution of the antibody responses in the simulated data. 
 
 ```{r}
@@ -151,6 +157,76 @@ ggplot(csdataL, aes(x=as.factor(antigen_iso), y= value)) +
   theme_linedraw() + 
   labs(x="antigen - isotype")
 ```
+
+## calculate log(likelihood)
+
+We can calculate the log-likelihood of the data as a function of the incidence rate directly:
+
+```{r}
+
+ll_A = llik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = "HlyE_IgA",
+  lambda = 0.1) |> print()
+
+ll_G = llik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = "HlyE_IgG",
+  lambda = 0.1) |> print()
+
+ll_AG = llik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = c("HlyE_IgG","HlyE_IgA"),
+  lambda = 0.1) |> print()
+
+print(ll_A + ll_G)
+
+
+```
+
+## graph log-likelihood
+
+We can also graph the log-likelihoods, even without finding the MLEs, using `graph.loglik()`:
+
+```{r}
+
+lik_HlyE_IgA = graph.loglik(
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = "HlyE_IgA",
+  log_x = TRUE
+)
+  
+lik_HlyE_IgG = graph.loglik(
+  previous_plot = lik_HlyE_IgA,
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = "HlyE_IgG",
+  log_x = TRUE
+)
+
+lik_both = graph.loglik(
+  previous_plot = lik_HlyE_IgG,
+  pop_data = csdataL,
+  curve_params = dmcmc,
+  noise_params = cond,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  log_x = TRUE
+)
+
+print(lik_both)
+
+```
+
+## estimate incidence
 
 We can estimate incidence with `est.incidence()`:
 
@@ -357,74 +433,6 @@ Finally, we can look at our simulation results:
 ```{r, "graph"}
 
 summary(ests) |> autoplot(xvar = 'lambda.sim')
-
-```
-
-## calculate log(likelihood) directly
-
-We can calculate the log-likelihood of the data as a function of the incidence rate directly:
-
-```{r}
-
-ll_A = llik(
-  pop_data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgA",
-  lambda = 0.1) |> print()
-
-ll_G = llik(
-  pop_data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgG",
-  lambda = 0.1) |> print()
-
-ll_AG = llik(
-  pop_data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-  lambda = 0.1) |> print()
-
-print(ll_A + ll_G)
-
-
-```
-
-## graph log-likelihood
-
-We can also graph the log-likelihoods, even without finding the MLEs, using `graph.loglik()`:
-
-```{r}
-
-graph.loglik(
-  pop_data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgA",
-  log_x = TRUE
-)
-  
-lik_HlyE_IgG = graph.loglik(
-  previous_plot = lik_HlyE_IgA,
-  pop_data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgG",
-  log_x = TRUE
-)
-
-lik_both = graph.loglik(
-  previous_plot = lik_HlyE_IgG,
-  pop_data = csdataL,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  log_x = TRUE
-)
-
-print(lik_both)
 
 ```
 

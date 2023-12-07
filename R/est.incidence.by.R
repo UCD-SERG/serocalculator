@@ -108,27 +108,15 @@ est.incidence.by <- function(
   # Loop over data per stratum
   if (num_cores > 1L)
   {
+    requireNamespace("parallel", quietly = FALSE)
 
-    if(num_cores > (parallel::detectCores() - 1))
-    {
-      num_cores =
-        num_cores |>
-        min(parallel::detectCores() - 1)
-
-      warning(
-        "This computer appears to have ",
-        parallel::detectCores(),
-        " cores available. `est.incidence.by()` has reduced its `num_cores` argument to ",
-        num_cores,
-        " to avoid destabilizing the computer."
-      )
-    }
+    num_cores = num_cores |> check_parallel_cores()
 
     if(verbose)
     {
       message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
     }
-    requireNamespace("parallel", quietly = FALSE)
+
 
     libPaths <- .libPaths()
     cl <-

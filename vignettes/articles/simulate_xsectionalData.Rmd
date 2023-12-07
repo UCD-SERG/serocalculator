@@ -162,21 +162,21 @@ We can calculate the log-likelihood of the data as a function of the incidence r
 ```{r}
 
 ll_A = llik(
-  pop_data = csdataL,
+  pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgA",
   lambda = 0.1) |> print()
 
 ll_G = llik(
-  pop_data = csdataL,
+  pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgG",
   lambda = 0.1) |> print()
 
 ll_AG = llik(
-  pop_data = csdataL,
+  pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
@@ -194,7 +194,7 @@ We can also graph the log-likelihoods, even without finding the MLEs, using `gra
 ```{r}
 
 lik_HlyE_IgA = graph.loglik(
-  pop_data = csdataL,
+  pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgA",
@@ -203,7 +203,7 @@ lik_HlyE_IgA = graph.loglik(
 
 lik_HlyE_IgG = graph.loglik(
   previous_plot = lik_HlyE_IgA,
-  pop_data = csdataL,
+  pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = "HlyE_IgG",
@@ -212,7 +212,7 @@ lik_HlyE_IgG = graph.loglik(
 
 lik_both = graph.loglik(
   previous_plot = lik_HlyE_IgG,
-  pop_data = csdataL,
+  pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
@@ -273,8 +273,6 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 
 ```{r "do-parallel"}
 
-doParallel::registerDoParallel(cores = n_cores)
-
 #number of clusters 
 nclus = 10;
 
@@ -287,15 +285,13 @@ lmbdaVec <- c(.05,.1, .15, .2)
 sim.df = 
   sim.cs.multi(
     # verbose = TRUE,
-    rng_seed = 1234,
     n_cores = n_cores,
     lambdas = lmbdaVec,
     nclus = nclus,
     n.smpl = nrep,
     age.rng = lifespan,
     antigen_isos = antibodies,
-    n.mc = 0,
-    renew.params = TRUE,
+    renew.params = FALSE,
     add.noise = TRUE,
     curve_params = dmcmc,
     noise_limits = dlims,

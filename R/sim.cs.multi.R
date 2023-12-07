@@ -28,6 +28,16 @@ sim.cs.multi = function(
     message('inputs to `sim.cs.multi()`:')
     print(environment() |> as.list())
   }
+
+  if (num_cores > 1L)
+  {
+    num_cores = num_cores |> check_parallel_cores()
+
+    if(verbose)
+    {
+      message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
+    }
+
   doParallel::registerDoParallel(cores = n_cores)
 
   n_lambda = length(lambdas)

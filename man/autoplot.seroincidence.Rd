@@ -4,10 +4,10 @@
 \alias{autoplot.seroincidence}
 \title{Plot the log-likelihood curve for the incidence rate estimate}
 \usage{
-\method{autoplot}{seroincidence}(x, log_x = FALSE, ...)
+\method{autoplot}{seroincidence}(object, log_x = FALSE, ...)
 }
 \arguments{
-\item{x}{a \code{seroincidence} object (from \code{\link[=est.incidence]{est.incidence()}})}
+\item{object}{a \code{seroincidence} object (from \code{\link[=est.incidence]{est.incidence()}})}
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
 

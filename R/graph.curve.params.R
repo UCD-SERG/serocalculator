@@ -2,13 +2,15 @@
 #'
 #' @param curve_param a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #'
-#' @returns a [ggplot2:ggplot()]
+#' @returns a [ggplot2::ggplot()]
 #' @export
 #'
 #' @examples
-#' curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
+#' \dontrun{
+#' curve_param = readRDS(url("https://osf.io/download/rtw5k/"))
 #' plot1 = graph.curve.params(curve_param)
 #' print(plot1)
+#' }
 graph.curve.params = function(curve_param)
 {
   day2yr <- 365.25

@@ -1,6 +1,6 @@
 #' Plot the log-likelihood curve for the incidence rate estimate
 #'
-#' @param x a `seroincidence` object (from [est.incidence()])
+#' @param object a `seroincidence` object (from [est.incidence()])
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @param ... unused
 #'
@@ -8,9 +8,9 @@
 #' @export
 #'
 autoplot.seroincidence =
-  function(x, log_x = FALSE, ...)
+  function(object, log_x = FALSE, ...)
 {
-  to_return = attr(x, "ll_graph")
+  to_return = attr(object, "ll_graph")
 
   if(is.null(to_return))
   {

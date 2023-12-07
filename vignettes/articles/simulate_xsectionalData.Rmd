@@ -54,10 +54,14 @@ library(tidyverse)
 library(ggbeeswarm) # for plotting
 
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
-dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k") |> 
-  ungroup()
+dmcmc =
+  "https://osf.io/download/rtw5k" |> 
+  url() |> 
+  readRDS()
 
 ```
+
+
 
 ## visualize antibody decay model
 

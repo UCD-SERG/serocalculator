@@ -10,13 +10,15 @@ graph.curve.params(curve_param)
 \item{curve_param}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 }
 \value{
-a \code{\link[=ggplot2:ggplot]{ggplot2:ggplot()}}
+a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 }
 \description{
 Graph estimated antibody decay curve
 }
 \examples{
-curve_param = getAdditionalData(fileURL ="https://osf.io/download/rtw5k/")
+\dontrun{
+curve_param = readRDS(url("https://osf.io/download/rtw5k/"))
 plot1 = graph.curve.params(curve_param)
 print(plot1)
+}
 }

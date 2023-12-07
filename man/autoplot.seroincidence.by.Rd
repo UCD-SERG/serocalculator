@@ -4,10 +4,10 @@
 \alias{autoplot.seroincidence.by}
 \title{Plot \code{seroincidence.by} log-likelihoods}
 \usage{
-\method{autoplot}{seroincidence.by}(x, ncol = min(3, length(x)), ...)
+\method{autoplot}{seroincidence.by}(object, ncol = min(3, length(object)), ...)
 }
 \arguments{
-\item{x}{a '"seroincidence.by"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
+\item{object}{a '"seroincidence.by"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
 
 \item{ncol}{number of columns to use for panel of plots}
 

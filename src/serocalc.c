@@ -118,7 +118,7 @@ double dnsF (double lambda, double y, double age, double Pa,
 
   ya = A/pow((1+d*(pow(A,d))*k*age),(1/d));
   dns_f = 0;
-  if((ya <= y) && (y <= A)){
+  if((ya <= y) && (y <= A)){ // should A be age here? compare p_f(y|a) in eq 8
     tau = (pow(y,-d) - pow(A,-d))/(k*d);
     dns_f = Pa*(lambda*exp(-lambda*tau)+EXPla)/(k*(pow(y,1+d)));
   }

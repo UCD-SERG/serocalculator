@@ -13,14 +13,19 @@
 #' * when `n.mc` is in `1:4000` a fixed posterior sample is used
 #' * when `n.mc` = `0`, a random sample is chosen
 #' @param renew.params whether to generate a new parameter set for each infection
-#' * `renew.params= TRUE` generates a new parameter set for each infection
+#' * `renew.params = TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
 #' @inheritParams llik
 
 #' @param noise_limits biologic noise distribution parameters
+#' @param format a [character()] variable, containing either:
+#' * `"long"` (one measurement per row) or
+#' * `"wide"` (one serum sample per row)
 #' @param ... additional arguments passed to `simcs.tinf()`
-#' @return a [tibble::tibble()] containing simulated cross-sectional serosurvey data, with columns:
+#' @inheritDotParams simcs.tinf
+#' @inheritParams llik # verbose
+#' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
 #' * one column for each element in the `antigen_iso` input argument
 #' @export
@@ -36,12 +41,18 @@ sim.cs <- function(
     add.noise = FALSE,
     curve_params,
     noise_limits,
-
+    format = "wide",
+    verbose = FALSE,
     ...)
 {
 
+  if(verbose > 1)
+  {
+    message('inputs to `sim.cs()`:')
+    print(environment() |> as.list())
+  }
 
-# @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
+  # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 
   predpar =
     curve_params %>%
@@ -58,8 +69,6 @@ sim.cs <- function(
   npar = dimnames(predpar)$parameter |> length()
 
 
-  ablist = 1:length(antigen_isos)
-
   baseline_limits <- noise_limits
 
   ysim <- simcs.tinf(
@@ -67,7 +76,7 @@ sim.cs <- function(
     n.smpl = n.smpl,
     age.rng = age.rng,
     age.fx = age.fx,
-    ablist = ablist,
+    antigen_isos = antigen_isos,
     n.mc = n.mc,
     renew.params = renew.params,
     predpar = predpar,
@@ -92,6 +101,18 @@ sim.cs <- function(
     ysim |>
     as_tibble() %>%
     mutate(age = round(.data$age / day2yr, 2))
+
+
+  if(format == "long")
+  {
+    if(verbose) message("outputting long format data")
+    to_return =
+      to_return %>%
+      pivot_longer(
+        cols = antigen_isos,
+        values_to = c("value"),
+        names_to = c("antigen_iso"))
+  }
 
   return(to_return)
 

@@ -18,7 +18,7 @@ strata <- function(x) {
 #' * `NULL` if `x` does not have a `"strata"` attribute
 #' @export
 #'
-strata.default = function(x)
+strata.seroincidence.by = function(x)
 {
   attr(x, "Strata")
 }

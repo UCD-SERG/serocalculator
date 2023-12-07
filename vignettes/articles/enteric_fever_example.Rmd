@@ -1,7 +1,10 @@
 ---
 title: "Enteric Fever Seroincidence Vignette"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
-output: rmarkdown::html_vignette
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Enteric Fever Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}

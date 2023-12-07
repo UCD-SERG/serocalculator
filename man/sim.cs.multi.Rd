@@ -26,7 +26,7 @@ sim.cs.multi(
 
 \item{renew.params}{whether to generate a new parameter set for each infection
 \itemize{
-\item \code{renew.params= TRUE} generates a new parameter set for each infection
+\item \code{renew.params = TRUE} generates a new parameter set for each infection
 \item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
 }}
 
@@ -48,6 +48,11 @@ sim.cs.multi(
 \item when \code{n.mc} = \code{0}, a random sample is chosen
 }}
     \item{\code{noise_limits}}{biologic noise distribution parameters}
+    \item{\code{format}}{a \code{\link[=character]{character()}} variable, containing either:
+\itemize{
+\item \code{"long"} (one measurement per row) or
+\item \code{"wide"} (one serum sample per row)
+}}
     \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations

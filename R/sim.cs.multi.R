@@ -37,6 +37,7 @@ sim.cs.multi = function(
     {
       message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
     }
+  }
 
   doParallel::registerDoParallel(cores = n_cores)
 

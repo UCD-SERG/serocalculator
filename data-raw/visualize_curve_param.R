@@ -47,8 +47,11 @@ serocourse.sum <- serocourse.all %>%
             res.p25 = quantile(res, 0.25),
             res.p10 = quantile(res, 0.10),
             res.p90 = quantile(res, 0.90)) %>%
-  pivot_longer(names_to = "quantile", cols = c("res.med","res.low","res.high", "res.p25", "res.p75", "res.p10", "res.p90"),
-               names_prefix = "res.", values_to = "res")
+  pivot_longer(
+    names_to = "quantile",
+    cols = c("res.med","res.low","res.high", "res.p25", "res.p75", "res.p10", "res.p90"),
+    names_prefix = "res.",
+    values_to = "res")
 
 
 

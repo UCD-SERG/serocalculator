@@ -51,13 +51,16 @@ llik <- function(
       } else
       {
         cur_data =
-          pop_data |> dplyr::filter(.data$antigen_iso == cur_antibody)
+          pop_data |>
+          dplyr::filter(.data$antigen_iso == cur_antibody)
 
         cur_curve_params =
-          curve_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+          curve_params |>
+          dplyr::filter(.data$antigen_iso == cur_antibody)
 
         cur_noise_params =
-          noise_params |> dplyr::filter(.data$antigen_iso == cur_antibody)
+          noise_params |>
+          dplyr::filter(.data$antigen_iso == cur_antibody)
       }
 
       nllSingle <-

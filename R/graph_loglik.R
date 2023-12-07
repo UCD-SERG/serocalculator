@@ -10,22 +10,26 @@
 #' @export
 #'
 graph.loglik = function(
-  pop_data,
-  curve_params,
-  noise_params,
-  antigen_isos,
+    pop_data,
+    curve_params,
+    noise_params,
+    antigen_isos,
     x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,
     highlight_point_names = "highlight_points",
     log_x = FALSE,
-  ...)
+    ...)
 {
 
-  curve_params =
-    curve_params |>
-    dplyr::mutate(
-      alpha = .data$alpha * 365.25,
-      d = .data$r - 1)
+  if(!is.list(curve_params) &&
+     !is.element("d", names(curve_params)))
+  {
+    curve_params =
+      curve_params |>
+      dplyr::mutate(
+        alpha = .data$alpha * 365.25,
+        d = .data$r - 1)
+  }
 
   plot1 = tibble(
     x = x |> sort(),

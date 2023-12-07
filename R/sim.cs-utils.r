@@ -258,14 +258,14 @@ simresp.tinf = function(
     {
       if (n.mc == 0)
         nmc <- sample.int(n = mcsize, size = 1)
-
+    }
       # DM: it might be possible to remove these lines and remove the !renew.params condition near the top of the while() loop
       if (!is.na(age.fx))
         par.now <- ldpar(age.fx, ablist, nmc, predpar = predpar, ...)
 
       if (is.na(age.fx))
         par.now <- ldpar((t0 + t.next) / day2yr, ablist, nmc, predpar = predpar, ...)
-    }
+
   }
   return(list(
     t = t,

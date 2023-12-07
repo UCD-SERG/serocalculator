@@ -1,3 +1,5 @@
+# note: this function outputs "value" on the log scale;
+# this gets undone in `par.pred.n()`
 prep_curve_params_for_array = function(data)
 {
   data |>

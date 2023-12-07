@@ -173,7 +173,7 @@ plot(est1, log_x = TRUE)
 ```{r "init-parallel"}
 library(parallel)
 n_cores = max(1, parallel::detectCores() - 1)
-n_cores = 1
+# n_cores = 1
 print(n_cores)
 ```
 

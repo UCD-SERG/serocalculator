@@ -10,7 +10,7 @@ graph.curve.params(curve_param)
 \item{curve_param}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 }
 \value{
-a \link{ggplot2:ggplot}
+a \code{\link[=ggplot2:ggplot]{ggplot2:ggplot()}}
 }
 \description{
 Graph estimated antibody decay curve

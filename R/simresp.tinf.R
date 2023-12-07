@@ -48,7 +48,7 @@ simresp.tinf = function(
   t0 <- 0
   t <- c()
   b <- c()
-  y <- c()
+  ymat <- c()
   t.step <- 1
   smp <- c()
   t.inf <- c()
@@ -75,7 +75,13 @@ simresp.tinf = function(
   t.now <- seq(from = 0, to = t.next, by = t.step)
   b.now <- array(0, dim = c(length(t.now), n.ab))
 
-  y.now <- array(0, dim = c(length(t.now), n.ab))
+  y.now <- array(
+    0,
+    dim = c(length(t.now), n.ab),
+    dimnames = list(
+      t = NULL,
+      y = antigen_isos
+    ))
 
   for (k.ab in 1:n.ab)
     y.now[, k.ab] <- mkbaseline(k.ab, length(t.now), ...)
@@ -83,7 +89,7 @@ simresp.tinf = function(
   t <- c(t, t0 + t.now)
 
   b <- rbind(b, b.now)
-  y <- rbind(y, y.now)
+  ymat <- rbind(ymat, y.now)
 
   y.end <- as.matrix(y.now)[nrow(y.now), ]
 
@@ -126,10 +132,10 @@ simresp.tinf = function(
     t <- c(t, t0 + t.now)
 
     b <- rbind(b, b.now)
-    y <- rbind(y, y.now)
+    ymat <- rbind(ymat, y.now)
 
-    b.end <- b[nrow(as.matrix(b)), ]
-    y.end <- y[nrow(as.matrix(y)), ]
+    b.end <- b |> tail(1)
+    y.end <- ymat |> tail(1)
 
     if (renew.params)
     {
@@ -147,7 +153,7 @@ simresp.tinf = function(
   return(list(
     t = t,
     b = b,
-    y = y,
+    y = ymat,
     smp = smp,
     t.inf = t.inf
   ))

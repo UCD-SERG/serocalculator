@@ -39,19 +39,7 @@ bfunc  <- function(par) par[4,]/(par[4,]-par[3,])
 t1func <- function(par) log(1+afunc(par)*par[2,])/(par[4,]-par[3,])
 y1func <- function(par) par[1,]*(1+afunc(par)*par[2,])^(bfunc(par))
 
-# kinetics of the bacteria (ag: antigen) response
-ag <- function(t,par) {
-  t1 <- t1func(par);
-  y0 <- par[1,]; b0 <- par[2,]; mu0 <- par[3,]; mu1 <- par[4,]; c1 <- par[5,];
-  bt <- array(0,dim=c(length(t),ncol(par)));
-  for(k in 1:ncol(par)){
-    u <- (t<=t1[k]);
-    bt[u,k] <- b0[k] * exp(mu0[k]*t[u]) -
-      c1[k] * y0[k] *(exp(mu0[k] * t[u]) - exp(mu1[k] * t[u]))/
-      (mu0[k] - mu1[k]);
-  }
-  return(bt);
-}
+
 
 #
 #' kinetics of the antibody (ab) response (power function decay)
@@ -129,10 +117,15 @@ baseline <- function(kab,yvec, blims, ...){
 #'
 mkbaseline <- function(kab,n=1, blims, ...){
   # yset <- rlnorm(n=1,meanlog=negpar[1],sdlog=negpar[2]);
-  if(blims[kab,2]==0){
+  if(blims[kab,2] == 0)
+  {
     yset <- rep(0,n);
-  }else{
-    yset <- runif(n = n, min = blims[kab, 1], max = blims[kab, 2])
+  } else
+  {
+    yset <- runif(
+      n = n,
+      min = blims[kab, "min"],
+      max = blims[kab, "max"])
 
   }
   return(yset);

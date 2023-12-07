@@ -84,7 +84,9 @@ lifespan <- c(0, 20);
 nrep <- 100
 
 # biologic noise distribution
-dlims <- rbind(c(0, 0.5),c(0, 0.5))
+dlims <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5))
 ```
 
 ```{r}

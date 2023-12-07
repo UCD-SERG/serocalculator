@@ -4,13 +4,21 @@
 \alias{graph.curve.params}
 \title{Graph estimated antibody decay curve}
 \usage{
-graph.curve.params(curve_param)
+graph.curve.params(
+  curve_params,
+  antigen_isos = unique(curve_param$antigen_iso),
+  verbose = FALSE
+)
 }
 \arguments{
-\item{curve_param}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+
+\item{antigen_isos}{antigen isotypes}
+
+\item{verbose}{verbose output}
 }
 \value{
-a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
+a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 Graph estimated antibody decay curve

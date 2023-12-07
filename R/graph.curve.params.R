@@ -1,8 +1,9 @@
 #' Graph estimated antibody decay curve
 #'
-#' @param curve_param a [data.frame()] containing MCMC samples of antibody decay curve parameters
-#'
-#' @returns a [ggplot2::ggplot()]
+#' @param curve_params a [data.frame()] containing MCMC samples of antibody decay curve parameters
+#' @param verbose verbose output
+#' @param antigen_isos antigen isotypes
+#' @returns a [ggplot2::ggplot()] object
 #' @export
 #'
 #' @examples
@@ -11,8 +12,20 @@
 #' plot1 = graph.curve.params(curve_param)
 #' print(plot1)
 #' }
-graph.curve.params = function(curve_param)
+graph.curve.params = function(
+    curve_params,
+    antigen_isos = unique(curve_param$antigen_iso),
+    verbose = FALSE)
 {
+
+  if (verbose)
+    message(
+      "Graphing curves for antigen isotypes: ",
+      paste(antigen_isos, collapse = ", "))
+
+  curve_params = curve_params |>
+    dplyr::filter(antigen_iso %in% antigen_isos)
+
   day2yr <- 365.25
 
   tx2 <- 10 ^ seq(-1, 3.1, 0.025)
@@ -20,6 +33,7 @@ graph.curve.params = function(curve_param)
   bt <- function(y0, y1, t1)
     log(y1 / y0) / t1
 
+  # uses r > 1 scale for shape
   ab <- function(t, y0, y1, t1, alpha, shape) {
     beta <- bt(y0, y1, t1)
 
@@ -36,23 +50,26 @@ graph.curve.params = function(curve_param)
   }
 
 
-  d <- curve_param %>%
+  d <- curve_params %>%
     mutate(alpha = .data$alpha / day2yr)
 
 
 
-  dT <- data.frame(t = tx2) %>%
+  dT <-
+    data.frame(t = tx2) %>%
     mutate(ID = 1:n()) %>%
     pivot_wider(
       names_from = .data$ID,
       values_from = .data$t,
       names_prefix = "time"
     ) %>%
-    dplyr::slice(rep(1:dplyr::n(),
-                     each = nrow(d)))
+    dplyr::slice(
+      rep(1:dplyr::n(),
+          each = nrow(d)))
 
 
-  serocourse.all <- cbind(d, dT)  %>%
+  serocourse.all <-
+    cbind(d, dT)  %>%
     tidyr::pivot_longer(cols = dplyr::starts_with("time"),
                         values_to = "t") %>%
     select(-"name")  %>%
@@ -66,17 +83,17 @@ graph.curve.params = function(curve_param)
       .data$r)) |>
     ungroup()
 
-
+  if (verbose) message('starting to compute quantiles')
   serocourse.sum <- serocourse.all %>%
     summarise(
       .by = c("antigen_iso", "t"),
       res.med  = quantile(.data$res, 0.5),
       res.low  = quantile(.data$res, 0.025),
       res.high = quantile(.data$res, 0.975),
-      res.p75 = quantile(.data$res, 0.75),
-      res.p25 = quantile(.data$res, 0.25),
-      res.p10 = quantile(.data$res, 0.10),
-      res.p90 = quantile(.data$res, 0.90)
+      res.p75  = quantile(.data$res, 0.75),
+      res.p25  = quantile(.data$res, 0.25),
+      res.p10  = quantile(.data$res, 0.10),
+      res.p90  = quantile(.data$res, 0.90)
     ) %>%
     pivot_longer(
       names_to = "quantile",

@@ -3,7 +3,7 @@ title: "Generate a simulated cross-sectional sample and estimate seroincidence"
 subtitle: "Enteric Fever using HlyE IgG and/or HlyE IgA"
 output: 
   bookdown::html_document2:
-    base_format: rmarkdown::html_vignette
+    base_format: rmarkdown::html_document
     toc: true
     toc_float:
       collapsed: false
@@ -65,7 +65,7 @@ dmcmc <- getAdditionalData(fileURL = "https://osf.io/download/rtw5k") |>
 ```
 
 
-## Simulate cross-sectional data
+# Simulate cross-sectional data
 
 ```{r "sim.cs"}
 #set seed to reproduce results
@@ -173,7 +173,7 @@ plot(est1, log_x = TRUE)
 ```{r "init-parallel"}
 library(parallel)
 n_cores = max(1, parallel::detectCores() - 1)
-# n_cores = 1
+n_cores = 1
 print(n_cores)
 ```
 

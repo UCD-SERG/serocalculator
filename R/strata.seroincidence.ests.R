@@ -1,6 +1,6 @@
 #' Extract strata from an object
 #'
-#' Generic method for extracting strata from objects. See [strata.default()]
+#' Generic method for extracting strata from objects. See [strata.seroincidence.by()]
 #' @param x an object
 #'
 #' @return the strata of `x`

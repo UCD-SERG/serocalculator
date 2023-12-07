@@ -72,13 +72,13 @@ antibodies = c("HlyE_IgA", "HlyE_IgG")
 lambda <- 0.2;
 
 # range covered in simulations
-lifespan <- c(0,20); 
+lifespan <- c(0, 20); 
 
 # cross-sectional sample size
-nrep <- 100
+nrep <- 1000
 
 # biologic noise distribution
-dlims <- rbind(c(0.01, 0.5),c(0.01, 0.5))
+dlims <- rbind(c(0, 0.5),c(0, 0.5))
 
 #generate cross-sectional data
 csdata0 <- sim.cs(
@@ -104,7 +104,7 @@ We need to provide noise parameters for the analysis; here, we define them direc
 cond <- data.frame(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
   nu = c(0.5, 0.5),  # Biologic noise (nu)
-  eps = c(0.2, 0.2),                             # M noise (eps)
+  eps = c(0, 0),                             # M noise (eps)
   y.low = c(1, 1),                            # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
@@ -141,10 +141,10 @@ We can estimate incidence with `est.incidence()`:
 ```{r "est.incidence"}
 
 est1 = est.incidence(
-  data = csdataL,
+  pop_data = csdataL,
   curve_params = dmcmc,
   noise_params = cond,
-  lambda.start = .1,
+  lambda_start = .1,
   build_graph = T,
   verbose = T, # print updates as the function runs
   print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
@@ -257,7 +257,7 @@ ests =
   est.incidence.by(
     curve_params = dmcmc,
     noise_params = cond,
-    numCores = n_cores,
+    num_cores = n_cores,
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
@@ -266,12 +266,6 @@ ests =
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-```
-
-We can extract a table listing the strata, using the `strata()` method:
-
-```{r}
-strata(ests)
 ```
 
 `summary(ests)` produces a `tibble()` with some extra meta-data:
@@ -354,16 +348,43 @@ We can calculate the log-likelihood of the data as a function of the incidence r
 
 ```{r}
 
-graph_loglik(
-  data = csdataL,
+lik_HlyE_IgA = graph.loglik(
+  pop_data = csdataL,
   curve_params = 
-    dmcmc |> # llik() is a lower-level function, it assumes this transformation is already done
+    dmcmc |> 
     dplyr::mutate(
     alpha = .data$alpha * 365.25,
     d = .data$r - 1),
   noise_params = cond,
-  antigen_isos = antibodies,
+  antigen_isos = "HlyE_IgA",
   log_x = TRUE
-)
+) |> 
+  print()
+
+lik_HlyE_IgG = graph.loglik(
+  pop_data = csdataL,
+  curve_params = 
+    dmcmc |> 
+    dplyr::mutate(
+    alpha = .data$alpha * 365.25,
+    d = .data$r - 1),
+  noise_params = cond,
+  antigen_isos = "HlyE_IgG",
+  log_x = TRUE
+) |> 
+  print()
+
+lik_both = graph.loglik(
+  pop_data = csdataL,
+  curve_params = 
+    dmcmc |>
+    dplyr::mutate(
+    alpha = .data$alpha * 365.25,
+    d = .data$r - 1),
+  noise_params = cond,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  log_x = TRUE
+) |> 
+  print()
 
 ```

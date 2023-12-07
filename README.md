@@ -42,9 +42,6 @@ library(serocalculator)
 
 # Show R help for the package.
 ?serocalculator
-
-# Show tutorial for the package.
-vignette(topic = "tutorial", package = "serocalculator")
 ```
 
 Additionally, most package details can be found when executing the following commands:

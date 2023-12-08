@@ -34,7 +34,7 @@ library(dplyr)
 
 ```
 
-More mathematically, the incidence rate *at a given time point*, $t$, is the *derivative* (i.e., the current rate of change over time) of the cumulative count of infections per person.
+More mathematically, the incidence rate *at a given time point* $t$, is the *derivative* (i.e., the current rate of change over time) of the cumulative count of infections per person, at time $t$.
 
 ## Scale of incidence rates
 

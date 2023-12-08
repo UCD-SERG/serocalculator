@@ -50,8 +50,9 @@ graph.curve.params = function(
   }
 
 
-  d <- curve_params %>%
-    mutate(alpha = .data$alpha / day2yr)
+  d <- curve_params
+  # %>%
+  #   mutate(alpha = .data$alpha / day2yr)
 
 
 

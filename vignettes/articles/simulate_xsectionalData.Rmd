@@ -73,7 +73,7 @@ dmcmc =
 
 We can visualize the model using the `graph.curve.params()` function:
 
-```{r}
+```{r, "graph-curve-params"}
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 graph.curve.params(

@@ -69,14 +69,29 @@ dmcmc =
 
 ```
 
+## visualize antibody decay model
+
+We can visualize the model using the `graph.curve.params()` function:
+
+```{r, "graph-curve-params"}
+
+# Specify the antibody-isotype responses to include in analyses
+antibodies = c("HlyE_IgA", "HlyE_IgG")
+
+graph.curve.params(
+  curve_params = dmcmc |> 
+    # dplyr::slice_sample(n = 100, by = antigen_iso) |>  # reduce data size for speed
+    dplyr::filter(antigen_iso %in% antibodies), 
+  
+  antigen_isos = antibodies) |> print()
+```
+
+
 ## Simulate cross-sectional data
 
 ```{r "sim.cs"}
 #set seed to reproduce results
 set.seed(54321)
-
-# Specify the antibody-isotype responses to simulate
-antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 # simulated incidence rate per person-year
 lambda <- 0.2;
@@ -407,6 +422,8 @@ Finally, we can look at our simulation results:
 
 library(ggplot2)
 summary(ests) |> 
-  autoplot(xvar = 'lambda.sim') + ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1))
+  autoplot(xvar = 'lambda.sim') +
+  ggplot2::geom_abline(
+    ggplot2::aes(intercept = 0, slope = 1))
 
 ```

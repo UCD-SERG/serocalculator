@@ -65,7 +65,8 @@ library(ggbeeswarm) # for plotting
 dmcmc =
   "https://osf.io/download/rtw5k" |> 
   url() |> 
-  readRDS()
+  readRDS() |> 
+  mutate(alpha = alpha * 365.25)
 
 ```
 
@@ -74,11 +75,14 @@ dmcmc =
 We can visualize the model using the `graph.curve.params()` function:
 
 ```{r, "graph-curve-params"}
+
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 graph.curve.params(
-  curve_params = dmcmc,
-  antigen_isos = antibodies)
+  curve_params = dmcmc |> 
+    dplyr::filter(antigen_iso %in% antibodies) |> 
+    dplyr::slice_sample(n = 100, by = antigen_iso),
+  antigen_isos = antibodies) |> print()
 ```
 
 
@@ -89,6 +93,7 @@ graph.curve.params(
 set.seed(54321)
 
 # Specify the antibody-isotype responses to simulate
+antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 # simulated incidence rate per person-year
 lambda <- 0.2;

@@ -78,8 +78,7 @@ antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 graph.curve.params(
   curve_params = dmcmc,
-  antigen_isos = antibodies,
-  verbose = TRUE)
+  antigen_isos = antibodies)
 ```
 
 
@@ -109,7 +108,6 @@ dlims <- rbind(
 ```{r}
 #generate cross-sectional data
 csdata <- sim.cs(
-  verbose = 2,
   curve_params = dmcmc,
   lambda = lambda,
   n.smpl = nrep,
@@ -291,7 +289,7 @@ sim.df =
     n.smpl = nrep,
     age.rng = lifespan,
     antigen_isos = antibodies,
-    renew.params = FALSE,
+    renew.params = TRUE,
     add.noise = TRUE,
     curve_params = dmcmc,
     noise_limits = dlims,

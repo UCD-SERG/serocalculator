@@ -1,8 +1,8 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 0.3.2
-Date: 2022-03-29
+Version: 0.4.0
+Date: 2023-12-08
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
   person(given = "Kristina", family = "Lai", role = c("aut")), 
@@ -14,13 +14,16 @@ Description: Translates antibody levels measured in cross-sectional population
 Depends: R (>= 4.1.0)
 License: GPL-3
 Imports: 
+    doParallel,
     dplyr (>= 1.1.1),
+    foreach,
     ggplot2,
     ggpubr,
     lifecycle,
     magrittr,
     Rcpp,
     rlang,
+    rngtools,
     scales,
     stats,
     tibble,
@@ -37,10 +40,8 @@ Suggests:
     testthat (>= 3.0.0),
     readr,
     bookdown,
-    doParallel,
     printr,
     doRNG,
-    rngtools,
     osfr,
     ggbeeswarm,
     DT

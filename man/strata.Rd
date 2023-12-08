@@ -15,4 +15,3 @@ the strata of \code{x}
 \description{
 Generic method for extracting strata from objects. See \code{\link[=strata.seroincidence.by]{strata.seroincidence.by()}}
 }
-\keyword{internal}

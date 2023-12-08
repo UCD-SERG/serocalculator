@@ -2,16 +2,19 @@
 % Please edit documentation in R/strata.seroincidence.ests.R
 \name{strata.seroincidence.by}
 \alias{strata.seroincidence.by}
-\title{Extract information about strata from a \code{seroincidence.by} object}
+\title{Extract the \code{Strata} attribute from an object, if present}
 \usage{
 \method{strata}{seroincidence.by}(x)
 }
 \arguments{
-\item{x}{a \code{seroincidence.by} object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
+\item{x}{any R object}
 }
 \value{
-a \code{\link[tibble:tibble]{tibble::tibble()}} with strata in rows
+\itemize{
+\item a \code{\link[tibble:tibble]{tibble::tibble()}} with strata in rows, or
+\item \code{NULL} if \code{x} does not have a \code{"strata"} attribute
+}
 }
 \description{
-Extract information about strata from a \code{seroincidence.by} object
+Extract the \code{Strata} attribute from an object, if present
 }

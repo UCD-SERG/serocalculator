@@ -69,19 +69,6 @@ dmcmc =
 
 ```
 
-## visualize antibody decay model
-
-We can visualize the model using the `graph.curve.params()` function:
-
-```{r, "graph-curve-params"}
-antibodies = c("HlyE_IgA", "HlyE_IgG")
-
-graph.curve.params(
-  curve_params = dmcmc,
-  antigen_isos = antibodies)
-```
-
-
 ## Simulate cross-sectional data
 
 ```{r "sim.cs"}
@@ -89,6 +76,7 @@ graph.curve.params(
 set.seed(54321)
 
 # Specify the antibody-isotype responses to simulate
+antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 # simulated incidence rate per person-year
 lambda <- 0.2;

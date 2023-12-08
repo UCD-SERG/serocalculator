@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
 
 
 
-<script src="simulate_xsectionalData_files/htmlwidgets-1.6.3/htmlwidgets.js"></script><link href="simulate_xsectionalData_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="simulate_xsectionalData_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="simulate_xsectionalData_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="simulate_xsectionalData_files/datatables-binding-0.30/datatables.js"></script><link href="simulate_xsectionalData_files/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="simulate_xsectionalData_files/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="simulate_xsectionalData_files/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="simulate_xsectionalData_files/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
@@ -111,6 +111,12 @@ then a random MC sample is chosen out of the posterior set (1:4000).
 When <code>n.mc</code> is given a value in 1:4000 then the chosen number
 is fixed and reused in any subsequent infection. This is for diagnostic
 purposes.</p>
+<div class="section level2">
+<h2 id="simulate-a-single-dataset">Simulate a single dataset<a class="anchor" aria-label="anchor" href="#simulate-a-single-dataset"></a>
+</h2>
+<div class="section level3">
+<h3 id="load-model-parameters">load model parameters<a class="anchor" aria-label="anchor" href="#load-model-parameters"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
@@ -127,32 +133,50 @@ purposes.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm" class="external-link">ggbeeswarm</a></span><span class="op">)</span> <span class="co"># for plotting</span></span>
 <span></span>
 <span><span class="co">#load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries </span></span>
-<span><span class="va">dmcmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAdditionalData.html">getAdditionalData</a></span><span class="op">(</span>fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/rtw5k"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">dmcmc</span> <span class="op">=</span></span>
+<span>  <span class="st">"https://osf.io/download/rtw5k"</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="visualize-antibody-decay-model">visualize antibody decay model<a class="anchor" aria-label="anchor" href="#visualize-antibody-decay-model"></a>
+</h3>
+<p>We can visualize the model using the
+<code><a href="../reference/graph.curve.params.html">graph.curve.params()</a></code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">antibodies</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/graph.curve.params.html">graph.curve.params</a></span><span class="op">(</span></span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 53 rows containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/graph-curve-params-1.png" width="672"></p>
+</div>
 <div class="section level3">
 <h3 id="simulate-cross-sectional-data">Simulate cross-sectional data<a class="anchor" aria-label="anchor" href="#simulate-cross-sectional-data"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#set seed to reproduce results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Specify the antibody-isotype responses to simulate</span></span>
-<span><span class="va">antibodies</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># simulated incidence rate per person-year</span></span>
 <span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">0.2</span>;</span>
 <span></span>
 <span><span class="co"># range covered in simulations</span></span>
-<span><span class="va">lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span>; </span>
+<span><span class="va">lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>; </span>
 <span></span>
 <span><span class="co"># cross-sectional sample size</span></span>
-<span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
+<span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span></span>
 <span><span class="co"># biologic noise distribution</span></span>
-<span><span class="va">dlims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#generate cross-sectional data</span></span>
-<span><span class="va">csdata0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim.cs.html">sim.cs</a></span><span class="op">(</span></span>
+<span><span class="va">dlims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>  <span class="st">"HlyE_IgA"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  <span class="st">"HlyE_IgG"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#generate cross-sectional data</span></span>
+<span><span class="va">csdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim.cs.html">sim.cs</a></span><span class="op">(</span></span>
 <span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>  lambda <span class="op">=</span> <span class="va">lambda</span>,</span>
 <span>  n.smpl <span class="op">=</span> <span class="va">nrep</span>,</span>
@@ -161,47 +185,118 @@ purposes.</p>
 <span>  n.mc <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  renew.params <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  add.noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  noise_limits <span class="op">=</span> <span class="va">dlims</span></span>
+<span>  noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"long"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="estimate-seroincidence">Estimate seroincidence<a class="anchor" aria-label="anchor" href="#estimate-seroincidence"></a>
+<h3 id="noise-parameters">Noise parameters<a class="anchor" aria-label="anchor" href="#noise-parameters"></a>
 </h3>
 <p>We need to provide noise parameters for the analysis; here, we define
 them directly in our code:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
+<span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  antigen_iso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
-<span>  nu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,  <span class="co"># Biologic noise (nu)</span></span>
+<span>  nu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,                          <span class="co"># Biologic noise (nu)</span></span>
 <span>  eps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,                             <span class="co"># M noise (eps)</span></span>
-<span>  y.low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,                            <span class="co"># low cutoff (llod)</span></span>
+<span>  y.low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,                           <span class="co"># low cutoff (llod)</span></span>
 <span>  y.high <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5e6</span>, <span class="fl">5e6</span><span class="op">)</span><span class="op">)</span>                      <span class="co"># high cutoff (y.high)</span></span></code></pre></div>
-<p>We also need to convert the data to a long format for analysis:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csdataL</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">csdata0</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span></span>
-<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>, </span>
-<span>    names_to <span class="op">=</span> <span class="st">"antigen_iso"</span>, </span>
-<span>    values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="visualize-data">Visualize data<a class="anchor" aria-label="anchor" href="#visualize-data"></a>
+</h3>
 <p>We can plot the distribution of the antibody responses in the
 simulated data.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">csdataL</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span>, y<span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">csdata</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span>, y<span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span>size<span class="op">=</span> <span class="fl">.2</span>, alpha <span class="op">=</span> <span class="fl">.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.colour <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"antigen - isotype"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="calculate-loglikelihood">calculate log(likelihood)<a class="anchor" aria-label="anchor" href="#calculate-loglikelihood"></a>
+</h3>
+<p>We can calculate the log-likelihood of the data as a function of the
+incidence rate directly:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">ll_A</span> <span class="op">=</span> <span class="fu"><a href="../reference/llik.html">llik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -226.1281</span></span>
+<span></span>
+<span><span class="va">ll_G</span> <span class="op">=</span> <span class="fu"><a href="../reference/llik.html">llik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -327.432</span></span>
+<span></span>
+<span><span class="va">ll_AG</span> <span class="op">=</span> <span class="fu"><a href="../reference/llik.html">llik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>,<span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -553.5601</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ll_A</span> <span class="op">+</span> <span class="va">ll_G</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -553.5601</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="graph-log-likelihood">graph log-likelihood<a class="anchor" aria-label="anchor" href="#graph-log-likelihood"></a>
+</h3>
+<p>We can also graph the log-likelihoods, even without finding the MLEs,
+using <code><a href="../reference/graph.loglik.html">graph.loglik()</a></code>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">lik_HlyE_IgA</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
+<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lik_HlyE_IgG</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
+<span>  previous_plot <span class="op">=</span> <span class="va">lik_HlyE_IgA</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>,</span>
+<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lik_both</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
+<span>  previous_plot <span class="op">=</span> <span class="va">lik_HlyE_IgG</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">lik_both</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="estimate-incidence">estimate incidence<a class="anchor" aria-label="anchor" href="#estimate-incidence"></a>
+</h3>
 <p>We can estimate incidence with <code><a href="../reference/est.incidence.html">est.incidence()</a></code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">est1</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.html">est.incidence</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
 <span>  lambda_start <span class="op">=</span> <span class="fl">.1</span>,</span>
@@ -210,7 +305,7 @@ simulated data.</p>
 <span>  print_graph <span class="op">=</span> <span class="cn">F</span>, <span class="co"># display the log-likelihood curve while `est.incidence()` is running</span></span>
 <span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span><span class="op">)</span></span>
 <span><span class="co">#&gt; nrow(curve_params) = 8000</span></span>
-<span><span class="co">#&gt; Initial negative log-likelihood: 6965.51373830999</span></span>
+<span><span class="co">#&gt; Initial negative log-likelihood: 553.560077627804</span></span>
 <span><span class="co">#&gt; building likelihood graph</span></span>
 <span><span class="co">#&gt; about to call `nlm()`</span></span>
 <span><span class="co">#&gt; iteration = 0</span></span>
@@ -219,98 +314,97 @@ simulated data.</p>
 <span><span class="co">#&gt; Parameter:</span></span>
 <span><span class="co">#&gt; [1] -2.302585</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 6965.514</span></span>
+<span><span class="co">#&gt; [1] 553.5601</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -599.4456</span></span>
+<span><span class="co">#&gt; [1] -42.3037</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 1</span></span>
 <span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.7032254</span></span>
+<span><span class="co">#&gt; [1] 0.4769564</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.59936</span></span>
+<span><span class="co">#&gt; [1] -1.825629</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 6700.598</span></span>
+<span><span class="co">#&gt; [1] 539.2395</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -115.3316</span></span>
+<span><span class="co">#&gt; [1] -15.99511</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 2</span></span>
 <span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] 0.167531</span></span>
+<span><span class="co">#&gt; [1] 0.2899803</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.431829</span></span>
+<span><span class="co">#&gt; [1] -1.535648</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 6693.393</span></span>
+<span><span class="co">#&gt; [1] 537.6454</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 30.84863</span></span>
+<span><span class="co">#&gt; [1] 5.827356</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 3</span></span>
 <span><span class="co">#&gt; Step:</span></span>
-<span><span class="co">#&gt; [1] -0.03535431</span></span>
+<span><span class="co">#&gt; [1] -0.07743479</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.467183</span></span>
+<span><span class="co">#&gt; [1] -1.613083</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 6692.862</span></span>
+<span><span class="co">#&gt; [1] 537.4411</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] -0.748492</span></span>
+<span><span class="co">#&gt; [1] -0.4900419</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; iteration = 4</span></span>
+<span><span class="co">#&gt; Step:</span></span>
+<span><span class="co">#&gt; [1] 0.006006633</span></span>
 <span><span class="co">#&gt; Parameter:</span></span>
-<span><span class="co">#&gt; [1] -1.466346</span></span>
+<span><span class="co">#&gt; [1] -1.607077</span></span>
 <span><span class="co">#&gt; Function Value</span></span>
-<span><span class="co">#&gt; [1] 6692.862</span></span>
+<span><span class="co">#&gt; [1] 537.4396</span></span>
 <span><span class="co">#&gt; Gradient:</span></span>
-<span><span class="co">#&gt; [1] 0.004289</span></span>
+<span><span class="co">#&gt; [1] -0.01308702</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; iteration = 5</span></span>
+<span><span class="co">#&gt; Parameter:</span></span>
+<span><span class="co">#&gt; [1] -1.606912</span></span>
+<span><span class="co">#&gt; Function Value</span></span>
+<span><span class="co">#&gt; [1] 537.4396</span></span>
+<span><span class="co">#&gt; Gradient:</span></span>
+<span><span class="co">#&gt; [1] 3.275662e-05</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Relative gradient close to zero.</span></span>
 <span><span class="co">#&gt; Current iterate is probably solution.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Elapsed time:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  14.728   0.000  14.728</span></span></code></pre></div>
+<span><span class="co">#&gt;   1.543   0.000   1.542</span></span></code></pre></div>
 <p>We can extract summary statistics with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
-<span><span class="co">#&gt;   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations</span></span>
-<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.231 0.007<span style="text-decoration: underline;">75</span>  0.216  0.246     0.95  -<span style="color: #BB0000; text-decoration: underline;">6</span><span style="color: #BB0000;">693.</span>          4</span></span>
+<span><span class="co">#&gt;   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations</span></span>
+<span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.201 0.022<span style="text-decoration: underline;">5</span>  0.161  0.250     0.95   -<span style="color: #BB0000;">537.</span>          5</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
-<p>We can plot the log-likelihood curve with <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<p>We can plot the log-likelihood curve with
+<code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <p>We can set the x-axis to a logarithmic scale, if desired:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">est1</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">est1</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="simulate-multiple-clusters-with-different-lambdas">Simulate multiple clusters with different lambdas<a class="anchor" aria-label="anchor" href="#simulate-multiple-clusters-with-different-lambdas"></a>
 </h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RevolutionAnalytics/doparallel" class="external-link">doParallel</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: foreach</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'foreach'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:purrr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     accumulate, when</span></span>
-<span><span class="co">#&gt; Loading required package: iterators</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://renozao.github.io/doRNG/" class="external-link">doRNG</a></span><span class="op">)</span> <span class="co"># for reproducible results</span></span>
-<span><span class="co">#&gt; Loading required package: rngtools</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://renozao.github.io/rngtools/" class="external-link">rngtools</a></span><span class="op">)</span></span>
 <span><span class="va">n_cores</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co"># n_cores = 1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">n_cores</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 <p>In the preceding code chunk, we have determined that we can use 3 CPU
 cores to run computations in parallel.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu">doParallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/doParallel/man/registerDoParallel.html" class="external-link">registerDoParallel</a></span><span class="op">(</span>cores <span class="op">=</span> <span class="va">n_cores</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co">#number of clusters </span></span>
 <span><span class="va">nclus</span> <span class="op">=</span> <span class="fl">10</span>;</span>
 <span></span>
@@ -318,75 +412,55 @@ cores to run computations in parallel.</p>
 <span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span></span>
 <span><span class="co">#incidence rate in e</span></span>
-<span><span class="va">lmbdaVec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>,<span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span>, <span class="fl">.3</span><span class="op">)</span></span>
+<span><span class="va">lmbdaVec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>,<span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">n_lambda</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lmbdaVec</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#trying to reproduce results using parallel</span></span>
-<span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rngtools/man/RNGseq.html" class="external-link">RNGseq</a></span><span class="op">(</span><span class="va">n_lambda</span> <span class="op">*</span> <span class="va">nclus</span>, <span class="fl">1234</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">sim.df</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lmbdaVec</span><span class="op">)</span>, </span>
-<span>          .combine <span class="op">=</span> <span class="va">bind_rows</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">%:%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nclus</span>,  </span>
-<span>          r <span class="op">=</span> <span class="va">rng</span><span class="op">[</span><span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nclus</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="va">nclus</span><span class="op">]</span>, </span>
-<span>          .combine <span class="op">=</span> <span class="va">bind_rows</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">%dopar%</a></span> </span>
-<span>  <span class="op">{</span></span>
-<span>    <span class="va">l</span> <span class="op">=</span> <span class="va">lmbdaVec</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
-<span>    <span class="fu">rngtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rngtools/man/rng.html" class="external-link">setRNG</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="../reference/sim.cs.html">sim.cs</a></span><span class="op">(</span></span>
-<span>      lambda <span class="op">=</span> <span class="va">l</span>,</span>
-<span>      n.smpl <span class="op">=</span> <span class="va">nrep</span>,</span>
-<span>      age.rng <span class="op">=</span> <span class="va">lifespan</span>,</span>
-<span>      antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
-<span>      n.mc <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>      renew.params <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>      add.noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>      curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
-<span>      noise_limits <span class="op">=</span> <span class="va">dlims</span></span>
-<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>lambda.sim <span class="op">=</span> <span class="va">l</span>, cluster <span class="op">=</span> <span class="va">n</span><span class="op">)</span> </span>
-<span>  <span class="op">}</span></span>
+<span><span class="va">sim.df</span> <span class="op">=</span> </span>
+<span>  <span class="fu"><a href="../reference/sim.cs.multi.html">sim.cs.multi</a></span><span class="op">(</span></span>
+<span>    <span class="co"># verbose = TRUE,</span></span>
+<span>    n_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
+<span>    lambdas <span class="op">=</span> <span class="va">lmbdaVec</span>,</span>
+<span>    nclus <span class="op">=</span> <span class="va">nclus</span>,</span>
+<span>    n.smpl <span class="op">=</span> <span class="va">nrep</span>,</span>
+<span>    age.rng <span class="op">=</span> <span class="va">lifespan</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>    renew.params <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    add.noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span>
+<span>    format <span class="op">=</span> <span class="st">"long"</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim.df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5,000 × 5</span></span></span>
-<span><span class="co">#&gt;      age HlyE_IgA HlyE_IgG lambda.sim cluster</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 10.8     0.584    0.472       0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  4.87    0.964   24.2         0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 17.8     0.567    0.455       0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  7.63    0.521    0.544       0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 10.1     0.279    0.116       0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 16.8     1.20     1.48        0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 11.3     0.695    0.211       0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 18.5     0.525    0.692       0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 10.1     1.70     2.00        0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 16.8    93.1      4.18        0.05       1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,990 more rows</span></span></span></code></pre></div>
-<p>We can plot the distributions of the simulated responses</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8,000 × 5</span></span></span>
+<span><span class="co">#&gt;      age antigen_iso value lambda.sim cluster</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  3.53 HlyE_IgA    0.538       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>  3.53 HlyE_IgG    0.592       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  2.27 HlyE_IgA    0.620       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  2.27 HlyE_IgG    0.309       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  9.05 HlyE_IgA    0.464       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  9.05 HlyE_IgG    0.638       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>  5.94 HlyE_IgA    0.417       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  5.94 HlyE_IgG    0.662       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  9.88 HlyE_IgA    0.185       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  9.88 HlyE_IgG    0.278       0.05       1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7,990 more rows</span></span></span></code></pre></div>
+<p>We can plot the distributions of the simulated responses:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">sim.df.l</span> <span class="op">&lt;-</span> <span class="va">sim.df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>, values_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"value"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"antigen_iso"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">sim.df.l</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">cluster</span><span class="op">)</span>, y<span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">sim.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">cluster</span><span class="op">)</span>, y<span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span>size<span class="op">=</span> <span class="fl">.2</span>, alpha <span class="op">=</span> <span class="fl">.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.colour <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">antigen_iso</span> <span class="op">+</span> <span class="va">lambda.sim</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <div class="section level3">
 <h3 id="estimate-incidence-in-each-cluster">Estimate incidence in each cluster<a class="anchor" aria-label="anchor" href="#estimate-incidence-in-each-cluster"></a>
 </h3>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ests</span> <span class="op">=</span></span>
 <span>  <span class="va">sim.df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span></span>
-<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>, </span>
-<span>    names_to <span class="op">=</span> <span class="st">"antigen_iso"</span>, </span>
-<span>    values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
@@ -397,10 +471,11 @@ cores to run computations in parallel.</p>
 <span>    verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    build_graph <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># slows down the function substantially</span></span>
 <span>    antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span>    <span class="co"># antigen_isos = "HlyE_IgA"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Data has been stratified.</span></span>
 <span><span class="co">#&gt; Here are the strata that will be analyzed:</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 4</span></span></span>
 <span><span class="co">#&gt;    Stratum    lambda.sim cluster     n</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Stratum 1        0.05       1   100</span></span>
@@ -413,56 +488,72 @@ cores to run computations in parallel.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Stratum 8        0.05       8   100</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Stratum 9        0.05       9   100</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Stratum 10       0.05      10   100</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span>
 <span><span class="co">#&gt; Setting up parallel processing with `num_cores` = 3.</span></span>
 <span><span class="co">#&gt; Elapsed time for parallelized code:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.281   0.040 129.130</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.234   0.056  90.287</span></span></code></pre></div>
 <p><code>summary(ests)</code> produces a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> with some
 extra meta-data:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
 <span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
 <span><span class="co">#&gt; b) Strata       : lambda.sim, cluster </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Seroincidence estimates:</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 14</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 40 × 14</span></span></span>
 <span><span class="co">#&gt;    Stratum    lambda.sim cluster     n est.start incidence.rate      SE CI.lwr</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Stratum 1        0.05       1   100       0.1         0.059<span style="text-decoration: underline;">7</span> 0.008<span style="text-decoration: underline;">84</span> 0.044<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Stratum 2        0.05       2   100       0.1         0.044<span style="text-decoration: underline;">5</span> 0.007<span style="text-decoration: underline;">10</span> 0.032<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Stratum 3        0.05       3   100       0.1         0.056<span style="text-decoration: underline;">0</span> 0.008<span style="text-decoration: underline;">00</span> 0.042<span style="text-decoration: underline;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Stratum 4        0.05       4   100       0.1         0.046<span style="text-decoration: underline;">7</span> 0.007<span style="text-decoration: underline;">57</span> 0.034<span style="text-decoration: underline;">0</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Stratum 5        0.05       5   100       0.1         0.054<span style="text-decoration: underline;">8</span> 0.008<span style="text-decoration: underline;">15</span> 0.040<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Stratum 6        0.05       6   100       0.1         0.063<span style="text-decoration: underline;">8</span> 0.009<span style="text-decoration: underline;">33</span> 0.047<span style="text-decoration: underline;">9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Stratum 7        0.05       7   100       0.1         0.045<span style="text-decoration: underline;">2</span> 0.007<span style="text-decoration: underline;">20</span> 0.033<span style="text-decoration: underline;">1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Stratum 8        0.05       8   100       0.1         0.055<span style="text-decoration: underline;">7</span> 0.008<span style="text-decoration: underline;">18</span> 0.041<span style="text-decoration: underline;">8</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Stratum 9        0.05       9   100       0.1         0.057<span style="text-decoration: underline;">3</span> 0.008<span style="text-decoration: underline;">94</span> 0.042<span style="text-decoration: underline;">2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Stratum 10       0.05      10   100       0.1         0.075<span style="text-decoration: underline;">4</span> 0.010<span style="text-decoration: underline;">3</span>  0.057<span style="text-decoration: underline;">6</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Stratum 1        0.05       1   100       0.1         0.036<span style="text-decoration: underline;">7</span> 0.006<span style="text-decoration: underline;">86</span> 0.025<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Stratum 2        0.05       2   100       0.1         0.042<span style="text-decoration: underline;">3</span> 0.007<span style="text-decoration: underline;">78</span> 0.029<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Stratum 3        0.05       3   100       0.1         0.064<span style="text-decoration: underline;">8</span> 0.009<span style="text-decoration: underline;">92</span> 0.048<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Stratum 4        0.05       4   100       0.1         0.066<span style="text-decoration: underline;">5</span> 0.010<span style="text-decoration: underline;">7</span>  0.048<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Stratum 5        0.05       5   100       0.1         0.039<span style="text-decoration: underline;">0</span> 0.007<span style="text-decoration: underline;">69</span> 0.026<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Stratum 6        0.05       6   100       0.1         0.047<span style="text-decoration: underline;">4</span> 0.008<span style="text-decoration: underline;">46</span> 0.033<span style="text-decoration: underline;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Stratum 7        0.05       7   100       0.1         0.068<span style="text-decoration: underline;">4</span> 0.010<span style="text-decoration: underline;">5</span>  0.050<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Stratum 8        0.05       8   100       0.1         0.030<span style="text-decoration: underline;">9</span> 0.006<span style="text-decoration: underline;">43</span> 0.020<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Stratum 9        0.05       9   100       0.1         0.046<span style="text-decoration: underline;">6</span> 0.008<span style="text-decoration: underline;">27</span> 0.032<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Stratum 10       0.05      10   100       0.1         0.046<span style="text-decoration: underline;">1</span> 0.008<span style="text-decoration: underline;">24</span> 0.032<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 30 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: CI.upr &lt;dbl&gt;, coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 <p>We can explore the summary table interactively using
 <code><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">DT::datatable()</a></code></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT" class="external-link">DT</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-18e5ccbd409b86e966d9" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-18e5ccbd409b86e966d9">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["Stratum 1","Stratum 2","Stratum 3","Stratum 4","Stratum 5","Stratum 6","Stratum 7","Stratum 8","Stratum 9","Stratum 10","Stratum 11","Stratum 12","Stratum 13","Stratum 14","Stratum 15","Stratum 16","Stratum 17","Stratum 18","Stratum 19","Stratum 20","Stratum 21","Stratum 22","Stratum 23","Stratum 24","Stratum 25","Stratum 26","Stratum 27","Stratum 28","Stratum 29","Stratum 30","Stratum 31","Stratum 32","Stratum 33","Stratum 34","Stratum 35","Stratum 36","Stratum 37","Stratum 38","Stratum 39","Stratum 40","Stratum 41","Stratum 42","Stratum 43","Stratum 44","Stratum 45","Stratum 46","Stratum 47","Stratum 48","Stratum 49","Stratum 50"],[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3],[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.05967195234165294,0.04447567640127124,0.05600176577953261,0.0466723807683798,0.05475380835852162,0.06375346535380456,0.04523046635894305,0.05569012089843286,0.05729120969405901,0.07536235193719767,0.1332904387133714,0.1285623212959812,0.1194507037167565,0.1399385459483743,0.1099416303534225,0.08020747581272643,0.1228893869424593,0.1211612610642002,0.1306704402476349,0.1139390933423574,0.1647278308924385,0.1661210978481733,0.1257685733934611,0.179740576064731,0.1444136259264588,0.1553688013686552,0.1563324595727086,0.1883359599812248,0.1935757016446529,0.2273613647655893,0.2350532897375856,0.2423121698040063,0.2853708680360911,0.2040254205196865,0.2795372800362956,0.2274567181942886,0.2569187706093884,0.22640465375373,0.269094805234444,0.1847158922220437,0.3044985660260687,0.3350387351966683,0.4078334041035957,0.3587404344685975,0.4110412716942251,0.32373570500877,0.2951908911745746,0.4040072451939847,0.3930394942873464,0.4157833805536346],[0.008837346916323131,0.007099474847781508,0.007998905090113237,0.00756854815223009,0.008149399175910043,0.00932948555087583,0.007200398239989528,0.008184667212681459,0.008938073720206784,0.01033194773552469,0.01580453364012771,0.01608965618461084,0.01391689433510023,0.01552550639290506,0.01327776181217144,0.01046621415092652,0.0141162052671141,0.01412348641169293,0.0144927674124304,0.0133929557960972,0.01802079999900171,0.01811174623665543,0.01428324101531711,0.01968871330436396,0.01622284434499644,0.0178310665379918,0.0174012848955119,0.02020003627542328,0.02015922018637216,0.02485654617459661,0.02505529352942654,0.02524738965399061,0.02981483958031051,0.02188231808538463,0.02912607809930479,0.02407294494742005,0.02696271929134761,0.0240106269505041,0.02829892989351224,0.01994351497901245,0.03131697733426407,0.03557322452063649,0.04346820407323072,0.03882483896651949,0.04347716262459377,0.03391393340826922,0.0315163473042157,0.04213526300436783,0.04196621420743318,0.043677363809626],[0.04463836573955733,0.03252734785014652,0.0423274374591112,0.03396458307454035,0.04090005997676354,0.04785657201473291,0.03310741519476162,0.04175214085660792,0.04219791261863556,0.05760462024731111,0.1056501704254962,0.1005970607039162,0.09506429014315232,0.1125902162548291,0.08676842259792633,0.0621072342387368,0.09811548148845871,0.09641424409904602,0.1051404622010395,0.09049370832066589,0.1329375668038781,0.1341592209872554,0.1006707207270739,0.1450126339172825,0.1158744334440382,0.124072279255218,0.1256904725173166,0.1526291003464345,0.1578358411060042,0.1835092950072594,0.1907362643966903,0.1975538191733645,0.2325295831060662,0.1653447643116893,0.227902836539475,0.1848466639532075,0.2091535468839474,0.1839136110270159,0.218972738115408,0.1494862437115791,0.2489093039402233,0.2720930568908301,0.3309474042729592,0.290174118583405,0.3340804751517842,0.2636454949134064,0.2394548169910672,0.3293172694223299,0.3188235541668325,0.3384151496481994],[0.07976864379488394,0.06081300573485536,0.07409373112783482,0.06413478186403762,0.07330012551240626,0.08493095459005043,0.06179265505967897,0.07428097103651216,0.07778305855724037,0.09859424582824414,0.1681619724876045,0.1643017235429788,0.1500928539722139,0.1739298252862655,0.1393036973920677,0.1035827670496496,0.1539186394847373,0.1522601905957642,0.1623995519618507,0.1434587799814335,0.2041203169496874,0.2056975208055501,0.1571234807815621,0.2227852416121867,0.179981853920341,0.1945596920088614,0.1944446339215206,0.2323962713633208,0.2374083858561213,0.2816924896694003,0.2896672491265382,0.2972110986302914,0.3502200934430162,0.2517550065254292,0.3428701990576389,0.2798890580184488,0.315592327621701,0.2787127442884946,0.3306896320856119,0.2282481651302791,0.3725026555624419,0.4125461905013654,0.5025816288486206,0.4435085387731688,0.5057312222728484,0.3975217051668118,0.3639002268878568,0.4956370932370088,0.4845314659180336,0.5108394814012379],[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],[-302.5477510999616,-276.4267085920224,-296.1823139590891,-294.2117704753842,-302.6030470268903,-304.7976126731299,-281.0003479202295,-306.8403664191965,-365.6376318980203,-322.1726112934534,-489.307177143662,-527.336957619401,-481.6389509873147,-535.6920451189828,-394.8171900936013,-327.64526625231,-463.9988686345766,-445.9921670917002,-508.8811595741973,-462.7441154546885,-567.2369229389662,-529.7051232387652,-496.1205417656099,-517.1460542445432,-581.6439462218781,-582.962432399929,-567.6792404428577,-650.3142375047935,-560.9118784904445,-685.3439963632088,-574.6829473658629,-740.9793039418078,-752.6899944501948,-638.1019079497867,-787.5702515852839,-617.6902800924665,-746.8979703827047,-666.6163571749128,-678.3651614314164,-561.2538529791502,-733.3214537071414,-756.0035100962514,-779.0609950710268,-820.8756696079035,-858.8865211710324,-740.1804625996435,-717.2541510908532,-863.7956707488811,-814.4719618645536,-755.909521633283],[5,6,5,6,5,5,6,6,5,5,4,11,4,4,3,5,4,4,4,3,5,5,4,5,7,4,4,10,4,5,5,4,4,4,4,5,4,5,4,7,4,4,4,4,4,4,4,7,7,4],["HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA"],["1","1","1","1","1","1","1","1","1","1","1","3","1","1","1","1","1","1","1","1","1","1","1","1","3","1","1","3","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Stratum<\/th>\n      <th>lambda.sim<\/th>\n      <th>cluster<\/th>\n      <th>n<\/th>\n      <th>est.start<\/th>\n      <th>incidence.rate<\/th>\n      <th>SE<\/th>\n      <th>CI.lwr<\/th>\n      <th>CI.upr<\/th>\n      <th>coverage<\/th>\n      <th>log.lik<\/th>\n      <th>iterations<\/th>\n      <th>antigen.isos<\/th>\n      <th>nlm.convergence.code<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>We can plot the likelihood for a single simulated cluster by
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/formatCurrency.html" class="external-link">formatRound</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"incidence.rate"</span>,</span>
+<span>      <span class="st">"SE"</span>,</span>
+<span>      <span class="st">"CI.lwr"</span>,</span>
+<span>      <span class="st">"CI.upr"</span>,</span>
+<span>      <span class="st">"log.lik"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b8ea9562e8c1480d33b4" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b8ea9562e8c1480d33b4">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40"],["Stratum 1","Stratum 2","Stratum 3","Stratum 4","Stratum 5","Stratum 6","Stratum 7","Stratum 8","Stratum 9","Stratum 10","Stratum 11","Stratum 12","Stratum 13","Stratum 14","Stratum 15","Stratum 16","Stratum 17","Stratum 18","Stratum 19","Stratum 20","Stratum 21","Stratum 22","Stratum 23","Stratum 24","Stratum 25","Stratum 26","Stratum 27","Stratum 28","Stratum 29","Stratum 30","Stratum 31","Stratum 32","Stratum 33","Stratum 34","Stratum 35","Stratum 36","Stratum 37","Stratum 38","Stratum 39","Stratum 40"],[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.03668230443845762,0.04230131796163193,0.0647769951357807,0.06645715318051412,0.03898975659783584,0.04742077103988303,0.06840886878166468,0.03094727518878101,0.04662060944012535,0.04608185768196251,0.114427563040899,0.1156451311040298,0.1021018327056579,0.1016553247773746,0.1070375222543285,0.1226878769796462,0.1417292802817913,0.1365620318130965,0.103219097629621,0.07363205761439739,0.1830519181157409,0.1522348497620277,0.1634127204987669,0.1897234514770159,0.1278644278617872,0.1345645328724239,0.1867868250801163,0.1904450166442281,0.2081724241051228,0.1751996104053256,0.2441268805407391,0.227734096099709,0.1573871121021935,0.240874113719851,0.1777509519158427,0.1889272809340351,0.1705805812881833,0.2277431715801006,0.2008485189089005,0.2758558308754959],[0.006861663544919796,0.00777701633377111,0.009915046156701635,0.01074933069508991,0.00769457374152809,0.00846347853259671,0.01052267226836236,0.006432187266782641,0.008273648848167139,0.00824079741814975,0.0129744646736083,0.0150317325887801,0.01429240408606918,0.0136788177550192,0.01432633346800396,0.0149813907988221,0.01755886217004931,0.01724418805378782,0.01361496432127604,0.01079811000125121,0.02154974624649496,0.01921672871466122,0.01945171917356149,0.02174636514149074,0.01629884461369576,0.01704026606619065,0.02114429189782371,0.02102049086232916,0.02305002220075303,0.01957977413022212,null,0.02430402187768385,0.01793911475651539,0.02476506057183054,0.01931897450844008,0.02222158064761713,0.01999455035458904,0.02472755557272594,0.02258726089145272,0.02829069976450532],[0.02542341155724138,0.02950272453710583,0.04798795247382904,0.04840178095198632,0.02648299473246565,0.03342330583710799,0.05060347458299657,0.02059234395841621,0.0329243515272267,0.0324571212410848,0.09162551990896478,0.08963690707263654,0.07760340290069169,0.07808934960984915,0.08233941960612552,0.09657430921256617,0.1111742203801578,0.1066217073024068,0.07970463212559997,0.05523808216735827,0.1453338478712622,0.118868346321539,0.1294087607673013,0.1515497119912027,0.09959724040544336,0.1049882469507813,0.1496201615580378,0.1533972933623978,0.1675611663918534,0.1407360791632435,null,0.184751058395546,0.125877613998729,0.1969134117788499,0.1436476606330674,0.1500294636016317,0.1355677109290544,0.184087747358477,0.1611176805222198,0.2256244978904246],[0.05292725784995685,0.06065207635452579,0.08743984442989812,0.09124774175643369,0.05740291590568725,0.06728028451094664,0.09247928855777586,0.04650921932656964,0.06601439736091234,0.06542593816769662,0.1429041515561192,0.1491996632283497,0.1343341123222991,0.1323330916088222,0.1391439388952595,0.1558625195510505,0.1806820755792742,0.174909865962165,0.1336708022023637,0.09815112501740257,0.230558849274627,0.194967375245362,0.206351695684853,0.2375127446130752,0.1641542661811404,0.172472767505705,0.2331859400511099,0.2364403150121747,0.2586265009427032,0.2181025908116571,null,0.2807173013066851,0.1967840211534239,0.2946489938708967,0.2199506818819367,0.2379100519608844,0.2146361734162644,0.2817512460531217,0.2503767892955463,0.337270288197901],[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],[-202.8087176501128,-178.1592100609887,-292.0725425438017,-265.5567600990434,-206.6788833343015,-263.6204181971373,-318.8020683460168,-154.8955946657583,-240.5510809243075,-230.245526595145,-417.9956473517993,-435.4521706762806,-385.4793962343934,-409.4695483202607,-403.5751598392125,-427.8022693774042,-428.4842505279057,-486.3926162639458,-406.2951199829191,-291.9265534037877,-489.6892475216658,-488.9645108378005,-520.2160668863335,-623.3509182322202,-401.1255618961391,-414.4255348233661,-518.8816184784229,-545.7247599529724,-580.2746430587537,-473.8828716978157,-598.6029392100394,-554.6911297770199,-454.2797808965968,-672.8345688346899,-529.4793963413765,-589.3593460320124,-491.4655670177403,-559.6189508882154,-568.1905167763489,-590.4406917635476],[6,6,5,5,6,6,7,8,6,6,4,3,2,2,3,4,4,4,2,5,5,5,5,5,4,3,5,5,5,5,6,5,5,5,5,7,5,5,5,5],["HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA","HlyE_IgG+HlyE_IgA"],["1","1","1","1","1","1","2","1","1","1","2","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","2","1","1","1","1","1","1","1","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Stratum<\/th>\n      <th>lambda.sim<\/th>\n      <th>cluster<\/th>\n      <th>n<\/th>\n      <th>est.start<\/th>\n      <th>incidence.rate<\/th>\n      <th>SE<\/th>\n      <th>CI.lwr<\/th>\n      <th>CI.upr<\/th>\n      <th>coverage<\/th>\n      <th>log.lik<\/th>\n      <th>iterations<\/th>\n      <th>antigen.isos<\/th>\n      <th>nlm.convergence.code<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":9,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":11,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script><p>We can plot the likelihood for a single simulated cluster by
 subsetting that simulation in <code>ests</code> and calling
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>We can also plot log-likelihood curves for several clusters at once
 (your computer might struggle to plot many at once):</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulate_xsectionalData_files/figure-html/plot-multiple-1.png" width="672"></p>
 <p>The <code>log_x</code> argument also works here:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulate_xsectionalData_files/figure-html/plot-multiple-log-1.png" width="672"></p>
 <div class="section level4">
 <h4 id="nlm-convergence-codes">
@@ -470,17 +561,16 @@ subsetting that simulation in <code>ests</code> and calling
 </h4>
 <p>Make sure to check the <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> exit codes (codes 3-5
 indicate possible non-convergence):</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># removes extra meta-data</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Stratum</span>, <span class="va">nlm.convergence.code</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">nlm.convergence.code</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> </span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
-<span><span class="co">#&gt;   Stratum    nlm.convergence.code</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 12 3                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 25 3                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Stratum 28 3</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 variables: Stratum &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 <p>Solutions to <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> exit codes 3-5:</p>
 <ul>
 <li>3: decrease the <code>stepmin</code> argument to
@@ -495,79 +585,38 @@ indicate possible non-convergence):</p>
 </ul>
 <p>We can extract the indices of problematic strata, if there are
 any:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">problem_strata</span> <span class="op">=</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span><span class="op">$</span><span class="va">nlm.convergence.code</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 12 25 28</span></span></code></pre></div>
-<p>A few clusters had problems; let’s take a look:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="va">problem_strata</span><span class="op">]</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
-<p>Visually, it looks like we approximately reached the MLE, but we
-should probably re-run those clusters, adjusting the <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code>
-settings appropriately, to be sure.</p>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; integer(0)</span></span></code></pre></div>
+<p>If any clusters had problems, we can take a look:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">problem_strata</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ests</span><span class="op">[</span><span class="va">problem_strata</span><span class="op">]</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>If any of the fits don’t appear to be at the maximum likelihood, we
+should re-run those clusters, adjusting the <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> settings
+appropriately, to be sure.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="plot-distribution-of-estimates-by-simulated-incidence-rate">plot distribution of estimates by simulated incidence rate<a class="anchor" aria-label="anchor" href="#plot-distribution-of-estimates-by-simulated-incidence-rate"></a>
 </h3>
 <p>Finally, we can look at our simulation results:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>xvar <span class="op">=</span> <span class="st">'lambda.sim'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/graph-1.png" width="672"></p>
-</div>
-<div class="section level3">
-<h3 id="extra-remove">extra (remove?)<a class="anchor" aria-label="anchor" href="#extra-remove"></a>
-</h3>
-<p>We can calculate the log-likelihood of the data as a function of the
-incidence rate, even without running <code><a href="../reference/est.incidence.html">est.incidence()</a></code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">lik_HlyE_IgA</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
-<span>  curve_params <span class="op">=</span> </span>
-<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span> </span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    alpha <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fl">365.25</span>,</span>
-<span>    d <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
-<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">lik_HlyE_IgG</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
-<span>  curve_params <span class="op">=</span> </span>
-<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span> </span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    alpha <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fl">365.25</span>,</span>
-<span>    d <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>,</span>
-<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-2.png" width="672"></p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">lik_both</span> <span class="op">=</span> <span class="fu"><a href="../reference/graph.loglik.html">graph.loglik</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdataL</span>,</span>
-<span>  curve_params <span class="op">=</span> </span>
-<span>    <span class="va">dmcmc</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    alpha <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">alpha</span> <span class="op">*</span> <span class="fl">365.25</span>,</span>
-<span>    d <span class="op">=</span> <span class="va">.data</span><span class="op">$</span><span class="va">r</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
-<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulate_xsectionalData_files/figure-html/unnamed-chunk-12-3.png" width="672"></p>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ests</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>xvar <span class="op">=</span> <span class="st">'lambda.sim'</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/graph-1.png" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

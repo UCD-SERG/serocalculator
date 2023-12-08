@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,24 +59,27 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">graph.loglik</span><span class="op">(</span></span>
-<span>  <span class="va">...</span>,</span>
+<span>  <span class="va">pop_data</span>,</span>
+<span>  <span class="va">curve_params</span>,</span>
+<span>  <span class="va">noise_params</span>,</span>
+<span>  <span class="va">antigen_isos</span>,</span>
 <span>  x <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">0</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span>
 <span>  highlight_points <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  highlight_point_names <span class="op">=</span> <span class="st">"highlight_points"</span>,</span>
-<span>  log_x <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  log_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  previous_plot <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  curve_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">antigen_isos</span>, collapse <span class="op">=</span> <span class="st">" + "</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="llik.html">llik</a></code></p><dl><dt><code>pop_data</code></dt>
+    <dl><dt>pop_data</dt>
 <dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with cross-sectional serology data per antibody and age, and additional columns</p></dd>
 
-    <dt><code>antigen_isos</code></dt>
-<dd><p>Character vector listing one or more antigen isotypes. Values must match <code>pop_data</code>.</p></dd>
 
-    <dt><code>curve_params</code></dt>
+<dt>curve_params</dt>
 <dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype combinations</p></li>
 <li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
 <li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
@@ -86,7 +89,8 @@
 <li><p><code>r</code>: shape factor of antibody decay</p></li>
 </ul></dd>
 
-    <dt><code>noise_params</code></dt>
+
+<dt>noise_params</dt>
 <dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p></li>
 <li><p><code>nu</code>: biological noise</p></li>
 <li><p><code>eps</code>: measurement noise</p></li>
@@ -94,14 +98,9 @@
 <li><p><code>y.high</code>: upper limit of detection for the current antigen isotype</p></li>
 </ul></dd>
 
-    <dt><code>verbose</code></dt>
-<dd><p>logical: if TRUE, print verbose log information to console</p></dd>
 
-    <dt><code>lambda</code></dt>
-<dd><p>incidence parameter, in events per person-year</p></dd>
-
-  
-</dl></dd>
+<dt>antigen_isos</dt>
+<dd><p>Character vector listing one or more antigen isotypes. Values must match <code>pop_data</code>.</p></dd>
 
 
 <dt>x</dt>
@@ -118,6 +117,22 @@
 
 <dt>log_x</dt>
 <dd><p>should the x-axis be on a logarithmic scale (<code>TRUE</code>) or linear scale (<code>FALSE</code>, default)?</p></dd>
+
+
+<dt>previous_plot</dt>
+<dd><p>if not NULL, the current data is added to the existing graph</p></dd>
+
+
+<dt>curve_label</dt>
+<dd><p>if not NULL, add a label for the curve</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Arguments passed on to <code><a href="llik.html">llik</a></code></p><dl><dt><code>verbose</code></dt>
+<dd><p>logical: if TRUE, print verbose log information to console</p></dd>
+
+  
+</dl></dd>
 
 </dl></div>
     <div class="section level2">

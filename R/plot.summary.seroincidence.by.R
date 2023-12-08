@@ -4,6 +4,7 @@
 #' @param xvar the name of a stratifying variable in `object`
 #' @param alpha transparency for the points in the graph (1 = no transparency, 0 = fully transparent)
 #' @param shape shape argument for `geom_point()`
+#' @param width width for jitter
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()] object
@@ -14,6 +15,7 @@ autoplot.summary.seroincidence.by = function(
     xvar,
     alpha = .7,
     shape = 1,
+    width = 0.001,
     ...)
 {
   object |>
@@ -21,8 +23,11 @@ autoplot.summary.seroincidence.by = function(
       ggplot2::aes(
         x = get(xvar),
         y = .data$incidence.rate)) +
-    ggplot2::geom_point(
-      aes(col = .data$nlm.convergence.code),
+    ggplot2::geom_jitter(
+      width = width,
+      height = 0,
+      aes(
+        col = .data$nlm.convergence.code),
       shape = shape,
       alpha = alpha) +
     ggplot2::xlab(xvar) +

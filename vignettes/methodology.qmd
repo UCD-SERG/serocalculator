@@ -2,30 +2,28 @@
 title: "Serocalculator package methodology"
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
 date: '`r Sys.Date()`'
-output: 
-  bookdown::html_document2:
-    base_format: rmarkdown::html_vignette
+format: 
+  html:
+    number-sections: true
     toc: true
-header-includes:
-- \usepackage{subfigure}
-  \DeclareUnicodeCharacter{2010}{-}
+    html-math-method: mathjax
+    fig-cap-location: top
+  revealjs: 
+    echo: false
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
 bibliography: references.bib
-fontsize: 11pt
-vignette: >
-  %\VignetteIndexEntry{Serocalculator package methodology}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 ---
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
+# Introduction to seroincidence estimation
 
-\newpage
-
-# Estimating incidence
+## Estimating incidence
 
 The **incidence rate** of a disease for a specific time period is the rate at which individuals in a population are acquiring that disease during that time period. For example, if ten people in a population of 1000 contract typhoid over a one month time period, then the incidence rate for that time period is 10 new cases per 1000 persons per month:
 
@@ -43,17 +41,19 @@ From the perspective of an individual in the population, the incidence rate is t
 
 We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
-# Estimating incidence from cross-sectional data
+## Estimating incidence from cross-sectional data
 
-Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so.
+Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so. In particular, if we assume that the incidence rate is constant over time, then we can make some progress.
 
-In particular, if we assume that the incidence rate is constant over time, then we can make some progress.
+Suppose we measure disease antibody levels $Y$ for a simple random sample of a population at a given calendar time. For a given member of the sample, let $\color{red}T$ denote the time since they were last exposed to typhoid. We don't get to observe $T$ - it is a "latent variable". Instead, we only observe $Y$.
 
-Suppose we measure disease antibody levels $Y$ for a simple random sample of a population at a given calendar time.
+If we assume the incidence rate is constant, then the probability that our individual was **last** infected $t$ days ago, $p(T=t)$, is equal to the probability of being infected at time $t$ (i.e., the incidence rate at time $t$, $\lambda$) times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
 
-For a given member of the sample, let $T$ denote the time since they were last exposed to typhoid. We don't get to observe $T$ - it is a "latent variable". Instead, we only observe $Y$.
+That is:
 
-If we assume the incidence rate is constant, then the probability that our individual was *last* infected $t$ days ago (i.e., $p(T=t)$) is equal to the probability of being infected at time $t$ (i.e., the incidence rate at time $t$, $\lambda$) times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
+$$p(T=t) = \lambda \exp(-\lambda t)$$
+
+## Likelihood for observed infection times
 
 If we could observe $T$ for each individual in our sample, we could compute the likelihood of the data:
 
@@ -67,13 +67,19 @@ $$
 
 Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.
 
-![Example log(likelihood) curve](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png){width=80%}
+## Example log(likelihood) curves
 
-The standard error of the estimate is approximately equal to the inverse of the rate of curvature^[2nd derivative, aka Hessian] in the log-likelihood function, at the maximum (more curvature -> maximum is easier to determine -> less standard error).
+![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-5-1.png){width=100% #fig-loglik}
+
+## standard error
+
+The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum (more curvature -> maximum is easier to determine -> less standard error).
+
+![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-5-1.png){}
 
 ## The plot thickens
 
-Unfortunately, we don't observe $T$; we only observe antibody levels $Y$. So things get a little more complicated.
+Unfortunately, we don't observe infection times $T$; we only observe antibody levels $\color{red}{Y}$. So things get a little more complicated.
 
 In short, we are hoping that we can estimate $T$ (time since last infection) from $Y$ (current antibody levels). If we could do that, then we could plug in our estimates $\hat t_i$ into that likelihood above, and estimate $\lambda$ as previously.
 
@@ -95,7 +101,13 @@ $$
 p(Y=y,T=t) = p(Y=y|T=t)P(T=t)
 $$
 
-Substituting into the previous expression for $p(Y=y)$:
+## Antibody response curves: $p(Y=y|T=t)$
+
+
+
+## Putting it all together
+
+Substituting $p(Y=y,T=t) = p(Y=y|T=t)P(T=t)$ into the previous expression for $p(Y=y)$:
 
 $$
 \begin{aligned}
@@ -104,7 +116,7 @@ p(Y=y)
 \end{aligned}
 $$
 
-Now, the likelihood is:
+Now, the likelihood of the observed data $\vec{y} = (y_1, y_2, ..., y_n)$ is:
 
 $$
 \begin{aligned}
@@ -124,13 +136,13 @@ A secondary problem is that the likelihood of $Y$ involves the product of integr
 
 $$
 \begin{aligned}
-\log\mathcal{L}(\lambda) 
+\log \mathcal{L} (\lambda) 
 &= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
 &= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
 \end{aligned}
 $$
 
-The derivative of this expression doesn't come out cleanly, so we will use a *numerical method*^[specifically, a Newton-type algorithm, implemented by `stats::nlm()`] to find the MLE and corresponding standard error.
+The derivative of this expression doesn't come out cleanly, so we will use a *numerical method* (specifically, a Newton-type algorithm, implemented by `stats::nlm()`) to find the MLE and corresponding standard error.
 
 # Modeling $p(Y=y|T=t)$
 
@@ -223,7 +235,7 @@ u(\tau) & = \int_{\Delta t=0}^{\infty} u_{f}(\tau;\Delta t)\cdot q(\Delta t)\tex
         & = \frac{1}{\overline{\Delta t_{p}}}\int_{\tau}^{\infty}p(\Delta t)\text{d}\Delta t
 \end{align*}
 
-# 3. Incidence of seroconversions
+# Incidence of seroconversions
 
 To calculate the incidence of seroconversions, as in [@Teunis_2012], the distribution 
 $p(\Delta t)$ of intervals $\Delta t$ between seroconversions, is important. Assuming any subject is 
@@ -337,7 +349,7 @@ $$
 $$
 that can be used to estimate $(\lambda, m)$.
 
-# 4. True seronegative subjects
+# True seronegative subjects
 
 At the time that a cross--sectional serum sample is collected, the subject whose blood is drawn may 
 have never been infected in their lifetime. The antibody concentration $y$ in that sample then 
@@ -379,7 +391,7 @@ $$
 When the seroconversion rate is low, or a subject is young, or both, the probability of a true 
 negative may be considerable.
 
-# 5. Censored observations
+# Censored observations
 
 In case observations are censored at $y_{c}$ such that an observed $Y = \max(Y,y_{c})$, then for 
 $y_{c} < Y$ the density $\rho(y)$ as in equations \eqref{margdist_y_increase} and 

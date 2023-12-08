@@ -82,7 +82,7 @@ graph.curve.params(
   curve_params = dmcmc |> 
     # dplyr::slice_sample(n = 100, by = antigen_iso) |>  # reduce data size for speed
     dplyr::filter(antigen_iso %in% antibodies), 
-    
+  
   antigen_isos = antibodies) |> print()
 ```
 
@@ -422,6 +422,8 @@ Finally, we can look at our simulation results:
 
 library(ggplot2)
 summary(ests) |> 
-  autoplot(xvar = 'lambda.sim') + ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1))
+  autoplot(xvar = 'lambda.sim') +
+  ggplot2::geom_abline(
+    ggplot2::aes(intercept = 0, slope = 1))
 
 ```

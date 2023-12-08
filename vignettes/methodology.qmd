@@ -25,19 +25,26 @@ bibliography: references.bib
 
 ## Estimating incidence
 
-The **incidence rate** of a disease for a specific time period is the rate at which individuals in a population are acquiring that disease during that time period. For example, if ten people in a population of 1000 contract typhoid over a one month time period, then the incidence rate for that time period is 10 new cases per 1000 persons per month:
+The **incidence rate** of a disease for a specific time period is the rate at which individuals in a population are acquiring that disease during that time period. 
+
+Example: if ten people in a population of 1000 contract typhoid over a one month time period, then the incidence rate for that time period is 10 new cases per 1000 persons per month.
 
 ```{r, echo = FALSE, message=FALSE}
 library(dplyr)
 
 ```
 
+More mathematically, the incidence rate *at a given time point*, $t$, is the *derivative* (i.e., the current rate of change over time) of the cumulative count of infections per person.
 
-More mathematically, the incidence rate *at a given time point*, $t$, is the derivative (i.e., the current rate of change over time) of the cumulative ratio of infections per person.
+## Scale of incidence rates
 
-In both definitions, the units for an incidence rate are "# new infections per # persons at risk per time duration". For convenience, we can rescale the incidence rate to make it easier to understand; for example, we might express incidence as "# new infections per 1000 persons per year" or "# new infections per 100,000 persons per day", etc., depending on the disease in question.
+In both definitions, the units for an incidence rate are "# new infections per # persons at risk per time duration"; for example, "new infections per 1000 persons per year". For convenience, we can rescale the incidence rate to make it easier to understand; for example, we might express incidence as "# new infections per 1000 persons per year" or "# new infections per 100,000 persons per day", etc., depending on the disease in question.
+
+## Incidence rate from an individual's perspective
 
 From the perspective of an individual in the population, the incidence rate is the probability of becoming infected at that time point.
+
+## Notation
 
 We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
@@ -46,6 +53,8 @@ We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so. In particular, if we assume that the incidence rate is constant over time, then we can make some progress.
 
 Suppose we measure disease antibody levels $Y$ for a simple random sample of a population at a given calendar time. For a given member of the sample, let $\color{red}T$ denote the time since they were last exposed to typhoid. We don't get to observe $T$ - it is a "latent variable". Instead, we only observe $Y$.
+
+## Time since infection and incidence
 
 If we assume the incidence rate is constant, then the probability that our individual was **last** infected $t$ days ago, $p(T=t)$, is equal to the probability of being infected at time $t$ (i.e., the incidence rate at time $t$, $\lambda$) times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
 
@@ -60,8 +69,8 @@ If we could observe $T$ for each individual in our sample, we could compute the 
 $$
 \begin{aligned}
 \mathcal{L}^*(\lambda)
-&= \prod_{i=1}^n p(T=t_i)\\
-&= \prod_{i=1}^n \lambda \exp(-\lambda t_i)\\
+&= \prod_{i=1}^n p(T=t_i)
+= \prod_{i=1}^n \lambda \exp(-\lambda t_i)\\
 \end{aligned}
 $$
 
@@ -83,7 +92,9 @@ Unfortunately, we don't observe infection times $T$; we only observe antibody le
 
 In short, we are hoping that we can estimate $T$ (time since last infection) from $Y$ (current antibody levels). If we could do that, then we could plug in our estimates $\hat t_i$ into that likelihood above, and estimate $\lambda$ as previously.
 
-We're actually going to do something a little more nuanced; instead of just using one value for $\hat t$, we are going to consider all possible values of $t$ for each individual. 
+We're actually going to do something a little more nuanced; instead of just using one value for $\hat t$, we are going to consider all possible values of $t$ for each individual.
+
+## Likelihood of observed data
 
 The likelihood of our individual's observed data, $P(Y=y)$, can be expressed as an integral over the joint probability of $Y$ and $T$ (using the Law of Total Probability):
 
@@ -101,9 +112,9 @@ $$
 p(Y=y,T=t) = p(Y=y|T=t)P(T=t)
 $$
 
-## Antibody response curves: $p(Y=y|T=t)$
+## Antibody response decay curves
 
-
+![Antibody response decay curves, $p(Y=y|T=t)$, for typhoid](fig1a-1.svg){width=100% #fig-decay}
 
 ## Putting it all together
 
@@ -121,18 +132,16 @@ Now, the likelihood of the observed data $\vec{y} = (y_1, y_2, ..., y_n)$ is:
 $$
 \begin{aligned}
 \mathcal{L}(\lambda) 
-&= \prod_{i=1}^n p(Y=y_i)\\
-&= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+&= \prod_{i=1}^n p(Y=y_i)
+= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
 \end{aligned}
 $$
 
 If we know $p(Y=y|T=t)$, then we can maximize $p(Y=y)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
 
-Now, the big problem becomes modeling $p(Y=y|T=t)$ (see next section).
-
 ## Finding the MLE numerically
 
-A secondary problem is that the likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
+The likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
 
 $$
 \begin{aligned}
@@ -147,6 +156,8 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 # Modeling $p(Y=y|T=t)$
 
 ## A simple model for the seroresponse
+
+Now, the big problem becomes modeling $p(Y=y|T=t)$.
 
 The current version of the serocalculator package uses the model proposed in @Teunis_2016 for 
 the shape of the seroresponse:

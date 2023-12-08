@@ -80,8 +80,9 @@ antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 graph.curve.params(
   curve_params = dmcmc |> 
-    dplyr::filter(antigen_iso %in% antibodies) |> 
-    # dplyr::slice_sample(n = 100, by = antigen_iso), # reduce data size for speed
+    # dplyr::slice_sample(n = 100, by = antigen_iso) |>  # reduce data size for speed
+    dplyr::filter(antigen_iso %in% antibodies), 
+    
   antigen_isos = antibodies) |> print()
 ```
 

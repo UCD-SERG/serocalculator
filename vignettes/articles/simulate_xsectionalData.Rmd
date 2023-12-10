@@ -71,7 +71,24 @@ dmcmc =
 
 ## visualize antibody decay model
 
-We can visualize the model using the `graph.curve.params()` function:
+We can graph individual MCMC samples from the posterior distribution of model parameters using the `graph.decay.curves()` function:
+
+```{r}
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgA") |> 
+  graph.decay.curves()
+```
+
+We can simultaneously graph MCMC samples for multiple antigen:isotype combinations using the `graph.decay.curves.by()` function:
+
+```{r}
+dmcmc |> 
+  graph.decay.curves.by()
+```
+
+
+
+We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
 
 ```{r, "graph-curve-params"}
 
@@ -80,7 +97,7 @@ antibodies = c("HlyE_IgA", "HlyE_IgG")
 
 graph.curve.params(
   curve_params = dmcmc |> 
-    # dplyr::slice_sample(n = 100, by = antigen_iso) |>  # reduce data size for speed
+    # dplyr::slice_sample(n = 100, by = antigen_iso) |> # can reduce data size for speed
     dplyr::filter(antigen_iso %in% antibodies), 
   
   antigen_isos = antibodies) |> print()

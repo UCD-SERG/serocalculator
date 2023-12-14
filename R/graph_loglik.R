@@ -83,8 +83,7 @@ graph.loglik = function(
     if(log_x)
     {
       plot1 = plot1 +
-        ggplot2::scale_x_continuous(
-          trans = "log10",
+        ggplot2::scale_x_log10(
           labels = scales::label_comma())
     }
   } else

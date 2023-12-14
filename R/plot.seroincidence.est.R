@@ -23,8 +23,7 @@ autoplot.seroincidence =
   if(log_x)
   {
     to_return = to_return +
-      ggplot2::scale_x_continuous(
-        trans = "log10",
+      ggplot2::scale_x_log10(
         labels = scales::label_comma())
   }
 

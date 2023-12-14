@@ -107,8 +107,7 @@ est.incidence <- function(
     if(print_graph)
       print(
         graph +
-          ggplot2::scale_x_continuous(
-            trans = "log10",
+          ggplot2::scale_x_log10(
             labels = scales::label_comma()))
 
   } else
@@ -169,8 +168,7 @@ est.incidence <- function(
     {
       print(
         graph +
-          ggplot2::scale_x_continuous(
-            trans = "log10",
+          ggplot2::scale_x_log10(
             labels = scales::label_comma()))
 
     }

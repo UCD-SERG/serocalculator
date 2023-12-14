@@ -8,6 +8,7 @@
 #' @param alpha (passed to [ggplot2::geom_function()]) how transparent the curves should be:
 #' * 0 = fully transparent (invisible)
 #' * 1 = fully opaque (no transparency)
+#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @inheritParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
 #' @export
@@ -28,6 +29,7 @@ graph.decay.curves = function(
     verbose = FALSE,
     alpha = .4,
     n_curves = 100,
+    log_x = FALSE,
     rows_to_graph = sample.int(
       n = nrow(curve_params),
       size = min(n_curves, nrow(curve_params)),
@@ -61,21 +63,19 @@ graph.decay.curves = function(
 
     yt <- 0
 
-    yt_1 = y0 * exp(beta * t)
-    yt_2 = (y1 ^ (1 - shape) - (1 - shape) * alpha * (t - t1)) ^ (1 / (1 - shape))
-    yt = if_else(t <= t1, yt_1, yt_2)
+    yt_phase_1 = y0 * exp(beta * t)
+    yt_phase_2 = (y1 ^ (1 - shape) - (1 - shape) * alpha * (t - t1)) ^ (1 / (1 - shape))
+    yt = dplyr::if_else(t <= t1, yt_phase_1, yt_phase_2)
     return(yt)
 
   }
 
-  # ab = Vectorize(ab, vectorize.args = "t")
-
   plot1 =
     ggplot2::ggplot() +
-    ggplot2::xlim(xlim) +
     ggplot2::scale_y_log10(
       # limits = c(0.9, 2000),
-      breaks = c(1, 10, 100, 1000),
+      labels = scales::label_comma(),
+      # breaks = c(0.1, 1, 10, 100, 1000),
       minor_breaks = NULL
     ) +
     # ggplot2::scale_x_log10() +
@@ -100,9 +100,21 @@ graph.decay.curves = function(
   layers =
     lapply(
       X = rows_to_graph,
-      F = layer_function)
+      FUN = layer_function)
 
   plot1 = plot1 + layers
+
+  if(log_x)
+  {
+    plot1 = plot1 +
+      ggplot2::scale_x_log10(
+      limits = xlim,
+      labels = scales::label_comma())
+  } else
+  {
+    plot1 = plot1 + ggplot2::xlim(xlim)
+
+  }
 
   return(plot1)
 }

@@ -6,7 +6,7 @@
 #' @param ncol how many columns of subfigures to use in panel plot
 #' @details
 #' ## `rows_to_graph`
-#' Note that if you directly specify `rows_to_graph` when calling this function, the row numbers are enumerated separately for each antigen isotype; in other words, for the purposes of this argument, row numbers start over at 1 for each antigen isotype. There is currently no way to specify different row numbers for different antigen isotypes; if you want to do that, you will could call [graph.decay.curve()] directly for each antigen isotype and combine the resulting panels yourself. Or you could subset `curve_params` manually, before passing it to this function, and set the `n_curves` argument to `Inf`.
+#' Note that if you directly specify `rows_to_graph` when calling this function, the row numbers are enumerated separately for each antigen isotype; in other words, for the purposes of this argument, row numbers start over at 1 for each antigen isotype. There is currently no way to specify different row numbers for different antigen isotypes; if you want to do that, you will could call [graph.decay.curves()] directly for each antigen isotype and combine the resulting panels yourself. Or you could subset `curve_params` manually, before passing it to this function, and set the `n_curves` argument to `Inf`.
 #' @return a [ggplot2::ggplot()] object
 #' @export
 graph.decay.curves.by = function(
@@ -22,7 +22,8 @@ graph.decay.curves.by = function(
     split(~antigen_iso)
 
   labels = names(split_data)
-  figs = lapply(split_data, FUN = graph.decay.curve, ...)
+  figs = split_data |>
+    lapply(FUN = graph.decay.curves, ...)
 
   for (i in 1:length(figs))
   {

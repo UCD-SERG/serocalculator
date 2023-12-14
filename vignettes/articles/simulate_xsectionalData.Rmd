@@ -71,22 +71,42 @@ dmcmc =
 
 ## visualize antibody decay model
 
+### The `graph.decay.curves()` function
+
 We can graph individual MCMC samples from the posterior distribution of model parameters using the `graph.decay.curves()` function:
 
 ```{r}
+set.seed(1) # to ensure reproducibility
 dmcmc |> 
   filter(antigen_iso == "HlyE_IgA") |> 
   graph.decay.curves()
 ```
 
+We can use a logarithmic scale for the x-axis if desired:
+
+```{r}
+set.seed(1) # to ensure reproducibility
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgA") |> 
+  graph.decay.curves(log_x = TRUE)
+```
+
+### The `graph.decay.curves.by()` function
+
 We can simultaneously graph MCMC samples for multiple antigen:isotype combinations using the `graph.decay.curves.by()` function:
 
 ```{r}
-dmcmc |> 
-  graph.decay.curves.by()
+dmcmc |> graph.decay.curves.by()
+```
+
+The `log_x` argument also works here:
+
+```{r}
+dmcmc |> graph.decay.curves.by(log_x = TRUE)
 ```
 
 
+### The `graph.curve.params()` function
 
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
 
@@ -95,12 +115,9 @@ We can graph the median, 10%, and 90% quantiles of the model using the `graph.cu
 # Specify the antibody-isotype responses to include in analyses
 antibodies = c("HlyE_IgA", "HlyE_IgG")
 
-graph.curve.params(
-  curve_params = dmcmc |> 
-    # dplyr::slice_sample(n = 100, by = antigen_iso) |> # can reduce data size for speed
-    dplyr::filter(antigen_iso %in% antibodies), 
-  
-  antigen_isos = antibodies) |> print()
+dmcmc |> 
+  graph.curve.params(antigen_isos = antibodies) |> 
+  print()
 ```
 
 

@@ -71,8 +71,9 @@ graph.curve.params = function(
 
   serocourse.all <-
     cbind(d, dT)  %>%
-    tidyr::pivot_longer(cols = dplyr::starts_with("time"),
-                        values_to = "t") %>%
+    tidyr::pivot_longer(
+      cols = dplyr::starts_with("time"),
+      values_to = "t") %>%
     select(-"name")  %>%
     rowwise() %>%
     mutate(res = ab(

@@ -9,6 +9,7 @@ graph.decay.curves(
   verbose = FALSE,
   alpha = 0.4,
   n_curves = 100,
+  log_x = FALSE,
   rows_to_graph = sample.int(n = nrow(curve_params), size = min(n_curves,
     nrow(curve_params)), replace = FALSE),
   xlim = c(10^-1, 10^3.1),
@@ -27,6 +28,8 @@ graph.decay.curves(
 }}
 
 \item{n_curves}{how many curves to plot (see details).}
+
+\item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
 
 \item{rows_to_graph}{which rows of \code{curve_params} to plot (overrides \code{n_curves}).}
 

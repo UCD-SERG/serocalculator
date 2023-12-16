@@ -80,7 +80,7 @@ Then we could find the value of $\lambda$ that maximizes this likelihood by taki
 
 ## Example log(likelihood) curves
 
-![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-5-1.png){width=100% #fig-loglik}
+![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png){width=100% #fig-loglik}
 
 ## standard error
 
@@ -88,7 +88,7 @@ The standard error of the estimate is approximately equal to the inverse of the 
 
 more curvature -> likelihood peak is clearer -> smaller standard errors
 
-![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-5-1.png){}
+![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-9-1.png){}
 
 ## The plot thickens
 
@@ -213,7 +213,7 @@ We are more concerned about overcount (cross-reactivity) than undercount. For a 
 
 There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
 
-## Other innovations in the `serocalculator` package
+# Other innovations in the `serocalculator` package
 
 The `serocalculator` package provides three refinements to the method for 
 calculating seroincidence published earlier [@Teunis_2012] and implemented in R package

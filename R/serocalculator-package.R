@@ -1,4 +1,4 @@
-#' @docType package
+#' _PACKAGE
 #'
 #' @name serocalculator
 #'

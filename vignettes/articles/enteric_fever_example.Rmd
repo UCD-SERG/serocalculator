@@ -276,7 +276,7 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
 In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)]. 
 
 
-## Acknowledgements
+## Acknowledgments
 Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan).  
 
 ## References

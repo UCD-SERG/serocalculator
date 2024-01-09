@@ -38,7 +38,7 @@ stratify_data <- function(
 
   # Make stratum variable (if needed)
 
-  strata = data |> count.strata(strata_varnames)
+  strata = data |> count_strata(strata_varnames)
 
   strata_vars_curve_params =
     warn.missing.strata(

@@ -1,4 +1,4 @@
-count.strata = function(data, strata_varnames)
+count_strata = function(data, strata_varnames)
 {
   to_return =
     data |>

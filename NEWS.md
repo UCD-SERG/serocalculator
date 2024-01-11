@@ -1,6 +1,6 @@
 # serocalculator (development version)
 
-##
+* Spell-checking of function documentation and tutorial articles.
 
 ## serocalculator 0.4.0
 

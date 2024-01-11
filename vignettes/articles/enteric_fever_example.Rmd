@@ -112,8 +112,7 @@ Column Name | Description
 
 #Import cross-sectional data from OSF and rename required variables
 xs_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
-  rename(value = result,
-         age = Age) #rename variables
+  clean_pop_data
 
 ```
 
@@ -143,7 +142,8 @@ We see that across countries, our data is highly skewed with the majority of res
 #Create log transformed plots
 
 options(scipen = 999)
-ggplot(xs_data, aes(x = value)) +
+xs_data |> 
+  ggplot(aes(x = value)) +
   geom_density(aes(fill = Country), alpha = .6, color = "black") +
   scale_x_log10() +
   theme_minimal() +
@@ -159,7 +159,7 @@ Once log transformed, our data looks much more normally distributed. In most cas
 
 Let's also take a look at how antibody responses change by age.
 
-```{r plotage}
+```{r "plot age"}
 
 #Plot antibody responses by age
 

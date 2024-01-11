@@ -26,7 +26,7 @@
 .errorCheck <- function(data, antigen_isos, curve_params)
 {
   .checkAntibodies(antigen_isos = antigen_isos)
-  .checkCsData(data = data, antigen_isos = antigen_isos)
+  check_pop_data(pop_data = data, antigen_isos = antigen_isos)
   .checkParams(antigen_isos = antigen_isos, params = curve_params)
 
   invisible(NULL)
@@ -46,20 +46,6 @@
   if (setequal(antigen_isos, "")) {
     stop(.pasteN("Argument `antigen_isos` is empty.",
                  "Provide a character vector with at least one antibody name."))
-  }
-
-  invisible(NULL)
-}
-
-.checkCsData <- function(data, antigen_isos)
-{
-  if (!is.data.frame(data)) {
-    stop(.pasteN("Argument `pop_data` is not a `data.frame()`.",
-                 "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
-  }
-
-  if (!is.element("age", names(data))) {
-    stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
   invisible(NULL)

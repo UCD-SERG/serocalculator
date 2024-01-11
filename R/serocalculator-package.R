@@ -1,4 +1,4 @@
-#' @docType package
+#' @docType _PACKAGE
 #'
 #' @name serocalculator
 #'
@@ -108,7 +108,7 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
 #' @importFrom dplyr summarise
-#' @importFrom dplyr tibble
+#' @importFrom tibble tibble
 #' @importFrom dplyr ungroup
 #' @importFrom foreach %:%
 #' @importFrom foreach %dopar%

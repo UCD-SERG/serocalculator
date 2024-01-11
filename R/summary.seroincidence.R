@@ -1,6 +1,6 @@
 
-#' summarize a fitted incidence model
-#'
+#' @title Summarizing fitted seroincidence models
+#' @description This function is a `summary()` method for `seroincidence` objects.
 #' @param object a [list()], outputted by [stats::nlm()] or [est.incidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param ... unused

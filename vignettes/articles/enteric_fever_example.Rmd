@@ -88,8 +88,18 @@ Column Name    |  Description
 
 #Import longitudinal antibody parameters from OSF
 
-curve = url("https://osf.io/download/rtw5k/") %>% readRDS() 
+curve = 
+  "https://osf.io/download/rtw5k/" |> 
+  load_curve_params()
 
+```
+
+#### Visualize curve parameters
+
+We can graph the decay curves with `graph.decay.curves.by()`:
+
+```{r}
+curve |> graph.decay.curves.by()
 ```
 
 

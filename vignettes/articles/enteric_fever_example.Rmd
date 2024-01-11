@@ -111,9 +111,27 @@ Column Name | Description
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
-  clean_pop_data
+xs_data <- 
+  "https://osf.io/download//n6cp3/" |> 
+  load_pop_data() |> 
+  clean_pop_data()
 
+```
+
+#### Check formatting
+
+We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
+
+```{r}
+xs_data |> check_pop_data()
+```
+
+#### Summarize antibody data
+
+We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
+
+```{r}
+xs_data |> summary()
 ```
 
 
@@ -124,15 +142,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 #Create plots
 
-ggplot(xs_data, aes(x = value)) +
-  geom_density(aes(fill = Country), alpha = .6, color = "black") +
-  theme_minimal() +
-  labs(
-    title = "Distribution of Cross-sectional Antibody Responses",
-    x = "Antibody Response Value",
-    y = "Frequency"
-  ) +
-  facet_wrap(~antigen_iso, nrow = 3)
+xs_data |> autoplot(strata = "Country")
 
 ```
 
@@ -143,16 +153,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 options(scipen = 999)
 xs_data |> 
-  ggplot(aes(x = value)) +
-  geom_density(aes(fill = Country), alpha = .6, color = "black") +
-  scale_x_log10() +
-  theme_minimal() +
-  labs(
-    title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
-    x = "Log10(Antibody Response Value)",
-    y = "Frequency"
-  ) +
-  facet_wrap(~ antigen_iso, nrow = 3)
+  autoplot(strata = "Country", log = TRUE)
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 

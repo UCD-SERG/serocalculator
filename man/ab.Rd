@@ -4,7 +4,7 @@
 \alias{ab}
 \title{kinetics of the antibody (ab) response (power function decay)}
 \usage{
-ab(t, initvec, parvec)
+ab(t, par, ...)
 }
 \arguments{
 \item{t}{age at infection?}

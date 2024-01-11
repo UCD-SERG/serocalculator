@@ -3,7 +3,7 @@
 #' @param data a [data.frame]
 #' @param antigen_isos
 #'
-#' @returns `NULL` (invisibly)
+#' @returns NULL (invisibly)
 #' @export
 check_pop_data <- function(
     pop_data,
@@ -22,5 +22,6 @@ check_pop_data <- function(
     stop("Argument `pop_data` is missing column `value` (antibody measurement).")
   }
 
+  message("data format is as expected.")
   invisible(NULL)
 }

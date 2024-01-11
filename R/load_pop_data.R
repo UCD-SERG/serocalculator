@@ -7,7 +7,7 @@
 #'
 load_pop_data = function(file_path, antigen_isos = NULL)
 {
-  if(substr(file_path(1,4)) == "http")
+  if(file_path |> substr(1,4) == "http")
   {
     file_path = url(file_path)
 

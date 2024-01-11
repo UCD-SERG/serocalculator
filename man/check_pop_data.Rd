@@ -12,7 +12,7 @@ check_pop_data(pop_data, antigen_isos)
 \item{data}{a \link{data.frame}}
 }
 \value{
-\code{NULL} (invisibly)
+NULL (invisibly)
 }
 \description{
 Check the formatting of a cross-sectional antibody survey dataset.

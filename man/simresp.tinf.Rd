@@ -46,6 +46,7 @@ but baseline y0 are carried over from prior infections.}
     \item{\code{nmc}}{mcmc sample to use}
     \item{\code{npar}}{number of parameters}
     \item{\code{t}}{age at infection?}
+    \item{\code{par}}{parameters}
     \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
     \item{\code{n}}{number of observations}
     \item{\code{blims}}{range of possible baseline antibody levels}

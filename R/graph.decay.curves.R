@@ -14,7 +14,7 @@
 #' @details
 #' ## `n_curves` and `rows_to_graph`
 #' In most cases, `curve_params` will contain too many rows of MCMC samples for all of these samples to be plotted at once.
-#' * Setting the  `n_curves` argument to a value smaller than the number of rows in `curve_params` will cause this function to randomly select (without replacement) a subset of `n_curves` rows to graph.
+#' * Setting the  `n_curves` argument to a value smaller than the number of rows in `curve_params` will cause this function to select the first `n_curves` rows to graph.
 #' * Setting `n_curves` larger than the number of rows in ` will result all curves being plotted.
 #' * If the user directly specifies the `rows_to_graph` argument, then `n_curves` has no effect.
 #' @examples
@@ -29,11 +29,7 @@ plot_curve_params_one_ab = function(
     alpha = .4,
     n_curves = 100,
     log_x = FALSE,
-    rows_to_graph = sample.int(
-      n = nrow(object),
-      size = min(n_curves, nrow(object)),
-      replace = FALSE
-    ),
+    rows_to_graph = 1:min(n_curves, nrow(object)),
     xlim = c(10^-1, 10^3.1),
     ...)
 {

@@ -70,42 +70,17 @@ dmcmc =
 
 ## visualize antibody decay model
 
-### The `plot_curve_params_one_ab()` function
-
-We can graph individual MCMC samples from the posterior distribution of model parameters using the `plot_curve_params_one_ab()` function:
-
-```{r}
-set.seed(1) # to ensure reproducibility
-dmcmc |> 
-  filter(antigen_iso == "HlyE_IgA") |> 
-  plot_curve_params_one_ab()
-```
-
-We can use a logarithmic scale for the x-axis if desired:
-
-```{r}
-set.seed(1) # to ensure reproducibility
-dmcmc |> 
-  filter(antigen_iso == "HlyE_IgA") |> 
-  plot_curve_params_one_ab(log_x = TRUE)
-```
-
-### The `autoplot.curve_params()` function
-
-We can simultaneously graph MCMC samples for multiple antigen:isotype combinations using the `autoplot.curve_params()` function:
+We can graph individual MCMC samples from the posterior distribution of model parameters an `autoplot()` method:
 
 ```{r}
 dmcmc |> autoplot()
 ```
 
-The `log_x` argument also works here:
+We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
 dmcmc |> autoplot(log_x = TRUE)
 ```
-
-
-### The `graph.curve.params()` function
 
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
 

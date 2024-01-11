@@ -11,6 +11,18 @@
 #' This package translates antibody levels measured in a (cross-sectional) population sample into an
 #' estimate of the frequency with which seroconversions (infections) occur in the sampled population.
 #'
+#' The API for this package includes the following functions:
+#'
+#' * loading cross-sectional antibody survey data [load_pop_data()]
+#' * cleaning antibody data [clean_pop_data()]
+#' * checking antibody data [check_pop_data()]
+#' * numerical summaries of antibody data [summary.pop_data()]
+#' * graphs of antibody data distributions [autoplot.pop_data()]
+#' * loading antibody decay curve models [load_curve_params()]
+#' * graphing antibody decay curves [autoplot.curve_params()]
+#' * estimating incidence rates [est.incidence()]
+#' * graphing incidence rates [autoplot.seroincidence()]
+#' * simulating antibody data [sim.cs()]
 #'
 #' @author
 #' * Peter Teunis \email{p.teunis@@emory.edu}

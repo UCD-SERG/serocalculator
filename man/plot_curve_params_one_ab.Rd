@@ -10,8 +10,7 @@ plot_curve_params_one_ab(
   alpha = 0.4,
   n_curves = 100,
   log_x = FALSE,
-  rows_to_graph = sample.int(n = nrow(object), size = min(n_curves, nrow(object)),
-    replace = FALSE),
+  rows_to_graph = 1:min(n_curves, nrow(object)),
   xlim = c(10^-1, 10^3.1),
   ...
 )
@@ -51,7 +50,7 @@ Graph an antibody decay curve model
 
 In most cases, \code{curve_params} will contain too many rows of MCMC samples for all of these samples to be plotted at once.
 \itemize{
-\item Setting the  \code{n_curves} argument to a value smaller than the number of rows in \code{curve_params} will cause this function to randomly select (without replacement) a subset of \code{n_curves} rows to graph.
+\item Setting the  \code{n_curves} argument to a value smaller than the number of rows in \code{curve_params} will cause this function to select the first \code{n_curves} rows to graph.
 \item Setting \code{n_curves} larger than the number of rows in ` will result all curves being plotted.
 \item If the user directly specifies the \code{rows_to_graph} argument, then \code{n_curves} has no effect.
 }

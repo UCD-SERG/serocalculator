@@ -1,3 +1,7 @@
+# serocalculator (development version)
+
+##
+
 ## serocalculator 0.4.0
 
 * `plot()` methods have been renamed to `autoplot()`, matching general convention for `ggplot2`-based graphics.

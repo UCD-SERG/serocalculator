@@ -18,7 +18,7 @@
   }}
 }
 \value{
-aan object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
+an object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
 }
 \description{
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects

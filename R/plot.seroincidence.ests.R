@@ -4,7 +4,7 @@
 #' @param object a '"seroincidence.by"' object (from [est.incidence.by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams autoplot.seroincidence
-#' @return aan object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
+#' @return an object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #'
 autoplot.seroincidence.by = function(

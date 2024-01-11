@@ -8,6 +8,8 @@ load_pop_data(file_path, antigen_isos = NULL)
 }
 \arguments{
 \item{file_path}{path to an RDS file containing a cross-sectional antibody survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
+
+\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
 }
 \value{
 a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})

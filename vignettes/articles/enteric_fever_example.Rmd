@@ -96,10 +96,10 @@ curve =
 
 #### Visualize curve parameters
 
-We can graph the decay curves with `graph.decay.curves.by()`:
+We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve |> graph.decay.curves.by()
+curve |> autoplot()
 ```
 
 

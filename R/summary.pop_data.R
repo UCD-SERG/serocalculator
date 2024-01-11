@@ -1,15 +1,17 @@
+#'
 #' @title Summarize a cross-sectional antibody survey data set
 #' @description
 #' This function is a `summary()` method for `pop_data` objects
+#' @param object a `pop_data` object
 #'
 #' @returns a list containing two summary tables: one of `age` and one of `value`, stratified by `antigen_iso`
 #' @export
-summary.pop_data = function(pop_data)
+summary.pop_data = function(object)
 {
 
   ages =
-    pop_data |>
-    distinct(id, age)
+    object |>
+    distinct(.data$id, .data$age)
 
   cat("\nn =", nrow(ages),"\n")
 
@@ -22,15 +24,15 @@ summary.pop_data = function(pop_data)
   cat('\nDistributions of antigen-isotype measurements:\n\n')
 
   ab_summary =
-    pop_data |>
+    object |>
     dplyr::summarize(
-      .by = antigen_iso,
-      Min = value |> min(na.rm = TRUE),
-      `1st Qu.` = value |> quantile(.25, na.rm = TRUE),
-      Median = value |> median(),
-      `3rd Qu.` = value |> quantile(.75, na.rm = TRUE),
-      Max = value |> max(na.rm = TRUE),
-      `# NAs` = value |> is.na() |> sum()
+      .by = .data$antigen_iso,
+      Min = .data$value |> min(na.rm = TRUE),
+      `1st Qu.` = .data$value |> quantile(.25, na.rm = TRUE),
+      Median = .data$value |> median(),
+      `3rd Qu.` = .data$value |> quantile(.75, na.rm = TRUE),
+      Max = .data$value |> max(na.rm = TRUE),
+      `# NAs` = .data$value |> is.na() |> sum()
     ) |>
     as.data.frame() |>
     print()

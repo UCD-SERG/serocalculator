@@ -4,12 +4,10 @@
 \alias{check_pop_data}
 \title{Check the formatting of a cross-sectional antibody survey dataset.}
 \usage{
-check_pop_data(pop_data, antigen_isos)
+check_pop_data(pop_data)
 }
 \arguments{
-\item{antigen_isos}{}
-
-\item{data}{a \link{data.frame}}
+\item{pop_data}{dataset to check}
 }
 \value{
 NULL (invisibly)

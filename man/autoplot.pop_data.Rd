@@ -4,10 +4,10 @@
 \alias{autoplot.pop_data}
 \title{Plot distribution of antibodies}
 \usage{
-\method{autoplot}{pop_data}(pop_data, log = FALSE, strata = NULL)
+\method{autoplot}{pop_data}(object, log = FALSE, strata = NULL)
 }
 \arguments{
-\item{pop_data}{A \code{pop_data} object (from \code{\link[=load_pop_data]{load_pop_data()}})}
+\item{object}{A \code{pop_data} object (from \code{\link[=load_pop_data]{load_pop_data()}})}
 
 \item{log}{whether to show antibody responses on logarithmic scale}
 
@@ -17,5 +17,5 @@
 a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 }
 \description{
-Plot distribution of antibodies
+\code{autoplot()} method for \code{pop_data} objects
 }

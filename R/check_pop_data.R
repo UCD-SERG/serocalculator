@@ -1,13 +1,10 @@
 #' Check the formatting of a cross-sectional antibody survey dataset.
 #'
-#' @param data a [data.frame]
-#' @param antigen_isos
+#' @param pop_data dataset to check
 #'
 #' @returns NULL (invisibly)
 #' @export
-check_pop_data <- function(
-    pop_data,
-    antigen_isos)
+check_pop_data <- function(pop_data)
 {
   if (!is.data.frame(pop_data)) {
     stop(.pasteN("Argument `pop_data` is not a `data.frame()`.",

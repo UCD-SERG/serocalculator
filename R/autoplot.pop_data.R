@@ -1,19 +1,21 @@
 #' Plot distribution of antibodies
+#' @description
+#' `autoplot()` method for `pop_data` objects
 #'
-#' @param pop_data A `pop_data` object (from [load_pop_data()])
+#' @param object A `pop_data` object (from [load_pop_data()])
 #' @param log whether to show antibody responses on logarithmic scale
 #' @param strata the name of a variable in `pop_data` to stratify by (or `NULL` for no stratification)
 #'
 #' @return a [ggplot2::ggplot] object
 #' @export
 autoplot.pop_data = function(
-    pop_data,
+    object,
     log =  FALSE,
     strata = NULL)
 {
 
   plot1 =
-    pop_data |>
+    object |>
     ggplot2::ggplot(aes(x = .data$value)) +
     ggplot2::theme_minimal() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
@@ -39,7 +41,7 @@ autoplot.pop_data = function(
   {
     plot1 = plot1 +
       ggplot2::scale_x_log10() +
-      ggplot2::scale_x_log10labs(
+      ggplot2::labs(
         title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
         x = "Log10(Antibody Response Value)",
         y = "Frequency"
@@ -47,7 +49,7 @@ autoplot.pop_data = function(
   } else
   {
     plot = plot1 +
-      ggplot2::scale_x_log10labs(
+      ggplot2::labs(
         title = "Distribution of Cross-sectional Antibody Responses",
         x = "Antibody Response Value",
         y = "Frequency"

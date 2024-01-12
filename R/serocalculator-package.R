@@ -21,9 +21,10 @@
 #' * loading antibody decay curve models [load_curve_params()]
 #' * graphing antibody decay curves [autoplot.curve_params()]
 #' * estimating incidence rates [est.incidence()]
+#' * estimating incidence rates by strata [est.incidence.by()]
 #' * summarizing stratified incidence rate estimates [summary.seroincidence.by()]
 #' * graphing incidence rates [autoplot.seroincidence()], [autoplot.seroincidence.by()], [autoplot.summary.seroincidence.by()]
-#' * simulating antibody data [sim.cs()]
+#' * simulating cross-sectional population antibody data using longitudinal seroresponse models [sim.cs()]
 
 #'
 #' @author

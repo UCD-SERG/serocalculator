@@ -13,19 +13,25 @@
 #'
 #' The API for this package includes the following functions:
 #'
-#' * loading cross-sectional antibody survey data [load_pop_data()]
-#' * cleaning antibody data [clean_pop_data()]
-#' * checking antibody data [check_pop_data()]
-#' * numerical summaries of antibody data [summary.pop_data()]
-#' * graphs of antibody data distributions [autoplot.pop_data()]
-#' * loading antibody decay curve models [load_curve_params()]
-#' * graphing antibody decay curves [autoplot.curve_params()]
-#' * estimating incidence rates [est.incidence()]
-#' * estimating incidence rates by strata [est.incidence.by()]
-#' * summarizing stratified incidence rate estimates [summary.seroincidence.by()]
-#' * graphing incidence rates [autoplot.seroincidence()], [autoplot.seroincidence.by()], [autoplot.summary.seroincidence.by()]
-#' * simulating cross-sectional population antibody data using longitudinal seroresponse models [sim.cs()]
-
+#' Function Name                          | Purpose
+#' -----------------                      | --------------------------------------------
+#' [load_pop_data()]                      | loading cross-sectional antibody survey data
+#' [clean_pop_data()]                     | cleaning antibody data
+#' [check_pop_data()]                     | checking antibody data
+#' [summary.pop_data()]                   | numerical summaries of antibody data
+#' [autoplot.pop_data()]                  | graphs of antibody data distributions
+#' [load_curve_params()]                  | loading antibody decay curve models
+#' [autoplot.curve_params()]              | graphing antibody decay curves
+#' [llik()]                               | computing log-likelihoods
+#' [graph.loglik()]                       | graphing log-likelihood functions
+#' [autoplot.seroincidence()]             | graphing log-likelihood functions
+#' [autoplot.seroincidence.by()]          | graphing log-likelihood functions
+#' [est.incidence()]                      | estimating incidence rates
+#' [est.incidence.by()]                   | estimating incidence rates by strata
+#' [summary.seroincidence.by()]           | summarizing stratified incidence rate estimates
+#' [autoplot.summary.seroincidence.by()]  | graphing incidence rate estimates
+#' [sim.cs()]                             | simulating cross-sectional population antibody data using longitudinal seroresponse models
+#'
 #'
 #' @author
 #' * Peter Teunis \email{p.teunis@@emory.edu}

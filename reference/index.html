@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,6 +68,16 @@
         <dd>kinetics of the antibody (ab) response (power function decay)</dd>
       </dl><dl><dt>
           
+          <code><a href="autoplot.curve_params.html">autoplot(<i>&lt;curve_params&gt;</i>)</a></code> 
+        </dt>
+        <dd>graph antibody decay curves by antigen isotype</dd>
+      </dl><dl><dt>
+          
+          <code><a href="autoplot.pop_data.html">autoplot(<i>&lt;pop_data&gt;</i>)</a></code> 
+        </dt>
+        <dd>Plot distribution of antibodies</dd>
+      </dl><dl><dt>
+          
           <code><a href="autoplot.seroincidence.html">autoplot(<i>&lt;seroincidence&gt;</i>)</a></code> 
         </dt>
         <dd>Plot the log-likelihood curve for the incidence rate estimate</dd>
@@ -81,6 +91,16 @@
           <code><a href="autoplot.summary.seroincidence.by.html">autoplot(<i>&lt;summary.seroincidence.by&gt;</i>)</a></code> 
         </dt>
         <dd>Plot method for <code>summary.seroincidence.by</code> objects</dd>
+      </dl><dl><dt>
+          
+          <code><a href="check_pop_data.html">check_pop_data()</a></code> 
+        </dt>
+        <dd>Check the formatting of a cross-sectional antibody survey dataset.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="clean_pop_data.html">clean_pop_data()</a></code> 
+        </dt>
+        <dd>Reformat a cross-sectional antibody survey dataset</dd>
       </dl><dl><dt>
           
           <code><a href="est.incidence.html">est.incidence()</a></code> 
@@ -108,16 +128,6 @@
         <dd>Graph estimated antibody decay curve</dd>
       </dl><dl><dt>
           
-          <code><a href="graph.decay.curves.html">graph.decay.curves()</a></code> 
-        </dt>
-        <dd>Graph an antibody decay curve model</dd>
-      </dl><dl><dt>
-          
-          <code><a href="graph.decay.curves.by.html">graph.decay.curves.by()</a></code> 
-        </dt>
-        <dd>graph antibody decay curves by antigen isotype</dd>
-      </dl><dl><dt>
-          
           <code><a href="graph.loglik.html">graph.loglik()</a></code> 
         </dt>
         <dd>Graph log-likelihood of data</dd>
@@ -133,9 +143,24 @@
         <dd>Calculate log-likelihood</dd>
       </dl><dl><dt>
           
+          <code><a href="load_curve_params.html">load_curve_params()</a></code> 
+        </dt>
+        <dd>Load antibody decay curve parameter samples</dd>
+      </dl><dl><dt>
+          
+          <code><a href="load_pop_data.html">load_pop_data()</a></code> 
+        </dt>
+        <dd>Load a cross-sectional antibody survey data set</dd>
+      </dl><dl><dt>
+          
           <code><a href="mkbaseline.html">mkbaseline()</a></code> 
         </dt>
         <dd>generate random sample from baseline distribution</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_curve_params_one_ab.html">plot_curve_params_one_ab()</a></code> 
+        </dt>
+        <dd>Graph an antibody decay curve model</dd>
       </dl><dl><dt>
           
           <code><a href="print.seroincidence.html">print(<i>&lt;seroincidence&gt;</i>)</a></code> 
@@ -193,9 +218,14 @@
         <dd>Extract or replace parts of a <code>seroincidence.by</code> object</dd>
       </dl><dl><dt>
           
+          <code><a href="summary.pop_data.html">summary(<i>&lt;pop_data&gt;</i>)</a></code> 
+        </dt>
+        <dd>Summarize a cross-sectional antibody survey data set</dd>
+      </dl><dl><dt>
+          
           <code><a href="summary.seroincidence.html">summary(<i>&lt;seroincidence&gt;</i>)</a></code> 
         </dt>
-        <dd>summarize a fitted incidence model</dd>
+        <dd>Summarizing fitted seroincidence models</dd>
       </dl><dl><dt>
           
           <code><a href="summary.seroincidence.by.html">summary(<i>&lt;seroincidence.by&gt;</i>)</a></code> 

@@ -5,13 +5,15 @@
 #' @param object A `pop_data` object (from [load_pop_data()])
 #' @param log whether to show antibody responses on logarithmic scale
 #' @param strata the name of a variable in `pop_data` to stratify by (or `NULL` for no stratification)
+#' @param ... unused
 #'
 #' @return a [ggplot2::ggplot] object
 #' @export
 autoplot.pop_data = function(
     object,
     log =  FALSE,
-    strata = NULL)
+    strata = NULL,
+    ...)
 {
 
   plot1 =

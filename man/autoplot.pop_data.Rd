@@ -4,7 +4,7 @@
 \alias{autoplot.pop_data}
 \title{Plot distribution of antibodies}
 \usage{
-\method{autoplot}{pop_data}(object, log = FALSE, strata = NULL)
+\method{autoplot}{pop_data}(object, log = FALSE, strata = NULL, ...)
 }
 \arguments{
 \item{object}{A \code{pop_data} object (from \code{\link[=load_pop_data]{load_pop_data()}})}
@@ -12,6 +12,8 @@
 \item{log}{whether to show antibody responses on logarithmic scale}
 
 \item{strata}{the name of a variable in \code{pop_data} to stratify by (or \code{NULL} for no stratification)}
+
+\item{...}{unused}
 }
 \value{
 a \link[ggplot2:ggplot]{ggplot2::ggplot} object

@@ -4,10 +4,12 @@
 \alias{summary.pop_data}
 \title{Summarize a cross-sectional antibody survey data set}
 \usage{
-\method{summary}{pop_data}(object)
+\method{summary}{pop_data}(object, ...)
 }
 \arguments{
 \item{object}{a \code{pop_data} object}
+
+\item{...}{unused}
 }
 \value{
 a list containing two summary tables: one of \code{age} and one of \code{value}, stratified by \code{antigen_iso}

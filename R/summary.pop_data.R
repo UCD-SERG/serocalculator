@@ -2,11 +2,13 @@
 #' @title Summarize a cross-sectional antibody survey data set
 #' @description
 #' This function is a `summary()` method for `pop_data` objects
+#'
 #' @param object a `pop_data` object
+#' @param ...  unused
 #'
 #' @returns a list containing two summary tables: one of `age` and one of `value`, stratified by `antigen_iso`
 #' @export
-summary.pop_data = function(object)
+summary.pop_data = function(object, ...)
 {
 
   ages =

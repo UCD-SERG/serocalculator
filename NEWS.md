@@ -1,6 +1,17 @@
-# serocalculator (development version)
+## serocalculator 0.5.0
 
 * Spell-checking of function documentation and tutorial articles.
+
+* Added functions and methods:
+
+  - `load_pop_data()`
+  - `check_pop_data()`
+  - `clean_pop_data()`
+  - `summary.pop_data()`
+  - `autoplot.pop_data()`
+  - `load_curve_params()`
+
+* Renamed `graph.decay.curves.by()` to `autoplot.curve_params()`
 
 ## serocalculator 0.4.0
 

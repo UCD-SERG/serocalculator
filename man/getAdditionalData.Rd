@@ -18,9 +18,8 @@ Data object
 }
 \description{
 Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
-function is to download data such as longitudinal response parameters from an online repository or population data.
-}
-\details{
+function is to download data such as longitudinal response parameters from an online repository or cross-sectional population data.
+
 Data for this package is available at: \url{https://osf.io/ne8pc/files/osfstorage}
 
 You can save the data into your chosen directory using the optional savePath argument. Specify the file path and the file name.

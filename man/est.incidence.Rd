@@ -10,7 +10,7 @@ est.incidence(
   noise_params,
   antigen_isos = unique(pop_data$antigen_iso),
   lambda_start = 0.1,
-  stepmin = 1e-08,
+  stepmin = 0.00000001,
   stepmax = 3,
   verbose = FALSE,
   build_graph = FALSE,

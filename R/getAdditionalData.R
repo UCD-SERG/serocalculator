@@ -1,7 +1,8 @@
-#' Get Additional Data
+#' @title Get Additional Data
 #'
+#' @description
 #' Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
-#' function is to download data such as longitudinal response parameters from an online repository or population data.
+#' function is to download data such as longitudinal response parameters from an online repository or cross-sectional population data.
 #'
 #' Data for this package is available at: <https://osf.io/ne8pc/files/osfstorage>
 #'

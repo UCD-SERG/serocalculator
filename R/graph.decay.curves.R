@@ -1,6 +1,6 @@
 #' Graph an antibody decay curve model
 #'
-#' @param curve_params [data.frame()] of curve parameters (one or more MCMC samples)
+#' @param object a [data.frame()] of curve parameters (one or more MCMC samples)
 #' @param verbose verbose output
 #' @param xlim range of x values to graph
 #' @param n_curves how many curves to plot (see details).
@@ -11,11 +11,10 @@
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @inheritParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
-#' @export
 #' @details
 #' ## `n_curves` and `rows_to_graph`
 #' In most cases, `curve_params` will contain too many rows of MCMC samples for all of these samples to be plotted at once.
-#' * Setting the  `n_curves` argument to a value smaller than the number of rows in `curve_params` will cause this function to randomly select (without replacement) a subset of `n_curves` rows to graph.
+#' * Setting the  `n_curves` argument to a value smaller than the number of rows in `curve_params` will cause this function to select the first `n_curves` rows to graph.
 #' * Setting `n_curves` larger than the number of rows in ` will result all curves being plotted.
 #' * If the user directly specifies the `rows_to_graph` argument, then `n_curves` has no effect.
 #' @examples
@@ -24,17 +23,13 @@
 #' plot1 = graph.curve.params(curve_params)
 #' print(plot1)
 #' }
-graph.decay.curves = function(
-    curve_params,
+plot_curve_params_one_ab = function(
+    object,
     verbose = FALSE,
     alpha = .4,
     n_curves = 100,
     log_x = FALSE,
-    rows_to_graph = sample.int(
-      n = nrow(curve_params),
-      size = min(n_curves, nrow(curve_params)),
-      replace = FALSE
-    ),
+    rows_to_graph = 1:min(n_curves, nrow(object)),
     xlim = c(10^-1, 10^3.1),
     ...)
 {
@@ -88,7 +83,7 @@ graph.decay.curves = function(
 
   layer_function = function(cur_row)
   {
-    cur_params = curve_params[cur_row, ]
+    cur_params = object[cur_row, ]
     ggplot2::geom_function(
         alpha = alpha,
         # aes(color = cur_row),
@@ -128,4 +123,4 @@ graph.decay.curves = function(
 #   theme(axis.line=element_line()) +
 #   labs(x="Days since fever onset", y="ELISA units")
 
-# mcmc |> ungroup() |> slice_head(by = antigen_iso, n = 10) |> droplevels() |> graph.decay.curves(alpha  = .4) |> print()
+# mcmc |> ungroup() |> slice_head(by = antigen_iso, n = 10) |> droplevels() |> plot_curve_params_one_ab(alpha  = .4) |> print()

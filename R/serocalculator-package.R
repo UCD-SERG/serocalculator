@@ -1,4 +1,4 @@
-#' @docType package
+#' _PACKAGE
 #'
 #' @name serocalculator
 #'
@@ -11,6 +11,20 @@
 #' This package translates antibody levels measured in a (cross-sectional) population sample into an
 #' estimate of the frequency with which seroconversions (infections) occur in the sampled population.
 #'
+#' The API for this package includes the following functions:
+#'
+#' * loading cross-sectional antibody survey data [load_pop_data()]
+#' * cleaning antibody data [clean_pop_data()]
+#' * checking antibody data [check_pop_data()]
+#' * numerical summaries of antibody data [summary.pop_data()]
+#' * graphs of antibody data distributions [autoplot.pop_data()]
+#' * loading antibody decay curve models [load_curve_params()]
+#' * graphing antibody decay curves [autoplot.curve_params()]
+#' * estimating incidence rates [est.incidence()]
+#' * summarizing stratified incidence rate estimates [summary.seroincidence.by()]
+#' * graphing incidence rates [autoplot.seroincidence()], [autoplot.seroincidence.by()], [autoplot.summary.seroincidence.by()]
+#' * simulating antibody data [sim.cs()]
+
 #'
 #' @author
 #' * Peter Teunis \email{p.teunis@@emory.edu}
@@ -108,13 +122,13 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
 #' @importFrom dplyr summarise
-#' @importFrom dplyr tibble
 #' @importFrom dplyr ungroup
 #' @importFrom foreach %:%
 #' @importFrom foreach %dopar%
 #' @importFrom foreach foreach
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 autoplot
+#' @importFrom ggplot2 ggplot
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
@@ -124,6 +138,7 @@
 #' @importFrom rngtools setRNG
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats formula
+#' @importFrom stats median
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
 #' @importFrom stats quantile

@@ -88,8 +88,18 @@ Column Name    |  Description
 
 #Import longitudinal antibody parameters from OSF
 
-curve = url("https://osf.io/download/rtw5k/") %>% readRDS() 
+curve = 
+  "https://osf.io/download/rtw5k/" |> 
+  load_curve_params()
 
+```
+
+#### Visualize curve parameters
+
+We can graph the decay curves with an `autoplot()` method:
+
+```{r}
+curve |> autoplot()
 ```
 
 
@@ -111,10 +121,27 @@ Column Name | Description
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- url("https://osf.io/download//n6cp3/") %>% readRDS() %>%
-  rename(value = result,
-         age = Age) #rename variables
+xs_data <- 
+  "https://osf.io/download//n6cp3/" |> 
+  load_pop_data() |> 
+  clean_pop_data()
 
+```
+
+#### Check formatting
+
+We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
+
+```{r}
+xs_data |> check_pop_data()
+```
+
+#### Summarize antibody data
+
+We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
+
+```{r}
+xs_data |> summary()
 ```
 
 
@@ -125,15 +152,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 #Create plots
 
-ggplot(xs_data, aes(x = value)) +
-  geom_density(aes(fill = Country), alpha = .6, color = "black") +
-  theme_minimal() +
-  labs(
-    title = "Distribution of Cross-sectional Antibody Responses",
-    x = "Antibody Response Value",
-    y = "Frequency"
-  ) +
-  facet_wrap(~antigen_iso, nrow = 3)
+xs_data |> autoplot(strata = "Country")
 
 ```
 
@@ -143,23 +162,15 @@ We see that across countries, our data is highly skewed with the majority of res
 #Create log transformed plots
 
 options(scipen = 999)
-ggplot(xs_data, aes(x = value)) +
-  geom_density(aes(fill = Country), alpha = .6, color = "black") +
-  scale_x_log10() +
-  theme_minimal() +
-  labs(
-    title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
-    x = "Log10(Antibody Response Value)",
-    y = "Frequency"
-  ) +
-  facet_wrap(~ antigen_iso, nrow = 3)
+xs_data |> 
+  autoplot(strata = "Country", log = TRUE)
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 Let's also take a look at how antibody responses change by age.
 
-```{r plotage}
+```{r "plot age"}
 
 #Plot antibody responses by age
 
@@ -276,7 +287,7 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
 In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)]. 
 
 
-## Acknowledgements
+## Acknowledgments
 Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan).  
 
 ## References

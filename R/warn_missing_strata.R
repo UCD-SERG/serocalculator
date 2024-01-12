@@ -62,7 +62,7 @@ warn.missing.strata = function(
 
   if(length(present_strata_vars) > 0)
   {
-    strata2 = data |> count.strata(present_strata_vars)
+    strata2 = data |> count_strata(present_strata_vars)
 
     missing_strata =
       anti_join(

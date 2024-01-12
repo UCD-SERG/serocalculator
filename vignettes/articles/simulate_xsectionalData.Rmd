@@ -64,49 +64,23 @@ library(ggbeeswarm) # for plotting
 #load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
 dmcmc =
   "https://osf.io/download/rtw5k" |> 
-  url() |> 
-  readRDS()
+  load_curve_params()
 
 ```
 
 ## visualize antibody decay model
 
-### The `graph.decay.curves()` function
-
-We can graph individual MCMC samples from the posterior distribution of model parameters using the `graph.decay.curves()` function:
+We can graph individual MCMC samples from the posterior distribution of model parameters an `autoplot()` method:
 
 ```{r}
-set.seed(1) # to ensure reproducibility
-dmcmc |> 
-  filter(antigen_iso == "HlyE_IgA") |> 
-  graph.decay.curves()
+dmcmc |> autoplot()
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-set.seed(1) # to ensure reproducibility
-dmcmc |> 
-  filter(antigen_iso == "HlyE_IgA") |> 
-  graph.decay.curves(log_x = TRUE)
+dmcmc |> autoplot(log_x = TRUE)
 ```
-
-### The `graph.decay.curves.by()` function
-
-We can simultaneously graph MCMC samples for multiple antigen:isotype combinations using the `graph.decay.curves.by()` function:
-
-```{r}
-dmcmc |> graph.decay.curves.by()
-```
-
-The `log_x` argument also works here:
-
-```{r}
-dmcmc |> graph.decay.curves.by(log_x = TRUE)
-```
-
-
-### The `graph.curve.params()` function
 
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
 

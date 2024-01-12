@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.seroincidence.R
 \name{summary.seroincidence}
 \alias{summary.seroincidence}
-\title{summarize a fitted incidence model}
+\title{Summarizing fitted seroincidence models}
 \usage{
 \method{summary}{seroincidence}(object, coverage = 0.95, ...)
 }
@@ -36,5 +36,5 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 }
 }
 \description{
-summarize a fitted incidence model
+This function is a \code{summary()} method for \code{seroincidence} objects.
 }

@@ -5,6 +5,10 @@
 #'
 #' @returns a `curve_params` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
+#' @examples
+#' curve = load_curve_params("https://osf.io/download/rtw5k/" )
+#' print(curve)
+#'
 #'
 load_curve_params = function(file_path, antigen_isos = NULL)
 {

@@ -8,19 +8,24 @@
 This package translates antibody levels measured in a (cross-sectional) population sample into an
 estimate of the frequency with which seroconversions (infections) occur in the sampled population.
 
-The API for this package includes the following functions:
-\itemize{
-\item loading cross-sectional antibody survey data \code{\link[=load_pop_data]{load_pop_data()}}
-\item cleaning antibody data \code{\link[=clean_pop_data]{clean_pop_data()}}
-\item checking antibody data \code{\link[=check_pop_data]{check_pop_data()}}
-\item numerical summaries of antibody data \code{\link[=summary.pop_data]{summary.pop_data()}}
-\item graphs of antibody data distributions \code{\link[=autoplot.pop_data]{autoplot.pop_data()}}
-\item loading antibody decay curve models \code{\link[=load_curve_params]{load_curve_params()}}
-\item graphing antibody decay curves \code{\link[=autoplot.curve_params]{autoplot.curve_params()}}
-\item estimating incidence rates \code{\link[=est.incidence]{est.incidence()}}
-\item summarizing stratified incidence rate estimates \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}}
-\item graphing incidence rates \code{\link[=autoplot.seroincidence]{autoplot.seroincidence()}}, \code{\link[=autoplot.seroincidence.by]{autoplot.seroincidence.by()}}, \code{\link[=autoplot.summary.seroincidence.by]{autoplot.summary.seroincidence.by()}}
-\item simulating antibody data \code{\link[=sim.cs]{sim.cs()}}
+The API for this package includes the following functions:\tabular{ll}{
+   Function Name \tab Purpose \cr
+   \code{\link[=load_pop_data]{load_pop_data()}} \tab loading cross-sectional antibody survey data \cr
+   \code{\link[=clean_pop_data]{clean_pop_data()}} \tab cleaning antibody data \cr
+   \code{\link[=check_pop_data]{check_pop_data()}} \tab checking antibody data \cr
+   \code{\link[=summary.pop_data]{summary.pop_data()}} \tab numerical summaries of antibody data \cr
+   \code{\link[=autoplot.pop_data]{autoplot.pop_data()}} \tab graphs of antibody data distributions \cr
+   \code{\link[=load_curve_params]{load_curve_params()}} \tab loading antibody decay curve models \cr
+   \code{\link[=autoplot.curve_params]{autoplot.curve_params()}} \tab graphing antibody decay curves \cr
+   \code{\link[=llik]{llik()}} \tab computing log-likelihoods \cr
+   \code{\link[=graph.loglik]{graph.loglik()}} \tab graphing log-likelihood functions \cr
+   \code{\link[=autoplot.seroincidence]{autoplot.seroincidence()}} \tab graphing log-likelihood functions \cr
+   \code{\link[=autoplot.seroincidence.by]{autoplot.seroincidence.by()}} \tab graphing log-likelihood functions \cr
+   \code{\link[=est.incidence]{est.incidence()}} \tab estimating incidence rates \cr
+   \code{\link[=est.incidence.by]{est.incidence.by()}} \tab estimating incidence rates by strata \cr
+   \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}} \tab summarizing stratified incidence rate estimates \cr
+   \code{\link[=autoplot.summary.seroincidence.by]{autoplot.summary.seroincidence.by()}} \tab graphing incidence rate estimates \cr
+   \code{\link[=sim.cs]{sim.cs()}} \tab simulating cross-sectional population antibody data using longitudinal seroresponse models \cr
 }
 }
 \details{

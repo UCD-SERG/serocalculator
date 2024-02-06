@@ -140,7 +140,7 @@ ggplot(data=xs_data, aes(x=age, y=value, color=country)) +
 
 
 
-### Load noise parameters
+### Compile noise parameters
 
 Next, we must set conditions based on some assumptions about the data and errors that may need to be accounted for. This will differ based on background knowledge of the data. 
 

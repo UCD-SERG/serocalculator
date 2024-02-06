@@ -3,8 +3,9 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   enteric_fever_example: enteric_fever_example.html
+  scrubTyphus_example: scrubTyphus_example.html
   simulate_xsectionalData: simulate_xsectionalData.html
-last_built: 2024-01-31T20:54Z
+last_built: 2024-02-06T19:35Z
 urls:
   reference: https://ucd-serg.github.io/serocalculator/reference
   article: https://ucd-serg.github.io/serocalculator/articles

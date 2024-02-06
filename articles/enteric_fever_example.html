@@ -42,6 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a>
+    <a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a>
     <a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a>
   </div>
 </li>
@@ -403,8 +404,7 @@ noise parameter below.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Import noise parameters from OSF</span></span>
 <span></span>
-<span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>y.low <span class="op">=</span> <span class="va">llod</span><span class="op">)</span> <span class="co">#rename lower bound</span></span></code></pre></div>
+<span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -439,7 +439,7 @@ isotypes, but users can add additional pairs if available.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
 <span><span class="co">#&gt;   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.153 0.007<span style="text-decoration: underline;">74</span>  0.139  0.169     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">420.</span>          5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.128 0.006<span style="text-decoration: underline;">82</span>  0.115  0.142     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">376.</span>          4</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -478,8 +478,8 @@ stratification variable in their cross-sectional population dataset.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 13</span></span></span>
 <span><span class="co">#&gt;   Stratum   catchment     n est.start incidence.rate      SE CI.lwr CI.upr</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294       0.1          0.125 0.008<span style="text-decoration: underline;">60</span>  0.109  0.143</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.1          0.204 0.015<span style="text-decoration: underline;">4</span>   0.176  0.237</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294       0.1          0.106 0.007<span style="text-decoration: underline;">67</span> 0.091<span style="text-decoration: underline;">6</span>  0.122</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.1          0.167 0.013<span style="text-decoration: underline;">3</span>  0.143   0.196</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 <p>We are warned that “curve_params is missing all strata variables, and

@@ -1,12 +1,12 @@
 ---
-title: "Enteric Fever Seroincidence Vignette"
+title: "Scrub Typhus Seroincidence Vignette"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
 output: 
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Enteric Fever Seroincidence Vignette}
+  %\VignetteIndexEntry{Scrub Typhus Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
@@ -15,18 +15,11 @@ bibliography: references.bib
 ---
 ## Introduction
 
-This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan.
+This vignette reproduces the analysis for: [**Estimating the seroincidence of scrub typhus using antibody dynamics following infection**](https://www.medrxiv.org/content/10.1101/2022.11.07.22282017v2) (@Aiemjoy_2024_scrub). 
 
 ## Methods
 
-The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.
-
-### A Proxy for Infection 
- 
-While the exact time of infection is impossible to measure in an individual, antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. So the presence of many high antibody concentrations indicates that many people in the population likely experienced infection recently, while mostly low concentrations indicate a low frequency of infections in the sampled population.
-
-
-In order to interpret the measured cross-sectional antibody concentrations in terms of incidence, we must define the antibody dynamic over time to understand the generalized antibody response at different times since infection. This dynamic must be quantified over time to include an initial increase in serum antibody concentration when seroconversion occurs, followed by a gradual decrease as antibodies wane. In published studies, this information on the time course of the serum antibody response has been obtained from longitudinal follow–up data in cases who had a symptomatic episode following infection. In this case, the onset of symptoms then provides a proxy for the time that infection occurred. 
+The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. 
 
 ### The Seroincidence Estimator
 
@@ -34,12 +27,10 @@ The **serocalculator** package was designed to calculate the incidence of seroco
 
 
 
-## Example: Enteric Fever
+## Scrub Typhus Seroincidence
 
-
-In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
-
-Further details on this published study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
+Scrub typhus, a vector-borne bacterial infection, is an important but neglected disease globally. Accurately characterizing burden is challenging due to non-specific symptoms and limited diagnostics. Prior seroepidemiology studies have struggled to find consensus cutoffs that permit comparing estimates across contexts and time. In this study, we present a novel approach that does not require a cutoff and instead uses information about antibody kinetics after infection to estimate seroincidence. We use data from three cohorts of scrub typhus patients in Chiang Rai, Thailand, and Vellore, India to characterize antibody kinetics after infection and two population serosurveys in the Kathmandu valley, Nepal, and Tamil Nadu, India to estimate seroincidence. The samples were tested for IgM and IgG responses to Orientia tsutsugamushi-derived recombinant 56-kDa antigen using commercial ELISA kits. We used Bayesian hierarchical models to characterize antibody responses after scrub typhus infection and used the joint distributions of the peak antibody titers and decay rates to estimate population-level incidence rates in the cross-sectional serosurveys. 
+ 
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -57,40 +48,30 @@ The first step in conducting this analysis is to load our necessary packages. If
 ```{r setup, message=FALSE}
 #devtools::install_github("ucd-serg/serocalculator")
 library(serocalculator)
-#install.packages("tidyverse)
+#install.packages("tidyverse")
 library(tidyverse)
+#install.packages("mixtools")
+library(mixtools)
 ```
 
 ### Load data
 
 Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
 
-Note that each dataset has specific formatting and variable name requirements.
 
 
 #### Load and prepare longitudinal parameter data
 
-We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
-
-*Formatting Specifications*: Data should be imported as a "wide" dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must *exactly* match follow the naming conventions:
-
-Column Name    |  Description
--------------- |  -----------
-    y0         |  Baseline antibody concentration
-    y1         |  Peak antibody concentration
-    t1         |  Time to peak antibody concentration
-    alpha      |  Antibody decay rate
-    r          |  Antibody decay shape
-*Note that variable names are case-sensitive*
+We will first load the longitudinal curve parameters to set the antibody decay parameters. These parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
 
 ```{r curve, message=FALSE}
 
 #Import longitudinal antibody parameters from OSF
 
-curve = 
-  "https://osf.io/download/rtw5k/" |> 
-  load_curve_params()
+curve <-  
+  "https://osf.io/download/u5gxh/" %>% 
+  load_curve_params() 
 
 ```
 
@@ -99,31 +80,20 @@ curve =
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve |> autoplot()
+curve %>% autoplot()
 ```
 
 
 #### Load and prepare cross-sectional data 
-Next, we load our sample cross-sectional data. We will use a subset of results from the SEES dataset. Ideally, this will be a representative sample of the general population without regard to disease status. Later, we will limit our analysis to cross-sectional data from Pakistan. 
-
-We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to the names required by **serocalculator**. 
-
-*Formatting Specifications*: Cross-sectional population data should be a "long" dataframe with one column for each variable and one row for each antigen isotype resulted for an individual. So the same individual will have more than one row if they have results for more than one antigen isotype. The dataframe can have additional variables, but the two below are required: 
-
-
-Column Name | Description
------------ | -----------
-  value     | Quantitative antibody response
-  age       | Numeric age
-*Note that variable names are case sensitive*
+Next, we load our sample cross-sectional data. 
 
 
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
 xs_data <- 
-  "https://osf.io/download//n6cp3/" |> 
-  load_pop_data() |> 
+  "https://osf.io/download/h5js4/" %>% 
+  load_pop_data() %>% 
   clean_pop_data()
 
 ```
@@ -133,7 +103,7 @@ xs_data <-
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
 ```{r, message = TRUE}
-xs_data |> check_pop_data()
+xs_data %>% check_pop_data()
 ```
 
 #### Summarize antibody data
@@ -141,32 +111,11 @@ xs_data |> check_pop_data()
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data |> summary()
+xs_data %>% summary()
 ```
 
 
 #### Visualize antibody data
-
-We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
-
-```{r plots}
-#Create plots
-
-xs_data |> autoplot(strata = "Country")
-
-```
-
-We see that across countries, our data is highly skewed with the majority of responses on the lower end of our data with long tails. Let's get a better look at the distribution by log transforming our antibody response value. 
-
-```{r logplot, message = FALSE}
-#Create log transformed plots
-
-options(scipen = 999)
-xs_data |> 
-  autoplot(strata = "Country", log = TRUE)
-```
-
-Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
 
 Let's also take a look at how antibody responses change by age.
 
@@ -174,7 +123,7 @@ Let's also take a look at how antibody responses change by age.
 
 #Plot antibody responses by age
 
-ggplot(data=xs_data, aes(x=age, y=value, color=Country)) + 
+ggplot(data=xs_data, aes(x=age, y=value, color=country)) + 
          geom_point(size=.6, alpha=.7)+
          geom_smooth(method=lm, se=FALSE)+
          scale_y_log10() +
@@ -183,10 +132,12 @@ ggplot(data=xs_data, aes(x=age, y=value, color=Country)) +
             title = "Quantitative Antibody Responses by Age",
             x = "Age",
             y = "Value"
-          )
+          ) + 
+  facet_wrap(~antigen_iso) +
+  scale_color_manual(values = c("orange2",'#39558CFF'))
 
 ```
-In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).
+
 
 
 ### Load noise parameters
@@ -207,49 +158,75 @@ Column Name | Description
     eps     | Measurement noise
 *Note that variable names are case-sensitive.*
 
-``` {r noise, message=FALSE}
-#Import noise parameters from OSF
+```{r message=FALSE, warning=FALSE}
 
-noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() %>%
-  rename(y.low = llod) #rename lower bound
+
+#biologic noise
+b.noise <- xs_data %>%
+  group_by(antigen_iso) %>%
+  filter(!is.na(value)) %>%
+  filter(age<40) %>% # restrict to young ages to capture recent exposures 
+  do({
+    set.seed(54321)
+    # Fit the mixture model
+    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
+    # Assuming the first component is the lower distribution
+    lower_mu <- mixmod$mu[1]
+    lower_sigma <- sqrt(mixmod$sigma[1])
+    # Calculate the 90th percentile of the lower distribution
+    percentile75 <- qnorm(0.75, lower_mu, lower_sigma)
+    # Return the results
+    data.frame(antigen_iso = .$antigen_iso[1], percentile75 = percentile75)
+  })
+
+
+
+# define conditional parameters
+noise <- data.frame(
+  antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
+  nu = as.numeric(c(b.noise[2,2], b.noise[1,2])),  # Biologic noise (nu)
+  eps = c(0.2, 0.2),                             # M noise (eps)
+  y.low = c(0.2, 0.2),                            # low cutoff (llod)
+  y.high = c(200, 200)) %>%                      # high cutoff (y.high)
+  mutate(across(where(is.numeric), round, digits = 2))  
+
 
 ```
 
-## Estimate Seroincidence 
-Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
-
-### Overall Seroincidence
-Using the function `est.incidence`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
-
-```{r est}
-
-#Using est.incidence (no strata)
-
-est1 = est.incidence(
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_param = curve, 
-  noise_param = noise %>% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-)
-
-summary(est1)
-```
-
-
-### Stratified Seroincidence
-
-We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their cross-sectional population dataset.
+## Estimate Seroincidence by study site
+Now we are ready to begin estimating seroincidence. We will use `est.incidence.by` to calculate stratified seroincidence rates.
 
 
 ```{r estby}
 #Using est.incidence.by (strata)
 
-est2 = est.incidence.by(
-  strata = c("catchment"),
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
+est = est.incidence.by(
+  strata = c("country"),
+  pop_data = xs_data,
   curve_params = curve, 
-  noise_params = noise %>% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  noise_params = noise,
+  antigen_isos = c("OT56kda_IgG"),
+  num_cores = 8 #Allow for parallel processing to decrease run time 
+  )
+
+summary(est)
+
+```
+
+
+## Estimate Seroincidence by study site and age strata
+Now we are ready to begin estimating seroincidence. We will use `est.incidence.by` to calculate stratified seroincidence rates.
+
+
+```{r estby2}
+#Using est.incidence.by (strata)
+
+est2 = est.incidence.by(
+  strata = c("country", "ageQ"),
+  pop_data = xs_data,
+  curve_params = curve, 
+  noise_params = noise,
+  antigen_isos = c("OT56kda_IgG"),
   num_cores = 8 #Allow for parallel processing to decrease run time 
   )
 
@@ -257,7 +234,11 @@ summary(est2)
 
 ```
 
-We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
+
+
+
+
+
 
 Let's visualize our seroincidence estimates by strata.
 
@@ -265,29 +246,42 @@ Let's visualize our seroincidence estimates by strata.
 ```{r}
 #Plot seroincidence estimates
 
+#Save summary(est) as a dataframe
+estdf<- summary(est) %>%
+  mutate(ageQ = "Overall")
+
 #Save summary(est2) as a dataframe
-est2df<- summary(est2)
+est2df<- summary(est2) 
+
+
+est.comb <- rbind(estdf, est2df)
 
 #Create barplot (rescale incidence rate and CIs)
-ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
-  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
+ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
+  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
+                position = position_dodge2(width = 0.8, preserve = "single")) +
   labs(
       title= "Enteric Fever Seroincidence by Catchment Area",
         x="Seroincience rate per 1000 person-years",
         y="Catchment"
       ) +
   theme_bw() +
+  #facet_wrap(~country) + 
   theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11))
+        axis.text.x = element_text(size=11)) + 
+  scale_fill_manual(values = c("orange2",'#39558CFF'))
+
 
 ```
 
-## Conclusions
-In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)]. 
+
 
 
 ## Acknowledgments
-Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan).  
+We gratefully acknowledge the study participants for their valuable time and interest in participating in these studies
+
+## Funding
+This work was supported by the National Institutes of Health Fogarty International Center (FIC) at [K01 TW012177] and the National Institute of Allergy and Infectious Diseases (NIAID) [R21 1AI176416] 
 
 ## References

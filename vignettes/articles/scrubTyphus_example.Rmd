@@ -51,7 +51,7 @@ library(serocalculator)
 #install.packages("tidyverse")
 library(tidyverse)
 #install.packages("mixtools")
-use_package("mixtools")
+library(mixtools)
 ```
 
 ### Load data

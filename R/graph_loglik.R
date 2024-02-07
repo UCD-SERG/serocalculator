@@ -10,6 +10,28 @@
 #' @inheritDotParams llik -lambda
 #' @return a [ggplot2::ggplot()]
 #' @export
+#' @examples
+#' #Load cross-sectional data
+#'
+#' #Load curve parameters
+#' dmcmc = load_curve_params(https://osf.io/download/rtw5k )
+#'
+#' #Load noise parameters
+#' cond <- tibble(
+#' antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
+#' nu = c(0.5, 0.5),                          # Biologic noise (nu)
+#' eps = c(0, 0),                             # M noise (eps)
+#' y.low = c(1, 1),                           # low cutoff (llod)
+#' y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+#'
+#' #Graph the log likelihood
+#' lik_HlyE_IgA = graph.loglik(
+#'  pop_data = csdata,
+#'  curve_params = dmcmc,
+#'  noise_params = cond,
+#'  antigen_isos = "HlyE_IgA",
+#'  log_x = TRUE
+#' )
 #'
 graph.loglik = function(
     pop_data,

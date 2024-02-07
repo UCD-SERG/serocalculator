@@ -13,6 +13,19 @@
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda_start`, `antigen_isos`, and `ll_graph`
 #' @export
+#' @examples
+#' xs_data = load_pop_data(""https://osf.io/download//n6cp3/"")
+#' curve = load_curve_params(""https://osf.io/download/rtw5k/"" )
+#'
+#' est1 = est.incidence(
+#' pop_data = xs_data %>% filter(Country == "Pakistan"),
+#' curve_param = curve,
+#' noise_param = noise %>% filter(Country == "Pakistan"),
+#' antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+#' )
+#'
+#' summary(est1)
+#'
 est.incidence <- function(
     pop_data,
     curve_params,

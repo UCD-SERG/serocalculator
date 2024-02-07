@@ -5,6 +5,10 @@
 #'
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
+#' @examples
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' print(xs_data)
+#'
 #'
 load_pop_data = function(file_path, antigen_isos = NULL)
 {

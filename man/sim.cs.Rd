@@ -83,3 +83,39 @@ a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectiona
 Makes a cross-sectional data set (age, y(t) set)
 and adds noise, if desired.
 }
+\examples{
+#Load curve parameters
+dmcmc = load_curve_params(https://osf.io/download/rtw5k )
+
+#set seed to reproduce results
+set.seed(54321)
+
+# simulated incidence rate per person-year
+lambda <- 0.2;
+
+# range covered in simulations
+lifespan <- c(0, 10);
+
+# cross-sectional sample size
+nrep <- 100
+
+# biologic noise distribution
+dlims <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5))
+
+#generate cross-sectional data
+csdata <- sim.cs(
+  curve_params = dmcmc,
+  lambda = lambda,
+  n.smpl = nrep,
+  age.rng = lifespan,
+  antigen_isos = antibodies,
+ n.mc = 0,
+ renew.params = TRUE,
+ add.noise = TRUE,
+ noise_limits = dlims,
+ format = "long"
+)
+
+}

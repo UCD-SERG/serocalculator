@@ -9,6 +9,11 @@
 #'
 #' @return a [ggplot2::ggplot] object
 #' @export
+#' @examples
+#' xs_data <- "https://osf.io/download//n6cp3/" |>
+#' load_pop_data()
+#' xs_data |> autoplot(strata = "Country")
+#'
 autoplot.pop_data = function(
     object,
     log =  FALSE,

@@ -61,7 +61,7 @@ library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
 
-#load in longitudinal parameters, these are modelled from all SEES cases across all ages and countries 
+#load in longitudinal parameters, these are modeled from all SEES cases across all ages and countries 
 dmcmc =
   "https://osf.io/download/rtw5k" |> 
   load_curve_params()

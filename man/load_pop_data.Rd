@@ -17,3 +17,9 @@ a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extr
 \description{
 Load a cross-sectional antibody survey data set
 }
+\examples{
+xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+print(xs_data)
+
+
+}

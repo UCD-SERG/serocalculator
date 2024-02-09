@@ -8,6 +8,11 @@
 #'
 #' @returns a list containing two summary tables: one of `age` and one of `value`, stratified by `antigen_iso`
 #' @export
+#' @examples
+#' xs_data <- "https://osf.io/download//n6cp3/" |>
+#' load_pop_data()
+#' xs_data |> summary()
+#'
 summary.pop_data = function(object, ...)
 {
 

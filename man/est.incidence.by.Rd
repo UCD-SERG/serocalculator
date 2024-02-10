@@ -106,8 +106,9 @@ response model.
 If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
 }
 \examples{
-xs_data = load_pop_data(""https://osf.io/download//n6cp3/"")
-curve = load_curve_params(""https://osf.io/download/rtw5k/"" )
+xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+curve = load_curve_params("https://osf.io/download/rtw5k/")
+noise = load_noise_params("https://osf.io/download//hqy4v/")
 
 est2 = est.incidence.by(
 strata = c("catchment"),

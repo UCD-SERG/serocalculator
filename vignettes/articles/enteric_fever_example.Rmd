@@ -210,8 +210,7 @@ Column Name | Description
 ``` {r noise, message=FALSE}
 #Import noise parameters from OSF
 
-noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() %>%
-  rename(y.low = llod) #rename lower bound
+noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() 
 
 ```
 

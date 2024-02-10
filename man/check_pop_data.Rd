@@ -15,3 +15,13 @@ NULL (invisibly)
 \description{
 Check the formatting of a cross-sectional antibody survey dataset.
 }
+\examples{
+#Import cross-sectional data from OSF and rename required variables
+xs_data <-
+ "https://osf.io/download//n6cp3/" |>
+  load_pop_data() |>
+  clean_pop_data()
+
+  xs_data |> check_pop_data()
+
+}

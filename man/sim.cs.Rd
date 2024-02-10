@@ -85,7 +85,7 @@ and adds noise, if desired.
 }
 \examples{
 #Load curve parameters
-dmcmc = load_curve_params(https://osf.io/download/rtw5k )
+dmcmc = load_curve_params("https://osf.io/download/rtw5k")
 
 #set seed to reproduce results
 set.seed(54321)

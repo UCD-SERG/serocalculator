@@ -14,7 +14,7 @@
 #' #Load cross-sectional data
 #'
 #' #Load curve parameters
-#' dmcmc = load_curve_params(https://osf.io/download/rtw5k )
+#' dmcmc = load_curve_params("https://osf.io/download/rtw5k" )
 #'
 #' #Load noise parameters
 #' cond <- tibble(

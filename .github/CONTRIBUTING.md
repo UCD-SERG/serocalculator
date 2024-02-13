@@ -45,3 +45,13 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 Please note that the serocalculator project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
 project you agree to abide by its terms.
+
+## References and guides for development tools
+
+### Documentation (`roxygen2`)
+
+* How to document functions: 
+  - https://r-pkgs.org/man.html
+  - https://roxygen2.r-lib.org/articles/roxygen2.html 
+* How to document object classes: https://roxygen2.r-lib.org/articles/rd-other.html#s3
+* How to document datasets: https://roxygen2.r-lib.org/articles/rd-other.html#datasets

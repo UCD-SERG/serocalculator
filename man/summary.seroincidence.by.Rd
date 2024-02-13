@@ -46,7 +46,10 @@ Calculate seroincidence from output of the seroincidence calculator
 \code{\link[=est.incidence.by]{est.incidence.by()}}.
 }
 \examples{
-xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+library(dplyr)
+
+xs_data = load_pop_data("https://osf.io/download//n6cp3/")\%>\%
+  clean_pop_data()
 curve = load_curve_params("https://osf.io/download/rtw5k/" )
 
 est2 = est.incidence.by(

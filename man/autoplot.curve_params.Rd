@@ -6,7 +6,7 @@
 \usage{
 \method{autoplot}{curve_params}(
   object,
-  antigen_isos = unique(object$antigen_iso),
+  antigen_isos = object$antigen_iso \%>\% unique(),
   ncol = min(3, length(antigen_isos)),
   ...
 )
@@ -46,9 +46,11 @@ Note that if you directly specify \code{rows_to_graph} when calling this functio
 }
 }
 \examples{
-curve = "https://osf.io/download/rtw5k/" |>
-  load_curve_params()
+library(dplyr)
+library(ggplot2)
 
-curve |> autoplot()
+curve = "https://osf.io/download/rtw5k/" \%>\%
+  load_curve_params() \%>\%
+  autoplot()
 
 }

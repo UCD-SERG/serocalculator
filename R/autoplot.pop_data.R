@@ -10,9 +10,12 @@
 #' @return a [ggplot2::ggplot] object
 #' @export
 #' @examples
-#' xs_data <- "https://osf.io/download//n6cp3/" |>
+#' library(dplyr)
+#' library(ggplot2)
+#'
+#' xs_data <- "https://osf.io/download//n6cp3/" %>%
 #' load_pop_data()
-#' xs_data |> autoplot(strata = "Country")
+#' xs_data %>% autoplot(strata = "Country")
 #'
 autoplot.pop_data = function(
     object,
@@ -22,8 +25,8 @@ autoplot.pop_data = function(
 {
 
   plot1 =
-    object |>
-    ggplot2::ggplot(aes(x = .data$value)) +
+    object %>%
+    ggplot2::ggplot(aes(x = .data$result)) +
     ggplot2::theme_minimal() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 

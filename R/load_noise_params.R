@@ -12,7 +12,7 @@
 #'
 load_noise_params = function(file_path, antigen_isos = NULL)
 {
-  if(file_path |> substr(1,4) == "http")
+  if(file_path %>% substr(1,4) == "http")
   {
     file_path = url(file_path)
 
@@ -20,7 +20,7 @@ load_noise_params = function(file_path, antigen_isos = NULL)
 
   noise =
     file_path %>%
-    readRDS() |>
+    readRDS() %>%
     tibble::as_tibble()
 
   class(noise) =

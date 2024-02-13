@@ -22,8 +22,11 @@ a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 \code{autoplot()} method for \code{pop_data} objects
 }
 \examples{
-xs_data <- "https://osf.io/download//n6cp3/" |>
+library(dplyr)
+library(ggplot2)
+
+xs_data <- "https://osf.io/download//n6cp3/" \%>\%
 load_pop_data()
-xs_data |> autoplot(strata = "Country")
+xs_data \%>\% autoplot(strata = "Country")
 
 }

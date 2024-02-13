@@ -26,6 +26,8 @@
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
 #' @examples
+#' library(dplyr)
+#'
 #' #generate cross-sectional data
 #' csdata <- sim.cs(
 #'   curve_params = dmcmc,
@@ -42,7 +44,7 @@
 #'
 #' #load in longitudinal parameters
 #' dmcmc =
-#'   "https://osf.io/download/rtw5k" |>
+#'   "https://osf.io/download/rtw5k" %>%
 #'   load_curve_params()
 #'
 #' #Load noise params
@@ -59,7 +61,7 @@
 #'   curve_params = dmcmc,
 #'   noise_params = cond,
 #'   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-#'   lambda = 0.1) |> print()
+#'   lambda = 0.1) %>% print()
 #'
 llik <- function(
     lambda,
@@ -87,21 +89,21 @@ llik <- function(
     } else
     {
       cur_data =
-        pop_data |>
+        pop_data %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_curve_params =
-        curve_params |>
+        curve_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_noise_params =
-        noise_params |>
+        noise_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       if(!is.element('d', names(cur_curve_params)))
       {
         cur_curve_params =
-          cur_curve_params |>
+          cur_curve_params %>%
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
             d = .data$r - 1)

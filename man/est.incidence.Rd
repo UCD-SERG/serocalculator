@@ -8,9 +8,9 @@ est.incidence(
   pop_data,
   curve_params,
   noise_params,
-  antigen_isos = unique(pop_data$antigen_iso),
+  antigen_isos = pop_data$antigen_iso \%>\% unique(),
   lambda_start = 0.1,
-  stepmin = 0.00000001,
+  stepmin = 1e-08,
   stepmax = 3,
   verbose = FALSE,
   build_graph = FALSE,
@@ -89,7 +89,10 @@ a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 }
 \examples{
-xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+library(dplyr)
+
+xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
+clean_pop_data()
 curve = load_curve_params("https://osf.io/download/rtw5k/")
 noise = load_noise_params("https://osf.io/download//hqy4v/")
 

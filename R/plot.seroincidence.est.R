@@ -7,43 +7,23 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
-#'  #generate cross-sectional data
-#' csdata <- sim.cs(
-#'   curve_params = dmcmc,
-#'   lambda = lambda,
-#'   n.smpl = nrep,
-#'   age.rng = lifespan,
-#'   antigen_isos = antibodies,
-#'  n.mc = 0,
-#'  renew.params = TRUE,
-#'  add.noise = TRUE,
-#'  noise_limits = dlims,
-#'  format = "long"
-#' )
+#' library(dplyr)
+#' library(ggplot2)
 #'
-#' #load in longitudinal parameters
-#' dmcmc =
-#'   "https://osf.io/download/rtw5k" |>
-#'   load_curve_params()
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data = clean_pop_data(xs_data)
 #'
-#' #Load noise params
-#'   cond <- tibble(
-#'   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-#'   nu = c(0.5, 0.5),                          # Biologic noise (nu)
-#'   eps = c(0, 0),                             # M noise (eps)
-#'   y.low = c(1, 1),                           # low cutoff (llod)
-#'   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+#' curve = load_curve_params("https://osf.io/download/rtw5k/")
+#' noise = load_noise_params("https://osf.io/download//hqy4v/")
 #'
-#' #Calculate seroincidence
 #' est1 = est.incidence(
-#'   pop_data = csdata,
-#'   curve_params = dmcmc,
-#'   noise_params = cond,
-#'   lambda_start = .1,
-#'   build_graph = T,
-#'   verbose = T, # print updates as the function runs
-#'   print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
-#'   antigen_isos = antibodies)
+#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   curve_param = curve,
+#'   noise_param = noise %>% filter(Country == "Pakistan"),
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   build_graph = TRUE
+#' )
+
 #'
 #' #plot the log-likelihood curve
 #'   autoplot(est1)

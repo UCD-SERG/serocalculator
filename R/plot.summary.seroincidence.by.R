@@ -10,8 +10,11 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @examples
+#' library(dplyr)
+#' library(ggplot2)
 #'
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   clean_pop_data()
 #' curve = load_curve_params("https://osf.io/download/rtw5k/" )
 #' noise = load_noise_params("https://osf.io/download//hqy4v/")
 #'
@@ -36,7 +39,7 @@ autoplot.summary.seroincidence.by = function(
     width = 0.001,
     ...)
 {
-  object |>
+  object %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = get(xvar),

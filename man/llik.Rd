@@ -52,6 +52,8 @@ the log-likelihood of the data with the current parameter values
 Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (\code{lambda}) value.
 }
 \examples{
+library(dplyr)
+
 #generate cross-sectional data
 csdata <- sim.cs(
   curve_params = dmcmc,
@@ -68,7 +70,7 @@ csdata <- sim.cs(
 
 #load in longitudinal parameters
 dmcmc =
-  "https://osf.io/download/rtw5k" |>
+  "https://osf.io/download/rtw5k" \%>\%
   load_curve_params()
 
 #Load noise params
@@ -85,6 +87,6 @@ dmcmc =
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-  lambda = 0.1) |> print()
+  lambda = 0.1) \%>\% print()
 
 }

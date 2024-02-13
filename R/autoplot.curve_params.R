@@ -10,25 +10,27 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @examples
-#' curve = "https://osf.io/download/rtw5k/" |>
-#'   load_curve_params()
+#' library(dplyr)
+#' library(ggplot2)
 #'
-#' curve |> autoplot()
+#' curve = "https://osf.io/download/rtw5k/" %>%
+#'   load_curve_params() %>%
+#'   autoplot()
 #'
 autoplot.curve_params = function(
     object,
-    antigen_isos = object$antigen_iso |> unique(),
+    antigen_isos = object$antigen_iso %>% unique(),
     ncol = min(3, length(antigen_isos)),
     ...)
 {
 
-  split_data = object |>
-    filter(.data$antigen_iso %in% antigen_isos) |>
-    droplevels() |>
+  split_data = object %>%
+    filter(.data$antigen_iso %in% antigen_isos) %>%
+    droplevels() %>%
     split(~antigen_iso)
 
   labels = names(split_data)
-  figs = split_data |>
+  figs = split_data %>%
     lapply(FUN = plot_curve_params_one_ab, ...)
 
   for (i in 1:length(figs))

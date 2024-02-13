@@ -84,7 +84,7 @@ sim.cs <- function(
   if(verbose > 1)
   {
     message('inputs to `sim.cs()`:')
-    print(environment() |> as.list())
+    print(environment() %>% as.list())
   }
 
   # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
@@ -101,7 +101,7 @@ sim.cs <- function(
   day2yr = 365.25
   lambda = lambda / day2yr
   age.rng = age.rng * day2yr
-  npar = dimnames(predpar)$parameter |> length()
+  npar = dimnames(predpar)$parameter %>% length()
 
 
   baseline_limits <- noise_limits
@@ -133,7 +133,7 @@ sim.cs <- function(
   colnames(ysim) <- c("age", antigen_isos)
 
   to_return =
-    ysim |>
+    ysim %>%
     as_tibble() %>%
     mutate(age = round(.data$age / day2yr, 2))
 

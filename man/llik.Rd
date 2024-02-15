@@ -54,7 +54,6 @@ Calculates the log-likelihood of a set of cross-sectional antibody response data
 \examples{
 library(dplyr)
 library(tibble)
-<<<<<<< HEAD
 
 #load in longitudinal parameters
 dmcmc = load_curve_params("https://osf.io/download/rtw5k")
@@ -80,8 +79,6 @@ dlims <- rbind(
   "HlyE_IgA" = c(min = 0, max = 0.5),
   "HlyE_IgG" = c(min = 0, max = 0.5))
 
-=======
->>>>>>> 16ae69976d8c522bea54459d78fc5fcfb54e45fc
 
 #generate cross-sectional data
 csdata <- sim.cs(
@@ -97,12 +94,6 @@ csdata <- sim.cs(
  format = "long"
 )
 
-<<<<<<< HEAD
-=======
-#load in longitudinal parameters
-dmcmc = load_curve_params("https://osf.io/download/rtw5k")
-
->>>>>>> 16ae69976d8c522bea54459d78fc5fcfb54e45fc
 #Load noise params
   cond <- tibble(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),

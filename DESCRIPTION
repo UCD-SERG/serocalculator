@@ -41,7 +41,6 @@ Suggests:
     bookdown,
     printr,
     doRNG,
-    osfr,
     ggbeeswarm,
     DT
 VignetteBuilder: knitr

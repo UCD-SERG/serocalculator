@@ -51,6 +51,7 @@ library(dplyr)
 xs_data = load_pop_data("https://osf.io/download//n6cp3/")\%>\%
   clean_pop_data()
 curve = load_curve_params("https://osf.io/download/rtw5k/" )
+noise = load_noise_params("https://osf.io/download//hqy4v/")
 
 est2 = est.incidence.by(
 strata = c("catchment"),

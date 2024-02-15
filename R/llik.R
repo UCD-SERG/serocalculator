@@ -27,6 +27,7 @@
 #' @export
 #' @examples
 #' library(dplyr)
+#' library(tibble)
 #'
 #' #generate cross-sectional data
 #' csdata <- sim.cs(
@@ -43,9 +44,7 @@
 #' )
 #'
 #' #load in longitudinal parameters
-#' dmcmc =
-#'   "https://osf.io/download/rtw5k" %>%
-#'   load_curve_params()
+#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
 #'
 #' #Load noise params
 #'   cond <- tibble(

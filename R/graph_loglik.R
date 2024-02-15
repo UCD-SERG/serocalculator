@@ -11,7 +11,13 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
+#' library(dplyr)
+#' library(tibble)
+#'
 #' #Load cross-sectional data
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/") %>%
+#' clean_pop_data()
+#'
 #'
 #' #Load curve parameters
 #' dmcmc = load_curve_params("https://osf.io/download/rtw5k" )
@@ -26,7 +32,7 @@
 #'
 #' #Graph the log likelihood
 #' lik_HlyE_IgA = graph.loglik(
-#'  pop_data = csdata,
+#'  pop_data = xs_data,
 #'  curve_params = dmcmc,
 #'  noise_params = cond,
 #'  antigen_isos = "HlyE_IgA",

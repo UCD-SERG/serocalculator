@@ -40,11 +40,11 @@ pop_data = xs_data \%>\% filter(Country == "Pakistan"),
 curve_params = curve,
 noise_params = noise \%>\% filter(Country == "Pakistan"),
 antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-num_cores = 8 #Allow for parallel processing to decrease run time
+#num_cores = 8 #Allow for parallel processing to decrease run time
 )
 
 est2sum <- summary(est2)
 
-autoplot(est2sum)
+autoplot(est2sum, "catchment")
 
 }

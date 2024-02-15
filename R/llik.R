@@ -27,6 +27,32 @@
 #' @export
 #' @examples
 #' library(dplyr)
+#' library(tibble)
+#'
+#' #load in longitudinal parameters
+#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+#'
+#'
+#' #Specify the antibody-isotype responses to include in analyses
+#' antibodies = c("HlyE_IgA", "HlyE_IgG")
+#'
+#'  #set seed to reproduce results
+#' set.seed(54321)
+#'
+#' # simulated incidence rate per person-year
+#' lambda <- 0.2;
+#'
+#' # range covered in simulations
+#' lifespan <- c(0, 10);
+#'
+#' # cross-sectional sample size
+#' nrep <- 100
+#'
+#' # biologic noise distribution
+#' dlims <- rbind(
+#'   "HlyE_IgA" = c(min = 0, max = 0.5),
+#'   "HlyE_IgG" = c(min = 0, max = 0.5))
+#'
 #'
 #' #generate cross-sectional data
 #' csdata <- sim.cs(
@@ -41,11 +67,6 @@
 #'  noise_limits = dlims,
 #'  format = "long"
 #' )
-#'
-#' #load in longitudinal parameters
-#' dmcmc =
-#'   "https://osf.io/download/rtw5k" %>%
-#'   load_curve_params()
 #'
 #' #Load noise params
 #'   cond <- tibble(

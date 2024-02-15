@@ -87,6 +87,9 @@ and adds noise, if desired.
 #Load curve parameters
 dmcmc = load_curve_params("https://osf.io/download/rtw5k")
 
+#Specify the antibody-isotype responses to include in analyses
+antibodies = c("HlyE_IgA", "HlyE_IgG")
+
 #set seed to reproduce results
 set.seed(54321)
 

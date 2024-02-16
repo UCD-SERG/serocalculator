@@ -32,15 +32,11 @@ Suggests:
     parallel,
     knitr,
     rmarkdown,
-    pander,
-    Hmisc,
     tidyverse,
     fs,
     testthat (>= 3.0.0),
     readr,
     bookdown,
-    printr,
-    doRNG,
     ggbeeswarm,
     DT
 VignetteBuilder: knitr

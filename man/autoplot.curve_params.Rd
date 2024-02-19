@@ -28,7 +28,7 @@
     \item{\code{alpha}}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}}) how transparent the curves should be:
 \itemize{
 \item 0 = fully transparent (invisible)
-\item 1 = fully opaque (no transparency)
+\item 1 = fully opaque
 }}
     \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
   }}

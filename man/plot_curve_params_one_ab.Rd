@@ -23,7 +23,7 @@ plot_curve_params_one_ab(
 \item{alpha}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}}) how transparent the curves should be:
 \itemize{
 \item 0 = fully transparent (invisible)
-\item 1 = fully opaque (no transparency)
+\item 1 = fully opaque
 }}
 
 \item{n_curves}{how many curves to plot (see details).}
@@ -57,9 +57,8 @@ In most cases, \code{curve_params} will contain too many rows of MCMC samples fo
 }
 }
 \examples{
-\dontrun{
-curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
-plot1 = graph.curve.params(curve_params)
-print(plot1)
-}
+"https://osf.io/download/rtw5k/" \%>\%
+load_curve_params() \%>\%
+filter(antigen_iso == "HlyE_IgG") \%>\%
+plot_curve_params_one_ab()
 }

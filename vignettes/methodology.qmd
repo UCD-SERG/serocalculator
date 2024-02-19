@@ -27,7 +27,7 @@ bibliography: references.bib
 
 The **incidence rate** of a disease for a specific time period is the rate at which individuals in a population are acquiring that disease during that time period. 
 
-Example: if $\color{red}{\text{ten}}$ people in a population of $\color{red}1000$ contract typhoid over a one month time period, then the incidence rate for that time period is $\color{red}{\text{10 new cases per 1000 persons per month}}$.
+Example: if $\color{red}{\text{ten}}$ people in a population of $\color{red}1000$ contract typhoid over a one month time period, then the incidence rate for that time period is *"$\color{red}{\text{10}}$ new cases per $\color{red}1000$ persons per month"*.
 
 ```{r, echo = FALSE, message=FALSE}
 library(dplyr)

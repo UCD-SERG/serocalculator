@@ -1,11 +1,11 @@
-#' Graph an antibody decay curve model
+#' @title Graph an antibody decay curve model
 #'
 #' @param object a [data.frame()] of curve parameters (one or more MCMC samples)
 #' @param verbose verbose output
 #' @param xlim range of x values to graph
 #' @param n_curves how many curves to plot (see details).
 #' @param rows_to_graph which rows of `curve_params` to plot (overrides `n_curves`).
-#' @param alpha (passed to [ggplot2::geom_function()]) how transparent the curves should be:
+#' @param transparency (passed to [ggplot2::geom_function()]) how transparent the curves should be:
 #' * 0 = fully transparent (invisible)
 #' * 1 = fully opaque (no transparency)
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
@@ -20,7 +20,7 @@
 #' @examples
 #' \dontrun{
 #' curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
-#' plot1 = graph.curve.params(curve_params)
+#' plot1 = plot_curve_params_one_ab(curve_params |> filter(antigen_iso == "HlyE_IgG"))
 #' print(plot1)
 #' }
 plot_curve_params_one_ab = function(
@@ -33,37 +33,6 @@ plot_curve_params_one_ab = function(
     xlim = c(10^-1, 10^3.1),
     ...)
 {
-
-  bt <- function(y0, y1, t1)
-  {
-    to_return = try(log(y1 / y0) / t1 )
-    # if(inherits(to_return, "try-error")) browser()
-    return(to_return)
-  }
-
-  # uses r > 1 scale for shape
-  ab0 <- function(
-    t,
-    curve_params)
-
-  {
-
-    y0 = curve_params[["y0"]]
-    y1 = curve_params[["y1"]]
-    t1 = curve_params[["t1"]]
-    alpha = curve_params[["alpha"]]
-    shape = curve_params[["r"]]
-
-    beta <- bt(y0, y1, t1)
-
-    yt <- 0
-
-    yt_phase_1 = y0 * exp(beta * t)
-    yt_phase_2 = (y1 ^ (1 - shape) - (1 - shape) * alpha * (t - t1)) ^ (1 / (1 - shape))
-    yt = dplyr::if_else(t <= t1, yt_phase_1, yt_phase_2)
-    return(yt)
-
-  }
 
   plot1 =
     ggplot2::ggplot() +
@@ -85,12 +54,11 @@ plot_curve_params_one_ab = function(
   {
     cur_params = object[cur_row, ]
     ggplot2::geom_function(
-        alpha = alpha,
+        alpha = transparency,
         # aes(color = cur_row),
-        fun = function(x) ab0(x, curve_params = cur_params))
+        fun = ab0,
+        args = list(curve_params = cur_params))
   }
-
-
 
   layers =
     lapply(

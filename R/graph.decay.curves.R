@@ -5,9 +5,9 @@
 #' @param xlim range of x values to graph
 #' @param n_curves how many curves to plot (see details).
 #' @param rows_to_graph which rows of `curve_params` to plot (overrides `n_curves`).
-#' @param transparency (passed to [ggplot2::geom_function()]) how transparent the curves should be:
+#' @param alpha (passed to [ggplot2::geom_function()]) how transparent the curves should be:
 #' * 0 = fully transparent (invisible)
-#' * 1 = fully opaque (no transparency)
+#' * 1 = fully opaque
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @inheritParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
@@ -54,7 +54,7 @@ plot_curve_params_one_ab = function(
   {
     cur_params = object[cur_row, ]
     ggplot2::geom_function(
-        alpha = transparency,
+        alpha = alpha,
         # aes(color = cur_row),
         fun = ab0,
         args = list(curve_params = cur_params))

@@ -20,7 +20,6 @@ Imports:
     ggpubr,
     lifecycle,
     magrittr,
-    mixtools,
     Rcpp,
     rlang,
     rngtools,
@@ -29,7 +28,7 @@ Imports:
     tibble,
     tidyr,
     utils
-Suggests: 
+Suggests:
     parallel,
     knitr,
     rmarkdown,
@@ -44,7 +43,8 @@ Suggests:
     doRNG,
     osfr,
     ggbeeswarm,
-    DT
+    DT,
+    mixtools
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

@@ -5,7 +5,7 @@ build_likelihood_function = function(
     antigen_isos = names(cross_sectional_data))
 {
 
-  likelihood_function = function(llam)
+  likelihood_function = function(lambda)
   {
 
     res = 0
@@ -15,10 +15,10 @@ build_likelihood_function = function(
     {
       res = res +
         fdev(
-          llam,
-          cross_sectional_data[[cur_antigen]],
-          longitudinal_parameter_samples[[cur_antigen]],
-          noise_params[[cur_antigen]])
+          lambda = lambda,
+          csdata = cross_sectional_data[[cur_antigen]],
+          lnpars = longitudinal_parameter_samples[[cur_antigen]],
+          cond = noise_params[[cur_antigen]])
     }
 
     return(res)

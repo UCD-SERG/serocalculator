@@ -1,8 +1,7 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 0.1.0.9000
-Date: 2022-03-29
+Version: 0.5.0
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
   person(given = "Kristina", family = "Lai", role = c("aut")), 
@@ -11,19 +10,27 @@ Authors@R: c(
 Description: Translates antibody levels measured in cross-sectional population 
   samples into estimates of the frequency with which seroconversions (infections) 
   occur in the sampled populations. Replaces the previous `seroincidence` package.
-Depends: R (>= 3.5.0)
+Depends: R (>= 4.1.0)
 License: GPL-3
 Imports: 
+    doParallel,
     dplyr (>= 1.1.1),
+    foreach,
+    ggplot2,
+    ggpubr,
+    lifecycle,
     magrittr,
-    parallel,
+    mixtools,
     Rcpp,
     rlang,
+    rngtools,
+    scales,
     stats,
     tibble,
     tidyr,
     utils
 Suggests: 
+    parallel,
     knitr,
     rmarkdown,
     pander,
@@ -32,8 +39,12 @@ Suggests:
     fs,
     testthat (>= 3.0.0),
     readr,
-    ggplot2,
-    bookdown
+    bookdown,
+    printr,
+    doRNG,
+    osfr,
+    ggbeeswarm,
+    DT
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8

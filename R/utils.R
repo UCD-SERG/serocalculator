@@ -23,54 +23,41 @@
   return(abNames)
 }
 
-.errorCheck <- function(data, antibodies, strata, params)
+.errorCheck <- function(data, antigen_isos, curve_params)
 {
-  .checkAntibodies(antibodies = antibodies)
-  .checkCsData(data = data, antibodies = antibodies)
-  .checkStrata(data = data, strata = strata)
-  .checkParams(antibodies = antibodies, params = params)
+  .checkAntibodies(antigen_isos = antigen_isos)
+  check_pop_data(pop_data = data)
+  .checkParams(antigen_isos = antigen_isos, params = curve_params)
 
   invisible(NULL)
 }
 
-.checkAntibodies <- function(antibodies)
+.checkAntibodies <- function(antigen_isos)
 {
-  stopifnot(!missing(antibodies))
 
-  if (!is.character(antibodies)) {
-    stop(.pasteN("Argument `antibodies` is not a character vector.",
+  if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
+    stop(
+      paste0(
+        'In `est.incidence()`, the argument `antigen_isos` should be a `character()` or `factor()` variable, but ',
+        'currently, `class(antigen_isos) == "', class(antigen_isos), '"`.',
+        '\nPlease provide a character vector with at least one antibody name.'))
+  }
+
+  if (setequal(antigen_isos, "")) {
+    stop(.pasteN("Argument `antigen_isos` is empty.",
                  "Provide a character vector with at least one antibody name."))
   }
 
-  if (all(antibodies == "")) {
-    stop(.pasteN("Argument `antibodies` is empty.",
-                 "Provide a character vector with at least one antibody name."))
-  }
-
   invisible(NULL)
 }
 
-.checkCsData <- function(data, antibodies)
-{
-  if (!is.data.frame(data)) {
-    stop(.pasteN("Argument `data` is not a `data.frame()`.",
-                 "Provide a `data.frame()` with cross-sectional serology data per antibody."))
-  }
-
-  if (!is.element("a", names(data))) {
-    stop("Argument `data` is missing column `a` (age, in years).")
-  }
-
-  invisible(NULL)
-}
-
-.checkParams <- function(antibodies, params)
+.checkParams <- function(antigen_isos, params)
 {
 
   message1 = paste(
     "Please provide a `data.frame()` containing Monte Carlo samples of the longitudinal parameters",
     "`y1`, `alpha`, and `r`",
-    "for each value of `antigen_iso` in `data`")
+    "for each value of `antigen_iso` in `pop_data`")
 
 
   if (!is.data.frame(params)) {
@@ -88,7 +75,7 @@
         message1))
   }
 
-  if (!all(antibodies %in% params$antigen_iso)) {
+  if (!all(antigen_isos %in% params$antigen_iso)) {
     stop("Some `antigen_iso` values are missing.")
   }
 
@@ -97,7 +84,7 @@
 
 .checkStrata <- function(data, strata) {
   if (!is.character(strata)) {
-    stop(.pasteN("Argument \"strata\" is not a character vector.",
+    stop(.pasteN("Argument `strata` is not a character vector.",
                  "Provide a character vector with names of stratifying variables."))
   }
 

@@ -5,44 +5,66 @@
 \title{Estimate Seroincidence}
 \usage{
 est.incidence.by(
-  data,
+  pop_data,
   curve_params,
   noise_params,
-  strata = "",
+  strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  antigen_isos = unique(pull(data, "antigen_iso")),
-  lambda.start = 1/365.25,
-  numCores = 1L,
+  antigen_isos = unique(pull(pop_data, "antigen_iso")),
+  lambda_start = 0.1,
+  build_graph = FALSE,
+  num_cores = 1L,
   verbose = FALSE,
+  print_graph = FALSE,
   ...
 )
 }
 \arguments{
-\item{data}{Data frame with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
+\item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
-\item{curve_params}{List of data frames of all longitudinal parameters. Each data frame contains
-Monte Carlo samples for each antibody type.}
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\itemize{
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
+\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
+\item \code{y1}: antibody peak level (ELISA units)
+\item \code{t1}: duration of infection
+\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
+\item \code{r}: shape factor of antibody decay
+}}
 
-\item{noise_params}{a \code{\link[=list]{list()}} (or \code{\link[=data.frame]{data.frame()}}, or \code{\link[=tibble]{tibble()}}) containing noise parameters}
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+\itemize{
+\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
+\item \code{nu}: biological noise
+\item \code{eps}: measurement noise
+\item \code{y.low}: lower limit of detection for the current antigen isotype
+\item \code{y.high}: upper limit of detection for the current antigen isotype
+}}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{data}. Default = "".}
+\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
 \item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{data}}
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 
-\item{lambda.start}{starting guess for incidence rate, in years/event.}
+\item{lambda_start}{starting guess for incidence rate, in years/event.}
 
-\item{numCores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
+\item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
+
+\item{num_cores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
+\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
+
 \item{...}{
-  Arguments passed on to \code{\link[=.optNll]{.optNll}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link[=est.incidence]{est.incidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
+    \item{\code{stepmin}}{A positive scalar providing the minimum allowable relative step length.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -53,19 +75,12 @@ Monte Carlo samples for each antibody type.}
     \item{\code{typsize}}{an estimate of the size of each parameter
     at the minimum.}
     \item{\code{fscale}}{an estimate of the size of \code{f} at the minimum.}
-    \item{\code{print.level}}{this argument determines the level of printing
-    which is done during the minimization process.  The default
-    value of \code{0} means that no printing occurs, a value of \code{1}
-    means that initial and final details are printed and a value
-    of 2 means that full tracing information is printed.}
     \item{\code{ndigit}}{the number of significant digits in the function \code{f}.}
     \item{\code{gradtol}}{a positive scalar giving the tolerance at which the
     scaled gradient is considered close enough to zero to
     terminate the algorithm.  The scaled gradient is a
     measure of the relative change in \code{f} in each direction
     \code{p[i]} divided by the relative change in \code{p[i]}.}
-    \item{\code{steptol}}{A positive scalar providing the minimum allowable
-    relative step length.}
     \item{\code{iterlim}}{a positive integer specifying the maximum number of
     iterations to be performed before the program is terminated.}
     \item{\code{check.analyticals}}{a logical scalar specifying whether the
@@ -76,9 +91,17 @@ Monte Carlo samples for each antibody type.}
   }}
 }
 \value{
-A set of lambda estimates for each strata.
+\itemize{
+\item if \code{strata} has meaningful inputs:
+An object of class \code{"seroincidence.by"}; i.e., a list of \code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+\item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
+An object of class \code{"seroincidence"}.
+}
 }
 \description{
 Function to estimate seroincidences based on cross-section serology data and longitudinal
 response model.
+}
+\details{
+If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
 }

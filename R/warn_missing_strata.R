@@ -4,14 +4,14 @@
 #' @param strata a [data.frame()] showing the strata levels that are expected to be in the dataset
 #' @param dataname the name of the dataset, for use in warning messages if some strata are missing.
 #'
-#' @return a [character()] vector of the subset of stratifying variables that are present in `data`
+#' @return a [character()] vector of the subset of stratifying variables that are present in `pop_data`
 #'
 #' @examples
 #' \dontrun{
 #' expected_strata = data.frame(Species = "banana", type = "orchid")
-#' warn_missing_strata(iris, expected_strata, dataname = "iris")
+#' warn.missing.strata(iris, expected_strata, dataname = "iris")
 #' }
-warn_missing_strata = function(
+warn.missing.strata = function(
     data,
     strata,
     dataname)
@@ -54,7 +54,7 @@ warn_missing_strata = function(
     message2 = c(
       "\n\nTo avoid this warning, specify the desired set of stratifying",
       " variables in the `curve_strata_varnames` and `noise_strata_varnames`",
-      " arguments to `est.incidence.by()`"
+      " arguments to `est.incidence.by()`.\n"
     )
 
     warning(message, message2)
@@ -62,7 +62,7 @@ warn_missing_strata = function(
 
   if(length(present_strata_vars) > 0)
   {
-    strata2 = data |> get_strata(present_strata_vars)
+    strata2 = data |> count_strata(present_strata_vars)
 
     missing_strata =
       anti_join(
@@ -74,9 +74,12 @@ warn_missing_strata = function(
 
     if(nrow(missing_strata) > 0)
     {
-      message("The following strata are missing in ", dataname, ":")
+      message(
+        "The following strata variables are present in `",
+        dataname,
+        "`, but the following specific combinations of those strata are missing:")
       print(missing_strata)
-      stop("Missing strata in `", dataname, "`.\n\n")
+      stop("Missing strata levels in `", dataname, "`.\n\n")
     }
   }
 

@@ -1,0 +1,287 @@
+---
+title: "Scrub Typhus Seroincidence Vignette"
+author: "UC Davis Seroepidemiology Research Group (SERG)"
+output: 
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Scrub Typhus Seroincidence Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+
+
+---
+## Introduction
+
+This vignette reproduces the analysis for: [**Estimating the seroincidence of scrub typhus using antibody dynamics following infection**](https://www.medrxiv.org/content/10.1101/2022.11.07.22282017v2) (@Aiemjoy_2024_scrub). 
+
+## Methods
+
+The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. 
+
+### The Seroincidence Estimator
+
+The **serocalculator** package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.
+
+
+
+## Scrub Typhus Seroincidence
+
+Scrub typhus, a vector-borne bacterial infection, is an important but neglected disease globally. Accurately characterizing burden is challenging due to non-specific symptoms and limited diagnostics. Prior seroepidemiology studies have struggled to find consensus cutoffs that permit comparing estimates across contexts and time. In this study, we present a novel approach that does not require a cutoff and instead uses information about antibody kinetics after infection to estimate seroincidence. We use data from three cohorts of scrub typhus patients in Chiang Rai, Thailand, and Vellore, India to characterize antibody kinetics after infection and two population serosurveys in the Kathmandu valley, Nepal, and Tamil Nadu, India to estimate seroincidence. The samples were tested for IgM and IgG responses to Orientia tsutsugamushi-derived recombinant 56-kDa antigen using commercial ELISA kits. We used Bayesian hierarchical models to characterize antibody responses after scrub typhus infection and used the joint distributions of the peak antibody titers and decay rates to estimate population-level incidence rates in the cross-sectional serosurveys. 
+ 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.height=4, fig.width=7,
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+### Load packages
+The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
+
+```{r setup, message=FALSE}
+#devtools::install_github("ucd-serg/serocalculator")
+library(serocalculator)
+#install.packages("tidyverse")
+library(tidyverse)
+#install.packages("mixtools")
+library(mixtools)
+```
+
+### Load data
+
+Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
+
+
+
+#### Load and prepare longitudinal parameter data
+
+We will first load the longitudinal curve parameters to set the antibody decay parameters. These parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
+
+
+```{r curve, message=FALSE}
+
+#Import longitudinal antibody parameters from OSF
+
+curve <-  
+  "https://osf.io/download/u5gxh/" %>% 
+  load_curve_params() 
+
+```
+
+#### Visualize curve parameters
+
+We can graph the decay curves with an `autoplot()` method:
+
+```{r}
+curve %>% autoplot()
+```
+
+
+#### Load and prepare cross-sectional data 
+Next, we load our sample cross-sectional data. 
+
+
+```{r data, message = FALSE}
+
+#Import cross-sectional data from OSF and rename required variables
+xs_data <- 
+  "https://osf.io/download/h5js4/" %>% 
+  load_pop_data() %>% 
+  clean_pop_data()
+
+```
+
+#### Check formatting
+
+We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
+
+```{r, message = TRUE}
+xs_data %>% check_pop_data()
+```
+
+#### Summarize antibody data
+
+We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
+
+```{r}
+xs_data %>% summary()
+```
+
+
+#### Visualize antibody data
+
+Let's also take a look at how antibody responses change by age.
+
+```{r "plot age"}
+
+#Plot antibody responses by age
+
+ggplot(data=xs_data, aes(x=age, y=value, color=country)) + 
+         geom_point(size=.6, alpha=.7)+
+         geom_smooth(method=lm, se=FALSE)+
+         scale_y_log10() +
+         theme_bw()+
+          labs(
+            title = "Quantitative Antibody Responses by Age",
+            x = "Age",
+            y = "Value"
+          ) + 
+  facet_wrap(~antigen_iso) +
+  scale_color_manual(values = c("orange2",'#39558CFF'))
+
+```
+
+
+
+### Compile noise parameters
+
+Next, we must set conditions based on some assumptions about the data and errors that may need to be accounted for. This will differ based on background knowledge of the data. 
+
+
+The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. Measurement noise, $\varepsilon$ ("epsilon"), represents error from the laboratory testing process. 
+
+*Formatting Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
+
+
+Column Name | Description
+----------- | -----------
+    y.low   | Lower limit of detection of the antibody assay
+    nu      | Biologic noise
+    y.high  | Upper limit of detection of the antibody assay
+    eps     | Measurement noise
+*Note that variable names are case-sensitive.*
+
+```{r message=FALSE, warning=FALSE}
+
+
+#biologic noise
+b.noise <- xs_data %>%
+  group_by(antigen_iso) %>%
+  filter(!is.na(value)) %>%
+  filter(age<40) %>% # restrict to young ages to capture recent exposures 
+  do({
+    set.seed(54321)
+    # Fit the mixture model
+    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
+    # Assuming the first component is the lower distribution
+    lower_mu <- mixmod$mu[1]
+    lower_sigma <- sqrt(mixmod$sigma[1])
+    # Calculate the 90th percentile of the lower distribution
+    percentile75 <- qnorm(0.75, lower_mu, lower_sigma)
+    # Return the results
+    data.frame(antigen_iso = .$antigen_iso[1], percentile75 = percentile75)
+  })
+
+
+
+# define conditional parameters
+noise <- data.frame(
+  antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
+  nu = as.numeric(c(b.noise[2,2], b.noise[1,2])),  # Biologic noise (nu)
+  eps = c(0.2, 0.2),                             # M noise (eps)
+  y.low = c(0.2, 0.2),                            # low cutoff (llod)
+  y.high = c(200, 200)) %>%                      # high cutoff (y.high)
+  mutate(across(where(is.numeric), round, digits = 2))  
+
+
+```
+
+## Estimate Seroincidence by study site
+Now we are ready to begin estimating seroincidence. We will use `est.incidence.by` to calculate stratified seroincidence rates.
+
+
+```{r estby}
+#Using est.incidence.by (strata)
+
+est = est.incidence.by(
+  strata = c("country"),
+  pop_data = xs_data,
+  curve_params = curve, 
+  noise_params = noise,
+  antigen_isos = c("OT56kda_IgG"),
+  num_cores = 8 #Allow for parallel processing to decrease run time 
+  )
+
+summary(est)
+
+```
+
+
+## Estimate Seroincidence by study site and age strata
+Now we are ready to begin estimating seroincidence. We will use `est.incidence.by` to calculate stratified seroincidence rates.
+
+
+```{r estby2}
+#Using est.incidence.by (strata)
+
+est2 = est.incidence.by(
+  strata = c("country", "ageQ"),
+  pop_data = xs_data,
+  curve_params = curve, 
+  noise_params = noise,
+  antigen_isos = c("OT56kda_IgG"),
+  num_cores = 8 #Allow for parallel processing to decrease run time 
+  )
+
+summary(est2)
+
+```
+
+
+
+
+
+
+
+Let's visualize our seroincidence estimates by strata.
+
+
+```{r}
+#Plot seroincidence estimates
+
+#Save summary(est) as a dataframe
+estdf<- summary(est) %>%
+  mutate(ageQ = "Overall")
+
+#Save summary(est2) as a dataframe
+est2df<- summary(est2) 
+
+
+est.comb <- rbind(estdf, est2df)
+
+#Create barplot (rescale incidence rate and CIs)
+ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
+  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
+                position = position_dodge2(width = 0.8, preserve = "single")) +
+  labs(
+      title= "Enteric Fever Seroincidence by Catchment Area",
+        x="Seroincience rate per 1000 person-years",
+        y="Catchment"
+      ) +
+  theme_bw() +
+  #facet_wrap(~country) + 
+  theme(axis.text.y = element_text(size=11),
+        axis.text.x = element_text(size=11)) + 
+  scale_fill_manual(values = c("orange2",'#39558CFF'))
+
+
+```
+
+
+
+
+## Acknowledgments
+We gratefully acknowledge the study participants for their valuable time and interest in participating in these studies
+
+## Funding
+This work was supported by the National Institutes of Health Fogarty International Center (FIC) at [K01 TW012177] and the National Institute of Allergy and Infectious Diseases (NIAID) [R21 1AI176416] 
+
+## References

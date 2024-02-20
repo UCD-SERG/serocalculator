@@ -14,7 +14,9 @@
 #' library(ggplot2)
 #'
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#' load_pop_data()
+#' load_pop_data() %>%
+#' clean_pop_data()
+#'
 #' xs_data %>% autoplot(strata = "Country")
 #'
 autoplot.pop_data = function(
@@ -26,7 +28,7 @@ autoplot.pop_data = function(
 
   plot1 =
     object %>%
-    ggplot2::ggplot(aes(x = .data$result)) +
+    ggplot2::ggplot(aes(x = .data$value)) +
     ggplot2::theme_minimal() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 

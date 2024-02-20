@@ -37,6 +37,7 @@ Suggests:
     testthat (>= 3.0.0),
     readr,
     bookdown,
+    osfr,
     ggbeeswarm,
     DT
 VignetteBuilder: knitr

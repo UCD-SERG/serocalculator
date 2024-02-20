@@ -18,7 +18,7 @@
 #' * Setting `n_curves` larger than the number of rows in ` will result all curves being plotted.
 #' * If the user directly specifies the `rows_to_graph` argument, then `n_curves` has no effect.
 #' @examples
-#' library(dplyr)
+#' library(dplyr) # loads the `%>%` operator and `dplyr::filter()`
 #' "https://osf.io/download/rtw5k/" %>%
 #' load_curve_params() %>%
 #' dplyr::filter(antigen_iso == "HlyE_IgG") %>%

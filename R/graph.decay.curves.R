@@ -18,10 +18,11 @@
 #' * Setting `n_curves` larger than the number of rows in ` will result all curves being plotted.
 #' * If the user directly specifies the `rows_to_graph` argument, then `n_curves` has no effect.
 #' @examples
-#' "https://osf.io/download/rtw5k/" |>
-#' load_curve_params() |>
-#' filter(antigen_iso == "HlyE_IgG") |>
-#' plot_curve_params_one_ab()
+#' library(dplyr)
+#' "https://osf.io/download/rtw5k/" %>%
+#' load_curve_params() %>%
+#' dplyr::filter(antigen_iso == "HlyE_IgG") %>%
+#' serocalculator:::plot_curve_params_one_ab()
 plot_curve_params_one_ab = function(
     object,
     verbose = FALSE,

@@ -20,6 +20,7 @@ Imports:
     ggpubr,
     lifecycle,
     magrittr,
+    mixtools,
     Rcpp,
     rlang,
     rngtools,

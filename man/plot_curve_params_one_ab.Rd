@@ -57,8 +57,8 @@ In most cases, \code{curve_params} will contain too many rows of MCMC samples fo
 }
 }
 \examples{
-"https://osf.io/download/rtw5k/" \%>\%
-load_curve_params() \%>\%
-filter(antigen_iso == "HlyE_IgG") \%>\%
+"https://osf.io/download/rtw5k/" |>
+load_curve_params() |>
+filter(antigen_iso == "HlyE_IgG") |>
 plot_curve_params_one_ab()
 }

@@ -17,7 +17,7 @@ autoplot.curve_params = function(
 {
 
   split_data = object |>
-    filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     droplevels() |>
     split(~antigen_iso)
 

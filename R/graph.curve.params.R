@@ -117,14 +117,14 @@ graph.curve.params = function(
   ggplot2::ggplot() +
     ggplot2::geom_line(
       data = serocourse.sum %>%
-        filter(.data$quantile == "med") ,
+        dplyr::filter(.data$quantile == "med") ,
       ggplot2::aes(
         x = .data$t,
         y = .data$res),
       linewidth = 1
     ) +
     ggplot2::geom_line(
-      data = serocourse.sum %>% filter(quantile == "p10") ,
+      data = serocourse.sum %>% dplyr::filter(quantile == "p10") ,
       ggplot2::aes(
         x = .data$t,
         y = .data$res),
@@ -132,7 +132,7 @@ graph.curve.params = function(
     ) +
     ggplot2::geom_line(
       data = serocourse.sum %>%
-        filter(quantile == "p90") ,
+        dplyr::filter(quantile == "p90") ,
       ggplot2::aes(
         x = .data$t,
         y = .data$res),

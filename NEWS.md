@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+* Added `methodology` vignette.
+
 ## serocalculator 0.5.0
 
 * Spell-checking of function documentation and tutorial articles.

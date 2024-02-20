@@ -225,9 +225,9 @@ Using the function `est.incidence`, we filter to sites in Pakistan and define th
 #Using est.incidence (no strata)
 
 est1 = est.incidence(
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
+  pop_data = xs_data %>% dplyr::filter(Country == "Pakistan"),
   curve_param = curve, 
-  noise_param = noise %>% filter(Country == "Pakistan"),
+  noise_param = noise %>% dplyr::filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 
@@ -245,9 +245,9 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 
 est2 = est.incidence.by(
   strata = c("catchment"),
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
+  pop_data = xs_data %>% dplyr::filter(Country == "Pakistan"),
   curve_params = curve, 
-  noise_params = noise %>% filter(Country == "Pakistan"),
+  noise_params = noise %>% dplyr::filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 8 #Allow for parallel processing to decrease run time 
   )

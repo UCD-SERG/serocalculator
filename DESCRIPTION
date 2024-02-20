@@ -20,7 +20,6 @@ Imports:
     ggpubr,
     lifecycle,
     magrittr,
-    mixtools,
     Rcpp,
     rlang,
     rngtools,
@@ -30,6 +29,7 @@ Imports:
     tidyr,
     utils
 Suggests: 
+    mixtools,
     parallel,
     knitr,
     rmarkdown,

@@ -42,7 +42,7 @@ llik <- function(
   {
 
     # the inputs can be lists, after `split(~antigen_ios)`
-    # this gives some speedups compared to running filter() every time .nll() is called
+    # this gives some speedups compared to running dplyr::filter() every time .nll() is called
     if(!is.data.frame(pop_data))
     {
       cur_data = pop_data[[cur_antibody]]

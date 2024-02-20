@@ -394,7 +394,7 @@ Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-conve
 summary(ests) |>
   as_tibble() |> # removes extra meta-data
   select(Stratum, nlm.convergence.code) |> 
-  filter(nlm.convergence.code > 2) 
+  dplyr::filter(nlm.convergence.code > 2) 
 ```
 
 Solutions to `nlm()` exit codes 3-5:

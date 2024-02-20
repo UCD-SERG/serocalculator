@@ -6,7 +6,7 @@ d0 <- read.csv(
   "inst/extdata/SEES_2022-10-24_redacted_2023-10-12.csv",
   header=T) %>%
   #filter(antigen != "CdtB" | antigen != "YncE") %>%
-  filter(studyarm!= "highE_hh",
+  dplyr::filter(studyarm!= "highE_hh",
          studyarm!= "lowE_hh",
          studyarm!="ae control") %>%
   mutate(
@@ -28,15 +28,15 @@ d0 <- read.csv(
         labels = c("Cases", "Population sample")),
     sex = sex |> as.factor() |> fct_collapse(NULL = c("97"))) %>%
   mutate(Gender = factor(sex, labels = c("Male", "Female"))) %>%
-  filter(Age<=25) %>%
-  filter(catchment!="matiari") %>%
-  filter(catchment!="mirzapur") %>%
+  dplyr::filter(Age<=25) %>%
+  dplyr::filter(catchment!="matiari") %>%
+  dplyr::filter(catchment!="mirzapur") %>%
   mutate(cluster = areaunit3) %>%
   droplevels() %>%
-  filter(Arm2 == "Population sample" & TimePeriod == "Baseline") %>%
+  dplyr::filter(Arm2 == "Population sample" & TimePeriod == "Baseline") %>%
   select(Country, cluster, catchment, Age, ageCat, antigen_iso, result) %>%
   mutate(cluster = factor(cluster)) %>%
-  filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) |>
+  dplyr::filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) |>
   as_tibble() |>
   select(-cluster)
 

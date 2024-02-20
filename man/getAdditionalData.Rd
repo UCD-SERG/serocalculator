@@ -4,16 +4,7 @@
 \alias{getAdditionalData}
 \title{Get Additional Data}
 \usage{
-<<<<<<< HEAD
-getAdditionalData(
-  fileName,
-  repoURL = "http://ecdc.europa.eu/sites/portal/files/documents",
-  savePath = NULL,
-  quiet = TRUE
-)
-=======
 getAdditionalData(fileURL, savePath = NULL)
->>>>>>> origin/main
 }
 \arguments{
 \item{fileURL}{URL of the file to be downloaded.}

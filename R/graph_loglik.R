@@ -15,7 +15,7 @@ graph.loglik = function(
     pop_data,
     curve_params,
     noise_params,
-    antigen_isos,
+    antigen_isos = pop_data |> get_antigen_isos(),
     x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,
     highlight_point_names = "highlight_points",

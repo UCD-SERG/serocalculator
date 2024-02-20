@@ -29,11 +29,6 @@ The **incidence rate** of a disease for a specific time period is the rate at wh
 
 Example: if $\color{red}{\text{ten}}$ people in a population of $\color{red}1000$ contract typhoid over a one month time period, then the incidence rate for that time period is *"$\color{red}{\text{10}}$ new cases per $\color{red}1000$ persons per month"*.
 
-```{r, echo = FALSE, message=FALSE}
-library(dplyr)
-
-```
-
 More mathematically, the incidence rate *at a given time point* is the *derivative* (i.e., the current rate of change over time) of the cumulative count of infections per person, at that time point.
 
 ## Scale of incidence rates
@@ -78,7 +73,24 @@ $$
 
 Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.
 
-## Example log(likelihood) curves
+## Example log-likelihood curves
+
+```{r}
+#Import longitudinal antibody parameters from OSF
+curve = 
+  "https://osf.io/download/rtw5k/" |> 
+  load_curve_params()
+
+#Import cross-sectional data from OSF and rename required variables:
+xs_data <- 
+  "https://osf.io/download//n6cp3/" |> 
+  load_pop_data() |> 
+  clean_pop_data()
+```
+
+```{r}
+xs_data
+```
 
 ![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png){width=100% #fig-loglik}
 

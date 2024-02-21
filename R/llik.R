@@ -32,7 +32,7 @@
 #' #load in longitudinal parameters
 #' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
 #'
-#' #' xs_data <- "https://osf.io/download//n6cp3/" %>%
+#' xs_data <- "https://osf.io/download//n6cp3/" %>%
 #' load_pop_data() %>%
 #' clean_pop_data()
 #'

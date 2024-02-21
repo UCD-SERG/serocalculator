@@ -152,7 +152,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 #Create plots
 
-xs_data %>% autoplot(strata = "Country")
+xs_data %>% autoplot(xs_data, strata = "Country")
 
 ```
 

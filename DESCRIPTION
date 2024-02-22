@@ -4,9 +4,9 @@ Title: Estimating Infection Rates from Serological Data
 Version: 0.5.0
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
-  person(given = "Kristina", family = "Lai", role = c("aut")), 
+  person(given = "Kristina", family = "Lai", email = "kwlai@ucdavis.edu", role = c("aut", "cre")), 
   person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
-  person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut", "cre")))
+  person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut")))
 Description: Translates antibody levels measured in cross-sectional population 
   samples into estimates of the frequency with which seroconversions (infections) 
   occur in the sampled populations. Replaces the previous `seroincidence` package.

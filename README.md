@@ -8,14 +8,14 @@ serocalculator
 <!-- badges: end -->
 
 
-Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titres indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
+Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titers indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
 
 The **serocalculator** package was designed to use the longitudinal response characteristics using a set of modeled parameters characterizing the longitudinal response of the selected serum antibodies. Calculating seroincidence estimates using the package requires three inputs: 1) a population-based cross-sectional dataset, 2) the longitudinal antibody response parameters, and 3) parameters for biologic and measurement noise. This is explained in more detail in the [Enteric Fever Example vignette](https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.html).
 
 
 ## Installing R
 
-The **serocalculator** package is written in R, a free, open-source software program. The end user of this package must have access to a working installation of the R software. We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI) for R such as [RStudio](http://www.rstudio.com/products/RStudio/).
+The **serocalculator** package is written in R, a free, open-source software program. The end user of this package must have access to a working installation of the R software. We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI) for R such as [RStudio](https://posit.co/products/open-source/rstudio/).
 
 If you need to download and install R and/or RStudio, we recommend following the tutorial below from *Hands On Programming in R* by Garrett Grolemund:
 

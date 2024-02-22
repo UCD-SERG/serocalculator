@@ -158,6 +158,47 @@ and adds noise, if desired.</p>
 <li><p>one column for each element in the <code>antigen_iso</code> input argument</p></li>
 </ul></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Load curve parameters</span></span></span>
+<span class="r-in"><span><span class="va">dmcmc</span> <span class="op">=</span> <span class="fu"><a href="load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#Specify the antibody-isotype responses to include in analyses</span></span></span>
+<span class="r-in"><span><span class="va">antibodies</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#set seed to reproduce results</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># simulated incidence rate per person-year</span></span></span>
+<span class="r-in"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">0.2</span>;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># range covered in simulations</span></span></span>
+<span class="r-in"><span><span class="va">lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># cross-sectional sample size</span></span></span>
+<span class="r-in"><span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># biologic noise distribution</span></span></span>
+<span class="r-in"><span><span class="va">dlims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"HlyE_IgA"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"HlyE_IgG"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#generate cross-sectional data</span></span></span>
+<span class="r-in"><span><span class="va">csdata</span> <span class="op">&lt;-</span> <span class="fu">sim.cs</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span></span>
+<span class="r-in"><span>  lambda <span class="op">=</span> <span class="va">lambda</span>,</span></span>
+<span class="r-in"><span>  n.smpl <span class="op">=</span> <span class="va">nrep</span>,</span></span>
+<span class="r-in"><span>  age.rng <span class="op">=</span> <span class="va">lifespan</span>,</span></span>
+<span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span></span>
+<span class="r-in"><span> n.mc <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span> renew.params <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span> add.noise <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span> noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span></span>
+<span class="r-in"><span> format <span class="op">=</span> <span class="st">"long"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

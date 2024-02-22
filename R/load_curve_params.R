@@ -5,10 +5,14 @@
 #'
 #' @returns a `curve_params` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
+#' @examples
+#' curve = load_curve_params("https://osf.io/download/rtw5k/" )
+#' print(curve)
+#'
 #'
 load_curve_params = function(file_path, antigen_isos = NULL)
 {
-  if(file_path |> substr(1,4) == "http")
+  if(file_path %>% substr(1,4) == "http")
   {
     file_path = url(file_path)
 
@@ -16,7 +20,7 @@ load_curve_params = function(file_path, antigen_isos = NULL)
 
   curve_params =
     file_path %>%
-    readRDS() |>
+    readRDS() %>%
     tibble::as_tibble()
 
   class(curve_params) =

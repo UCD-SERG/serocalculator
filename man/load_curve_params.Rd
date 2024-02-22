@@ -17,3 +17,9 @@ a \code{curve_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with 
 \description{
 Load antibody decay curve parameter samples
 }
+\examples{
+curve = load_curve_params("https://osf.io/download/rtw5k/" )
+print(curve)
+
+
+}

@@ -32,15 +32,11 @@ Suggests:
     parallel,
     knitr,
     rmarkdown,
-    pander,
-    Hmisc,
     tidyverse,
     fs,
     testthat (>= 3.0.0),
     readr,
     bookdown,
-    printr,
-    doRNG,
     osfr,
     ggbeeswarm,
     DT,
@@ -49,7 +45,7 @@ VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
 URL: https://github.com/UCD-SERG/serocalculator, https://ucd-serg.github.io/serocalculator/
-RoxygenNote: 7.2.3.9000
+RoxygenNote: 7.3.1
 NeedsCompilation: no
 LinkingTo: 
     Rcpp

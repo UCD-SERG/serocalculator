@@ -9,6 +9,27 @@
 #'
 #' @return a [ggplot2::ggplot()] object
 #' @export
+#' @examples
+#' library(dplyr)
+#' library(ggplot2)
+#'
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   clean_pop_data()
+#' curve = load_curve_params("https://osf.io/download/rtw5k/" )
+#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' est2 = est.incidence.by(
+#' strata = c("catchment"),
+#' pop_data = xs_data %>% filter(Country == "Pakistan"),
+#' curve_params = curve,
+#' noise_params = noise %>% filter(Country == "Pakistan"),
+#' antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#' #num_cores = 8 #Allow for parallel processing to decrease run time
+#' )
+#'
+#' est2sum <- summary(est2)
+#'
+#' autoplot(est2sum, "catchment")
 #'
 autoplot.summary.seroincidence.by = function(
     object,
@@ -18,7 +39,7 @@ autoplot.summary.seroincidence.by = function(
     width = 0.001,
     ...)
 {
-  object |>
+  object %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = get(xvar),

@@ -91,4 +91,4 @@ plot_curve_params_one_ab = function(
 #   theme(axis.line=element_line()) +
 #   labs(x="Days since fever onset", y="ELISA units")
 
-# mcmc |> ungroup() |> slice_head(by = antigen_iso, n = 10) |> droplevels() |> plot_curve_params_one_ab(alpha  = .4) |> print()
+# mcmc %>% ungroup() %>% slice_head(by = antigen_iso, n = 10) %>% droplevels() %>% plot_curve_params_one_ab(alpha  = .4) %>% print()

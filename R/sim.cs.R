@@ -29,6 +29,44 @@
 #' * `age`: age (in days)
 #' * one column for each element in the `antigen_iso` input argument
 #' @export
+#' @examples
+#' #Load curve parameters
+#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+#'
+#' #Specify the antibody-isotype responses to include in analyses
+#' antibodies = c("HlyE_IgA", "HlyE_IgG")
+#'
+#' #set seed to reproduce results
+#' set.seed(54321)
+#'
+#' # simulated incidence rate per person-year
+#' lambda <- 0.2;
+#'
+#' # range covered in simulations
+#' lifespan <- c(0, 10);
+#'
+#' # cross-sectional sample size
+#' nrep <- 100
+#'
+#' # biologic noise distribution
+#' dlims <- rbind(
+#'   "HlyE_IgA" = c(min = 0, max = 0.5),
+#'   "HlyE_IgG" = c(min = 0, max = 0.5))
+#'
+#' #generate cross-sectional data
+#' csdata <- sim.cs(
+#'   curve_params = dmcmc,
+#'   lambda = lambda,
+#'   n.smpl = nrep,
+#'   age.rng = lifespan,
+#'   antigen_isos = antibodies,
+#'  n.mc = 0,
+#'  renew.params = TRUE,
+#'  add.noise = TRUE,
+#'  noise_limits = dlims,
+#'  format = "long"
+#' )
+#'
 
 sim.cs <- function(
     lambda = 0.1,
@@ -49,7 +87,7 @@ sim.cs <- function(
   if(verbose > 1)
   {
     message('inputs to `sim.cs()`:')
-    print(environment() |> as.list())
+    print(environment() %>% as.list())
   }
 
   # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
@@ -66,7 +104,7 @@ sim.cs <- function(
   day2yr = 365.25
   lambda = lambda / day2yr
   age.rng = age.rng * day2yr
-  npar = dimnames(predpar)$parameter |> length()
+  npar = dimnames(predpar)$parameter %>% length()
 
 
   baseline_limits <- noise_limits
@@ -98,7 +136,7 @@ sim.cs <- function(
   colnames(ysim) <- c("age", antigen_isos)
 
   to_return =
-    ysim |>
+    ysim %>%
     as_tibble() %>%
     mutate(age = round(.data$age / day2yr, 2))
 

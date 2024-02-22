@@ -5,17 +5,21 @@
 #'
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
+#' @examples
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' print(xs_data)
+#'
 #'
 load_pop_data = function(file_path, antigen_isos = NULL)
 {
-  if(file_path |> substr(1,4) == "http")
+  if(file_path %>% substr(1,4) == "http")
   {
     file_path = url(file_path)
 
   }
 
   pop_data =
-    file_path %>% readRDS() |>
+    file_path %>% readRDS() %>%
     tibble::as_tibble()
 
   class(pop_data) =

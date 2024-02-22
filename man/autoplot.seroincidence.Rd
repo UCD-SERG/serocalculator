@@ -19,3 +19,25 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 \description{
 Plot the log-likelihood curve for the incidence rate estimate
 }
+\examples{
+library(dplyr)
+library(ggplot2)
+
+xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+xs_data = clean_pop_data(xs_data)
+
+curve = load_curve_params("https://osf.io/download/rtw5k/")
+noise = load_noise_params("https://osf.io/download//hqy4v/")
+
+est1 = est.incidence(
+  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  curve_param = curve,
+  noise_param = noise \%>\% filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  build_graph = TRUE
+)
+
+#plot the log-likelihood curve
+  autoplot(est1)
+
+}

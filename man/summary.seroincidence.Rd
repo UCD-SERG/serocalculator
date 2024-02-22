@@ -38,3 +38,21 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 \description{
 This function is a \code{summary()} method for \code{seroincidence} objects.
 }
+\examples{
+library(dplyr)
+
+xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
+  clean_pop_data()
+curve = load_curve_params("https://osf.io/download/rtw5k/")
+noise = load_noise_params("https://osf.io/download//hqy4v/")
+
+est1 = est.incidence(
+pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+curve_param = curve,
+noise_param = noise \%>\% filter(Country == "Pakistan"),
+antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+summary(est1)
+
+}

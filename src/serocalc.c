@@ -13,6 +13,7 @@ double NLLFf (double lambda, double *yy, double *aa, int nsubj,
 
   /* Calculate LLF */
   llf = 0;
+  rho = 0;
   if(0 < nu){                            /* B noise */
     for(subj=1; subj <= nsubj; subj++){ /* over all subjects */
       y = yy[subj-1];
@@ -156,7 +157,7 @@ double dnsB (double lambda, double y, double age, double nu,
 /* SIM equation 12: probability function for y with B noise present */
 double prbB (double lambda, double y, double age, double nu, double step,
              double Pa, double Qa, double EXPla, double A, double k, double d){
-  double ya,y1,zmin,zmax,z,dz,integ,prb_b;
+  double ya,zmin,zmax,z,dz,integ,prb_b;
   int Nstep, kstep;
 
   ya = A/pow((1+d*(pow(A,d))*k*age),(1/d));

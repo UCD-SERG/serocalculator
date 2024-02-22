@@ -12,10 +12,14 @@
 #' * `value`: the measured antibody concentration
 #' * `age`: age of the individual whose serum has been assayed, at the time of blood sample
 #' @export
+#' @examples
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' clean_pop_data(xs_data)
+#'
 #'
 clean_pop_data = function(pop_data)
 {
-  pop_data = pop_data |>
+  pop_data = pop_data %>%
     rename(
       id = .data$index_id,
       value = .data$result,

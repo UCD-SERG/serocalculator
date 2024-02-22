@@ -1,11 +1,11 @@
 count_strata = function(data, strata_varnames)
 {
   to_return =
-    data |>
+    data %>%
     count(across(any_of(c(strata_varnames, "antigen_iso"))))
 
   uneven_counts =
-    to_return |>
+    to_return %>%
     dplyr::filter(
       .by = all_of(strata_varnames),
       n_distinct(n) > 1)
@@ -16,7 +16,7 @@ count_strata = function(data, strata_varnames)
   }
 
   to_return =
-    to_return |>
+    to_return %>%
     dplyr::summarize(
       .by = all_of(strata_varnames),
       n = min(n)
@@ -25,8 +25,8 @@ count_strata = function(data, strata_varnames)
   if(!("Stratum" %in% strata_varnames))
   {
     to_return =
-      to_return |>
-      mutate(Stratum = paste("Stratum", row_number())) |>
+      to_return %>%
+      mutate(Stratum = paste("Stratum", row_number())) %>%
       dplyr::relocate("Stratum", .before = everything())
 
   }

@@ -10,7 +10,7 @@ test_that(
       fs::path_package(
         "extdata",
         "dmcmc_hlyeigg_09.30.rds",
-        package = "serocalculator") |> #Load longitudinal parameters dataset
+        package = "serocalculator") %>% #Load longitudinal parameters dataset
       readRDS()%>%
       select(y1, alpha, r, antigen_iso)
 
@@ -29,7 +29,7 @@ test_that(
       rename( #rename variables
         y = y.smpl,
         a = a.smpl) %>%
-      select(y, a) |>
+      select(y, a) %>%
       mutate(antigen_iso = "HlyE_IgG")
 
     cond.hlye.IgG <- data.frame(

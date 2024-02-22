@@ -26,6 +26,24 @@
 #' An object of class `"seroincidence"`.
 #'
 #' @export
+#' @examples
+#' library(dplyr)
+#'
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   clean_pop_data()
+#' curve = load_curve_params("https://osf.io/download/rtw5k/")
+#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' est2 = est.incidence.by(
+#' strata = c("catchment"),
+#' pop_data = xs_data %>% filter(Country == "Pakistan"),
+#' curve_params = curve,
+#' noise_params = noise %>% filter(Country == "Pakistan"),
+#' antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#' #num_cores = 8 #Allow for parallel processing to decrease run time
+#' )
+#'
+#' summary(est2)
 est.incidence.by <- function(
     pop_data,
     curve_params,
@@ -33,7 +51,7 @@ est.incidence.by <- function(
     strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    antigen_isos = pop_data |> pull("antigen_iso") |> unique(),
+    antigen_isos = pop_data %>% pull("antigen_iso") %>% unique(),
     lambda_start = 0.1,
     build_graph = FALSE,
     num_cores = 1L,
@@ -82,14 +100,14 @@ est.incidence.by <- function(
   # Split data per stratum
   stratumDataList <- stratify_data(
     antigen_isos = antigen_isos,
-    data = pop_data |> filter(.data$antigen_iso %in% antigen_isos),
-    curve_params = curve_params |> filter(.data$antigen_iso %in% antigen_isos),
-    noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
+    data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
+    noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames)
 
-  strata_table = stratumDataList |> attr("strata")
+  strata_table = stratumDataList %>% attr("strata")
 
   if(verbose)
   {
@@ -110,7 +128,7 @@ est.incidence.by <- function(
   {
     requireNamespace("parallel", quietly = FALSE)
 
-    num_cores = num_cores |> check_parallel_cores()
+    num_cores = num_cores %>% check_parallel_cores()
 
     if(verbose)
     {
@@ -120,8 +138,8 @@ est.incidence.by <- function(
 
     libPaths <- .libPaths()
     cl <-
-      num_cores |>
-      parallel::makeCluster() |>
+      num_cores %>%
+      parallel::makeCluster() %>%
       suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
@@ -154,7 +172,7 @@ est.incidence.by <- function(
             )
           )
       )
-    } |> system.time() -> time
+    } %>% system.time() -> time
 
     if(verbose)
     {
@@ -175,7 +193,7 @@ est.incidence.by <- function(
       {
 
         cur_stratum_vars =
-          strata_table |>
+          strata_table %>%
           dplyr::filter(.data$Stratum == cur_stratum)
 
         if(verbose)
@@ -201,7 +219,7 @@ est.incidence.by <- function(
 
 
       }
-    } |> system.time() -> time
+    } %>% system.time() -> time
 
     if(verbose)
     {
@@ -215,7 +233,7 @@ est.incidence.by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.by" |> union(class(fits)))
+    class = "seroincidence.by" %>% union(class(fits)))
 
   return(incidenceData)
 }

@@ -6,7 +6,7 @@
 \usage{
 \method{autoplot}{curve_params}(
   object,
-  antigen_isos = unique(object$antigen_iso),
+  antigen_isos = object$antigen_iso \%>\% unique(),
   ncol = min(3, length(antigen_isos)),
   ...
 )
@@ -44,4 +44,13 @@ graph antibody decay curves by antigen isotype
 
 Note that if you directly specify \code{rows_to_graph} when calling this function, the row numbers are enumerated separately for each antigen isotype; in other words, for the purposes of this argument, row numbers start over at 1 for each antigen isotype. There is currently no way to specify different row numbers for different antigen isotypes; if you want to do that, you will could call \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab()}} directly for each antigen isotype and combine the resulting panels yourself. Or you could subset \code{curve_params} manually, before passing it to this function, and set the \code{n_curves} argument to \code{Inf}.
 }
+}
+\examples{
+library(dplyr)
+library(ggplot2)
+
+curve = "https://osf.io/download/rtw5k/" \%>\%
+  load_curve_params() \%>\%
+  autoplot()
+
 }

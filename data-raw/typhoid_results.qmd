@@ -25,7 +25,7 @@ c.hlye.IgG <-
   fs::path_package(                          
     "extdata", 
     "dmcmc_hlyeigg_09.30.rds", 
-    package = "serocalculator") |> #Load longitudinal parameters dataset
+    package = "serocalculator") %>% #Load longitudinal parameters dataset
   readRDS()%>%
   mutate(alpha = alpha*365.25, #Create alpha and d 
          d = r-1) %>%
@@ -77,11 +77,11 @@ fit <- nlm(
   stepmax=1,
   iterlim = 100)
 
-typhoid_results = fit |> 
+typhoid_results = fit %>% 
   summary.seroincidence(
     coverage = .95,
     start = start
-  ) |>
+  ) %>%
   mutate(
     ageCat = NULL,
     antigen.iso = paste(collapse = "+", "HlyE_IgG")) %>%

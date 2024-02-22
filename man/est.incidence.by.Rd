@@ -11,7 +11,7 @@ est.incidence.by(
   strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  antigen_isos = unique(pull(pop_data, "antigen_iso")),
+  antigen_isos = pop_data \%>\% pull("antigen_iso") \%>\% unique(),
   lambda_start = 0.1,
   build_graph = FALSE,
   num_cores = 1L,
@@ -104,4 +104,23 @@ response model.
 }
 \details{
 If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
+}
+\examples{
+library(dplyr)
+
+xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
+  clean_pop_data()
+curve = load_curve_params("https://osf.io/download/rtw5k/")
+noise = load_noise_params("https://osf.io/download//hqy4v/")
+
+est2 = est.incidence.by(
+strata = c("catchment"),
+pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+curve_params = curve,
+noise_params = noise \%>\% filter(Country == "Pakistan"),
+antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#num_cores = 8 #Allow for parallel processing to decrease run time
+)
+
+summary(est2)
 }

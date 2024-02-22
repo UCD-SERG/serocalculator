@@ -17,3 +17,13 @@ a list containing two summary tables: one of \code{age} and one of \code{value},
 \description{
 This function is a \code{summary()} method for \code{pop_data} objects
 }
+\examples{
+library(dplyr)
+
+xs_data <- "https://osf.io/download//n6cp3/" \%>\%
+load_pop_data() \%>\%
+clean_pop_data()
+
+xs_data \%>\% summary()
+
+}

@@ -11,22 +11,22 @@ d0 <- read.csv(
          studyarm!="ae control") %>%
   mutate(
     antigen_iso =
-      paste(elisa_antigen, "_", elisa_antbdy_iso, sep="") |>
+      paste(elisa_antigen, "_", elisa_antbdy_iso, sep="") %>%
       factor(),
     ageCat = cut(
       Age,
       breaks= c(0, 4.99, 15.99, 99),
       right=FALSE, labels = c("<5", "5-15", "16+")),
     TimePeriod =
-      TimePeriod |>
+      TimePeriod %>%
       factor(levels = c("Baseline","28 days","3 months","6 months", "12 months", "18 months", "First visit")),
     Arm2 =
-      Arm |>
-      fct_collapse(Cases = c("Prospective Cases", "Retrospective Cases")) |>
+      Arm %>%
+      fct_collapse(Cases = c("Prospective Cases", "Retrospective Cases")) %>%
       factor(
         levels = c("Cases", "Population-based"),
         labels = c("Cases", "Population sample")),
-    sex = sex |> as.factor() |> fct_collapse(NULL = c("97"))) %>%
+    sex = sex %>% as.factor() %>% fct_collapse(NULL = c("97"))) %>%
   mutate(Gender = factor(sex, labels = c("Male", "Female"))) %>%
   filter(Age<=25) %>%
   filter(catchment!="matiari") %>%
@@ -36,8 +36,8 @@ d0 <- read.csv(
   filter(Arm2 == "Population sample" & TimePeriod == "Baseline") %>%
   select(Country, cluster, catchment, Age, ageCat, antigen_iso, result) %>%
   mutate(cluster = factor(cluster)) %>%
-  filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) |>
-  as_tibble() |>
+  filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) %>%
+  as_tibble() %>%
   select(-cluster)
 
   sees_crossSectional_baseline_allCountries = d0

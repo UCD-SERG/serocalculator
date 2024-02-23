@@ -23,15 +23,12 @@ If you need to download and install R and/or RStudio, we recommend following the
 
 ## Installing the Serocalculator Package
 
-The **serocalculator** package must be installed in R before first use. As of November 21, 2023, **serocalculator** is still in development. To install the development version, you must install the **devtools** R package and then download **serocalculator** from [GitHub](https://github.com/). Enter the code below into the R console to install both packages:
+The **serocalculator** package must be installed in R before first use. 
 
-
-```r{eval=FALSE}
-# Install the devtools package and the development version of serocalculator
-install.packages("devtools")
-devtools::install_github("ucd-serg/serocalculator")
-
+```{r eval=FALSE}
+install.packages("serocalculator")
 ```
+
 
 ### Post-installation
 

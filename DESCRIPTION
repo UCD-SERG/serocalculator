@@ -28,7 +28,8 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils
+    utils,
+    shiny
 Suggests: 
     parallel,
     knitr,

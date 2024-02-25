@@ -29,7 +29,7 @@ autoplot.pop_data = function(
   plot1 =
     object %>%
     ggplot2::ggplot(aes(x = .data$value)) +
-    ggplot2::theme_minimal() +
+    ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
   if(!is.null(strata))
@@ -38,14 +38,16 @@ autoplot.pop_data = function(
       ggplot2::geom_density(
         ggplot2::aes(fill = get(strata)),
         alpha = .6,
-        color = "black")
+        color = "black") +
+      ggplot2::theme_linedraw()
   } else
   {
     plot1 = plot1 +
       ggplot2::geom_density(
         # aes(fill = get(strata)),
         alpha = .6,
-        color = "black")
+        color = "black") +
+      ggplot2::theme_linedraw()
 }
 
 
@@ -53,6 +55,7 @@ autoplot.pop_data = function(
   {
     plot1 = plot1 +
       ggplot2::scale_x_log10() +
+      ggplot2::theme_linedraw() +
       ggplot2::labs(
         title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
         x = "Log10(Antibody Response Value)",
@@ -65,7 +68,7 @@ autoplot.pop_data = function(
         title = "Distribution of Cross-sectional Antibody Responses",
         x = "Antibody Response Value",
         y = "Frequency"
-      )
+      ) + ggplot2::theme_linedraw()
 
   }
 

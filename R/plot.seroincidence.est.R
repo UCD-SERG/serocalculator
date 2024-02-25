@@ -45,7 +45,8 @@ autoplot.seroincidence =
   {
     to_return = to_return +
       ggplot2::scale_x_log10(
-        labels = scales::label_comma())
+        labels = scales::label_comma()) +
+      ggplot2::theme_linedraw()
   }
 
   return(to_return)

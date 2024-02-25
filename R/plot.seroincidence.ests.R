@@ -58,7 +58,7 @@ autoplot.seroincidence.by = function(
 
   for (i in 1:length(figs))
   {
-    figs[[i]] = figs[[i]] + ggplot2::ggtitle(labels[i])
+    figs[[i]] = figs[[i]] + ggplot2::ggtitle(labels[i]) + ggplot2::theme_linedraw()
   }
 
 

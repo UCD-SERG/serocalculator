@@ -23,7 +23,7 @@ ui <- fluidPage(
 
       # Input: Decimal interval with step value ----
       sliderInput("y1", "Peak antibody concentration (y1):",
-                  min = 0.5, max = 1300000,
+                  min = 0.5, max = 1200,
                   value = 63.48, step = 0.01),
 
       # Input: Specification of range within an interval ----
@@ -47,9 +47,8 @@ ui <- fluidPage(
     mainPanel(
 
       # Output: Table summarizing the values entered ----
-      tableOutput("values"),
-      plotOutput("plot", click = "plot_click")
-      #textOutput(outputId = "Slider1Out")
+      plotOutput("plot", click = "plot_click"),
+      tableOutput("values")
 
     )
   )

@@ -28,9 +28,6 @@ Imports:
     tibble,
     tidyr,
     utils
-Suggests: 
-=======
-    utils
 Suggests:
     parallel,
     knitr,

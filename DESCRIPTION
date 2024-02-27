@@ -29,7 +29,7 @@ Imports:
     tibble,
     tidyr,
     utils
-Suggests: 
+Suggests:
     parallel,
     knitr,
     rmarkdown,

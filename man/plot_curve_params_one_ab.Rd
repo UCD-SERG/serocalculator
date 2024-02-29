@@ -57,7 +57,7 @@ In most cases, \code{curve_params} will contain too many rows of MCMC samples fo
 }
 }
 \examples{
-library(dplyr)
+library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
 "https://osf.io/download/rtw5k/" \%>\%
 load_curve_params() \%>\%
 dplyr::filter(antigen_iso == "HlyE_IgG") \%>\%

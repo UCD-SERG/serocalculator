@@ -84,4 +84,4 @@ Another great resource is **The Epidemiologist R Handbook**, which includes an i
 
 ## Contributing to this project
 
-We welcome contributions to this project - anything from typo corrections, requests for 
+We welcome contributions to this project - anything from typo corrections to new features. Please see our [Contributor guide](https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html#fixing-typos) for more information.

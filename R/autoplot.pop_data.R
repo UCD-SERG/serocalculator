@@ -29,7 +29,7 @@ autoplot.pop_data = function(
   plot1 =
     object %>%
     ggplot2::ggplot(aes(x = .data$value)) +
-    ggplot2::theme_minimal() +
+    ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
   if(!is.null(strata))

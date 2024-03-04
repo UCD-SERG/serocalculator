@@ -78,6 +78,10 @@ When prompted to install additional build tools, select "Yes" and Rtools will be
 
 ## Getting Help
 
-If you need assistance or encounter a clear bug, please file an issue with a minimal reproducible example on [GitHub](https://github.com/UCD-SERG/serocalculator/issues). 
+If you need assistance, have questions about this software package, or encounter bugs, please create a discussion topic, or file an issue with a minimal reproducible example on [GitHub](https://github.com/UCD-SERG/serocalculator/issues). 
 
 Another great resource is **The Epidemiologist R Handbook**, which includes an introductory page on asking for help with R packages via GitHub: https://epirhandbook.com/en/getting-help.html 
+
+## Contributing to this project
+
+We welcome contributions to this project - anything from typo corrections, requests for 

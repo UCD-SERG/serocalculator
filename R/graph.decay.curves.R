@@ -50,7 +50,7 @@ plot_curve_params_one_ab = function(
       x = "Days since fever onset",
       y = "Antibody Concentration") +
     ggplot2::ggtitle('Decay Curve') +
-    theme(plot.title = element_text(size = 20, face = "bold"))
+    ggplot2::theme(plot.title = element_text(size = 20, face = "bold"))
 
   layer_function = function(cur_row)
   {

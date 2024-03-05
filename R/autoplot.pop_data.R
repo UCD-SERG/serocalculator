@@ -6,6 +6,7 @@
 #' @param log whether to show antibody responses on logarithmic scale
 #' @param strata the name of a variable in `pop_data` to stratify by (or `NULL` for no stratification)
 #' @param ... unused
+#' @param type an option to choose type of chart, defaults to density chart
 #'
 #' @return a [ggplot2::ggplot] object
 #' @export
@@ -37,7 +38,7 @@ autoplot.pop_data = function(
     {
       plot1 = plot1 +
           ggplot2::geom_point(size=.6, alpha=.7) +
-          ggplot2::geom_smooth(method=lm, se=FALSE) +
+          ggplot2::geom_smooth(method=stats::lm, se=FALSE) +
           ggplot2::scale_y_log10() +
           ggplot2::theme_linedraw() +
           ggplot2::labs(

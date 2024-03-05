@@ -30,7 +30,7 @@ autoplot.pop_data = function(
     {
     plot1 =
       object %>%
-      ggplot2::ggplot(aes(x = age,y = value)) +
+      ggplot2::ggplot(aes(x = .data$age,y = .data$value)) +
       ggplot2::theme_linedraw()
 
     if(is.null(strata))
@@ -38,9 +38,9 @@ autoplot.pop_data = function(
       plot1 = plot1 +
           ggplot2::geom_point(size=.6, alpha=.7) +
           ggplot2::geom_smooth(method=lm, se=FALSE) +
-          scale_y_log10() +
-          theme_linedraw()+
-          labs(
+          ggplot2::scale_y_log10() +
+          ggplot2::theme_linedraw() +
+          ggplot2::labs(
               title = "Quantitative Antibody Responses by Age",
             x = "Age",
             y = "Value"
@@ -55,8 +55,8 @@ autoplot.pop_data = function(
                              se=FALSE,
                              aes(color = get(strata))
                              ) +
-        scale_y_log10() +
-        labs(
+        ggplot2::scale_y_log10() +
+        ggplot2::labs(
           title = "Quantitative Antibody Responses by Age",
           x = "Age",
           y = "Value",
@@ -69,7 +69,7 @@ autoplot.pop_data = function(
     {
     plot1 =
         object %>%
-        ggplot2::ggplot(aes(x = value)) +
+        ggplot2::ggplot(aes(x = .data$value)) +
         ggplot2::theme_linedraw() +
         ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 

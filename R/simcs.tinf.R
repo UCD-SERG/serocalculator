@@ -10,7 +10,7 @@
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `curve_params`.
 #' @param n.mc
 #' * when `n.mc` is in 1:4000 a fixed posterior sample is used
-#' * when n.mc = 0 a random smaple is chosen
+#' * when n.mc = 0 a random sample is chosen
 #' @param renew.params
 #' * `renew.params = TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0

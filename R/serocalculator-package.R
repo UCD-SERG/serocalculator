@@ -145,6 +145,7 @@
 #' @importFrom rngtools setRNG
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats formula
+#' @importFrom stats lm
 #' @importFrom stats median
 #' @importFrom stats nlm
 #' @importFrom stats qnorm

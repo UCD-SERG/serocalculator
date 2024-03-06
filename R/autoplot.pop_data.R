@@ -14,12 +14,14 @@
 #' library(dplyr)
 #' library(ggplot2)
 #'
+#'
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
 #' load_pop_data() %>%
 #' clean_pop_data()
 #'
 #' xs_data %>% autoplot(strata = "Country")
 #'
+
 autoplot.pop_data = function(
     object,
     log =  FALSE,
@@ -35,10 +37,10 @@ autoplot.pop_data = function(
       ggplot2::theme_linedraw()
 
     if(is.null(strata))
-    {
+    { # test lm in qoutes
       plot1 = plot1 +
           ggplot2::geom_point(size=.6, alpha=.7) +
-          ggplot2::geom_smooth(method=stats::lm, se=FALSE) +
+          ggplot2::geom_smooth(method="lm", se=FALSE) +
           ggplot2::scale_y_log10() +
           ggplot2::theme_linedraw() +
           ggplot2::labs(

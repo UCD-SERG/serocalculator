@@ -75,10 +75,27 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="serocalculator">serocalculator<a class="anchor" aria-label="anchor" href="#serocalculator"></a>
 </h1></div>
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 <hr>
 <!-- badges: start -->
-<p>Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titres indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titres indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.</p>
+<p>Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titers indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.</p>
 <p>The <strong>serocalculator</strong> package was designed to use the longitudinal response characteristics using a set of modeled parameters characterizing the longitudinal response of the selected serum antibodies.</p>
+<div class="section level2">
+<h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a>
+</h2>
+<p>The <strong>serocalculator</strong> R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in Simonsen et al. (2009) and Teunis et al. (2012), and further developed in subsequent publications by deGraaf et al. (2014), Teunis et al. (2016), and Teunis and Eijkeren (2020). In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.</p>
+<div class="section level3">
+<h3 id="a-proxy-for-infection">A Proxy for Infection<a class="anchor" aria-label="anchor" href="#a-proxy-for-infection"></a>
+</h3>
+<p>While the exact time of infection is impossible to measure in an individual, antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. So the presence of many high antibody concentrations indicates that many people in the population likely experienced infection recently, while mostly low concentrations indicate a low frequency of infections in the sampled population.</p>
+<p>In order to interpret the measured cross-sectional antibody concentrations in terms of incidence, we must define the antibody dynamic over time to understand the generalized antibody response at different times since infection. This dynamic must be quantified over time to include an initial increase in serum antibody concentration when seroconversion occurs, followed by a gradual decrease as antibodies wane. In published studies, this information on the time course of the serum antibody response has been obtained from longitudinal follow–up data in cases who had a symptomatic episode following infection. In this case, the onset of symptoms then provides a proxy for the time that infection occurred.</p>
+</div>
+<div class="section level3">
+<h3 id="the-seroincidence-estimator">The Seroincidence Estimator<a class="anchor" aria-label="anchor" href="#the-seroincidence-estimator"></a>
+</h3>
+<p>The <strong>serocalculator</strong> package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.</p>
+</div>
+</div>
 <div class="section level2">
 <h2 id="installing-r">Installing R<a class="anchor" aria-label="anchor" href="#installing-r"></a>
 </h2>
@@ -90,24 +107,27 @@
 <h2 id="installing-the-serocalculator-package">Installing the Serocalculator Package<a class="anchor" aria-label="anchor" href="#installing-the-serocalculator-package"></a>
 </h2>
 <p>The <strong>serocalculator</strong> package must be installed in R before first use. As of November 21, 2023, <strong>serocalculator</strong> is still in development. To install the development version, you must install the <strong>devtools</strong> R package and then download <strong>serocalculator</strong> from <a href="https://github.com/" class="external-link">GitHub</a>. Enter the code below into the R console to install both packages:</p>
-<pre class="r{eval=false}"><code><span><span class="co"># Install the devtools package and the development version of serocalculator</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Install the devtools package and the development version of serocalculator</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ucd-serg/serocalculator"</span><span class="op">)</span></span></code></pre>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ucd-serg/serocalculator"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="post-installation">Post-installation<a class="anchor" aria-label="anchor" href="#post-installation"></a>
 </h3>
 <p>Successful installation can be confirmed by loading the package into the RStudio workspaceand exploring help files and manuals distributed with the package:</p>
-<pre class="r{eval=false}"><code><span><span class="co"># Load package "seroincidence".</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load package "seroincidence".</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Show R help for the package.</span></span>
-<span><span class="op">?</span><span class="va">serocalculator</span></span></code></pre>
+<span><span class="op">?</span><span class="va">serocalculator</span></span></code></pre></div>
 <p>Additionally, most package details can be found when executing the following commands:</p>
-<pre class="r{eval=false}"><code><span><span class="co"># Show description.</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Show description.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageDescription</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Show citation.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span></code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="a-note-for-windows-users">A Note for Windows Users<a class="anchor" aria-label="anchor" href="#a-note-for-windows-users"></a>
@@ -117,9 +137,9 @@
 <h4 id="during-devtools-installation">During devtools installation:<a class="anchor" aria-label="anchor" href="#during-devtools-installation"></a>
 </h4>
 <p>When prompted to install additional build tools, select “Yes” and Rtools will be installed.</p>
-<div class="figure">
-<img src="reference/figures/Rtools1.png" alt=""><p class="caption">Click Yes to install Rtools along with the <em>devtools</em> package</p>
-</div>
+<figure><img src="reference/figures/Rtools1.png" alt="Click Yes to install Rtools along with the devtools package"><figcaption aria-hidden="true">
+Click Yes to install Rtools along with the <em>devtools</em> package
+</figcaption></figure>
 </div>
 <div class="section level4">
 <h4 id="independently">Independently:<a class="anchor" aria-label="anchor" href="#independently"></a>
@@ -144,6 +164,27 @@
 </h2>
 <p>If you need assistance or encounter a clear bug, please file an issue with a minimal reproducible example on <a href="https://github.com/UCD-SERG/serocalculator/issues" class="external-link">GitHub</a>.</p>
 <p>Another great resource is <strong>The Epidemiologist R Handbook</strong>, which includes an introductory page on asking for help with R packages via GitHub: <a href="https://epirhandbook.com/en/getting-help.html" class="external-link uri">https://epirhandbook.com/en/getting-help.html</a></p>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-de_Graaf_2014" class="csl-entry">
+deGraaf, W. F., M. E. E. Kretzschmar, P. F. M. Teunis, and O. Diekmann. 2014. “A Two-Phase Within-Host Model for Immune Response and Its Application to Serological Profiles of Pertussis.” <em>Epidemics</em> 9 (December): 1–7. <a href="https://doi.org/10.1016/j.epidem.2014.08.002" class="external-link uri">https://doi.org/10.1016/j.epidem.2014.08.002</a>.
+</div>
+<div id="ref-Simonsen_2009" class="csl-entry">
+Simonsen, J., K. Mølbak, G. Falkenhorst, K. A. Krogfelt, A. Linneberg, and P. F. M. Teunis. 2009. “Estimation of Incidences of Infectious Diseases Based on Antibody Measurements.” <em>Statistics in Medicine</em> 28 (14): 1882–95. <a href="https://doi.org/10.1002/sim.3592" class="external-link uri">https://doi.org/10.1002/sim.3592</a>.
+</div>
+<div id="ref-Teunis_2020" class="csl-entry">
+Teunis, P. F. M., and J. C. H. van Eijkeren. 2020. “Estimation of Seroconversion Rates for Infectious Diseases: Effects of Age and Noise.” <em>Statistics in Medicine</em> 39 (21): 2799–2814. <a href="https://doi.org/10.1002/sim.8578" class="external-link uri">https://doi.org/10.1002/sim.8578</a>.
+</div>
+<div id="ref-Teunis_2016" class="csl-entry">
+Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić Marinović, and M. E. E. Kretzschmar. 2016. “Linking the Seroresponse to Infection to Within-Host Heterogeneity in Antibody Production.” <em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001" class="external-link uri">https://doi.org/10.1016/j.epidem.2016.04.001</a>.
+</div>
+<div id="ref-Teunis_2012" class="csl-entry">
+Teunis, P. F. M., JCH van Eijkeren, CW Ang, YTHP van Duynhoven, JB Simonsen, MA Strid, and W van Pelt. 2012. “Biomarker Dynamics: Estimating Infection Rates from Serological Data.” <em>Statistics in Medicine</em> 31 (20): 2240–48. <a href="https://doi.org/10.1002/sim.5322" class="external-link uri">https://doi.org/10.1002/sim.5322</a>.
+</div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -179,9 +220,9 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Peter Teunis <br><small class="roles"> Author, copyright holder </small>  </li>
-<li>Kristina Lai <br><small class="roles"> Author </small>  </li>
+<li>Kristina Lai <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Kristen Aiemjoy <br><small class="roles"> Author </small>  </li>
-<li>Douglas Ezra Morrison <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Douglas Ezra Morrison <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>

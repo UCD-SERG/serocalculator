@@ -23,7 +23,7 @@ antibody_decay_curve = function(
     mu_y = 0.36853621,
     gamma = 0.0013040664,
     alpha = 0.00002192627,
-    rho = 2.9621994
+    rho = 2
     # rho = 2 # exponential decay?
     )
 {

@@ -12,7 +12,7 @@ antibody_decay_curve(
   mu_y = 0.36853621,
   gamma = 0.0013040664,
   alpha = 2.192627e-05,
-  rho = 2.9621994
+  rho = 2
 )
 }
 \arguments{

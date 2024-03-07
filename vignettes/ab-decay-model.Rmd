@@ -81,8 +81,8 @@ fluidRow(
   sliderInput(
     inputId = "alpha", 
     label = "log10(alpha)", 
-    min = -12, 
-    max = 12, 
+    min = -8, 
+    max = -1, 
     step = .1,
     val =  log10(0.00002192627)) |> column(width = 4))
 

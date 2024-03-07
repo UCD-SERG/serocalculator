@@ -14,6 +14,8 @@ plot_decay_curve(decay_function, ..., xmax = 100, ymax = NA, title = "")
 \item{xmax}{upper limit of x axis}
 
 \item{ymax}{upper limit of y axis}
+
+\item{title}{plot title}
 }
 \value{
 a \link[ggplot2:ggplot]{ggplot2::ggplot}

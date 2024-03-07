@@ -57,21 +57,7 @@ curve_app_ui = function(request)
       min = -8,
       max = -1,
       step = .1,
-      val =  log10(0.00002192627)),
-
-    shiny::sliderInput(
-      inputId = "ymax",
-      label = "log10(ymax)",
-      min = 2,
-      max = 10,
-      step = .1,
-      val = 4.5)
-
-    # shiny::textInput(
-    #   inputId = "inputtext1",
-    #   label = "title 1",
-    #   value = ""
-    # )
+      val =  log10(0.00002192627))
   )
 
 
@@ -80,21 +66,35 @@ curve_app_ui = function(request)
     mainPanel = shiny::mainPanel(
       width = 9,
 
-      # shiny::fluidRow(shiny::textOutput("text"))  ,
       shiny::fluidRow(
         shiny::tableOutput("tab1")
       ),
       shiny::fluidRow(
         shiny::column(
-          width = 6,
+          width = 12,
           h2("pathogens"),
           # plotly::plotlyOutput("plot2")),
-          shiny::plotOutput("plot2")),
-        shiny::column(
-          width = 6,
+          shiny::plotOutput(height = "300px", "plot2"),
+          shiny::sliderInput(
+            inputId = "ymax2",
+            label = "log10(ymax)",
+            min = 0,
+            max = 5,
+            step = .1,
+            val = 1),
+          # shiny::column(
+          # width = 6,
           h2("antibodies"),
           # plotly::plotlyOutput("plot1"))
-          shiny::plotOutput('plot1'))
+          shiny::plotOutput(height = "300px", 'plot1'),
+          shiny::sliderInput(
+            inputId = "ymax1",
+            label = "log10(ymax)",
+            min = 2,
+            max = 10,
+            step = .1,
+            val = 4.5)
+          )
 
 
       )

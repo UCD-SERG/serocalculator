@@ -147,6 +147,8 @@
 #' @importFrom rlang .env
 #' @importFrom rngtools RNGseq
 #' @importFrom rngtools setRNG
+#' @importFrom shiny reactive
+#' @importFrom shiny renderText
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats formula
 #' @importFrom stats median

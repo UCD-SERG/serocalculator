@@ -120,7 +120,7 @@ derived_params =
 
 
 
-derived_params() |> renderTable(digits = 4)
+derived_params() |> shiny::renderTable(digits = 4)
 ```
 
 ```{r,fig.height=6}
@@ -136,7 +136,7 @@ plot1 =
     alpha = input$alpha |> exp10(),
     rho = input$rho,
     ymax = 10^input$ymax
-  ) |> reactive()
+  ) |> eventReactive(eventExpr = derived_params())
 
 plot2 = 
   plot_decay_curve(
@@ -146,24 +146,32 @@ plot2 =
     gamma = input$gamma |> exp10(),
     y0 = input$y0 |> exp10(),
     b0 = input$b0 |> exp10()
-  ) |> reactive()
+  ) |> eventReactive(eventExpr = derived_params())
 ```
 
 ```{r}
 
 fluidRow(
-  plot1() |> 
-    # renderPlot()
-    plotly::ggplotly()  |>
-    plotly::layout(legend = list(orientation = 'h')) |>
-    plotly::renderPlotly() |> 
-    column(width = 6),
   
+  
+  column(
+    width = 6, 
+         h2("Pathogen"),
   plot2() |> 
-    # renderPlot()
+    # renderPlot() |> 
     plotly::ggplotly()  |>
     plotly::layout(legend = list(orientation = 'h')) |>
-    plotly::renderPlotly() |> 
-    column(width = 6)
+    plotly::renderPlotly()),
+  
+  column(
+    width = 6, 
+    h2("Antibody"),
+  plot1() |> 
+    renderPlot()
+    # plotly::ggplotly()  |>
+    # plotly::layout(legend = list(orientation = 'h')) |>
+    # plotly::renderPlotly() |> 
+)
+    
 )
 ```

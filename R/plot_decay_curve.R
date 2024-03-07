@@ -3,6 +3,7 @@
 #' @param decay_function a function with first argument `t`
 #' @param xmax upper limit of x axis
 #' @param ymax upper limit of y axis
+#' @param title plot title
 #' @param ... parameters passed to `decay_function`
 #'
 #' @returns a [ggplot2::ggplot]
@@ -18,6 +19,7 @@ plot_decay_curve = function(
     title = ""
     )
 {
+
   plot1 =
     ggplot2::ggplot() +
     ggplot2::geom_function(
@@ -26,8 +28,8 @@ plot_decay_curve = function(
       fun = function(x) decay_function(t = x, ...),
     ) +
     ggplot2::theme_bw() +
-    ggplot2::labs(col = "") +
-    ggplot2::theme(legend.position = "bottom") +
+    # ggplot2::labs(col = "") +
+    # ggplot2::theme(legend.position = "bottom") +
     ggplot2::xlim(0, 100) +
     # scale_x_log10(limits = c(.0001, 100)) +
     ggplot2::ylab("concentration") +
@@ -40,10 +42,9 @@ plot_decay_curve = function(
     ) +
     ggplot2::ggtitle(title)
 
-    # ggplot2::scale_y_continuous(
-
   if(!is.na(ymax))
   {
+    message('setting ymax')
     plot1 = plot1 +
       ggplot2::expand_limits(y = ymax)
   }

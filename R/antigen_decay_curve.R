@@ -22,6 +22,7 @@ pathogen_decay_curve = function(
     mu_y = 0.36853621,
     gamma = 0.0013040664)
 {
+
   fraction = gamma * y0 * (exp(mu_y * t) - exp(mu_b*t)) / (mu_y - mu_b)
   bt_active = (b0 * exp(mu_b * t)) - fraction
 

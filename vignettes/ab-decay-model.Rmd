@@ -1,0 +1,130 @@
+---
+title: "ab-decay-model"
+output: html_document
+runtime: shiny
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  message = FALSE
+)
+```
+
+```{r setup}
+library(serocalculator)
+library(dplyr)
+```
+
+
+```{r}
+fluidRow(
+  sliderInput(
+    inputId = "y0", 
+    label = "log(y0)", 
+    min = -2, 
+    max = 2, 
+    val =  0) |> column(width = 4), 
+  
+  
+  sliderInput(
+    inputId = "b0", 
+    label = "log(b0)", 
+    min = -2, 
+    max = 2, 
+    val =  0) |> column(width = 4),
+  
+  sliderInput(
+    inputId = "mu_b", 
+    label = "log(mu_b)", 
+    min = -2, 
+    max = 2, 
+    val =  log(0.18432798)) |> column(width = 4)
+)
+
+fluidRow(
+  sliderInput(
+    inputId = "mu_y", 
+    label = "log(mu_y)", 
+    min = -2, 
+    max = 2, 
+    val =  log(0.36853621)) |> column(width = 4), 
+  
+  
+  sliderInput(
+    inputId = "gamma", 
+    label = "log(gamma)", 
+    min = -10, 
+    max = 10, 
+    val =  log(0.0013040664)) |> column(width = 4)
+)
+
+fluidRow(
+  sliderInput(
+    inputId = "rho", 
+    label = "rho", 
+    min = 1, 
+    max = 4, 
+    val =  2.9621994) |> column(width = 4),
+  
+  sliderInput(
+    inputId = "alpha", 
+    label = "log(alpha)", 
+    min = -12, 
+    max = 12, 
+    val =  log(0.00002192627)) |> column(width = 4))
+```
+
+```{r, eval = TRUE}
+
+derived_params = 
+  tibble(
+    mu_y = input$mu_y |> exp(), 
+    mu_b = input$mu_b |> exp(), 
+    gamma = input$gamma |> exp(), 
+    y0 = input$y0 |> exp(),
+    b0 = input$b0 |> exp(),
+    alpha = input$alpha |> exp(),
+    rho = input$rho,
+    t1 = t1f(
+      mu_y = mu_y,
+      mu_b = mu_b, 
+      gamma = gamma, 
+      y0 = y0,
+      b0 = b0),
+    y1 = y1f(y0 = y0, mu_y = mu_y, t1 = t1)
+  ) |> reactive()
+
+
+
+derived_params() |> renderTable()
+```
+
+```{r}
+library(ggplot2); 
+{
+    ggplot() + 
+      geom_function(
+        fun = antibody_decay_curve,
+        args = list(
+          mu_y = input$mu_y |> exp(), 
+          mu_b = input$mu_b |> exp(), 
+          gamma = input$gamma |> exp(), 
+          y0 = input$y0 |> exp(),
+          b0 = input$b0 |> exp(),
+          alpha = input$alpha |> exp(),
+          rho = input$rho
+        ),
+      ) + 
+      xlim(1,100) + 
+      scale_y_continuous(
+        limits = c(0, derived_params() |> pull(y1))
+      )
+} |>
+  # renderPlot()
+  plotly::ggplotly() |>
+  plotly::renderPlotly()
+```
+

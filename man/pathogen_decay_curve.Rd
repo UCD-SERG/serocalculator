@@ -4,16 +4,23 @@
 \alias{pathogen_decay_curve}
 \title{Pathogen decay curve}
 \usage{
-pathogen_decay_curve(t, b0, mu_b, y0, mu_y, gamma)
+pathogen_decay_curve(
+  t,
+  y0 = 0.74916052,
+  b0 = 1,
+  mu_b = 0.18432798,
+  mu_y = 0.36853621,
+  gamma = 0.0013040664
+)
 }
 \arguments{
 \item{t}{time since infection}
 
+\item{y0}{initial antibody concnetration}
+
 \item{b0}{initial bacteria concentration}
 
 \item{mu_b}{pathogen reproduction rate}
-
-\item{y0}{initial antibody concnetration}
 
 \item{mu_y}{antibody reproduction rate}
 

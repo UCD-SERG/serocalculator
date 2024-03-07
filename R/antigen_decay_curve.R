@@ -26,4 +26,5 @@ pathogen_decay_curve = function(
   bt_active = (b0 * exp(mu_b * t)) - fraction
 
   bt = pmax(0, bt_active)
+  return(bt)
 }

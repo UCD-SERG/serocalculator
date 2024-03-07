@@ -1,0 +1,54 @@
+#' Plot a decay function
+#'
+#' @param decay_function a function with first argument `t`
+#' @param xmax upper limit of x axis
+#' @param ymax upper limit of y axis
+#' @param ... parameters passed to `decay_function`
+#'
+#' @returns a [ggplot2::ggplot]
+#' @export
+#'
+#' @examples
+#' plot_decay_curve(antibody_decay_curve)
+plot_decay_curve = function(
+    decay_function,
+    ...,
+    xmax = 100,
+    ymax = NA,
+    title = ""
+    )
+{
+  plot1 =
+    ggplot2::ggplot() +
+    ggplot2::geom_function(
+      n = 1001,
+      # aes(col = "antibody"),
+      fun = function(x) decay_function(t = x, ...),
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::labs(col = "") +
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::xlim(0, 100) +
+    # scale_x_log10(limits = c(.0001, 100)) +
+    ggplot2::ylab("concentration") +
+    ggplot2::xlab('time since infection (days)') +
+    ggplot2::expand_limits(y = 10^-4) +
+    # ggplot2::scale_y_log10(
+    ggplot2::scale_y_continuous(
+      # breaks = 10^seq(-4, ymax, by = 1),
+      labels = scales::label_comma()
+    ) +
+    ggplot2::ggtitle(title)
+
+    # ggplot2::scale_y_continuous(
+
+  if(!is.na(ymax))
+  {
+    plot1 = plot1 +
+      ggplot2::expand_limits(y = ymax)
+  }
+
+  return(plot1)
+
+
+}

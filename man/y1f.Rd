@@ -4,7 +4,12 @@
 \alias{y1f}
 \title{Calculate peak antibody concentration}
 \usage{
-y1f(y0 = 0.74916052, mu_y = 0.36853621, t1 = t1f(y0 = y0, mu_y = mu_y...))
+y1f(
+  y0 = 0.74916052,
+  mu_y = 0.36853621,
+  t1 = t1f(y0 = y0, mu_y = mu_y, ...),
+  ...
+)
 }
 \arguments{
 \item{y0}{initial antibody concnetration}

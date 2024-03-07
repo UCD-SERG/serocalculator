@@ -123,13 +123,14 @@ derived_params =
 derived_params() |> renderTable(digits = 4)
 ```
 
-```{r}
+```{r,fig.height=6}
 
 plot1 = 
   {
     ggplot() + 
       geom_function(
         n = 1001,
+        aes(col = "antibody"),
         fun = function(x) 
           antibody_decay_curve(
             t = x,
@@ -142,20 +143,42 @@ plot1 =
             rho = input$rho
           ),
       ) + 
+      geom_function(
+        n = 1001,
+        aes(col = "pathogen"),
+        fun = function(x)
+        {
+          pathogen_decay_curve(
+            t = x,
+            mu_y = input$mu_y |> exp10(), 
+            mu_b = input$mu_b |> exp10(), 
+            gamma = input$gamma |> exp10(), 
+            y0 = input$y0 |> exp10(),
+            b0 = input$b0 |> exp10()
+          )
+        }) + 
       theme_bw() +
+      labs(col = "") +
+      theme(legend.position = "bottom") +
       xlim(0, 100) +
-      # scale_x_log10(limits = c(.0001,100 |> log10())) +
+      # scale_x_log10(limits = c(.0001, 100)) +
+      ylab("concentration") +
+      xlab('time since infection (days)') +
       scale_y_continuous(
+        # scale_y_log10(
+        labels = scales::label_comma(),
         limits = c(
-          0,
+          10^-4,
           10^input$ylim
-         # derived_params() |> pull(y1)
-         )
+          # derived_params() |> pull(y1)
+        )
       )
   } |> reactive()
 
 plot1() |> 
+  # renderPlot()
   plotly::ggplotly()  |>
+  plotly::layout(legend = list(orientation = 'h')) |>
   plotly::renderPlotly()
 ```
 

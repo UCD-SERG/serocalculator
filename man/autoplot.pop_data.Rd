@@ -4,7 +4,7 @@
 \alias{autoplot.pop_data}
 \title{Plot distribution of antibodies}
 \usage{
-\method{autoplot}{pop_data}(object, log = FALSE, type = "density", strata = NULL, ...)
+\method{autoplot}{pop_data}(object, log = FALSE, type = NULL, strata = NULL, ...)
 }
 \arguments{
 \item{object}{A \code{pop_data} object (from \code{\link[=load_pop_data]{load_pop_data()}})}
@@ -32,6 +32,6 @@ xs_data <- "https://osf.io/download//n6cp3/" \%>\%
 load_pop_data() \%>\%
 clean_pop_data()
 
-xs_data \%>\% autoplot(strata = "Country")
+xs_data \%>\% autoplot(strata = "Country",type='density')
 
 }

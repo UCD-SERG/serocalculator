@@ -19,35 +19,42 @@
 #' load_pop_data() %>%
 #' clean_pop_data()
 #'
-#' xs_data %>% autoplot(strata = "Country")
+#' xs_data %>% autoplot(strata = "Country",type='density')
 #'
 
 autoplot.pop_data = function(
     object,
     log =  FALSE,
-    type = 'density',
+    type = NULL,
     strata = NULL,
     ...)
 {
-  if(type == 'age-scatter')
-    {
+
+  # age-scatter plotting function
+  age_scatter = function(
+    object,
+    strata = NULL
+  )
+  {
+    # create basic plotting features
+    options(scipen = 999)
     plot1 =
       object %>%
       ggplot2::ggplot(aes(x = .data$age,y = .data$value)) +
       ggplot2::theme_linedraw()
 
     if(is.null(strata))
-    { # test lm in qoutes
+    {
       plot1 = plot1 +
-          ggplot2::geom_point(size=.6, alpha=.7) +
-          ggplot2::geom_smooth(method="lm", se=FALSE) +
-          ggplot2::scale_y_log10() +
-          ggplot2::theme_linedraw() +
-          ggplot2::labs(
-              title = "Quantitative Antibody Responses by Age",
-            x = "Age",
-            y = "Value"
-            )
+        ggplot2::geom_point(size=.6, alpha=.7) +
+        ggplot2::geom_smooth(method="lm", se=FALSE) +
+        ggplot2::scale_y_log10() +
+        ggplot2::theme_linedraw() +
+        ggplot2::labs(
+          title = "Quantitative Antibody Responses by Age",
+          x = "Age",
+          y = "Value"
+        )
     } else
     {
       plot1 = plot1 +
@@ -57,24 +64,32 @@ autoplot.pop_data = function(
         ggplot2::geom_smooth(method=lm,
                              se=FALSE,
                              aes(color = get(strata))
-                             ) +
+        ) +
         ggplot2::scale_y_log10() +
         ggplot2::labs(
           title = "Quantitative Antibody Responses by Age",
           x = "Age",
           y = "Value",
           colour = strata
-          )
+        )
     }
 
-    } else
+  return(plot1)
+  }
 
-    {
+  # density plotting function
+  density_plot = function(
+    object,
+    log = FALSE,
+    strata = NULL
+  )
+
+  {
     plot1 =
-        object %>%
-        ggplot2::ggplot(aes(x = .data$value)) +
-        ggplot2::theme_linedraw() +
-        ggplot2::facet_wrap(~antigen_iso, nrow = 3)
+      object %>%
+      ggplot2::ggplot(aes(x = .data$value)) +
+      ggplot2::theme_linedraw() +
+      ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
     if(is.null(strata))
     {
@@ -108,7 +123,25 @@ autoplot.pop_data = function(
           y = "Frequency"
         )
     }
-    }
+    return(plot1)
+  }
 
-  return(plot1)
+  # type error function
+  err_type = function()
+  {
+    return("Error:Select the correct type: {'density','age-scatter'}")
+  }
+
+
+  if(type == 'age-scatter')
+  {
+    age_scatter(object,strata)
+  } else if (type == 'density')
+  {
+    density_plot(object,strata,log=FALSE)
+  } else
+  {
+    err_type()
+  }
+
 }

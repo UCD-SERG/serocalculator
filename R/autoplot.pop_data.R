@@ -6,7 +6,7 @@
 #' @param log whether to show antibody responses on logarithmic scale
 #' @param strata the name of a variable in `pop_data` to stratify by (or `NULL` for no stratification)
 #' @param ... unused
-#' @param type an option to choose type of chart, defaults to density chart
+#' @param type an option to choose type of chart,{'density','age-scatter'}
 #'
 #' @return a [ggplot2::ggplot] object
 #' @export

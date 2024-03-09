@@ -163,7 +163,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 options(scipen = 999)
 xs_data %>% 
-  autoplot(strata = "Country", log = TRUE)
+  autoplot(strata = "Country", log = TRUE,type='density')
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 

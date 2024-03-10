@@ -28,7 +28,7 @@ simcs.tinf(
 
 \item{n.mc}{\itemize{
 \item when \code{n.mc} is in 1:4000 a fixed posterior sample is used
-\item when n.mc = 0 a random smaple is chosen
+\item when n.mc = 0 a random sample is chosen
 }}
 
 \item{renew.params}{\itemize{

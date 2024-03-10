@@ -138,6 +138,7 @@
 #' @importFrom ggplot2 ggplot
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
+#' @importFrom mixtools normalmixEM
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
 #' @importFrom rlang .env

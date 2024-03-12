@@ -23,7 +23,7 @@ The **serocalculator** package was designed to use the longitudinal
 response characteristics using a set of modeled parameters
 characterizing the longitudinal response of the selected serum
 antibodies. More details on the underlying methods can be found in
-`vignette("serocalculator")` or [Getting
+[Getting
 Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html).
 
 ## Installing R

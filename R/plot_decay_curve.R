@@ -44,7 +44,6 @@ plot_decay_curve = function(
 
   if(!is.na(ymax))
   {
-    message('setting ymax')
     plot1 = plot1 +
       ggplot2::expand_limits(y = ymax)
   }

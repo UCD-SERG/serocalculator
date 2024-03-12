@@ -22,6 +22,7 @@ Imports:
     lifecycle,
     magrittr,
     mixtools,
+    pkgload,
     Rcpp,
     rlang,
     rngtools,

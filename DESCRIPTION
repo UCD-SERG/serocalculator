@@ -12,7 +12,6 @@ Description: Translates antibody levels measured in cross-sectional population
   occur in the sampled populations. Replaces the previous `seroincidence` package.
 Depends: R (>= 4.1.0)
 License: GPL-3
-VignetteBuilder: knitr
 Imports: 
     doParallel,
     dplyr (>= 1.1.1),

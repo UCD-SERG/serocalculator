@@ -1,7 +1,7 @@
 #' Graph antibody decay function with natural parameters
 #'
 #' @param b0 initial bacteria concentration
-#' @param y0 initial antibody concnetration
+#' @param y0 initial antibody concentration
 #' @param mu_y antibody reproduction rate
 #' @param mu_b pathogen reproduction rate
 #' @param gamma bacteria destruction rate per antibody

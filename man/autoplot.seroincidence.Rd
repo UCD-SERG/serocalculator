@@ -20,6 +20,8 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 Plot the log-likelihood curve for the incidence rate estimate
 }
 \examples{
+\dontrun{
+
 library(dplyr)
 library(ggplot2)
 
@@ -39,5 +41,5 @@ est1 = est.incidence(
 
 #plot the log-likelihood curve
   autoplot(est1)
-
+}
 }

@@ -12,7 +12,7 @@
 #' @examples
 #' plot_decay_curve(antibody_decay_curve)
 plot_decay_curve = function(
-    decay_function,
+    decay_function = antibody_decay_curve,
     ...,
     xmax = 100,
     ymax = NA,

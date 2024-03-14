@@ -29,7 +29,8 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils
+    utils,
+    ggfortify
 Suggests:
     parallel,
     knitr,

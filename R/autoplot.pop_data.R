@@ -112,7 +112,6 @@ density_plot <- function(
   return(plot1)
 }
 
-
 autoplot.pop_data <- function(
     object,
     log = FALSE,

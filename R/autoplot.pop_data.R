@@ -9,7 +9,7 @@
 #' @param type an option to choose type of chart:`density` or`age-scatter`
 #'
 #' @return a [ggplot2::ggplot] object
-#' @export
+#'
 #' @examples
 #' library(dplyr)
 #' library(ggplot2)
@@ -21,7 +21,22 @@
 #'
 #' xs_data %>% autoplot(strata = "Country", type = "density")
 #' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
-# age-scatter plotting function
+#' @export
+autoplot.pop_data <- function(
+    object,
+    log = FALSE,
+    type = "density",
+    strata = NULL,
+    ...) {
+  if (type == "age-scatter") {
+    age_scatter(object, strata)
+  } else if (type == "density") {
+    density_plot(object, strata, log)
+  } else {
+    cli::cli_abort(c("Provide the correct type, `density` or `age-scatter`"))
+  }
+}
+
 age_scatter <- function(
     object,
     strata = NULL) {
@@ -112,18 +127,3 @@ density_plot <- function(
   return(plot1)
 }
 
-#' @export
-autoplot.pop_data <- function(
-    object,
-    log = FALSE,
-    type = "density",
-    strata = NULL,
-    ...) {
-  if (type == "age-scatter") {
-    age_scatter(object, strata)
-  } else if (type == "density") {
-    density_plot(object, strata, log)
-  } else {
-    cli::cli_abort(c("Provide the correct type, `density` or `age-scatter`"))
-  }
-}

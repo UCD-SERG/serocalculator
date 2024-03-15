@@ -29,7 +29,8 @@ Imports:
     tibble,
     tidyr,
     utils,
-    ggfortify
+    ggfortify,
+    cli
 Suggests:
     parallel,
     knitr,

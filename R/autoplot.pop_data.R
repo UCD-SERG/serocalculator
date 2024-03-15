@@ -41,7 +41,6 @@ age_scatter <- function(
     object,
     strata = NULL) {
   # create basic plotting features
-  options(scipen = 999)
   plot1 <-
     object %>%
     ggplot2::ggplot(aes(x = .data$age, y = .data$value)) +
@@ -108,7 +107,7 @@ density_plot <- function(
       ) +
       ggplot2::labs(fill = strata)
   }
-  if (isTRUE(log)) {
+  if (log) {
     plot1 <- plot1 +
       ggplot2::scale_x_log10() +
       ggplot2::labs(

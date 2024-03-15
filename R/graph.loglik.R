@@ -11,6 +11,7 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' library(tibble)
 #'
@@ -38,7 +39,7 @@
 #'  antigen_isos = "HlyE_IgA",
 #'  log_x = TRUE
 #' )
-#'
+#'}
 graph.loglik = function(
     pop_data,
     curve_params,

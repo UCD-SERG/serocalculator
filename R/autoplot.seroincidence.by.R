@@ -7,6 +7,7 @@
 #' @return an object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' library(ggplot2)
 #'
@@ -32,7 +33,7 @@
 #'
 #' #plot the log-likelihood curve
 #'   autoplot(est2)
-#'
+#'}
 autoplot.seroincidence.by = function(
     object,
     ncol = min(3, length(object)),

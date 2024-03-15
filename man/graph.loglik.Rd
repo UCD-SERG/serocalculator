@@ -68,6 +68,7 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 Graph log-likelihood of data
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(tibble)
 
@@ -95,5 +96,5 @@ lik_HlyE_IgA = graph.loglik(
  antigen_isos = "HlyE_IgA",
  log_x = TRUE
 )
-
+}
 }

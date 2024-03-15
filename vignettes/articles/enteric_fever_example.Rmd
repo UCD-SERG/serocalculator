@@ -171,6 +171,7 @@ ggplot(data=xs_data, aes(x=age, y=value, color=Country)) +
           )
 
 ```
+
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).
 
 
@@ -272,6 +273,6 @@ In our data, we find that the overall estimated seroincidence of enteric fever i
 
 
 ## Acknowledgments
-Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan).  
+Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel, Nepal).
 
 ## References

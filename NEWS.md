@@ -1,3 +1,7 @@
+## serocalculator 1.0.0
+
+* Moved underlying methods to `serocalculator` vignette
+
 ## serocalculator 0.5.0
 
 * Spell-checking of function documentation and tutorial articles.

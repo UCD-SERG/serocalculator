@@ -24,6 +24,7 @@ an object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{gg
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(ggplot2)
 
@@ -49,5 +50,5 @@ build_graph = TRUE
 
 #plot the log-likelihood curve
   autoplot(est2)
-
+}
 }

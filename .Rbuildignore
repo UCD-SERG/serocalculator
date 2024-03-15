@@ -20,3 +20,4 @@ allpopsamples_hlye.csv$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
 ^inst/extdata
+^CRAN-SUBMISSION$

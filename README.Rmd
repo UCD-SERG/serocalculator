@@ -29,7 +29,7 @@ The **serocalculator** package was designed to use the longitudinal response cha
 
 ## Installing R
 
-The **serocalculator** package is written in R, a free, open-source software program. The end user of this package must have access to a working installation of the R software. We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI) for R such as [RStudio](http://www.rstudio.com/products/RStudio/).
+The **serocalculator** package is written in R, a free, open-source software program. The end user of this package must have access to a working installation of the R software. We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI) for R such as [RStudio](https://posit.co/products/open-source/rstudio/).
 
 If you need to download and install R and/or RStudio, we recommend following the tutorial below from *Hands On Programming in R* by Garrett Grolemund:
 
@@ -46,7 +46,7 @@ install.packages("serocalculator")
 ```
 ### Post-installation
 
-Successful installation can be confirmed by loading the package into the RStudio workspaceand exploring help files and manuals distributed with the package:
+Successful installation can be confirmed by loading the package into the RStudio workspace and exploring help files and manuals distributed with the package:
 
 ```r{eval=FALSE}
 # Load package "seroincidence".

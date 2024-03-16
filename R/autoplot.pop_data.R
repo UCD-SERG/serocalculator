@@ -40,24 +40,20 @@ autoplot.pop_data <- function(
 age_scatter <- function(
     object,
     strata = NULL) {
-  # create basic plotting features
+  # create default plotting
   plot1 <-
     object %>%
     ggplot2::ggplot(aes(x = .data$age, y = .data$value)) +
-    ggplot2::theme_linedraw()
-
-  if (is.null(strata)) {
-    plot1 <- plot1 +
-      ggplot2::geom_point(size = .6, alpha = .7) +
-      ggplot2::geom_smooth(method = "lm", se = FALSE) +
-      ggplot2::scale_y_log10() +
-      ggplot2::theme_linedraw() +
-      ggplot2::labs(
-        title = "Quantitative Antibody Responses by Age",
-        x = "Age",
-        y = "Value"
-      )
-  } else {
+    ggplot2::theme_linedraw() +
+    ggplot2::geom_point(size = .6, alpha = .7) +
+    ggplot2::geom_smooth(method = "lm", se = FALSE) +
+    ggplot2::scale_y_log10() +
+    ggplot2::labs(
+      title = "Quantitative Antibody Responses by Age",
+      x = "Age",
+      y = "Value"
+    )
+  if (!is.null(strata)) {
     plot1 <- plot1 +
       ggplot2::geom_point(
         size = .6,
@@ -125,4 +121,3 @@ density_plot <- function(
   }
   return(plot1)
 }
-

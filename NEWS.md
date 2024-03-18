@@ -1,4 +1,4 @@
-# serocalculator 1.1.0
+# Development version
 
 * Added `type = "age-scatter"` option for `autoplot.pop_data()`
 

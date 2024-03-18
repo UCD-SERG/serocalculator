@@ -28,12 +28,15 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
+
   if (type == "age-scatter") {
     age_scatter(object, strata)
   } else if (type == "density") {
     density_plot(object, strata, log)
   } else {
-    cli::cli_abort(c("Provide the correct type, `density` or `age-scatter`"))
+    cli::cli_abort(
+      '`type = "{type}"` is not a valid input;
+      the currently available options for `type` are "density" or "age-scatter"')
   }
 }
 

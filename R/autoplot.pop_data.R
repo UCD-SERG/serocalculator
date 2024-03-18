@@ -46,23 +46,13 @@ age_scatter <- function(
   {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = .data$age, y = .data$value)) +
-      ggplot2::labs(
-        title = "Quantitative Antibody Responses by Age",
-        x = "Age",
-        y = "Value"
-      )
+      ggplot2::ggplot(aes(x = .data$age, y = .data$value))
   } else
   {
     plot1 <-
       object %>%
       ggplot2::ggplot(aes(x = .data$age, y = .data$value, col = get(strata))) +
-      ggplot2::labs(
-        title = "Quantitative Antibody Responses by Age",
-        x = "Age",
-        y = "Value",
-        colour = strata
-      )
+      ggplot2::labs(colour = strata)
   }
 
   plot1 <- plot1 +
@@ -73,7 +63,12 @@ age_scatter <- function(
       method = "lm",
       se = FALSE,
       formula = y ~ x,
-      na.rm = TRUE)
+      na.rm = TRUE) +
+    ggplot2::labs(
+      title = "Quantitative Antibody Responses by Age",
+      x = "Age",
+      y = "Antibody Response Value"
+    )
 
   return(plot1)
 }

@@ -1,10 +1,11 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
   person(given = "Kristina", family = "Lai", email = "kwlai@ucdavis.edu", role = c("aut", "cre")), 
+  person(given = "Chris", family = "Orwa", role = "aut"), 
   person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
   person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut")))
 Description: Translates antibody levels measured in cross-sectional population 
@@ -28,7 +29,9 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils
+    utils,
+    ggfortify,
+    cli
 Suggests:
     parallel,
     knitr,

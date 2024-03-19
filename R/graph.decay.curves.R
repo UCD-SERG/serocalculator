@@ -43,12 +43,14 @@ plot_curve_params_one_ab = function(
       minor_breaks = NULL
     ) +
     # ggplot2::scale_x_log10() +
-    ggplot2::theme_minimal()  +
+    ggplot2::theme_linedraw()  +
     ggplot2::theme(
       axis.line = ggplot2::element_line()) +
     ggplot2::labs(
       x = "Days since fever onset",
-      y = "ELISA units")
+      y = "Antibody Concentration") +
+    ggplot2::ggtitle('Decay Curve') +
+    ggplot2::theme(plot.title = ggplot2::element_text(size = 20, face = "bold"))
 
   layer_function = function(cur_row)
   {

@@ -257,7 +257,7 @@ ggplot(est_countrydf, aes(y=Country, x=incidence.rate*1000, fill=Country)) +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
   labs(
       title= "Enteric Fever Seroincidence by Country",
-        x="Seroincience rate per 1000 person-years",
+        x="Seroincidence rate per 1000 person-years",
         y="Country"
       ) +
   theme_bw() +
@@ -272,7 +272,7 @@ A crucial element of understanding the burden of enteric fever in a population i
 #Using est.incidence.by (strata)
 
 est_age = est.incidence.by(
-  strata = c("ageCat"),
+  strata = c("Country","ageCat"),
   pop_data = xs_data, 
   curve_params = curve, 
   noise_params = noise,
@@ -293,6 +293,7 @@ est_agedf<- summary(est_age)
 
 #Create barplot (rescale incidence rate and CIs)
 ggplot(est_agedf, aes(y=ageCat, x=incidence.rate*1000, fill=ageCat)) +
+  facet_wrap(~Country, nrow=3, ncol = 1) +
   geom_bar(stat = "identity", show.legend = FALSE) +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
   labs(
@@ -324,9 +325,6 @@ est2 = est.incidence.by(
 
 summary(est2)
 
-```
-
-```{r}
 #Plot seroincidence estimates
 
 #Save summary(est2) as a dataframe
@@ -348,7 +346,7 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
 ```
 
 ## Conclusions
-In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)]. 
+We find that Bangladesh has the highest overall seroincidence of enteric fever with a rate of `r round(est_countrydf$incidence.rate[1] * 1000)` per 1000 person-years, as well as the highest seroincidence by age category. In comparison, Nepal has a seroincidence rate over `r round((est_countrydf$incidence.rate[1])/(est_countrydf$incidence.rate[2]))` times lower than that of Bangladesh (`r round(est_countrydf$incidence.rate[2] * 1000)` per 1000 person-years) and the lowest age-specific seroincidence rates of the three counrtes in the study. **serocalculator** makes this an efficient analysis with actionable results. 
 
 
 ## Acknowledgments

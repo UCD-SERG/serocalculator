@@ -2,7 +2,9 @@ count_strata = function(data, strata_varnames)
 {
   to_return =
     data %>%
-    count(across(any_of(c(strata_varnames, "antigen_iso"))))
+    count(
+      across(any_of(c(strata_varnames, "antigen_iso"))),
+      .drop = FALSE)
 
   uneven_counts =
     to_return %>%

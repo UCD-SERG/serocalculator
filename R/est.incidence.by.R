@@ -202,11 +202,12 @@ est.incidence.by <- function(
           print(cur_stratum_vars)
         }
 
+        stratum_data = stratumDataList[[cur_stratum]]
         fits[[cur_stratum]] =
           do.call(
             what = est.incidence,
             args = c(
-              stratumDataList[[cur_stratum]],
+              stratum_data, # this contains several variables
               list(
                 lambda_start = lambda_start,
                 antigen_isos = antigen_isos,

@@ -2,9 +2,12 @@
 % Please edit documentation in R/getAdditionalData.R
 \name{getAdditionalData}
 \alias{getAdditionalData}
+\alias{get_additional_data}
 \title{Get Additional Data}
 \usage{
 getAdditionalData(fileURL, savePath = NULL)
+
+get_additional_data(fileURL, savePath = NULL)
 }
 \arguments{
 \item{fileURL}{URL of the file to be downloaded.}
@@ -40,4 +43,5 @@ curve_param_samples =
     savePath = "~/Downloads/curv_params.rds")
 }
 
+get_additional_data(fileURL = "https://osf.io/download/bhfvx",savePath = "~/Downloads/curv_params.rds")
 }

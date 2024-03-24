@@ -2,9 +2,12 @@
 % Please edit documentation in R/df.to.array.R
 \name{df.to.array}
 \alias{df.to.array}
+\alias{df_to_array}
 \title{Convert a data.frame (or tibble) into a multidimensional array}
 \usage{
 df.to.array(df, dim_var_names, value_var_name = "value")
+
+df_to_array(df, dim_var_names, value_var_name = "value")
 }
 \arguments{
 \item{df}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) in long format (each row contains one value for the intended array)}
@@ -28,5 +31,11 @@ df = iris \%>\%
   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) \%>\%
   mutate(parameter = factor(parameter, levels = unique(parameter)))
   df \%>\% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+df = iris \%>\%
+  tidyr::pivot_longer(
+  names_to = "parameter",
+  cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) \%>\%
+  mutate(parameter = factor(parameter, levels = unique(parameter)))
+  df \%>\% serocalculator:::df_to_array(dim_var_names = c("parameter", "Species"))
 }
 \keyword{internal}

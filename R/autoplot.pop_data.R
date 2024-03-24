@@ -29,12 +29,15 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
+
   if (type == "age-scatter") {
     age_scatter(object, strata)
   } else if (type == "density") {
     density_plot(object, strata, log)
   } else {
-    cli::cli_abort(c("Provide the correct type, `density` or `age-scatter`"))
+    cli::cli_abort(
+      '`type = "{type}"` is not a valid input;
+      the currently available options for `type` are "density" or "age-scatter"')
   }
 }
 
@@ -42,38 +45,34 @@ age_scatter <- function(
     object,
     strata = NULL) {
   # create default plotting
-  plot1 <-
-    object %>%
-    ggplot2::ggplot(aes(x = .data$age, y = .data$value)) +
+
+  if(is.null(strata))
+  {
+    plot1 <-
+      object %>%
+      ggplot2::ggplot(aes(x = .data$age, y = .data$value))
+  } else
+  {
+    plot1 <-
+      object %>%
+      ggplot2::ggplot(aes(x = .data$age, y = .data$value, col = get(strata))) +
+      ggplot2::labs(colour = strata)
+  }
+
+  plot1 <- plot1 +
     ggplot2::theme_linedraw() +
-    ggplot2::geom_point(size = .6, alpha = .7) +
-    ggplot2::geom_smooth(method = "lm", se = FALSE) +
     ggplot2::scale_y_log10() +
+    ggplot2::geom_point(size = .6, alpha = .7) +
+    ggplot2::geom_smooth(
+      method = "lm",
+      se = FALSE,
+      formula = y ~ x,
+      na.rm = TRUE) +
     ggplot2::labs(
       title = "Quantitative Antibody Responses by Age",
       x = "Age",
-      y = "Value"
+      y = "Antibody Response Value"
     )
-  if (!is.null(strata)) {
-    plot1 <- plot1 +
-      ggplot2::geom_point(
-        size = .6,
-        alpha = .7,
-        aes(color = get(strata))
-      ) +
-      ggplot2::geom_smooth(
-        method = lm,
-        se = FALSE,
-        aes(color = get(strata))
-      ) +
-      ggplot2::scale_y_log10() +
-      ggplot2::labs(
-        title = "Quantitative Antibody Responses by Age",
-        x = "Age",
-        y = "Value",
-        colour = strata
-      )
-  }
 
   return(plot1)
 }

@@ -15,7 +15,7 @@
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
 #'   df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
 #' @keywords internal
-df.to.array = function(
+df.to.array <- function(
     df,
     dim_var_names,
     value_var_name = "value")
@@ -57,3 +57,14 @@ df.to.array = function(
     mutate(.by = all_of(dim_var_names), obs = 1:n()) %>%
     xtabs(formula = formula(xtabs_formula))
 }
+
+
+#' @rdname df.to.array
+#' @examples df = iris %>%
+#'   tidyr::pivot_longer(
+#'   names_to = "parameter",
+#'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) %>%
+#'   mutate(parameter = factor(parameter, levels = unique(parameter)))
+#'   df %>% serocalculator:::df_to_array(dim_var_names = c("parameter", "Species"))
+#' @export
+df_to_array <- df.to.array

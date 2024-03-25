@@ -86,6 +86,5 @@ getAdditionalData <- function(
 }
 
 #' @rdname getAdditionalData
-#' @examples get_additional_data(fileURL = "https://osf.io/download/bhfvx",savePath = "~/Downloads/curv_params.rds")
 #' @export
 get_additional_data <- getAdditionalData

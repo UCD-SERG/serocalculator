@@ -13,7 +13,6 @@
 #' @examples
 #' library(dplyr)
 #' library(ggplot2)
-#' library(ggfortify)
 #'
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
 #'   load_pop_data() %>%

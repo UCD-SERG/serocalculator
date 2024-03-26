@@ -132,3 +132,11 @@ with a minimal reproducible example on
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
 GitHub: <https://epirhandbook.com/en/getting-help.html>
+
+## Serocalculator App
+
+An app that takes the 5 curve parameters as inputs and runs
+`autoplot.curve_params()`
+
+<iframe src="https://ucdserg.shinyapps.io/shiny_decay_curve/?showcase=0" width="100%" height="600px" data-external="1">
+</iframe>

@@ -2,9 +2,12 @@
 % Please edit documentation in R/fdev.r
 \name{fdev}
 \alias{fdev}
+\alias{f_dev}
 \title{Calculate negative log-likelihood (deviance)}
 \usage{
 fdev(lambda, csdata, lnpars, cond)
+
+f_dev(lambda, csdata, lnpars, cond)
 }
 \arguments{
 \item{lambda}{incidence parameter, in events per person-year}

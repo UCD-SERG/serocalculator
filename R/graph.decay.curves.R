@@ -59,7 +59,8 @@ plot_curve_params_one_ab = function(
         alpha = alpha,
         # aes(color = cur_row),
         fun = ab0,
-        args = list(curve_params = cur_params))
+        args = list(curve_params = cur_params),
+        n = 1001)
   }
 
   layers =

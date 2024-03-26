@@ -105,3 +105,12 @@ If you need assistance or encounter a clear bug, please file an issue with a min
 
 Another great resource is **The Epidemiologist R Handbook**, which includes an introductory page on asking for help with R packages via GitHub: https://epirhandbook.com/en/getting-help.html 
 
+## Serocalculator App
+An app that takes the 5 curve parameters as inputs and runs `autoplot.curve_params()`
+
+ 
+```{r, echo=FALSE}
+knitr::include_app("https://ucdserg.shinyapps.io/shiny_decay_curve/",
+  height = "600px")
+```
+

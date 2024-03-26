@@ -2,7 +2,7 @@
 % Please edit documentation in R/llik.R
 \name{llik}
 \alias{llik}
-\alias{likelihood}
+\alias{log_likelihood}
 \title{Calculate log-likelihood}
 \usage{
 llik(
@@ -15,7 +15,7 @@ llik(
   ...
 )
 
-likelihood(
+log_likelihood(
   lambda,
   pop_data,
   antigen_isos,

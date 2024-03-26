@@ -2,9 +2,20 @@
 % Please edit documentation in R/llik.R
 \name{llik}
 \alias{llik}
+\alias{likelihood}
 \title{Calculate log-likelihood}
 \usage{
 llik(
+  lambda,
+  pop_data,
+  antigen_isos,
+  curve_params,
+  noise_params,
+  verbose = FALSE,
+  ...
+)
+
+likelihood(
   lambda,
   pop_data,
   antigen_isos,

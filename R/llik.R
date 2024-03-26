@@ -120,5 +120,5 @@ llik <- function(
 
 #' @rdname llik
 #' @export
-likelihood <- llik
+log_likelihood <- llik
 

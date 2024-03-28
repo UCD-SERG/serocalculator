@@ -84,3 +84,7 @@ getAdditionalData <- function(
 
   return(data)
 }
+
+#' @rdname getAdditionalData
+#' @export
+get_additional_data <- getAdditionalData

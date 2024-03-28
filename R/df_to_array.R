@@ -57,3 +57,7 @@ df.to.array = function(
     mutate(.by = all_of(dim_var_names), obs = 1:n()) %>%
     xtabs(formula = formula(xtabs_formula))
 }
+
+#' @rdname df.to.array
+#' @export
+df_to_array <- df.to.array

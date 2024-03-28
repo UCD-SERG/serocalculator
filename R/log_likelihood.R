@@ -117,3 +117,7 @@ llik <- function(
   # Return total log-likelihood
   return(-nllTotal)
 }
+
+#' @rdname llik
+#' @export
+log_likelihood <- llik

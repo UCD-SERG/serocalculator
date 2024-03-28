@@ -51,3 +51,6 @@ fdev <- Vectorize(
     return(llpp$res);
   })
 
+#' @rdname fdev
+#' @export
+f_dev <- fdev

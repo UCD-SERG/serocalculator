@@ -24,4 +24,14 @@ In order to interpret the measured cross-sectional antibody concentrations in te
 
 The **serocalculator** package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.
 
+### The Serocalculator App
+
+The **serocalculator app** is a web based tool that takes the 5 curve parameters (y0, y1, t1, alpha, and r) to draw a single curve on antibody concentration.
+
+```{r,echo=FALSE}
+knitr::include_app("https://ucdserg.shinyapps.io/shiny_decay_curve/",
+  height = "600px")
+```
+
 ## References
+

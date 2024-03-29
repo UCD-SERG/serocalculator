@@ -136,7 +136,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 #Create plots
 
-xs_data %>% autoplot(strata = "Country")
+xs_data %>% autoplot(strata = "Country",type='density')
 
 ```
 
@@ -147,7 +147,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 options(scipen = 999)
 xs_data %>% 
-  autoplot(strata = "Country", log = TRUE)
+  autoplot(strata = "Country", log = TRUE,type='density')
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
@@ -158,11 +158,12 @@ Let's also take a look at how antibody responses change by age.
 
 #Plot antibody responses by age
 
+
 ggplot(data=xs_data, aes(x=age, y=value, color=Country)) + 
          geom_point(size=.6, alpha=.7)+
          geom_smooth(method=lm, se=FALSE)+
          scale_y_log10() +
-         theme_bw()+
+         theme_linedraw()+
           labs(
             title = "Quantitative Antibody Responses by Age",
             x = "Age",

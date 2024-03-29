@@ -15,8 +15,9 @@
 #' load_pop_data() %>%
 #' clean_pop_data
 #'
-#' curve <- "https://osf.io/download/rtw5k/" %>%
-#' load_curve_params()
+#' curve = load_curve_params("https://osf.io/download/rtw5k/") %>%
+#' filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:1000) #reduce dataset for the purposes of this example
 #'
 #' noise <-"https://osf.io/download//hqy4v/" %>%
 #' load_noise_params()

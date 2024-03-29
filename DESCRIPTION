@@ -29,8 +29,6 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils,
-    ggfortify,
     cli
 Suggests:
     parallel,

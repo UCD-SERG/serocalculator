@@ -31,7 +31,9 @@ library(ggplot2)
 
 xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
   clean_pop_data()
-curve = load_curve_params("https://osf.io/download/rtw5k/" )
+curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
+  slice(1:1000) #reduce dataset for the purposes of this example
 noise = load_noise_params("https://osf.io/download//hqy4v/")
 
 est2 = est.incidence.by(

@@ -77,8 +77,10 @@ xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
 clean_pop_data()
 
 
-#Load curve parameters
-dmcmc = load_curve_params("https://osf.io/download/rtw5k" )
+#Load curve parameters and subset for the purposes of this example
+dmcmc = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
+slice(1:1000)
 
 #Load noise parameters
 cond <- tibble(
@@ -96,5 +98,7 @@ lik_HlyE_IgA = graph.loglik(
  antigen_isos = "HlyE_IgA",
  log_x = TRUE
 )
+
+ lik_HlyE_IgA
 }
 }

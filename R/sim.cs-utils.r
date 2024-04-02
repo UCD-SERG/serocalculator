@@ -32,6 +32,10 @@ ldpar <- function(
   return(spar);
 }
 
+#' @rdname ldpar
+#' @export
+row_longitudinal_parameter <- ldpar
+
 # calculate a few additional variables needed for the simulation
 # parameter vector: c(y0,b0,mu0,mu1,c1,alpha,shape)
 afunc  <- function(par) (par[4,]-par[3,])/(par[5,]*par[1,])
@@ -101,3 +105,7 @@ mkbaseline <- function(kab,n=1, blims, ...){
   }
   return(yset);
 }
+
+#' @rdname mkbaseline
+#' @export
+mk_baseline <- mkbaseline

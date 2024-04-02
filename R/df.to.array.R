@@ -67,3 +67,4 @@ df.to.array = function(
 #'   df %>% serocalculator:::df_to_array(dim_var_names = c("parameter", "Species"))
 #' @export
 df_to_array <- df.to.array
+

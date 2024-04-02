@@ -22,8 +22,22 @@ load_pop_data = function(file_path, antigen_isos = NULL)
     file_path %>% readRDS() %>%
     tibble::as_tibble()
 
+  # create pop_data class
   class(pop_data) =
     c("pop_data", class(pop_data))
+
+  # define pop_data get age function
+  get_age <- function(x)
+  {
+      UseMethod("get_age",x)
+  }
+
+  # implementation of get_age function
+  get_age.pop_data <- function(obj){
+    g <- grep(pattern = 'age',x = colnames(pop_data),ignore.case = TRUE)
+    age_var <- colnames(pop_data)[g]
+    return(age_var)
+  }
 
   if(is.null(antigen_isos))
   {

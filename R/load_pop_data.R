@@ -6,7 +6,8 @@
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data = load_pop_data(
+#' )
 #' print(xs_data)
 #'
 #'
@@ -33,9 +34,17 @@ load_pop_data = function(file_path, antigen_isos = NULL)
   }
 
   # implementation of get_age function
-  get_age.pop_data <- function(obj){
-    g <- grep(pattern = 'age',x = colnames(pop_data),ignore.case = TRUE)
-    age_var <- colnames(pop_data)[g]
+  get_age.pop_data <- function(){
+
+    # get column(s) matching 'age'
+    age_var <- pop_data %>%
+      select(contains("age")) %>%
+      names()
+
+    # set age attribute on pop_data
+    attributes(pop_data)$age_var <- age_var
+
+    # return age
     return(age_var)
   }
 

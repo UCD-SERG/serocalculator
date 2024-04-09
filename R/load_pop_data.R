@@ -8,19 +8,18 @@
 #' @examples
 #' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
 #' print(xs_data)
-load_pop_data = function(file_path, antigen_isos = NULL)
+load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
 {
   if(file_path %>% substr(1,4) == "http")
   {
     file_path = url(file_path)
-
   }
 
   pop_data =
     file_path %>% readRDS() %>%
     tibble::as_tibble()
 
-  # set class
+  # set pop_data class
   attr(pop_data, "class") = c('pop_data',class(pop_data))
 
   if(is.null(antigen_isos))
@@ -29,37 +28,90 @@ load_pop_data = function(file_path, antigen_isos = NULL)
   } else
   {
     stopifnot(all(is.element(antigen_isos, pop_data$antigen_iso)))
-
   }
 
   attr(pop_data, "antigen_isos") = antigen_isos
 
-  # get age variable from pop_data
-  attr(pop_data, "age_var") = pop_data %>%
-    select(contains("age",ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
-    names()
+  ##### AGE
+  if(age %in% colnames(pop_data))
+  {
+    attr(pop_data, "age_var") = age
+  } else
+  {
+    # search age variable from pop_data
+    age_var <- pop_data %>%
+      select(contains("age",ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
+      names()
 
-  # index
-  attr(pop_data, "id_var") <- pop_data %>%
-    select(contains("id",ignore.case = TRUE)) %>%
-    names()
+    if(length(age_var) > 0)
+    {
+      attr(pop_data, "age_var") <- age_var
+    } else
+    {
+      cli::cli_abort(
+        '`age = "{age}"` is not a valid input;
+      the age column in not available in the data set')
+    }
 
-  # value
-  attr(pop_data, "value_var") <- pop_data %>%
-    select(contains("result",ignore.case = TRUE)) %>%
-    names()
+  }
+
+  ##### INDEX
+  if(id %in% colnames(pop_data))
+  {
+    attr(pop_data, "age_var") <- id
+  } else
+  {
+    # search index variable from pop_data
+    id_var <- pop_data %>%
+      select(contains("id",ignore.case = TRUE)) %>%
+      names()
+
+    if(length(id_var) > 0)
+    {
+      attr(pop_data, "id_var") <- id_var
+    } else
+    {
+      cli::cli_abort(
+        '`id = "{id}"` is not a valid input;
+      the id column in not available in the data set')
+    }
+
+  }
+
+  ##### VALUE
+  if(value %in% colnames(pop_data))
+  {
+    attr(pop_data, "value_var") <- value
+  } else
+  {
+    # search value variable from pop_data
+    value_var <- pop_data %>%
+      select(contains("result",ignore.case = TRUE)) %>%
+      names()
+
+    if(length(value_var) > 0)
+    {
+      attr(pop_data, "value_var") <- value_var
+    } else
+    {
+      cli::cli_abort(
+        '`value = "{value}"` is not a valid input;
+      the value column in not available in the data set')
+    }
+
+  }
 
   return(pop_data)
 
 }
 
-# define pop_data get age function
+#' @export
 get_age <- function(x)
 {
   UseMethod("get_age",x)
 }
 
-# implementation of get_age function
+#' @export
 get_age.pop_data <- function(obj){
 
   # get age data
@@ -68,7 +120,7 @@ get_age.pop_data <- function(obj){
   return(age_data)
 }
 
-# implementation of get_value function
+#' @export
 get_value.pop_data <- function(obj){
 
   # get age data
@@ -77,7 +129,7 @@ get_value.pop_data <- function(obj){
   return(value_data)
 }
 
-# implementation of get_value function
+#' @export
 get_id.pop_data <- function(obj){
 
   # get age data

@@ -28,9 +28,10 @@ Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
 library(dplyr)
 library(ggplot2)
 
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
-load_pop_data() \%>\%
-clean_pop_data
+xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+                         age = "Age",
+                         id = "index_id",
+                         value = "result")
 
 curve <- "https://osf.io/download/rtw5k/" \%>\%
 load_curve_params()

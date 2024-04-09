@@ -108,8 +108,10 @@ If \code{strata} is left empty, a warning will be produced, recommending that yo
 \examples{
 library(dplyr)
 
-xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
+xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+                         age = "Age",
+                         id = "index_id",
+                         value = "result")
 curve = load_curve_params("https://osf.io/download/rtw5k/")
 noise = load_noise_params("https://osf.io/download//hqy4v/")
 

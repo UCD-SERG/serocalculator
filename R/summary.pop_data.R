@@ -11,9 +11,10 @@
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#' load_pop_data() %>%
-#' clean_pop_data()
+#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+#'                          age = "Age",
+#'                          id = "index_id",
+#'                          value = "result")
 #'
 #' xs_data %>% summary()
 #'
@@ -22,13 +23,18 @@ summary.pop_data = function(object, ...)
 
   ages =
     object %>%
-    distinct(.data$id, .data$age)
+    distinct(eval(parse(text=attributes(object)$id_var)),
+             eval(parse(text=attributes(object)$age_var)))
+
+  names(ages) <- c(attributes(object)$id_var,
+                        attributes(object)$age_var)
 
   cat("\nn =", nrow(ages),"\n")
 
   cat("\nDistribution of age: \n\n")
   age_summary =
-    ages$age %>%
+    ages %>%
+    pull(attributes(object)$age_var) %>%
     summary() %>%
     print()
 
@@ -38,12 +44,12 @@ summary.pop_data = function(object, ...)
     object %>%
     dplyr::summarize(
       .by = .data$antigen_iso,
-      Min = .data$value %>% min(na.rm = TRUE),
-      `1st Qu.` = .data$value %>% quantile(.25, na.rm = TRUE),
-      Median = .data$value %>% median(),
-      `3rd Qu.` = .data$value %>% quantile(.75, na.rm = TRUE),
-      Max = .data$value %>% max(na.rm = TRUE),
-      `# NAs` = .data$value %>% is.na() %>% sum()
+      Min = object %>% pull(attributes(object)$value_var) %>% min(na.rm = TRUE),
+      `1st Qu.` = object %>% pull(attributes(object)$value_var) %>% quantile(.25, na.rm = TRUE),
+      Median = object %>% pull(attributes(object)$value_var) %>% median(),
+      `3rd Qu.` = object %>% pull(attributes(object)$value_var) %>% quantile(.75, na.rm = TRUE),
+      Max = object %>% pull(attributes(object)$value_var) %>% max(na.rm = TRUE),
+      `# NAs` = object %>% pull(attributes(object)$value_var) %>% is.na() %>% sum()
     ) %>%
     as.data.frame() %>%
     print()

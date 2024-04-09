@@ -30,7 +30,7 @@ Imports:
     tibble,
     tidyr,
     utils,
-    ggfortify,
+    tidyselect,
     cli
 Suggests:
     parallel,

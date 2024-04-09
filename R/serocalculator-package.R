@@ -159,6 +159,8 @@
 #' @importFrom tidyr drop_na
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
+#' @importFrom tidyselect contains
+#' @importFrom tidyselect ends_with
 #' @importFrom utils download.file unzip
 #' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE

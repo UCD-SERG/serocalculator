@@ -13,7 +13,10 @@
 #' * `age`: age of the individual whose serum has been assayed, at the time of blood sample
 #' @export
 #' @examples
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+#'                        age = "Age",
+#'                        id = "index_id",
+#'                        value = "result")
 #' clean_pop_data(xs_data)
 #'
 #'

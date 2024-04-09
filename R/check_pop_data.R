@@ -8,10 +8,10 @@
 #' library(dplyr)
 #'
 #' #Import cross-sectional data from OSF and rename required variables
-#' xs_data <-
-#'  "https://osf.io/download//n6cp3/" %>%
-#'   load_pop_data() %>%
-#'   clean_pop_data()
+#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+#'                          age = "Age",
+#'                          id = "index_id",
+#'                          value = "result")
 #'
 #'   xs_data %>% check_pop_data()
 #'
@@ -22,11 +22,11 @@ check_pop_data <- function(pop_data)
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
-  if (!is.element("age", names(pop_data))) {
+  if (!is.element(attributes(pop_data)$age_var, names(pop_data))) {
     stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
-  if (!is.element("value", names(pop_data))) {
+  if (!is.element(attributes(pop_data)$value_var, names(pop_data))) {
     stop("Argument `pop_data` is missing column `value` (antibody measurement).")
   }
 

@@ -13,11 +13,11 @@
 #' @examples
 #' library(dplyr)
 #' library(ggplot2)
-#' library(ggfortify)
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#'   load_pop_data() %>%
-#'   clean_pop_data()
+#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+#'                          age = "Age",
+#'                          id = "index_id",
+#'                          value = "result")
 #'
 #' xs_data %>% autoplot(strata = "Country", type = "density")
 #' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
@@ -49,12 +49,15 @@ age_scatter <- function(
   {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = .data$age, y = .data$value))
+      ggplot2::ggplot(aes(x = eval(parse(text=attributes(object)$age_var)),
+                          y = eval(parse(text=attributes(object)$value_var))))
   } else
   {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = .data$age, y = .data$value, col = get(strata))) +
+      ggplot2::ggplot(aes(x = eval(parse(text=attributes(object)$age_var)),
+                          y = eval(parse(text=attributes(object)$value_var)),
+                          col = get(strata))) +
       ggplot2::labs(colour = strata)
   }
 
@@ -83,7 +86,7 @@ density_plot <- function(
     log = FALSE) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(aes(x = .data$value)) +
+    ggplot2::ggplot(aes(x = eval(parse(text=attributes(object)$value_var)))) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 

@@ -32,9 +32,10 @@
 #' #load in longitudinal parameters
 #' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#' load_pop_data() %>%
-#' clean_pop_data()
+#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+#'                          age = "Age",
+#'                          id = "index_id",
+#'                          value = "result")
 #'
 #' #Load noise params
 #'   cond <- tibble(

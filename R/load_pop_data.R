@@ -2,11 +2,16 @@
 #'
 #' @param file_path path to an RDS file containing a cross-sectional antibody survey data set, stored as a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
-#'
+#' @param age a[character()] identifying the age column
+#' @param id a[character()] identifying the id column
+#' @param value a[character()] identifying the value column
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+#'                        age = "Age",
+#'                        id = "index_id",
+#'                        value = "result")
 #' print(xs_data)
 load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
 {
@@ -20,7 +25,7 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
     tibble::as_tibble()
 
   # set pop_data class
-  attr(pop_data, "class") = c('pop_data',class(pop_data))
+  attr(pop_data, "class") = c('pop_data', class(pop_data))
 
   if(is.null(antigen_isos))
   {
@@ -35,12 +40,12 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
   ##### AGE
   if(age %in% colnames(pop_data))
   {
-    attr(pop_data, "age_var") = age
+    attr(pop_data, "age_var") <- age
   } else
   {
     # search age variable from pop_data
     age_var <- pop_data %>%
-      select(contains("age",ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
+      select(contains("age", ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
       names()
 
     if(length(age_var) > 0)
@@ -58,12 +63,12 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
   ##### INDEX
   if(id %in% colnames(pop_data))
   {
-    attr(pop_data, "age_var") <- id
+    attr(pop_data, "id_var") <- id
   } else
   {
     # search index variable from pop_data
     id_var <- pop_data %>%
-      select(contains("id",ignore.case = TRUE)) %>%
+      select(contains("id", ignore.case = TRUE)) %>%
       names()
 
     if(length(id_var) > 0)
@@ -86,7 +91,7 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
   {
     # search value variable from pop_data
     value_var <- pop_data %>%
-      select(contains("result",ignore.case = TRUE)) %>%
+      select(contains("result", ignore.case = TRUE)) %>%
       names()
 
     if(length(value_var) > 0)
@@ -105,35 +110,44 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
 
 }
 
-#' @export
-get_age <- function(x)
+get_age <- function(object, ...)
 {
-  UseMethod("get_age",x)
+  UseMethod("get_age", object)
 }
 
 #' @export
-get_age.pop_data <- function(obj){
+get_age.pop_data <- function(object, ...){
 
   # get age data
-  age_data <- obj %>% select(attributes(obj)$age_var)
+  age_data <- object %>% select(attributes(object)$age_var)
 
   return(age_data)
 }
 
+get_value <- function(object, ...)
+{
+  UseMethod("get_value", object)
+}
+
 #' @export
-get_value.pop_data <- function(obj){
+get_value.pop_data <- function(object, ...){
 
   # get age data
-  value_data <- obj %>% select(attributes(obj)$value_var)
+  value_data <- object %>% select(attributes(object)$value_var)
 
   return(value_data)
 }
 
+get_id <- function(object, ...)
+{
+  UseMethod("get_id", object)
+}
+
 #' @export
-get_id.pop_data <- function(obj){
+get_id.pop_data <- function(object, ...){
 
   # get age data
-  id_data <- obj %>% select(attributes(obj)$id_var)
+  id_data <- object %>% select(attributes(object)$id_var)
 
   return(id_data)
 }

@@ -4,7 +4,13 @@
 \alias{load_pop_data}
 \title{Load a cross-sectional antibody survey data set}
 \usage{
-load_pop_data(file_path, antigen_isos = NULL, age, id, value)
+load_pop_data(
+  file_path,
+  antigen_isos = NULL,
+  age = "Age",
+  id = "id",
+  value = "result"
+)
 }
 \arguments{
 \item{file_path}{path to an RDS file containing a cross-sectional antibody survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
@@ -28,5 +34,6 @@ xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
                        age = "Age",
                        id = "index_id",
                        value = "result")
+
 print(xs_data)
 }

@@ -12,8 +12,9 @@
 #'                        age = "Age",
 #'                        id = "index_id",
 #'                        value = "result")
+#'
 #' print(xs_data)
-load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
+load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "id", value = "result")
 {
   if(file_path %>% substr(1,4) == "http")
   {
@@ -45,12 +46,17 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
   {
     # search age variable from pop_data
     age_var <- pop_data %>%
-      select(contains("age", ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
+      select(tidyselect::matches("age",colnames(pop_data),ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
       names()
 
     if(length(age_var) > 0)
     {
       attr(pop_data, "age_var") <- age_var
+
+      # create warning when using searched age instead of provided age
+      cli::cli_alert_warning('The provided age attribute "{id}" does not exist.
+                        Proceeding to use "{id_var}"')
+
     } else
     {
       cli::cli_abort(
@@ -64,16 +70,23 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
   if(id %in% colnames(pop_data))
   {
     attr(pop_data, "id_var") <- id
+
+
   } else
   {
-    # search index variable from pop_data
+    # search index variable from pop_data (no need to find ID)
     id_var <- pop_data %>%
-      select(contains("id", ignore.case = TRUE)) %>%
+      select(tidyselect::matches("\\w*id\\b")) %>%
       names()
+
 
     if(length(id_var) > 0)
     {
       attr(pop_data, "id_var") <- id_var
+
+      # create warning when using searched id  instead of provided id
+      cli::cli_alert_warning('The provided age attribute "{age}" does not exist.
+                        Proceeding to use "{age_var}"')
     } else
     {
       cli::cli_abort(
@@ -91,12 +104,16 @@ load_pop_data = function(file_path, antigen_isos = NULL, age, id, value)
   {
     # search value variable from pop_data
     value_var <- pop_data %>%
-      select(contains("result", ignore.case = TRUE)) %>%
+      select(tidyselect::matches("result", ignore.case = TRUE)) %>%
       names()
 
     if(length(value_var) > 0)
     {
       attr(pop_data, "value_var") <- value_var
+
+      # create warning when using searched age instead of provided age
+      cli::cli_alert_warning('The provided age attribute "{value}" does not exist.
+                        Proceeding to use "{value_var}"')
     } else
     {
       cli::cli_abort(
@@ -119,7 +136,7 @@ get_age <- function(object, ...)
 get_age.pop_data <- function(object, ...){
 
   # get age data
-  age_data <- object %>% select(attributes(object)$age_var)
+  age_data <- object %>% pull(attributes(object)$age_var)
 
   return(age_data)
 }
@@ -133,7 +150,7 @@ get_value <- function(object, ...)
 get_value.pop_data <- function(object, ...){
 
   # get age data
-  value_data <- object %>% select(attributes(object)$value_var)
+  value_data <- object %>% pull(attributes(object)$value_var)
 
   return(value_data)
 }
@@ -147,7 +164,7 @@ get_id <- function(object, ...)
 get_id.pop_data <- function(object, ...){
 
   # get age data
-  id_data <- object %>% select(attributes(object)$id_var)
+  id_data <- object %>% pull(attributes(object)$id_var)
 
   return(id_data)
 }

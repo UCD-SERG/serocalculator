@@ -59,7 +59,6 @@
     "`y1`, `alpha`, and `r`",
     "for each value of `antigen_iso` in `pop_data`")
 
-
   if (!is.data.frame(params)) {
     stop(
       .pasteN(

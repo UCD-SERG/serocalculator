@@ -56,7 +56,7 @@ est.incidence <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params)
+    curve_params = curve)
 
   pop_data = pop_data %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%

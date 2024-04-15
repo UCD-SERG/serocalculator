@@ -28,8 +28,8 @@
 #'                          age = "Age",
 #'                          id = "index_id",
 #'                          value = "result")
-#' curve = load_curve_params("https://osf.io/download/rtw5k/")
-#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#' curve = ("https://osf.io/download/rtw5k/")
+#' noise = load_curve_params("https://osf.io/download//hqy4v/")
 #'
 #' est1 = est.incidence(
 #' pop_data = xs_data %>% filter(Country == "Pakistan"),

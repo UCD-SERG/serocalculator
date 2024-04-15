@@ -20,8 +20,8 @@ fdev <- Vectorize(
   {
     res <- 0;
     lambda <- as.double(lambda);
-    y <- as.double(csdata$"value");
-    a <- as.double(csdata$"age");
+    y <- as.double(get_value.pop_data(csdata));
+    a <- as.double(get_age.pop_data(csdata));
     nsubj <- as.integer(nrow(csdata));
     y1 <- as.double(lnpars$y1);
     alpha <- as.double(lnpars$alpha);

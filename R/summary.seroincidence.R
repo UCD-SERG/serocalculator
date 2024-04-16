@@ -21,24 +21,6 @@
 #'    * 4: iteration limit exceeded; increase `iterlim`.
 #'    * 5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small.
 #' @export
-#' @examples
-#' library(dplyr)
-#'
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                          age = "Age",
-#'                          id = "index_id",
-#'                          value = "result")
-#' curve = ("https://osf.io/download/rtw5k/")
-#' noise = load_curve_params("https://osf.io/download//hqy4v/")
-#'
-#' est1 = est.incidence(
-#' pop_data = xs_data %>% filter(Country == "Pakistan"),
-#' curve_param = curve,
-#' noise_param = noise %>% filter(Country == "Pakistan"),
-#' antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-#' )
-#'
-#' summary(est1)
 #'
 summary.seroincidence = function(
     object,

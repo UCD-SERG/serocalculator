@@ -65,5 +65,5 @@ df.to.array = function(
 #'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) %>%
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
 #'   df %>% serocalculator:::df_to_array(dim_var_names = c("parameter", "Species"))
-#' @export
+#' @keywords internal
 df_to_array <- df.to.array

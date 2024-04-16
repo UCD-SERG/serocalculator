@@ -2,9 +2,12 @@
 % Please edit documentation in R/sim.cs-utils.r
 \name{mkbaseline}
 \alias{mkbaseline}
+\alias{mk_baseline}
 \title{generate random sample from baseline distribution}
 \usage{
 mkbaseline(kab, n = 1, blims, ...)
+
+mk_baseline(kab, n = 1, blims, ...)
 }
 \arguments{
 \item{kab}{index for which row of antibody baseline limits to read from \code{blims}}

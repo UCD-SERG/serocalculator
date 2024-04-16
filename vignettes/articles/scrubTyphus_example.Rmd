@@ -96,7 +96,6 @@ xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
                           id = "index_id",
                           value = "result")
 
-
 ```
 
 #### Check formatting
@@ -135,7 +134,7 @@ ggplot(data=xs_data, aes(x=eval(parse(text=attributes(xs_data)$age_var)), y=eval
             y = "Value"
           ) + 
   facet_wrap(~antigen_iso) 
-  #scale_color_manual(values = c("orange2",'#39558CFF'))
+  scale_color_manual(values = c("orange2",'#39558CFF','red'))
 
 ```
 
@@ -202,7 +201,7 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 #Using est.incidence.by (strata)
 
 est = est.incidence.by(
-  strata = c("country"),
+  strata = c("Country"),
   pop_data = xs_data,
   curve_params = curve, 
   noise_params = noise,
@@ -271,7 +270,7 @@ ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
   #facet_wrap(~country) + 
   theme(axis.text.y = element_text(size=11),
         axis.text.x = element_text(size=11)) + 
-  scale_fill_manual(values = c("orange2",'#39558CFF'))
+  scale_fill_manual(values = c("orange2",'#39558CFF',"red"))
 
 
 ```

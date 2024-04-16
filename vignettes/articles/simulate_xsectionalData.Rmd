@@ -156,7 +156,8 @@ We can plot the distribution of the antibody responses in the simulated data.
 ```{r}
 
 
-ggplot(csdata, aes(x=as.factor(antigen_iso), y= value)) +
+ggplot(csdata, aes(x=as.factor(antigen_iso), 
+                   y=eval(parse(text=attributes(csdata)$value_var)))) +
   geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso), show.legend = F) + 
   geom_boxplot(outlier.colour = NA, fill = NA) + 
   scale_y_log10() + 
@@ -314,7 +315,8 @@ We can plot the distributions of the simulated responses:
 
 ```{r}
 
-ggplot(sim.df, aes(x = as.factor(cluster), y= value)) +
+ggplot(sim.df, aes(x = as.factor(cluster), 
+                   y=eval(parse(text=attributes(object)$value_var)))) +
   geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso)) + 
   geom_boxplot(outlier.colour = NA, fill = NA) + 
   scale_y_log10() + 

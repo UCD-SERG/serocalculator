@@ -134,8 +134,8 @@ ggplot(data=xs_data, aes(x=eval(parse(text=attributes(xs_data)$age_var)), y=eval
             x = "Age",
             y = "Value"
           ) + 
-  facet_wrap(~antigen_iso) +
-  scale_color_manual(values = c("orange2",'#39558CFF'))
+  facet_wrap(~antigen_iso) 
+  #scale_color_manual(values = c("orange2",'#39558CFF'))
 
 ```
 

@@ -157,21 +157,7 @@ Let's also take a look at how antibody responses change by age.
 ```{r "plot age"}
 
 #Plot antibody responses by age
- 
-
-ggplot(data=xs_data, aes(x = eval(parse(text=attributes(xs_data)$age_var)),
-                         y= eval(parse(text=attributes(xs_data)$value_var)), 
-                         color=Country)) + 
-         geom_point(size=.6, alpha=.7)+
-         geom_smooth(method=lm, se=FALSE)+
-         scale_y_log10() +
-         theme_linedraw()+
-          labs(
-            title = "Quantitative Antibody Responses by Age",
-            x = "Age",
-            y = "Value"
-          )
-
+autoplot.pop_data(object = xs_data,type = 'age-scatter',strata = 'Country')
 ```
 
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).

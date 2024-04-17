@@ -109,7 +109,9 @@ density_plot <- function(
   }
   if (log) {
     plot1 <- plot1 +
-      ggplot2::scale_x_log10() +
+      #ggplot2::scale_x_log10() +
+      ggplot2::scale_y_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
+                                  breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
       ggplot2::labs(
         title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
         x = "Log10(Antibody Response Value)",

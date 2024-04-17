@@ -14,7 +14,7 @@
 #'                        value = "result")
 #'
 #' print(xs_data)
-load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "id", value = "result")
+load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "index_id", value = "result")
 {
   if(file_path %>% substr(1,4) == "http")
   {
@@ -54,8 +54,8 @@ load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "id",
       attr(pop_data, "age_var") <- age_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_warning('The provided age attribute "{id}" does not exist.
-                        Proceeding to use "{id_var}"')
+      cli::cli_alert_warning('The provided age attribute "{age}" does not exist.
+                        Proceeding to use "{age_var}"')
 
     } else
     {
@@ -85,8 +85,8 @@ load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "id",
       attr(pop_data, "id_var") <- id_var
 
       # create warning when using searched id  instead of provided id
-      cli::cli_alert_warning('The provided age attribute "{age}" does not exist.
-                        Proceeding to use "{age_var}"')
+      cli::cli_alert_warning('The provided id attribute "{id}" does not exist.
+                        Proceeding to use "{id_var}"')
     } else
     {
       cli::cli_abort(

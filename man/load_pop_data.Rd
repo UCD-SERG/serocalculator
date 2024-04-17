@@ -8,7 +8,7 @@ load_pop_data(
   file_path,
   antigen_isos = NULL,
   age = "Age",
-  id = "id",
+  id = "index_id",
   value = "result"
 )
 }

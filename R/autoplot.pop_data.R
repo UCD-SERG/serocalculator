@@ -63,7 +63,9 @@ age_scatter <- function(
 
   plot1 <- plot1 +
     ggplot2::theme_linedraw() +
-    ggplot2::scale_y_log10() +
+    #ggplot2::scale_y_log10() +
+    ggplot2::scale_y_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
+                       breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
     ggplot2::geom_point(size = .6, alpha = .7) +
     ggplot2::geom_smooth(
       method = "lm",

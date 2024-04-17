@@ -155,9 +155,8 @@ Once log transformed, our data looks much more normally distributed. In most cas
 Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
-
 #Plot antibody responses by age
-autoplot.pop_data(object = xs_data,type = 'age-scatter',strata = 'Country')
+autoplot.pop_data(object = xs_data,type = 'age-scatter',strata = 'Country',log = TRUE)
 ```
 
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).

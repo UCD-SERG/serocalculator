@@ -46,7 +46,7 @@ knitr::opts_chunk$set(
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
-#devtools::install_github("ucd-serg/serocalculator")
+devtools::install_github("ucd-serg/serocalculator",ref = "age-case-in-clean_pop_data")
 library(serocalculator)
 #install.packages("tidyverse")
 library(tidyverse)
@@ -122,7 +122,7 @@ Let's also take a look at how antibody responses change by age.
 ```{r "plot age"}
 
 #Plot antibody responses by age
-autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
+autoplot.pop_data(object = xs_data,type = 'age-scatter',strata = 'Country')
 
 ```
 

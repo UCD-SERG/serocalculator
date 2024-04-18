@@ -39,7 +39,7 @@ knitr::opts_chunk$set(
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
-#devtools::install_github("ucd-serg/serocalculator")
+devtools::install_github("ucd-serg/serocalculator",ref = "age-case-in-clean_pop_data")
 library(serocalculator)
 #install.packages("tidyverse)
 library(tidyverse)
@@ -136,7 +136,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 #Create plots
 
-xs_data %>% autoplot(strata = "Country",type='density')
+xs_data %>% autoplot.pop_data(strata = "Country",type='density')
 
 ```
 
@@ -147,7 +147,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 options(scipen = 999)
 xs_data %>% 
-  autoplot(strata = "Country", log = TRUE,type='density')
+  autoplot.pop_data(strata = "Country", log = TRUE,type='density')
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
@@ -156,7 +156,7 @@ Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
 #Plot antibody responses by age
-autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
+autoplot.pop_data(object = xs_data,type = 'age-scatter',strata = 'Country')
 ```
 
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).

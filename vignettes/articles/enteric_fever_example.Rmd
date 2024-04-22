@@ -125,7 +125,7 @@ xs_data %>% check_pop_data()
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary.pop_data()
+xs_data %>% summary()
 ```
 
 
@@ -136,7 +136,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 #Create plots
 
-xs_data %>% autoplot.pop_data(strata = "Country",type='density')
+xs_data %>% autoplot(strata = "Country",type='density')
 
 ```
 
@@ -147,7 +147,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 options(scipen = 999)
 xs_data %>% 
-  autoplot.pop_data(strata = "Country", log = TRUE,type='density')
+  autoplot(strata = "Country", log = TRUE,type='density')
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
@@ -156,7 +156,7 @@ Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
 #Plot antibody responses by age
-autoplot.pop_data(object = xs_data,type = 'age-scatter',strata = 'Country')
+autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
 ```
 
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).

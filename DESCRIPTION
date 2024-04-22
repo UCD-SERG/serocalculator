@@ -31,8 +31,7 @@ Imports:
     tidyr,
     utils,
     tidyselect,
-    cli,
-    devtools
+    cli
 Suggests:
     parallel,
     knitr,

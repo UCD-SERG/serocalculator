@@ -93,10 +93,7 @@ Next, we load our sample cross-sectional data.
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-                          age = "Age",
-                          id = "index_id",
-                          value = "result")
+xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/")
 
 ```
 
@@ -105,7 +102,7 @@ xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
 ```{r, message = TRUE}
-xs_data %>% check_pop_data()
+#xs_data %>% check_pop_data()
 ```
 
 #### Summarize antibody data
@@ -113,7 +110,7 @@ xs_data %>% check_pop_data()
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary()
+#xs_data %>% summary()
 ```
 
 
@@ -124,7 +121,7 @@ Let's also take a look at how antibody responses change by age.
 ```{r "plot age"}
 
 #Plot antibody responses by age
-autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
+#autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
 
 ```
 
@@ -190,14 +187,14 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 ```{r estby}
 #Using est.incidence.by (strata)
 
-est = est.incidence.by(
-  strata = c("Country"),
-  pop_data = xs_data,
-  curve_params = curves, 
-  noise_params = noise,
-  antigen_isos = c("OT56kda_IgG"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
+#est = est.incidence.by(
+#  strata = c("Country"),
+#  pop_data = xs_data,
+#  curve_params = curves, 
+#  noise_params = noise,
+#  antigen_isos = c("OT56kda_IgG"),
+#  num_cores = 8 #Allow for parallel processing to decrease run time 
+#  )
 
 summary(est)
 
@@ -211,16 +208,16 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 ```{r estby2}
 #Using est.incidence.by (strata)
 
-est2 = est.incidence.by(
-  strata = c("country", "ageQ"),
-  pop_data = xs_data,
-  curve_params = curve, 
-  noise_params = noise,
-  antigen_isos = c("OT56kda_IgG"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
+#est2 = est.incidence.by(
+#  strata = c("country", "ageQ"),
+#  pop_data = xs_data,
+#  curve_params = curve, 
+#  noise_params = noise,
+#  antigen_isos = c("OT56kda_IgG"),
+#  num_cores = 8 #Allow for parallel processing to decrease run time 
+#  )
 
-summary(est2)
+#summary(est2)
 
 ```
 
@@ -237,30 +234,30 @@ Let's visualize our seroincidence estimates by strata.
 #Plot seroincidence estimates
 
 #Save summary(est) as a dataframe
-estdf<- summary(est) %>%
-  mutate(ageQ = "Overall")
+#estdf<- summary(est) %>%
+#  mutate(ageQ = "Overall")
 
 #Save summary(est2) as a dataframe
-est2df<- summary(est2) 
+#est2df<- summary(est2) 
 
 
-est.comb <- rbind(estdf, est2df)
+#est.comb <- rbind(estdf, est2df)
 
 #Create barplot (rescale incidence rate and CIs)
-ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
-  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
-                position = position_dodge2(width = 0.8, preserve = "single")) +
-  labs(
-      title= "Enteric Fever Seroincidence by Catchment Area",
-        x="Seroincience rate per 1000 person-years",
-        y="Catchment"
-      ) +
-  theme_bw() +
+#ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
+#  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
+#  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
+#                position = position_dodge2(width = 0.8, preserve = "single")) +
+#  labs(
+#      title= "Enteric Fever Seroincidence by Catchment Area",
+#        x="Seroincience rate per 1000 person-years",
+#        y="Catchment"
+#      ) +
+#  theme_bw() +
   #facet_wrap(~country) + 
-  theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11)) + 
-  scale_fill_manual(values = c("orange2",'#39558CFF',"red"))
+#  theme(axis.text.y = element_text(size=11),
+#        axis.text.x = element_text(size=11)) + 
+#  scale_fill_manual(values = c("orange2",'#39558CFF',"red"))
 
 
 ```

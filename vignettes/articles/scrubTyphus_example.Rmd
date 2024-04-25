@@ -196,7 +196,7 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 #  num_cores = 8 #Allow for parallel processing to decrease run time 
 #  )
 
-summary(est)
+#summary(est)
 
 ```
 

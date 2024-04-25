@@ -197,14 +197,14 @@ Using the function `est.incidence`, we filter to sites in Pakistan and define th
 
 #Using est.incidence (no strata)
 
-est1 = est.incidence(
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_param = curve, 
-  noise_param = noise %>% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-)
+#est1 = est.incidence(
+#  pop_data = xs_data %>% filter(Country == "Pakistan"),
+#  curve_param = curve, 
+#  noise_param = noise %>% filter(Country == "Pakistan"),
+#  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+#)
 
-summary(est1)
+#summary(est1)
 ```
 
 

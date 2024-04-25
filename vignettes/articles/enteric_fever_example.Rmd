@@ -124,7 +124,7 @@ We can check that `xs_data` has the correct formatting using the `check_pop_data
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary()
+#xs_data %>% summary()
 ```
 
 

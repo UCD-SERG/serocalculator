@@ -2,9 +2,12 @@
 % Please edit documentation in R/sim.cs-utils.r
 \name{ldpar}
 \alias{ldpar}
+\alias{row_longitudinal_parameter}
 \title{extract a row from longitudinal parameter set}
 \usage{
 ldpar(age, antigen_isos, nmc, npar, ...)
+
+row_longitudinal_parameter(age, antigen_isos, nmc, npar, ...)
 }
 \arguments{
 \item{age}{age at infection}

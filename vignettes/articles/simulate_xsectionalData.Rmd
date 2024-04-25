@@ -313,13 +313,13 @@ We can plot the distributions of the simulated responses:
 
 ```{r}
 
-ggplot(sim.df, aes(x = as.factor(cluster), 
-                   y=eval(parse(text=attributes(sim.df)$value_var)))) +
-  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso)) + 
-  geom_boxplot(outlier.colour = NA, fill = NA) + 
-  scale_y_log10() + 
-  facet_wrap(~antigen_iso + lambda.sim, nrow = 2) + 
-  theme_linedraw()
+#ggplot(sim.df, aes(x = as.factor(cluster), 
+#                   y=eval(parse(text=attributes(sim.df)$value_var)))) +
+#  geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso)) + 
+#  geom_boxplot(outlier.colour = NA, fill = NA) + 
+#  scale_y_log10() + 
+#  facet_wrap(~antigen_iso + lambda.sim, nrow = 2) + 
+#  theme_linedraw()
 
 ```
 

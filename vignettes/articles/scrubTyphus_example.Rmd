@@ -94,7 +94,7 @@ Next, we load our sample cross-sectional data.
 xs_data <- 
   "https://osf.io/download/h5js4/" %>% 
   load_pop_data() %>% 
-  #clean_pop_data()
+  clean_pop_data()
 
 ```
 

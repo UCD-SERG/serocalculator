@@ -14,7 +14,12 @@
 #'                        value = "result")
 #'
 #' print(xs_data)
-load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "index_id", value = "result")
+load_pop_data = function(file_path,
+                         antigen_isos = NULL,
+                         age = "Age",
+                         id = "index_id",
+                         value = "result",
+                         standardize = TRUE)
 {
   if(file_path %>% substr(1,4) == "http")
   {
@@ -121,6 +126,15 @@ load_pop_data = function(file_path, antigen_isos = NULL, age = "Age", id = "inde
       the value column in not available in the data set')
     }
 
+  }
+
+  # standardize columns
+  if(standardize)
+  {
+    pop_data <- pop_data %>%
+                    rename('age' = attributes(pop_data)$age_var,
+                           'value' = attributes(pop_data)$value_var,
+                           'id' = attributes(pop_data)$id_var)
   }
 
   return(pop_data)

@@ -12,8 +12,8 @@ stratify_data <- function(
   {
     all_data =
       list(
-        pop_data = data %>% select(attributes(data)$value_var,
-                                   attributes(data)$age_var,
+        pop_data = data %>% select("value",
+                                   "age",
                                    "antigen_iso"),
         curve_params = curve_params %>% select("y1", "alpha", "r", "antigen_iso"),
         noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso")
@@ -76,8 +76,8 @@ stratify_data <- function(
           semi_join(
             cur_stratum_vals,
             by = strata_varnames) %>%
-          select(attributes(data)$value_var,
-                 attributes(data)$age_var,
+          select(value,
+                 age,
                  "antigen_iso")
       )
 

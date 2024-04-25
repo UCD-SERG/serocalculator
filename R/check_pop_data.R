@@ -8,12 +8,9 @@
 #' library(dplyr)
 #'
 #' #Import cross-sectional data from OSF and rename required variables
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                          age = "Age",
-#'                          id = "index_id",
-#'                          value = "result")
+#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/")
 #'
-#'   xs_data %>% check_pop_data()
+#' xs_data %>% check_pop_data()
 #'
 check_pop_data <- function(pop_data)
 {
@@ -22,14 +19,26 @@ check_pop_data <- function(pop_data)
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
-  if (!is.element(attributes(pop_data)$age_var, names(pop_data))) {
+  if (!(or_logic(x = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[1],
+                 y = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[2] ))) {
     stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
-  if (!is.element(attributes(pop_data)$value_var, names(pop_data))) {
+  if (!(or_logic(x = is.element(c(attributes(pop_data)$value_var,'value'), names(pop_data))[1],
+                 y = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[2]))) {
     stop("Argument `pop_data` is missing column `value` (antibody measurement).")
   }
 
   message("data format is as expected.")
   invisible(NULL)
 }
+
+or_logic <- function(x, y) {
+  if (x || y) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+

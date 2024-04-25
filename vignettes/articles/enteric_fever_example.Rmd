@@ -216,16 +216,16 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 ```{r estby}
 #Using est.incidence.by (strata)
 
-est2 = est.incidence.by(
-  strata = c("catchment"),
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_params = curve, 
-  noise_params = noise %>% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
+#est2 = est.incidence.by(
+#  strata = c("catchment"),
+#  pop_data = xs_data %>% filter(Country == "Pakistan"),
+#  curve_params = curve, 
+#  noise_params = noise %>% filter(Country == "Pakistan"),
+#  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#  num_cores = 8 #Allow for parallel processing to decrease run time 
+#  )
 
-summary(est2)
+#summary(est2)
 
 ```
 
@@ -238,20 +238,20 @@ Let's visualize our seroincidence estimates by strata.
 #Plot seroincidence estimates
 
 #Save summary(est2) as a dataframe
-est2df<- summary(est2)
+#est2df<- summary(est2)
 
 #Create barplot (rescale incidence rate and CIs)
-ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
-  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
-  labs(
-      title= "Enteric Fever Seroincidence by Catchment Area",
-        x="Seroincience rate per 1000 person-years",
-        y="Catchment"
-      ) +
-  theme_bw() +
-  theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11))
+#ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
+#  geom_bar(stat = "identity", show.legend = FALSE) +
+#  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
+#  labs(
+#      title= "Enteric Fever Seroincidence by Catchment Area",
+#        x="Seroincience rate per 1000 person-years",
+#        y="Catchment"
+#      ) +
+#  theme_bw() +
+#  theme(axis.text.y = element_text(size=11),
+#        axis.text.x = element_text(size=11))
 
 ```
 

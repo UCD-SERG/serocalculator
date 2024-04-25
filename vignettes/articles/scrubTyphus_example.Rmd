@@ -152,12 +152,12 @@ Column Name | Description
 #biologic noise
 b.noise <- xs_data %>%
   group_by(antigen_iso) %>%
-  filter(!is.na(value)) %>%
+  filter(!is.na(result)) %>%
   filter(age<40) %>% # restrict to young ages to capture recent exposures 
   do({
     set.seed(54321)
     # Fit the mixture model
-    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
+    mixmod <- normalmixEM(.$result, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
     # Assuming the first component is the lower distribution
     lower_mu <- mixmod$mu[1]
     lower_sigma <- sqrt(mixmod$sigma[1])

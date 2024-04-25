@@ -314,7 +314,7 @@ We can plot the distributions of the simulated responses:
 ```{r}
 
 ggplot(sim.df, aes(x = as.factor(cluster), 
-                   y=eval(parse(text=attributes(object)$value_var)))) +
+                   y=eval(parse(text=attributes(sim.df)$value_var)))) +
   geom_beeswarm(size= .2, alpha = .3, aes(color = antigen_iso)) + 
   geom_boxplot(outlier.colour = NA, fill = NA) + 
   scale_y_log10() + 
@@ -339,7 +339,7 @@ ggplot(sim.df, aes(x = as.factor(cluster),
 #    build_graph = TRUE, # slows down the function substantially
 #    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     # antigen_isos = "HlyE_IgA"
-  )
+#  )
 
 ```
 

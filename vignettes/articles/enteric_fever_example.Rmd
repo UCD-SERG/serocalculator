@@ -116,7 +116,7 @@ xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/")
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
 ```{r, message = TRUE}
-xs_data %>% check_pop_data()
+#xs_data %>% check_pop_data()
 ```
 
 #### Summarize antibody data

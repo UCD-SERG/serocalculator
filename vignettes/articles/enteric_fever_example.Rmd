@@ -42,6 +42,7 @@ The first step in conducting this analysis is to load our necessary packages. If
 # load libraries
 library(devtools)
 devtools::install_github("ucd-serg/serocalculator")
+
 library(serocalculator)
 #install.packages("tidyverse)
 library(tidyverse)
@@ -144,9 +145,9 @@ We see that across countries, our data is highly skewed with the majority of res
 ```{r logplot, message = FALSE}
 #Create log transformed plots
 
-options(scipen = 999)
-xs_data %>% 
-  autoplot(strata = "Country", log = TRUE,type='density')
+#options(scipen = 999)
+#xs_data %>% 
+#  autoplot(strata = "Country", log = TRUE,type='density')
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
@@ -155,7 +156,7 @@ Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
 #Plot antibody responses by age
-autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
+#autoplot(object = xs_data,type = 'age-scatter',strata = 'Country')
 ```
 
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).

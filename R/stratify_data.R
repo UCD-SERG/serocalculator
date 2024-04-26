@@ -12,8 +12,8 @@ stratify_data <- function(
   {
     all_data =
       list(
-        pop_data = data %>% select("value",
-                                   "age",
+        pop_data = data %>% select(value,
+                                   age,
                                    "antigen_iso"),
         curve_params = curve_params %>% select("y1", "alpha", "r", "antigen_iso"),
         noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso")

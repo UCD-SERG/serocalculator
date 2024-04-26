@@ -19,7 +19,8 @@
 #' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
 #'                          age = "Age",
 #'                          id = "index_id",
-#'                          value = "result")
+#'                          value = "result",
+#'                          standardize = TRUE)
 #'
 #' curves = load_curve_params("https://osf.io/download/rtw5k/")
 #' noise = load_noise_params("https://osf.io/download//hqy4v/")
@@ -60,8 +61,8 @@ est.incidence <- function(
 
   pop_data = pop_data %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
-    dplyr::select(attributes(pop_data)$value_var,
-                  attributes(pop_data)$age,
+    dplyr::select(.data$value,
+                  .data$age,
                   "antigen_iso") %>%
     tidyr::drop_na()
 

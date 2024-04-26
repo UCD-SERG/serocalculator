@@ -49,14 +49,14 @@ age_scatter <- function(
   {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = age,
-                          y = value))
+      ggplot2::ggplot(aes(x = .data$age,
+                          y = .data$value))
   } else
   {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = age,
-                          y = value),
+      ggplot2::ggplot(aes(x = .data$age,
+                          y = .data$value),
                           col = get(strata)) +
       ggplot2::labs(colour = strata)
   }
@@ -88,7 +88,7 @@ density_plot <- function(
     log = FALSE) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(aes(x = value)) +
+    ggplot2::ggplot(aes(x = .data$value)) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 

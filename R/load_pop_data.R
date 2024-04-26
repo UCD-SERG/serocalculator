@@ -5,6 +5,7 @@
 #' @param age a[character()] identifying the age column
 #' @param id a[character()] identifying the id column
 #' @param value a[character()] identifying the value column
+#' @param standardize a [logical()]to determine standardization of columns
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
@@ -150,7 +151,7 @@ get_age <- function(object, ...)
 get_age.pop_data <- function(object, ...){
 
   # get age data
-  age_data <- object %>% pull(attributes(object)$age_var)
+  age_data <- object %>% pull('age')
 
   return(age_data)
 }
@@ -164,7 +165,7 @@ get_value <- function(object, ...)
 get_value.pop_data <- function(object, ...){
 
   # get age data
-  value_data <- object %>% pull(attributes(object)$value_var)
+  value_data <- object %>% pull('value')
 
   return(value_data)
 }
@@ -178,7 +179,7 @@ get_id <- function(object, ...)
 get_id.pop_data <- function(object, ...){
 
   # get age data
-  id_data <- object %>% pull(attributes(object)$id_var)
+  id_data <- object %>% pull('id')
 
   return(id_data)
 }

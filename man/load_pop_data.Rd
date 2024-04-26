@@ -9,7 +9,8 @@ load_pop_data(
   antigen_isos = NULL,
   age = "Age",
   id = "index_id",
-  value = "result"
+  value = "result",
+  standardize = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ load_pop_data(
 \item{id}{a\code{\link[=character]{character()}} identifying the id column}
 
 \item{value}{a\code{\link[=character]{character()}} identifying the value column}
+
+\item{standardize}{a \code{\link[=logical]{logical()}}to determine standardization of columns}
 }
 \value{
 a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})

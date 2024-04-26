@@ -19,11 +19,8 @@ Check the formatting of a cross-sectional antibody survey dataset.
 library(dplyr)
 
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-                         age = "Age",
-                         id = "index_id",
-                         value = "result")
+xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/")
 
-  xs_data \%>\% check_pop_data()
+xs_data \%>\% check_pop_data()
 
 }

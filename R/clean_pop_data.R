@@ -13,10 +13,7 @@
 #' * `age`: age of the individual whose serum has been assayed, at the time of blood sample
 #' @export
 #' @examples
-#' xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                        age = "Age",
-#'                        id = "index_id",
-#'                        value = "result")
+#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
 #' clean_pop_data(xs_data)
 #'
 #'
@@ -24,7 +21,7 @@ clean_pop_data = function(pop_data)
 {
   pop_data = pop_data %>%
     rename(
-      id = .data$index_id,
-      value = .data$result,
-      age = .data$Age)
+      id = .data$id,
+      value = .data$value,
+      age = .data$age)
 }

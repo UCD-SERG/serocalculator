@@ -19,26 +19,25 @@ check_pop_data <- function(pop_data)
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
-  if (!(or_logic(x = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[1],
-                 y = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[2] ))) {
+  #if (!(xor(x = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[1],
+  #               y = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[2] ))) {
+  #  stop("Argument `pop_data` is missing column `age` (age, in years).")
+  #}
+
+
+  if (!is.element("age", names(pop_data))) {
     stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
-  if (!(or_logic(x = is.element(c(attributes(pop_data)$value_var,'value'), names(pop_data))[1],
-                 y = is.element(c(attributes(pop_data)$age_var,'age'), names(pop_data))[2]))) {
+  #if (!(xor(x = is.element(c(attributes(pop_data)$value_var,'value'), names(pop_data))[1],
+  #               y = is.element(c(attributes(pop_data)$value_var,'value'), names(pop_data))[2]))) {
+  #  stop("Argument `pop_data` is missing column `value` (antibody measurement).")
+  #}
+
+  if (!is.element("value", names(pop_data))) {
     stop("Argument `pop_data` is missing column `value` (antibody measurement).")
   }
 
   message("data format is as expected.")
   invisible(NULL)
 }
-
-or_logic <- function(x, y) {
-  if (x || y) {
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
-}
-
-

@@ -1,3 +1,6 @@
+
+utils::globalVariables(c("value", "age"))
+
 stratify_data <- function(
     data,
     antigen_isos,
@@ -7,6 +10,7 @@ stratify_data <- function(
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL)
 {
+
 
   if(is.null(strata_varnames) || all(strata_varnames == ""))
   {
@@ -76,8 +80,8 @@ stratify_data <- function(
           semi_join(
             cur_stratum_vals,
             by = strata_varnames) %>%
-          select(value,
-                 age,
+          select("value",
+                 "age",
                  "antigen_iso")
       )
 

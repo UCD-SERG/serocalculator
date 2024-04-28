@@ -75,7 +75,7 @@ Column Name    |  Description
 
 #Import longitudinal antibody parameters from OSF
 
-curve = 
+curves = 
   "https://osf.io/download/rtw5k/" %>% 
   load_curve_params()
 
@@ -86,7 +86,7 @@ curve =
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve %>% autoplot()
+curves %>% autoplot()
 ```
 
 
@@ -197,7 +197,7 @@ Using the function `est.incidence`, we filter to sites in Pakistan and define th
 
 est1 = est.incidence(
   pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_param = curve, 
+  curve_param = curves, 
   noise_param = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
@@ -217,7 +217,7 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 est2 = est.incidence.by(
   strata = c("catchment"),
   pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_params = curve, 
+  curve_params = curves, 
   noise_params = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 8 #Allow for parallel processing to decrease run time 

@@ -304,9 +304,20 @@ ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
         axis.text.x = element_text(size=11))
 
 ```
+```{r}
+#Calculate output values
+rate_bangla <- round(est_countrydf$incidence.rate[3] * 1000) 
+
+rate_nepal <- round(est_countrydf$incidence.rate[1] *1000)
+
+rate_ratio_bangla_nepal <- round(rate_bangla/rate_nepal)
+```
+
 
 ## Conclusions
-We find that Bangladesh has the highest overall seroincidence of enteric fever with a rate of `r round(est_countrydf$incidence.rate[1] * 1000)` per 1000 person-years, as well as the highest seroincidence by age category. In comparison, Nepal has a seroincidence rate over `r round((est_countrydf$incidence.rate[1])/(est_countrydf$incidence.rate[2]))` times lower than that of Bangladesh (`r round(est_countrydf$incidence.rate[2] * 1000)` per 1000 person-years) and the lowest age-specific seroincidence rates of the three countries in the study. **serocalculator** provides an efficient tool to conduct this analysis and produce actionable results. 
+We find that Bangladesh has the highest overall seroincidence of enteric fever with a rate of `r rate_bangla` per 1000 person-years, as well as the highest seroincidence by age category.
+In comparison, Nepal has a seroincidence rate over `r rate_ratio_bangla_nepal` times lower than that of Bangladesh (`r rate_nepal)` per 1000 person-years) and the lowest age-specific seroincidence rates of the three countries in the study. 
+**serocalculator** provides an efficient tool to conduct this analysis and produce actionable results. 
 
 
 ## Acknowledgments

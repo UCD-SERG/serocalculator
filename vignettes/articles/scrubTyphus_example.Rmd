@@ -262,7 +262,7 @@ ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
   geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
                 position = position_dodge2(width = 0.8, preserve = "single")) +
   labs(
-      title= "Enteric Fever Seroincidence by Catchment Area",
+      title= "Scrub Typhus Seroincidence by Catchment Area",
         x="Seroincience rate per 1000 person-years",
         y="Catchment"
       ) +

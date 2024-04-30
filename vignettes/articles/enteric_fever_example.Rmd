@@ -18,12 +18,9 @@ bibliography: references.bib
 This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan.
 
 
-## Example: Enteric Fever
-
-
 In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
 
-Further details on this published study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -83,7 +80,7 @@ curve =
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve %>% autoplot()
+curve %>% filter(antigen_iso == "HlyE_IgA"| antigen_iso == "HlyE_IgG") %>%autoplot()
 ```
 
 
@@ -145,7 +142,6 @@ We see that across countries, our data is highly skewed with the majority of res
 ```{r logplot, message = FALSE}
 #Create log transformed plots
 
-options(scipen = 999)
 xs_data %>% 
   autoplot(strata = "Country", log = TRUE,type='density')
 ```

@@ -327,6 +327,9 @@ In comparison, Nepal has a seroincidence rate over `r rate_ratio_bangla_nepal` t
 
 
 ## Acknowledgments
-Special thanks to our collaborators at Sabin Vaccine Institute, Aga Khan University  (Karachi, Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel, Nepal). This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation. 
+We gratefully acknowledge the study participants for their valuable time and interest in participating in these studies. Special thanks to our collaborators at Sabin Vaccine Institute, Aga Khan University  (Karachi, Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel, Nepal). 
+
+## Funding
+This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation. 
 
 ## References

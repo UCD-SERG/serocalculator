@@ -64,6 +64,8 @@ age_scatter <- function(
   plot1 <- plot1 +
     ggplot2::theme_linedraw() +
     #ggplot2::scale_y_log10() +
+
+    # avoid log 0 (https://forum.posit.co/t/using-log-transformation-but-need-to-preserve-0/129197/4)
     ggplot2::scale_y_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
                        breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
     ggplot2::geom_point(size = .6, alpha = .7) +

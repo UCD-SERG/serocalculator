@@ -14,7 +14,6 @@
 
   - `load_pop_data()`
   - `check_pop_data()`
-  - `clean_pop_data()`
   - `summary.pop_data()`
   - `autoplot.pop_data()`
   - `load_curve_params()`

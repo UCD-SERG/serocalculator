@@ -152,6 +152,9 @@ sim.cs <- function(
         names_to = c("antigen_iso"))
   }
 
+  class(to_return) =
+    c("pop_data", class(to_return))
+
   return(to_return)
 
 }

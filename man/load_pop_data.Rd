@@ -8,8 +8,8 @@ load_pop_data(
   file_path,
   antigen_isos = NULL,
   age = "Age",
-  id = "index_id",
   value = "result",
+  id = "index_id",
   standardize = TRUE
 )
 }
@@ -20,9 +20,9 @@ load_pop_data(
 
 \item{age}{a\code{\link[=character]{character()}} identifying the age column}
 
-\item{id}{a\code{\link[=character]{character()}} identifying the id column}
-
 \item{value}{a\code{\link[=character]{character()}} identifying the value column}
+
+\item{id}{a\code{\link[=character]{character()}} identifying the id column}
 
 \item{standardize}{a \code{\link[=logical]{logical()}}to determine standardization of columns}
 }
@@ -34,9 +34,10 @@ Load a cross-sectional antibody survey data set
 }
 \examples{
 xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-                       age = "Age",
-                       id = "index_id",
-                       value = "result")
+                        age = "Age",
+                        value = "result",
+                        id = "index_id",
+                        standardize = TRUE)
 
 print(xs_data)
 }

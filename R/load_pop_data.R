@@ -10,29 +10,31 @@
 #' @export
 #' @examples
 #' xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                        age = "Age",
-#'                        id = "index_id",
-#'                        value = "result")
+#'                         age = "Age",
+#'                         value = "result",
+#'                         id = "index_id",
+#'                         standardize = TRUE)
 #'
 #' print(xs_data)
 load_pop_data = function(file_path,
                          antigen_isos = NULL,
                          age = "Age",
-                         id = "index_id",
                          value = "result",
+                         id = "index_id",
                          standardize = TRUE)
 {
   if(file_path %>% substr(1,4) == "http")
   {
     file_path = url(file_path)
+
   }
 
   pop_data =
     file_path %>% readRDS() %>%
     tibble::as_tibble()
 
-  # set pop_data class
-  attr(pop_data, "class") = c('pop_data', class(pop_data))
+  class(pop_data) =
+    c("pop_data", class(pop_data))
 
   if(is.null(antigen_isos))
   {
@@ -40,102 +42,17 @@ load_pop_data = function(file_path,
   } else
   {
     stopifnot(all(is.element(antigen_isos, pop_data$antigen_iso)))
+
   }
 
   attr(pop_data, "antigen_isos") = antigen_isos
 
-  ##### AGE
-  if(age %in% colnames(pop_data))
-  {
-    attr(pop_data, "age_var") <- age
-  } else
-  {
-    # search age variable from pop_data
-    age_var <- pop_data %>%
-      select(tidyselect::matches("age",colnames(pop_data),ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
-      names()
-
-    if(length(age_var) > 0)
-    {
-      attr(pop_data, "age_var") <- age_var
-
-      # create warning when using searched age instead of provided age
-      cli::cli_alert_warning('The provided age attribute "{age}" does not exist.
-                        Proceeding to use "{age_var}"')
-
-    } else
-    {
-      cli::cli_abort(
-        '`age = "{age}"` is not a valid input;
-      the age column in not available in the data set')
-    }
-
-  }
-
-  ##### INDEX
-  if(id %in% colnames(pop_data))
-  {
-    attr(pop_data, "id_var") <- id
-
-
-  } else
-  {
-    # search index variable from pop_data (no need to find ID)
-    id_var <- pop_data %>%
-      select(tidyselect::matches("\\w*id\\b")) %>%
-      names()
-
-
-    if(length(id_var) > 0)
-    {
-      attr(pop_data, "id_var") <- id_var
-
-      # create warning when using searched id  instead of provided id
-      cli::cli_alert_warning('The provided id attribute "{id}" does not exist.
-                        Proceeding to use "{id_var}"')
-    } else
-    {
-      cli::cli_abort(
-        '`id = "{id}"` is not a valid input;
-      the id column in not available in the data set')
-    }
-
-  }
-
-  ##### VALUE
-  if(value %in% colnames(pop_data))
-  {
-    attr(pop_data, "value_var") <- value
-  } else
-  {
-    # search value variable from pop_data
-    value_var <- pop_data %>%
-      select(tidyselect::matches("result", ignore.case = TRUE)) %>%
-      names()
-
-    if(length(value_var) > 0)
-    {
-      attr(pop_data, "value_var") <- value_var
-
-      # create warning when using searched age instead of provided age
-      cli::cli_alert_warning('The provided age attribute "{value}" does not exist.
-                        Proceeding to use "{value_var}"')
-    } else
-    {
-      cli::cli_abort(
-        '`value = "{value}"` is not a valid input;
-      the value column in not available in the data set')
-    }
-
-  }
-
-  # standardize columns
   if(standardize)
   {
-    pop_data <- pop_data %>%
-                    rename('age' = attributes(pop_data)$age_var,
-                           'value' = attributes(pop_data)$value_var,
-                           'id' = attributes(pop_data)$id_var)
+    pop_data = pop_data %>%
+                    set_age(age = age, standardize = standardize) %>%
+                    set_value(value = value, standardize = standardize) %>%
+                    set_id(id = id, standardize = standardize)
   }
 
   return(pop_data)
@@ -183,3 +100,166 @@ get_id.pop_data <- function(object, ...){
 
   return(id_data)
 }
+
+
+set_age <- function(object, ...){
+  UseMethod("set_age", object)
+}
+
+#' @export
+set_age.pop_data <- function(object, age = 'Age', standardize, ...){
+
+  if(standardize)
+  {
+    # set age attribute
+    attr(object, "age_var") <- 'age'
+
+    # rename provided column
+    if(age %in% colnames(object))
+    {
+      object <- object %>%
+        rename('age' = age)
+    } else
+    {
+      cli::cli_abort(
+        '`age = "{age}"` is not a valid input;
+      the age column in not available in the data set')
+    }
+
+
+  } else if (!standardize)
+  {
+    # check if age column exists
+    if(age %in% colnames(object))
+    {
+      attr(object, "age_var") <- age
+    } else
+    {
+      # search age variable from object
+      age_var <- object %>%
+        select(tidyselect::matches("age",colnames(object),ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
+        names()
+
+      if(length(age_var) > 0)
+      {
+        attr(object, "age_var") <- age_var
+
+        # create warning when using searched age instead of provided age
+        cli::cli_alert_warning('The provided age attribute "{age}" does not exist.
+                        Proceeding to use "{age_var}"')
+
+      } else
+      {
+        cli::cli_abort(
+          '`age = "{age}"` is not a valid input;
+      the age column in not available in the data set')
+      }
+    }
+  }
+
+  return(object)
+}
+
+
+set_value <- function(object, ...){
+  UseMethod("set_value", object)
+}
+
+#' @export
+set_value.pop_data <- function(object, value = 'result', standardize, ...){
+
+  if(standardize)
+  {
+    # set attribute
+    attr(object, "value_var") <- 'value'
+
+    # rename provided column
+    if(value %in% colnames(object))
+    {
+      object <- object %>%
+        rename('value' = value)
+    } else
+    {
+      cli::cli_abort(
+        '`value = "{value}"` is not a valid input;
+      the value column in not available in the data set')
+    }
+
+
+  } else if(!standardize)
+  {
+    # search value variable from pop_data
+    value_var <- object %>%
+      select(tidyselect::matches("result", ignore.case = TRUE)) %>%
+      names()
+
+    if(length(value_var) > 0)
+    {
+      attr(object, "value_var") <- value_var
+
+      # create warning when using searched age instead of provided age
+      cli::cli_alert_warning('The provided age attribute "{value}" does not exist.
+                        Proceeding to use "{value_var}"')
+    } else
+    {
+      cli::cli_abort(
+        '`value = "{value}"` is not a valid input;
+      the value column in not available in the data set')
+    }
+
+  }
+  return(object)
+}
+
+set_id <- function(object, ...){
+  UseMethod("set_id", object)
+}
+
+#' @export
+set_id.pop_data <- function(object, id = 'index_id', standardize, ...){
+
+  if(standardize)
+  {
+    # set attribute
+    attr(object, "id_var") <- 'id'
+
+    # rename provided column
+    if(id %in% colnames(object))
+    {
+      object <- object %>%
+        rename('id' = id)
+
+    } else
+    {
+      cli::cli_abort(
+        '`id = "{id}"` is not a valid input;
+      the id column in not available in the data set')
+    }
+
+  } else if (!standardize)
+  {
+    # search index variable from pop_data (no need to find ID)
+    id_var <- pop_data %>%
+      select(tidyselect::matches("\\w*id\\b")) %>%
+      names()
+
+
+    if(length(id_var) > 0)
+    {
+      attr(pop_data, "id_var") <- id_var
+
+      # create warning when using searched id  instead of provided id
+      cli::cli_alert_warning('The provided id attribute "{id}" does not exist.
+                        Proceeding to use "{id_var}"')
+    } else
+    {
+      cli::cli_abort(
+        '`id = "{id}"` is not a valid input;
+      the id column in not available in the data set')
+    }
+
+  }
+
+  return(object)
+}
+

@@ -16,7 +16,6 @@
 #' Function Name                          | Purpose
 #' -----------------                      | --------------------------------------------
 #' [load_pop_data()]                      | loading cross-sectional antibody survey data
-#' [clean_pop_data()]                     | cleaning antibody data
 #' [check_pop_data()]                     | checking antibody data
 #' [summary.pop_data()]                   | numerical summaries of antibody data
 #' [autoplot.pop_data()]                  | graphs of antibody data distributions

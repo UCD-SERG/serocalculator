@@ -46,9 +46,8 @@ knitr::opts_chunk$set(
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
-library(devtools)
+devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
 
-devtools::install_github("ucd-serg/serocalculator",ref="age-case-in-clean_pop_data")
 library(serocalculator)
 #install.packages("tidyverse")
 library(tidyverse)
@@ -152,7 +151,7 @@ Column Name | Description
 b.noise <- xs_data %>%
   group_by(antigen_iso) %>%
   filter(!is.na(value)) %>%
-  #filter(age<40) %>% # restrict to young ages to capture recent exposures 
+  filter(age<40) %>% # restrict to young ages to capture recent exposures 
   do({
     set.seed(54321)
     # Fit the mixture model
@@ -234,30 +233,30 @@ Let's visualize our seroincidence estimates by strata.
 #Plot seroincidence estimates
 
 #Save summary(est) as a dataframe
-#estdf<- summary(est) %>%
-#  mutate(ageQ = "Overall")
+estdf<- summary(est) %>%
+  mutate(ageQ = "Overall")
 
 #Save summary(est2) as a dataframe
-#est2df<- summary(est2) 
+est2df<- summary(est2) 
 
 
-#est.comb <- rbind(estdf, est2df)
+est.comb <- rbind(estdf, est2df)
 
 #Create barplot (rescale incidence rate and CIs)
-#ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
-#  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
-#  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
-#                position = position_dodge2(width = 0.8, preserve = "single")) +
-#  labs(
-#      title= "Enteric Fever Seroincidence by Catchment Area",
-#        x="Seroincience rate per 1000 person-years",
-#        y="Catchment"
-#      ) +
-#  theme_bw() +
-  #facet_wrap(~country) + 
-#  theme(axis.text.y = element_text(size=11),
-#        axis.text.x = element_text(size=11)) + 
-#  scale_fill_manual(values = c("orange2",'#39558CFF',"red"))
+ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
+  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
+                position = position_dodge2(width = 0.8, preserve = "single")) +
+  labs(
+      title= "Enteric Fever Seroincidence by Catchment Area",
+        x="Seroincience rate per 1000 person-years",
+        y="Catchment"
+      ) +
+  theme_bw() +
+  facet_wrap(~country) + 
+  theme(axis.text.y = element_text(size=11),
+        axis.text.x = element_text(size=11)) + 
+  scale_fill_manual(values = c("orange2",'#39558CFF',"red"))
 
 
 ```

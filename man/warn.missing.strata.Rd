@@ -4,10 +4,10 @@
 \alias{warn.missing.strata}
 \title{Warn about missing stratifying variables in a dataset}
 \usage{
-warn.missing.strata(est_data, strata, dataname)
+warn.missing.strata(data, strata, dataname)
 }
 \arguments{
-\item{est_data}{the dataset that should contain the strata}
+\item{data}{the dataset that should contain the strata}
 
 \item{strata}{a \code{\link[=data.frame]{data.frame()}} showing the strata levels that are expected to be in the dataset}
 

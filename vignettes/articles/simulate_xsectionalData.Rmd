@@ -244,7 +244,7 @@ est1 = est.incidence(
   lambda_start = .1,
   build_graph = T,
   verbose = T, # print updates as the function runs
-  print_graph = F, # display the log-likelihood curve while `est.incidence()` is #running
+  print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
   antigen_isos = antibodies)
 
 ```

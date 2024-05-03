@@ -23,7 +23,7 @@ summary.pop_data = function(object, ...)
 
   ages =
     object %>%
-    distinct(.data$id,.data$age)
+    distinct(.data$id, .data$age)
 
   cat("\nn =", nrow(ages),"\n")
 
@@ -40,12 +40,12 @@ summary.pop_data = function(object, ...)
     object %>%
     dplyr::summarize(
       .by = .data$antigen_iso,
-      Min = object %>% pull('value') %>% min(na.rm = TRUE),
-      `1st Qu.` = object %>% pull('value') %>% quantile(.25, na.rm = TRUE),
-      Median = object %>% pull('value') %>% median(),
-      `3rd Qu.` = object %>% pull('value') %>% quantile(.75, na.rm = TRUE),
-      Max = object %>% pull('value') %>% max(na.rm = TRUE),
-      `# NAs` = object %>% pull('value') %>% is.na() %>% sum()
+      Min = object %>% get_value() %>% min(na.rm = TRUE),
+      `1st Qu.` = object %>% get_value() %>% quantile(.25, na.rm = TRUE),
+      Median = object %>% get_value() %>% median(),
+      `3rd Qu.` = object %>% get_value() %>% quantile(.75, na.rm = TRUE),
+      Max = object %>% get_value() %>% max(na.rm = TRUE),
+      `# NAs` = object %>% get_value() %>% is.na() %>% sum()
     ) %>%
     as.data.frame() %>%
     print()

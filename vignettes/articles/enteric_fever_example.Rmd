@@ -39,15 +39,16 @@ knitr::opts_chunk$set(
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
+#devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
+```
 
+
+```{r load_packages}
 library(serocalculator)
-
-# load packages
-devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
-
 #install.packages("tidyverse)
 library(tidyverse)
-```
+``` 
+
 
 ### Load data
 
@@ -109,7 +110,11 @@ Column Name | Description
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/")
+xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
+                         age = "Age",
+                         value = "result",
+                         id = "index_id",
+                         standardize = TRUE)
 
 ```
 

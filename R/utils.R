@@ -87,7 +87,7 @@
                  "Provide a character vector with names of stratifying variables."))
   }
 
-  if (!all(is.element(strata, union("", names(check_data))))) {
+  if (!all(is.element(strata, union("", names(data))))) {
     stop("Strata names in argument \"data\" and argument \"strata\" do not match.")
   }
 

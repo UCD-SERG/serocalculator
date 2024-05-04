@@ -55,7 +55,7 @@ est.incidence <- function(
   }
 
   .errorCheck(
-    check_data = pop_data,
+    data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = curve_params)
 

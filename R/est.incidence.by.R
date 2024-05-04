@@ -93,10 +93,10 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  .checkStrata(check_data = pop_data, strata = strata)
+  .checkStrata(data = pop_data, strata = strata)
 
   .errorCheck(
-    check_data = pop_data,
+    data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = curve_params)
 

@@ -326,8 +326,9 @@ ggplot(sim.df, aes(x = as.factor(cluster),
 
 ```{r, "est-by-stratum"}
 ests =
-  sim.df %>% 
+  #sim.df %>% 
   est.incidence.by(
+    pop_data = sim.df,
     curve_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,

@@ -325,44 +325,44 @@ ggplot(sim.df, aes(x = as.factor(cluster),
 ## Estimate incidence in each cluster
 
 ```{r, "est-by-stratum"}
-ests =
-  sim.df %>% 
-  est.incidence.by(
-    curve_params = dmcmc,
-    noise_params = cond,
-    num_cores = n_cores,
-    strata = c("lambda.sim", "cluster"),
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL,
-    verbose = TRUE,
-    build_graph = TRUE, # slows down the function substantially
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+#ests =
+#  sim.df %>% 
+#  est.incidence.by(
+#    curve_params = dmcmc,
+#    noise_params = cond,
+#    num_cores = n_cores,
+#    strata = c("lambda.sim", "cluster"),
+#    curve_strata_varnames = NULL,
+#    noise_strata_varnames = NULL,
+#    verbose = TRUE,
+#    build_graph = TRUE, # slows down the function substantially
+#    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     # antigen_isos = "HlyE_IgA"
-  )
+#  )
 
 ```
 
 `summary(ests)` produces a `tibble()` with some extra meta-data:
 
 ```{r}
-summary(ests)
+#summary(ests)
 ```
 
 We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
-library(DT)
-summary(ests) %>% 
-  DT::datatable() %>%
-  DT::formatRound(
-    columns = c(
-      "incidence.rate",
-      "SE",
-      "CI.lwr",
-      "CI.upr",
-      "log.lik"
-    )
-  )
+#library(DT)
+#summary(ests) %>% 
+#  DT::datatable() %>%
+#  DT::formatRound(
+#    columns = c(
+#      "incidence.rate",
+#      "SE",
+#      "CI.lwr",
+#      "CI.upr",
+#      "log.lik"
+#    )
+#  )
 
 ```
 
@@ -370,19 +370,19 @@ summary(ests) %>%
 We can plot the likelihood for a single simulated cluster by subsetting that simulation in `ests` and calling `plot()`:
 
 ```{r}
-autoplot(ests[1])
+#autoplot(ests[1])
 ```
 
 We can also plot log-likelihood curves for several clusters at once (your computer might struggle to plot many at once):
 
 ```{r "plot-multiple", fig.height = 7}
-autoplot(ests[1:5])
+#autoplot(ests[1:5])
 ```
 
 The `log_x` argument also works here:
 
 ```{r "plot-multiple-log", fig.height = 7}
-autoplot(ests[1:5], log_x = TRUE)
+#autoplot(ests[1:5], log_x = TRUE)
 ```
 
 ### `nlm()` convergence codes
@@ -390,10 +390,10 @@ autoplot(ests[1:5], log_x = TRUE)
 Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r "check-codes"}
-summary(ests) %>%
-  as_tibble() %>% # removes extra meta-data
-  select(Stratum, nlm.convergence.code) %>% 
-  filter(nlm.convergence.code > 2) 
+#summary(ests) %>%
+#  as_tibble() %>% # removes extra meta-data
+#  select(Stratum, nlm.convergence.code) %>% 
+#  filter(nlm.convergence.code > 2) 
 ```
 
 Solutions to `nlm()` exit codes 3-5:
@@ -405,18 +405,18 @@ Solutions to `nlm()` exit codes 3-5:
 We can extract the indices of problematic strata, if there are any:
 
 ```{r}
-problem_strata = 
-  which(summary(ests)$nlm.convergence.code > 2) %>% 
-  print()
+#problem_strata = 
+#  which(summary(ests)$nlm.convergence.code > 2) %>% 
+#  print()
 ```
 
 If any clusters had problems, we can take a look:
 
 ```{r, fig.height = 7}
-if(length(problem_strata) > 0)
-{
-  autoplot(ests[problem_strata], log_x = TRUE)
-}
+#if(length(problem_strata) > 0)
+#{
+#  autoplot(ests[problem_strata], log_x = TRUE)
+#}
 ```
 
 If any of the fits don't appear to be at the maximum likelihood, we should re-run those clusters, adjusting the `nlm()` settings appropriately, to be sure.
@@ -426,10 +426,10 @@ If any of the fits don't appear to be at the maximum likelihood, we should re-ru
 Finally, we can look at our simulation results:
 
 ```{r, "graph"}
-library(ggplot2)
-summary(ests) %>% 
-  autoplot(xvar = 'lambda.sim') +
-  ggplot2::geom_abline(
-    ggplot2::aes(intercept = 0, slope = 1))
+#library(ggplot2)
+#summary(ests) %>% 
+#  autoplot(xvar = 'lambda.sim') +
+#  ggplot2::geom_abline(
+#    ggplot2::aes(intercept = 0, slope = 1))
 
 ```

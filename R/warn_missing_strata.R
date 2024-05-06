@@ -1,6 +1,6 @@
 #' Warn about missing stratifying variables in a dataset
 #'
-#' @param est_data the dataset that should contain the strata
+#' @param data the dataset that should contain the strata
 #' @param strata a [data.frame()] showing the strata levels that are expected to be in the dataset
 #' @param dataname the name of the dataset, for use in warning messages if some strata are missing.
 #'
@@ -12,17 +12,17 @@
 #' warn.missing.strata(iris, expected_strata, dataname = "iris")
 #' }
 warn.missing.strata = function(
-    est_data,
+    data,
     strata,
     dataname)
 {
   present_strata_vars = intersect(
     names(strata),
-    names(est_data))
+    names(data))
 
   missing_strata_vars = setdiff(
     names(strata),
-    names(est_data))
+    names(data))
 
 
 
@@ -62,7 +62,7 @@ warn.missing.strata = function(
 
   if(length(present_strata_vars) > 0)
   {
-    strata2 = est_data %>% count_strata(present_strata_vars)
+    strata2 = data %>% count_strata(present_strata_vars)
 
     missing_strata =
       anti_join(

@@ -93,17 +93,17 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  .checkStrata(check_data = pop_data, strata = strata)
+  .checkStrata(data = pop_data, strata = strata)
 
   .errorCheck(
-    check_data = pop_data,
+    data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = curve_params)
 
   # Split data per stratum
   stratumDataList <- stratify_data(
     antigen_isos = antigen_isos,
-    est_data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
+    data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
     curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
     noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,

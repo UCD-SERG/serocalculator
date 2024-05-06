@@ -30,7 +30,9 @@ See our guide on [how to create a great issue](https://code-review.tidyverse.org
 
 *  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). Follow the style described in <https://style.tidyverse.org/news.html>.
 
-*  GitHub will automatically check your PR to see if the pacakge is still functional on Mac OS, Windows, and Linux; if not, you will receive an email describing the problems. For help decoding errors, try this resource: <https://github.com/r-lib/actions?tab=readme-ov-file#where-to-find-help>.
+*  GitHub will [automatically check your PR](https://github.com/r-lib/actions) to see if the pacakge is still functional on Mac OS, Windows, and Linux; 
+if not, you will receive an email describing the problems. 
+For help decoding errors, try this resource: <https://github.com/r-lib/actions?tab=readme-ov-file#where-to-find-help>.
 
 ### Code style
 

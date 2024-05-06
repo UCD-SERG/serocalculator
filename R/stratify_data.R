@@ -1,6 +1,6 @@
 
 stratify_data <- function(
-    data,
+    est_data,
     antigen_isos,
     curve_params,
     noise_params,
@@ -14,8 +14,8 @@ stratify_data <- function(
   {
     all_data =
       list(
-        pop_data = data %>% select(attributes(data)$value_var,
-                                   attributes(data)$age_var,
+        pop_data = est_data %>% select(attributes(est_data)$value_var,
+                                   attributes(est_data)$age_var,
                                    "antigen_iso"),
         curve_params = curve_params %>% select("y1", "alpha", "r", "antigen_iso"),
         noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso")
@@ -42,18 +42,18 @@ stratify_data <- function(
 
   # Make stratum variable (if needed)
 
-  strata = data %>% count_strata(strata_varnames)
+  strata = est_data %>% count_strata(strata_varnames)
 
   strata_vars_curve_params =
     warn.missing.strata(
-      data = curve_params,
+      est_data = curve_params,
       strata = strata %>% select(curve_strata_varnames),
       dataname = "curve_params"
     )
 
   strata_vars_noise_params =
     warn.missing.strata(
-      data = noise_params,
+      est_data = noise_params,
       strata = strata %>% select(noise_strata_varnames),
       dataname = "noise_params"
     )
@@ -74,12 +74,12 @@ stratify_data <- function(
     data_and_params_cur_stratum =
       list(
         pop_data =
-          data %>%
+          est_data %>%
           semi_join(
             cur_stratum_vals,
             by = strata_varnames) %>%
-          select(attributes(data)$value_var,
-                 attributes(data)$age_var,
+          select(attributes(est_data)$value_var,
+                 attributes(est_data)$age_var,
                  "antigen_iso")
       )
 

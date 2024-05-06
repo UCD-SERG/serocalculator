@@ -47,13 +47,10 @@ load_pop_data = function(file_path,
 
   attr(pop_data, "antigen_isos") = antigen_isos
 
-  if(standardize)
-  {
-    pop_data = pop_data %>%
-                    set_age(age = age, standardize = standardize) %>%
-                    set_value(value = value, standardize = standardize) %>%
-                    set_id(id = id, standardize = standardize)
-  }
+  pop_data = pop_data %>%
+    set_age(age = age, standardize = standardize) %>%
+    set_value(value = value, standardize = standardize) %>%
+    set_id(id = id, standardize = standardize)
 
   return(pop_data)
 
@@ -68,7 +65,7 @@ get_age <- function(object, ...)
 get_age.pop_data <- function(object, ...){
 
   # get age data
-  age_data <- object %>% pull('age')
+  age_data <- object %>% pull(attr(object, 'age_var'))
 
   return(age_data)
 }
@@ -82,7 +79,7 @@ get_value <- function(object, ...)
 get_value.pop_data <- function(object, ...){
 
   # get age data
-  value_data <- object %>% pull('value')
+  value_data <- object %>% pull(attr(object, 'value_var'))
 
   return(value_data)
 }
@@ -96,7 +93,7 @@ get_id <- function(object, ...)
 get_id.pop_data <- function(object, ...){
 
   # get age data
-  id_data <- object %>% pull('id')
+  id_data <- object %>% pull(attr(object, 'id_var'))
 
   return(id_data)
 }
@@ -107,54 +104,51 @@ set_age <- function(object, ...){
 }
 
 #' @export
-set_age.pop_data <- function(object, age = 'Age', standardize, ...){
+set_age.pop_data <- function(object, age = 'Age', standardize = TRUE, ...){
 
-  if(standardize)
-  {
-    # set age attribute
-    attr(object, "age_var") <- 'age'
-
-    # rename provided column
-    if(age %in% colnames(object))
-    {
-      object <- object %>%
-        rename('age' = age)
-    } else
-    {
-      cli::cli_abort(
-        '`age = "{age}"` is not a valid input;
-      the age column in not available in the data set')
-    }
-
-
-  } else if (!standardize)
-  {
     # check if age column exists
     if(age %in% colnames(object))
     {
       attr(object, "age_var") <- age
     } else
     {
-      # search age variable from object
-      age_var <- object %>%
-        select(tidyselect::matches("age",colnames(object),ignore.case = TRUE) & ends_with("e", ignore.case = TRUE)) %>%
-        names()
 
-      if(length(age_var) > 0)
+      cli::cli_alert_warning('The specified `age` column "{age}" does not exist.')
+
+      # search age variable from object
+      age_var <-
+        grep(
+          x = colnames(object),
+          value = TRUE,
+          pattern = age,
+          ignore.case = TRUE
+          )
+
+      if(length(age_var) == 1)
       {
         attr(object, "age_var") <- age_var
 
         # create warning when using searched age instead of provided age
-        cli::cli_alert_warning('The provided age attribute "{age}" does not exist.
-                        Proceeding to use "{age_var}"')
+        cli::cli_alert_info('Proceeding to use "{age_var}"')
 
-      } else
+      } else if (length(age_var) == 0)
       {
-        cli::cli_abort(
-          '`age = "{age}"` is not a valid input;
-      the age column in not available in the data set')
+        cli::cli_abort('No similar column name was detected.')
+      } else # if (length(age_var) > 1)
+      {
+         cli::cli_alert_warning("Multiple potential matches found: {age_var}")
+         cli::cli_alert_warning("Using first match: {age_var[1]}")
+         attr(object, "age_var") <- age_var[1]
       }
     }
+
+  if(standardize)
+  {
+    object <- object %>%
+      rename(c('age' = attr(object, "age_var")))
+
+    # set age attribute
+    attr(object, "age_var") <- 'age'
   }
 
   return(object)
@@ -166,100 +160,107 @@ set_value <- function(object, ...){
 }
 
 #' @export
-set_value.pop_data <- function(object, value = 'result', standardize, ...){
+set_value.pop_data <- function(object, value = 'result', standardize = TRUE, ...){
 
-  if(standardize)
+  # check if value column exists
+  if(value %in% colnames(object))
   {
-    # set attribute
-    attr(object, "value_var") <- 'value'
-
-    # rename provided column
-    if(value %in% colnames(object))
-    {
-      object <- object %>%
-        rename('value' = value)
-    } else
-    {
-      cli::cli_abort(
-        '`value = "{value}"` is not a valid input;
-      the value column in not available in the data set')
-    }
-
-
-  } else if(!standardize)
+    attr(object, "value_var") <- value
+  } else
   {
+
+    cli::cli_alert_warning('The specified `value` column "{value}" does not exist.')
+
     # search value variable from pop_data
-    value_var <- object %>%
-      select(tidyselect::matches("result", ignore.case = TRUE)) %>%
-      names()
+    value_var <-
+      grep(
+        x = colnames(object),
+        value = TRUE,
+        pattern = value,
+        ignore.case = TRUE
+      )
 
-    if(length(value_var) > 0)
+    if(length(value_var) == 1)
     {
       attr(object, "value_var") <- value_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_warning('The provided age attribute "{value}" does not exist.
-                        Proceeding to use "{value_var}"')
-    } else
+      cli::cli_alert_info('Proceeding to use "{value_var}"')
+
+    } else if (length(value_var) == 0)
     {
-      cli::cli_abort(
-        '`value = "{value}"` is not a valid input;
-      the value column in not available in the data set')
+      cli::cli_abort('No similar column name was detected.')
+    } else # if (length(value_var) > 1)
+    {
+      cli::cli_alert_warning("Multiple potential matches found: {value_var}")
+      cli::cli_alert_warning("Using first match: {value_var[1]}")
+      attr(object, "value_var") <- value_var[1]
     }
 
   }
+
+  if(standardize)
+  {
+    object <- object %>%
+      rename(c('value' = attr(object, "value_var")))
+
+    # set id attribute
+    attr(object, "value_var") <- 'value'
+  }
+
   return(object)
 }
 
 set_id <- function(object, ...){
   UseMethod("set_id", object)
 }
-
 #' @export
-set_id.pop_data <- function(object, id = 'index_id', standardize, ...){
+set_id.pop_data <- function(object, id = 'index_id', standardize = TRUE, ...){
+
+  # check if id column exists
+  if (id %in% colnames(object))
+  {
+    attr(object, "id_var") <- id
+  } else
+  {
+
+    cli::cli_alert_warning('The specified `id` column "{id}" does not exist.')
+
+    # search id variable from object
+    id_var <-
+      grep(
+        x = colnames(object),
+        value = TRUE,
+        pattern = id,
+        ignore.case = TRUE
+      )
+
+    if(length(id_var) == 1)
+    {
+      attr(object, "id_var") <- id_var
+
+      # create warning when using searched id instead of provided id
+      cli::cli_alert_info('Proceeding to use "{id_var}"')
+
+    } else if (length(id_var) == 0)
+    {
+      cli::cli_abort('No similar column name was detected.')
+    } else # if (length(id_var) > 1)
+    {
+      cli::cli_alert_warning("Multiple potential matches found: {id_var}")
+      cli::cli_alert_warning("Using first match: {id_var[1]}")
+      attr(object, "id_var") <- id_var[1]
+    }
+  }
 
   if(standardize)
   {
-    # set attribute
+    object <- object %>%
+      rename(c('id' = attr(object, "id_var")))
+
+    # set id attribute
     attr(object, "id_var") <- 'id'
-
-    # rename provided column
-    if(id %in% colnames(object))
-    {
-      object <- object %>%
-        rename('id' = id)
-
-    } else
-    {
-      cli::cli_abort(
-        '`id = "{id}"` is not a valid input;
-      the id column in not available in the data set')
-    }
-
-  } else if (!standardize)
-  {
-    # search index variable from pop_data (no need to find ID)
-    id_var <- pop_data %>%
-      select(tidyselect::matches("\\w*id\\b")) %>%
-      names()
-
-
-    if(length(id_var) > 0)
-    {
-      attr(pop_data, "id_var") <- id_var
-
-      # create warning when using searched id  instead of provided id
-      cli::cli_alert_warning('The provided id attribute "{id}" does not exist.
-                        Proceeding to use "{id_var}"')
-    } else
-    {
-      cli::cli_abort(
-        '`id = "{id}"` is not a valid input;
-      the id column in not available in the data set')
-    }
-
   }
 
   return(object)
 }
-

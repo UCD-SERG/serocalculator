@@ -64,7 +64,8 @@ library(ggbeeswarm) # for plotting
 #load in longitudinal parameters, these are modeled from all SEES cases across all ages and countries 
 dmcmc =
   "https://osf.io/download/rtw5k" %>% 
-  load_curve_params()
+  load_curve_params() %>% 
+  filter(iter < 500) # reduce number of mcmc samples for speed
 
 ```
 
@@ -73,13 +74,13 @@ dmcmc =
 We can graph individual MCMC samples from the posterior distribution of model parameters using a `autoplot.curve_params()` method for the `autoplot()` function:
 
 ```{r}
-dmcmc %>% autoplot()
+dmcmc %>% autoplot(n_curves = 50)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-dmcmc %>% autoplot(log_x = TRUE)
+dmcmc %>% autoplot(log_x = TRUE, n_curves = 50)
 ```
 
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:

@@ -138,8 +138,9 @@ sim.cs <- function(
   to_return =
     ysim %>%
     as_tibble() %>%
-    mutate(age = round(.data$age / day2yr, 2))
-
+    mutate(
+      id = as.character(1:n()),
+      age = round(.data$age / day2yr, 2))
 
   if(format == "long")
   {
@@ -149,11 +150,22 @@ sim.cs <- function(
       pivot_longer(
         cols = antigen_isos,
         values_to = c("value"),
-        names_to = c("antigen_iso"))
+        names_to = c("antigen_iso")) %>%
+      structure(
+        class = c("pop_data", class(to_return)),
+        format = "long") %>%
+      set_value(value = "value") %>%
+      set_age(age = "age") %>%
+      set_id(id = "id")
+  } else
+  {
+    if(verbose) message("outputting wide format data")
+    to_return =
+      to_return %>%
+      structure(
+        class = c("pop_data_wide", class(to_return)),
+        format = "wide")
   }
-
-  class(to_return) =
-    c("pop_data", class(to_return))
 
   return(to_return)
 

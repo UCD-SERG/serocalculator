@@ -24,7 +24,7 @@ an object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{gg
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
 }
 \examples{
-\dontrun{
+
 library(dplyr)
 library(ggplot2)
 
@@ -34,7 +34,7 @@ clean_pop_data
 
 curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
 filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:1000) #reduce dataset for the purposes of this example
+  slice(1:100, .by=antigen_iso) #reduce dataset for the purposes of this example
 
 noise <-"https://osf.io/download//hqy4v/" \%>\%
 load_noise_params()
@@ -51,5 +51,5 @@ build_graph = TRUE
 
 #plot the log-likelihood curve
   autoplot(est2)
-}
+
 }

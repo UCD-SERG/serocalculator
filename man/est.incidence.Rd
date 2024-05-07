@@ -89,13 +89,14 @@ a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 }
 \examples{
+
 library(dplyr)
 
 xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
 clean_pop_data()
 curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
 filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:1000) #reduce dataset for the purposes of this example
+  slice(1:100, .by=antigen_iso) #reduce dataset for the purposes of this example
 noise = load_noise_params("https://osf.io/download//hqy4v/")
 
 est1 = est.incidence(

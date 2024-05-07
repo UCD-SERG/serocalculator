@@ -68,7 +68,7 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 Graph log-likelihood of data
 }
 \examples{
-\dontrun{
+
 library(dplyr)
 library(tibble)
 
@@ -80,7 +80,7 @@ clean_pop_data()
 #Load curve parameters and subset for the purposes of this example
 dmcmc = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
 filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
-slice(1:1000)
+slice(1:100, .by=antigen_iso)
 
 #Load noise parameters
 cond <- tibble(
@@ -100,5 +100,5 @@ lik_HlyE_IgA = graph.loglik(
 )
 
  lik_HlyE_IgA
-}
+
 }

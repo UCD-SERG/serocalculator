@@ -58,7 +58,7 @@ library(tibble)
 #load in longitudinal parameters
 dmcmc = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
 filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:1000) #reduce dataset for the purposes of this example
+  slice(1:100, .by=antigen_iso) #reduce dataset for the purposes of this example
 
 xs_data <- "https://osf.io/download//n6cp3/" \%>\%
 load_pop_data() \%>\%

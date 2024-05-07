@@ -20,7 +20,7 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}
 Plot the log-likelihood curve for the incidence rate estimate
 }
 \examples{
-\dontrun{
+
 
 library(dplyr)
 library(ggplot2)
@@ -30,7 +30,7 @@ xs_data = clean_pop_data(xs_data)
 
 curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
 filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:1000) #reduce dataset for the purposes of this example
+  slice(1:100, .by=antigen_iso) #reduce dataset for the purposes of this example
 noise = load_noise_params("https://osf.io/download//hqy4v/")
 
 est1 = est.incidence(
@@ -43,5 +43,5 @@ est1 = est.incidence(
 
 #plot the log-likelihood curve
   autoplot(est1)
-}
+
 }

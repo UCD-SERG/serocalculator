@@ -8,8 +8,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
-#' plot1 = graph.curve.params(curve_params)
+#' curve_params <- readRDS(url("https://osf.io/download/rtw5k/"))
+#'
+#' plot1 <- graph.curve.params(curve_params)
+#'
 #' print(plot1)
 #' }
 graph.curve.params = function(

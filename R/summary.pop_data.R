@@ -11,11 +11,10 @@
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#' load_pop_data() %>%
-#' clean_pop_data()
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   clean_pop_data()
 #'
-#' xs_data %>% summary()
+#' summary(xs_data)
 #'
 summary.pop_data = function(object, ...)
 {

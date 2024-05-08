@@ -6,7 +6,8 @@
 #' @returns a `noise` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
 #' print(noise)
 #'
 #'

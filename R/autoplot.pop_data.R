@@ -18,8 +18,8 @@
 #'   load_pop_data() %>%
 #'   clean_pop_data()
 #'
-#' xs_data %>% autoplot(strata = "Country", type = "density")
-#' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
+#' xs_data %>% autoplot(strata <- "Country", type = "density")
+#' xs_data %>% autoplot(strata <- "Country", type = "age-scatter")
 #' @export
 autoplot.pop_data <- function(
     object,

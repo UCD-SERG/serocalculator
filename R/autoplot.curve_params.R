@@ -14,7 +14,7 @@
 #' library(ggplot2)
 #'
 #' curve = load_curve_params("https://osf.io/download/rtw5k/") %>%
-#' filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
 #'   slice(1:100, .by=antigen_iso)  %>% # Reduce dataset for the purposes of this example
 #'   autoplot()
 #'

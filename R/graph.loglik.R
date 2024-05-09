@@ -22,8 +22,8 @@
 #'
 #' # Load curve parameters and subset for the purposes of this example
 #' dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   filter(antigen_iso %>% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by=antigen_iso)
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso)
 #'
 #' # Load noise parameters
 #' cond <- tibble(

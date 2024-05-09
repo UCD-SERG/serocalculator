@@ -34,7 +34,7 @@
 #' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'
 #' # Specify the antibody-isotype responses to include in analyses
-#' antibodies = c("HlyE_IgA", "HlyE_IgG")
+#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
 #'
 #' # Set seed to reproduce results
 #' set.seed(54321)
@@ -60,11 +60,11 @@
 #'   n.smpl = nrep,
 #'   age.rng = lifespan,
 #'   antigen_isos = antibodies,
-#'  n.mc = 0,
-#'  renew.params = TRUE,
-#'  add.noise = TRUE,
-#'  noise_limits = dlims,
-#'  format = "long"
+#'   n.mc = 0,
+#'   renew.params = TRUE,
+#'   add.noise = TRUE,
+#'   noise_limits = dlims,
+#'   format = "long"
 #' )
 #'
 

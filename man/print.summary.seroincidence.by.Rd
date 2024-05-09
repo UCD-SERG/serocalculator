@@ -17,16 +17,16 @@ Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" obj
 \examples{
 
 \dontrun{
-# estimate seroincidence
+# Estimate seroincidence
 seroincidence <- est.incidence.by(...)
 
-# calculate summary statistics for the seroincidence object
+# Calculate summary statistics for the seroincidence object
 seroincidenceSummary <- summary(seroincidence)
 
-# print the summary of seroincidence object to the console
+# Print the summary of seroincidence object to the console
 print(seroincidenceSummary)
 
-# or simply type (appropriate print method will be invoked automatically)
+# Or simply type (appropriate print method will be invoked automatically)
 seroincidenceSummary
 }
 

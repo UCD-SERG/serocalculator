@@ -81,7 +81,8 @@ age_scatter <- function(
     ggplot2::labs(
       title = "Quantitative Antibody Responses by Age",
       x = "Age",
-      y = "Antibody Response Value")
+      y = "Antibody Response Value"
+    )
 
   return(plot1)
 }

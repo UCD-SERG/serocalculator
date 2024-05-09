@@ -76,8 +76,7 @@ age_scatter <- function(
       method = "lm",
       se = FALSE,
       formula = y ~ x,
-      na.rm = TRUE
-    ) +
+      na.rm = TRUE) +
     ggplot2::labs(
       title = "Quantitative Antibody Responses by Age",
       x = "Age",

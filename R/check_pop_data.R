@@ -19,14 +19,24 @@ check_pop_data <- function(pop_data)
                  "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
   }
 
-  if (!is.element("age", names(pop_data))) {
+  if (!or(x = is.element("age", names(pop_data)), y = is.element(attributes(pop_data)$age_var,names(pop_data)))) {
     stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
-  if (!is.element("value", names(pop_data))) {
+  if (!or(x = is.element("value", names(pop_data)), y = is.element(attributes(pop_data)$value_var,names(pop_data)))){
     stop("Argument `pop_data` is missing column `value` (antibody measurement).")
   }
 
   message("data format is as expected.")
   invisible(NULL)
 }
+
+or <- function(x, y) {
+  if (is.logical(x) && is.logical(y)) {
+    return(x | y)
+  } else {
+    stop("Input vectors must be logical")
+  }
+}
+
+

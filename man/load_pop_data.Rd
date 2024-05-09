@@ -18,13 +18,13 @@ load_pop_data(
 
 \item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
 
-\item{age}{a\code{\link[=character]{character()}} identifying the age column}
+\item{age}{a \code{\link[=character]{character()}} identifying the age column}
 
-\item{value}{a\code{\link[=character]{character()}} identifying the value column}
+\item{value}{a \code{\link[=character]{character()}} identifying the value column}
 
-\item{id}{a\code{\link[=character]{character()}} identifying the id column}
+\item{id}{a \code{\link[=character]{character()}} identifying the id column}
 
-\item{standardize}{a \code{\link[=logical]{logical()}}to determine standardization of columns}
+\item{standardize}{a \code{\link[=logical]{logical()}} to determine standardization of columns}
 }
 \value{
 a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})

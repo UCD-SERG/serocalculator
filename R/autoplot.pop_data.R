@@ -17,7 +17,8 @@
 #' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
 #'                          age = "Age",
 #'                          id = "index_id",
-#'                          value = "result")
+#'                          value = "result",
+#'                          standardize = TRUE)
 #'
 #' xs_data %>% autoplot(strata = "Country", type = "density")
 #' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
@@ -66,7 +67,7 @@ age_scatter <- function(
     #ggplot2::scale_y_log10() +
 
     # avoid log 0 (https://forum.posit.co/t/using-log-transformation-but-need-to-preserve-0/129197/4)
-    ggplot2::scale_y_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
+    ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
                        breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
     ggplot2::geom_point(size = .6, alpha = .7) +
     ggplot2::geom_smooth(
@@ -112,7 +113,7 @@ density_plot <- function(
   if (log) {
     plot1 <- plot1 +
       #ggplot2::scale_x_log10() +
-      ggplot2::scale_y_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
+      ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
                                   breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
       ggplot2::labs(
         title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",

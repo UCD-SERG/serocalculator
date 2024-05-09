@@ -2,11 +2,11 @@
 #'
 #' @param file_path path to an RDS file containing a cross-sectional antibody survey data set, stored as a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
-#' @param age a[character()] identifying the age column
-#' @param id a[character()] identifying the id column
-#' @param value a[character()] identifying the value column
-#' @param standardize a [logical()]to determine standardization of columns
-#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @param age a [character()] identifying the age column
+#' @param id a [character()] identifying the id column
+#' @param value a [character()] identifying the value column
+#' @param standardize a [logical()] to determine standardization of columns
+#' @return a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
@@ -61,7 +61,6 @@ get_age <- function(object, ...)
   UseMethod("get_age", object)
 }
 
-#' @export
 get_age.pop_data <- function(object, ...){
 
   # get age data
@@ -75,7 +74,6 @@ get_value <- function(object, ...)
   UseMethod("get_value", object)
 }
 
-#' @export
 get_value.pop_data <- function(object, ...){
 
   # get age data
@@ -89,7 +87,6 @@ get_id <- function(object, ...)
   UseMethod("get_id", object)
 }
 
-#' @export
 get_id.pop_data <- function(object, ...){
 
   # get age data
@@ -103,7 +100,6 @@ set_age <- function(object, ...){
   UseMethod("set_age", object)
 }
 
-#' @export
 set_age.pop_data <- function(object, age = 'Age', standardize = TRUE, ...){
 
     # check if age column exists
@@ -159,7 +155,6 @@ set_value <- function(object, ...){
   UseMethod("set_value", object)
 }
 
-#' @export
 set_value.pop_data <- function(object, value = 'result', standardize = TRUE, ...){
 
   # check if value column exists
@@ -214,7 +209,7 @@ set_value.pop_data <- function(object, value = 'result', standardize = TRUE, ...
 set_id <- function(object, ...){
   UseMethod("set_id", object)
 }
-#' @export
+
 set_id.pop_data <- function(object, id = 'index_id', standardize = TRUE, ...){
 
   # check if id column exists

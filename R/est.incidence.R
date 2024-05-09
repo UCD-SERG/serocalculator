@@ -61,9 +61,9 @@ est.incidence <- function(
 
   pop_data = pop_data %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
-    dplyr::select(.data$value,
-                  .data$age,
-                  "antigen_iso") %>%
+    dplyr::select(dplyr::any_of(c("value",attributes(pop_data)$value_var)),
+                  dplyr::any_of(c("age",attributes(pop_data)$age)),
+                              "antigen_iso") %>%
     tidyr::drop_na()
 
   curve_params = curve_params %>%

@@ -4,12 +4,15 @@
 #' @param verbose verbose output
 #' @param xlim range of x values to graph
 #' @param n_curves how many curves to plot (see details).
+#' @param n_points Number of points to interpolate along the x axis (passed to [ggplot2::geom_function()])
 #' @param rows_to_graph which rows of `curve_params` to plot (overrides `n_curves`).
 #' @param alpha (passed to [ggplot2::geom_function()]) how transparent the curves should be:
 #' * 0 = fully transparent (invisible)
 #' * 1 = fully opaque
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
+#' @param log_y should the Y-axis be on a logarithmic scale (default, `TRUE`) or linear scale (`FALSE`)?
 #' @inheritParams ggplot2::geom_function
+#' @inheritDotParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
 #' @details
 #' ## `n_curves` and `rows_to_graph`
@@ -28,7 +31,9 @@ plot_curve_params_one_ab = function(
     verbose = FALSE,
     alpha = .4,
     n_curves = 100,
+    n_points = 1000,
     log_x = FALSE,
+    log_y = TRUE,
     rows_to_graph = 1:min(n_curves, nrow(object)),
     xlim = c(10^-1, 10^3.1),
     ...)
@@ -36,12 +41,6 @@ plot_curve_params_one_ab = function(
 
   plot1 =
     ggplot2::ggplot() +
-    ggplot2::scale_y_log10(
-      # limits = c(0.9, 2000),
-      labels = scales::label_comma(),
-      # breaks = c(0.1, 1, 10, 100, 1000),
-      minor_breaks = NULL
-    ) +
     # ggplot2::scale_x_log10() +
     ggplot2::theme_linedraw()  +
     ggplot2::theme(
@@ -50,16 +49,33 @@ plot_curve_params_one_ab = function(
       x = "Days since fever onset",
       y = "Antibody Concentration") +
     ggplot2::ggtitle('Decay Curve') +
-    ggplot2::theme(plot.title = ggplot2::element_text(size = 20, face = "bold"))
+    ggplot2::theme(
+      plot.title =
+        ggplot2::element_text(
+          size = 20,
+          face = "bold"))
+
+  if(log_y)
+  {
+    plot1 = plot1 +
+      ggplot2::scale_y_log10(
+        # limits = c(0.9, 2000),
+        labels = scales::label_comma(),
+        # breaks = c(0.1, 1, 10, 100, 1000),
+        minor_breaks = NULL
+      )
+
+  }
 
   layer_function = function(cur_row)
   {
     cur_params = object[cur_row, ]
     ggplot2::geom_function(
-        alpha = alpha,
-        # aes(color = cur_row),
-        fun = ab0,
-        args = list(curve_params = cur_params))
+      alpha = alpha,
+      # aes(color = cur_row),
+      fun = ab0,
+      args = list(curve_params = cur_params),
+      n = n_points)
   }
 
   layers =
@@ -73,8 +89,8 @@ plot_curve_params_one_ab = function(
   {
     plot1 = plot1 +
       ggplot2::scale_x_log10(
-      limits = xlim,
-      labels = scales::label_comma())
+        limits = xlim,
+        labels = scales::label_comma())
   } else
   {
     plot1 = plot1 + ggplot2::xlim(xlim)

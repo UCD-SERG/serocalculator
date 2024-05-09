@@ -164,7 +164,7 @@ Column Name | Description
 #biologic noise
 b.noise <- xs_data %>%
   group_by(antigen_iso) %>%
-  filter(!is.na(value)) %>% # 
+  filter(!is.na(value)) %>%  
   filter(age<40) %>% # restrict to young ages to capture recent exposures 
   do({
     set.seed(54321)

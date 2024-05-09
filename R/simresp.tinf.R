@@ -14,10 +14,10 @@
 #' @param renew.params At infection, a new parameter sample may be generated (when `renew.params = TRUE`).
 #' Otherwise (when `renew.params = FALSE`), a sample is generated at birth and kept,
 #' but baseline y0 are carried over from prior infections.
-#' @param ... additional arguments passed to [ldpar()], [mkbaseline()], and [ab()]
-#' @inheritDotParams ldpar
+#' @param ... additional arguments passed to [row_longitudinal_parameter()], [mk_baseline()], and [ab()]
+#' @inheritDotParams row_longitudinal_parameter
 #' @inheritDotParams ab
-#' @inheritDotParams mkbaseline
+#' @inheritDotParams mk_baseline
 #' @returns This function returns a [list()] with:
 #' * t = times (in days, birth at day 0),
 #' * b = bacteria level, for each antibody signal (not used; probably meaningless),
@@ -56,10 +56,10 @@ simresp.tinf = function(
   #set.seed(975313579)
   t.next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
   if (!is.na(age.fx))
-    mcpar <- ldpar(age.fx, antigen_isos, nmc, predpar = predpar, ...)
+    mcpar <- row_longitudinal_parameter(age.fx, antigen_isos, nmc, predpar = predpar, ...)
 
   if (is.na(age.fx))
-    mcpar <- ldpar(t.next / day2yr, antigen_isos, nmc, predpar = predpar, ...)
+    mcpar <- row_longitudinal_parameter(t.next / day2yr, antigen_isos, nmc, predpar = predpar, ...)
 
   par.now <- mcpar
 
@@ -84,7 +84,7 @@ simresp.tinf = function(
     ))
 
   for (k.ab in 1:n.ab)
-    y.now[, k.ab] <- mkbaseline(k.ab, length(t.now), ...)
+    y.now[, k.ab] <- mk_baseline(k.ab, length(t.now), ...)
 
   t <- c(t, t0 + t.now)
 
@@ -104,10 +104,10 @@ simresp.tinf = function(
 
     if (!renew.params) {
       if (!is.na(age.fx))
-        par.now <- ldpar(age.fx, antigen_isos, nmc, predpar = predpar, ...)
+        par.now <- row_longitudinal_parameter(age.fx, antigen_isos, nmc, predpar = predpar, ...)
 
       if (is.na(age.fx))
-        par.now <- ldpar(t0 / day2yr, antigen_isos, nmc, predpar = predpar, ...)
+        par.now <- row_longitudinal_parameter(t0 / day2yr, antigen_isos, nmc, predpar = predpar, ...)
 
       b0 <- b.inf
       # b0 <- runif(n=1,min=1,max=200); not implemented
@@ -144,10 +144,10 @@ simresp.tinf = function(
     }
     # DM: it might be possible to remove these lines and remove the !renew.params condition near the top of the while() loop
     if (!is.na(age.fx))
-      par.now <- ldpar(age.fx, antigen_isos, nmc, predpar = predpar, ...)
+      par.now <- row_longitudinal_parameter(age.fx, antigen_isos, nmc, predpar = predpar, ...)
 
     if (is.na(age.fx))
-      par.now <- ldpar((t0 + t.next) / day2yr, antigen_isos, nmc, predpar = predpar, ...)
+      par.now <- row_longitudinal_parameter((t0 + t.next) / day2yr, antigen_isos, nmc, predpar = predpar, ...)
 
   }
   return(list(

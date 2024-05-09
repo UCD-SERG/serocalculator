@@ -67,7 +67,9 @@
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.4</span>,</span>
 <span>  n_curves <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n_points <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  log_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  log_y <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  rows_to_graph <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n_curves</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">^</span><span class="fl">3.1</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -94,8 +96,16 @@
 <dd><p>how many curves to plot (see details).</p></dd>
 
 
+<dt>n_points</dt>
+<dd><p>Number of points to interpolate along the x axis (passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)</p></dd>
+
+
 <dt>log_x</dt>
 <dd><p>should the x-axis be on a logarithmic scale (<code>TRUE</code>) or linear scale (<code>FALSE</code>, default)?</p></dd>
+
+
+<dt>log_y</dt>
+<dd><p>should the Y-axis be on a logarithmic scale (default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
 
 
 <dt>rows_to_graph</dt>
@@ -107,10 +117,46 @@
 
 
 <dt>...</dt>
-<dd><p>Other arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/layer.html" class="external-link">layer()</a></code>. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-<code>colour = "red"</code> or <code>size = 3</code>. They may also be parameters
-to the paired geom/stat.</p></dd>
+<dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function</a></code></p><dl><dt><code>mapping</code></dt>
+<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code>. If specified and
+<code>inherit.aes = TRUE</code> (the default), it is combined with the default mapping
+at the top level of the plot. You must supply <code>mapping</code> if there is no plot
+mapping.</p></dd>
+
+    <dt><code>data</code></dt>
+<dd><p>Ignored by <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">stat_function()</a></code>, do not use.</p></dd>
+
+    <dt><code>stat</code></dt>
+<dd><p>The statistical transformation to use on the data for this
+layer, either as a <code>ggproto</code> <code>Geom</code> subclass or as a string naming the
+stat stripped of the <code>stat_</code> prefix (e.g. <code>"count"</code> rather than
+<code>"stat_count"</code>)</p></dd>
+
+    <dt><code>position</code></dt>
+<dd><p>Position adjustment, either as a string naming the adjustment
+(e.g. <code>"jitter"</code> to use <code>position_jitter</code>), or the result of a call to a
+position adjustment function. Use the latter if you need to change the
+settings of the adjustment.</p></dd>
+
+    <dt><code>na.rm</code></dt>
+<dd><p>If <code>FALSE</code>, the default, missing values are removed with
+a warning. If <code>TRUE</code>, missing values are silently removed.</p></dd>
+
+    <dt><code>show.legend</code></dt>
+<dd><p>logical. Should this layer be included in the legends?
+<code>NA</code>, the default, includes if any aesthetics are mapped.
+<code>FALSE</code> never includes, and <code>TRUE</code> always includes.
+It can also be a named logical vector to finely select the aesthetics to
+display.</p></dd>
+
+    <dt><code>inherit.aes</code></dt>
+<dd><p>If <code>FALSE</code>, overrides the default aesthetics,
+rather than combining with them. This is most useful for helper functions
+that define both data and aesthetics and shouldn't inherit behaviour from
+the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders()</a></code>.</p></dd>
+
+  
+</dl></dd>
 
 </dl></div>
     <div class="section level2">

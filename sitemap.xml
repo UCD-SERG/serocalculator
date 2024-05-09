@@ -61,6 +61,9 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/df.to.array.html</loc>
   </url>
   <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc>
+  </url>
+  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc>
   </url>
   <url>
@@ -70,10 +73,16 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.html</loc>
   </url>
   <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/f_dev.html</loc>
+  </url>
+  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/fdev.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/getAdditionalData.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/get_additional_data.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.html</loc>
@@ -100,6 +109,12 @@
     <loc>https://ucd-serg.github.io/serocalculator/reference/load_pop_data.html</loc>
   </url>
   <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/log_likelihood.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/mk_baseline.html</loc>
+  </url>
+  <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/mkbaseline.html</loc>
   </url>
   <url>
@@ -113,6 +128,9 @@
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.by.html</loc>
+  </url>
+  <url>
+    <loc>https://ucd-serg.github.io/serocalculator/reference/row_longitudinal_parameter.html</loc>
   </url>
   <url>
     <loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc>

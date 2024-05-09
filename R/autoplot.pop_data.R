@@ -67,8 +67,11 @@ age_scatter <- function(
     #ggplot2::scale_y_log10() +
 
     # avoid log 0 (https://forum.posit.co/t/using-log-transformation-but-need-to-preserve-0/129197/4)
-    ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
-                       breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
+    ggplot2::scale_y_continuous(
+      trans = scales::pseudo_log_trans(sigma = 0.01),
+      breaks = c(-1, -0.1, 0, 0.1, 1, 10),
+      minor_breaks = NULL
+    ) +
     ggplot2::geom_point(size = .6, alpha = .7) +
     ggplot2::geom_smooth(
       method = "lm",
@@ -111,15 +114,33 @@ density_plot <- function(
       ggplot2::labs(fill = strata)
   }
   if (log) {
+
+    min_nonzero_val =
+      object %>%
+      filter(value > 0) %>%
+      pull(value) %>%
+      min()
+
+    max_val =
+      object %>%
+      pull(value) %>%
+      max()
+
+   breaks1 = c(0, 10^seq(
+      min_nonzero_val %>% log10() %>% floor(),
+      max_val %>% log10() %>% ceiling()))
+
     plot1 <- plot1 +
-      #ggplot2::scale_x_log10() +
-      ggplot2::scale_x_continuous(trans = scales::pseudo_log_trans(sigma = 0.01),
-                                  breaks = c(-1, -0.1, 0, 0.1, 1, 10), minor_breaks = NULL) +
-      ggplot2::labs(
-        title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
-        x = "Log10(Antibody Response Value)",
-        y = "Frequency"
-      )
+      ggplot2::scale_x_continuous(
+        labels = scales::label_comma(),
+        transform = scales::pseudo_log_trans(
+          sigma = min_nonzero_val/10,
+          base = 10),
+        breaks = breaks1
+      ) +
+      ggplot2::labs(title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
+                    x = "Log10(Antibody Response Value)",
+                    y = "Frequency")
   } else {
     plot1 <- plot1 +
       ggplot2::labs(

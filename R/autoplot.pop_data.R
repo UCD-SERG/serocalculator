@@ -138,8 +138,8 @@ density_plot <- function(
           base = 10),
         breaks = breaks1
       ) +
-      ggplot2::labs(title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
-                    x = "Log10(Antibody Response Value)",
+      ggplot2::labs(title = "Distribution of Cross-sectional Antibody Responses",
+                    x = "Quantitative antibody response",
                     y = "Frequency")
   } else {
     plot1 <- plot1 +

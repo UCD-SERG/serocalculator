@@ -6,7 +6,7 @@
 #' @param id a [character()] identifying the id column
 #' @param value a [character()] identifying the value column
 #' @param standardize a [logical()] to determine standardization of columns
-#' @return a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' xs_data = load_pop_data(file_path = "https://osf.io/download//n6cp3/",
@@ -69,6 +69,19 @@ get_age.pop_data <- function(object, ...){
   return(age_data)
 }
 
+get_age_var <- function(object, ...)
+{
+  UseMethod("get_age_var", object)
+}
+
+get_age_var.pop_data <- function(object, ...)
+{
+  # get value attribute
+  age_var = attributes(object)$age_var
+
+  return(age_var)
+}
+
 get_value <- function(object, ...)
 {
   UseMethod("get_value", object)
@@ -80,6 +93,19 @@ get_value.pop_data <- function(object, ...){
   value_data <- object %>% pull(attr(object, 'value_var'))
 
   return(value_data)
+}
+
+get_value_var <- function(object, ...)
+{
+  UseMethod("get_value_var", object)
+}
+
+get_value_var.pop_data <- function(object, ...)
+{
+  # get value attribute
+  value_var = attributes(object)$value_var
+
+  return(value_var)
 }
 
 get_id <- function(object, ...)
@@ -95,6 +121,18 @@ get_id.pop_data <- function(object, ...){
   return(id_data)
 }
 
+get_id_var <- function(object, ...)
+{
+  UseMethod("get_id_var", object)
+}
+
+get_id_var.pop_data <- function(object, ...)
+{
+  # get value attribute
+  id_var = attributes(object)$id_var
+
+  return(id_var)
+}
 
 set_age <- function(object, ...){
   UseMethod("set_age", object)

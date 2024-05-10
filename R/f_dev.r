@@ -8,8 +8,16 @@
 #' @param csdata cross-sectional sample data containing variables `value` and `age`
 #' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
 #' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `fdev()` was renamed to `f_dev()` to create a more
+#' consistent API.
+#'
+#' @keywords internal
+#'
 #' @export
-
 fdev <- Vectorize(
   vectorize.args = "lambda",
   function(
@@ -18,6 +26,30 @@ fdev <- Vectorize(
     lnpars,
     cond)
   {
+    lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")
+    f_dev(lambda, csdata, lnpars, cond)
+  })
+
+#  Utility functions: interface with C lib serocalc.so
+
+#' Calculate negative log-likelihood (deviance)
+#'
+#' more description to be added here
+#' @param lambda incidence parameter, in events per person-year
+
+#' @param csdata cross-sectional sample data containing variables `value` and `age`
+#' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
+#' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
+#' @export
+f_dev <- Vectorize(
+  vectorize.args = "lambda",
+  function(
+    lambda,
+    csdata,
+    lnpars,
+    cond)
+  {
+
     res <- 0;
     lambda <- as.double(lambda);
     y <- as.double(get_value.pop_data(csdata));
@@ -50,4 +82,3 @@ fdev <- Vectorize(
       nmc=nmc);
     return(llpp$res);
   })
-

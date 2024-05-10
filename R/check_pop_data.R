@@ -25,7 +25,7 @@ check_pop_data <- function(pop_data)
     stop("Argument `pop_data` is missing column `age` (age, in years).")
   }
 
-  missing_value = is.element(attributes(pop_data)$value_var,names(pop_data)))
+  missing_value = is.element(attributes(pop_data)$value_var,names(pop_data))
 
   if (!missing_value){
     stop("Argument `pop_data` is missing column `value` (antibody measurement).")

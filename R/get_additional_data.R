@@ -26,22 +26,23 @@
 #'
 #' @examples
 #' \dontrun{
-#' curve_param_samples =
+#' curve_param_samples <-
 #'   getAdditionalData(
-#'     fileURL = "https://osf.io/download/bhfvx")
+#'     fileURL = "https://osf.io/download/bhfvx"
+#'   )
 #'
 #' # optionally, save the data to disk
-#' curve_param_samples =
+#' curve_param_samples <-
 #'   getAdditionalData(
 #'     fileURL = "https://osf.io/download/bhfvx",
-#'     savePath = "~/Downloads/curv_params.rds")
+#'     savePath = "~/Downloads/curv_params.rds"
+#'   )
 #' }
 #'
 #' @export
 getAdditionalData <- function(
     fileURL,
-    savePath = NULL)
-{
+    savePath = NULL) {
   lifecycle::deprecate_warn("1.0.0", "getAdditionalData()", "get_additional_data()")
   get_additional_data(fileURL, savePath = NULL)
 }
@@ -69,23 +70,23 @@ getAdditionalData <- function(
 #'
 #' @examples
 #' \dontrun{
-#' curve_param_samples =
+#' curve_param_samples <-
 #'   getAdditionalData(
-#'     fileURL = "https://osf.io/download/bhfvx")
+#'     fileURL = "https://osf.io/download/bhfvx"
+#'   )
 #'
 #' # optionally, save the data to disk
-#' curve_param_samples =
+#' curve_param_samples <-
 #'   getAdditionalData(
 #'     fileURL = "https://osf.io/download/bhfvx",
-#'     savePath = "~/Downloads/curv_params.rds")
+#'     savePath = "~/Downloads/curv_params.rds"
+#'   )
 #' }
-#'
 #'
 #' @export
 get_additional_data <- function(
     fileURL,
-    savePath = NULL)
-{
+    savePath = NULL) {
   lifecycle::deprecate_warn("1.0.0", "getAdditionalData()", "get_additional_data()")
 
   get_additional_data(fileURL, savePath = NULL)
@@ -95,19 +96,21 @@ get_additional_data <- function(
   on.exit({
     unlink(tmpFileName)
   })
-  #Increase timeout for big files
+  # Increase timeout for big files
   options(timeout = max(300, getOption("timeout")))
   # Download
   tryCatch(
     {
       download.file(fileURL,
-                    tmpFileName,
-                    mode = "wb",
-                    quiet = TRUE)
+        tmpFileName,
+        mode = "wb",
+        quiet = TRUE
+      )
     },
     error = function(e) {
       print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
-    })
+    }
+  )
 
   # Unzip
   if (tolower(tools::file_ext(tmpFileName)) == "zip") {
@@ -138,4 +141,3 @@ get_additional_data <- function(
 
   return(data)
 }
-

@@ -11,32 +11,32 @@
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                          age = "Age",
-#'                          id = "index_id",
-#'                          value = "result")
+#' xs_data <- load_pop_data(
+#'   file_path = "https://osf.io/download//n6cp3/",
+#'   age = "Age",
+#'   id = "index_id",
+#'   value = "result"
+#' )
 #'
 #' xs_data %>% summary()
 #'
-summary.pop_data = function(object, ...)
-{
-
-  ages =
+summary.pop_data <- function(object, ...) {
+  ages <-
     object %>%
     distinct(.data$id, .data$age)
 
-  cat("\nn =", nrow(ages),"\n")
+  cat("\nn =", nrow(ages), "\n")
 
   cat("\nDistribution of age: \n\n")
-  age_summary =
+  age_summary <-
     ages %>%
-    pull('age') %>%
+    pull("age") %>%
     summary() %>%
     print()
 
-  cat('\nDistributions of antigen-isotype measurements:\n\n')
+  cat("\nDistributions of antigen-isotype measurements:\n\n")
 
-  ab_summary =
+  ab_summary <-
     object %>%
     dplyr::summarize(
       .by = .data$antigen_iso,
@@ -50,10 +50,11 @@ summary.pop_data = function(object, ...)
     as.data.frame() %>%
     print()
 
-  to_return = list(
+  to_return <- list(
     n = nrow(ages),
     age_summary = age_summary,
-    ab_summary = ab_summary)
+    ab_summary = ab_summary
+  )
 
   return(invisible(to_return))
 }

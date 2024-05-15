@@ -11,67 +11,68 @@
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                          age = "Age",
-#'                          id = "index_id",
-#'                          value = "result")
-#'
-#' curve <- "https://osf.io/download/rtw5k/" %>%
-#' load_curve_params()
-#'
-#' noise <-"https://osf.io/download//hqy4v/" %>%
-#' load_noise_params()
-#'
-#' est2 = est.incidence.by(
-#' strata = c("catchment"),
-#' pop_data = xs_data %>% filter(Country == "Pakistan"),
-#' curve_params = curve,
-#' noise_params = noise %>% filter(Country == "Pakistan"),
-#' antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#' #num_cores = 8, #Allow for parallel processing to decrease run time
-#' build_graph = TRUE
+#' xs_data <- load_pop_data(
+#'   file_path = "https://osf.io/download//n6cp3/",
+#'   age = "Age",
+#'   id = "index_id",
+#'   value = "result"
 #' )
 #'
-#' #plot the log-likelihood curve
-#'   autoplot(est2)
-#'}
-autoplot.seroincidence.by = function(
+#' curve <- "https://osf.io/download/rtw5k/" %>%
+#'   load_curve_params()
+#'
+#' noise <- "https://osf.io/download//hqy4v/" %>%
+#'   load_noise_params()
+#'
+#' est2 <- est.incidence.by(
+#'   strata = c("catchment"),
+#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   curve_params = curve,
+#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   # num_cores = 8, #Allow for parallel processing to decrease run time
+#'   build_graph = TRUE
+#' )
+#'
+#' # plot the log-likelihood curve
+#' autoplot(est2)
+#' }
+autoplot.seroincidence.by <- function(
     object,
     ncol = min(3, length(object)),
-    ...)
-{
-
-  if(length(object) == 0)
-  {
+    ...) {
+  if (length(object) == 0) {
     stop("The input doesn't contain any fits. Did subsetting go wrong?")
   }
 
-  if(!attr(object,"graphs_included"))
-  {
-
+  if (!attr(object, "graphs_included")) {
     stop(
       "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `est.incidence.by()`")
-    figure = NULL
+      "`build_graph` was not `TRUE` in the call to `est.incidence.by()`"
+    )
+    figure <- NULL
   }
 
-  labels = names(object)
-  figs = lapply(object, FUN = autoplot.seroincidence, ...)
+  labels <- names(object)
+  figs <- lapply(object, FUN = autoplot.seroincidence, ...)
 
   for (i in 1:length(figs))
   {
-    figs[[i]] = figs[[i]] + ggplot2::ggtitle(labels[i])
+    figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 
 
-  nrow = ceiling(length(figs)/ncol)
+  nrow <- ceiling(length(figs) / ncol)
   figure <- do.call(
-    what = function(...) ggpubr::ggarrange(
-      ...,
-      ncol = ncol,
-      nrow = nrow),
-    args = figs)
+    what = function(...) {
+      ggpubr::ggarrange(
+        ...,
+        ncol = ncol,
+        nrow = nrow
+      )
+    },
+    args = figs
+  )
 
   return(figure)
-
 }

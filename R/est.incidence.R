@@ -16,24 +16,25 @@
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                          age = "Age",
-#'                          id = "index_id",
-#'                          value = "result",
-#'                          standardize = TRUE)
+#' xs_data <- load_pop_data(
+#'   file_path = "https://osf.io/download//n6cp3/",
+#'   age = "Age",
+#'   id = "index_id",
+#'   value = "result",
+#'   standardize = TRUE
+#' )
 #'
-#' curves = load_curve_params("https://osf.io/download/rtw5k/")
-#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#' curves <- load_curve_params("https://osf.io/download/rtw5k/")
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
-#' est1 = est.incidence(
-#' pop_data = xs_data %>% filter(Country == "Pakistan"),
-#' curve_params = curves,
-#' noise_params = noise %>% filter(Country == "Pakistan"),
-#' antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+#' est1 <- est.incidence(
+#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   curve_params = curves,
+#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 #' )
 #'
 #' summary(est1)
-
 est.incidence <- function(
     pop_data,
     curve_params,
@@ -45,38 +46,38 @@ est.incidence <- function(
     verbose = FALSE,
     build_graph = FALSE,
     print_graph = build_graph & verbose,
-    ...)
-{
-
-  if(verbose > 1)
-  {
-    message('inputs to `est.incidence()`:')
+    ...) {
+  if (verbose > 1) {
+    message("inputs to `est.incidence()`:")
     print(environment() %>% as.list())
   }
 
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params)
+    curve_params = curve_params
+  )
 
-  pop_data = pop_data %>%
+  pop_data <- pop_data %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
-    dplyr::select(pop_data %>% get_value_var(),
-                  pop_data %>% get_age_var(),
-                  "antigen_iso"
-                  ) %>%
+    dplyr::select(
+      pop_data %>% get_value_var(),
+      pop_data %>% get_age_var(),
+      "antigen_iso"
+    ) %>%
     tidyr::drop_na()
 
-  curve_params = curve_params %>%
+  curve_params <- curve_params %>%
     ungroup() %>%
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
-      d = .data$r - 1) %>%
+      d = .data$r - 1
+    ) %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
     dplyr::select("y1", "alpha", "d", "antigen_iso") %>%
     droplevels()
 
-  noise_params = noise_params %>%
+  noise_params <- noise_params %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
     droplevels()
 
@@ -85,17 +86,17 @@ est.incidence <- function(
     stop("No data provided.")
   }
 
-  if(verbose)
-  {
+  if (verbose) {
     message("nrow(curve_params) = ", nrow(curve_params))
   }
 
-  if(nrow(noise_params) != length(antigen_isos))
+  if (nrow(noise_params) != length(antigen_isos)) {
     stop("too many rows of noise parameters.")
+  }
 
-  pop_data = pop_data %>% split(~antigen_iso)
-  curve_params = curve_params %>% split(~antigen_iso)
-  noise_params = noise_params %>% split(~antigen_iso)
+  pop_data <- pop_data %>% split(~antigen_iso)
+  curve_params <- curve_params %>% split(~antigen_iso)
+  noise_params <- noise_params %>% split(~antigen_iso)
 
   # First, check if we find numeric results...
   res <- .nll(
@@ -105,22 +106,21 @@ est.incidence <- function(
     curve_params = curve_params,
     noise_params = noise_params,
     verbose = verbose,
-    ...)
+    ...
+  )
 
   if (is.na(res)) {
     warning("Could not calculate the log-likelihood with starting parameter value.")
     return(NULL)
   }
 
-  if (verbose)
-  {
+  if (verbose) {
     message("Initial negative log-likelihood: ", res)
   }
 
-  if (build_graph)
-  {
-    if(verbose) message('building likelihood graph')
-    graph = graph.loglik(
+  if (build_graph) {
+    if (verbose) message("building likelihood graph")
+    graph <- graph.loglik(
       highlight_points = lambda_start,
       highlight_point_names = "lambda_start",
       pop_data = pop_data,
@@ -128,23 +128,24 @@ est.incidence <- function(
       curve_params = curve_params,
       noise_params = noise_params
     )
-    if(print_graph)
+    if (print_graph) {
       print(
         graph +
           ggplot2::scale_x_log10(
-            labels = scales::label_comma()))
-
-  } else
-  {
-    graph = NULL
+            labels = scales::label_comma()
+          )
+      )
+    }
+  } else {
+    graph <- NULL
   }
 
 
-  if(verbose) message('about to call `nlm()`')
+  if (verbose) message("about to call `nlm()`")
   # Estimate lambda
-  time =
+  time <-
     {
-      fit = nlm(
+      fit <- nlm(
         f = .nll,
         p = log(lambda_start),
         pop_data = pop_data,
@@ -156,55 +157,54 @@ est.incidence <- function(
         steptol = stepmin,
         verbose = verbose,
         print.level = ifelse(verbose, 2, 0),
-        ...)
+        ...
+      )
     } %>%
     system.time()
 
-  code_text = nlm_exit_codes[fit$code]
-  message1 = '\n`nlm()` completed with the following convergence code:\n'
-  if(fit$code %in% 3:5)
-  {
+  code_text <- nlm_exit_codes[fit$code]
+  message1 <- "\n`nlm()` completed with the following convergence code:\n"
+  if (fit$code %in% 3:5) {
     warning(
       "`nlm()` may not have reached the maximum likelihood estimate.",
       message1,
-      code_text)
-
+      code_text
+    )
   }
 
-  if(verbose)
-  {
-    message('\nElapsed time: ')
+  if (verbose) {
+    message("\nElapsed time: ")
     print(time)
   }
 
-  if(build_graph)
-  {
-    graph =
+  if (build_graph) {
+    graph <-
       graph %>%
       add_point_to_graph(
         fit = fit,
         pop_data = pop_data,
         antigen_isos = antigen_isos,
         curve_params = curve_params,
-        noise_params = noise_params)
+        noise_params = noise_params
+      )
 
-    if(print_graph)
-    {
+    if (print_graph) {
       print(
         graph +
           ggplot2::scale_x_log10(
-            labels = scales::label_comma()))
-
+            labels = scales::label_comma()
+          )
+      )
     }
-
   }
 
-  fit = fit %>%
+  fit <- fit %>%
     structure(
       class = union("seroincidence", class(fit)),
       lambda_start = lambda_start,
       antigen_isos = antigen_isos,
-      ll_graph = graph)
+      ll_graph = graph
+    )
 
   return(fit)
 }

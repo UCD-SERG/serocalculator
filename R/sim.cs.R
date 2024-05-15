@@ -30,44 +30,42 @@
 #' * one column for each element in the `antigen_iso` input argument
 #' @export
 #' @examples
-#' #Load curve parameters
-#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+#' # Load curve parameters
+#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'
-#' #Specify the antibody-isotype responses to include in analyses
-#' antibodies = c("HlyE_IgA", "HlyE_IgG")
+#' # Specify the antibody-isotype responses to include in analyses
+#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
 #'
-#' #set seed to reproduce results
+#' # set seed to reproduce results
 #' set.seed(54321)
 #'
 #' # simulated incidence rate per person-year
-#' lambda <- 0.2;
-#'
+#' lambda <- 0.2
 #' # range covered in simulations
-#' lifespan <- c(0, 10);
-#'
+#' lifespan <- c(0, 10)
 #' # cross-sectional sample size
 #' nrep <- 100
 #'
 #' # biologic noise distribution
 #' dlims <- rbind(
 #'   "HlyE_IgA" = c(min = 0, max = 0.5),
-#'   "HlyE_IgG" = c(min = 0, max = 0.5))
+#'   "HlyE_IgG" = c(min = 0, max = 0.5)
+#' )
 #'
-#' #generate cross-sectional data
+#' # generate cross-sectional data
 #' csdata <- sim.cs(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,
 #'   n.smpl = nrep,
 #'   age.rng = lifespan,
 #'   antigen_isos = antibodies,
-#'  n.mc = 0,
-#'  renew.params = TRUE,
-#'  add.noise = TRUE,
-#'  noise_limits = dlims,
-#'  format = "long"
+#'   n.mc = 0,
+#'   renew.params = TRUE,
+#'   add.noise = TRUE,
+#'   noise_limits = dlims,
+#'   format = "long"
 #' )
 #'
-
 sim.cs <- function(
     lambda = 0.1,
     n.smpl = 100,
@@ -81,18 +79,15 @@ sim.cs <- function(
     noise_limits,
     format = "wide",
     verbose = FALSE,
-    ...)
-{
-
-  if(verbose > 1)
-  {
-    message('inputs to `sim.cs()`:')
+    ...) {
+  if (verbose > 1) {
+    message("inputs to `sim.cs()`:")
     print(environment() %>% as.list())
   }
 
   # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 
-  predpar =
+  predpar <-
     curve_params %>%
     filter(.data$antigen_iso %in% antigen_isos) %>%
     droplevels() %>%
@@ -101,10 +96,10 @@ sim.cs <- function(
 
   stopifnot(length(lambda) == 1)
 
-  day2yr = 365.25
-  lambda = lambda / day2yr
-  age.rng = age.rng * day2yr
-  npar = dimnames(predpar)$parameter %>% length()
+  day2yr <- 365.25
+  lambda <- lambda / day2yr
+  age.rng <- age.rng * day2yr
+  npar <- dimnames(predpar)$parameter %>% length()
 
 
   baseline_limits <- noise_limits
@@ -127,46 +122,48 @@ sim.cs <- function(
     for (k.ab in 1:(ncol(ysim) - 1)) {
       ysim[, 1 + k.ab] <-
         ysim[, 1 + k.ab] +
-        runif(n = nrow(ysim),
-              min = noise_limits[k.ab, 1],
-              max = noise_limits[k.ab, 2])
-
+        runif(
+          n = nrow(ysim),
+          min = noise_limits[k.ab, 1],
+          max = noise_limits[k.ab, 2]
+        )
     }
   }
   colnames(ysim) <- c("age", antigen_isos)
 
-  to_return =
+  to_return <-
     ysim %>%
     as_tibble() %>%
     mutate(
       id = as.character(1:n()),
-      age = round(.data$age / day2yr, 2))
+      age = round(.data$age / day2yr, 2)
+    )
 
-  if(format == "long")
-  {
-    if(verbose) message("outputting long format data")
-    to_return =
+  if (format == "long") {
+    if (verbose) message("outputting long format data")
+    to_return <-
       to_return %>%
       pivot_longer(
         cols = antigen_isos,
         values_to = c("value"),
-        names_to = c("antigen_iso")) %>%
+        names_to = c("antigen_iso")
+      ) %>%
       structure(
         class = c("pop_data", class(to_return)),
-        format = "long") %>%
+        format = "long"
+      ) %>%
       set_value(value = "value") %>%
       set_age(age = "age") %>%
       set_id(id = "id")
-  } else
-  {
-    if(verbose) message("outputting wide format data")
-    to_return =
+  } else {
+    if (verbose) message("outputting wide format data")
+    to_return <-
       to_return %>%
       structure(
         class = c("pop_data_wide", class(to_return)),
-        format = "wide")
+        format = "wide"
+      )
   }
 
   return(to_return)
-
 }

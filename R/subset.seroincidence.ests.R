@@ -6,9 +6,9 @@
 #' @returns the subset specified
 #' @export
 #'
-`[.seroincidence.by` <- function(x,i,...) {
+`[.seroincidence.by` <- function(x, i, ...) {
   r <- NextMethod("[")
   mostattributes(r) <- attributes(x)
-  names(r) = names(x)[i]
+  names(r) <- names(x)[i]
   r
 }

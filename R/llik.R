@@ -35,29 +35,33 @@
 #' library(dplyr)
 #' library(tibble)
 #'
-#' #load in longitudinal parameters
-#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+#' # load in longitudinal parameters
+#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-#'                          age = "Age",
-#'                          id = "index_id",
-#'                          value = "result")
+#' xs_data <- load_pop_data(
+#'   file_path = "https://osf.io/download//n6cp3/",
+#'   age = "Age",
+#'   id = "index_id",
+#'   value = "result"
+#' )
 #'
-#' #Load noise params
-#'   cond <- tibble(
+#' # Load noise params
+#' cond <- tibble(
 #'   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-#'   nu = c(0.5, 0.5),                          # Biologic noise (nu)
-#'   eps = c(0, 0),                             # M noise (eps)
-#'   y.low = c(1, 1),                           # low cutoff (llod)
-#'   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+#'   nu = c(0.5, 0.5), # Biologic noise (nu)
+#'   eps = c(0, 0), # M noise (eps)
+#'   y.low = c(1, 1), # low cutoff (llod)
+#'   y.high = c(5e6, 5e6)
+#' ) # high cutoff (y.high)
 #'
-#' #Calculate log-likelihood
-#'   ll_AG = llik(
+#' # Calculate log-likelihood
+#' ll_AG <- llik(
 #'   pop_data = xs_data,
 #'   curve_params = dmcmc,
 #'   noise_params = cond,
-#'   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-#'   lambda = 0.1) %>% print()
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   lambda = 0.1
+#' ) %>% print()
 #'
 llik <- function(
     lambda,
@@ -66,12 +70,9 @@ llik <- function(
     curve_params,
     noise_params,
     verbose = FALSE,
-    ...)
-{
+    ...) {
   lifecycle::deprecate_warn("1.0.0", "llik()", "log_likelihood()")
   log_likelihood(lambda, pop_data, antigen_isos, curve_params, noise_params, verbose = FALSE)
-
-
 }
 
 #' Calculate log-likelihood
@@ -104,27 +105,29 @@ llik <- function(
 #' library(dplyr)
 #' library(tibble)
 #'
-#' #load in longitudinal parameters
-#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+#' # load in longitudinal parameters
+#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#' load_pop_data()
+#'   load_pop_data()
 #'
-#' #Load noise params
-#'   cond <- tibble(
+#' # Load noise params
+#' cond <- tibble(
 #'   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-#'   nu = c(0.5, 0.5),                          # Biologic noise (nu)
-#'   eps = c(0, 0),                             # M noise (eps)
-#'   y.low = c(1, 1),                           # low cutoff (llod)
-#'   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
+#'   nu = c(0.5, 0.5), # Biologic noise (nu)
+#'   eps = c(0, 0), # M noise (eps)
+#'   y.low = c(1, 1), # low cutoff (llod)
+#'   y.high = c(5e6, 5e6)
+#' ) # high cutoff (y.high)
 #'
-#' #Calculate log-likelihood
-#'   ll_AG = llik(
+#' # Calculate log-likelihood
+#' ll_AG <- llik(
 #'   pop_data = xs_data,
 #'   curve_params = dmcmc,
 #'   noise_params = cond,
-#'   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-#'   lambda = 0.1) %>% print()
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   lambda = 0.1
+#' ) %>% print()
 #'
 log_likelihood <- function(
     lambda,
@@ -133,43 +136,39 @@ log_likelihood <- function(
     curve_params,
     noise_params,
     verbose = FALSE,
-    ...)
-{
+    ...) {
   # Start with zero total
   nllTotal <- 0
 
   # Loop over antigen_isos
   for (cur_antibody in antigen_isos)
   {
-
     # the inputs can be lists, after `split(~antigen_ios)`
     # this gives some speedups compared to running filter() every time .nll() is called
-    if(!is.data.frame(pop_data))
-    {
-      cur_data = pop_data[[cur_antibody]]
-      cur_curve_params = curve_params[[cur_antibody]]
-      cur_noise_params = noise_params[[cur_antibody]]
-    } else
-    {
-      cur_data =
+    if (!is.data.frame(pop_data)) {
+      cur_data <- pop_data[[cur_antibody]]
+      cur_curve_params <- curve_params[[cur_antibody]]
+      cur_noise_params <- noise_params[[cur_antibody]]
+    } else {
+      cur_data <-
         pop_data %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      cur_curve_params =
+      cur_curve_params <-
         curve_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      cur_noise_params =
+      cur_noise_params <-
         noise_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      if(!is.element('d', names(cur_curve_params)))
-      {
-        cur_curve_params =
+      if (!is.element("d", names(cur_curve_params))) {
+        cur_curve_params <-
           cur_curve_params %>%
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
-            d = .data$r - 1)
+            d = .data$r - 1
+          )
       }
     }
 
@@ -184,8 +183,7 @@ log_likelihood <- function(
     # if (!is.na(nllSingle))  # not meaningful for vectorized fdev()
     {
       nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
-      }
-
+    }
   }
 
   # Return total log-likelihood

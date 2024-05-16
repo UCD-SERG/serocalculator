@@ -29,6 +29,7 @@ Imports:
     stats,
     tibble,
     tidyr,
+    utils,
     cli
 Suggests:
     parallel,

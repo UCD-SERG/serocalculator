@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,28 +91,41 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">xs_data</span> <span class="op">=</span> <span class="fu"><a href="load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="st">"https://osf.io/download//n6cp3/"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">xs_data</span> <span class="op">=</span> <span class="fu"><a href="clean_pop_data.html">clean_pop_data</a></span><span class="op">(</span><span class="va">xs_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="st">"https://osf.io/download//n6cp3/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="clean_pop_data.html">clean_pop_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">curve</span> <span class="op">=</span> <span class="fu"><a href="load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">noise</span> <span class="op">=</span> <span class="fu"><a href="load_noise_params.html">load_noise_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">curve</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, .by <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span> <span class="co"># Reduce dataset for the purposes of this example</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">est1</span> <span class="op">=</span> <span class="fu"><a href="est.incidence.html">est.incidence</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_noise_params.html">load_noise_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="est.incidence.html">est.incidence</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  curve_param <span class="op">=</span> <span class="va">curve</span>,</span></span>
 <span class="r-in"><span>  noise_param <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  build_graph <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> data format is as expected.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`llik()` was deprecated in serocalculator 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `log_likelihood()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">serocalculator</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue to the authors.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`fdev()` was deprecated in serocalculator 1.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `f_dev()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">base</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue to the authors.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#plot the log-likelihood curve</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># Plot the log-likelihood curve</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="autoplot.seroincidence-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

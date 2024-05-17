@@ -26,7 +26,7 @@ consistent API.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,14 +111,10 @@ Data object</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">curve_param_samples</span> <span class="op">=</span></span></span>
-<span class="r-in"><span>  <span class="fu">getAdditionalData</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/bhfvx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">curve_param_samples</span> <span class="op">&lt;-</span> <span class="fu">getAdditionalData</span><span class="op">(</span>fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/bhfvx"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># optionally, save the data to disk</span></span></span>
-<span class="r-in"><span><span class="va">curve_param_samples</span> <span class="op">=</span></span></span>
-<span class="r-in"><span>  <span class="fu">getAdditionalData</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/bhfvx"</span>,</span></span>
+<span class="r-in"><span><span class="co"># Optionally, save the data to disk</span></span></span>
+<span class="r-in"><span><span class="va">curve_param_samples</span> <span class="op">&lt;-</span> <span class="fu">getAdditionalData</span><span class="op">(</span>fileURL <span class="op">=</span> <span class="st">"https://osf.io/download/bhfvx"</span>,</span></span>
 <span class="r-in"><span>    savePath <span class="op">=</span> <span class="st">"~/Downloads/curv_params.rds"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>

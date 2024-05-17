@@ -28,7 +28,8 @@ A \link{data.frame} (or \link[tibble:tbl_df-class]{tibble::tbl_df}) containing t
 Reformat a cross-sectional antibody survey dataset
 }
 \examples{
-xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+
 clean_pop_data(xs_data)
 
 

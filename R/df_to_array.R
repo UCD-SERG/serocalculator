@@ -41,7 +41,8 @@ df.to.array <- function(
 #' @examples
 #' library(dplyr)
 #' library(tidyr)
-#' df = iris %>%
+#'
+#' df <- iris %>%
 #'   tidyr::pivot_longer(
 #'   names_to = "parameter",
 #'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) %>%

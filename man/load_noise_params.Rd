@@ -18,7 +18,8 @@ a \code{noise} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra a
 Load noise parameters
 }
 \examples{
-noise = load_noise_params("https://osf.io/download//hqy4v/")
+noise <- load_noise_params("https://osf.io/download//hqy4v/")
+
 print(noise)
 
 

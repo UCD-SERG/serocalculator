@@ -7,10 +7,8 @@
 #' @examples
 #' library(dplyr)
 #'
-#' # Import cross-sectional data from OSF and rename required variables
-#' xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/")
-#'
-#' xs_data %>% check_pop_data()
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   check_pop_data()
 #'
 check_pop_data <- function(pop_data) {
   if (!is.data.frame(pop_data)) {

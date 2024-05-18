@@ -40,6 +40,7 @@ df.to.array <- function(
 #' @examples
 #' library(dplyr)
 #' library(tidyr)
+#'
 #' df <- iris %>%
 #'   tidyr::pivot_longer(
 #'     names_to = "parameter",

@@ -20,11 +20,8 @@ This function is a \code{summary()} method for \code{pop_data} objects
 \examples{
 library(dplyr)
 
-xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-                         age = "Age",
-                         id = "index_id",
-                         value = "result")
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
-xs_data \%>\% summary()
+summary(xs_data)
 
 }

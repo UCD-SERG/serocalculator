@@ -36,23 +36,25 @@
 #' # Specify the antibody-isotype responses to include in analyses
 #' antibodies <- c("HlyE_IgA", "HlyE_IgG")
 #'
-#' # set seed to reproduce results
+#' # Set seed to reproduce results
 #' set.seed(54321)
 #'
-#' # simulated incidence rate per person-year
-#' lambda <- 0.2
-#' # range covered in simulations
-#' lifespan <- c(0, 10)
-#' # cross-sectional sample size
+#' # Simulated incidence rate per person-year
+#' lambda <- 0.2;
+#'
+#' # Range covered in simulations
+#' lifespan <- c(0, 10);
+#'
+#' # Cross-sectional sample size
 #' nrep <- 100
 #'
-#' # biologic noise distribution
+#' # Biologic noise distribution
 #' dlims <- rbind(
 #'   "HlyE_IgA" = c(min = 0, max = 0.5),
 #'   "HlyE_IgG" = c(min = 0, max = 0.5)
 #' )
 #'
-#' # generate cross-sectional data
+#' # Generate cross-sectional data
 #' csdata <- sim.cs(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,

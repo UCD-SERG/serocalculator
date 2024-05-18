@@ -22,11 +22,13 @@ Convert a data.frame (or tibble) into a multidimensional array
 \examples{
 library(dplyr)
 library(tidyr)
-df = iris \%>\%
+
+df <- iris \%>\%
   tidyr::pivot_longer(
-  names_to = "parameter",
-  cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) \%>\%
+    names_to = "parameter",
+    cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length")
+  ) \%>\%
   mutate(parameter = factor(parameter, levels = unique(parameter)))
-  df \%>\% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+df \%>\% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
 
 }

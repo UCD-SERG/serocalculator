@@ -21,17 +21,15 @@
 #'    * 5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small.
 #' @export
 #' @examples
+#'
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data(
-#'   file_path = "https://osf.io/download//n6cp3/",
-#'   age = "Age",
-#'   id = "index_id",
-#'   value = "result",
-#'   standardize = TRUE
-#' )
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
-#' curves <- load_curve_params("https://osf.io/download/rtw5k/")
+#' curves <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
 #' est1 <- est.incidence(

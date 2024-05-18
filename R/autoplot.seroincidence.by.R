@@ -7,22 +7,18 @@
 #' @return an object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #' @examples
-#' \dontrun{
+#'
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data <- load_pop_data(
-#'   file_path = "https://osf.io/download//n6cp3/",
-#'   age = "Age",
-#'   id = "index_id",
-#'   value = "result"
-#' )
+#' xs_data <- "https://osf.io/download//n6cp3/" %>%
+#'   load_pop_data()
 #'
-#' curve <- "https://osf.io/download/rtw5k/" %>%
-#'   load_curve_params()
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 #'
-#' noise <- "https://osf.io/download//hqy4v/" %>%
-#'   load_noise_params()
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
 #' est2 <- est.incidence.by(
 #'   strata = c("catchment"),
@@ -30,14 +26,14 @@
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   # num_cores = 8, #Allow for parallel processing to decrease run time
+#'   #num_cores = 8, #Allow for parallel processing to decrease run time
 #'   build_graph = TRUE
 #' )
 #'
-#' # plot the log-likelihood curve
+#' # Plot the log-likelihood curve
 #' autoplot(est2)
-#' }
-autoplot.seroincidence.by <- function(
+#'
+autoplot.seroincidence.by = function(
     object,
     ncol = min(3, length(object)),
     ...) {

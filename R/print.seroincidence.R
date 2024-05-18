@@ -9,13 +9,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' # estimate seroincidence
+#' # Estimate seroincidence
 #' seroincidence <- est.incidence.by(...)
 #'
-#' # print the seroincidence object to the console
+#' # Print the seroincidence object to the console
 #' print(seroincidence)
 #'
-#' # or simply type (appropriate print method will be invoked automatically)
+#' # Or simply type (appropriate print method will be invoked automatically)
 #' seroincidence
 #' }
 #'

@@ -27,11 +27,13 @@ a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 library(dplyr)
 library(ggplot2)
 
-xs_data <- load_pop_data(file_path = "https://osf.io/download//n6cp3/",
-                         age = "Age",
-                         id = "index_id",
-                         value = "result",
-                         standardize = TRUE)
+xs_data <- load_pop_data(
+  file_path = "https://osf.io/download//n6cp3/",
+  age = "Age",
+  id = "index_id",
+  value = "result",
+  standardize = TRUE
+)
 
 xs_data \%>\% autoplot(strata = "Country", type = "density")
 xs_data \%>\% autoplot(strata = "Country", type = "age-scatter")

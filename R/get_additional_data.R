@@ -26,17 +26,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' curve_param_samples <-
-#'   getAdditionalData(
-#'     fileURL = "https://osf.io/download/bhfvx"
-#'   )
+#' curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx")
 #'
-#' # optionally, save the data to disk
-#' curve_param_samples <-
-#'   getAdditionalData(
-#'     fileURL = "https://osf.io/download/bhfvx",
-#'     savePath = "~/Downloads/curv_params.rds"
-#'   )
+#' # Optionally, save the data to disk
+#' curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx",
+#'     savePath = "~/Downloads/curv_params.rds")
 #' }
 #'
 #' @export

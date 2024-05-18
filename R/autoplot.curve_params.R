@@ -13,11 +13,14 @@
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' curve <- "https://osf.io/download/rtw5k/" %>%
-#'   load_curve_params() %>%
+#' curve = load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso)  %>% # Reduce dataset for the purposes of this example
 #'   autoplot()
 #'
-autoplot.curve_params <- function(
+#' curve
+#'
+autoplot.curve_params = function(
     object,
     antigen_isos = object$antigen_iso %>% unique(),
     ncol = min(3, length(antigen_isos)),

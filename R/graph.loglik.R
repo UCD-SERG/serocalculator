@@ -11,30 +11,26 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
-#' \dontrun{
+#'
 #' library(dplyr)
 #' library(tibble)
 #'
 #' # Load cross-sectional data
-#' xs_data <- load_pop_data(
-#'   file_path = "https://osf.io/download//n6cp3/",
-#'   age = "Age",
-#'   id = "index_id",
-#'   value = "result"
-#' )
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #'
-#' # Load curve parameters
-#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+#' # Load curve parameters and subset for the purposes of this example
+#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso)
 #'
 #' # Load noise parameters
 #' cond <- tibble(
 #'   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-#'   nu = c(0.5, 0.5), # Biologic noise (nu)
-#'   eps = c(0, 0), # M noise (eps)
-#'   y.low = c(1, 1), # low cutoff (llod)
-#'   y.high = c(5e6, 5e6)
-#' ) # high cutoff (y.high)
+#'   nu = c(0.5, 0.5),                          # Biologic noise (nu)
+#'   eps = c(0, 0),                             # M noise (eps)
+#'   y.low = c(1, 1),                           # Low cutoff (llod)
+#'   y.high = c(5e6, 5e6))                      # High cutoff (y.high)
 #'
 #' # Graph the log likelihood
 #' lik_HlyE_IgA <- graph.loglik(
@@ -44,8 +40,10 @@
 #'   antigen_isos = "HlyE_IgA",
 #'   log_x = TRUE
 #' )
-#' }
-graph.loglik <- function(
+#'
+#' lik_HlyE_IgA
+#'
+graph.loglik = function(
     pop_data,
     curve_params,
     noise_params,

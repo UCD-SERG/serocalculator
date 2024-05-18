@@ -51,17 +51,17 @@ age_scatter <- function(
   if (is.null(strata)) {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(
-        x = .data$age,
-        y = .data$value
+      ggplot2::ggplot(ggplot2::aes_string(
+        x = object %>% get_age_var(),
+        y = object %>% get_value_var()
       ))
   } else {
     plot1 <-
       object %>%
       ggplot2::ggplot(
-        aes(
-          x = .data$age,
-          y = .data$value
+        ggplot2::aes_string(
+          x = object %>% get_age_var(),
+          y = object %>% get_value_var()
         ),
         col = get(strata)
       ) +
@@ -101,7 +101,7 @@ density_plot <- function(
     log = FALSE) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(aes(x = .data$value)) +
+    ggplot2::ggplot(ggplot2::aes_string(x = object %>% get_value_var())) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
@@ -123,13 +123,13 @@ density_plot <- function(
   if (log) {
     min_nonzero_val <-
       object %>%
-      filter(value > 0) %>%
-      pull(value) %>%
+      filter(object %>% get_value_var() > 0) %>%
+      get_value() %>%
       min()
 
     max_val <-
       object %>%
-      pull(value) %>%
+      get_value() %>%
       max()
 
     breaks1 <- c(0, 10^seq(

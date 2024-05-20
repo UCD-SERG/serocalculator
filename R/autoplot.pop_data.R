@@ -132,7 +132,7 @@ density_plot <- function(
       get_value() %>%
       max()
 
-    breaks1 <- c(0, 10^seq(
+    breaks1 <- c(0.00001, 10^seq(
       min_nonzero_val %>% log10() %>% floor(),
       max_val %>% log10() %>% ceiling()
     ))

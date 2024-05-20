@@ -125,14 +125,14 @@ density_plot <- function(
       object %>%
       filter(object %>% get_value_var() > 0) %>%
       get_value() %>%
-      min()
+      min() + 0.0001 # avoid log 0
 
     max_val <-
       object %>%
       get_value() %>%
       max()
 
-    breaks1 <- c(0.00001, 10^seq(
+    breaks1 <- c(0, 10^seq(
       min_nonzero_val %>% log10() %>% floor(),
       max_val %>% log10() %>% ceiling()
     ))

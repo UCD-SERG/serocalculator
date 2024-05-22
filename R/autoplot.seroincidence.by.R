@@ -21,6 +21,7 @@
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
+#' \dontrun{
 #' est2 <- est.incidence.by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data %>% filter(Country == "Pakistan"),
@@ -33,7 +34,7 @@
 #'
 #' # Plot the log-likelihood curve
 #' autoplot(est2)
-#'
+#' }
 autoplot.seroincidence.by = function(
     object,
     ncol = min(3, length(object)),

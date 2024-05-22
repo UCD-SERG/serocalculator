@@ -1,6 +1,8 @@
 ## Resubmission
 
 * Reduced run time of examples
+* Fixed html documentation error 
+* Verified that "potentially misspelled words" are correctly spelled 
 
 
 ## R CMD check results

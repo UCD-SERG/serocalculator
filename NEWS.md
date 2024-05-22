@@ -2,6 +2,7 @@
 
 * added `n_points` argument to `plot_curve_params_one_ab()`
 * Added `type = "age-scatter"` option for `autoplot.pop_data()`
+* Updated documentation for sim.cs and log-likelihood
 
 ## serocalculator 1.0.0
 

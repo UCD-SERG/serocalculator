@@ -32,6 +32,7 @@
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' library(tibble)
 #'
@@ -58,7 +59,7 @@
 #'   noise_params = cond,
 #'   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
 #'   lambda = 0.1) %>% print()
-#'
+#' }
 llik <- function(
     lambda,
     pop_data,
@@ -118,7 +119,7 @@ llik <- function(
 #'   eps = c(0, 0),                             # M noise (eps)
 #'   y.low = c(1, 1),                           # low cutoff (llod)
 #'   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
-#'
+#' \dontrun{
 #' #Calculate log-likelihood
 #'   ll_AG = llik(
 #'   pop_data = xs_data,
@@ -126,7 +127,7 @@ llik <- function(
 #'   noise_params = cond,
 #'   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
 #'   lambda = 0.1) %>% print()
-#'
+#' }
 log_likelihood <- function(
     lambda,
     pop_data,

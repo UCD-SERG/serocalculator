@@ -39,7 +39,7 @@ curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
-
+\dontrun{
 est2 <- est.incidence.by(
   strata = c("catchment"),
   pop_data = xs_data \%>\% filter(Country == "Pakistan"),
@@ -52,5 +52,5 @@ est2 <- est.incidence.by(
 est2sum <- summary(est2)
 
 autoplot(est2sum, "catchment")
-
+}
 }

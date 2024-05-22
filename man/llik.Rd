@@ -56,6 +56,7 @@ Calculates the log-likelihood of a set of cross-sectional antibody response data
 consistent API.
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(tibble)
 
@@ -82,6 +83,6 @@ ll_AG <- llik(
   noise_params = cond,
   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
   lambda = 0.1) \%>\% print()
-
+}
 }
 \keyword{internal}

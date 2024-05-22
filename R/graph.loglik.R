@@ -32,7 +32,7 @@
 #'   eps = c(0, 0),                             # M noise (eps)
 #'   y.low = c(1, 1),                           # Low cutoff (llod)
 #'   y.high = c(5e6, 5e6))                      # High cutoff (y.high)
-#'
+#' \dontrun{
 #' # Graph the log likelihood
 #' lik_HlyE_IgA <- graph.loglik(
 #'   pop_data = xs_data,
@@ -43,7 +43,7 @@
 #' )
 #'
 #' lik_HlyE_IgA
-#'
+#' }
 graph.loglik = function(
     pop_data,
     curve_params,

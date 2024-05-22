@@ -12,7 +12,7 @@
 #'
 check_pop_data <- function(pop_data) {
   if (!is.data.frame(pop_data)) {
-    stop(.pasteN(
+    cli::cli_abort(message = .pasteN(
       "Argument `pop_data` is not a `data.frame()`.",
       "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."
     ))
@@ -21,13 +21,13 @@ check_pop_data <- function(pop_data) {
   missing_age <- is.element(attributes(pop_data)$age_var, names(pop_data))
 
   if (!missing_age) {
-    stop("Argument `pop_data` is missing column `age` (age, in years).")
+    cli::cli_abort(message = "Argument `pop_data` is missing column `attributes(pop_data)$age_var` (age, in years).")
   }
 
   missing_value <- is.element(attributes(pop_data)$value_var, names(pop_data))
 
   if (!missing_value) {
-    stop("Argument `pop_data` is missing column `value` (antibody measurement).")
+    cli::cli_abort(message = "Argument `pop_data` is missing column `attributes(pop_data)$value_var` (antibody measurement).")
   }
 
   message("data format is as expected.")

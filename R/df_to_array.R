@@ -21,7 +21,9 @@
 #'   ) %>%
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
 #' df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+#'
 #' @keywords internal
+#'
 df.to.array <- function(
     df,
     dim_var_names,

@@ -51,17 +51,18 @@ age_scatter <- function(
   if (is.null(strata)) {
     plot1 <-
       object %>%
-      ggplot2::ggplot(ggplot2::aes_string(
-        x = object %>% get_age_var(),
-        y = object %>% get_value_var()
-      ))
+      ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_age_var()]],
+                                   y = .data[[object %>% get_value_var()]],
+                                   col = get(strata)
+                                   )
+                      )
   } else {
     plot1 <-
       object %>%
       ggplot2::ggplot(
-        ggplot2::aes_string(
-          x = object %>% get_age_var(),
-          y = object %>% get_value_var()
+        ggplot2::aes(
+          x = .data[[object %>% get_age_var()]],
+          y = .data[[object %>% get_value_var()]]
         ),
         col = get(strata)
       ) +
@@ -101,7 +102,7 @@ density_plot <- function(
     log = FALSE) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(ggplot2::aes_string(x = object %>% get_value_var())) +
+    ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_value_var()]])) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
@@ -123,9 +124,9 @@ density_plot <- function(
   if (log) {
     min_nonzero_val <-
       object %>%
-      filter(object %>% get_value_var() > 0) %>%
+      filter(object %>% get_value() > 0) %>%
       get_value() %>%
-      min() + 0.0001 # avoid log 0
+      min()
 
     max_val <-
       object %>%

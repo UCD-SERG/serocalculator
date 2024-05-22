@@ -49,7 +49,7 @@ sim.cs(
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
-\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
+\item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
 \item \code{y1}: antibody peak level (ELISA units)
 \item \code{t1}: duration of infection
 \item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
@@ -66,11 +66,7 @@ sim.cs(
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{...}{
-  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{additional arguments passed to \code{simcs.tinf()}}
 }
 \value{
 a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey data, with columns:
@@ -84,6 +80,7 @@ Makes a cross-sectional data set (age, y(t) set)
 and adds noise, if desired.
 }
 \examples{
+\dontrun{
 # Load curve parameters
 dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 
@@ -120,5 +117,5 @@ csdata <- sim.cs(
   noise_limits = dlims,
   format = "long"
 )
-
+}
 }

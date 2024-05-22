@@ -25,6 +25,7 @@
 #'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
 #' \dontrun{
 #' est1 <- est.incidence(
 #'   pop_data = xs_data %>% filter(Country == "Pakistan"),

@@ -1,13 +1,4 @@
-#  Utility functions: interface with C lib serocalc.so
-
 #' Calculate negative log-likelihood (deviance)
-#'
-#' more description to be added here
-#' @param lambda incidence parameter, in events per person-year
-
-#' @param csdata cross-sectional sample data containing variables `value` and `age`
-#' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
-#' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
 #'
 #' @description
 #' `r lifecycle::badge("deprecated")`

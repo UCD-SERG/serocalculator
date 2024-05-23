@@ -1,26 +1,10 @@
 #' Convert a data.frame (or tibble) into a multidimensional array
 #'
-#' @param df a [data.frame()] (or [tibble::tibble()]) in long format (each row contains one value for the intended array)
-#' @param dim_var_names a [character()] vector of variable names in `df`. All of these variables should be factors, or a warning will be produced.
-#' @param value_var_name a [character()] variable containing a variable name from `df` which contains the values for the intended array.
-#' @return an [array()] with dimensions defined by the variables in `df` listed in `dim_var_names`
-#'
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
 #' `df.to.array()` was renamed to `df_to_array()` to create a more
 #' consistent API.
-#'
-#' @examples
-#' library(dplyr)
-#' library(tidyr)
-#' df <- iris %>%
-#'   tidyr::pivot_longer(
-#'     names_to = "parameter",
-#'     cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length")
-#'   ) %>%
-#'   mutate(parameter = factor(parameter, levels = unique(parameter)))
-#' df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
 #'
 #' @keywords internal
 #'

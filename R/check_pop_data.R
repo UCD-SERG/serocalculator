@@ -21,13 +21,13 @@ check_pop_data <- function(pop_data) {
   missing_age <- is.element(attributes(pop_data)$age_var, names(pop_data))
 
   if (!missing_age) {
-    cli::cli_abort(message = "Argument `pop_data` is missing column `attributes(pop_data)$age_var` (age, in years).")
+    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$age_var,  "(age, in years)"))
   }
 
   missing_value <- is.element(attributes(pop_data)$value_var, names(pop_data))
 
   if (!missing_value) {
-    cli::cli_abort(message = "Argument `pop_data` is missing column `attributes(pop_data)$value_var` (antibody measurement).")
+    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
   }
 
   message("data format is as expected.")

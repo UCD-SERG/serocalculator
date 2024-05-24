@@ -1,6 +1,6 @@
 Package: serocalculator
 Type: Package
-Title: Estimating Infection Rates from Serological Data
+Title: Estimating Infection Rates from 'Serological' Data
 Version: 1.0.1
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
@@ -9,8 +9,8 @@ Authors@R: c(
   person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
   person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut")))
 Description: Translates antibody levels measured in cross-sectional population 
-  samples into estimates of the frequency with which seroconversions (infections) 
-  occur in the sampled populations. Replaces the previous `seroincidence` package.
+  samples into estimates of the frequency with which 'seroconversions' (infections) 
+  occur in the sampled populations. Replaces the previous '`seroincidence`' package.
 Depends: R (>= 4.1.0)
 License: GPL-3
 Imports: 

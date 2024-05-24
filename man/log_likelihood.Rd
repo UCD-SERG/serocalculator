@@ -57,7 +57,7 @@ library(tibble)
 
 #load in longitudinal parameters
 dmcmc = load_curve_params("https://osf.io/download/rtw5k")
-
+ \dontrun{
 xs_data <- "https://osf.io/download//n6cp3/" \%>\%
 load_pop_data() \%>\%
 clean_pop_data()
@@ -69,7 +69,7 @@ clean_pop_data()
   eps = c(0, 0),                             # M noise (eps)
   y.low = c(1, 1),                           # low cutoff (llod)
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
-\dontrun{
+
 #Calculate log-likelihood
   ll_AG = llik(
   pop_data = xs_data,

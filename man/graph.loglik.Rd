@@ -76,7 +76,7 @@ library(tibble)
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
   clean_pop_data()
 
-
+\dontrun{
 # Load curve parameters and subset for the purposes of this example
 dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
@@ -89,7 +89,7 @@ cond <- tibble(
   eps = c(0, 0),                             # M noise (eps)
   y.low = c(1, 1),                           # Low cutoff (llod)
   y.high = c(5e6, 5e6))                      # High cutoff (y.high)
-\dontrun{
+
 # Graph the log likelihood
 lik_HlyE_IgA <- graph.loglik(
   pop_data = xs_data,

@@ -16,7 +16,7 @@
 #' * `renew.params = TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
-#' @inheritParams llik
+#' @inheritParams log_likelihood
 
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
@@ -24,7 +24,7 @@
 #' * `"wide"` (one serum sample per row)
 #' @param ... additional arguments passed to `simcs.tinf()`
 #' @inheritDotParams simcs.tinf
-#' @inheritParams llik # verbose
+#' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
 #' * one column for each element in the `antigen_iso` input argument

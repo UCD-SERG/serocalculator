@@ -6,7 +6,7 @@
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @param previous_plot if not NULL, the current data is added to the existing graph
 #' @param curve_label if not NULL, add a label for the curve
-#' @inheritParams llik
+#' @inheritParams log_likelihood
 #' @inheritDotParams llik -lambda
 #' @return a [ggplot2::ggplot()]
 #' @export

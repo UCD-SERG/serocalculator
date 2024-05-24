@@ -1,4 +1,5 @@
-
+#' @title Get Additional Data
+#'
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
@@ -38,13 +39,13 @@ getAdditionalData <- function(
 #' @examples
 #' \dontrun{
 #' curve_param_samples <-
-#'   getAdditionalData(
+#'   get_additional_data(
 #'     fileURL = "https://osf.io/download/bhfvx"
 #'   )
 #'
 #' # optionally, save the data to disk
 #' curve_param_samples <-
-#'   getAdditionalData(
+#'   get_additional_data(
 #'     fileURL = "https://osf.io/download/bhfvx",
 #'     savePath = "~/Downloads/curv_params.rds"
 #'   )

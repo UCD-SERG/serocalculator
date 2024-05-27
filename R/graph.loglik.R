@@ -7,7 +7,7 @@
 #' @param previous_plot if not NULL, the current data is added to the existing graph
 #' @param curve_label if not NULL, add a label for the curve
 #' @inheritParams log_likelihood
-#' @inheritDotParams llik -lambda
+#' @inheritDotParams log_likelihood -lambda
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples

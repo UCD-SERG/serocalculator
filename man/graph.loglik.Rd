@@ -56,9 +56,9 @@ graph.loglik(
 \item{curve_label}{if not NULL, add a label for the curve}
 
 \item{...}{
-  Arguments passed on to \code{\link[=llik]{llik}}
+  Arguments passed on to \code{\link[=log_likelihood]{log_likelihood}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
   }}
 }
 \value{

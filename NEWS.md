@@ -1,12 +1,12 @@
 # serocalculator 1.1.0
 
-* Renamed `llik()` function and replaced by `log_likelihood()`
+* Renamed `llik()` to `log_likelihood()`
 
-* Renamed `fdev()` function and replaced by `f_dev()`
+* Renamed `fdev()` to `f_dev()`
 
-* Renamed `df.to.array()` function and replaced by `df_to_array()`
+* Renamed `df.to.array()` to `df_to_array()`
 
-* Renamed `getAdditionalData()` function and replaced by `get_additional_data()`
+* Renamed `getAdditionalData()` to `get_additional_data()`
 
 * Removed `clean_pop_data()` function
 

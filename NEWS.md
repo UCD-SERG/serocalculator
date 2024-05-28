@@ -1,12 +1,12 @@
 # serocalculator 1.1.0
 
-* Deprecated `llik()` function and replaced by `log_likelihood()`
+* Renamed `llik()` function and replaced by `log_likelihood()`
 
-* Deprecated `fdev()` function and replaced by `f_dev()`
+* Renamed `fdev()` function and replaced by `f_dev()`
 
-* Deprecated `df.to.array()` function and replaced by `df_to_array()`
+* Renamed `df.to.array()` function and replaced by `df_to_array()`
 
-* Deprecated `getAdditionalData()` function and replaced by `get_additional_data()`
+* Renamed `getAdditionalData()` function and replaced by `get_additional_data()`
 
 * Removed `clean_pop_data()` function
 
@@ -30,7 +30,7 @@
 
 * Added `scales::pseudo_log_trans()` to `autoplot.pop_data()` to avoid log 0
 
-* Added `test-est.incidence-status.R` test to check output when `standarize` option is FALSE on `load_pop_data()`
+* Added `test-est.incidence-status.R` test to check output when `standardize` option is FALSE on `load_pop_data()`
 
 * Replaced column name comparison on `check_pop_data()` to use attribute name on `pop_data` class
 

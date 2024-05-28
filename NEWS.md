@@ -1,5 +1,39 @@
 # serocalculator 1.1.0
 
+* Deprecated `llik()` function and replaced by `log_likelihood()`
+
+* Deprecated `fdev()` function and replaced by `f_dev()`
+
+* Deprecated `df.to.array()` function and replaced by `df_to_array()`
+
+* Deprecated `getAdditionalData()` function and replaced by `get_additional_data()`
+
+* Removed `clean_pop_data()` function
+
+* Remove `clean_pop_data()` dependency functions documentation examples
+
+* Added `age`, `value`, `id` and `standardize` arguments to `load_pop_data()`
+
+* Added the following methods to `pop_data` class:
+
+  - `set_age()`
+  - `set_value()`
+  - `set_id()`
+  - `get_age()`
+  - `get_value()`
+  - `get_id()`
+  - `get_age_var()`
+  - `get_value_var()`
+  - `get_id_var()`
+  
+* Added additional warnings to `load_pop_data()`
+
+* Added `scales::pseudo_log_trans()` to `autoplot.pop_data()` to avoid log 0
+
+* Added `test-est.incidence-status.R` test to check output when `standarize` option is FALSE on `load_pop_data()`
+
+* Replaced column name comparison on `check_pop_data()` to use attribute name on `pop_data` class
+
 # serocalculator 1.0.1
 
 * added `n_points` argument to `plot_curve_params_one_ab()`

@@ -7,49 +7,49 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
-#' \dontrun{
 #'
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/")
-#' xs_data = clean_pop_data(xs_data)
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
-#' curve = load_curve_params("https://osf.io/download/rtw5k/")
-#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 #'
-#' est1 = est.incidence(
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' est1 <- est.incidence(
 #'   pop_data = xs_data %>% filter(Country == "Pakistan"),
 #'   curve_param = curve,
 #'   noise_param = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   build_graph = TRUE
 #' )
-
 #'
-#' #plot the log-likelihood curve
-#'   autoplot(est1)
-#'}
+#' # Plot the log-likelihood curve
+#' autoplot(est1)
+#'
 autoplot.seroincidence =
   function(object, log_x = FALSE, ...)
 {
   to_return = attr(object, "ll_graph")
 
-  if(is.null(to_return))
-  {
-    stop(
-      "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `est.incidence()`")
-    figure = NULL
-  }
+    if (is.null(to_return)) {
+      stop(
+        "Graphs cannot be extracted; ",
+        "`build_graph` was not `TRUE` in the call to `est.incidence()`"
+      )
+      figure <- NULL
+    }
 
-  if(log_x)
-  {
-    to_return = to_return +
-      ggplot2::scale_x_log10(
-        labels = scales::label_comma()) +
-      ggplot2::theme_linedraw()
-  }
+    if (log_x) {
+      to_return <- to_return +
+        ggplot2::scale_x_log10(
+          labels = scales::label_comma()
+        ) +
+        ggplot2::theme_linedraw()
+    }
 
-  return(to_return)
-}
+    return(to_return)
+  }

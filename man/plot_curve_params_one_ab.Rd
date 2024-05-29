@@ -9,7 +9,9 @@ plot_curve_params_one_ab(
   verbose = FALSE,
   alpha = 0.4,
   n_curves = 100,
+  n_points = 1000,
   log_x = FALSE,
+  log_y = TRUE,
   rows_to_graph = 1:min(n_curves, nrow(object)),
   xlim = c(10^-1, 10^3.1),
   ...
@@ -28,16 +30,44 @@ plot_curve_params_one_ab(
 
 \item{n_curves}{how many curves to plot (see details).}
 
+\item{n_points}{Number of points to interpolate along the x axis (passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
+
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+
+\item{log_y}{should the Y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
 \item{rows_to_graph}{which rows of \code{curve_params} to plot (overrides \code{n_curves}).}
 
 \item{xlim}{range of x values to graph}
 
-\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-\code{colour = "red"} or \code{size = 3}. They may also be parameters
-to the paired geom/stat.}
+\item{...}{
+  Arguments passed on to \code{\link[ggplot2:geom_function]{ggplot2::geom_function}}
+  \describe{
+    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
+    \item{\code{data}}{Ignored by \code{stat_function()}, do not use.}
+    \item{\code{stat}}{The statistical transformation to use on the data for this
+layer, either as a \code{ggproto} \code{Geom} subclass or as a string naming the
+stat stripped of the \code{stat_} prefix (e.g. \code{"count"} rather than
+\code{"stat_count"})}
+    \item{\code{position}}{Position adjustment, either as a string naming the adjustment
+(e.g. \code{"jitter"} to use \code{position_jitter}), or the result of a call to a
+position adjustment function. Use the latter if you need to change the
+settings of the adjustment.}
+    \item{\code{na.rm}}{If \code{FALSE}, the default, missing values are removed with
+a warning. If \code{TRUE}, missing values are silently removed.}
+    \item{\code{show.legend}}{logical. Should this layer be included in the legends?
+\code{NA}, the default, includes if any aesthetics are mapped.
+\code{FALSE} never includes, and \code{TRUE} always includes.
+It can also be a named logical vector to finely select the aesthetics to
+display.}
+    \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics,
+rather than combining with them. This is most useful for helper functions
+that define both data and aesthetics and shouldn't inherit behaviour from
+the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+  }}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
@@ -58,8 +88,9 @@ In most cases, \code{curve_params} will contain too many rows of MCMC samples fo
 }
 \examples{
 library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
-"https://osf.io/download/rtw5k/" \%>\%
-load_curve_params() \%>\%
-dplyr::filter(antigen_iso == "HlyE_IgG") \%>\%
-serocalculator:::plot_curve_params_one_ab()
+
+load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+  dplyr::filter(antigen_iso == "HlyE_IgG") \%>\%
+  serocalculator:::plot_curve_params_one_ab()
+
 }

@@ -10,51 +10,58 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @examples
+#'
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/") %>%
-#'   clean_pop_data()
-#' curve = load_curve_params("https://osf.io/download/rtw5k/" )
-#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
-#' est2 = est.incidence.by(
-#' strata = c("catchment"),
-#' pop_data = xs_data %>% filter(Country == "Pakistan"),
-#' curve_params = curve,
-#' noise_params = noise %>% filter(Country == "Pakistan"),
-#' antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#' #num_cores = 8 #Allow for parallel processing to decrease run time
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' est2 <- est.incidence.by(
+#'   strata = c("catchment"),
+#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   curve_params = curve,
+#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   #num_cores = 8 #Allow for parallel processing to decrease run time
 #' )
 #'
 #' est2sum <- summary(est2)
 #'
 #' autoplot(est2sum, "catchment")
 #'
-autoplot.summary.seroincidence.by = function(
+autoplot.summary.seroincidence.by <- function(
     object,
     xvar,
     alpha = .7,
     shape = 1,
     width = 0.001,
-    ...)
-{
+    ...) {
   object %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = get(xvar),
-        y = .data$incidence.rate)) +
+        y = .data$incidence.rate
+      )
+    ) +
     ggplot2::geom_jitter(
       width = width,
       height = 0,
       aes(
-        col = .data$nlm.convergence.code),
+        col = .data$nlm.convergence.code
+      ),
       shape = shape,
-      alpha = alpha) +
+      alpha = alpha
+    ) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_linedraw() +
     ggplot2::expand_limits(x = 0, y = 0) +
     ggplot2::labs(col = "`nlm()` convergence code") +
-    ggplot2::theme(legend.position="bottom")
+    ggplot2::theme(legend.position = "bottom")
 }

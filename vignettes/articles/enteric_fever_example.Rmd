@@ -27,7 +27,7 @@ Further details on this published study can be found here: https://doi.org/10.10
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  fig.height=4, fig.width=7,
+  fig.height = 4, fig.width = 7,
   message = FALSE,
   collapse = TRUE,
   comment = "#>"
@@ -39,11 +39,16 @@ knitr::opts_chunk$set(
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
-#devtools::install_github("ucd-serg/serocalculator")
-library(serocalculator)
-#install.packages("tidyverse)
-library(tidyverse)
+# devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
 ```
+
+
+```{r load_packages}
+library(serocalculator)
+# install.packages("tidyverse)
+library(tidyverse)
+``` 
+
 
 ### Load data
 
@@ -69,13 +74,11 @@ Column Name    |  Description
 
 
 ```{r curve, message=FALSE}
+# Import longitudinal antibody parameters from OSF
 
-#Import longitudinal antibody parameters from OSF
-
-curve = 
-  "https://osf.io/download/rtw5k/" %>% 
+curves <-
+  "https://osf.io/download/rtw5k/" %>%
   load_curve_params()
-
 ```
 
 #### Visualize curve parameters
@@ -83,7 +86,7 @@ curve =
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve %>% autoplot()
+curves %>% autoplot()
 ```
 
 
@@ -103,13 +106,14 @@ Column Name | Description
 
 
 ```{r data, message = FALSE}
-
-#Import cross-sectional data from OSF and rename required variables
-xs_data <- 
-  "https://osf.io/download//n6cp3/" %>% 
-  load_pop_data() %>% 
-  clean_pop_data()
-
+# Import cross-sectional data from OSF and rename required variables
+xs_data <- load_pop_data(
+  file_path = "https://osf.io/download//n6cp3/",
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = TRUE
+)
 ```
 
 #### Check formatting
@@ -134,20 +138,18 @@ xs_data %>% summary()
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
 ```{r plots}
-#Create plots
-
-xs_data %>% autoplot(strata = "Country",type='density')
-
+# Create plots
+xs_data %>% autoplot(strata = "Country", type = "density")
 ```
 
 We see that across countries, our data is highly skewed with the majority of responses on the lower end of our data with long tails. Let's get a better look at the distribution by log transforming our antibody response value. 
 
 ```{r logplot, message = FALSE}
-#Create log transformed plots
+# Create log transformed plots
 
 options(scipen = 999)
-xs_data %>% 
-  autoplot(strata = "Country", log = TRUE,type='density')
+xs_data %>%
+  autoplot(strata = "Country", log = TRUE, type = "density")
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
@@ -155,21 +157,8 @@ Once log transformed, our data looks much more normally distributed. In most cas
 Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
-
-#Plot antibody responses by age
-
-
-ggplot(data=xs_data, aes(x=age, y=value, color=Country)) + 
-         geom_point(size=.6, alpha=.7)+
-         geom_smooth(method=lm, se=FALSE)+
-         scale_y_log10() +
-         theme_linedraw()+
-          labs(
-            title = "Quantitative Antibody Responses by Age",
-            x = "Age",
-            y = "Value"
-          )
-
+# Plot antibody responses by age
+autoplot(object = xs_data, type = "age-scatter", strata = "Country")
 ```
 
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).
@@ -194,10 +183,9 @@ Column Name | Description
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}
-#Import noise parameters from OSF
+# Import noise parameters from OSF
 
-noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() 
-
+noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
 ```
 
 ## Estimate Seroincidence 
@@ -207,12 +195,11 @@ Now we are ready to begin estimating seroincidence. We will conduct two separate
 Using the function `est.incidence`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
 
 ```{r est}
+# Using est.incidence (no strata)
 
-#Using est.incidence (no strata)
-
-est1 = est.incidence(
+est1 <- est.incidence(
   pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_param = curve, 
+  curve_param = curves,
   noise_param = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
@@ -227,19 +214,18 @@ We can also produce stratified seroincidence estimates. Here we stratify by catc
 
 
 ```{r estby}
-#Using est.incidence.by (strata)
+# Using est.incidence.by (strata)
 
-est2 = est.incidence.by(
+est2 <- est.incidence.by(
   strata = c("catchment"),
   pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_params = curve, 
+  curve_params = curves,
   noise_params = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
+  num_cores = 8 # Allow for parallel processing to decrease run time
+)
 
 summary(est2)
-
 ```
 
 We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
@@ -248,24 +234,25 @@ Let's visualize our seroincidence estimates by strata.
 
 
 ```{r}
-#Plot seroincidence estimates
+# Plot seroincidence estimates
 
-#Save summary(est2) as a dataframe
-est2df<- summary(est2)
+# Save summary(est2) as a dataframe
+est2df <- summary(est2)
 
-#Create barplot (rescale incidence rate and CIs)
-ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
+# Create barplot (rescale incidence rate and CIs)
+ggplot(est2df, aes(y = catchment, x = incidence.rate * 1000, fill = catchment)) +
   geom_bar(stat = "identity", show.legend = FALSE) +
-  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
+  geom_errorbar(aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000, width = .05)) +
   labs(
-      title= "Enteric Fever Seroincidence by Catchment Area",
-        x="Seroincience rate per 1000 person-years",
-        y="Catchment"
-      ) +
+    title = "Enteric Fever Seroincidence by Catchment Area",
+    x = "Seroincience rate per 1000 person-years",
+    y = "Catchment"
+  ) +
   theme_bw() +
-  theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11))
-
+  theme(
+    axis.text.y = element_text(size = 11),
+    axis.text.x = element_text(size = 11)
+  )
 ```
 
 ## Conclusions

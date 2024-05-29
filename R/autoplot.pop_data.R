@@ -13,11 +13,14 @@
 #' @examples
 #' library(dplyr)
 #' library(ggplot2)
-#' library(ggfortify)
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#'   load_pop_data() %>%
-#'   clean_pop_data()
+#' xs_data <- load_pop_data(
+#'   file_path = "https://osf.io/download//n6cp3/",
+#'   age = "Age",
+#'   id = "index_id",
+#'   value = "result",
+#'   standardize = TRUE
+#' )
 #'
 #' xs_data %>% autoplot(strata = "Country", type = "density")
 #' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
@@ -28,7 +31,6 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
-
   if (type == "age-scatter") {
     age_scatter(object, strata)
   } else if (type == "density") {
@@ -36,7 +38,8 @@ autoplot.pop_data <- function(
   } else {
     cli::cli_abort(
       '`type = "{type}"` is not a valid input;
-      the currently available options for `type` are "density" or "age-scatter"')
+      the currently available options for `type` are "density" or "age-scatter"'
+    )
   }
 }
 
@@ -45,28 +48,44 @@ age_scatter <- function(
     strata = NULL) {
   # create default plotting
 
-  if(is.null(strata))
-  {
+  if (is.null(strata)) {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = .data$age, y = .data$value))
-  } else
-  {
+      ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_age_var()]],
+                                   y = .data[[object %>% get_value_var()]],
+                                   col = get(strata)
+                                   )
+                      )
+  } else {
     plot1 <-
       object %>%
-      ggplot2::ggplot(aes(x = .data$age, y = .data$value, col = get(strata))) +
+      ggplot2::ggplot(
+        ggplot2::aes(
+          x = .data[[object %>% get_age_var()]],
+          y = .data[[object %>% get_value_var()]]
+        ),
+        col = get(strata)
+      ) +
       ggplot2::labs(colour = strata)
   }
 
   plot1 <- plot1 +
     ggplot2::theme_linedraw() +
-    ggplot2::scale_y_log10() +
+    # ggplot2::scale_y_log10() +
+
+    # avoid log 0 (https://forum.posit.co/t/using-log-transformation-but-need-to-preserve-0/129197/4)
+    ggplot2::scale_y_continuous(
+      trans = scales::pseudo_log_trans(sigma = 0.01),
+      breaks = c(-1, -0.1, 0, 0.1, 1, 10),
+      minor_breaks = NULL
+    ) +
     ggplot2::geom_point(size = .6, alpha = .7) +
     ggplot2::geom_smooth(
       method = "lm",
       se = FALSE,
       formula = y ~ x,
-      na.rm = TRUE) +
+      na.rm = TRUE
+    ) +
     ggplot2::labs(
       title = "Quantitative Antibody Responses by Age",
       x = "Age",
@@ -83,7 +102,7 @@ density_plot <- function(
     log = FALSE) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(aes(x = .data$value)) +
+    ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_value_var()]])) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
@@ -103,11 +122,34 @@ density_plot <- function(
       ggplot2::labs(fill = strata)
   }
   if (log) {
+    min_nonzero_val <-
+      object %>%
+      filter(object %>% get_value() > 0) %>%
+      get_value() %>%
+      min()
+
+    max_val <-
+      object %>%
+      get_value() %>%
+      max()
+
+    breaks1 <- c(0, 10^seq(
+      min_nonzero_val %>% log10() %>% floor(),
+      max_val %>% log10() %>% ceiling()
+    ))
+
     plot1 <- plot1 +
-      ggplot2::scale_x_log10() +
+      ggplot2::scale_x_continuous(
+        labels = scales::label_comma(),
+        transform = scales::pseudo_log_trans(
+          sigma = min_nonzero_val / 10,
+          base = 10
+        ),
+        breaks = breaks1
+      ) +
       ggplot2::labs(
-        title = "Distribution of Cross-sectional Antibody Responses (Log transformed)",
-        x = "Log10(Antibody Response Value)",
+        title = "Distribution of Cross-sectional Antibody Responses",
+        x = "Quantitative antibody response",
         y = "Frequency"
       )
   } else {

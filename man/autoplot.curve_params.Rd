@@ -24,6 +24,7 @@
     \item{\code{verbose}}{verbose output}
     \item{\code{xlim}}{range of x values to graph}
     \item{\code{n_curves}}{how many curves to plot (see details).}
+    \item{\code{n_points}}{Number of points to interpolate along the x axis (passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
     \item{\code{rows_to_graph}}{which rows of \code{curve_params} to plot (overrides \code{n_curves}).}
     \item{\code{alpha}}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}}) how transparent the curves should be:
 \itemize{
@@ -31,6 +32,7 @@
 \item 1 = fully opaque
 }}
     \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+    \item{\code{log_y}}{should the Y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
   }}
 }
 \value{
@@ -49,8 +51,11 @@ Note that if you directly specify \code{rows_to_graph} when calling this functio
 library(dplyr)
 library(ggplot2)
 
-curve = "https://osf.io/download/rtw5k/" \%>\%
-  load_curve_params() \%>\%
+curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+  slice(1:100, .by = antigen_iso)  \%>\% # Reduce dataset for the purposes of this example
   autoplot()
+
+curve
 
 }

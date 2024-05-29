@@ -7,27 +7,27 @@
 #' @examples
 #' library(dplyr)
 #'
-#' #Import cross-sectional data from OSF and rename required variables
-#' xs_data <-
-#'  "https://osf.io/download//n6cp3/" %>%
-#'   load_pop_data() %>%
-#'   clean_pop_data()
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   check_pop_data()
 #'
-#'   xs_data %>% check_pop_data()
-#'
-check_pop_data <- function(pop_data)
-{
+check_pop_data <- function(pop_data) {
   if (!is.data.frame(pop_data)) {
-    stop(.pasteN("Argument `pop_data` is not a `data.frame()`.",
-                 "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
+    cli::cli_abort(message = .pasteN(
+      "Argument `pop_data` is not a `data.frame()`.",
+      "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."
+    ))
   }
 
-  if (!is.element("age", names(pop_data))) {
-    stop("Argument `pop_data` is missing column `age` (age, in years).")
+  missing_age <- is.element(attributes(pop_data)$age_var, names(pop_data))
+
+  if (!missing_age) {
+    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$age_var,  "(age, in years)"))
   }
 
-  if (!is.element("value", names(pop_data))) {
-    stop("Argument `pop_data` is missing column `value` (antibody measurement).")
+  missing_value <- is.element(attributes(pop_data)$value_var, names(pop_data))
+
+  if (!missing_value) {
+    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
   }
 
   message("data format is as expected.")

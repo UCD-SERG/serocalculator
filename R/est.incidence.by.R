@@ -27,23 +27,28 @@
 #'
 #' @export
 #' @examples
+#'
 #' library(dplyr)
 #'
-#' xs_data = load_pop_data("https://osf.io/download//n6cp3/") %>%
-#'   clean_pop_data()
-#' curve = load_curve_params("https://osf.io/download/rtw5k/")
-#' noise = load_noise_params("https://osf.io/download//hqy4v/")
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
-#' est2 = est.incidence.by(
-#' strata = c("catchment"),
-#' pop_data = xs_data %>% filter(Country == "Pakistan"),
-#' curve_params = curve,
-#' noise_params = noise %>% filter(Country == "Pakistan"),
-#' antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#' #num_cores = 8 #Allow for parallel processing to decrease run time
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' est2 <- est.incidence.by(
+#'   strata = c("catchment"),
+#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   curve_params = curve,
+#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   #num_cores = 8 # Allow for parallel processing to decrease run time
 #' )
 #'
 #' summary(est2)
+#'
 est.incidence.by <- function(
     pop_data,
     curve_params,
@@ -51,33 +56,32 @@ est.incidence.by <- function(
     strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    antigen_isos = pop_data %>% pull("antigen_iso") %>% unique(),
+    antigen_isos = pop_data %>%
+      pull("antigen_iso") %>%
+      unique(),
     lambda_start = 0.1,
     build_graph = FALSE,
     num_cores = 1L,
     verbose = FALSE,
     print_graph = FALSE,
-    ...)
-{
-
-  if(missing(strata))
-  {
+    ...) {
+  if (missing(strata)) {
     warning(
       "The `strata` argument to `est.incidence.by()` is missing.",
       "\n\n  If you do not want to stratify your data, ",
       "consider using the `est.incidence()` function to simplify your code and avoid this warning.",
-      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.\n")
+      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.\n"
+    )
   }
 
-  strata_is_empty =
+  strata_is_empty <-
     missing(strata) ||
-    is.null(strata) ||
-    setequal(strata, NA) ||
-    setequal(strata, "")
+      is.null(strata) ||
+      setequal(strata, NA) ||
+      setequal(strata, "")
 
-  if(strata_is_empty)
-  {
-    to_return =
+  if (strata_is_empty) {
+    to_return <-
       est.incidence(
         pop_data = pop_data,
         curve_params = curve_params,
@@ -86,7 +90,8 @@ est.incidence.by <- function(
         antigen_isos = antigen_isos,
         build_graph = build_graph,
         verbose = verbose,
-        ...)
+        ...
+      )
     return(to_return)
   }
 
@@ -95,7 +100,8 @@ est.incidence.by <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params)
+    curve_params = curve_params
+  )
 
   # Split data per stratum
   stratumDataList <- stratify_data(
@@ -105,33 +111,31 @@ est.incidence.by <- function(
     noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
-    noise_strata_varnames = noise_strata_varnames)
+    noise_strata_varnames = noise_strata_varnames
+  )
 
-  strata_table = stratumDataList %>% attr("strata")
+  strata_table <- stratumDataList %>% attr("strata")
 
-  if(verbose)
-  {
+  if (verbose) {
     message("Data has been stratified.")
-    message('Here are the strata that will be analyzed:')
+    message("Here are the strata that will be analyzed:")
     print(strata_table)
   }
 
-  if(num_cores > 1L && !requireNamespace("parallel", quietly = TRUE))
-  {
+  if (num_cores > 1L && !requireNamespace("parallel", quietly = TRUE)) {
     warning(
       "The `parallel` package is not installed, so `num_cores > 1` has no effect.",
-      "To install `parallel`, run `install.packages('parallel')` in the console.")
+      "To install `parallel`, run `install.packages('parallel')` in the console."
+    )
   }
 
   # Loop over data per stratum
-  if (num_cores > 1L)
-  {
+  if (num_cores > 1L) {
     requireNamespace("parallel", quietly = FALSE)
 
-    num_cores = num_cores %>% check_parallel_cores()
+    num_cores <- num_cores %>% check_parallel_cores()
 
-    if(verbose)
-    {
+    if (verbose) {
       message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
     }
 
@@ -150,14 +154,13 @@ est.incidence.by <- function(
       .libPaths(libPaths)
       require(serocalculator) # note - this gets out of sync when using load_all() in development
       require(dplyr)
-
     })
 
     {
       fits <- parallel::parLapplyLB(
         cl = cl,
         X = stratumDataList,
-        fun = function(x)
+        fun = function(x) {
           do.call(
             what = est.incidence,
             args = c(
@@ -168,41 +171,39 @@ est.incidence.by <- function(
                 build_graph = build_graph,
                 print_graph = FALSE,
                 verbose = FALSE,
-                ...)
+                ...
+              )
             )
           )
+        }
       )
     } %>% system.time() -> time
 
-    if(verbose)
-    {
+    if (verbose) {
       message("Elapsed time for parallelized code: ")
       print(time)
     }
-  } else
-  {
+  } else {
     # fits <- lapply(
     #   X = stratumDataList,
     #   FUN = function(x) est.incidence(dataList = x, verbose = verbose, ...))
 
-    fits = list()
+    fits <- list()
 
     { # time progress
 
       for (cur_stratum in names(stratumDataList))
       {
-
-        cur_stratum_vars =
+        cur_stratum_vars <-
           strata_table %>%
           dplyr::filter(.data$Stratum == cur_stratum)
 
-        if(verbose)
-        {
-          message('starting new stratum: ', cur_stratum)
+        if (verbose) {
+          message("starting new stratum: ", cur_stratum)
           print(cur_stratum_vars)
         }
 
-        fits[[cur_stratum]] =
+        fits[[cur_stratum]] <-
           do.call(
             what = est.incidence,
             args = c(
@@ -213,16 +214,14 @@ est.incidence.by <- function(
                 build_graph = build_graph,
                 print_graph = print_graph,
                 verbose = verbose,
-                ...)
+                ...
+              )
             )
           )
-
-
       }
     } %>% system.time() -> time
 
-    if(verbose)
-    {
+    if (verbose) {
       message("Elapsed time for loop over strata: ")
       print(time)
     }
@@ -233,7 +232,8 @@ est.incidence.by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.by" %>% union(class(fits)))
+    class = "seroincidence.by" %>% union(class(fits))
+  )
 
   return(incidenceData)
 }

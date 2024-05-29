@@ -15,7 +15,6 @@
 Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=est.incidence.by]{est.incidence.by()}}.
 }
 \examples{
-
 \dontrun{
 # Estimate seroincidence
 seroincidence <- est.incidence.by(...)

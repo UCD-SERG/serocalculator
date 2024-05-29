@@ -11,7 +11,6 @@ estimate of the frequency with which seroconversions (infections) occur in the s
 The API for this package includes the following functions:\tabular{ll}{
    Function Name \tab Purpose \cr
    \code{\link[=load_pop_data]{load_pop_data()}} \tab loading cross-sectional antibody survey data \cr
-   \code{\link[=clean_pop_data]{clean_pop_data()}} \tab cleaning antibody data \cr
    \code{\link[=check_pop_data]{check_pop_data()}} \tab checking antibody data \cr
    \code{\link[=summary.pop_data]{summary.pop_data()}} \tab numerical summaries of antibody data \cr
    \code{\link[=autoplot.pop_data]{autoplot.pop_data()}} \tab graphs of antibody data distributions \cr

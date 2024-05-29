@@ -1,4 +1,4 @@
-nlm_exit_codes = c(
+nlm_exit_codes <- c(
   "1" = "1: relative gradient is close to zero, current iterate is probably solution.",
   "2" = "2: successive iterates within tolerance, current iterate is probably solution.",
   "3" = "3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or `stepmin` in `est.incidence()` (a.k.a. `steptol` in `nlm()`) is too large.",

@@ -1,10 +1,8 @@
-check_parallel_cores = function(num_cores)
-{
+check_parallel_cores <- function(num_cores) {
   requireNamespace("parallel", quietly = FALSE)
 
-  if(num_cores > (parallel::detectCores() - 1))
-  {
-    num_cores =
+  if (num_cores > (parallel::detectCores() - 1)) {
+    num_cores <-
       num_cores %>%
       min(parallel::detectCores() - 1)
 

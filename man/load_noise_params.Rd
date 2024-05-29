@@ -19,8 +19,6 @@ Load noise parameters
 }
 \examples{
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
-
 print(noise)
-
 
 }

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,32 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="serocalculator-110">serocalculator 1.1.0<a class="anchor" aria-label="anchor" href="#serocalculator-110"></a></h2>
+<ul><li><p>Renamed <code><a href="../reference/llik.html">llik()</a></code> to <code><a href="../reference/log_likelihood.html">log_likelihood()</a></code></p></li>
+<li><p>Renamed <code><a href="../reference/fdev.html">fdev()</a></code> to <code><a href="../reference/f_dev.html">f_dev()</a></code></p></li>
+<li><p>Renamed <code><a href="../reference/df.to.array.html">df.to.array()</a></code> to <code><a href="../reference/df_to_array.html">df_to_array()</a></code></p></li>
+<li><p>Renamed <code><a href="../reference/getAdditionalData.html">getAdditionalData()</a></code> to <code><a href="../reference/get_additional_data.html">get_additional_data()</a></code></p></li>
+<li><p>Removed <code>clean_pop_data()</code> function</p></li>
+<li><p>Remove <code>clean_pop_data()</code> dependency functions documentation examples</p></li>
+<li><p>Added <code>age</code>, <code>value</code>, <code>id</code> and <code>standardize</code> arguments to <code><a href="../reference/load_pop_data.html">load_pop_data()</a></code></p></li>
+<li>
+<p>Added the following methods to <code>pop_data</code> class:</p>
+<ul><li><code>set_age()</code></li>
+<li><code>set_value()</code></li>
+<li><code>set_id()</code></li>
+<li><code>get_age()</code></li>
+<li><code>get_value()</code></li>
+<li><code>get_id()</code></li>
+<li><code>get_age_var()</code></li>
+<li><code>get_value_var()</code></li>
+<li><code>get_id_var()</code></li>
+</ul></li>
+<li><p>Added additional warnings to <code><a href="../reference/load_pop_data.html">load_pop_data()</a></code></p></li>
+<li><p>Added <code><a href="https://scales.r-lib.org/reference/transform_log.html" class="external-link">scales::pseudo_log_trans()</a></code> to <code><a href="../reference/autoplot.pop_data.html">autoplot.pop_data()</a></code> to avoid log 0</p></li>
+<li><p>Added <code>test-est.incidence-status.R</code> test to check output when <code>standardize</code> option is FALSE on <code><a href="../reference/load_pop_data.html">load_pop_data()</a></code></p></li>
+<li><p>Replaced column name comparison on <code><a href="../reference/check_pop_data.html">check_pop_data()</a></code> to use attribute name on <code>pop_data</code> class</p></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="serocalculator-101">serocalculator 1.0.1<a class="anchor" aria-label="anchor" href="#serocalculator-101"></a></h2>
 <ul><li>added <code>n_points</code> argument to <code><a href="../reference/plot_curve_params_one_ab.html">plot_curve_params_one_ab()</a></code>
 </li>
@@ -72,7 +98,6 @@
 <p>Added functions and methods:</p>
 <ul><li><code><a href="../reference/load_pop_data.html">load_pop_data()</a></code></li>
 <li><code><a href="../reference/check_pop_data.html">check_pop_data()</a></code></li>
-<li><code><a href="../reference/clean_pop_data.html">clean_pop_data()</a></code></li>
 <li><code><a href="../reference/summary.pop_data.html">summary.pop_data()</a></code></li>
 <li><code><a href="../reference/autoplot.pop_data.html">autoplot.pop_data()</a></code></li>
 <li><code><a href="../reference/load_curve_params.html">load_curve_params()</a></code></li>

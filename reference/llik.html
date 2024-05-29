@@ -16,7 +16,7 @@ consistent API."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,89 +82,8 @@ consistent API.</p>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
-    <div class="section level2">
-    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>lambda</dt>
-<dd><p>incidence parameter, in events per person-year</p></dd>
 
-
-<dt>pop_data</dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with cross-sectional serology data per antibody and age, and additional columns</p></dd>
-
-
-<dt>antigen_isos</dt>
-<dd><p>Character vector listing one or more antigen isotypes. Values must match <code>pop_data</code>.</p></dd>
-
-
-<dt>curve_params</dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype combinations</p></li>
-<li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
-<li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
-<li><p><code>y1</code>: antibody peak level (ELISA units)</p></li>
-<li><p><code>t1</code>: duration of infection</p></li>
-<li><p><code>alpha</code>: antibody decay rate (1/days for the current longitudinal parameter sets)</p></li>
-<li><p><code>r</code>: shape factor of antibody decay</p></li>
-</ul></dd>
-
-
-<dt>noise_params</dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p></li>
-<li><p><code>nu</code>: biological noise</p></li>
-<li><p><code>eps</code>: measurement noise</p></li>
-<li><p><code>y.low</code>: lower limit of detection for the current antigen isotype</p></li>
-<li><p><code>y.high</code>: upper limit of detection for the current antigen isotype</p></li>
-</ul></dd>
-
-
-<dt>verbose</dt>
-<dd><p>logical: if TRUE, print verbose log information to console</p></dd>
-
-
-<dt>...</dt>
-<dd><p>additional arguments passed to other functions (not currently used).</p></dd>
-
-</dl></div>
-    <div class="section level2">
-    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    
-
-<p>the log-likelihood of the data with the current parameter values</p>
-    </div>
-
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load in longitudinal parameters</span></span></span>
-<span class="r-in"><span><span class="va">dmcmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, .by <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span> <span class="co"># Reduce dataset for the purposes of this example</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="st">"https://osf.io/download//n6cp3/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="clean_pop_data.html">clean_pop_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#Load noise params</span></span></span>
-<span class="r-in"><span><span class="va">cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  antigen_iso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  nu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,                          <span class="co"># Biologic noise (nu)</span></span></span>
-<span class="r-in"><span>  eps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,                             <span class="co"># M noise (eps)</span></span></span>
-<span class="r-in"><span>  y.low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,                           <span class="co"># Low cutoff (llod)</span></span></span>
-<span class="r-in"><span>  y.high <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5e6</span>, <span class="fl">5e6</span><span class="op">)</span><span class="op">)</span>                      <span class="co"># High cutoff (y.high)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Calculate log-likelihood</span></span></span>
-<span class="r-in"><span><span class="va">ll_AG</span> <span class="op">&lt;-</span> <span class="fu">llik</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span></span>
-<span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span></span>
-<span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span></span>
-<span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>,<span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  lambda <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -9404.196</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside></div>
+  </main></div>
 
 
     <footer><div class="pkgdown-footer-left">

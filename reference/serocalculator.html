@@ -4,7 +4,6 @@ estimate of the frequency with which seroconversions (infections) occur in the s
 The API for this package includes the following functions:
 Function NamePurpose
 load_pop_data()loading cross-sectional antibody survey data
-clean_pop_data()cleaning antibody data
 check_pop_data()checking antibody data
 summary.pop_data()numerical summaries of antibody data
 autoplot.pop_data()graphs of antibody data distributions
@@ -26,7 +25,6 @@ estimate of the frequency with which seroconversions (infections) occur in the s
 The API for this package includes the following functions:
 Function NamePurpose
 load_pop_data()loading cross-sectional antibody survey data
-clean_pop_data()cleaning antibody data
 check_pop_data()checking antibody data
 summary.pop_data()numerical summaries of antibody data
 autoplot.pop_data()graphs of antibody data distributions
@@ -54,7 +52,7 @@ sim.cs()simulating cross-sectional population antibody data using longitudinal s
     
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +101,7 @@ sim.cs()simulating cross-sectional population antibody data using longitudinal s
     <div class="ref-description section level2">
     <p>This package translates antibody levels measured in a (cross-sectional) population sample into an
 estimate of the frequency with which seroconversions (infections) occur in the sampled population.</p>
-<p>The API for this package includes the following functions:</p><table class="table table"><tr><td>Function Name</td><td>Purpose</td></tr><tr><td><code><a href="load_pop_data.html">load_pop_data()</a></code></td><td>loading cross-sectional antibody survey data</td></tr><tr><td><code><a href="clean_pop_data.html">clean_pop_data()</a></code></td><td>cleaning antibody data</td></tr><tr><td><code><a href="check_pop_data.html">check_pop_data()</a></code></td><td>checking antibody data</td></tr><tr><td><code><a href="summary.pop_data.html">summary.pop_data()</a></code></td><td>numerical summaries of antibody data</td></tr><tr><td><code><a href="autoplot.pop_data.html">autoplot.pop_data()</a></code></td><td>graphs of antibody data distributions</td></tr><tr><td><code><a href="load_curve_params.html">load_curve_params()</a></code></td><td>loading antibody decay curve models</td></tr><tr><td><code><a href="autoplot.curve_params.html">autoplot.curve_params()</a></code></td><td>graphing antibody decay curves</td></tr><tr><td><code><a href="llik.html">llik()</a></code></td><td>computing log-likelihoods</td></tr><tr><td><code><a href="graph.loglik.html">graph.loglik()</a></code></td><td>graphing log-likelihood functions</td></tr><tr><td><code><a href="autoplot.seroincidence.html">autoplot.seroincidence()</a></code></td><td>graphing log-likelihood functions</td></tr><tr><td><code><a href="autoplot.seroincidence.by.html">autoplot.seroincidence.by()</a></code></td><td>graphing log-likelihood functions</td></tr><tr><td><code><a href="est.incidence.html">est.incidence()</a></code></td><td>estimating incidence rates</td></tr><tr><td><code><a href="est.incidence.by.html">est.incidence.by()</a></code></td><td>estimating incidence rates by strata</td></tr><tr><td><code><a href="summary.seroincidence.by.html">summary.seroincidence.by()</a></code></td><td>summarizing stratified incidence rate estimates</td></tr><tr><td><code><a href="autoplot.summary.seroincidence.by.html">autoplot.summary.seroincidence.by()</a></code></td><td>graphing incidence rate estimates</td></tr><tr><td><code><a href="sim.cs.html">sim.cs()</a></code></td><td>simulating cross-sectional population antibody data using longitudinal seroresponse models</td></tr></table></div>
+<p>The API for this package includes the following functions:</p><table class="table table"><tr><td>Function Name</td><td>Purpose</td></tr><tr><td><code><a href="load_pop_data.html">load_pop_data()</a></code></td><td>loading cross-sectional antibody survey data</td></tr><tr><td><code><a href="check_pop_data.html">check_pop_data()</a></code></td><td>checking antibody data</td></tr><tr><td><code><a href="summary.pop_data.html">summary.pop_data()</a></code></td><td>numerical summaries of antibody data</td></tr><tr><td><code><a href="autoplot.pop_data.html">autoplot.pop_data()</a></code></td><td>graphs of antibody data distributions</td></tr><tr><td><code><a href="load_curve_params.html">load_curve_params()</a></code></td><td>loading antibody decay curve models</td></tr><tr><td><code><a href="autoplot.curve_params.html">autoplot.curve_params()</a></code></td><td>graphing antibody decay curves</td></tr><tr><td><code><a href="llik.html">llik()</a></code></td><td>computing log-likelihoods</td></tr><tr><td><code><a href="graph.loglik.html">graph.loglik()</a></code></td><td>graphing log-likelihood functions</td></tr><tr><td><code><a href="autoplot.seroincidence.html">autoplot.seroincidence()</a></code></td><td>graphing log-likelihood functions</td></tr><tr><td><code><a href="autoplot.seroincidence.by.html">autoplot.seroincidence.by()</a></code></td><td>graphing log-likelihood functions</td></tr><tr><td><code><a href="est.incidence.html">est.incidence()</a></code></td><td>estimating incidence rates</td></tr><tr><td><code><a href="est.incidence.by.html">est.incidence.by()</a></code></td><td>estimating incidence rates by strata</td></tr><tr><td><code><a href="summary.seroincidence.by.html">summary.seroincidence.by()</a></code></td><td>summarizing stratified incidence rate estimates</td></tr><tr><td><code><a href="autoplot.summary.seroincidence.by.html">autoplot.summary.seroincidence.by()</a></code></td><td>graphing incidence rate estimates</td></tr><tr><td><code><a href="sim.cs.html">sim.cs()</a></code></td><td>simulating cross-sectional population antibody data using longitudinal seroresponse models</td></tr></table></div>
 
 
     <div class="section level2">

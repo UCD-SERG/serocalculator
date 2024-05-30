@@ -4,6 +4,7 @@
 #' This function is a `summary()` method for `pop_data` objects
 #'
 #' @param object a `pop_data` object
+#' @param strata a [character()] providing the grouping column
 #' @param ...  unused
 #'
 #' @returns a list containing two summary tables: one of `age` and one of `value`, stratified by `antigen_iso`
@@ -18,15 +19,23 @@
 summary.pop_data <- function(object, ...) {
   ages <-
     object %>%
-    distinct(.data$id, .data$age)
+    distinct(.data$id, .data$age, .data[[strata]])
 
   cat("\nn =", nrow(ages), "\n")
 
   cat("\nDistribution of age: \n\n")
   age_summary <-
     ages %>%
-    pull("age") %>%
-    summary() %>%
+    select(age, all_of(strata)) %>%
+    group_by(across(all_of(strata))) %>%
+    summarise(
+      age_min = min(age),
+      age_first_quartile = quantile(age, 0.25),
+      age_median = median(age),
+      age_mean = mean(age),
+      age_third_quartile = quantile(age, 0.75),
+      age_max = max(age)
+    ) %>%
     print()
 
   cat("\nDistributions of antigen-isotype measurements:\n\n")

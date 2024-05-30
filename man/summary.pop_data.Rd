@@ -4,10 +4,12 @@
 \alias{summary.pop_data}
 \title{Summarize a cross-sectional antibody survey data set}
 \usage{
-\method{summary}{pop_data}(object, ...)
+\method{summary}{pop_data}(object, strata = "Country", ...)
 }
 \arguments{
 \item{object}{a \code{pop_data} object}
+
+\item{strata}{a \code{\link[=character]{character()}} providing the grouping column}
 
 \item{...}{unused}
 }
@@ -21,7 +23,6 @@ This function is a \code{summary()} method for \code{pop_data} objects
 library(dplyr)
 
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
-
-summary(xs_data)
+summary(xs_data, strata = "Country")
 
 }

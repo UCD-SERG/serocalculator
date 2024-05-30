@@ -15,7 +15,6 @@
 Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" objects (constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})
 }
 \examples{
-
 \dontrun{
 # Estimate seroincidence
 seroincidence <- est.incidence.by(...)

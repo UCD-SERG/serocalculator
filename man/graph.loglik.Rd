@@ -56,7 +56,7 @@ graph.loglik(
 \item{curve_label}{if not NULL, add a label for the curve}
 
 \item{...}{
-  Arguments passed on to \code{\link[=llik]{llik}}
+  Arguments passed on to \code{\link[=log_likelihood]{log_likelihood}}
   \describe{
     \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
   }}
@@ -73,8 +73,7 @@ library(dplyr)
 library(tibble)
 
 # Load cross-sectional data
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 
 # Load curve parameters and subset for the purposes of this example

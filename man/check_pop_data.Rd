@@ -18,9 +18,7 @@ Check the formatting of a cross-sectional antibody survey dataset.
 \examples{
 library(dplyr)
 
-# Import cross-sectional data from OSF and rename required variables
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data() \%>\%
   check_pop_data()
 
 }

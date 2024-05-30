@@ -1,5 +1,4 @@
-.tau1 <- function(y, age, param)
-{
+.tau1 <- function(y, age, param) {
   y1 <- param$y1
   alpha <- param$alpha
   if (is.na(age)) {
@@ -10,8 +9,7 @@
   return(tm < age & y <= y1)
 }
 
-.tau2 <- function(y, age, param)
-{
+.tau2 <- function(y, age, param) {
   y1 <- param$y1
   alpha <- param$alpha
   r <- param$r
@@ -23,57 +21,12 @@
   return(tm < age & y <= y1)
 }
 
-.tau30 <- function(y, age, param)
-{
+.tau30 <- function(y, age, param) {
   y0 <- param$y0
   return(y < y0)
 }
 
-.tau31 <- function(y, age, param)
-{
-  y0 <- param$y0
-  mu1 <- param$mu1
-  y1 <- param$y1
-  if (is.na(age)) {
-    return(y >= y0 & y < y1)
-  }
-
-  tm <- log(y / y0)/mu1
-  return(tm < age & y >= y0 & y < y1)
-}
-
-.tau32 <- function(y, age, param)
-{
-  y1 <- param$y1
-  alpha <- param$alpha
-  t1 <- param$t1
-  if (is.na(age)) {
-    return(y <= y1)
-  }
-
-  tm <- t1 + log(y1 / y) / alpha
-  return(tm < age & y <= y1)
-}
-
-.tau33 <- function(y, age, param)
-{
-  y1 <- param$y1
-  t1 <- param$t1
-  if (is.na(age)) {
-    return(y > y1)
-  }
-
-  return(t1 > age & y > y1)
-}
-
-.tau40 <- function(y, age, param)
-{
-  y0 <- param$y0
-  return(y < y0)
-}
-
-.tau41 <- function(y, age, param)
-{
+.tau31 <- function(y, age, param) {
   y0 <- param$y0
   mu1 <- param$mu1
   y1 <- param$y1
@@ -85,8 +38,46 @@
   return(tm < age & y >= y0 & y < y1)
 }
 
-.tau42 <- function(y, age, param)
-{
+.tau32 <- function(y, age, param) {
+  y1 <- param$y1
+  alpha <- param$alpha
+  t1 <- param$t1
+  if (is.na(age)) {
+    return(y <= y1)
+  }
+
+  tm <- t1 + log(y1 / y) / alpha
+  return(tm < age & y <= y1)
+}
+
+.tau33 <- function(y, age, param) {
+  y1 <- param$y1
+  t1 <- param$t1
+  if (is.na(age)) {
+    return(y > y1)
+  }
+
+  return(t1 > age & y > y1)
+}
+
+.tau40 <- function(y, age, param) {
+  y0 <- param$y0
+  return(y < y0)
+}
+
+.tau41 <- function(y, age, param) {
+  y0 <- param$y0
+  mu1 <- param$mu1
+  y1 <- param$y1
+  if (is.na(age)) {
+    return(y >= y0 & y < y1)
+  }
+
+  tm <- log(y / y0) / mu1
+  return(tm < age & y >= y0 & y < y1)
+}
+
+.tau42 <- function(y, age, param) {
   y1 <- param$y1
   alpha <- param$alpha
   r <- param$r
@@ -99,8 +90,7 @@
   return(tm < age & y <= y1)
 }
 
-.tau43 <- function(y, age, param)
-{
+.tau43 <- function(y, age, param) {
   y1 <- param$y1
   t1 <- param$t1
   if (is.na(age)) {
@@ -110,8 +100,7 @@
   return(t1 > age & y > y1)
 }
 
-.tau5 <- function(y, age, param)
-{
+.tau5 <- function(y, age, param) {
   y1 <- param$y1
   alpha <- param$alpha
   yb <- param$yb
@@ -124,4 +113,3 @@
   tm <- log(tm) / alpha
   return(tm < age & y > yb & y <= y1)
 }
-

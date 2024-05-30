@@ -113,7 +113,7 @@ xs_data %>% check_pop_data()
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary()
+xs_data %>% summary(strata = "country")
 ```
 
 

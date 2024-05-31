@@ -4,7 +4,7 @@
 \alias{summary.pop_data}
 \title{Summarize a cross-sectional antibody survey data set}
 \usage{
-\method{summary}{pop_data}(object, strata = "Country", ...)
+\method{summary}{pop_data}(object, strata = NULL, ...)
 }
 \arguments{
 \item{object}{a \code{pop_data} object}

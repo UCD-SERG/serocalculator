@@ -42,7 +42,7 @@ test_that("`summary.pop_data()` produces same results when stratified", {
     mean()
 
   expect_equal(
-    unstratified_summary %>% pull(age_median) %>% as.numeric(),
+    unstratified_summary %>% pull(age_median),
     median_country,
     tolerance = 0.5
   )
@@ -56,7 +56,7 @@ test_that("`summary.pop_data()` produces same results when stratified", {
     mean()
 
   expect_equal(
-    unstratified_summary %>% pull(age_mean) %>% as.numeric(),
+    unstratified_summary %>% pull(age_mean),
     mean_country,
     tolerance = 0.5
   )

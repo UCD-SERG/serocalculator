@@ -6,12 +6,6 @@
 #'
 #' @return a [character()] vector of the subset of stratifying variables that are present in `pop_data`
 #'
-#' @examples
-#' \dontrun{
-#' expected_strata <- data.frame(Species = "banana", type = "orchid")
-#'
-#' warn.missing.strata(iris, expected_strata, dataname = "iris")
-#' }
 warn.missing.strata = function(
     data,
     strata,

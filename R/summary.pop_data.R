@@ -21,110 +21,61 @@ summary.pop_data <- function(object, strata = NULL, ...) {
   value_column <- object %>% get_value_var()
   id_column <- object %>% get_id_var()
 
-  if (!is.null(strata)) {
-    ages <-
-      object %>%
-      distinct(
-        .data[[age_column]],
-        .data[[id_column]],
-        .data[[strata]]
-      )
+  # create a list of the columns
+  cols <- c(age_column, id_column, strata)
 
-    age_summary <-
-      ages %>%
-      select(
-        all_of(age_column),
-        all_of(strata)
-      ) %>%
-      summarise(
-        age_min = min(.data[[age_column]]),
-        age_first_quartile = quantile(.data[[age_column]], 0.25),
-        age_median = median(.data[[age_column]]),
-        age_mean = mean(.data[[age_column]]),
-        age_third_quartile = quantile(.data[[age_column]], 0.75),
-        age_max = max(.data[[age_column]]),
-        .by = strata
-      ) %>%
-      print()
-  } else {
-    ages <- object %>%
-      distinct(
-        .data[[age_column]],
-        .data[[id_column]]
-      )
+  ages <-
+    object %>%
+    distinct(
+      across(all_of(cols))
+    )
 
-    age_summary <- ages %>%
-      select(all_of(age_column)) %>%
-      summarise(
-        age_min = min(.data[[age_column]]),
-        age_first_quartile = quantile(.data[[age_column]], 0.25),
-        age_median = median(.data[[age_column]]),
-        age_mean = mean(.data[[age_column]]),
-        age_third_quartile = quantile(.data[[age_column]], 0.75),
-        age_max = max(.data[[age_column]])
-      ) %>%
-      print()
-  }
+  age_summary <-
+    ages %>%
+    select(
+      all_of(c(age_column, strata))
+    ) %>%
+    summarise(
+      age_min = min(.data[[age_column]]),
+      age_first_quartile = quantile(.data[[age_column]], 0.25),
+      age_median = median(.data[[age_column]]),
+      age_mean = mean(.data[[age_column]]),
+      age_third_quartile = quantile(.data[[age_column]], 0.75),
+      age_max = max(.data[[age_column]]),
+      .by = strata
+    ) %>%
+    print()
 
   cat("\nn =", nrow(ages), "\n")
 
   cat("\nDistribution of age: \n\n")
 
-  ab_summary <- if (!is.null(strata)) {
+  ab_summary <-
     object %>%
-      dplyr::summarize(
-        .by = c(.data$antigen_iso, .data[[strata]]),
-        Min = object %>%
-          get_value() %>%
-          min(na.rm = TRUE),
-        `1st Qu.` = object %>%
-          get_value() %>%
-          quantile(.25, na.rm = TRUE),
-        Median = object %>%
-          get_value() %>%
-          median(),
-        `3rd Qu.` = object %>%
-          get_value() %>%
-          quantile(.75, na.rm = TRUE),
-        Max = object %>%
-          get_value() %>%
-          max(na.rm = TRUE),
-        `# NAs` = object %>%
-          get_value() %>%
-          is.na() %>%
-          sum()
-      ) %>%
-      as.data.frame() %>%
-      print()
-  } else {
-    object %>%
-      dplyr::summarize(
-        .by = .data$antigen_iso,
-        Min = object %>%
-          get_value() %>%
-          min(na.rm = TRUE),
-        `1st Qu.` = object %>%
-          get_value() %>%
-          quantile(.25, na.rm = TRUE),
-        Median = object %>%
-          get_value() %>%
-          median(),
-        `3rd Qu.` = object %>%
-          get_value() %>%
-          quantile(.75, na.rm = TRUE),
-        Max = object %>%
-          get_value() %>%
-          max(na.rm = TRUE),
-        `# NAs` = object %>%
-          get_value() %>%
-          is.na() %>%
-          sum()
-      ) %>%
-      as.data.frame() %>%
-      print()
-  }
-
-
+    dplyr::summarize(
+      .by = c(all_of(c("antigen_iso", strata))),
+      Min = object %>%
+        get_value() %>%
+        min(na.rm = TRUE),
+      `1st Qu.` = object %>%
+        get_value() %>%
+        quantile(.25, na.rm = TRUE),
+      Median = object %>%
+        get_value() %>%
+        median(),
+      `3rd Qu.` = object %>%
+        get_value() %>%
+        quantile(.75, na.rm = TRUE),
+      Max = object %>%
+        get_value() %>%
+        max(na.rm = TRUE),
+      `# NAs` = object %>%
+        get_value() %>%
+        is.na() %>%
+        sum()
+    ) %>%
+    as.data.frame() %>%
+    print()
 
   to_return <- list(
     n = nrow(ages),

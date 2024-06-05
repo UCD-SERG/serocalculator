@@ -19,10 +19,3 @@ a \code{\link[=character]{character()}} vector of the subset of stratifying vari
 \description{
 Warn about missing stratifying variables in a dataset
 }
-\examples{
-\dontrun{
-expected_strata <- data.frame(Species = "banana", type = "orchid")
-
-warn.missing.strata(iris, expected_strata, dataname = "iris")
-}
-}

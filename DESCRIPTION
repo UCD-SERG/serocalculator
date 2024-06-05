@@ -8,9 +8,7 @@ Authors@R: c(
   person(given = "Chris", family = "Orwa", role = "aut"), 
   person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
   person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut")))
-Description: Translates antibody levels measured in cross-sectional population 
-  samples into estimates of the frequency with which 'seroconversions' (infections) 
-  occur in the sampled populations. Replaces the previous '`seroincidence`' package.
+Description: Translates antibody levels measured in cross-sectional population samples into estimates of the frequency with which 'seroconversions' (infections) occur in the sampled populations. Replaces the previous '`seroincidence`' package. Methods originally published in Simonsen et al. (2009) <doi:10.1002/sim.3592> and Teunis et al. (2012) <doi:10.1002/sim.5322>, and further developed in subsequent publications by de Graaf et al. (2014) <doi:10.1016/j.epidem.2014.08.002>, Teunis et al. (2016) <doi:10.1016/j.epidem.2016.04.001>, and Teunis et al. (2020) <doi:10.1002/sim.8578>.
 Depends: R (>= 4.1.0)
 License: GPL-3
 Imports: 

@@ -93,6 +93,8 @@ get_additional_data <- function(
   })
   #Increase timeout for big files
   options(timeout = max(300, getOption("timeout")))
+  #Reset timeout option
+  on.exit(options(timeout = original_timeout))
   # Download
   tryCatch(
     {

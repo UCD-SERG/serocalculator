@@ -30,25 +30,27 @@ summary.pop_data <- function(object, strata = NULL, ...) {
       across(all_of(cols))
     )
 
+  cat("\nn =", nrow(ages), "\n")
+
+  cat("\nDistribution of age: \n\n")
+
   age_summary <-
     ages %>%
     select(
       all_of(c(age_column, strata))
     ) %>%
     summarise(
-      age_min = min(.data[[age_column]]),
-      age_first_quartile = quantile(.data[[age_column]], 0.25),
-      age_median = median(.data[[age_column]]),
-      age_mean = mean(.data[[age_column]]),
-      age_third_quartile = quantile(.data[[age_column]], 0.75),
-      age_max = max(.data[[age_column]]),
+      min = min(.data[[age_column]]),
+      first_quartile = quantile(.data[[age_column]], 0.25),
+      median = median(.data[[age_column]]),
+      mean = mean(.data[[age_column]]),
+      third_quartile = quantile(.data[[age_column]], 0.75),
+      max = max(.data[[age_column]]),
       .by = strata
     ) %>%
     print()
 
-  cat("\nn =", nrow(ages), "\n")
-
-  cat("\nDistribution of age: \n\n")
+  cat("\nDistributions of antigen-isotype measurements:\n\n")
 
   ab_summary <-
     object %>%

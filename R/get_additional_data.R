@@ -104,7 +104,7 @@ get_additional_data <- function(
                     quiet = TRUE)
     },
     error = function(e) {
-      print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
+      message("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
     })
 
   # Unzip

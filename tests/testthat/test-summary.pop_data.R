@@ -6,87 +6,36 @@ xs_data <- load_pop_data(
   standardize = TRUE
 )
 
-unstratified_summary <- xs_data %>%
-  summary() %>%
-  magrittr::extract2("age_summary")
+#write_rds(x = country,file = 'country.rds')
 
-test_that("`summary.pop_data()` produces same results when stratified", {
-  min_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary") %>%
-    pull(age_min) %>%
-    min()
-
-  expect_equal(object = unstratified_summary %>% pull(age_min), expected = min_country)
+test_that("`summary.pop_data()` produces an error when wrong stratification is provied", {
+  expect_error(object = xs_data %>% summary(strata = "province"))
 })
 
-test_that("`summary.pop_data()` produces same results when stratified", {
-  first_quartile_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary") %>%
-    pull(age_first_quartile) %>%
-    mean()
-
-  expect_equal(
-    unstratified_summary %>% pull(age_first_quartile) %>% as.numeric(),
-    first_quartile_country,
-    tolerance = 0.5
-  )
+test_that("`summary.pop_data()` does not produce an error when NULL", {
+  expect_no_error(object = xs_data %>% summary(strata = NULL))
 })
 
-test_that("`summary.pop_data()` produces same results when stratified", {
-  median_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary") %>%
-    pull(age_median) %>%
-    mean()
-
-  expect_equal(
-    unstratified_summary %>% pull(age_median),
-    median_country,
-    tolerance = 0.5
-  )
+test_that("`summary.pop_data()` does not produce an error when stratified", {
+  expect_no_error(object = xs_data %>% summary(strata = "Country"))
 })
 
-test_that("`summary.pop_data()` produces same results when stratified", {
-  mean_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary") %>%
-    pull(age_mean) %>%
-    mean()
+# compare outputs
+test_that("`summary.pop_data()` expected", {
+  country <-
+    fs::path_package(
+      "inst",
+      "extdata",
+      "country.rds",
+      package = "serocalculator"
+    ) %>%
+    readRDS()
 
-  expect_equal(
-    unstratified_summary %>% pull(age_mean),
-    mean_country,
-    tolerance = 0.5
-  )
+  gen_country <- xs_data %>%
+    summary(strata = "Country") %>%
+    magrittr::extract2("age_summary")
+
+  expect_equal(object = gen_country,expected = country)
 })
 
-test_that("`summary.pop_data()` produces same results when stratified", {
-  third_quartile_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary") %>%
-    pull(age_mean) %>%
-    mean()
-
-  expect_equal(
-    unstratified_summary %>% pull(age_third_quartile) %>% as.numeric(),
-    third_quartile_country,
-    tolerance = 0.5
-  )
-})
-
-test_that("`summary.pop_data()` produces same results when stratified", {
-  max_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary") %>%
-    pull(age_max) %>%
-    mean()
-
-  expect_equal(
-    unstratified_summary %>% pull(age_max),
-    max_country,
-    tolerance = 0.5
-  )
-})
 

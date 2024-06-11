@@ -1,3 +1,20 @@
+
+# get pop data
+xs_data <- load_pop_data(
+  file_path = "https://osf.io/download//n6cp3/",
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = TRUE
+)
+
+# get noise data
+noise <- load_noise_params("https://osf.io/download//hqy4v/")
+
+# get curve data
+curve <- load_curve_params("https://osf.io/download/rtw5k/")
+
+
 test_that(
   "est.incidence() produces expected results for typhoid data",
   {
@@ -5,34 +22,6 @@ test_that(
 
     library(readr)
     library(dplyr)
-    c.hlye.IgG <-
-      fs::path_package(
-        "extdata",
-        "dmcmc_hlyeigg_09.30.rds",
-        package = "serocalculator"
-      ) %>% # Load longitudinal parameters dataset
-      readRDS() %>%
-      select(y1, alpha, r, antigen_iso)
-
-    p.hlye.IgG <-
-      fs::path_package(
-        package = "serocalculator",
-        "extdata/simpophlyeigg.2.csv"
-      ) %>% # Load simulated cross-sectional dataset
-      read_csv(
-        col_types = cols(
-          a.smpl = col_double(),
-          y.smpl = col_double(),
-          i = col_double(),
-          t = col_double()
-        )
-      ) %>%
-      rename( # rename variables
-        y = y.smpl,
-        a = a.smpl
-      ) %>%
-      select(y, a) %>%
-      mutate(antigen_iso = "HlyE_IgG")
 
     cond.hlye.IgG <- data.frame(
       nu = 1.027239, # B noise
@@ -45,16 +34,19 @@ test_that(
     start <- .05
 
     fit <- est.incidence(
-      dpop = p.hlye.IgG,
-      dmcmc = c.hlye.IgG,
-      c.age = NULL,
-      antigen_isos = "HlyE_IgG",
-      noise_params = cond.hlye.IgG,
-      start = start,
-      print.level = 2,
-      iterlim = 100,
-      stepmax = 1
-    )
+      pop_data = xs_data %>% filter(Country == "Pakistan"),
+      curve_param = curve,
+      noise_param = noise %>% filter(Country == "Pakistan"),
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    ) %>% summary.seroincidence(
+      coverage = .95,
+      start = start
+    ) %>%
+      mutate(
+        ageCat = NULL,
+        antigen.iso = paste(collapse = "+", "HlyE_IgG")
+      ) %>%
+      structure(noise.parameters = noise)
 
     # compare with `typhoid_results` from data-raw/typhoid_results.qmd
 

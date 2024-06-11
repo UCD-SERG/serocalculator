@@ -20,44 +20,35 @@ library(tidyverse)
 ```
 
 ```{r longdata}
-c.hlye.IgG <-
-  fs::path_package(
-    "extdata",
-    "dmcmc_hlyeigg_09.30.rds",
-    package = "serocalculator"
-  ) %>% # Load longitudinal parameters dataset
-  readRDS() %>%
+
+# pop data
+csdata <- load_pop_data(
+  file_path = "https://osf.io/download//n6cp3/",
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = TRUE
+) %>% 
+  filter(Country == "Bangladesh") %>% 
+  select(age, antigen_iso, value)
+  
+
+# get curve data
+lnpars <- load_curve_params("https://osf.io/download/rtw5k/") %>% 
   mutate(
-    alpha = alpha * 365.25, # Create alpha and d
     d = r - 1
-  ) %>%
-  select(y1, alpha, d) # Select only the variables needed for analysis
+  ) %>% 
+  select(alpha, y1, d)
 ```
 
 ``` {r simdata}
-library(fs) # filesystem utility functions
-p.hlye.IgG <-
-  fs::path_package(
-    package = "serocalculator",
-    "extdata/simpophlyeigg.2.csv"
-  ) %>% # Load simulated cross-sectional dataset
-  read_csv() %>%
-  rename( # rename variables
-    y = y.smpl,
-    a = a.smpl
-  ) %>%
-  select(y, a) # Select only the variables needed for analysis
+# get noise data
+cond <- load_noise_params("https://osf.io/download//hqy4v/") %>% 
+  filter(Country == "Bangladesh") %>% 
+  select(nu, eps, y.low, y.high)
+  
 ```
 
-``` {r conditions}
-cond.hlye.IgG <- data.frame(
-  nu = 1.027239, # B noise
-  eps = 0.2, # M noise
-  y.low = 0.0, # low cutoff
-  y.high = 5e4,
-  antigen_iso = "HlyE_IgG"
-)
-```
 
 ```{r seroinc}
 start <- .05
@@ -70,7 +61,7 @@ log.lmax <- log(10 * lambda)
 
 
 objfunc <- function(llam) {
-  return(res <- fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
+  return(res <- fdev(lambda, xs_data, lnpars, cond))
 }
 
 
@@ -92,7 +83,7 @@ typhoid_results <- fit %>%
     ageCat = NULL,
     antigen.iso = paste(collapse = "+", "HlyE_IgG")
   ) %>%
-  structure(noise.parameters = cond.hlye.IgG)
+  structure(noise.parameters = cond)
 
 usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
 ```

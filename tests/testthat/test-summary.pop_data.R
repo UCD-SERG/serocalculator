@@ -23,10 +23,12 @@ test_that("`summary.pop_data()` expected", {
   skip(message = "skipping to fix file access iisue")
   country <-
     fs::path_package(
-      "country.rds",
+      "extdata",
+      "country.rda",
       package = "serocalculator"
     ) %>%
-    readRDS()
+    load()
+    #readRDS()
 
   gen_country <- xs_data %>%
     summary(strata = "Country") %>%

@@ -80,7 +80,7 @@ Makes a cross-sectional data set (age, y(t) set)
 and adds noise, if desired.
 }
 \examples{
-\dontrun{
+\donttest{
 # Load curve parameters
 dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 

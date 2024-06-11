@@ -56,7 +56,7 @@ Calculates the log-likelihood of a set of cross-sectional antibody response data
 consistent API.
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 library(tibble)
 

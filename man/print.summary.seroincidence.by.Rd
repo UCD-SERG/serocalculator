@@ -11,12 +11,15 @@
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
+\value{
+A \code{list} containing the summary statistics for output of the function \code{est.incidence.by()}.
+}
 \description{
 Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" objects (constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})
 }
 \examples{
 
-\dontrun{
+\donttest{
 # Estimate seroincidence
 seroincidence <- est.incidence.by(...)
 

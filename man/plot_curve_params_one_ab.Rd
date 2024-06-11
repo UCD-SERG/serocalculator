@@ -88,7 +88,7 @@ In most cases, \code{curve_params} will contain too many rows of MCMC samples fo
 }
 \examples{
 library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
-\dontrun{
+\donttest{
 load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   dplyr::filter(antigen_iso == "HlyE_IgG") \%>\%
   serocalculator::plot_curve_params_one_ab()

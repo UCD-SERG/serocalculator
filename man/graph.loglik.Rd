@@ -71,12 +71,12 @@ Graph log-likelihood of data
 
 library(dplyr)
 library(tibble)
-
+\donttest{
 # Load cross-sectional data
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
   clean_pop_data()
 
-\dontrun{
+
 # Load curve parameters and subset for the purposes of this example
 dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%

@@ -32,7 +32,7 @@ Large datasets may timeout. If so, you can increase the download time by updatin
 consistent API.
 }
 \examples{
-\dontrun{
+\donttest{
 curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx")
 
 # Optionally, save the data to disk

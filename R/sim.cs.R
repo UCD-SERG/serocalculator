@@ -29,7 +29,7 @@
 #' * one column for each element in the `antigen_iso` input argument
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Load curve parameters
 #' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'

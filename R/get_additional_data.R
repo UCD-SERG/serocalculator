@@ -25,7 +25,7 @@
 #' Data object
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx")
 #'
 #' # Optionally, save the data to disk
@@ -64,7 +64,7 @@ getAdditionalData <- function(
 #' Data object
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' curve_param_samples =
 #'   getAdditionalData(
 #'     fileURL = "https://osf.io/download/bhfvx")

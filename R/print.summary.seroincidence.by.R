@@ -10,7 +10,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # Estimate seroincidence
 #' seroincidence <- est.incidence.by(...)
 #'

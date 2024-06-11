@@ -30,7 +30,7 @@ Large datasets may timeout. If so, you can increase the download time by updatin
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
-\dontrun{
+\donttest{
 curve_param_samples =
   getAdditionalData(
     fileURL = "https://osf.io/download/bhfvx")

@@ -32,7 +32,7 @@
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(tibble)
 #'
@@ -107,7 +107,7 @@ llik <- function(
 #'
 #' #load in longitudinal parameters
 #' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
-#'  \dontrun{
+#'  \donttest{
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
 #' load_pop_data() %>%
 #' clean_pop_data()

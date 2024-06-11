@@ -6,6 +6,7 @@
 #'
 #' @param x A "summary.seroincidence.by" object (constructed by [summary.seroincidence.by()])
 #' @param ... Additional arguments affecting the summary produced.
+#' @return A \code{list} containing the summary statistics for output of the function \code{est.incidence.by()}.
 #'
 #' @examples
 #'

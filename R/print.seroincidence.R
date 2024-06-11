@@ -6,6 +6,7 @@
 #'
 #' @param x A list containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
+#' @return A \code{list} containing the output of the function \code{est.incidence()}.
 #'
 #' @examples
 #'

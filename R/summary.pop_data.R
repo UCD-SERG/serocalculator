@@ -34,11 +34,12 @@ summary.pop_data <- function(object, strata = NULL, ...) {
 
   cat("\nDistribution of age: \n\n")
 
+  # columns to use
+  cols_select <- c(age_column, strata)
+
   age_summary <-
     ages %>%
-    select(
-      all_of(c(age_column, strata))
-    ) %>%
+    select(all_of(cols_select)) %>%
     summarise(
       min = min(.data[[age_column]]),
       first_quartile = quantile(.data[[age_column]], 0.25),
@@ -55,7 +56,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
   ab_summary <-
     object %>%
     dplyr::summarize(
-      .by = c(all_of(c("antigen_iso", strata))),
+      .by = all_of(c("antigen_iso", strata)),
       Min = object %>%
         get_value() %>%
         min(na.rm = TRUE),

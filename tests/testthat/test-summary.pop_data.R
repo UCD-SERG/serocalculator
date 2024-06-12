@@ -19,22 +19,13 @@ test_that("`summary.pop_data()` does not produce an error when stratified", {
 })
 
 # compare outputs
-test_that("`summary.pop_data()` expected", {
-  skip(message = "skipping to fix file access iisue")
-  country <-
-    fs::path_package(
-      "extdata",
-      "country.rda",
-      package = "serocalculator"
-    ) %>%
-    load()
-    #readRDS()
+test_that("`summary.pop_data()` expected same results", {
 
   gen_country <- xs_data %>%
     summary(strata = "Country") %>%
     magrittr::extract2("age_summary")
 
-  expect_equal(object = gen_country,expected = country)
+  expect_equal(object = gen_country,expected = summary_country)
 })
 
 

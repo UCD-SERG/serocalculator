@@ -41,7 +41,7 @@ The first step in conducting this analysis is to load our necessary packages. If
 ```{r setup, message=FALSE}
 #devtools::install_github("ucd-serg/serocalculator")
 library(serocalculator)
-#install.packages("tidyverse)
+#install.packages("tidyverse")
 library(tidyverse)
 ```
 

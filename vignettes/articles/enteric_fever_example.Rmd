@@ -15,15 +15,10 @@ bibliography: references.bib
 ---
 ## Introduction
 
-This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan.
+This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplied version of the analysis, the results here will differ slightly from those presented in the publication.
 
+In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SeroEpidemiology and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
 
-## Example: Enteric Fever
-
-
-In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SErologic and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
-
-Further details on this published study can be found here: https://doi.org/10.1016/S2666-5247(22)00114-8. 
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -41,7 +36,7 @@ The first step in conducting this analysis is to load our necessary packages. If
 ```{r setup, message=FALSE}
 #devtools::install_github("ucd-serg/serocalculator")
 library(serocalculator)
-#install.packages("tidyverse)
+#install.packages("tidyverse")
 library(tidyverse)
 ```
 
@@ -83,7 +78,7 @@ curve =
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve %>% autoplot()
+curve %>% filter(antigen_iso == "HlyE_IgA"| antigen_iso == "HlyE_IgG") %>%autoplot()
 ```
 
 
@@ -107,8 +102,7 @@ Column Name | Description
 #Import cross-sectional data from OSF and rename required variables
 xs_data <- 
   "https://osf.io/download//n6cp3/" %>% 
-  load_pop_data() %>% 
-  clean_pop_data()
+  load_pop_data() 
 
 ```
 
@@ -134,9 +128,12 @@ xs_data %>% summary()
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
 ```{r plots}
-#Create plots
+#color pallette
+country.pal <- c('#EA6552', '#8F4B86','#0099B4FF')
 
-xs_data %>% autoplot(strata = "Country",type='density')
+#Create plots
+xs_data %>% autoplot(strata = "Country",type='density') + 
+  scale_fill_manual(values = country.pal)
 
 ```
 
@@ -145,9 +142,16 @@ We see that across countries, our data is highly skewed with the majority of res
 ```{r logplot, message = FALSE}
 #Create log transformed plots
 
-options(scipen = 999)
 xs_data %>% 
-  autoplot(strata = "Country", log = TRUE,type='density')
+  autoplot(strata = "Country", log = TRUE,type='density') + 
+  scale_fill_manual(values = country.pal)
+
+
+xs_data %>% 
+  autoplot(strata = "Country", type='density') + 
+  scale_fill_manual(values = country.pal) + 
+  scale_x_log10(labels = scales::label_comma())
+
 ```
 
 Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data. 
@@ -168,7 +172,8 @@ ggplot(data=xs_data, aes(x=age, y=value, color=Country)) +
             title = "Quantitative Antibody Responses by Age",
             x = "Age",
             y = "Value"
-          )
+          ) + 
+  scale_color_manual(values = country.pal)
 
 ```
 
@@ -223,7 +228,54 @@ summary(est1)
 
 ### Stratified Seroincidence
 
-We can also produce stratified seroincidence estimates. Here we stratify by catchment area within Pakistan, but users can select any stratification variable in their cross-sectional population dataset.
+We can also produce stratified seroincidence estimates. Let's compare estimates across all countries. 
+
+```{r estbycountry}
+#Using est.incidence.by (strata)
+
+est_country = est.incidence.by(
+  strata = c("Country"),
+  pop_data = xs_data,
+  curve_params = curve, 
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  num_cores = 8 #Allow for parallel processing to decrease run time 
+  )
+
+summary(est_country)
+
+```
+
+
+We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
+
+Let's visualize our seroincidence estimates by strata.
+
+```{r}
+#Plot seroincidence estimates
+
+#Save summary(est2) as a dataframe and sort by incidence rate
+est_countrydf<- summary(est_country) %>%
+  arrange(incidence.rate) 
+
+#Create barplot (rescale incidence rate and CIs)
+ggplot(est_countrydf, aes(y=reorder(Country,incidence.rate), x=incidence.rate*1000, fill=Country)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
+  labs(
+      title= "Enteric Fever Seroincidence by Country",
+        x="Seroincidence rate per 1000 person-years",
+        y="Country"
+      ) +
+  theme_linedraw() +
+  theme(axis.text.y = element_text(size=11),
+        axis.text.x = element_text(size=11)) + 
+  scale_x_continuous(expand = c(0,10)) +
+  scale_fill_manual(values = country.pal)
+
+```
+
+Users can select any stratification variable in their cross-sectional population dataset. For example, we can also stratify by catchment area within Pakistan.
 
 
 ```{r estby}
@@ -240,39 +292,48 @@ est2 = est.incidence.by(
 
 summary(est2)
 
-```
-
-We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
-
-Let's visualize our seroincidence estimates by strata.
-
-
-```{r}
 #Plot seroincidence estimates
 
 #Save summary(est2) as a dataframe
-est2df<- summary(est2)
+est2df<- summary(est2) %>%
+  mutate(catchment = factor(catchment, levels = c("kgh", "aku"), labels = c("KGH", "AKU")))
 
 #Create barplot (rescale incidence rate and CIs)
 ggplot(est2df, aes(y=catchment, x=incidence.rate*1000, fill=catchment)) +
   geom_bar(stat = "identity", show.legend = FALSE) +
   geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
   labs(
-      title= "Enteric Fever Seroincidence by Catchment Area",
+      title= "Enteric Fever Seroincidence in Pakistan by Catchment Area",
         x="Seroincience rate per 1000 person-years",
-        y="Catchment"
+        y="Catchment Area",
+        caption = "AKU = Aga Khan University Hospital, Karachi, Pakistan; KGH = Kharadar General Hospital, Karachi, Pakistan"
       ) +
-  theme_bw() +
+  theme_linedraw() +
   theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11))
+        axis.text.x = element_text(size=11)) +
+   scale_x_continuous(expand = c(0,10)) +
+  scale_fill_manual(values = c("#8F4B86", "#9D83BC"))
 
+```
+```{r}
+#Calculate output values
+rate_bangla <- round(est_countrydf$incidence.rate[3] * 1000) 
+
+rate_nepal <- round(est_countrydf$incidence.rate[1] *1000)
+
+rate_ratio_bangla_nepal <- round(rate_bangla/rate_nepal)
 ```
 
 ## Conclusions
-In our data, we find that the overall estimated seroincidence of enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139, 169). When stratified by catchment area, we find that area KGH has a higher incidence rate than area AKU [204 per 1000 person-years (95% CI: 176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)]. 
+We find that Bangladesh has the highest overall seroincidence of enteric fever with a rate of `r rate_bangla` per 1000 person-years, as well as the highest seroincidence by age category.
+In comparison, Nepal has a seroincidence rate over `r rate_ratio_bangla_nepal` times lower than that of Bangladesh (`r rate_nepal` per 1000 person-years) and the lowest age-specific seroincidence rates of the three countries in the study. 
+**serocalculator** provides an efficient tool to conduct this analysis and produce actionable results. 
 
 
 ## Acknowledgments
-Special thanks to our collaborators at Aga Khan University  (Karachi, Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel, Nepal).
+We gratefully acknowledge the study participants for their valuable time and interest in participating in these studies. Special thanks to our collaborators at Sabin Vaccine Institute, Aga Khan University  (Karachi, Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel, Nepal). 
+
+## Funding
+This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation. 
 
 ## References

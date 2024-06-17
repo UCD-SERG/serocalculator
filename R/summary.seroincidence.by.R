@@ -28,8 +28,7 @@
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")%>%
-#'   clean_pop_data()
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
@@ -62,11 +61,9 @@ summary.seroincidence.by <- function(
     confidence_level = .95,
     showDeviance = TRUE,
     showConvergence = TRUE,
-    ...)
-{
-
-  alpha = 1 - confidence_level
-  quantiles = c(alpha/2, 1 - alpha/2)
+    ...) {
+  alpha <- 1 - confidence_level
+  quantiles <- c(alpha / 2, 1 - alpha / 2)
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
     stop("Incorrectly specified quantiles")
@@ -76,14 +73,15 @@ summary.seroincidence.by <- function(
     stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
   }
 
-  results =
+  results <-
     object %>%
     lapply(
       FUN = summary.seroincidence,
-      coverage = confidence_level) %>%
+      coverage = confidence_level
+    ) %>%
     bind_rows(.id = "Stratum")
 
-  results =
+  results <-
     inner_join(
       object %>% attr("Strata"),
       results,
@@ -98,10 +96,9 @@ summary.seroincidence.by <- function(
   }
 
   if (showConvergence) {
-    results = results %>%
+    results <- results %>%
       relocate("nlm.convergence.code", .after = everything())
-  } else
-  {
+  } else {
     results$nlm.convergence.code <- NULL
   }
 
@@ -115,7 +112,7 @@ summary.seroincidence.by <- function(
       Quantiles = quantiles,
       class =
         "summary.seroincidence.by" %>%
-        union(class(results))
+          union(class(results))
     )
 
   return(output)

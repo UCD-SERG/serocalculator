@@ -15,8 +15,7 @@ bibliography: references.bib
 ---
 ## Introduction
 
-This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan.
-
+This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplied version of the analysis, the results here will differ slightly from those presented in the publication.
 
 In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SeroEpidemiology and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
 
@@ -104,8 +103,7 @@ Column Name | Description
 #Import cross-sectional data from OSF and rename required variables
 xs_data <- 
   "https://osf.io/download//n6cp3/" %>% 
-  load_pop_data() %>% 
-  clean_pop_data()
+  load_pop_data() 
 
 ```
 

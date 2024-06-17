@@ -20,7 +20,6 @@ This vignette provides users with an example analysis using the [**serocalculato
 In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the the SeroEpidemiology and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
 
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   fig.height=4, fig.width=7,

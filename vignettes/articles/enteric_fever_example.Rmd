@@ -249,7 +249,7 @@ summary(est_country)
 
 
 ```
-We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
+We are warned that "curve_params is missing all strata variables, and will be used unstratified". This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
 
 Let's visualize our seroincidence estimates by strata.
 
@@ -286,7 +286,7 @@ Users can select any stratification variable in their cross-sectional population
 est2 = est.incidence.by(
   strata = c("catchment"),
   pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_params = curve, 
+  curve_params = curves, 
   noise_params = noise %>% filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 8 #Allow for parallel processing to decrease run time 

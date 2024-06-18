@@ -81,7 +81,7 @@ curves <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve %>% filter(antigen_iso == "HlyE_IgA"| antigen_iso == "HlyE_IgG") %>%autoplot()
+curves %>% filter(antigen_iso == "HlyE_IgA"| antigen_iso == "HlyE_IgG") %>%autoplot()
 ```
 
 
@@ -240,7 +240,7 @@ We can also produce stratified seroincidence estimates. Let's compare estimates 
 est_country = est.incidence.by(
   strata = c("Country"),
   pop_data = xs_data,
-  curve_params = curve, 
+  curve_params = curves, 
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 8 # Allow for parallel processing to decrease run time
@@ -249,7 +249,7 @@ est_country = est.incidence.by(
 summary(est_country)
 
 
-
+```
 We are warned that "curve_params is missing all strata variables, and will be used unstratified." This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
 
 Let's visualize our seroincidence estimates by strata.

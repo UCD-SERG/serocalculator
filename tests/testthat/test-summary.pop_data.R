@@ -7,24 +7,29 @@ xs_data <- load_pop_data(
 )
 
 test_that("`summary.pop_data()` produces an error when wrong stratification is provied", {
-  expect_error(object = xs_data %>% summary(strata = "province"))
-  # add condition for exact error - use regexp option in expect_error()
+  expect_error(
+    object = xs_data %>% summary(strata = "province"),
+    regexp = "Can't subset columns that don't exist."
+  )
 })
 
 test_that("`summary.pop_data()` does not produce an error when NULL", {
+  # TO DOs: change calls to deprecated function calls (New PR)
   suppressWarnings({
     expect_no_error(object = xs_data %>% summary(strata = NULL))
   })
 })
 
 test_that("`summary.pop_data()` does not produce an error when stratified", {
-
+  # TO DOs: change calls to deprecated function calls (New PR)
   suppressWarnings({
     expect_no_error(object = xs_data %>% summary(strata = "Country"))
   })
 })
 
+
 test_that("`summary.pop_data()` expected same results", {
+  # TO DOs: change calls to deprecated function calls (New PR)
   suppressWarnings({
     expect_equal(object = xs_data %>%
       summary(strata = "Country"), expected = summary_country)

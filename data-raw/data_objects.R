@@ -1,4 +1,3 @@
-
 nlm_exit_codes <- c(
   "1" = "1: relative gradient is close to zero, current iterate is probably solution.",
   "2" = "2: successive iterates within tolerance, current iterate is probably solution.",
@@ -59,5 +58,3 @@ typhoid_results <- fit %>%
 
 
 usethis::use_data(typhoid_results, summary_country, nlm_exit_codes, overwrite = TRUE, internal = TRUE)
-
-

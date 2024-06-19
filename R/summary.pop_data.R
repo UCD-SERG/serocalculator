@@ -22,24 +22,18 @@ summary.pop_data <- function(object, strata = NULL, ...) {
   id_column <- object %>% get_id_var()
 
   # create a list of the columns
-  cols <- c(age_column, id_column, strata)
+  cols <- c(age_column, strata)
 
   ages <-
     object %>%
-    distinct(
-      across(all_of(cols))
-    )
+    distinct(across(all_of(cols)))
 
   cat("\nn =", nrow(ages), "\n")
 
   cat("\nDistribution of age: \n\n")
 
-  # columns to use
-  cols_select <- c(age_column, strata)
-
   age_summary <-
     ages %>%
-    select(all_of(cols_select)) %>%
     summarise(
       min = min(.data[[age_column]]),
       first_quartile = quantile(.data[[age_column]], 0.25),

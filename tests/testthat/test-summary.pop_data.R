@@ -8,24 +8,25 @@ xs_data <- load_pop_data(
 
 test_that("`summary.pop_data()` produces an error when wrong stratification is provied", {
   expect_error(object = xs_data %>% summary(strata = "province"))
+  # add condition for exact error - use regexp option in expect_error()
 })
 
 test_that("`summary.pop_data()` does not produce an error when NULL", {
-  expect_no_error(object = xs_data %>% summary(strata = NULL))
+  suppressWarnings({
+    expect_no_error(object = xs_data %>% summary(strata = NULL))
+  })
 })
 
 test_that("`summary.pop_data()` does not produce an error when stratified", {
-  expect_no_error(object = xs_data %>% summary(strata = "Country"))
+
+  suppressWarnings({
+    expect_no_error(object = xs_data %>% summary(strata = "Country"))
+  })
 })
 
-# compare outputs
 test_that("`summary.pop_data()` expected same results", {
-
-  gen_country <- xs_data %>%
-    summary(strata = "Country") %>%
-    magrittr::extract2("age_summary")
-
-  expect_equal(object = gen_country,expected = summary_country)
+  suppressWarnings({
+    expect_equal(object = xs_data %>%
+      summary(strata = "Country"), expected = summary_country)
+  })
 })
-
-

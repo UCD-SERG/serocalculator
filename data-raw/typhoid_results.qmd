@@ -22,30 +22,25 @@ library(tidyverse)
 ```{r longdata}
 
 # pop data
-csdata <- load_pop_data(
+xs_data <- load_pop_data(
   file_path = "https://osf.io/download//n6cp3/",
   age = "Age",
   value = "result",
   id = "index_id",
   standardize = TRUE
 ) %>% 
-  filter(Country == "Bangladesh") %>% 
-  select(age, antigen_iso, value)
+  filter(Country == 'Pakistan')
   
 
 # get curve data
-lnpars <- load_curve_params("https://osf.io/download/rtw5k/") %>% 
-  mutate(
-    d = r - 1
-  ) %>% 
-  select(alpha, y1, d)
+curve <- load_curve_params("https://osf.io/download/rtw5k/")
+
 ```
 
 ``` {r simdata}
 # get noise data
-cond <- load_noise_params("https://osf.io/download//hqy4v/") %>% 
-  filter(Country == "Bangladesh") %>% 
-  select(nu, eps, y.low, y.high)
+noise <- load_noise_params("https://osf.io/download//hqy4v/") %>% 
+  filter(Country == 'Pakistan')
   
 ```
 
@@ -58,20 +53,15 @@ log.lambda <- log(lambda)
 log.lmin <- log(lambda / 10)
 log.lmax <- log(10 * lambda)
 
+# objfunc <- function(llam) {
+#   return(res <- f_dev(lambda, csdata, lnpars, cond))
+# }
 
-
-objfunc <- function(llam) {
-  return(res <- fdev(lambda, xs_data, lnpars, cond))
-}
-
-
-fit <- nlm(
-  objfunc,
-  p = log.lambda,
-  hessian = TRUE,
-  print.level = 0,
-  stepmax = 1,
-  iterlim = 100
+fit <- est.incidence(
+  pop_data = xs_data,
+  curve_param = curve,
+  noise_param = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 
 typhoid_results <- fit %>%
@@ -83,7 +73,10 @@ typhoid_results <- fit %>%
     ageCat = NULL,
     antigen.iso = paste(collapse = "+", "HlyE_IgG")
   ) %>%
-  structure(noise.parameters = cond)
+  structure(noise.parameters = noise)
 
 usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
+
+
+
 ```

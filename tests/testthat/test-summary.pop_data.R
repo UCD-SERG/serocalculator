@@ -6,7 +6,7 @@ xs_data <- load_pop_data(
   standardize = TRUE
 )
 
-test_that("`summary.pop_data()` produces an error when wrong stratification is provide", {
+test_that("`summary.pop_data()` produces an error when wrong stratification is provided", {
   expect_error(
     object = xs_data %>% summary(strata = "province"),
     regexp = "Element `province` doesn't exist.",
@@ -15,14 +15,14 @@ test_that("`summary.pop_data()` produces an error when wrong stratification is p
 })
 
 test_that("`summary.pop_data()` does not produce an error when NULL", {
-  # TO DOs: change calls to deprecated function calls (New PR)
+  # suppress warning avoids a deprecation tidyverse warning on use of select(data)
   suppressWarnings({
     expect_no_error(object = xs_data %>% summary(strata = NULL))
   })
 })
 
 test_that("`summary.pop_data()` does not produce an error when stratified", {
-  # TO DOs: change calls to deprecated function calls (New PR)
+  # suppress warning avoids a deprecation tidyverse warning on use of select(data)
   suppressWarnings({
     expect_no_error(object = xs_data %>% summary(strata = "Country"))
   })
@@ -30,7 +30,7 @@ test_that("`summary.pop_data()` does not produce an error when stratified", {
 
 
 test_that("`summary.pop_data()` expected same results", {
-  # TO DOs: change calls to deprecated function calls (New PR)
+  # suppress warning avoids a deprecation tidyverse warning on use of select(data)
   suppressWarnings({
     expect_equal(object = xs_data %>%
       summary(strata = "Country"), expected = summary_country)

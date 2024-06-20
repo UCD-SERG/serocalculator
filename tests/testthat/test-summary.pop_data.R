@@ -6,10 +6,11 @@ xs_data <- load_pop_data(
   standardize = TRUE
 )
 
-test_that("`summary.pop_data()` produces an error when wrong stratification is provied", {
+test_that("`summary.pop_data()` produces an error when wrong stratification is provide", {
   expect_error(
     object = xs_data %>% summary(strata = "province"),
-    regexp = "Can't subset columns that don't exist."
+    regexp = "Element `province` doesn't exist.",
+    fixed = TRUE
   )
 })
 

@@ -1,3 +1,5 @@
+# serocalculator 1.2.0
+
 # serocalculator 1.1.0
 
 * Renamed `llik()` to `log_likelihood()`

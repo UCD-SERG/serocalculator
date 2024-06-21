@@ -95,18 +95,15 @@ package by reproducing the analysis for: <a href="https://www.thelancet.com/jour
 typhoid incidence from community-based serosurveys: a multicohort
 study</strong></a> (<span class="citation">Aiemjoy et al.
 (2022)</span>). We review the methods underlying the analysis and then
-walk through an example of enteric fever incidence in Pakistan.</p>
-</div>
-<div class="section level2">
-<h2 id="example-enteric-fever">Example: Enteric Fever<a class="anchor" aria-label="anchor" href="#example-enteric-fever"></a>
-</h2>
+walk through an example of enteric fever incidence in Pakistan. Note
+that because this is a simplied version of the analysis, the results
+here will differ slightly from those presented in the publication.</p>
 <p>In this example, users will determine the seroincidence of enteric
 fever in cross-sectional serosurveys conducted as part of the the
-SErologic and Environmental Surveillance (SEES) for enteric fever study
-in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were
-modeled from 1420 blood culture-confirmed enteric fever cases enrolled
-from the same countries.</p>
-<p>Further details on this published study can be found here: <a href="https://doi.org/10.1016/S2666-5247(22)00114-8" class="external-link uri">https://doi.org/10.1016/S2666-5247(22)00114-8</a>.</p>
+SeroEpidemiology and Environmental Surveillance (SEES) for enteric fever
+study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody
+responses were modeled from 1420 blood culture-confirmed enteric fever
+cases enrolled from the same countries.</p>
 <div class="section level3">
 <h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h3>
@@ -117,7 +114,7 @@ before loading.</p>
 <code class="sourceCode R"><span><span class="co"># devtools::install_github("ucd-serg/serocalculator", eval=FALSE)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
-<span><span class="co"># install.packages("tidyverse)</span></span>
+<span><span class="co">#install.packages("tidyverse")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -184,7 +181,7 @@ names must <em>exactly</em> match follow the naming conventions:</p>
 <p>We can graph the decay curves with an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>
 method:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">curves</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">curves</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op">==</span> <span class="st">"HlyE_IgA"</span><span class="op">|</span> <span class="va">antigen_iso</span> <span class="op">==</span> <span class="st">"HlyE_IgG"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 </div>
 <div class="section level4">
@@ -225,14 +222,11 @@ but the two below are required:</p>
 </table>
 <p><em>Note that variable names are case sensitive</em></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Import cross-sectional data from OSF and rename required variables</span></span>
-<span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pop_data.html">load_pop_data</a></span><span class="op">(</span></span>
-<span>  file_path <span class="op">=</span> <span class="st">"https://osf.io/download//n6cp3/"</span>,</span>
-<span>  age <span class="op">=</span> <span class="st">"Age"</span>,</span>
-<span>  value <span class="op">=</span> <span class="st">"result"</span>,</span>
-<span>  id <span class="op">=</span> <span class="st">"index_id"</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Import cross-sectional data from OSF and rename required variables</span></span>
+<span><span class="va">xs_data</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="st">"https://osf.io/download//n6cp3/"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="check-formatting">Check formatting<a class="anchor" aria-label="anchor" href="#check-formatting"></a>
@@ -273,8 +267,13 @@ distribution of quantitative antibody responses. Here, we will look at
 the distribution of our selected antigen and isotype pairs, HlyE IgA and
 HlyE IgG, across participating countries.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create plots</span></span>
-<span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>, type <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co">#color pallette</span></span>
+<span><span class="va">country.pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#EA6552'</span>, <span class="st">'#8F4B86'</span>,<span class="st">'#0099B4FF'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Create plots</span></span>
+<span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>,type<span class="op">=</span><span class="st">'density'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country.pal</span><span class="op">)</span></span></code></pre></div>
 <p><img src="enteric_fever_example_files/figure-html/plots-1.png" width="672"></p>
 <p>We see that across countries, our data is highly skewed with the
 majority of responses on the lower end of our data with long tails.
@@ -283,17 +282,47 @@ antibody response value.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create log transformed plots</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">999</span><span class="op">)</span></span>
-<span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>, log <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>, log <span class="op">=</span> <span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">'density'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country.pal</span><span class="op">)</span></span></code></pre></div>
 <p><img src="enteric_fever_example_files/figure-html/logplot-1.png" width="672"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>, type<span class="op">=</span><span class="st">'density'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country.pal</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_comma</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in scale_x_log10(labels = scales::label_comma()): <span style="color: #00BB00;">log-10</span></span></span>
+<span><span class="co">#&gt; transformation introduced infinite values.</span></span>
+<span><span class="co">#&gt; Warning: Removed 18 rows containing non-finite outside the scale range</span></span>
+<span><span class="co">#&gt; (`stat_density()`).</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/logplot-2.png" width="672"></p>
 <p>Once log transformed, our data looks much more normally distributed.
 In most cases, log transformation will be the best way to visualize
 serologic data.</p>
 <p>Let’s also take a look at how antibody responses change by age.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Plot antibody responses by age</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">xs_data</span>, type <span class="op">=</span> <span class="st">"age-scatter"</span>, strata <span class="op">=</span> <span class="st">"Country"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Plot antibody responses by age</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">xs_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">age</span>, y<span class="op">=</span><span class="va">value</span>, color<span class="op">=</span><span class="va">Country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">.6</span>, alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span><span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="va">lm</span>, se<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>            title <span class="op">=</span> <span class="st">"Quantitative Antibody Responses by Age"</span>,</span>
+<span>            x <span class="op">=</span> <span class="st">"Age"</span>,</span>
+<span>            y <span class="op">=</span> <span class="st">"Value"</span></span>
+<span>          <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country.pal</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in scale_y_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span>
+<span><span class="co">#&gt; Warning: Removed 18 rows containing non-finite outside the scale range</span></span>
+<span><span class="co">#&gt; (`stat_smooth()`).</span></span></code></pre></div>
 <p><img src="enteric_fever_example_files/figure-html/plot%20age-1.png" width="672"></p>
 <p>In this plot, a steeper slope indicates a higher incidence. We can
 see that the highest burden is in Bangladesh. Nepal has a slightly
@@ -338,7 +367,7 @@ noise parameter below.</p>
 </tbody>
 </table>
 <p><em>Note that variable names are case-sensitive.</em></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Import noise parameters from OSF</span></span>
 <span></span>
 <span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -361,7 +390,7 @@ Pakistan and define the datasets for our cross-sectional data
 (noise_param). We also define the antigen-isotype pairs to be included
 in the estimate (antigen_isos). Here, we have chosen to use two antigen
 isotypes, but users can add additional pairs if available.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using est.incidence (no strata)</span></span>
 <span></span>
 <span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.html">est.incidence</a></span><span class="op">(</span></span>
@@ -384,7 +413,7 @@ isotypes, but users can add additional pairs if available.</p>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
@@ -396,20 +425,82 @@ isotypes, but users can add additional pairs if available.</p>
 <div class="section level3">
 <h3 id="stratified-seroincidence">Stratified Seroincidence<a class="anchor" aria-label="anchor" href="#stratified-seroincidence"></a>
 </h3>
-<p>We can also produce stratified seroincidence estimates. Here we
-stratify by catchment area within Pakistan, but users can select any
-stratification variable in their cross-sectional population dataset.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Using est.incidence.by (strata)</span></span>
+<p>We can also produce stratified seroincidence estimates. Let’s compare
+estimates across all countries.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Using est.incidence.by (strata)</span></span>
 <span></span>
-<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
-<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span>
-<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span><span class="va">est_country</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
+<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Country"</span><span class="op">)</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">curves</span>, </span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in count_strata(., strata_varnames): The number of observations in `data` varies between antigen isotypes, for at least one stratum. Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes.</span></span>
+<span><span class="co">#&gt; Warning in warn.missing.strata(data = curve_params, strata = strata %&gt;% : curve_params is missing all strata variables, and will be used unstratified.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
+<span><span class="co">#&gt; Warning in check_parallel_cores(.): This computer appears to have 4 cores</span></span>
+<span><span class="co">#&gt; available. `est.incidence.by()` has reduced its `num_cores` argument to 3 to</span></span>
+<span><span class="co">#&gt; avoid destabilizing the computer.</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est_country</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
+<span><span class="co">#&gt; b) Strata       : Country </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 13</span></span></span>
+<span><span class="co">#&gt;   Stratum  Country     n est.start incidence.rate      SE CI.lwr CI.upr coverage</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum… Bangla…   401       0.1         0.451  0.023<span style="text-decoration: underline;">5</span>  0.407  0.499      0.95</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum… Nepal     760       0.1         0.048<span style="text-decoration: underline;">2</span> 0.002<span style="text-decoration: underline;">78</span> 0.043<span style="text-decoration: underline;">1</span> 0.054<span style="text-decoration: underline;">0</span>     0.95</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Stratum… Pakist…   494       0.1         0.128  0.006<span style="text-decoration: underline;">82</span> 0.115  0.142      0.95</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: log.lik &lt;dbl&gt;, iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
+<p>We are warned that “curve_params is missing all strata variables, and
+will be used unstratified”. This can be ignored, as the unstratified
+parameters will simply give us the overall seroincidence estimate.</p>
+<p>Let’s visualize our seroincidence estimates by strata.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
+<span></span>
+<span><span class="co">#Save summary(est2) as a dataframe and sort by incidence rate</span></span>
+<span><span class="va">est_countrydf</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est_country</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">incidence.rate</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co">#Create barplot (rescale incidence rate and CIs)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">est_countrydf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">Country</span>,<span class="va">incidence.rate</span><span class="op">)</span>, x<span class="op">=</span><span class="va">incidence.rate</span><span class="op">*</span><span class="fl">1000</span>, fill<span class="op">=</span><span class="va">Country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span><span class="va">CI.lwr</span><span class="op">*</span><span class="fl">1000</span>, xmax<span class="op">=</span><span class="va">CI.upr</span><span class="op">*</span><span class="fl">1000</span>, width<span class="op">=</span><span class="fl">.05</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>      title<span class="op">=</span> <span class="st">"Enteric Fever Seroincidence by Country"</span>,</span>
+<span>        x<span class="op">=</span><span class="st">"Seroincidence rate per 1000 person-years"</span>,</span>
+<span>        y<span class="op">=</span><span class="st">"Country"</span></span>
+<span>      <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">11</span><span class="op">)</span>,</span>
+<span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country.pal</span><span class="op">)</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p>Users can select any stratification variable in their cross-sectional
+population dataset. For example, we can also stratify by catchment area
+within Pakistan.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Using est.incidence.by (strata)</span></span>
+<span></span>
+<span><span class="va">est2</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
+<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">curves</span>, </span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co">#Allow for parallel processing to decrease run time </span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in warn.missing.strata(data = curve_params, strata = strata %&gt;% : curve_params is missing all strata variables, and will be used unstratified.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
@@ -419,7 +510,7 @@ stratification variable in their cross-sectional population dataset.</p>
 <span><span class="co">#&gt; Warning in check_parallel_cores(.): This computer appears to have 4 cores</span></span>
 <span><span class="co">#&gt; available. `est.incidence.by()` has reduced its `num_cores` argument to 3 to</span></span>
 <span><span class="co">#&gt; avoid destabilizing the computer.</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
@@ -434,49 +525,62 @@ stratification variable in their cross-sectional population dataset.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.1          0.167 0.013<span style="text-decoration: underline;">3</span>  0.143   0.196</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
-<p>We are warned that “curve_params is missing all strata variables, and
-will be used unstratified.” This can be ignored, as the unstratified
-parameters will simply give us the overall seroincidence estimate.</p>
-<p>Let’s visualize our seroincidence estimates by strata.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Plot seroincidence estimates</span></span>
 <span></span>
-<span><span class="co"># Save summary(est2) as a dataframe</span></span>
-<span><span class="va">est2df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
+<span><span class="co">#Save summary(est2) as a dataframe</span></span>
+<span><span class="va">est2df</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>catchment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">catchment</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"kgh"</span>, <span class="st">"aku"</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"KGH"</span>, <span class="st">"AKU"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span><span class="co"># Create barplot (rescale incidence rate and CIs)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">est2df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">catchment</span>, x <span class="op">=</span> <span class="va">incidence.rate</span> <span class="op">*</span> <span class="fl">1000</span>, fill <span class="op">=</span> <span class="va">catchment</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">CI.lwr</span> <span class="op">*</span> <span class="fl">1000</span>, xmax <span class="op">=</span> <span class="va">CI.upr</span> <span class="op">*</span> <span class="fl">1000</span>, width <span class="op">=</span> <span class="fl">.05</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Enteric Fever Seroincidence by Catchment Area"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Seroincience rate per 1000 person-years"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Catchment"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span>,</span>
-<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<span>      title<span class="op">=</span> <span class="st">"Enteric Fever Seroincidence in Pakistan by Catchment Area"</span>,</span>
+<span>        x<span class="op">=</span><span class="st">"Seroincience rate per 1000 person-years"</span>,</span>
+<span>        y<span class="op">=</span><span class="st">"Catchment Area"</span>,</span>
+<span>        caption <span class="op">=</span> <span class="st">"AKU = Aga Khan University Hospital, Karachi, Pakistan; KGH = Kharadar General Hospital, Karachi, Pakistan"</span></span>
+<span>      <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">11</span><span class="op">)</span>,</span>
+<span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#8F4B86"</span>, <span class="st">"#9D83BC"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="enteric_fever_example_files/figure-html/estby-1.png" width="672"></p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
 </h2>
-<p>In our data, we find that the overall estimated seroincidence of
-enteric fever in Pakistan is 153 per 1000 person-years (95% CI: 139,
-169). When stratified by catchment area, we find that area KGH has a
-higher incidence rate than area AKU [204 per 1000 person-years (95% CI:
-176, 237) vs. 125 per 1000 person-years (95% CI: 109, 143)].</p>
+<p>We find that Bangladesh has the highest overall seroincidence of
+enteric fever with a rate of 451 per 1000 person-years, as well as the
+highest seroincidence by age category. In comparison, Nepal has a
+seroincidence rate over 9 times lower than that of Bangladesh (48 per
+1000 person-years) and the lowest age-specific seroincidence rates of
+the three countries in the study. <strong>serocalculator</strong>
+provides an efficient tool to conduct this analysis and produce
+actionable results.</p>
 </div>
 <div class="section level2">
 <h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
 </h2>
-<p>Special thanks to our collaborators at Aga Khan University (Karachi,
-Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and
-Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel,
-Nepal).</p>
+<p>We gratefully acknowledge the study participants for their valuable
+time and interest in participating in these studies. Special thanks to
+our collaborators at Sabin Vaccine Institute, Aga Khan University
+(Karachi, Pakistan), Child Health Research Foundation (Dhaka,
+Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital
+(Dhulikhel, Nepal).</p>
+</div>
+<div class="section level2">
+<h2 id="funding">Funding<a class="anchor" aria-label="anchor" href="#funding"></a>
+</h2>
+<p>This project was supported by grants from the National Institutes of
+Health (NIH) National Institute of Allergy and Infectious Disease
+(R21AI176416), the NIH Fogarty International Center (K01TW012177) and
+the Bill and Melinda Gates Foundation.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

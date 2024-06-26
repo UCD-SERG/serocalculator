@@ -7,5 +7,5 @@
 #' @return the negative log-likelihood of the data with the current parameter values
 #' @keywords internal
 .nll <- function(log.lambda, ...) {
-  -llik(lambda = exp(log.lambda), ...)
+  -log_likelihood(lambda = exp(log.lambda), ...)
 }

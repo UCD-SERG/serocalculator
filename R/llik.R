@@ -120,7 +120,7 @@ log_likelihood <- function(
     }
 
     nllSingle <-
-      fdev(
+      f_dev(
         lambda = lambda,
         csdata = cur_data,
         lnpars = cur_curve_params,

@@ -127,7 +127,7 @@ log_likelihood <- function(
         cond = cur_noise_params
       )
 
-    # if (!is.na(nllSingle))  # not meaningful for vectorized fdev()
+    # if (!is.na(nllSingle))  # not meaningful for vectorized f_dev()
     {
       nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
     }

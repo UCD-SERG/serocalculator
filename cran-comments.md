@@ -21,8 +21,8 @@ This is a second resubmission of the package `serocalculator` version 1.0.2.
   - **Specific Changes**: Removed additional linebreaks from DESCRIPTION
   
 4. **Comment 4: We see : Unexecutable code in man/autoplot.curve_params.Rd: `%>%:`**
-  - **Response**: We thoroughly reviewed the code in man/autoplot.curve_params.Rd and couldn't reproduce the reported issue. We ensured that the code is correct and functional.
-  - **Specific Changes**: None
+  - **Response**: We thoroughly reviewed the code in man/autoplot.curve_params.Rd and couldn't reproduce the reported issue. We fixed what we though could be the issue and ensured that the code is correct and functional.
+  - **Specific Changes**: Reformatted code to avoid pipes in naming
   
 5. **Comment 5: Please add `\value` to .Rd files regarding exported methods and explain the functions results in the documentation. Please write about the structure of the output (class) and also what the output means. (If a function does not return a value, please document that too**
   - **Response**: Reviewed functions without a return value
@@ -48,8 +48,8 @@ This is a second resubmission of the package `serocalculator` version 1.0.2.
   - **Specific Changes**: Replaced `\dontrun` with `\donttest` and noted that this was used because examples could not run in <5 sec
   
 9. **Comment 9: You write information messages to the console that cannot be easily suppressed. It is more R like to generate objects that can be used to extract the information a user is interested in, and then print() that object. Instead of print() rather use message()/warning() or if(verbose)cat(..) (or maybe stop()) if you really have to write text to the console.**
-  - **Response**: Reviewed affected files
-  - **Specific Changes**: Replaced `print()` with `message()` in 
+  - **Response**: Reviewed affected files and made edits where we could. We could not find this issue in R/par.pred.R. We intentionally use print() in R/warn_missing_strata.R because we want to print a dataframe to the console to inform users about which pieces of data are broken. This forms part of an error message and is followed immediately by a stop()
+  - **Specific Changes**: Replaced `print()` with `message()` in get_additional_data.R.
   
 10. **Comment 10: Please make sure that you do not change the user's options, par or working directory. If you really have to do so within functions, please ensure with an *immediate* call of on.exit() that the settings are reset when the function is exited.**
   - **Response**: Reviewed instances where user options are changed, or there is example code for updating these examples.

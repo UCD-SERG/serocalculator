@@ -24,6 +24,7 @@ a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 \code{autoplot()} method for \code{pop_data} objects
 }
 \examples{
+\donttest{
 library(dplyr)
 library(ggplot2)
 
@@ -33,4 +34,5 @@ xs_data <- "https://osf.io/download//n6cp3/" \%>\%
 
 xs_data \%>\% autoplot(strata = "Country", type = "density")
 xs_data \%>\% autoplot(strata = "Country", type = "age-scatter")
+}
 }

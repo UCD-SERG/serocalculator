@@ -88,13 +88,15 @@ get_additional_data <- function(
 
   fileName <- basename(fileURL)
   tmpFileName <- file.path(tempdir(), fileName)
-  on.exit({
-    unlink(tmpFileName)
-  })
+
   #Increase timeout for big files
   options(timeout = max(300, getOption("timeout")))
   #Reset timeout option
-  on.exit(options(timeout = original_timeout))
+  on.exit({
+    unlink(tmpFileName)
+    options(timeout = original_timeout)
+  })
+
   # Download
   tryCatch(
     {

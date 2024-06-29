@@ -32,12 +32,12 @@ Large datasets may timeout. If so, you can increase the download time by updatin
 \examples{
 \donttest{
 curve_param_samples =
-  getAdditionalData(
+  get_additional_data(
     fileURL = "https://osf.io/download/bhfvx")
 
 # optionally, save the data to disk
 curve_param_samples =
-  getAdditionalData(
+  get_additional_data(
     fileURL = "https://osf.io/download/bhfvx",
     savePath = "~/Downloads/curv_params.rds")
 }

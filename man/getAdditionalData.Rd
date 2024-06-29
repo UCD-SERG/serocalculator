@@ -33,10 +33,10 @@ consistent API.
 }
 \examples{
 \donttest{
-curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx")
+curve_param_samples <- get_additional_data(fileURL = "https://osf.io/download/bhfvx")
 
 # Optionally, save the data to disk
-curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx",
+curve_param_samples <- get_additional_data(fileURL = "https://osf.io/download/bhfvx",
     savePath = "~/Downloads/curv_params.rds")
 }
 

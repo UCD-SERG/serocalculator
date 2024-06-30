@@ -2,11 +2,7 @@
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
-#' @param age a [character()] identifying the age column
-#' @param id a [character()] identifying the id column
-#' @param value a [character()] identifying the value column
-#' @param standardize a [logical()] to determine standardization of columns
-#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @returns a `curve_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' xs_data <- load_curve_params("https://osf.io/download/rtw5k/")
@@ -29,7 +25,17 @@ as_curve_data <- function(data, antigen_isos = NULL){
     stopifnot(all(is.element(antigen_isos, curve_data$antigen_iso)))
   }
 
-  attr(curve_data, "antigen_isos") <- antigen_isos
+  if(all(is.element(c('y0','y1', 'alpha'), curve_data %>% names()))){
 
-  return(curve_data)
+    attr(curve_data, "antigen_isos") <- antigen_isos
+
+    return(curve_data)
+
+  } else {
+
+    cli::cli_abort("Please provide curve data")
+  }
+
 }
+
+

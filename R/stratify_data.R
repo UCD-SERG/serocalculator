@@ -44,14 +44,14 @@ stratify_data <- function(
   strata_vars_curve_params <-
     warn.missing.strata(
       data = curve_params,
-      strata = strata %>% select(curve_strata_varnames),
+      strata = strata %>% select(all_of(curve_strata_varnames)),
       dataname = "curve_params"
     )
 
   strata_vars_noise_params <-
     warn.missing.strata(
       data = noise_params,
-      strata = strata %>% select(noise_strata_varnames),
+      strata = strata %>% select(all_of(noise_strata_varnames)),
       dataname = "noise_params"
     )
 

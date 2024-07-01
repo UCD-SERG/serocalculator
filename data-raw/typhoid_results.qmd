@@ -20,44 +20,30 @@ library(tidyverse)
 ```
 
 ```{r longdata}
-c.hlye.IgG <-
-  fs::path_package(
-    "extdata",
-    "dmcmc_hlyeigg_09.30.rds",
-    package = "serocalculator"
-  ) %>% # Load longitudinal parameters dataset
-  readRDS() %>%
-  mutate(
-    alpha = alpha * 365.25, # Create alpha and d
-    d = r - 1
-  ) %>%
-  select(y1, alpha, d) # Select only the variables needed for analysis
+
+# pop data
+xs_data <- load_pop_data(
+  file_path = "https://osf.io/download//n6cp3/",
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = TRUE
+) %>% 
+  filter(Country == 'Pakistan')
+  
+
+# get curve data
+curve <- load_curve_params("https://osf.io/download/rtw5k/")
+
 ```
 
 ``` {r simdata}
-library(fs) # filesystem utility functions
-p.hlye.IgG <-
-  fs::path_package(
-    package = "serocalculator",
-    "extdata/simpophlyeigg.2.csv"
-  ) %>% # Load simulated cross-sectional dataset
-  read_csv() %>%
-  rename( # rename variables
-    y = y.smpl,
-    a = a.smpl
-  ) %>%
-  select(y, a) # Select only the variables needed for analysis
+# get noise data
+noise <- load_noise_params("https://osf.io/download//hqy4v/") %>% 
+  filter(Country == 'Pakistan')
+  
 ```
 
-``` {r conditions}
-cond.hlye.IgG <- data.frame(
-  nu = 1.027239, # B noise
-  eps = 0.2, # M noise
-  y.low = 0.0, # low cutoff
-  y.high = 5e4,
-  antigen_iso = "HlyE_IgG"
-)
-```
 
 ```{r seroinc}
 start <- .05
@@ -67,20 +53,15 @@ log.lambda <- log(lambda)
 log.lmin <- log(lambda / 10)
 log.lmax <- log(10 * lambda)
 
+# objfunc <- function(llam) {
+#   return(res <- f_dev(lambda, csdata, lnpars, cond))
+# }
 
-
-objfunc <- function(llam) {
-  return(res <- fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
-}
-
-
-fit <- nlm(
-  objfunc,
-  p = log.lambda,
-  hessian = TRUE,
-  print.level = 0,
-  stepmax = 1,
-  iterlim = 100
+fit <- est.incidence(
+  pop_data = xs_data,
+  curve_param = curve,
+  noise_param = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 
 typhoid_results <- fit %>%
@@ -92,7 +73,10 @@ typhoid_results <- fit %>%
     ageCat = NULL,
     antigen.iso = paste(collapse = "+", "HlyE_IgG")
   ) %>%
-  structure(noise.parameters = cond.hlye.IgG)
+  structure(noise.parameters = noise)
 
 usethis::use_data(typhoid_results, internal = TRUE, overwrite = TRUE)
+
+
+
 ```

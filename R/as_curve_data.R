@@ -5,9 +5,9 @@
 #' @returns a `curve_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' xs_data <- load_curve_params("https://osf.io/download/rtw5k/")
+#' curve_data <- load_curve_params("https://osf.io/download/rtw5k/")
 #'
-#' print(xs_data)
+#' print(curve_data)
 #'
 
 as_curve_data <- function(data, antigen_isos = NULL){

@@ -10,12 +10,24 @@ stratify_data <- function(
     all_data <-
       list(
         pop_data = data %>% select(
-          attributes(data)$value_var,
-          attributes(data)$age_var,
-          "antigen_iso"
+          all_of(
+            c(
+              attributes(data)$value_var,
+              attributes(data)$age_var,
+              "antigen_iso"
+            )
+          )
         ),
-        curve_params = curve_params %>% select("y1", "alpha", "r", "antigen_iso"),
-        noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso")
+        curve_params = curve_params %>% select(
+          all_of(
+            c("y1", "alpha", "r", "antigen_iso")
+          )
+        ),
+        noise_params = noise_params %>% select(
+          all_of(
+            c("nu", "eps", "y.low", "y.high", "antigen_iso")
+          )
+        )
       ) %>%
       structure(
         class = union(
@@ -44,14 +56,18 @@ stratify_data <- function(
   strata_vars_curve_params <-
     warn.missing.strata(
       data = curve_params,
-      strata = strata %>% select(all_of(curve_strata_varnames)),
+      strata = strata %>% select(
+        all_of(curve_strata_varnames)
+      ),
       dataname = "curve_params"
     )
 
   strata_vars_noise_params <-
     warn.missing.strata(
       data = noise_params,
-      strata = strata %>% select(all_of(noise_strata_varnames)),
+      strata = strata %>% select(
+        all_of(noise_strata_varnames)
+      ),
       dataname = "noise_params"
     )
 
@@ -76,15 +92,23 @@ stratify_data <- function(
               by = strata_varnames
             ) %>%
             select(
-              attributes(data)$value_var,
-              attributes(data)$age_var,
-              "antigen_iso"
+              all_of(
+                c(
+                  attributes(data)$value_var,
+                  attributes(data)$age_var,
+                  "antigen_iso"
+                )
+              )
             )
       )
 
     if (length(strata_vars_curve_params) == 0) {
       data_and_params_cur_stratum$curve_params <-
-        curve_params %>% select("y1", "alpha", "r", "antigen_iso")
+        curve_params %>% select(
+          all_of(
+            c("y1", "alpha", "r", "antigen_iso")
+          )
+        )
     } else {
       data_and_params_cur_stratum$curve_params <-
         curve_params %>%
@@ -92,13 +116,21 @@ stratify_data <- function(
           cur_stratum_vals,
           by = strata_vars_curve_params
         ) %>%
-        select("y1", "alpha", "r", "antigen_iso")
+        select(
+          all_of(
+            c("y1", "alpha", "r", "antigen_iso")
+          )
+        )
     }
 
     if (length(strata_vars_noise_params) == 0) {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
-        select("nu", "eps", "y.low", "y.high", "antigen_iso")
+        select(
+          all_of(
+            c("nu", "eps", "y.low", "y.high", "antigen_iso")
+          )
+        )
     } else {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
@@ -106,7 +138,11 @@ stratify_data <- function(
           cur_stratum_vals,
           by = strata_vars_noise_params
         ) %>%
-        select("nu", "eps", "y.low", "y.high", "antigen_iso")
+        select(
+          all_of(
+            c("nu", "eps", "y.low", "y.high", "antigen_iso")
+          )
+        )
     }
 
     stratumDataList[[cur_stratum]] <-

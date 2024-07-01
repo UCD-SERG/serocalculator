@@ -1,3 +1,12 @@
+# serocalculator 1.2.0
+* Renamed `nlm_exit_codes` file to `data_objects`
+
+* Added `test-summary.pop_data` test
+
+* Modified `test-est.incidence` test
+
+* Added stratification to `summary.pop_data`
+
 # serocalculator 1.1.0
 
 * Renamed `llik()` to `log_likelihood()`

@@ -1,4 +1,3 @@
-
 #' collect cross-sectional data
 #'
 #' @description output: (age, y(t) set)
@@ -10,7 +9,7 @@
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `curve_params`.
 #' @param n.mc
 #' * when `n.mc` is in 1:4000 a fixed posterior sample is used
-#' * when n.mc = 0 a random smaple is chosen
+#' * when n.mc = 0 a random sample is chosen
 #' @param renew.params
 #' * `renew.params = TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
@@ -26,14 +25,14 @@ simcs.tinf <- function(
     antigen_isos,
     n.mc = 0,
     renew.params = FALSE,
-    ...)
-{
+    ...) {
   st.days <- round(age.rng[1])
   # from min=age.rng[1] days...
   en.days <- round(age.rng[2])
   # to   max=age.rng[2] days...
-  if (st.days == 0)
+  if (st.days == 0) {
     st.days <- 1
+  }
 
   # if(en.days>30000) en.days <- 30000;
   y.smpl <- array(
@@ -41,7 +40,9 @@ simcs.tinf <- function(
     dim = c(n.smpl, length(antigen_isos) + 1),
     dimnames = list(
       obs = 1:n.smpl,
-      var = c("age", antigen_isos)))
+      var = c("age", antigen_isos)
+    )
+  )
   # y and age
   for (k.smpl in 1:n.smpl)
   {
@@ -61,8 +62,6 @@ simcs.tinf <- function(
     # sample at random age
     y.smpl[k.smpl, ] <-
       c(resp$t[tinf.smp], as.matrix(resp$y)[tinf.smp, ])
-
   }
   return(y.smpl)
-
 }

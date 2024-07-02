@@ -1,4 +1,4 @@
-#' @docType package
+#' _PACKAGE
 #'
 #' @name serocalculator
 #'
@@ -10,6 +10,26 @@
 #' @description
 #' This package translates antibody levels measured in a (cross-sectional) population sample into an
 #' estimate of the frequency with which seroconversions (infections) occur in the sampled population.
+#'
+#' The API for this package includes the following functions:
+#'
+#' Function Name                          | Purpose
+#' -----------------                      | --------------------------------------------
+#' [load_pop_data()]                      | loading cross-sectional antibody survey data
+#' [check_pop_data()]                     | checking antibody data
+#' [summary.pop_data()]                   | numerical summaries of antibody data
+#' [autoplot.pop_data()]                  | graphs of antibody data distributions
+#' [load_curve_params()]                  | loading antibody decay curve models
+#' [autoplot.curve_params()]              | graphing antibody decay curves
+#' [llik()]                               | computing log-likelihoods
+#' [graph.loglik()]                       | graphing log-likelihood functions
+#' [autoplot.seroincidence()]             | graphing log-likelihood functions
+#' [autoplot.seroincidence.by()]          | graphing log-likelihood functions
+#' [est.incidence()]                      | estimating incidence rates
+#' [est.incidence.by()]                   | estimating incidence rates by strata
+#' [summary.seroincidence.by()]           | summarizing stratified incidence rate estimates
+#' [autoplot.summary.seroincidence.by()]  | graphing incidence rate estimates
+#' [sim.cs()]                             | simulating cross-sectional population antibody data using longitudinal seroresponse models
 #'
 #'
 #' @author
@@ -108,15 +128,16 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
 #' @importFrom dplyr summarise
-#' @importFrom dplyr tibble
 #' @importFrom dplyr ungroup
 #' @importFrom foreach %:%
 #' @importFrom foreach %dopar%
 #' @importFrom foreach foreach
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 autoplot
+#' @importFrom ggplot2 ggplot
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
+#' @importFrom mixtools normalmixEM
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
 #' @importFrom rlang .env
@@ -124,6 +145,8 @@
 #' @importFrom rngtools setRNG
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats formula
+#' @importFrom stats lm
+#' @importFrom stats median
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
 #' @importFrom stats quantile
@@ -135,6 +158,8 @@
 #' @importFrom tidyr drop_na
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
+#' @importFrom tidyselect contains
+#' @importFrom tidyselect ends_with
 #' @importFrom utils download.file unzip
 #' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE

@@ -8,27 +8,25 @@
 #' @param ... Additional arguments affecting the summary produced.
 #'
 #' @examples
-#'
 #' \dontrun{
-#' # estimate seroincidence
+#' # Estimate seroincidence
 #' seroincidence <- est.incidence.by(...)
 #'
-#' # calculate summary statistics for the seroincidence object
+#' # Calculate summary statistics for the seroincidence object
 #' seroincidenceSummary <- summary(seroincidence)
 #'
-#' # print the summary of seroincidence object to the console
+#' # Print the summary of seroincidence object to the console
 #' print(seroincidenceSummary)
 #'
-#' # or simply type (appropriate print method will be invoked automatically)
+#' # Or simply type (appropriate print method will be invoked automatically)
 #' seroincidenceSummary
 #' }
 #'
 #' @export
-print.summary.seroincidence.by <- function(x, ...)
-{
+print.summary.seroincidence.by <- function(x, ...) {
   cat("Seroincidence estimated given the following setup:\n")
-  cat(paste("a) Antigen isotypes   :", paste(x |> attr("antigen_isos"), collapse = ", ")), "\n")
-  cat(paste("b) Strata       :", paste(x |> attr("Strata"), collapse = ", ")), "\n")
+  cat(paste("a) Antigen isotypes   :", paste(x %>% attr("antigen_isos"), collapse = ", ")), "\n")
+  cat(paste("b) Strata       :", paste(x %>% attr("Strata"), collapse = ", ")), "\n")
   cat("\n Seroincidence estimates:\n")
   print(as_tibble(x))
   invisible(x)

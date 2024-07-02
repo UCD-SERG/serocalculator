@@ -1,0 +1,35 @@
+#' Check the formatting of a cross-sectional antibody survey dataset.
+#'
+#' @param pop_data dataset to check
+#'
+#' @returns NULL (invisibly)
+#' @export
+#' @examples
+#' library(dplyr)
+#'
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   check_pop_data()
+#'
+check_pop_data <- function(pop_data) {
+  if (!is.data.frame(pop_data)) {
+    cli::cli_abort(message = .pasteN(
+      "Argument `pop_data` is not a `data.frame()`.",
+      "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."
+    ))
+  }
+
+  missing_age <- is.element(attributes(pop_data)$age_var, names(pop_data))
+
+  if (!missing_age) {
+    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$age_var,  "(age, in years)"))
+  }
+
+  missing_value <- is.element(attributes(pop_data)$value_var, names(pop_data))
+
+  if (!missing_value) {
+    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
+  }
+
+  message("data format is as expected.")
+  invisible(NULL)
+}

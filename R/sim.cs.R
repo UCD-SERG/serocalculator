@@ -16,7 +16,7 @@
 #' * `renew.params = TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
-#' @inheritParams llik
+#' @inheritParams log_likelihood
 
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
@@ -24,12 +24,50 @@
 #' * `"wide"` (one serum sample per row)
 #' @param ... additional arguments passed to `simcs.tinf()`
 #' @inheritDotParams simcs.tinf
-#' @inheritParams llik # verbose
+#' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
 #' * one column for each element in the `antigen_iso` input argument
 #' @export
-
+#' @examples
+#' # Load curve parameters
+#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+#'
+#' # Specify the antibody-isotype responses to include in analyses
+#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
+#'
+#' # Set seed to reproduce results
+#' set.seed(54321)
+#'
+#' # Simulated incidence rate per person-year
+#' lambda <- 0.2;
+#'
+#' # Range covered in simulations
+#' lifespan <- c(0, 10);
+#'
+#' # Cross-sectional sample size
+#' nrep <- 100
+#'
+#' # Biologic noise distribution
+#' dlims <- rbind(
+#'   "HlyE_IgA" = c(min = 0, max = 0.5),
+#'   "HlyE_IgG" = c(min = 0, max = 0.5)
+#' )
+#'
+#' # Generate cross-sectional data
+#' csdata <- sim.cs(
+#'   curve_params = dmcmc,
+#'   lambda = lambda,
+#'   n.smpl = nrep,
+#'   age.rng = lifespan,
+#'   antigen_isos = antibodies,
+#'   n.mc = 0,
+#'   renew.params = TRUE,
+#'   add.noise = TRUE,
+#'   noise_limits = dlims,
+#'   format = "long"
+#' )
+#'
 sim.cs <- function(
     lambda = 0.1,
     n.smpl = 100,
@@ -43,18 +81,15 @@ sim.cs <- function(
     noise_limits,
     format = "wide",
     verbose = FALSE,
-    ...)
-{
-
-  if(verbose > 1)
-  {
-    message('inputs to `sim.cs()`:')
-    print(environment() |> as.list())
+    ...) {
+  if (verbose > 1) {
+    message("inputs to `sim.cs()`:")
+    print(environment() %>% as.list())
   }
 
   # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 
-  predpar =
+  predpar <-
     curve_params %>%
     filter(.data$antigen_iso %in% antigen_isos) %>%
     droplevels() %>%
@@ -63,10 +98,10 @@ sim.cs <- function(
 
   stopifnot(length(lambda) == 1)
 
-  day2yr = 365.25
-  lambda = lambda / day2yr
-  age.rng = age.rng * day2yr
-  npar = dimnames(predpar)$parameter |> length()
+  day2yr <- 365.25
+  lambda <- lambda / day2yr
+  age.rng <- age.rng * day2yr
+  npar <- dimnames(predpar)$parameter %>% length()
 
 
   baseline_limits <- noise_limits
@@ -89,31 +124,48 @@ sim.cs <- function(
     for (k.ab in 1:(ncol(ysim) - 1)) {
       ysim[, 1 + k.ab] <-
         ysim[, 1 + k.ab] +
-        runif(n = nrow(ysim),
-              min = noise_limits[k.ab, 1],
-              max = noise_limits[k.ab, 2])
-
+        runif(
+          n = nrow(ysim),
+          min = noise_limits[k.ab, 1],
+          max = noise_limits[k.ab, 2]
+        )
     }
   }
   colnames(ysim) <- c("age", antigen_isos)
 
-  to_return =
-    ysim |>
+  to_return <-
+    ysim %>%
     as_tibble() %>%
-    mutate(age = round(.data$age / day2yr, 2))
+    mutate(
+      id = as.character(1:n()),
+      age = round(.data$age / day2yr, 2)
+    )
 
-
-  if(format == "long")
-  {
-    if(verbose) message("outputting long format data")
-    to_return =
+  if (format == "long") {
+    if (verbose) message("outputting long format data")
+    to_return <-
       to_return %>%
       pivot_longer(
         cols = antigen_isos,
         values_to = c("value"),
-        names_to = c("antigen_iso"))
+        names_to = c("antigen_iso")
+      ) %>%
+      structure(
+        class = c("pop_data", class(to_return)),
+        format = "long"
+      ) %>%
+      set_value(value = "value") %>%
+      set_age(age = "age") %>%
+      set_id(id = "id")
+  } else {
+    if (verbose) message("outputting wide format data")
+    to_return <-
+      to_return %>%
+      structure(
+        class = c("pop_data_wide", class(to_return)),
+        format = "wide"
+      )
   }
 
   return(to_return)
-
 }

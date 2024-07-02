@@ -26,6 +26,26 @@
 #'
 #'
 #' @examples
+#' library(dplyr)
+#'
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#'
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' est2 <- est.incidence.by(
+#'   strata = c("catchment"),
+#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   curve_params = curve,
+#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   #num_cores = 8 # Allow for parallel processing to decrease run time
+#' )
+#'
+#' summary(est2)
 #'
 #' \dontrun{
 #' # estimate seroincidence
@@ -41,11 +61,9 @@ summary.seroincidence.by <- function(
     confidence_level = .95,
     showDeviance = TRUE,
     showConvergence = TRUE,
-    ...)
-{
-
-  alpha = 1 - confidence_level
-  quantiles = c(alpha/2, 1 - alpha/2)
+    ...) {
+  alpha <- 1 - confidence_level
+  quantiles <- c(alpha / 2, 1 - alpha / 2)
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
     stop("Incorrectly specified quantiles")
@@ -55,20 +73,21 @@ summary.seroincidence.by <- function(
     stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
   }
 
-  results =
-    object |>
+  results <-
+    object %>%
     lapply(
       FUN = summary.seroincidence,
-      coverage = confidence_level) |>
+      coverage = confidence_level
+    ) %>%
     bind_rows(.id = "Stratum")
 
-  results =
+  results <-
     inner_join(
-      object |> attr("Strata"),
+      object %>% attr("Strata"),
       results,
       by = "Stratum",
       relationship = "one-to-one"
-    ) |>
+    ) %>%
     relocate("Stratum", .before = everything())
 
 
@@ -77,24 +96,23 @@ summary.seroincidence.by <- function(
   }
 
   if (showConvergence) {
-    results = results |>
+    results <- results %>%
       relocate("nlm.convergence.code", .after = everything())
-  } else
-  {
+  } else {
     results$nlm.convergence.code <- NULL
   }
 
 
 
   output <-
-    results |>
+    results %>%
     structure(
       antigen_isos = attr(object, "antigen_isos"),
-      Strata = attr(object, "Strata") |> attr("strata_vars"),
+      Strata = attr(object, "Strata") %>% attr("strata_vars"),
       Quantiles = quantiles,
       class =
-        "summary.seroincidence.by" |>
-        union(class(results))
+        "summary.seroincidence.by" %>%
+          union(class(results))
     )
 
   return(output)

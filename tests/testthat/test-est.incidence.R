@@ -1,7 +1,6 @@
 test_that(
   "est.incidence() produces expected results for typhoid data",
   {
-
     skip(message = "Skipping test of `est.incidence()` for now, because github was producing miniscule differences in SE (and thus CIs) for some reason that I don't have time to hunt down.")
 
     library(readr)
@@ -10,14 +9,16 @@ test_that(
       fs::path_package(
         "extdata",
         "dmcmc_hlyeigg_09.30.rds",
-        package = "serocalculator") |> #Load longitudinal parameters dataset
-      readRDS()%>%
+        package = "serocalculator"
+      ) %>% # Load longitudinal parameters dataset
+      readRDS() %>%
       select(y1, alpha, r, antigen_iso)
 
-    p.hlye.IgG  <-
+    p.hlye.IgG <-
       fs::path_package(
         package = "serocalculator",
-        "extdata/simpophlyeigg.2.csv") %>% #Load simulated cross-sectional dataset
+        "extdata/simpophlyeigg.2.csv"
+      ) %>% # Load simulated cross-sectional dataset
       read_csv(
         col_types = cols(
           a.smpl = col_double(),
@@ -26,22 +27,24 @@ test_that(
           t = col_double()
         )
       ) %>%
-      rename( #rename variables
+      rename( # rename variables
         y = y.smpl,
-        a = a.smpl) %>%
-      select(y, a) |>
+        a = a.smpl
+      ) %>%
+      select(y, a) %>%
       mutate(antigen_iso = "HlyE_IgG")
 
     cond.hlye.IgG <- data.frame(
-      nu = 1.027239,             # B noise
-      eps = 0.2,            # M noise
-      y.low = 0.0,          # low cutoff
+      nu = 1.027239, # B noise
+      eps = 0.2, # M noise
+      y.low = 0.0, # low cutoff
       y.high = 5e4,
-      antigen_iso = "HlyE_IgG");
+      antigen_iso = "HlyE_IgG"
+    )
 
     start <- .05
 
-    fit = est.incidence(
+    fit <- est.incidence(
       dpop = p.hlye.IgG,
       dmcmc = c.hlye.IgG,
       c.age = NULL,
@@ -50,11 +53,14 @@ test_that(
       start = start,
       print.level = 2,
       iterlim = 100,
-      stepmax = 1)
+      stepmax = 1
+    )
 
     # compare with `typhoid_results` from data-raw/typhoid_results.qmd
 
     expect_equal(
       object = fit,
-      expected = typhoid_results)
-  })
+      expected = typhoid_results
+    )
+  }
+)

@@ -8,7 +8,7 @@ est.incidence(
   pop_data,
   curve_params,
   noise_params,
-  antigen_isos = unique(pop_data$antigen_iso),
+  antigen_isos = pop_data$antigen_iso \%>\% unique(),
   lambda_start = 0.1,
   stepmin = 1e-08,
   stepmax = 3,
@@ -87,4 +87,25 @@ a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}
 }
 \description{
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
+}
+\examples{
+
+library(dplyr)
+
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+
+curves <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+
+noise <- load_noise_params("https://osf.io/download//hqy4v/")
+
+est1 <- est.incidence(
+  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  curve_params = curves,
+  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+summary(est1)
 }

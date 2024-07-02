@@ -108,6 +108,8 @@ alt="Click Yes to install Rtools along with the devtools package" />
 the <em>devtools</em> package</figcaption>
 </figure>
 
+After installing Rtools, you may need to restart RStudio before continuing to install `serocalculator`.
+
 ##### Independently:
 
 1.  Download Rtools from
@@ -122,6 +124,8 @@ the <em>devtools</em> package</figcaption>
       needed.
     - **Do** select the box for “Save version information to registry”.
       It should be selected by default.
+
+
 
 ## Getting Help
 

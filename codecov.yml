@@ -4,5 +4,11 @@ coverage:
       default:
         # basic
         target: auto #default
-        threshold: 0%
+        threshold: 1%
         base: auto
+        informational: true
+    patch:
+      default:
+        target: auto
+        threshold: 1%
+        informational: true

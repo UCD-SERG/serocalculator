@@ -6,10 +6,14 @@
 #' @param id a [character()] identifying the id column
 #' @param value a [character()] identifying the value column
 #' @param standardize a [logical()] to determine standardization of columns
-#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attributes)
 #' @export
 #' @examples
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data <-
+#'   "https://osf.io/download//n6cp3/" %>%
+#'   url() %>%
+#'   readRDS() %>%
+#'   as_pop_data()
 #'
 #' print(xs_data)
 as_pop_data <- function(data,
@@ -33,12 +37,15 @@ as_pop_data <- function(data,
     stopifnot(all(is.element(antigen_isos, pop_data$antigen_iso)))
   }
 
+  attr(pop_data, "antigen_isos")
+
   attr(pop_data, "antigen_isos") <- antigen_isos
 
   pop_data <- pop_data %>%
     set_age(age = age, standardize = standardize) %>%
     set_value(value = value, standardize = standardize) %>%
-    set_id(id = id, standardize = standardize)
+    set_id(id = id, standardize = standardize)  %>%
+    set_biomarker_var(biomarker = "antigen_iso", standardize = standardize)
 
   return(pop_data)
 }

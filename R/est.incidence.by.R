@@ -40,11 +40,12 @@
 #'
 #' est2 <- est.incidence.by(
 #'   strata = c("catchment"),
-#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   pop_data = xs_data2 %>% filter(Country == "Pakistan"),
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   #num_cores = 8 # Allow for parallel processing to decrease run time
+#'   #num_cores = 1,
+#'   verbose = TRUE # Allow for parallel processing to decrease run time
 #' )
 #'
 #' summary(est2)

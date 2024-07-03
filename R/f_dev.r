@@ -3,23 +3,21 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `fdev()` was renamed to `f_dev()` to create a more
+#' `fdev()` was renamed to [f_dev()] to create a more
 #' consistent API.
 #'
 #' @keywords internal
 #'
 #' @export
-fdev <- Vectorize(
-  vectorize.args = "lambda",
-  function(
-      lambda,
-      csdata,
-      lnpars,
-      cond) {
-    lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")
-    f_dev(lambda, csdata, lnpars, cond)
-  }
-)
+fdev <- function(lambda,
+                 csdata,
+                 lnpars,
+                 cond)
+{
+  lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")
+  f_dev(lambda, csdata, lnpars, cond)
+}
+
 
 #  Utility functions: interface with C lib serocalc.so
 

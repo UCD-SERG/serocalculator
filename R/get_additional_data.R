@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `getAdditionalData()` was renamed to `get_additional_data()` to create a more
+#' `getAdditionalData()` was renamed to [get_additional_data()] to create a more
 #' consistent API.
 #'
 #' @keywords internal

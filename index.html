@@ -122,14 +122,18 @@
 <div class="section level4">
 <h4 id="a-note-for-windows-users">A Note for Windows Users<a class="anchor" aria-label="anchor" href="#a-note-for-windows-users"></a>
 </h4>
-<p>Before launching the development version of <strong>serocalculator</strong>, Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either during the <em>devtools</em> package installation, or independently if <em>devtools</em> is already installed.</p>
+<p>Before launching the development version of <strong>serocalculator</strong>, Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either: (1) <a href="#sec-install-rtools-with-devtools">during the <em>devtools</em> package installation</a>, <strong>or</strong> (2) <a href="#sec-install-rtools-a-la-carte">independently if <em>devtools</em> is already installed</a>.</p>
 <div class="section level5">
-<h5 id="during-devtools-installation">During devtools installation:<a class="anchor" aria-label="anchor" href="#during-devtools-installation"></a>
+<h5 id="during-devtools-installation">During devtools installation<a class="anchor" aria-label="anchor" href="#during-devtools-installation"></a>
 </h5>
 <p>When prompted to install additional build tools, select “Yes” and Rtools will be installed.</p>
-<figure><img src="reference/figures/Rtools1.png" alt="Click Yes to install Rtools along with the devtools package"><figcaption aria-hidden="true">
-Click Yes to install Rtools along with the <em>devtools</em> package
-</figcaption></figure>
+<div class="float">
+<img src="reference/figures/Rtools1.png" alt="Click Yes to install Rtools along with the devtools package"><div class="figcaption">Click Yes to install Rtools along with the <em>devtools</em> package</div>
+</div>
+<blockquote>
+<p>[!NOTE]</p>
+<p>After installing Rtools, you may need to restart RStudio before continuing to install <code>serocalculator</code>.</p>
+</blockquote>
 </div>
 <div class="section level5">
 <h5 id="independently">Independently:<a class="anchor" aria-label="anchor" href="#independently"></a>
@@ -155,13 +159,6 @@ Click Yes to install Rtools along with the <em>devtools</em> package
 </h2>
 <p>If you need assistance or encounter a clear bug, please file an issue with a minimal reproducible example on <a href="https://github.com/UCD-SERG/serocalculator/issues" class="external-link">GitHub</a>.</p>
 <p>Another great resource is <strong>The Epidemiologist R Handbook</strong>, which includes an introductory page on asking for help with R packages via GitHub: <a href="https://epirhandbook.com/en/getting-help.html" class="external-link uri">https://epirhandbook.com/en/getting-help.html</a></p>
-</div>
-<div class="section level2">
-<h2 id="serocalculator-app">Serocalculator App<a class="anchor" aria-label="anchor" href="#serocalculator-app"></a>
-</h2>
-<p>An app that takes the 5 curve parameters as inputs and runs <code><a href="reference/autoplot.curve_params.html">autoplot.curve_params()</a></code></p>
-<iframe src="https://ucdserg.shinyapps.io/shiny_decay_curve/?showcase=0" width="100%" height="600px" data-external="1">
-</iframe>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -208,7 +205,7 @@ Click Yes to install Rtools along with the <em>devtools</em> package
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/UCD-SERG/serocalculator/actions" class="external-link"><img src="https://github.com/UCD-SERG/serocalculator/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 

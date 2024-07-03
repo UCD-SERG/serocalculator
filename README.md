@@ -95,8 +95,9 @@ devtools::install_github("ucd-serg/serocalculator")
 Before launching the development version of **serocalculator**, Windows
 users will need to install Rtools, which contains a collection of tools
 for building and employing R packages that are still in development.
-This can be done either: (1) during the *devtools* package installation,
-**or** (2) independently if *devtools* is already installed.
+This can be done either: (1) [during the *devtools* package
+installation](#during-devtools-installation), **or** (2)
+[independently](#independently), if *devtools* is already installed.
 
 ##### During devtools installation
 

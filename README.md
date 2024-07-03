@@ -94,9 +94,9 @@ Before launching the development version of **serocalculator**, Windows
 users will need to install Rtools, which contains a collection of tools
 for building and employing R packages that are still in development.
 This can be done either: (1) [during the *devtools* package
-installation](@sec-install-rtools-with-devtools), **or** (2)
+installation](#sec-install-rtools-with-devtools), **or** (2)
 [independently if *devtools* is already
-installed](@sec-install-rtools-a-la-carte).
+installed](#sec-install-rtools-a-la-carte).
 
 ##### During devtools installation
 

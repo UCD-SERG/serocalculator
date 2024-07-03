@@ -22,14 +22,21 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titers indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
+Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. 
+In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, 
+while low titers indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
 
-The **serocalculator** package was designed to use the longitudinal response characteristics using a set of modeled parameters characterizing the longitudinal response of the selected serum antibodies. More details on the underlying methods can be found in [Getting Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html).
+The **serocalculator** package was designed to use the longitudinal response characteristics 
+using a set of modeled parameters characterizing the longitudinal response of the selected serum antibodies. 
+More details on the underlying methods can be found in [Getting Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html).
 
 
 ## Installing R
 
-The **serocalculator** package is written in R, a free, open-source software program. The end user of this package must have access to a working installation of the R software. We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI) for R such as [RStudio](https://posit.co/products/open-source/rstudio/).
+The **serocalculator** package is designed to be used in [R](https://www.r-project.org/), 
+which is a free, open-source software environment for statistical computing and graphics. 
+The end user of this package must have access to a working installation of the R software. 
+We recommend installing [base R](https://cran.r-project.org/) and a Graphical User Interface (GUI) for R such as [RStudio](https://posit.co/products/open-source/rstudio/).
 
 If you need to download and install R and/or RStudio, we recommend following the tutorial below from *Hands On Programming in R* by Garrett Grolemund:
 

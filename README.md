@@ -1,5 +1,5 @@
-serocalculator
-================
+# serocalculator
+
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -7,7 +7,7 @@ serocalculator
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/UCD-SERG/serocalculator/workflows/R-CMD-check/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions)
+[![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Antibody levels measured in a cross–sectional population sample can be
@@ -39,7 +39,7 @@ following the tutorial below from *Hands On Programming in R* by Garrett
 Grolemund:
 
 **Installing R and RStudio**:
-<https://rstudio-education.github.io/hopr/starting.html>
+https://rstudio-education.github.io/hopr/starting.html
 
 ## Installing the Serocalculator Package
 
@@ -93,25 +93,27 @@ devtools::install_github("ucd-serg/serocalculator")
 Before launching the development version of **serocalculator**, Windows
 users will need to install Rtools, which contains a collection of tools
 for building and employing R packages that are still in development.
-This can be done either during the *devtools* package installation, or
-independently if *devtools* is already installed.
+This can be done either: (1) [during the *devtools* package
+installation](#sec-install-rtools-with-devtools), **or** (2)
+[independently if *devtools* is already
+installed](#sec-install-rtools-a-la-carte).
 
-##### During devtools installation:
+##### During devtools installation
 
 When prompted to install additional build tools, select “Yes” and Rtools
 will be installed.
 
-<figure>
-<img src="man/figures/Rtools1.png"
-alt="Click Yes to install Rtools along with the devtools package" />
-<figcaption aria-hidden="true">Click Yes to install Rtools along with
-the <em>devtools</em> package</figcaption>
-</figure>
+![Click Yes to install Rtools along with the *devtools*
+package](man/figures/Rtools1.png)
+
+> [!NOTE]
+>
+> After installing Rtools, you may need to restart RStudio before
+> continuing to install `serocalculator`.
 
 ##### Independently:
 
-1.  Download Rtools from
-    <https://cran.r-project.org/bin/windows/Rtools/>
+1.  Download Rtools from https://cran.r-project.org/bin/windows/Rtools/
 
 2.  Run the installer
 
@@ -131,12 +133,4 @@ with a minimal reproducible example on
 
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
-GitHub: <https://epirhandbook.com/en/getting-help.html>
-
-## Serocalculator App
-
-An app that takes the 5 curve parameters as inputs and runs
-`autoplot.curve_params()`
-
-<iframe src="https://ucdserg.shinyapps.io/shiny_decay_curve/?showcase=0" width="100%" height="600px" data-external="1">
-</iframe>
+GitHub: https://epirhandbook.com/en/getting-help.html

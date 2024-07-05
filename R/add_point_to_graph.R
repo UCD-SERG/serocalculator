@@ -5,7 +5,7 @@ add_point_to_graph <- function(
     point_data =
       tibble(
         x = fit$estimate %>% exp(),
-        y = log_likelihood(.data$x, ...),
+        y = llik(.data$x, ...),
         label = "est.incidence"
       ),
     ...) {

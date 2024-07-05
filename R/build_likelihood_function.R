@@ -14,7 +14,7 @@ build_likelihood_function = function(
     for (cur_antigen in antigen_isos)
     {
       res = res +
-        fdev(
+        f_dev(
           lambda = lambda,
           csdata = cross_sectional_data[[cur_antigen]],
           lnpars = longitudinal_parameter_samples[[cur_antigen]],

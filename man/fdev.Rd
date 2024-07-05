@@ -2,26 +2,14 @@
 % Please edit documentation in R/f_dev.r
 \name{fdev}
 \alias{fdev}
-\title{Calculate negative log-likelihood (deviance)}
+\title{Calculate negative log-likelihood (deviance) for one antigen-isotype}
 \usage{
 fdev(lambda, csdata, lnpars, cond)
-}
-\arguments{
-\item{lambda}{incidence parameter, in events per person-year}
-
-\item{csdata}{cross-sectional sample data containing variables \code{value} and \code{age}}
-
-\item{lnpars}{longitudinal antibody decay model parameters \code{alpha}, \code{y1}, and \code{d}}
-
-\item{cond}{measurement noise parameters \code{nu}, \code{eps}, \code{y.low}, and \code{y.high}}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{fdev()} was renamed to \code{f_dev()} to create a more
 consistent API.
-}
-\details{
-more description to be added here
 }
 \keyword{internal}

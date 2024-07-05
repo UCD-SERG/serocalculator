@@ -68,7 +68,7 @@ graph.loglik = function(
   plot_data <-
     tibble(
       x = x %>% sort(),
-      y = llik(
+      y = log_likelihood(
         pop_data = pop_data,
         curve_params = curve_params,
         noise_params = noise_params,
@@ -94,7 +94,7 @@ graph.loglik = function(
         ggplot2::geom_point(
           data = tibble(
             x = highlight_points,
-            y = llik(
+            y = log_likelihood(
               pop_data = pop_data,
               curve_params = curve_params,
               noise_params = noise_params,

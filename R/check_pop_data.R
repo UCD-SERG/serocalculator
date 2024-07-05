@@ -9,7 +9,7 @@
 #' library(dplyr)
 #'
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
-#'   check_pop_data()
+#'   check_pop_data(verbose = TRUE)
 #'
 check_pop_data <- function(pop_data,
                            verbose = FALSE) {

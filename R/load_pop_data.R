@@ -27,6 +27,7 @@ get_age <- function(object, ...) {
   UseMethod("get_age", object)
 }
 
+#' @export
 get_age.pop_data <- function(object, ...) {
   # get age data
   age_data <- object %>% pull(attr(object, "age_var"))
@@ -38,6 +39,7 @@ get_age_var <- function(object, ...) {
   UseMethod("get_age_var", object)
 }
 
+#' @export
 get_age_var.pop_data <- function(object, ...) {
   # get value attribute
   age_var <- attributes(object)$age_var
@@ -49,6 +51,7 @@ get_value <- function(object, ...) {
   UseMethod("get_value", object)
 }
 
+#' @export
 get_value.pop_data <- function(object, ...) {
   # get age data
   value_data <- object %>% pull(attr(object, "value_var"))
@@ -60,6 +63,7 @@ get_value_var <- function(object, ...) {
   UseMethod("get_value_var", object)
 }
 
+#' @export
 get_value_var.pop_data <- function(object, ...) {
   # get value attribute
   value_var <- attributes(object)$value_var
@@ -71,6 +75,7 @@ get_id <- function(object, ...) {
   UseMethod("get_id", object)
 }
 
+#' @export
 get_id.pop_data <- function(object, ...) {
   # get age data
   id_data <- object %>% pull(attr(object, "id_var"))
@@ -82,6 +87,7 @@ get_id_var <- function(object, ...) {
   UseMethod("get_id_var", object)
 }
 
+#' @export
 get_id_var.pop_data <- function(object, ...) {
   # get value attribute
   id_var <- attributes(object)$id_var
@@ -97,6 +103,7 @@ set_biomarker_var <- function(object, ...) {
   UseMethod("set_biomarker_var", object)
 }
 
+#' @export
 set_biomarker_var.pop_data = function(object,
                                   biomarker = "antigen_iso",
                                   standardize = TRUE,
@@ -127,9 +134,10 @@ get_biomarker_names <- function(object, ...) {
   UseMethod("get_biomarker_names", object)
 }
 
+#' @export
 get_biomarker_names.pop_data <- function(object, ...) {
   # get biomarker name data
-  biomarker_data <- object %>% pull(attr(object, "biomarker_var"))
+  biomarker_data <- object %>% pull(get_biomarker_names_var(object))
 
   return(biomarker_data)
 }
@@ -138,6 +146,7 @@ get_biomarker_names_var <- function(object, ...) {
   UseMethod("get_biomarker_names_var", object)
 }
 
+#' @export
 get_biomarker_names_var.pop_data <- function(object, ...) {
   # get value attribute
   biomarker_var <- attributes(object)[["biomarker_var"]]
@@ -145,6 +154,7 @@ get_biomarker_names_var.pop_data <- function(object, ...) {
   return(biomarker_var)
 }
 
+#' @export
 set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
   # check if age column exists
   if (age %in% colnames(object)) {
@@ -192,6 +202,7 @@ set_value <- function(object, ...) {
   UseMethod("set_value", object)
 }
 
+#' @export
 set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...) {
   # check if value column exists
   if (value %in% colnames(object)) {
@@ -238,6 +249,7 @@ set_id <- function(object, ...) {
   UseMethod("set_id", object)
 }
 
+#' @export
 set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
   # check if id column exists
   if (id %in% colnames(object)) {

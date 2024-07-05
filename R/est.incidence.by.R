@@ -30,19 +30,21 @@
 #'
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
+#'   filter(Country == "Pakistan")
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
 #'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 #'
-#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")  %>%
+#'    filter(Country == "Pakistan")
 #'
 #' est2 <- est.incidence.by(
-#'   strata = c("catchment"),
-#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   strata = "catchment",
+#'   pop_data = xs_data,
 #'   curve_params = curve,
-#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   #num_cores = 8 # Allow for parallel processing to decrease run time
 #' )
@@ -95,7 +97,7 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  .checkStrata(data = pop_data, strata = strata)
+  .checkStrata(data = pop_data, strata = strata, antigen_isos = antigen_isos)
 
   .errorCheck(
     data = pop_data,
@@ -167,7 +169,6 @@ est.incidence.by <- function(
               x,
               list(
                 lambda_start = lambda_start,
-                antigen_isos = antigen_isos,
                 build_graph = build_graph,
                 print_graph = FALSE,
                 verbose = FALSE,
@@ -194,6 +195,9 @@ est.incidence.by <- function(
 
       for (cur_stratum in names(stratumDataList))
       {
+
+        if(verbose) cli::cli_rule(center = cur_stratum)
+
         cur_stratum_vars <-
           strata_table %>%
           dplyr::filter(.data$Stratum == cur_stratum)
@@ -210,7 +214,6 @@ est.incidence.by <- function(
               stratumDataList[[cur_stratum]],
               list(
                 lambda_start = lambda_start,
-                antigen_isos = antigen_isos,
                 build_graph = build_graph,
                 print_graph = print_graph,
                 verbose = verbose,

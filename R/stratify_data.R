@@ -5,17 +5,20 @@ stratify_data <- function(
     noise_params,
     strata_varnames = "",
     curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL) {
+    noise_strata_varnames = NULL)
+{
+
   if (is.null(strata_varnames) || all(strata_varnames == "")) {
     all_data <-
       list(
         pop_data = data %>% select(
-          attributes(data)$value_var,
-          attributes(data)$age_var,
-          "antigen_iso"
+          data %>% get_value_var(),
+          data %>% get_age_var(),
+          data %>% get_biomarker_names_var()
         ),
         curve_params = curve_params %>% select("y1", "alpha", "r", "antigen_iso"),
-        noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso")
+        noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso"),
+        antigen_isos = antigen_isos %>% intersect(pop_data %>% get_biomarker_names())
       ) %>%
       structure(
         class = union(
@@ -29,7 +32,7 @@ stratify_data <- function(
         `all data` = all_data
       ) %>%
       structure(
-        antigen_isos = antigen_isos,
+        antigen_isos = antigen_isos, # might be able to remove
         strata = tibble(Stratum = NA)
       )
 
@@ -44,14 +47,14 @@ stratify_data <- function(
   strata_vars_curve_params <-
     warn.missing.strata(
       data = curve_params,
-      strata = strata %>% select(curve_strata_varnames),
+      strata = strata %>% select(all_of(curve_strata_varnames)),
       dataname = "curve_params"
     )
 
   strata_vars_noise_params <-
     warn.missing.strata(
       data = noise_params,
-      strata = strata %>% select(noise_strata_varnames),
+      strata = strata %>% select(all_of(noise_strata_varnames)),
       dataname = "noise_params"
     )
 
@@ -67,20 +70,23 @@ stratify_data <- function(
     cur_stratum_vals <-
       strata %>% dplyr::filter(.data$Stratum == cur_stratum)
 
-    data_and_params_cur_stratum <-
-      list(
-        pop_data =
-          data %>%
-            semi_join(
-              cur_stratum_vals,
-              by = strata_varnames
-            ) %>%
-            select(
-              attributes(data)$value_var,
-              attributes(data)$age_var,
-              "antigen_iso"
-            )
+    pop_data_cur_stratum <- data %>%
+      semi_join(
+        cur_stratum_vals,
+        by = strata_varnames
+      ) %>%
+      select(
+        data %>% get_value_var(),
+        data %>% get_age_var(),
+        data %>% get_biomarker_names_var()
       )
+
+    antigen_isos_cur_stratum =
+      antigen_isos %>% intersect(pop_data_cur_stratum %>% get_biomarker_names())
+
+    data_and_params_cur_stratum <-
+      list(pop_data = pop_data_cur_stratum,
+           antigen_isos = antigen_isos_cur_stratum)
 
     if (length(strata_vars_curve_params) == 0) {
       data_and_params_cur_stratum$curve_params <-

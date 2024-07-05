@@ -31,7 +31,9 @@
 }
 
 .checkAntibodies <- function(pop_data,
-                             antigen_isos = pop_data %>% attr("antigen_isos")) {
+                             antigen_isos = pop_data %>% attr("antigen_isos"))
+{
+
   if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
     stop(
       paste0(
@@ -58,13 +60,13 @@
     antigen_isos %>%
     setdiff(pop_data %>% get_biomarker_names())
 
-  if(length(missing_AIs) != 0)
+  if (length(missing_AIs) != 0)
   {
-    c(
+    message = c(
       "`pop_data` has no observations for the following {pop_data %>% get_biomarker_names_var()}s: ",
       paste0('"', missing_AIs, '"') %>% and::and()
-    ) %>%
-    cli::cli_alert_warning()
+    )
+    cli::cli_warn(message = message, class = "missing_biomarker")
   }
 
   invisible(NULL)
@@ -102,7 +104,7 @@
   invisible(NULL)
 }
 
-.checkStrata <- function(data, strata) {
+.checkStrata <- function(data, strata, antigen_isos) {
   if (!is.character(strata)) {
     stop(.pasteN(
       "Argument `strata` is not a character vector.",
@@ -112,6 +114,18 @@
 
   if (!all(is.element(strata, union("", names(data))))) {
     stop("Strata names in argument \"data\" and argument \"strata\" do not match.")
+  }
+
+  antigen_iso_counts =
+    data %>%
+    select(all_of(c(strata, get_biomarker_names_var(data)))) %>%
+    table()
+
+  if(any(antigen_iso_counts == 0L))
+  {
+    cli::cli_inform(
+        class = "missing_biomarker",
+        message = "Some strata are completely missing one or more biomarkers.")
   }
 
   invisible(NULL)

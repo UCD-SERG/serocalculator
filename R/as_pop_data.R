@@ -17,11 +17,11 @@
 #'
 #' print(xs_data)
 as_pop_data <- function(data,
-                          antigen_isos = NULL,
-                          age = "Age",
-                          value = "result",
-                          id = "index_id",
-                          standardize = TRUE) {
+                        antigen_isos = NULL,
+                        age = "Age",
+                        value = "result",
+                        id = "index_id",
+                        standardize = TRUE) {
 
 
   pop_data <-

@@ -399,22 +399,7 @@ isotypes, but users can add additional pairs if available.</p>
 <span>  noise_param <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `llik()` was deprecated in serocalculator 1.0.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `log_likelihood()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">serocalculator</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: `fdev()` was deprecated in serocalculator 1.0.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `f_dev()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">serocalculator</span> package.</span></span>
-<span><span class="co">#&gt;   Please report the issue to the authors.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
 <span><span class="co">#&gt;   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations</span></span>
@@ -427,7 +412,7 @@ isotypes, but users can add additional pairs if available.</p>
 </h3>
 <p>We can also produce stratified seroincidence estimates. Let’s compare
 estimates across all countries.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Using est.incidence.by (strata)</span></span>
 <span></span>
 <span><span class="va">est_country</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
@@ -445,7 +430,7 @@ estimates across all countries.</p>
 <span><span class="co">#&gt; Warning in check_parallel_cores(.): This computer appears to have 4 cores</span></span>
 <span><span class="co">#&gt; available. `est.incidence.by()` has reduced its `num_cores` argument to 3 to</span></span>
 <span><span class="co">#&gt; avoid destabilizing the computer.</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est_country</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
@@ -465,7 +450,7 @@ estimates across all countries.</p>
 will be used unstratified”. This can be ignored, as the unstratified
 parameters will simply give us the overall seroincidence estimate.</p>
 <p>Let’s visualize our seroincidence estimates by strata.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
 <span></span>
 <span><span class="co">#Save summary(est2) as a dataframe and sort by incidence rate</span></span>
@@ -490,7 +475,7 @@ parameters will simply give us the overall seroincidence estimate.</p>
 <p>Users can select any stratification variable in their cross-sectional
 population dataset. For example, we can also stratify by catchment area
 within Pakistan.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Using est.incidence.by (strata)</span></span>
 <span></span>
 <span><span class="va">est2</span> <span class="op">=</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
@@ -510,7 +495,7 @@ within Pakistan.</p>
 <span><span class="co">#&gt; Warning in check_parallel_cores(.): This computer appears to have 4 cores</span></span>
 <span><span class="co">#&gt; available. `est.incidence.by()` has reduced its `num_cores` argument to 3 to</span></span>
 <span><span class="co">#&gt; avoid destabilizing the computer.</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
@@ -525,7 +510,7 @@ within Pakistan.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.1          0.167 0.013<span style="text-decoration: underline;">3</span>  0.143   0.196</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co">#Plot seroincidence estimates</span></span>
 <span></span>

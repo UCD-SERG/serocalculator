@@ -20,14 +20,24 @@ Custom \code{\link[=print]{print()}} function to show output of the seroincidenc
 \examples{
 
 \donttest{
-# Estimate seroincidence
-seroincidence <- est.incidence.by(...)
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
+  clean_pop_data()
 
-# Print the seroincidence object to the console
-print(seroincidence)
+curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 
-# Or simply type (appropriate print method will be invoked automatically)
-seroincidence
+noise <- load_noise_params("https://osf.io/download//hqy4v/")
+
+
+est1 <- est.incidence(
+  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  curve_param = curve,
+  noise_param = noise \%>\% filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+print(est1)
 }
 
 }

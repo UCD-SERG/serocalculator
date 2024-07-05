@@ -41,7 +41,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
       mean = mean(.data[[age_column]]),
       third_quartile = quantile(.data[[age_column]], 0.75),
       max = max(.data[[age_column]]),
-      .by = strata
+      .by = all_of(strata)
     ) %>%
     print()
 

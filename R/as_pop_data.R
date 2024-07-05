@@ -9,6 +9,7 @@
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attributes)
 #' @export
 #' @examples
+#' library(magrittr)
 #' xs_data <-
 #'   "https://osf.io/download//n6cp3/" %>%
 #'   url() %>%

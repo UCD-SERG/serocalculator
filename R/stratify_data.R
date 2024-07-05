@@ -8,36 +8,39 @@ stratify_data <- function(
     noise_strata_varnames = NULL)
 {
 
-  if (is.null(strata_varnames) || all(strata_varnames == "")) {
-    all_data <-
-      list(
-        pop_data = data %>% select(
-          data %>% get_value_var(),
-          data %>% get_age_var(),
-          data %>% get_biomarker_names_var()
-        ),
-        curve_params = curve_params %>% select("y1", "alpha", "r", "antigen_iso"),
-        noise_params = noise_params %>% select("nu", "eps", "y.low", "y.high", "antigen_iso"),
-        antigen_isos = antigen_isos %>% intersect(pop_data %>% get_biomarker_names())
-      ) %>%
-      structure(
-        class = union(
-          "biomarker_data_and_params",
-          "list"
-        )
+  no_strata = is.null(strata_varnames) || all(strata_varnames == "")
+
+  if (no_strata) {
+    pop_data <-
+      data %>%
+      select(
+        data %>% get_value_var(),
+        data %>% get_age_var(),
+        data %>% get_biomarker_names_var()
       )
 
-    stratumDataList <-
-      list( # est.incidence.by() expects a list.
-        `all data` = all_data
+    all_data <-
+      list(
+        pop_data = pop_data,
+        curve_params =
+          curve_params %>% select(all_of(curve_param_names)),
+        noise_params =
+          noise_params %>% select(all_of(noise_param_names)),
+        antigen_isos =
+          antigen_isos %>% intersect(data %>% get_biomarker_names())
       ) %>%
+      structure(class = union("biomarker_data_and_params", "list"))
+
+    stratumataList <-
+      # est.incidence.by() expects a list:
+      list(`all data` = all_data) %>%
       structure(
         antigen_isos = antigen_isos, # might be able to remove
         strata = tibble(Stratum = NA)
       )
 
-
     return(stratumDataList)
+
   }
 
   # Make stratum variable (if needed)
@@ -58,11 +61,6 @@ stratify_data <- function(
       dataname = "noise_params"
     )
 
-  # xs_dataStrata <- data %>% .makeStrata(strata_varnames)
-  # curve_paramsStrata = curve_params %>% .makeStrata(strata_varnames)
-  # noise_params_Strata = noise_params %>% .makeStrata(strata_varnames)
-  # levelsStrata <- levels(xs_dataStrata$Stratum)
-
   stratumDataList <- list()
 
   for (cur_stratum in strata$Stratum)
@@ -70,7 +68,8 @@ stratify_data <- function(
     cur_stratum_vals <-
       strata %>% dplyr::filter(.data$Stratum == cur_stratum)
 
-    pop_data_cur_stratum <- data %>%
+    pop_data_cur_stratum <-
+      data %>%
       semi_join(
         cur_stratum_vals,
         by = strata_varnames
@@ -82,7 +81,9 @@ stratify_data <- function(
       )
 
     antigen_isos_cur_stratum =
-      antigen_isos %>% intersect(pop_data_cur_stratum %>% get_biomarker_names())
+       intersect(
+        antigen_isos,
+        pop_data_cur_stratum %>% get_biomarker_names())
 
     data_and_params_cur_stratum <-
       list(pop_data = pop_data_cur_stratum,

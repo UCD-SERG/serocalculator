@@ -4,10 +4,12 @@
 \alias{check_pop_data}
 \title{Check the formatting of a cross-sectional antibody survey dataset.}
 \usage{
-check_pop_data(pop_data)
+check_pop_data(pop_data, verbose = FALSE)
 }
 \arguments{
 \item{pop_data}{dataset to check}
+
+\item{verbose}{whether to print extra information}
 }
 \value{
 NULL (invisibly)

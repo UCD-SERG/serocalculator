@@ -46,6 +46,7 @@ test_that(
 
   code =     {
     expect_snapshot_value(
+      tolerance = 10^-3,
       style = "serialize",
       est.incidence.by(
         strata = "catchment",

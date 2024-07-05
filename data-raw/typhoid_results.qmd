@@ -70,7 +70,7 @@ log.lmax <- log(10 * lambda)
 
 
 objfunc <- function(llam) {
-  return(res <- fdev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
+  return(res <- f_dev(llam, p.hlye.IgG, c.hlye.IgG, cond.hlye.IgG))
 }
 
 

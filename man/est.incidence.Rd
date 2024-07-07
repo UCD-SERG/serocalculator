@@ -21,6 +21,26 @@ est.incidence(
 \arguments{
 \item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
 
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\itemize{
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
+\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
+\item \code{y1}: antibody peak level (ELISA units)
+\item \code{t1}: duration of infection
+\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
+\item \code{r}: shape factor of antibody decay
+}}
+
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+\itemize{
+\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
+\item \code{nu}: biological noise
+\item \code{eps}: measurement noise
+\item \code{y.low}: lower limit of detection for the current antigen isotype
+\item \code{y.high}: upper limit of detection for the current antigen isotype
+}}
+
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 
 \item{lambda_start}{starting guess for incidence rate, in years/event.}
@@ -34,6 +54,8 @@ est.incidence(
     detect divergence in the algorithm. \code{stepmax} would be chosen
     small enough to prevent the first two of these occurrences, but should
     be larger than any anticipated reasonable step.}
+
+\item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 

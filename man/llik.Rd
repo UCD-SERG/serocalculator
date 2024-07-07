@@ -14,75 +14,11 @@ llik(
   ...
 )
 }
-\arguments{
-\item{lambda}{incidence parameter, in events per person-year}
-
-\item{pop_data}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
-
-\item{antigen_isos}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
-
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
-\itemize{
-\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
-\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
-\item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
-\item \code{y1}: antibody peak level (ELISA units)
-\item \code{t1}: duration of infection
-\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
-\item \code{r}: shape factor of antibody decay
-}}
-
-\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
-\itemize{
-\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
-\item \code{nu}: biological noise
-\item \code{eps}: measurement noise
-\item \code{y.low}: lower limit of detection for the current antigen isotype
-\item \code{y.high}: upper limit of detection for the current antigen isotype
-}}
-
-\item{verbose}{logical: if TRUE, print verbose log information to console}
-
-\item{...}{additional arguments passed to other functions (not currently used).}
-}
-\value{
-the log-likelihood of the data with the current parameter values
-}
 \description{
-Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (\code{lambda}) value.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
-
+}
+\details{
 \code{llik()} was renamed to \code{log_likelihood()} to create a more
 consistent API.
-}
-\examples{
-\donttest{
-library(dplyr)
-library(tibble)
-
-# Load in longitudinal parameters
-dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
-
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
-
-#Load noise params
-cond <- tibble(
-  antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-  nu = c(0.5, 0.5),                          # Biologic noise (nu)
-  eps = c(0, 0),                             # M noise (eps)
-  y.low = c(1, 1),                           # Low cutoff (llod)
-  y.high = c(5e6, 5e6))                      # High cutoff (y.high)
-
-# Calculate log-likelihood
-ll_AG <- llik(
-  pop_data = xs_data,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-  lambda = 0.1) \%>\% print()
-}
 }
 \keyword{internal}

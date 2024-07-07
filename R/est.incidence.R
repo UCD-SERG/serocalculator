@@ -1,7 +1,7 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
 #' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
-#' @inheritParams llik
+#' @inheritParams log_likelihood
 #' @inheritParams stats::nlm
 #' @param pop_data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns
 #' @param lambda_start starting guess for incidence rate, in years/event.

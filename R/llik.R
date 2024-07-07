@@ -28,7 +28,7 @@
 #'
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
-#' @inheritParams fdev
+#' @inheritParams f_dev
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
 #' @examples
@@ -98,7 +98,7 @@ llik <- function(
 #'
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
-#' @inheritParams fdev
+#' @inheritParams f_dev
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
 #' @examples
@@ -121,7 +121,7 @@ llik <- function(
 #'   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 #'
 #' #Calculate log-likelihood
-#'   ll_AG = llik(
+#'   ll_AG = log_likelihood(
 #'   pop_data = xs_data,
 #'   curve_params = dmcmc,
 #'   noise_params = cond,
@@ -176,7 +176,7 @@ log_likelihood <- function(
     }
 
     nllSingle <-
-      fdev(
+      f_dev(
         lambda = lambda,
         csdata = cur_data,
         lnpars = cur_curve_params,

@@ -20,6 +20,9 @@ Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" obj
 \examples{
 
 \donttest{
+
+library(tidyverse)
+
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
   clean_pop_data()
 

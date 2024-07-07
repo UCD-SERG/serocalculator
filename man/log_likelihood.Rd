@@ -71,7 +71,7 @@ clean_pop_data()
   y.high = c(5e6, 5e6))                      # high cutoff (y.high)
 
 #Calculate log-likelihood
-  ll_AG = llik(
+  ll_AG = log_likelihood(
   pop_data = xs_data,
   curve_params = dmcmc,
   noise_params = cond,

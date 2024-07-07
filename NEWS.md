@@ -1,6 +1,7 @@
 # serocalculator 1.0.2
 
 * Updated documentation and functionality based on CRAN resubmission
+* Deleted get_additional_data.R as it is no longer used
 
 # serocalculator 1.0.1
 

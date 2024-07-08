@@ -23,8 +23,8 @@ graph.loglik(
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
-\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
-\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{antigen_iso}: a \code{character} vector indicating antigen-isotype combinations
+\item \code{iter}: an \code{integer} vector indicating MCMC sampling iterations
 \item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
 \item \code{y1}: antibody peak level (ELISA units)
 \item \code{t1}: duration of infection

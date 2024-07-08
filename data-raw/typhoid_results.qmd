@@ -53,17 +53,12 @@ log.lambda <- log(lambda)
 log.lmin <- log(lambda / 10)
 log.lmax <- log(10 * lambda)
 
-# objfunc <- function(llam) {
-#   return(res <- f_dev(lambda, csdata, lnpars, cond))
-# }
-
 fit <- est.incidence(
   pop_data = xs_data,
   curve_param = curve,
   noise_param = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-)
-
+  
 typhoid_results <- fit %>%
   summary.seroincidence(
     coverage = .95,

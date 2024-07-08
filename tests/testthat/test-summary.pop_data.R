@@ -24,13 +24,13 @@ test_that("`summary.pop_data()` does not produce an error when stratified", {
 
 
 test_that("`summary.pop_data()` expected same results", {
-  # Define the path to the RDS file in the fixtures directory
-  summary_country_path <- test_path("fixtures", "summary_country.rds")
 
-  # Load the RDS file
-  summary_country <- readRDS(summary_country_path)
+  # define the path to the RDS file in the fixtures directory
+   summary_country_path <- test_path("fixtures", "summary_country.rds")
 
+  # load the RDS file
+  sum_country <- readRDS(summary_country_path)
 
-  expect_equal(object = xs_data %>%
-    summary(strata = "Country"), expected = summary_country)
+  expect_equal(object = xs_data %>% summary(strata = "Country"),
+               expected = sum_country)
 })

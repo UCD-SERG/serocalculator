@@ -37,6 +37,12 @@ test_that(
       ) %>%
       structure(noise.parameters = noise)
 
+    # define the path to the RDS file in the fixtures directory
+    typhoid_results_path <- test_path("fixtures", "typhoid_results.rds")
+
+    # load the RDS file
+    typhoid_results <- readRDS(typhoid_results_path)
+
     # compare with `typhoid_results` from data-raw/typhoid_results.qmd
       expect_equal(
         object = fit,

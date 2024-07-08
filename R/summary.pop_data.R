@@ -22,7 +22,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
   id_column <- object %>% get_id_var()
 
   # create a list of the columns
-  cols <- c(age_column, strata)
+  cols <- c(age_column, id_column, strata)
 
   ages <-
     object %>%

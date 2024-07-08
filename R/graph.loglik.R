@@ -6,6 +6,22 @@
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @param previous_plot if not NULL, the current data is added to the existing graph
 #' @param curve_label if not NULL, add a label for the curve
+#' @param pop_data a [data.frame()] with cross-sectional serology data per antibody and age, and additional columns
+#' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `pop_data`.
+#' @param curve_params a [data.frame()] containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+#' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations
+#' - `iter`: an [integer()] vector indicating MCMC sampling iterations
+#' - `y0`: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
+#' - `y1`: antibody peak level (ELISA units)
+#' - `t1`: duration of infection
+#' - `alpha`: antibody decay rate (1/days for the current longitudinal parameter sets)
+#' - `r`: shape factor of antibody decay
+#' @param noise_params a [data.frame()] (or [tibble::tibble()]) containing the following variables, specifying noise parameters for each antigen isotype:
+#' * `antigen_iso`: antigen isotype whose noise parameters are being specified on each row
+#' * `nu`: biological noise
+#' * `eps`: measurement noise
+#' * `y.low`: lower limit of detection for the current antigen isotype
+#' * `y.high`: upper limit of detection for the current antigen isotype
 #' @inheritParams llik
 #' @inheritDotParams llik -lambda
 #' @return a [ggplot2::ggplot()]
@@ -79,6 +95,7 @@ graph.loglik = function(
         lambda = x,
         ...)
     )
+
 
   if(is.null(previous_plot))
   {

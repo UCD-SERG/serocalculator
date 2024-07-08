@@ -46,7 +46,7 @@ llik <- function(
 #'
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
-#' @inheritParams fdev
+#' @inheritParams f_dev
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
 #' @examples

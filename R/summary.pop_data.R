@@ -1,7 +1,7 @@
 #'
-#' @title Summarize a cross-sectional antibody survey data set
+#' @title Summarize cross-sectional antibody survey data
 #' @description
-#' This function is a `summary()` method for `pop_data` objects
+#' [summary()] method for `pop_data` objects
 #'
 #' @param object a `pop_data` object (from [as_pop_data()])
 #' @param strata a [character()] specifying grouping column(s)
@@ -73,6 +73,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
 
 
 #' Print method for [summary.pop_data] objects
+#' @param x an object of class `"summary.pop_data"`; usually, the result of a call to [summary.pop_data()]
 #' @rdname summary.pop_data
 #' @export
 print.summary.pop_data = function(x, ...)

@@ -3,7 +3,7 @@
 \name{summary.pop_data}
 \alias{summary.pop_data}
 \alias{print.summary.pop_data}
-\title{Summarize a cross-sectional antibody survey data set}
+\title{Summarize cross-sectional antibody survey data}
 \usage{
 \method{summary}{pop_data}(object, strata = NULL, ...)
 
@@ -15,6 +15,8 @@
 \item{strata}{a \code{\link[=character]{character()}} specifying grouping column(s)}
 
 \item{...}{unused}
+
+\item{x}{an object of class \code{"summary.pop_data"}; usually, the result of a call to \code{\link[=summary.pop_data]{summary.pop_data()}}}
 }
 \value{
 a \code{summary.pop_data} object, which is a list containing two summary tables:
@@ -24,7 +26,7 @@ a \code{summary.pop_data} object, which is a list containing two summary tables:
 }
 }
 \description{
-This function is a \code{summary()} method for \code{pop_data} objects
+\code{\link[=summary]{summary()}} method for \code{pop_data} objects
 }
 \examples{
 library(dplyr)

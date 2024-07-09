@@ -22,3 +22,6 @@ allpopsamples_hlye.csv$
 ^inst/extdata
 ^CRAN-SUBMISSION$
 
+^README\.qmd$
+^README_files$
+^codecov\.yml$

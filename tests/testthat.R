@@ -9,4 +9,4 @@
 library(testthat)
 library(serocalculator)
 
-test_check("serocalculator")
+test_check("serocalculator", stop_on_warning = TRUE)

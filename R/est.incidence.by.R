@@ -4,7 +4,7 @@
 #' Function to estimate seroincidences based on cross-section serology data and longitudinal
 #' response model.
 #'
-#' @param pop_data [data.frame] with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
+#' @param pop_data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
 #' @param strata Character vector of stratum-defining variables. Values must be variable names in `pop_data`.
 #' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".

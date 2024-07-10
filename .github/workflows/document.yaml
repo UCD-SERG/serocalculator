@@ -41,7 +41,7 @@ jobs:
           git add man/\* NAMESPACE DESCRIPTION
           git commit -m "Update documentation" || echo "No changes to commit"
 
-      - name: push changes
+      - name: Push
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
         run: |

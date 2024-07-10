@@ -7,7 +7,7 @@ on:
 name: Document
 
 permissions:
-      contents: write
+  contents: write
 
 jobs:
   document:

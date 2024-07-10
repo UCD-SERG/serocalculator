@@ -6,7 +6,8 @@ on:
 
 name: Document
 
-permissions: read-all
+permissions:
+      contents: write
 
 jobs:
   document:

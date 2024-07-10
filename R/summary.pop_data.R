@@ -1,7 +1,7 @@
 #'
 #' @title Summarize a cross-sectional antibody survey data set
 #' @description
-#' This function is a `summary()` method for `pop_data` objects
+#' This function is a [summary()] method for `pop_data` objects
 #'
 #' @param object a `pop_data` object
 #' @param ...  unused

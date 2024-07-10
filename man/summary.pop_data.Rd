@@ -15,7 +15,7 @@
 a list containing two summary tables: one of \code{age} and one of \code{value}, stratified by \code{antigen_iso}
 }
 \description{
-This function is a \code{summary()} method for \code{pop_data} objects
+This function is a \code{\link[=summary]{summary()}} method for \code{pop_data} objects
 }
 \examples{
 library(dplyr)

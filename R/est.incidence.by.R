@@ -44,7 +44,8 @@
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   #num_cores = 8 # Allow for parallel processing to decrease run time
+#'   #num_cores = 8 # Allow for parallel processing to decrease run time,
+#'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
 #' summary(est2)

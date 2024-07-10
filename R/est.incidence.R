@@ -29,7 +29,8 @@
 #'   pop_data = xs_data %>% filter(Country == "Pakistan"),
 #'   curve_params = curves,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
-#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
 #' summary(est1)

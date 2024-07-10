@@ -21,7 +21,7 @@ est.incidence.by(
 )
 }
 \arguments{
-\item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
+\item{pop_data}{\link{data.frame} with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -43,7 +43,7 @@ est.incidence.by(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
+\item{strata}{\link{character} vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 

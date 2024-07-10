@@ -41,6 +41,9 @@ jobs:
           git add man/\* NAMESPACE DESCRIPTION
           git commit -m "Update documentation" || echo "No changes to commit"
 
-      - uses: r-lib/actions/pr-push@v2
+      - name: push changes
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git pull --ff-only
+          git push origin

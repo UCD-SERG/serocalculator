@@ -12,7 +12,7 @@
 
 #' @details
 #'
-#' If `strata` is left empty, a warning will be produced, recommending that you use `est.incidence()` for unstratified analyses, and then the data will be passed to `est.incidence()`. If for some reason you want to use `est.incidence.by()` with no strata instead of calling `est.incidence()`, you may use `NA`, `NULL`, or "" as the `strata` argument to avoid that warning.
+#' If `strata` is left empty, a warning will be produced, recommending that you use [est.incidence()] for unstratified analyses, and then the data will be passed to `est.incidence()`. If for some reason you want to use `est.incidence.by()` with no strata instead of calling `est.incidence()`, you may use `NA`, `NULL`, or "" as the `strata` argument to avoid that warning.
 #'
 #'
 #' @inheritParams est.incidence

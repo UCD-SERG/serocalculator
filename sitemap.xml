@@ -1,171 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/404.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/articles/scrubTyphus_example.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/articles/serocalculator.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/ab.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/as_pop_data.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.summary.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/check_pop_data.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/df.to.array.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/f_dev.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/fdev.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/getAdditionalData.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/get_additional_data.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/graph.loglik.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/ldpar.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/llik.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/load_curve_params.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/load_noise_params.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/load_pop_data.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/log_likelihood.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/mk_baseline.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/mkbaseline.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/plot_curve_params_one_ab.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/row_longitudinal_parameter.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/sim.cs.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/sim.cs.multi.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/simcs.tinf.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/simresp.tinf.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/strata.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/strata.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/sub-.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/summary.pop_data.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.html</loc>
-  </url>
-  <url>
-    <loc>https://ucd-serg.github.io/serocalculator/reference/warn.missing.strata.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://ucd-serg.github.io/serocalculator/404.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/articles/index.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/articles/scrubTyphus_example.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/articles/serocalculator.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/authors.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/index.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/news/index.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/ab.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/as_pop_data.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.summary.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/check_pop_data.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/df.to.array.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/f_dev.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/fdev.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/getAdditionalData.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/get_additional_data.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/graph.loglik.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/index.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/ldpar.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/llik.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/load_curve_params.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/load_noise_params.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/load_pop_data.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/log_likelihood.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/mk_baseline.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/mkbaseline.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/plot_curve_params_one_ab.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/row_longitudinal_parameter.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/sim.cs.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/sim.cs.multi.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/simcs.tinf.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/simresp.tinf.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/strata.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/strata.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/sub-.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/summary.pop_data.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/warn.missing.strata.html</loc></url>
 </urlset>
+

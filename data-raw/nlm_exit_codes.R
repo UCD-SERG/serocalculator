@@ -5,5 +5,3 @@ nlm_exit_codes <- c(
   "4" = "4: iteration limit exceeded; increase `iterlim`.",
   "5" = "5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small."
 )
-
-usethis::use_data(nlm_exit_codes, overwrite = TRUE, internal = TRUE)

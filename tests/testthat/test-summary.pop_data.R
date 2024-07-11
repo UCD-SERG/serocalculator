@@ -20,3 +20,4 @@ test_that("`summary.pop_data()` produces stable results when `strata = NULL`", {
 
 test_that("`summary.pop_data()` produces stable results with stratification", {
   expect_snapshot(xs_data %>% summary(strata = "Country"))
+})

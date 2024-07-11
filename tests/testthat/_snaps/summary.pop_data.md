@@ -1,3 +1,4 @@
+
 # `summary.pop_data()` produces stable results when `strata = NULL`
 
     Code
@@ -22,15 +23,7 @@
       2 HlyE_IgG        0     1.15    2.70      6.74  219.       0
       
 
-# `summary.pop_data()` produces stable results with stratification
-
-    Code
-      xs_data %>% summary(strata = "Country")
-    Output
-      
-      n = 3336 
-      
-      Distribution of age: 
+# `summary.pop_data()` produces stable results with stratification 
       
       # A tibble: 3 x 8
         Country        n   min first_quartile median  mean third_quartile   max
@@ -50,5 +43,5 @@
       4 HlyE_IgG    Nepal      0          0.897   1.62      3.37 184.        0
       5 HlyE_IgA    Pakistan   0          1.13    2.12      3.89 133.        0
       6 HlyE_IgG    Pakistan   0.192      1.04    2.40      5.15 135.        0
-      
+
 

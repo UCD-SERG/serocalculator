@@ -5,6 +5,9 @@
 
 * Added stratification to `summary.pop_data`
 
+* Added `verbose` option for `check_pop_data()`, changing default behavior
+to avoid printing an OK message.
+
 # serocalculator 1.1.0
 
 * Renamed `llik()` to `log_likelihood()`

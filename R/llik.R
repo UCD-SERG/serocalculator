@@ -43,7 +43,6 @@ llik <- function(
 #' * `eps`: measurement noise
 #' * `y.low`: lower limit of detection for the current antigen isotype
 #' * `y.high`: upper limit of detection for the current antigen isotype
-#'
 #' @param verbose logical: if TRUE, print verbose log information to console
 #' @param ... additional arguments passed to other functions (not currently used).
 #' @inheritParams f_dev

@@ -8,37 +8,18 @@
 #' @param curve_label if not NULL, add a label for the curve
 #' @param pop_data a [data.frame()] with cross-sectional serology data per antibody and age, and additional columns
 #' @param antigen_isos Character vector listing one or more antigen isotypes. Values must match `pop_data`.
-#' @param curve_params a [data.frame()] containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
-#'   \itemize{
-#'     \item \code{antigen_iso}: a \code{character} vector indicating antigen-isotype combinations
-#'     \item \code{iter}: an \code{integer} vector indicating MCMC sampling iterations
-#'     \item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
-#'     \item \code{y1}: antibody peak level (ELISA units)
-#'     \item \code{t1}: duration of infection
-#'     \item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
-#'     \item \code{r}: shape factor of antibody decay
-#'   }
-#' @param noise_params a [data.frame()] (or [tibble::tibble()]) containing the following variables, specifying noise parameters for each antigen isotype:
-#'   \itemize{
-#'     \item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
-#'     \item \code{nu}: biological noise
-#'     \item \code{eps}: measurement noise
-#'     \item \code{y.low}: lower limit of detection for the current antigen isotype
-#'     \item \code{y.high}: upper limit of detection for the current antigen isotype
-#'   }
-#' @inheritParams llik
-#' @inheritDotParams llik -lambda
+#' @inheritParams log_likelihood
+#' @inheritDotParams log_likelihood -lambda
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
-#'
+#' \donttest{
 #' library(dplyr)
 #' library(tibble)
-#'\donttest{
+#'
 #' # Load cross-sectional data
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
 #'   clean_pop_data()
-#'
 #'
 #' # Load curve parameters and subset for the purposes of this example
 #' dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") %>%

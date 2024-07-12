@@ -14,19 +14,10 @@ test_that("`summary.pop_data()` produces an error when wrong stratification is p
   )
 })
 
-test_that("`summary.pop_data()` does not produce an error when NULL", {
-  expect_no_error(object = xs_data %>% summary(strata = NULL))
+test_that("`summary.pop_data()` produces stable results when `strata = NULL`", {
+  expect_snapshot(xs_data %>% summary(strata = NULL))
 })
 
-test_that("`summary.pop_data()` does not produce an error when stratified", {
-  expect_no_error(object = xs_data %>% summary(strata = "Country"))
-})
-
-
-test_that("`summary.pop_data()` expected same results", {
-
-  # load the RDS file
-  sum_country <- readRDS(test_path("fixtures", "summary_country.rds"))
-
-  expect_snapshot(x = xs_data %>% summary(strata = "Country"))
+test_that("`summary.pop_data()` produces stable results with stratification", {
+  expect_snapshot(xs_data %>% summary(strata = "Country"))
 })

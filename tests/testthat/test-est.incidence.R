@@ -21,7 +21,7 @@ test_that(
     # set start
     start <- .05
 
-    fit <- est.incidence(
+    typhoid_results <- est.incidence(
       pop_data = xs_data,
       curve_param = curve,
       noise_param = noise,
@@ -36,9 +36,6 @@ test_that(
         antigen.iso = paste(collapse = "+", "HlyE_IgG")
       ) %>%
       structure(noise.parameters = noise)
-
-    # load the RDS file
-    typhoid_results <- readRDS(test_path("fixtures", "typhoid_results.rds"))
 
     expect_snapshot(x = typhoid_results)
   }

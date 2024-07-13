@@ -9,7 +9,7 @@ fdev(lambda, csdata, lnpars, cond)
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-\code{fdev()} was renamed to \code{f_dev()} to create a more
+\code{fdev()} was renamed to \code{\link[=f_dev]{f_dev()}} to create a more
 consistent API.
 }
 \keyword{internal}

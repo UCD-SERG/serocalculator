@@ -2,7 +2,7 @@
 #'
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `llik()` was renamed to `log_likelihood()` to create a more
+#' `llik()` was renamed to [log_likelihood()] to create a more
 #' consistent API.
 #'
 #' @keywords internal

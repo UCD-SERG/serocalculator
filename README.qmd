@@ -1,6 +1,6 @@
 ---
 title: "serocalculator"
-output: github_document
+format: gfm
 bibliography: vignettes/articles/references.bib
 ---
 
@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
 
@@ -77,10 +78,10 @@ devtools::install_github("ucd-serg/serocalculator")
 ```
 #### A Note for Windows Users
 
-Before launching the development version of **serocalculator**, Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either during the  *devtools* package installation, or independently if *devtools* is already installed. 
+Before launching the development version of **serocalculator**, Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. This can be done either: (1) during the *devtools* package installation, **or** (2) independently if *devtools* is already installed.
 
 
-##### During devtools installation:
+##### During devtools installation {#sec-install-rtools-with-devtools}
 
 When prompted to install additional build tools, select "Yes" and Rtools will be installed. 
 
@@ -88,7 +89,11 @@ When prompted to install additional build tools, select "Yes" and Rtools will be
 
 [id]: man/figures/Rtools1.png
 
-##### Independently:
+:::{.callout-note}
+After installing Rtools, you may need to restart RStudio before continuing to install `serocalculator`.
+:::
+
+##### Independently: {#sec-install-rtools-a-la-carte}
 
 1. Download Rtools from https://cran.r-project.org/bin/windows/Rtools/
 2. Run the installer

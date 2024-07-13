@@ -114,7 +114,7 @@ xs_data <-
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
 ```{r, message = TRUE}
-xs_data %>% check_pop_data()
+xs_data %>% check_pop_data(verbose = TRUE)
 ```
 
 #### Summarize antibody data

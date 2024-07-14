@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `fdev()` was renamed to [f_dev()] to create a more
+#' `fdev()` was renamed to `f_dev()` to create a more
 #' consistent API.
 #'
 #' @keywords internal

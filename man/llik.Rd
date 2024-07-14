@@ -18,7 +18,7 @@ llik(
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
-\code{llik()} was renamed to \code{\link[=log_likelihood]{log_likelihood()}} to create a more
+\code{llik()} was renamed to \code{log_likelihood()} to create a more
 consistent API.
 }
 \keyword{internal}

@@ -85,7 +85,7 @@ baseline <- function(kab, yvec, blims, ...) {
   subst <- which(yvec < blims[kab, 2])
   k <- 1
   while (k <= length(subst)) {
-    yvec[subst[k]] <- mkbaseline(kab, 1, blims)
+    yvec[subst[k]] <- mk_baseline(kab, 1, blims)
     k <- k + 1
   }
   return(yvec)
@@ -94,7 +94,7 @@ baseline <- function(kab, yvec, blims, ...) {
 #' @title generate random sample from baseline distribution
 #' @description
 #' `r lifecycle::badge("deprecated")`
-#' `mkbaseline()` was renamed to `mk_baseline()` to create a more
+#' `mkbaseline()` was renamed to [mk_baseline()] to create a more
 #' consistent API.
 #' @param kab index for which row of antibody baseline limits to read from `blims`
 #' @param n number of observations

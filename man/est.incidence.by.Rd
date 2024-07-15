@@ -21,7 +21,7 @@ est.incidence.by(
 )
 }
 \arguments{
-\item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
+\item{pop_data}{a \link{data.frame} with cross-sectional serology data per antibody and age, and additional columns corresponding to each element of the \code{strata} input}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -43,7 +43,7 @@ est.incidence.by(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
+\item{strata}{a \link{character} vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
@@ -103,7 +103,12 @@ Function to estimate seroincidences based on cross-section serology data and lon
 response model.
 }
 \details{
-If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
+If \code{strata} is left empty, a warning will be produced,
+recommending that you use \code{\link[=est.incidence]{est.incidence()}} for unstratified analyses,
+and then the data will be passed to \code{\link[=est.incidence]{est.incidence()}}.
+If for some reason you want to use \code{\link[=est.incidence.by]{est.incidence.by()}}
+with no strata instead of calling \code{\link[=est.incidence]{est.incidence()}},
+you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata} argument to avoid that warning.
 }
 \examples{
 
@@ -126,6 +131,7 @@ est2 <- est.incidence.by(
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8 # Allow for parallel processing to decrease run time
+  iterlim = 5 # limit iterations for the purpose of this example
 )
 print(est2)
 summary(est2)

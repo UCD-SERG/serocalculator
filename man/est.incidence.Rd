@@ -19,7 +19,7 @@ est.incidence(
 )
 }
 \arguments{
-\item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
+\item{pop_data}{\link{data.frame} with cross-sectional serology data per antibody and age, and additional columns}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -104,7 +104,8 @@ est1 <- est.incidence(
   pop_data = xs_data \%>\% filter(Country == "Pakistan"),
   curve_params = curves,
   noise_params = noise \%>\% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  iterlim = 5 # limit iterations for the purpose of this example
 )
 
 summary(est1)

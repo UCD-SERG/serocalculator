@@ -1,31 +1,33 @@
-# @title Split data by stratum
-# @description Split biomarker data, decay curve parameters, and noise parameters
-# to prepare for stratified incidence estimation.
-# @param strata_varnames [character()] vector of names of variables in `data` to stratify by
-# @inheritParams est.incidence.by
-#
-# @returns a `"biomarker_data_and_params.list"` object (a [list] with extra attributes `"strata"`, `"antigen_isos"`, etc)
-#
-# @examples
-# library(dplyr)
-#
-# xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
-#
-# curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-#   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
-#
-# noise <- load_noise_params("https://osf.io/download//hqy4v/")
-#
-# stratified_data =
-#   stratify_data(
-#    data = xs_data,
-#    curve_params = curve,
-#    noise_params = noise,
-#    strata_varnames = "catchment",
-#    curve_strata_varnames = NULL,
-#    noise_strata_varnames = NULL
-#    )
+#' @title Split data by stratum
+#' @description Split biomarker data, decay curve parameters, and noise parameters
+#' to prepare for stratified incidence estimation.
+#' @param strata_varnames [character()] vector of names of variables in `data` to stratify by
+#' @inheritParams est.incidence.by
+#'
+#' @returns a `"biomarker_data_and_params.list"` object (a [list] with extra attributes `"strata"`, `"antigen_isos"`, etc)
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' library(dplyr)
+#'
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#'
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'
+#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#'
+#' stratified_data =
+#'   stratify_data(
+#'    data = xs_data,
+#'    curve_params = curve,
+#'    noise_params = noise,
+#'    strata_varnames = "catchment",
+#'    curve_strata_varnames = NULL,
+#'    noise_strata_varnames = NULL
+#'    )
+#' }
 stratify_data <- function(
     data,
     antigen_isos = data %>% attr("antigen_isos"),

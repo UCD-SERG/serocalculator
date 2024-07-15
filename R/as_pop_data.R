@@ -10,7 +10,6 @@
 #' @export
 #' @examples
 #' library(magrittr)
-#' library(readr)
 #' xs_data <-
 #'   "https://osf.io/download//n6cp3/" %>%
 #'   readr::read_rds() %>%

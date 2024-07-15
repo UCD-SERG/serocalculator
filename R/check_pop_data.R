@@ -6,7 +6,6 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' library(readr)
 #' xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
 #'             as_pop_data()
 #'   check_pop_data(xs_data, verbose = TRUE)

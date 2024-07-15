@@ -28,45 +28,41 @@
 #'    noise_strata_varnames = NULL
 #'    )
 #' }
-stratify_data <- function(
-    data,
-    antigen_isos = data %>% attr("antigen_isos"),
-    curve_params,
-    noise_params,
-    strata_varnames = "",
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL) {
-
+stratify_data <- function(data,
+                          antigen_isos = data %>% attr("antigen_isos"),
+                          curve_params,
+                          noise_params,
+                          strata_varnames = "",
+                          curve_strata_varnames = NULL,
+                          noise_strata_varnames = NULL) {
   no_strata = is.null(strata_varnames) || all(strata_varnames == "")
   if (no_strata) {
     all_data <-
-      list(pop_data = data %>% select(
-        all_of(
+      list(
+        pop_data = data %>% select(all_of(
           c(
             data %>% get_value_var(),
             data %>% get_age_var(),
             "antigen_iso"
           )
-        )
-      ),
-      curve_params = curve_params %>% select(all_of(c("y1", "alpha", "r", "antigen_iso"))),
-      noise_params = noise_params %>% select(all_o(c("nu", "eps", "y.low", "y.high", "antigen_iso")))
+        )),
+        curve_params =
+          curve_params %>%
+          select(all_of(c(
+            "y1", "alpha", "r", "antigen_iso"
+          ))),
+        noise_params =
+          noise_params %>%
+          select(all_of(
+            c("nu", "eps", "y.low", "y.high", "antigen_iso")
+          ))
       ) %>%
-      structure(
-        class = union(
-          "biomarker_data_and_params",
-          "list"
-        )
-      )
+      structure(class = union("biomarker_data_and_params", "list"))
 
     stratumDataList <-
-      list( # est.incidence.by() expects a list.
-        `all data` = all_data
-      ) %>%
-      structure(
-        antigen_isos = antigen_isos,
-        strata = tibble(Stratum = NA)
-      )
+      list(# est.incidence.by() expects a list.
+        `all data` = all_data) %>%
+      structure(antigen_isos = antigen_isos, strata = tibble(Stratum = NA))
 
 
     return(stratumDataList)
@@ -106,19 +102,14 @@ stratify_data <- function(
       list(
         pop_data =
           data %>%
-          semi_join(
-            cur_stratum_vals,
-            by = strata_varnames
-          ) %>%
-          select(
-            all_of(
-              c(
-                data %>% get_value_var(),
-                data %>% get_age_var(),
-                "antigen_iso"
-              )
+          semi_join(cur_stratum_vals, by = strata_varnames) %>%
+          select(all_of(
+            c(
+              data %>% get_value_var(),
+              data %>% get_age_var(),
+              "antigen_iso"
             )
-          )
+          ))
       )
 
     if (length(strata_vars_curve_params) == 0) {
@@ -127,45 +118,39 @@ stratify_data <- function(
     } else {
       data_and_params_cur_stratum$curve_params <-
         curve_params %>%
-        semi_join(
-          cur_stratum_vals,
-          by = strata_vars_curve_params
-        ) %>%
+        semi_join(cur_stratum_vals, by = strata_vars_curve_params) %>%
         select(all_of(c("y1", "alpha", "r", "antigen_iso")))
     }
 
     if (length(strata_vars_noise_params) == 0) {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
-        select(all_of(c("nu", "eps", "y.low", "y.high", "antigen_iso")))
+        select(all_of(c(
+          "nu", "eps", "y.low", "y.high", "antigen_iso"
+        )))
     } else {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
-        semi_join(
-          cur_stratum_vals,
-          by = strata_vars_noise_params
-        ) %>%
-        select(all_of(c("nu", "eps", "y.low", "y.high", "antigen_iso")))
+        semi_join(cur_stratum_vals, by = strata_vars_noise_params) %>%
+        select(all_of(c(
+          "nu", "eps", "y.low", "y.high", "antigen_iso"
+        )))
     }
 
     stratumDataList[[cur_stratum]] <-
       data_and_params_cur_stratum %>%
-      structure(
-        class = union(
-          "biomarker_data_and_params",
-          class(data_and_params_cur_stratum)
-        )
-      )
+      structure(class = union(
+        "biomarker_data_and_params",
+        class(data_and_params_cur_stratum)
+      ))
   }
 
 
 
-  return(
-    structure(
-      stratumDataList,
-      antigen_isos = antigen_isos,
-      strata = strata,
-      class = c("biomarker_data_and_params.list", "list")
-    )
-  )
+  return(structure(
+    stratumDataList,
+    antigen_isos = antigen_isos,
+    strata = strata,
+    class = c("biomarker_data_and_params.list", "list")
+  ))
 }

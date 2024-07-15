@@ -27,17 +27,17 @@ as_pop_data(
 \item{standardize}{a \code{\link[=logical]{logical()}} to determine standardization of columns}
 }
 \value{
-a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attributes)
+a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})
 }
 \description{
 Load a cross-sectional antibody survey data set
 }
 \examples{
 library(magrittr)
+library(readr)
 xs_data <-
   "https://osf.io/download//n6cp3/" \%>\%
-  url() \%>\%
-  readRDS() \%>\%
+  readr::read_rds() \%>\%
   as_pop_data()
 
 print(xs_data)

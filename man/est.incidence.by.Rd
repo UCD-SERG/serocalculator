@@ -127,7 +127,7 @@ est2 <- est.incidence.by(
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8 # Allow for parallel processing to decrease run time
 )
-
+print(est2)
 summary(est2)
 
 }

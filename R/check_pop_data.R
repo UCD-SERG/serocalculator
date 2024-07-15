@@ -6,9 +6,10 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
-#'   check_pop_data(verbose = TRUE)
+#' library(readr)
+#' xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
+#'             as_pop_data()
+#'   check_pop_data(xs_data, verbose = TRUE)
 #'
 check_pop_data <- function(pop_data,
                            verbose = FALSE) {
@@ -31,6 +32,6 @@ check_pop_data <- function(pop_data,
     cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
   }
 
-  if(verbose) cli::cli_alert_info("\ndata format is as expected.")
+  if(verbose) cli::cli_alert_info("data format is as expected.")
   invisible(NULL)
 }

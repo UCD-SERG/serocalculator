@@ -6,14 +6,14 @@
 #' @param id a [character()] identifying the id column
 #' @param value a [character()] identifying the value column
 #' @param standardize a [logical()] to determine standardization of columns
-#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attributes)
+#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' library(magrittr)
+#' library(readr)
 #' xs_data <-
 #'   "https://osf.io/download//n6cp3/" %>%
-#'   url() %>%
-#'   readRDS() %>%
+#'   readr::read_rds() %>%
 #'   as_pop_data()
 #'
 #' print(xs_data)

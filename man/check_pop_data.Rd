@@ -21,6 +21,6 @@ Check the formatting of a cross-sectional antibody survey dataset.
 library(dplyr)
 
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  check_pop_data()
+  check_pop_data(verbose = TRUE)
 
 }

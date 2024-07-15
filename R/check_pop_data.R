@@ -1,7 +1,7 @@
 #' Check the formatting of a cross-sectional antibody survey dataset.
 #'
 #' @param pop_data dataset to check
-#'
+#' @param verbose whether to print an "OK" message when all checks pass
 #' @returns NULL (invisibly)
 #' @export
 #' @examples
@@ -10,7 +10,8 @@
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
 #'   check_pop_data()
 #'
-check_pop_data <- function(pop_data) {
+check_pop_data <- function(pop_data,
+                           verbose = FALSE) {
   if (!is.data.frame(pop_data)) {
     cli::cli_abort(message = .pasteN(
       "Argument `pop_data` is not a `data.frame()`.",
@@ -30,6 +31,6 @@ check_pop_data <- function(pop_data) {
     cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
   }
 
-  message("data format is as expected.")
+  if(verbose) message("data format is as expected.")
   invisible(NULL)
 }

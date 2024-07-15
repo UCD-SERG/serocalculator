@@ -2,22 +2,31 @@
 % Please edit documentation in R/summary.pop_data.R
 \name{summary.pop_data}
 \alias{summary.pop_data}
-\title{Summarize a cross-sectional antibody survey data set}
+\alias{print.summary.pop_data}
+\title{Summarize cross-sectional antibody survey data}
 \usage{
 \method{summary}{pop_data}(object, strata = NULL, ...)
+
+\method{print}{summary.pop_data}(x, ...)
 }
 \arguments{
-\item{object}{a \code{pop_data} object}
+\item{object}{a \code{pop_data} object (from \code{\link[=as_pop_data]{as_pop_data()}})}
 
-\item{strata}{a \code{\link[=character]{character()}} providing the grouping column}
+\item{strata}{a \code{\link[=character]{character()}} specifying grouping column(s)}
 
 \item{...}{unused}
+
+\item{x}{an object of class \code{"summary.pop_data"}; usually, the result of a call to \code{\link[=summary.pop_data]{summary.pop_data()}}}
 }
 \value{
-a list containing two summary tables: one of \code{age} and one of \code{value}, stratified by \code{antigen_iso}
+a \code{summary.pop_data} object, which is a list containing two summary tables:
+\itemize{
+\item \code{age_summary} summarizing \code{age}
+\item \code{ab_summary} summarizing \code{value}, stratified by \code{antigen_iso}
+}
 }
 \description{
-This function is a \code{summary()} method for \code{pop_data} objects
+\code{\link[=summary]{summary()}} method for \code{pop_data} objects
 }
 \examples{
 library(dplyr)

@@ -14,25 +14,10 @@ test_that("`summary.pop_data()` produces an error when wrong stratification is p
   )
 })
 
-test_that("`summary.pop_data()` does not produce an error when NULL", {
-  # suppress warning avoids a deprecation tidyverse warning on use of select(data)
-  suppressWarnings({
-    expect_no_error(object = xs_data %>% summary(strata = NULL))
-  })
+test_that("`summary.pop_data()` produces stable results when `strata = NULL`", {
+  expect_snapshot(xs_data %>% summary(strata = NULL))
 })
 
-test_that("`summary.pop_data()` does not produce an error when stratified", {
-  # suppress warning avoids a deprecation tidyverse warning on use of select(data)
-  suppressWarnings({
-    expect_no_error(object = xs_data %>% summary(strata = "Country"))
-  })
-})
-
-
-test_that("`summary.pop_data()` expected same results", {
-  # suppress warning avoids a deprecation tidyverse warning on use of select(data)
-  suppressWarnings({
-    expect_equal(object = xs_data %>%
-      summary(strata = "Country"), expected = summary_country)
-  })
+test_that("`summary.pop_data()` produces stable results with stratification", {
+  expect_snapshot(xs_data %>% summary(strata = "Country"))
 })

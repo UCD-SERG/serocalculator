@@ -9,7 +9,7 @@ check_pop_data(pop_data, verbose = FALSE)
 \arguments{
 \item{pop_data}{dataset to check}
 
-\item{verbose}{whether to print extra information}
+\item{verbose}{whether to print an "OK" message when all checks pass}
 }
 \value{
 NULL (invisibly)

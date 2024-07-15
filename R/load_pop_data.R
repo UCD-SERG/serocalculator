@@ -95,10 +95,6 @@ get_id_var.pop_data <- function(object, ...) {
   return(id_var)
 }
 
-set_age <- function(object, ...) {
-  UseMethod("set_age", object)
-}
-
 set_biomarker_var <- function(object, ...) {
   UseMethod("set_biomarker_var", object)
 }
@@ -152,6 +148,11 @@ get_biomarker_names_var.pop_data <- function(object, ...) {
   biomarker_var <- attributes(object)[["biomarker_var"]]
 
   return(biomarker_var)
+}
+
+
+set_age <- function(object, ...) {
+  UseMethod("set_age", object)
 }
 
 #' @export

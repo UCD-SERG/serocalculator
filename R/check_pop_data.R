@@ -1,8 +1,7 @@
 #' Check the formatting of a cross-sectional antibody survey dataset.
 #'
 #' @param pop_data dataset to check
-#' @param verbose whether to print extra information
-#'
+#' @param verbose whether to print an "OK" message when all checks pass
 #' @returns NULL (invisibly)
 #' @export
 #' @examples

@@ -1,3 +1,5 @@
+# serocalculator 1.0.3
+
 # serocalculator 1.0.2
 
 * Updated documentation and functionality based on CRAN resubmission

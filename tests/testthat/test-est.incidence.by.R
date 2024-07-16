@@ -28,12 +28,12 @@ test_that(
       num_cores = 1
     )
 
+    expect_snapshot(x = testobj %>% summary())
+
     expect_snapshot_value(
       x = testobj,
       tolerance = 10^-3,
-      style = "serialize",
-
-
+      style = "serialize"
     )
   }
 )

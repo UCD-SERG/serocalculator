@@ -1,5 +1,23 @@
 # `est.incidence.by()` produces consistent results
 
+    Code
+      testobj %>% summary()
+    Output
+      Seroincidence estimated given the following setup:
+      a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+      b) Strata       : catchment 
+      
+       Seroincidence estimates:
+      # A tibble: 2 x 13
+        Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage
+        <chr>   <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
+      1 Stratu~ aku         100       0.1          0.114 0.0135 0.0905  0.144     0.95
+      2 Stratu~ kgh         100       0.1          0.217 0.0223 0.177   0.265     0.95
+      # i 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
+      #   nlm.convergence.code <ord>
+
+---
+
     WAoAAAACAAQEAQACAwAAAAMTAAAAAgAAAxMAAAAGAAAADgAAAAFAfhnFe1G0CAAAAA4AAAAB
     wAFcwcB46oAAAAAOAAAAAb60NqLjAWpNAAACDgAAAAFAUcDUJZGVnQAABAIAAAABAAQACQAA
     AANkaW0AAAANAAAAAgAAAAEAAAABAAAA/gAAAA0AAAABAAAAAQAAAA0AAAABAAAAAwAABAIA

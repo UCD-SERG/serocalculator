@@ -29,12 +29,12 @@
 #'    )
 #' }
 stratify_data <- function(data,
-                          antigen_isos = data %>% attr("antigen_isos"),
                           curve_params,
                           noise_params,
                           strata_varnames = "",
                           curve_strata_varnames = NULL,
-                          noise_strata_varnames = NULL) {
+                          noise_strata_varnames = NULL,
+                          antigen_isos = data %>% attr("antigen_isos")) {
   no_strata = is.null(strata_varnames) || all(strata_varnames == "")
   if (no_strata) {
     all_data <-

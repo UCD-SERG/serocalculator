@@ -32,8 +32,8 @@ test_that(
 
     expect_snapshot_value(
       x = testobj,
-      tolerance = 10^-3,
-      style = "serialize"
+      tolerance = 10^-5,
+      style = "deparse"
     )
   }
 )

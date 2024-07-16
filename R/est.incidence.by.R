@@ -5,7 +5,7 @@
 #' response model.
 #'
 #' @param pop_data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
-#' @param strata Character vector of stratum-defining variables. Values must be variable names in `pop_data`.
+#' @param strata [character()] vector of stratum-defining variables. Values must be variable names in `pop_data`.
 #' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param num_cores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.

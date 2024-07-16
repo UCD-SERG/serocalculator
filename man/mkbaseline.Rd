@@ -20,7 +20,7 @@ a \code{\link[=numeric]{numeric()}} vector
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
-\code{mkbaseline()} was renamed to \code{mk_baseline()} to create a more
+\code{mkbaseline()} was renamed to \code{\link[=mk_baseline]{mk_baseline()}} to create a more
 consistent API.
 }
 \keyword{internal}

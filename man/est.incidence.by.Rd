@@ -43,7 +43,7 @@ est.incidence.by(
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{a \link{character} vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
+\item{strata}{\code{\link[=character]{character()}} vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
 
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 

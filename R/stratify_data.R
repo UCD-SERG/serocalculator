@@ -127,12 +127,12 @@ stratify_data <- function(
     if (length(strata_vars_noise_params) == 0) {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
-        select(all_of(noise_strata_varnames))
+        select(all_of(noise_param_names))
     } else {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
         semi_join(cur_stratum_vals, by = strata_vars_noise_params) %>%
-        select(all_of(noise_strata_varnames))
+        select(all_of(noise_param_names))
     }
 
     stratumDataList[[cur_stratum]] <-

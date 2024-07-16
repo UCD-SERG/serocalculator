@@ -6,17 +6,15 @@
 \usage{
 stratify_data(
   data,
-  antigen_isos = data \%>\% get_biomarker_levels(),
   curve_params,
   noise_params,
   strata_varnames = "",
   curve_strata_varnames = NULL,
-  noise_strata_varnames = NULL
+  noise_strata_varnames = NULL,
+  antigen_isos = data \%>\% get_biomarker_levels()
 )
 }
 \arguments{
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
-
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
@@ -42,6 +40,8 @@ stratify_data(
 \item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
 \item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
+
+\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 }
 \value{
 a \code{"biomarker_data_and_params.list"} object (a \link{list} with extra attributes \code{"strata"}, \code{"antigen_isos"}, etc)
@@ -72,6 +72,5 @@ stratified_data =
    noise_strata_varnames = NULL
    )
 }
-
 }
 \keyword{internal}

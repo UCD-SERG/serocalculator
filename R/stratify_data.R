@@ -28,17 +28,24 @@
 #'    noise_strata_varnames = NULL
 #'    )
 #' }
-#'
 
-stratify_data <- function(
-    data,
-    antigen_isos = data %>% get_biomarker_levels(),
-    curve_params,
-    noise_params,
-    strata_varnames = "",
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL) {
-  no_strata = is.null(strata_varnames) || all(strata_varnames == "")
+stratify_data <- function(data,
+                          curve_params,
+                          noise_params,
+                          strata_varnames = "",
+                          curve_strata_varnames = NULL,
+                          noise_strata_varnames = NULL,
+                          antigen_isos = data %>% get_biomarker_levels()) {
+  curve_params =
+    curve_params %>%
+    filter(.data[["antigen_iso"]] %in% antigen_isos)
+
+  noise_params =
+    noise_params %>%
+    filter(.data[["antigen_iso"]] %in% antigen_isos)
+
+  no_strata = is.null(strata_varnames) ||
+    all(strata_varnames == "")
 
   if (no_strata) {
     pop_data <-
@@ -54,7 +61,6 @@ stratify_data <- function(
       list(
         pop_data = pop_data,
         curve_params =
-          curve_params %>%
           curve_params %>% select(all_of(curve_param_names)),
         noise_params =
           noise_params %>% select(all_of(noise_param_names)),

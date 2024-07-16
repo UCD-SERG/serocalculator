@@ -20,6 +20,9 @@
       10 9.57   13   HlyE_IgG   
       # i 578 more rows
       
+      $antigen_isos
+      [1] "HlyE_IgA" "HlyE_IgG"
+      
       $curve_params
       # A tibble: 200 x 4
             y1     alpha     r antigen_iso
@@ -37,13 +40,11 @@
       # i 190 more rows
       
       $noise_params
-      # A tibble: 4 x 5
+      # A tibble: 2 x 5
            nu   eps y.low  y.high antigen_iso
         <dbl> <dbl> <dbl>   <dbl> <chr>      
       1  2.60 0.279 0.508 5000000 HlyE_IgA   
       2  2.36 0.146 1.59  5000000 HlyE_IgG   
-      3  2.14 0.246 5.13  5000000 LPS_IgA    
-      4  3.24 0.273 4.84  5000000 LPS_IgG    
       
       attr(,"class")
       [1] "biomarker_data_and_params" "list"                     
@@ -65,6 +66,9 @@
       10 11.6     7.6 HlyE_IgG   
       # i 390 more rows
       
+      $antigen_isos
+      [1] "HlyE_IgA" "HlyE_IgG"
+      
       $curve_params
       # A tibble: 200 x 4
             y1     alpha     r antigen_iso
@@ -82,13 +86,11 @@
       # i 190 more rows
       
       $noise_params
-      # A tibble: 4 x 5
+      # A tibble: 2 x 5
            nu   eps y.low  y.high antigen_iso
         <dbl> <dbl> <dbl>   <dbl> <chr>      
       1  2.60 0.279 0.508 5000000 HlyE_IgA   
       2  2.36 0.146 1.59  5000000 HlyE_IgG   
-      3  2.14 0.246 5.13  5000000 LPS_IgA    
-      4  3.24 0.273 4.84  5000000 LPS_IgG    
       
       attr(,"class")
       [1] "biomarker_data_and_params" "list"                     

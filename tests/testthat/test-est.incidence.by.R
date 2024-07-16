@@ -7,16 +7,16 @@ test_that(
 
     xs_data <-
       load_pop_data("https://osf.io/download//n6cp3/") %>%
-      filter(Country == "Pakistan")
+      filter(Country == "Pakistan") %>%
+      slice_head(n = 100, by = c("catchment", "antigen_iso"))
 
     curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
       filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-      slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+      slice_head(n = 100, by = antigen_iso) # Reduce dataset for the purposes of this example
 
     noise <- load_noise_params("https://osf.io/download//hqy4v/")
 
     testobj = est.incidence.by(
-      verbose = TRUE,
       strata = "catchment",
       pop_data = xs_data,
       curve_params = curve,

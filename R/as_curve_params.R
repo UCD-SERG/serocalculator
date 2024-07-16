@@ -10,8 +10,18 @@
 #' print(curve_data)
 #'
 curve_converter <- function(data, antigen_isos = NULL) {
+  # define curve columns
+  curve_cols < c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
+
+  # check if object is curve (with columns)
+  if (!all(is.element(curve_cols, data %>% names()))) {
+    cli::cli_abort("Please provide curve data")
+  }
+
+  # assign curve class
   class(data) <-
     c("curve_params", class(data))
+
 
   if (is.null(antigen_isos)) {
     antigen_isos <- unique(data$antigen_iso)
@@ -21,18 +31,10 @@ curve_converter <- function(data, antigen_isos = NULL) {
     ))
   }
 
-  if (all(
-    is.element(
-      c("antigen_iso", "iter", "y0", "y1", "t1", "alpha", "r"),
-      data %>% names()
-    )
-  )) {
-    attr(data, "antigen_isos") <- antigen_isos
+  # assign antigen attribute
+  attr(data, "antigen_isos") <- antigen_isos
 
-    return(data)
-  } else {
-    cli::cli_abort("Please provide curve data")
-  }
+  return(data)
 }
 
 as_curve_params <- function(data, antigen_isos = NULL) {
@@ -41,7 +43,6 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     tibble::as_tibble()
 
   curve_data <- curve_converter(
-    data = curve_data,
-    antigen_isos = antigen_isos
+    data = curve_data
   )
 }

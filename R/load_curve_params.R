@@ -22,8 +22,7 @@ load_curve_params <- function(file_path, antigen_isos = NULL) {
 
   # convert to curve_params class
   curve_params <- curve_converter(
-    data = curve_params,
-    antigen_isos = antigen_isos
+    data = curve_params
   )
 
   return(curve_params)

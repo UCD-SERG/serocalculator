@@ -6,7 +6,7 @@
 \usage{
 stratify_data(
   data,
-  antigen_isos = data \%>\% attr("antigen_isos"),
+  antigen_isos = data \%>\% get_biomarker_names(),
   curve_params,
   noise_params,
   strata_varnames = "",
@@ -72,5 +72,6 @@ stratified_data =
    noise_strata_varnames = NULL
    )
 }
+
 }
 \keyword{internal}

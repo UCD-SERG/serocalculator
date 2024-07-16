@@ -126,6 +126,17 @@ set_biomarker_var.pop_data = function(object,
 
 }
 
+get_biomarker_levels <- function(object, ...)
+{
+  UseMethod("get_biomarker_levels", object)
+}
+
+#' @export
+get_biomarker_levels.pop_data <- function(object, ...)
+{
+  attr(object, "antigen_isos")
+}
+
 get_biomarker_names <- function(object, ...) {
   UseMethod("get_biomarker_names", object)
 }

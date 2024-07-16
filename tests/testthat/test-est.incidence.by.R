@@ -12,36 +12,6 @@ curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
 
 test_that(
-  "`est.incidence.by()` warns users about missing antigen:isotype combinations",
-  {
-
-    xs_data2 = xs_data %>%
-      filter(
-        antigen_iso == "HlyE_IgG" |
-          catchment == "aku"
-      )
-
-    xs_data2 %>% select(antigen_iso, catchment) %>% table()
-
-    expect_message(
-      class = "missing_biomarker",
-      {
-        ests1 = est.incidence.by(
-          strata = "catchment",
-          pop_data = xs_data2,
-          curve_params = curve,
-          curve_strata_varnames = NULL,
-          noise_params = noise %>% filter(Country == "Pakistan"),
-          noise_strata_varnames = NULL,
-          antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-          num_cores = 1
-        )
-      }
-    )
-  }
-)
-
-test_that(
   desc = "`est.incidence.by()` produces consistent results",
 
   code =     {

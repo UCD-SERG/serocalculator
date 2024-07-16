@@ -37,8 +37,6 @@ as_pop_data <- function(data,
     stopifnot(all(is.element(antigen_isos, pop_data$antigen_iso)))
   }
 
-  attr(pop_data, "antigen_isos")
-
   attr(pop_data, "antigen_isos") <- antigen_isos
 
   pop_data <- pop_data %>%

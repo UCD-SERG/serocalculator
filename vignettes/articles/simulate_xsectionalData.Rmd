@@ -167,7 +167,7 @@ ggplot(csdata, aes(
 We can calculate the log-likelihood of the data as a function of the incidence rate directly:
 
 ```{r}
-ll_A <- llik(
+ll_A <- log_likelihood(
   pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
@@ -175,7 +175,7 @@ ll_A <- llik(
   lambda = 0.1
 ) %>% print()
 
-ll_G <- llik(
+ll_G <- log_likelihood(
   pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,

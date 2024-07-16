@@ -114,27 +114,23 @@ stratify_data <- function(data,
 
     if (length(strata_vars_curve_params) == 0) {
       data_and_params_cur_stratum$curve_params <-
-        curve_params %>% select(all_of(c("y1", "alpha", "r", "antigen_iso")))
+        curve_params %>% select(all_of(curve_param_names))
     } else {
       data_and_params_cur_stratum$curve_params <-
         curve_params %>%
         semi_join(cur_stratum_vals, by = strata_vars_curve_params) %>%
-        select(all_of(c("y1", "alpha", "r", "antigen_iso")))
+        select(all_of(curve_param_names))
     }
 
     if (length(strata_vars_noise_params) == 0) {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
-        select(all_of(c(
-          "nu", "eps", "y.low", "y.high", "antigen_iso"
-        )))
+        select(all_of(noise_param_names))
     } else {
       data_and_params_cur_stratum$noise_params <-
         noise_params %>%
         semi_join(cur_stratum_vals, by = strata_vars_noise_params) %>%
-        select(all_of(c(
-          "nu", "eps", "y.low", "y.high", "antigen_iso"
-        )))
+        select(all_of(noise_param_names))
     }
 
     stratumDataList[[cur_stratum]] <-

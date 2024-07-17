@@ -4,15 +4,20 @@
 #' Function to estimate seroincidences based on cross-section serology data and longitudinal
 #' response model.
 #'
-#' @param pop_data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns to identify possible `strata`.
-#' @param strata Character vector of stratum-defining variables. Values must be variable names in `pop_data`.
+#' @param pop_data a [data.frame] with cross-sectional serology data per antibody and age, and additional columns corresponding to each element of the `strata` input
+#' @param strata a [character] vector of stratum-defining variables. Values must be variable names in `pop_data`.
 #' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
 #' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
 #' @param num_cores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
 
 #' @details
 #'
-#' If `strata` is left empty, a warning will be produced, recommending that you use `est.incidence()` for unstratified analyses, and then the data will be passed to `est.incidence()`. If for some reason you want to use `est.incidence.by()` with no strata instead of calling `est.incidence()`, you may use `NA`, `NULL`, or "" as the `strata` argument to avoid that warning.
+#' If `strata` is left empty, a warning will be produced,
+#' recommending that you use [est.incidence()] for unstratified analyses,
+#' and then the data will be passed to [est.incidence()].
+#' If for some reason you want to use [est.incidence.by()]
+#' with no strata instead of calling [est.incidence()],
+#' you may use `NA`, `NULL`, or `""` as the `strata` argument to avoid that warning.
 #'
 #'
 #' @inheritParams est.incidence
@@ -44,7 +49,8 @@
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   #num_cores = 1
+#'   #num_cores = 8 # Allow for parallel processing to decrease run time
+#'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
 #' summary(est2)

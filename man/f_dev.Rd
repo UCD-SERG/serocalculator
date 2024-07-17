@@ -44,10 +44,12 @@ cur_data =
   dplyr::filter(
    .data$catchment == "dhaka",
    .data$antigen_iso == cur_antibody) \%>\%
+  dplyr::slice_head(n = 100)
 
 cur_curve_params =
   curve_params \%>\%
   dplyr::filter(.data$antigen_iso == cur_antibody) \%>\%
+  dplyr::slice_head(n = 100)
 
 cur_noise_params =
   noise_params \%>\%

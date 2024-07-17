@@ -44,23 +44,25 @@ noise_params <- tibble(
 
 cur_antibody = "HlyE_IgA"
 
-cur_data =
+cur_data <-
   xs_data \%>\%
   dplyr::filter(
    .data$catchment == "dhaka",
    .data$antigen_iso == cur_antibody) \%>\%
+  dplyr::slice_head(n = 100)
 
-cur_curve_params =
+cur_curve_params <-
   curve_params \%>\%
   dplyr::filter(.data$antigen_iso == cur_antibody) \%>\%
+  dplyr::slice_head(n = 100)
 
-cur_noise_params =
+cur_noise_params <-
   noise_params \%>\%
   dplyr::filter(.data$antigen_iso == cur_antibody)
 
 if(!is.element('d', names(cur_curve_params)))
 {
-  cur_curve_params =
+  cur_curve_params <-
     cur_curve_params \%>\%
     dplyr::mutate(
       alpha = .data$alpha * 365.25,

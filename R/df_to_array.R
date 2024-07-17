@@ -34,7 +34,7 @@ df.to.array <- function(
 #'   ) %>%
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
 #' df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
-#'
+#' @noRd
 df_to_array <- function(
     df,
     dim_var_names,

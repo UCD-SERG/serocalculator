@@ -18,12 +18,7 @@ load_curve_params <- function(file_path, antigen_isos = NULL) {
   curve_params <-
     file_path %>%
     readRDS() %>%
-    tibble::as_tibble()
-
-  # convert to curve_params class
-  curve_params <- curve_converter(
-    data = curve_params
-  )
+    as_curve_params()
 
   return(curve_params)
 }

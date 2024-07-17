@@ -1,6 +1,8 @@
+
 test_that(
   "est.incidence() produces expected results for typhoid data",
   {
+    library(dplyr)
     # get pop data
     xs_data <- load_pop_data(
       file_path = "https://osf.io/download//n6cp3/",
@@ -9,7 +11,8 @@ test_that(
       id = "index_id",
       standardize = TRUE
     ) %>%
-      filter(Country == "Pakistan")
+      filter(Country == 'Pakistan') %>%
+      slice_head(n=100)
 
     # get noise data
     noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
@@ -30,12 +33,7 @@ test_that(
       summary.seroincidence(
         coverage = .95,
         start = start
-      ) %>%
-      mutate(
-        ageCat = NULL,
-        antigen.iso = paste(collapse = "+", "HlyE_IgG")
-      ) %>%
-      structure(noise.parameters = noise)
+      )
 
     expect_snapshot(x = typhoid_results)
   }

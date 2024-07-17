@@ -88,11 +88,6 @@ a \code{"seroincidence"} object, which is a \code{\link[stats:nlm]{stats::nlm()}
 \description{
 This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 }
-\details{
-\code{\link[stats:nlm]{stats::nlm()}} expects an objective function \code{f} "returning a single numeric value",
-but `\code{\link[=.nll]{.nll()}} is vectorized via its subfunction \code{\link[=f_dev]{f_dev()}}.
-The vectorization doesn't appear to cause a problem for \code{\link[=nlm]{nlm()}}.
-}
 \examples{
 
 library(dplyr)

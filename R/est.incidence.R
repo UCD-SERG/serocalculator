@@ -12,10 +12,6 @@
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda_start`, `antigen_isos`, and `ll_graph`
-#' @details
-#' [stats::nlm()] expects an objective function `f` "returning a single numeric value",
-#' but `[.nll()] is vectorized via its subfunction [f_dev()].
-#' The vectorization doesn't appear to cause a problem for [nlm()].
 #' @export
 #' @examples
 #'
@@ -143,6 +139,10 @@ est.incidence <- function(
     graph <- NULL
   }
 
+
+  # [stats::nlm()] expects an objective function `f` "returning a single numeric value",
+  # but [.nll()] is vectorized via its subfunction [f_dev()].
+  # The vectorization doesn't appear to cause a problem for [nlm()].
 
   if (verbose) message("about to call `nlm()`")
   # Estimate lambda

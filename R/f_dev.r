@@ -74,57 +74,44 @@ fdev <- function(lambda, csdata, lnpars, cond)
 #'   )
 #' }
 #' @keywords internal
-f_dev0 <- function(lambda, csdata, lnpars, cond)
-{
-  res <- 0
-
-  lambda <- as.double(lambda)
-
-  y <- as.double(csdata$"value")
-
-  a <- as.double(csdata$"age")
-
-  nsubj <- as.integer(nrow(csdata))
-
-  y1 <- as.double(lnpars$y1)
-
-  alpha <- as.double(lnpars$alpha)
-
-  d <- as.double(lnpars$d)
-
-  nmc <- as.integer(length(y1))
-
-  step <- as.double(max(y1) / 100)
-  # hack for numerical integrations
-  nu <- as.double(cond$nu)
-
-  eps <- as.double(cond$eps)
-
-  y.low <- as.double(cond$y.low)
-
-  y.high <- as.double(cond$y.high)
-
-  llpp <- .C(
-    "negloglik",
-    res = as.double(res),
-    lambda = lambda,
-    y = y,
-    a = a,
-    nsubj = nsubj,
-    nu = nu,
-    eps = eps,
-    step = step,
-    y.low = y.low,
-    y.high = y.high,
-    y1 = y1,
-    alpha = alpha,
-    d = d,
-    nmc = nmc
-  )
-
-  return(llpp$res)
-
-}
+f_dev0 <- function(
+      lambda,
+      csdata,
+      lnpars,
+      cond) {
+    res <- 0
+    lambda <- as.double(lambda)
+    y <- as.double(get_value(csdata))
+    a <- as.double(get_age(csdata))
+    nsubj <- as.integer(nrow(csdata))
+    y1 <- as.double(lnpars$y1)
+    alpha <- as.double(lnpars$alpha)
+    d <- as.double(lnpars$d)
+    nmc <- as.integer(length(y1))
+    step <- as.double(max(y1) / 100) # hack for numerical integrations
+    nu <- as.double(cond$nu)
+    eps <- as.double(cond$eps)
+    y.low <- as.double(cond$y.low)
+    y.high <- as.double(cond$y.high)
+    llpp <- .C(
+      "negloglik",
+      res = as.double(res),
+      lambda = lambda,
+      y = y,
+      a = a,
+      nsubj = nsubj,
+      nu = nu,
+      eps = eps,
+      step = step,
+      y.low = y.low,
+      y.high = y.high,
+      y1 = y1,
+      alpha = alpha,
+      d = d,
+      nmc = nmc
+    )
+    return(llpp$res)
+  }
 
 #' @title Calculate negative log-likelihood (deviance) for one antigen:isotype pair and several values of incidence
 #'

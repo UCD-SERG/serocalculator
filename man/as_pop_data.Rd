@@ -33,7 +33,11 @@ a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extr
 Load a cross-sectional antibody survey data set
 }
 \examples{
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+library(magrittr)
+xs_data <-
+  "https://osf.io/download//n6cp3/" \%>\%
+  readr::read_rds() \%>\%
+  as_pop_data()
 
 print(xs_data)
 }

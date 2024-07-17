@@ -164,9 +164,9 @@ f_dev0 <- function(
 #'       d = .data$r - 1)
 #' }
 #'
-#' lambda = seq(.1, .2, by = .01)
+#' lambdas = seq(.1, .2, by = .01)
 #' f_dev(
-#'     lambda = lambda,
+#'     lambda = lambdas,
 #'     csdata = cur_data,
 #'     lnpars = cur_curve_params,
 #'     cond = cur_noise_params

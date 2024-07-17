@@ -27,8 +27,7 @@ library(tibble)
 # load in longitudinal parameters
 curve_params = load_curve_params("https://osf.io/download/rtw5k")
 xs_data <- "https://osf.io/download//n6cp3/" \%>\%
-load_pop_data() \%>\%
-clean_pop_data()
+load_pop_data()
 
 #Load noise params
 noise_params <- tibble(
@@ -63,9 +62,9 @@ if(!is.element('d', names(cur_curve_params)))
       d = .data$r - 1)
 }
 
-lambda = seq(.1, .2, by = .01)
+lambdas = seq(.1, .2, by = .01)
 f_dev(
-    lambda = lambda,
+    lambda = lambdas,
     csdata = cur_data,
     lnpars = cur_curve_params,
     cond = cur_noise_params

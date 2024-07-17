@@ -1,12 +1,11 @@
-test_that("f_dev0() produces stable results", {
+test_that("`f_dev0()` and `f_dev()` produce stable results", {
 
   library(dplyr)
   library(tibble)
 
   # load in longitudinal parameters
   curve_params = load_curve_params("https://osf.io/download/rtw5k")
-  xs_data <- "https://osf.io/download//n6cp3/" %>%
-  load_pop_data()
+  xs_data <- "https://osf.io/download//n6cp3/" %>% load_pop_data()
 
   #Load noise params
   noise_params <- tibble(
@@ -22,11 +21,13 @@ test_that("f_dev0() produces stable results", {
     xs_data %>%
     dplyr::filter(
      .data$catchment == "dhaka",
-     .data$antigen_iso == cur_antibody)
+     .data$antigen_iso == cur_antibody) %>%
+    slice_head(n = 100)
 
   cur_curve_params =
     curve_params %>%
-    dplyr::filter(.data$antigen_iso == cur_antibody)
+    dplyr::filter(.data$antigen_iso == cur_antibody)  %>%
+    slice_head(n = 100)
 
   cur_noise_params =
     noise_params %>%
@@ -42,12 +43,23 @@ test_that("f_dev0() produces stable results", {
   }
 
   lambda = 0.1
-  expect_snapshot(
-    f_dev0(
+  expect_snapshot_value(
+    x = f_dev0(
       lambda = lambda,
       csdata = cur_data,
       lnpars = cur_curve_params,
       cond = cur_noise_params
-    ))
+    ),
+    style = "deparse")
+
+  lambdas = seq(0.1, 0.2, by = .01)
+  expect_snapshot_value(
+    x = f_dev(
+      lambda = lambdas,
+      csdata = cur_data,
+      lnpars = cur_curve_params,
+      cond = cur_noise_params
+    ),
+    style = "deparse")
 
 })

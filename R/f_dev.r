@@ -15,7 +15,7 @@ fdev <- function(lambda, csdata, lnpars, cond)
 
 #' @title Calculate negative log-likelihood (deviance) for one antigen:isotype pair and incidence rate
 #'
-#' @details interface with C lib serocalc.so
+#' @details interface with C lib `serocalc.so`
 #' @param lambda [numeric()] incidence parameter, in events per person-year
 #' @param csdata cross-sectional sample data containing variables `value` and `age`
 #' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
@@ -116,7 +116,7 @@ f_dev0 <- function(
 #' @title Calculate negative log-likelihood (deviance) for one antigen:isotype pair and several values of incidence
 #'
 #' @description Calculates negative log-likelihood (deviance) for one antigen:isotype pair and several values of incidence (`lambda`).
-#' @details Vectorized version of [f_dev0()]; interface with C lib serocalc.so
+#' @details Vectorized version of [f_dev0()]; interface with C lib `serocalc.so`
 #' @param lambda a [numeric] vector of incidence parameters, in events per person-year
 #' @inheritParams f_dev
 #' @returns a [numeric] vector of negative log-likelihoods,

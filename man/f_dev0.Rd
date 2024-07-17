@@ -23,7 +23,7 @@ corresponding to input \code{lambda}
 Calculate negative log-likelihood (deviance) for one antigen:isotype pair and incidence rate
 }
 \details{
-interface with C lib serocalc.so
+interface with C lib \code{serocalc.so}
 }
 \examples{
 \donttest{

@@ -17,7 +17,7 @@ corresponding to the elements of input \code{lambda}
 Calculates negative log-likelihood (deviance) for one antigen:isotype pair and several values of incidence (\code{lambda}).
 }
 \details{
-Vectorized version of \code{\link[=f_dev0]{f_dev0()}}; interface with C lib serocalc.so
+Vectorized version of \code{\link[=f_dev0]{f_dev0()}}; interface with C lib \code{serocalc.so}
 }
 \examples{
 \donttest{

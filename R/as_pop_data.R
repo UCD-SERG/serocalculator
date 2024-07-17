@@ -47,4 +47,3 @@ as_pop_data <- function(data,
 
   return(pop_data)
 }
-

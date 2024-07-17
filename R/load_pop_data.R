@@ -11,13 +11,9 @@
 load_pop_data <- function(file_path,
                           ...) {
 
-  if (file_path %>% substr(1, 4) == "http") {
-    file_path <- url(file_path)
-  }
-
   pop_data <-
     file_path %>%
-    readRDS() %>%
+    readr::read_rds() %>%
     as_pop_data(...)
 
   return(pop_data)
@@ -101,9 +97,9 @@ set_biomarker_var <- function(object, ...) {
 
 #' @export
 set_biomarker_var.pop_data = function(object,
-                                  biomarker = "antigen_iso",
-                                  standardize = TRUE,
-                                  ...)
+                                      biomarker = "antigen_iso",
+                                      standardize = TRUE,
+                                      ...)
 {
   if (biomarker %in% colnames(object))
   {

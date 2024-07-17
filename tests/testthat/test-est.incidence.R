@@ -53,7 +53,6 @@ test_that("`est.incidence()` produces expected results", {
   )
 
   est_true <- est.incidence(
-    verbose = TRUE,
     pop_data = xs_data_true %>% filter(Country == "Pakistan"),
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),

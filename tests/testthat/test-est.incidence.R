@@ -1,6 +1,7 @@
 test_that(
   "est.incidence() produces expected results for typhoid data",
   {
+    library(dplyr)
     # get pop data
     xs_data <- load_pop_data(
       file_path = "https://osf.io/download//n6cp3/",
@@ -9,14 +10,16 @@ test_that(
       id = "index_id",
       standardize = TRUE
     ) %>%
-      filter(Country == "Pakistan")
+      filter(Country == "Pakistan") %>%
+      slice_head(n = 100, by = "antigen_iso")
 
     # get noise data
     noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
       filter(Country == "Pakistan")
 
     # get curve data
-    curve <- load_curve_params("https://osf.io/download/rtw5k/")
+    curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
+      slice_head(n = 100, by = "antigen_iso")
 
     # set start
     start <- .05
@@ -53,9 +56,9 @@ test_that("`est.incidence()` produces expected results", {
   )
 
   est_true <- est.incidence(
-    pop_data = xs_data_true %>% filter(Country == "Pakistan"),
+    pop_data = xs_data_true,
     curve_params = curves,
-    noise_params = noise %>% filter(Country == "Pakistan"),
+    noise_params = noise,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 

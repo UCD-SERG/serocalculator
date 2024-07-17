@@ -64,7 +64,7 @@ est.incidence <- function(
       pop_data %>% get_age_var(),
       "antigen_iso"
     ) %>%
-    tidyr::drop_na()
+    filter(across(everything(), ~ !is.na(.x)))
 
   curve_params <- curve_params %>%
     ungroup() %>%

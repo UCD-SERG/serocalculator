@@ -33,7 +33,8 @@ df.to.array <- function(
 #'     cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length")
 #'   ) %>%
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
-#' df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+#' arr <- df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+#' ftable(arr[,,1:5])
 #' @noRd
 df_to_array <- function(
     df,

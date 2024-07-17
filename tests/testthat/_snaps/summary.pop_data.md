@@ -1,8 +1,15 @@
 # `summary.pop_data()` produces stable results when `strata = NULL`
 
     Code
-      xs_data %>% summary(strata = NULL)
+      warnings <- character()
+      result <- withCallingHandlers(xs_data %>% summary(strata = NULL), warning = function(
+        w) {
+        warnings <<- c(warnings, conditionMessage(w))
+        invokeRestart("muffleWarning")
+      })
+      list(result = result, warnings = warnings)
     Output
+      $result
       
       n = 3336 
       
@@ -20,6 +27,10 @@
         <fct>       <dbl>     <dbl>  <dbl>     <dbl> <dbl>   <int>
       1 HlyE_IgA        0     0.851   1.74      3.66  133.       0
       2 HlyE_IgG        0     1.15    2.70      6.74  219.       0
+      
+      
+      $warnings
+      character(0)
       
 
 # `summary.pop_data()` produces stable results with stratification

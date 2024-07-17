@@ -11,8 +11,7 @@ test_that(
       id = "index_id",
       standardize = TRUE
     ) %>%
-      filter(Country == 'Pakistan') %>%
-      slice_head(n=100)
+      filter(Country == 'Pakistan')
 
     # get noise data
     noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%

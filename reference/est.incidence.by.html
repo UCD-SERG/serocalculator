@@ -9,7 +9,7 @@ response model."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@ response model.</p>
 
 
 <dl><dt id="arg-pop-data">pop_data<a class="anchor" aria-label="anchor" href="#arg-pop-data"></a></dt>
-<dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with cross-sectional serology data per antibody and age, and additional columns to identify possible <code>strata</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a> with cross-sectional serology data per antibody and age, and additional columns corresponding to each element of the <code>strata</code> input</p></dd>
 
 
 <dt id="arg-curve-params">curve_params<a class="anchor" aria-label="anchor" href="#arg-curve-params"></a></dt>
@@ -101,7 +101,7 @@ response model.</p>
 
 
 <dt id="arg-strata">strata<a class="anchor" aria-label="anchor" href="#arg-strata"></a></dt>
-<dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector of stratum-defining variables. Values must be variable names in <code>pop_data</code>.</p></dd>
+<dd><p>a <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> vector of stratum-defining variables. Values must be variable names in <code>pop_data</code>.</p></dd>
 
 
 <dt id="arg-curve-strata-varnames">curve_strata_varnames<a class="anchor" aria-label="anchor" href="#arg-curve-strata-varnames"></a></dt>
@@ -191,7 +191,12 @@ An object of class <code>"seroincidence"</code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>If <code>strata</code> is left empty, a warning will be produced, recommending that you use <code><a href="est.incidence.html">est.incidence()</a></code> for unstratified analyses, and then the data will be passed to <code><a href="est.incidence.html">est.incidence()</a></code>. If for some reason you want to use <code>est.incidence.by()</code> with no strata instead of calling <code><a href="est.incidence.html">est.incidence()</a></code>, you may use <code>NA</code>, <code>NULL</code>, or "" as the <code>strata</code> argument to avoid that warning.</p>
+    <p>If <code>strata</code> is left empty, a warning will be produced,
+recommending that you use <code><a href="est.incidence.html">est.incidence()</a></code> for unstratified analyses,
+and then the data will be passed to <code><a href="est.incidence.html">est.incidence()</a></code>.
+If for some reason you want to use <code>est.incidence.by()</code>
+with no strata instead of calling <code><a href="est.incidence.html">est.incidence()</a></code>,
+you may use <code>NA</code>, <code>NULL</code>, or <code>""</code> as the <code>strata</code> argument to avoid that warning.</p>
     </div>
 
     <div class="section level2">
@@ -214,6 +219,7 @@ An object of class <code>"seroincidence"</code>.</p></li>
 <span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="co">#num_cores = 8 # Allow for parallel processing to decrease run time</span></span></span>
+<span class="r-in"><span>  iterlim <span class="op">=</span> <span class="fl">5</span> <span class="co"># limit iterations for the purpose of this example</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>curve_params is missing all strata variables, and will be used unstratified.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>

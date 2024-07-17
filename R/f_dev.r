@@ -1,3 +1,18 @@
+#' Calculate negative log-likelihood (deviance)
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `fdev()` was renamed to [f_dev()] to create a more
+#' consistent API.
+#' @export
+#' @keywords internal
+fdev <- function(lambda, csdata, lnpars, cond)
+{
+  lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")
+  f_dev(lambda, csdata, lnpars, cond)
+}
+
 #' @title Calculate negative log-likelihood (deviance) for one antigen:isotype pair and incidence rate
 #'
 #' @details interface with C lib serocalc.so
@@ -174,18 +189,3 @@ f_dev0 <- function(lambda, csdata, lnpars, cond)
 #' @export
 #' @keywords internal
 f_dev <- Vectorize(FUN = f_dev0, vectorize.args = "lambda")
-
-#' Calculate negative log-likelihood (deviance)
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `fdev()` was renamed to [f_dev()] to create a more
-#' consistent API.
-#' @export
-#' @keywords internal
-fdev <- function(lambda, csdata, lnpars, cond)
-{
-  lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")
-  f_dev(lambda, csdata, lnpars, cond)
-}

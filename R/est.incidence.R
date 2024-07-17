@@ -3,7 +3,7 @@
 #' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
 #' @inheritParams log_likelihood
 #' @inheritParams stats::nlm
-#' @param pop_data [data.frame()] with cross-sectional serology data per antibody and age, and additional columns
+#' @param pop_data a [data.frame] with cross-sectional serology data per antibody and age, and additional columns
 #' @param lambda_start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `pop_data`
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
@@ -29,7 +29,8 @@
 #'   pop_data = xs_data %>% filter(Country == "Pakistan"),
 #'   curve_params = curves,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
-#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
 #' summary(est1)

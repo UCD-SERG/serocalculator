@@ -22,8 +22,9 @@ fdev <- function(lambda, csdata, lnpars, cond)
 #' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
 #' @returns a [numeric()] negative log-likelihood,
 #' corresponding to input `lambda`
+#' @keywords internal
+#' @export
 #' @examples
-#' \donttest{
 #' library(dplyr)
 #' library(tibble)
 #'
@@ -46,11 +47,13 @@ fdev <- function(lambda, csdata, lnpars, cond)
 #'   xs_data %>%
 #'   dplyr::filter(
 #'    .data$catchment == "dhaka",
-#'    .data$antigen_iso == cur_antibody)
+#'    .data$antigen_iso == cur_antibody) %>%
+#"   dplyr::slice_head(n = 100)
 #'
 #' cur_curve_params =
 #'   curve_params %>%
-#'   dplyr::filter(.data$antigen_iso == cur_antibody)
+#'   dplyr::filter(.data$antigen_iso == cur_antibody) %>%
+#"   dplyr::slice_head(n = 100)
 #'
 #' cur_noise_params =
 #'   noise_params %>%
@@ -72,8 +75,6 @@ fdev <- function(lambda, csdata, lnpars, cond)
 #'     lnpars = cur_curve_params,
 #'     cond = cur_noise_params
 #'   )
-#' }
-#' @keywords internal
 f_dev0 <- function(
       lambda,
       csdata,
@@ -145,11 +146,13 @@ f_dev0 <- function(
 #'   xs_data %>%
 #'   dplyr::filter(
 #'    .data$catchment == "dhaka",
-#'    .data$antigen_iso == cur_antibody)
+#'    .data$antigen_iso == cur_antibody) %>%
+#"   dplyr::slice_head(n = 100)
 #'
 #' cur_curve_params =
 #'   curve_params %>%
-#'   dplyr::filter(.data$antigen_iso == cur_antibody)
+#'   dplyr::filter(.data$antigen_iso == cur_antibody) %>%
+#"   dplyr::slice_head(n = 100)
 #'
 #' cur_noise_params =
 #'   noise_params %>%

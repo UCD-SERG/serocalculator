@@ -26,7 +26,6 @@ Calculate negative log-likelihood (deviance) for one antigen:isotype pair and in
 interface with C lib \code{serocalc.so}
 }
 \examples{
-\donttest{
 library(dplyr)
 library(tibble)
 
@@ -49,11 +48,11 @@ cur_data =
   xs_data \%>\%
   dplyr::filter(
    .data$catchment == "dhaka",
-   .data$antigen_iso == cur_antibody)
+   .data$antigen_iso == cur_antibody) \%>\%
 
 cur_curve_params =
   curve_params \%>\%
-  dplyr::filter(.data$antigen_iso == cur_antibody)
+  dplyr::filter(.data$antigen_iso == cur_antibody) \%>\%
 
 cur_noise_params =
   noise_params \%>\%
@@ -75,6 +74,5 @@ f_dev0(
     lnpars = cur_curve_params,
     cond = cur_noise_params
   )
-}
 }
 \keyword{internal}

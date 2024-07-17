@@ -15,21 +15,7 @@ test_that("`summary.pop_data()` produces an error when wrong stratification is p
 })
 
 test_that("`summary.pop_data()` produces stable results when `strata = NULL`", {
-  expect_snapshot({
-    warnings <- character()
-
-    result <- withCallingHandlers(
-
-      xs_data %>% summary(strata = NULL),
-      warning = function(w) {
-        warnings <<- c(warnings, conditionMessage(w))
-        invokeRestart("muffleWarning")
-      }
-    )
-
-    # Combine result and warnings for the snapshot
-    list(result = result, warnings = warnings)
-  })
+  expect_snapshot(xs_data %>% summary(strata = NULL))
 })
 
 test_that("`summary.pop_data()` produces stable results with stratification", {

@@ -5,8 +5,8 @@
 #'
 #' `fdev()` was renamed to [f_dev()] to create a more
 #' consistent API.
-#' @export
 #' @keywords internal
+#' @export
 fdev <- function(lambda, csdata, lnpars, cond)
 {
   lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")

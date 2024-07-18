@@ -5,10 +5,13 @@
 #' @returns a `curve_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' curve_data <- load_curve_params("https://osf.io/download/rtw5k/")
+#' library(magrittr)
+#' curve_data <-
+#'   "https://osf.io/download/rtw5k/" %>%
+#'   readr::read_rds() %>%
+#'   as_curve_params()
 #'
 #' print(curve_data)
-#'
 
 as_curve_params <- function(data, antigen_isos = NULL) {
   curve_data <-

@@ -18,8 +18,11 @@ a \code{curve_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with ex
 Load antibody decay curve parameter
 }
 \examples{
-curve_data <- load_curve_params("https://osf.io/download/rtw5k/")
+library(magrittr)
+curve_data <-
+  "https://osf.io/download/rtw5k/" \%>\%
+  readr::read_rds() \%>\%
+  as_curve_params()
 
 print(curve_data)
-
 }

@@ -16,7 +16,6 @@
 #' Function Name                          | Purpose
 #' -----------------                      | --------------------------------------------
 #' [load_pop_data()]                      | loading cross-sectional antibody survey data
-#' [clean_pop_data()]                     | cleaning antibody data
 #' [check_pop_data()]                     | checking antibody data
 #' [summary.pop_data()]                   | numerical summaries of antibody data
 #' [autoplot.pop_data()]                  | graphs of antibody data distributions
@@ -116,6 +115,8 @@
 #' @importFrom dplyr everything
 #' @importFrom dplyr filter
 #' @importFrom dplyr group_by
+#' @importFrom dplyr if_all
+#' @importFrom dplyr if_any
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr is.grouped_df
 #' @importFrom dplyr mutate
@@ -159,6 +160,8 @@
 #' @importFrom tidyr drop_na
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
+#' @importFrom tidyselect contains
+#' @importFrom tidyselect ends_with
 #' @importFrom utils download.file unzip
 #' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE

@@ -9,7 +9,9 @@ plot_curve_params_one_ab(
   verbose = FALSE,
   alpha = 0.4,
   n_curves = 100,
+  n_points = 1000,
   log_x = FALSE,
+  log_y = TRUE,
   rows_to_graph = 1:min(n_curves, nrow(object)),
   xlim = c(10^-1, 10^3.1),
   ...
@@ -28,7 +30,11 @@ plot_curve_params_one_ab(
 
 \item{n_curves}{how many curves to plot (see details).}
 
+\item{n_points}{Number of points to interpolate along the x axis (passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
+
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+
+\item{log_y}{should the Y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
 \item{rows_to_graph}{which rows of \code{curve_params} to plot (overrides \code{n_curves}).}
 

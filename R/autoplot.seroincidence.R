@@ -8,12 +8,10 @@
 #' @export
 #' @examples
 #'
-#'
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/") %>%
-#'   clean_pop_data()
+#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
@@ -37,21 +35,21 @@ autoplot.seroincidence =
 {
   to_return = attr(object, "ll_graph")
 
-  if(is.null(to_return))
-  {
-    stop(
-      "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `est.incidence()`")
-    figure = NULL
-  }
+    if (is.null(to_return)) {
+      stop(
+        "Graphs cannot be extracted; ",
+        "`build_graph` was not `TRUE` in the call to `est.incidence()`"
+      )
+      figure <- NULL
+    }
 
-  if(log_x)
-  {
-    to_return = to_return +
-      ggplot2::scale_x_log10(
-        labels = scales::label_comma()) +
-      ggplot2::theme_linedraw()
-  }
+    if (log_x) {
+      to_return <- to_return +
+        ggplot2::scale_x_log10(
+          labels = scales::label_comma()
+        ) +
+        ggplot2::theme_linedraw()
+    }
 
-  return(to_return)
-}
+    return(to_return)
+  }

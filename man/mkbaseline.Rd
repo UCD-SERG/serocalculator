@@ -19,5 +19,8 @@ mkbaseline(kab, n = 1, blims, ...)
 a \code{\link[=numeric]{numeric()}} vector
 }
 \description{
-generate random sample from baseline distribution
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\code{mkbaseline()} was renamed to \code{\link[=mk_baseline]{mk_baseline()}} to create a more
+consistent API.
 }
+\keyword{internal}

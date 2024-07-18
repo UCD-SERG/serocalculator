@@ -1,4 +1,4 @@
-typhoid_noise_params =
+typhoid_noise_params <-
   tibble::tribble(
     ~Country,      ~antigen_iso, ~llod,    ~nu,      ~y.high, ~eps,
     "MGH",         "HlyE_IgA",   0.17922,  2.86983,  5e+06,   0.23961,

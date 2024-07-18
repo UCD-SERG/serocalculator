@@ -34,7 +34,7 @@ Scrub typhus, a vector-borne bacterial infection, is an important but neglected 
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  fig.height=4, fig.width=7,
+  fig.height = 4, fig.width = 7,
   message = FALSE,
   collapse = TRUE,
   comment = "#>"
@@ -46,11 +46,14 @@ knitr::opts_chunk$set(
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, message=FALSE}
-#devtools::install_github("ucd-serg/serocalculator")
+# devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
+```
+
+```{r load_packages}
 library(serocalculator)
-#install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
-#install.packages("mixtools")
+# install.packages("mixtools")
 library(mixtools)
 ```
 
@@ -66,13 +69,11 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 
 
 ```{r curve, message=FALSE}
+# Import longitudinal antibody parameters from OSF
 
-#Import longitudinal antibody parameters from OSF
-
-curve <-  
-  "https://osf.io/download/u5gxh/" %>% 
-  load_curve_params() 
-
+curves <-
+  "https://osf.io/download/u5gxh/" %>%
+  load_curve_params()
 ```
 
 #### Visualize curve parameters
@@ -80,7 +81,7 @@ curve <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curve %>% autoplot()
+curves %>% autoplot()
 ```
 
 
@@ -89,13 +90,14 @@ Next, we load our sample cross-sectional data.
 
 
 ```{r data, message = FALSE}
-
-#Import cross-sectional data from OSF and rename required variables
-xs_data <- 
-  "https://osf.io/download/h5js4/" %>% 
-  load_pop_data() %>% 
-  clean_pop_data()
-
+# Import cross-sectional data from OSF and rename required variables
+xs_data <- load_pop_data(
+  file_path = "https://osf.io/download/h5js4/",
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = TRUE
+)
 ```
 
 #### Check formatting
@@ -103,7 +105,7 @@ xs_data <-
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
 ```{r, message = TRUE}
-xs_data %>% check_pop_data()
+xs_data %>% check_pop_data(verbose = TRUE)
 ```
 
 #### Summarize antibody data
@@ -111,7 +113,7 @@ xs_data %>% check_pop_data()
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary()
+xs_data %>% summary(strata = "country")
 ```
 
 
@@ -120,22 +122,8 @@ xs_data %>% summary()
 Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
-
-#Plot antibody responses by age
-
-ggplot(data=xs_data, aes(x=age, y=value, color=country)) + 
-         geom_point(size=.6, alpha=.7)+
-         geom_smooth(method=lm, se=FALSE)+
-         scale_y_log10() +
-         theme_bw()+
-          labs(
-            title = "Quantitative Antibody Responses by Age",
-            x = "Age",
-            y = "Value"
-          ) + 
-  facet_wrap(~antigen_iso) +
-  scale_color_manual(values = c("orange2",'#39558CFF'))
-
+# Plot antibody responses by age
+autoplot(object = xs_data, type = "age-scatter", strata = "Country")
 ```
 
 
@@ -159,13 +147,11 @@ Column Name | Description
 *Note that variable names are case-sensitive.*
 
 ```{r message=FALSE, warning=FALSE}
-
-
-#biologic noise
+# biologic noise
 b.noise <- xs_data %>%
   group_by(antigen_iso) %>%
   filter(!is.na(value)) %>%
-  filter(age<40) %>% # restrict to young ages to capture recent exposures 
+  filter(age < 40) %>% # restrict to young ages to capture recent exposures
   do({
     set.seed(54321)
     # Fit the mixture model
@@ -184,13 +170,12 @@ b.noise <- xs_data %>%
 # define conditional parameters
 noise <- data.frame(
   antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
-  nu = as.numeric(c(b.noise[2,2], b.noise[1,2])),  # Biologic noise (nu)
-  eps = c(0.2, 0.2),                             # M noise (eps)
-  y.low = c(0.2, 0.2),                            # low cutoff (llod)
-  y.high = c(200, 200)) %>%                      # high cutoff (y.high)
-  mutate(across(where(is.numeric), round, digits = 2))  
-
-
+  nu = as.numeric(c(b.noise[2, 2], b.noise[1, 2])), # Biologic noise (nu)
+  eps = c(0.2, 0.2), # M noise (eps)
+  y.low = c(0.2, 0.2), # low cutoff (llod)
+  y.high = c(200, 200)
+) %>% # high cutoff (y.high)
+  mutate(across(where(is.numeric), round, digits = 2))
 ```
 
 ## Estimate Seroincidence by study site
@@ -198,19 +183,18 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 
 
 ```{r estby}
-#Using est.incidence.by (strata)
+# Using est.incidence.by (strata)
 
-est = est.incidence.by(
+est <- est.incidence.by(
   strata = c("country"),
   pop_data = xs_data,
-  curve_params = curve, 
+  curve_params = curves,
   noise_params = noise,
   antigen_isos = c("OT56kda_IgG"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
+  num_cores = 8 # Allow for parallel processing to decrease run time
+)
 
 summary(est)
-
 ```
 
 
@@ -219,19 +203,18 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 
 
 ```{r estby2}
-#Using est.incidence.by (strata)
+# Using est.incidence.by (strata)
 
-est2 = est.incidence.by(
+est2 <- est.incidence.by(
   strata = c("country", "ageQ"),
   pop_data = xs_data,
-  curve_params = curve, 
+  curve_params = curves,
   noise_params = noise,
   antigen_isos = c("OT56kda_IgG"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
+  num_cores = 8 # Allow for parallel processing to decrease run time
+)
 
 summary(est2)
-
 ```
 
 
@@ -244,35 +227,36 @@ Let's visualize our seroincidence estimates by strata.
 
 
 ```{r}
-#Plot seroincidence estimates
+# Plot seroincidence estimates
 
-#Save summary(est) as a dataframe
-estdf<- summary(est) %>%
+# Save summary(est) as a dataframe
+estdf <- summary(est) %>%
   mutate(ageQ = "Overall")
 
-#Save summary(est2) as a dataframe
-est2df<- summary(est2) 
+# Save summary(est2) as a dataframe
+est2df <- summary(est2)
 
 
 est.comb <- rbind(estdf, est2df)
 
-#Create barplot (rescale incidence rate and CIs)
-ggplot(est.comb, aes(y=ageQ, x=incidence.rate*1000, fill=country)) +
+# Create barplot (rescale incidence rate and CIs)
+ggplot(est.comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
   geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
-  geom_linerange(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000), 
-                position = position_dodge2(width = 0.8, preserve = "single")) +
+  geom_linerange(aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000),
+    position = position_dodge2(width = 0.8, preserve = "single")
+  ) +
   labs(
-      title= "Enteric Fever Seroincidence by Catchment Area",
-        x="Seroincience rate per 1000 person-years",
-        y="Catchment"
-      ) +
+    title = "Enteric Fever Seroincidence by Catchment Area",
+    x = "Seroincience rate per 1000 person-years",
+    y = "Catchment"
+  ) +
   theme_bw() +
-  #facet_wrap(~country) + 
-  theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11)) + 
-  scale_fill_manual(values = c("orange2",'#39558CFF'))
-
-
+  facet_wrap(~country) +
+  theme(
+    axis.text.y = element_text(size = 11),
+    axis.text.x = element_text(size = 11)
+  ) +
+  scale_fill_manual(values = c("orange2", "#39558CFF", "red"))
 ```
 
 

@@ -1,6 +1,21 @@
 #' @title Get Additional Data
 #'
 #' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `getAdditionalData()` was renamed to `get_additional_data()` to create a more
+#' consistent API.
+#'
+#' @keywords internal
+#' @export
+getAdditionalData <- function(fileURL, savePath = NULL) {
+  lifecycle::deprecate_warn("1.0.0", "getAdditionalData()", "get_additional_data()")
+  get_additional_data(fileURL, savePath = NULL)
+}
+
+#' @title Get Additional Data
+#'
+#' @description
 #' Retrieves additional data from internet. The data format must be .RDS or a zipped .RDS. The purpose of this
 #' function is to download data such as longitudinal response parameters from an online repository or cross-sectional population data.
 #'
@@ -20,36 +35,44 @@
 #'
 #' @examples
 #' \dontrun{
-#' curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx")
+#' curve_param_samples <-
+#'   get_additional_data(
+#'     fileURL = "https://osf.io/download/bhfvx"
+#'   )
 #'
-#' # Optionally, save the data to disk
-#' curve_param_samples <- getAdditionalData(fileURL = "https://osf.io/download/bhfvx",
-#'     savePath = "~/Downloads/curv_params.rds")
+#' # optionally, save the data to disk
+#' curve_param_samples <-
+#'   get_additional_data(
+#'     fileURL = "https://osf.io/download/bhfvx",
+#'     savePath = "~/Downloads/curv_params.rds"
+#'   )
 #' }
 #'
 #' @export
-getAdditionalData <- function(
+get_additional_data <- function(
     fileURL,
-    savePath = NULL)
-{
+    savePath = NULL) {
+
   fileName <- basename(fileURL)
   tmpFileName <- file.path(tempdir(), fileName)
   on.exit({
     unlink(tmpFileName)
   })
-  #Increase timeout for big files
+  # Increase timeout for big files
   options(timeout = max(300, getOption("timeout")))
   # Download
   tryCatch(
     {
       download.file(fileURL,
-                    tmpFileName,
-                    mode = "wb",
-                    quiet = TRUE)
+        tmpFileName,
+        mode = "wb",
+        quiet = TRUE
+      )
     },
     error = function(e) {
       print("There is problem with downloading the requested file. Please, check input arguments or the internet connection.")
-    })
+    }
+  )
 
   # Unzip
   if (tolower(tools::file_ext(tmpFileName)) == "zip") {

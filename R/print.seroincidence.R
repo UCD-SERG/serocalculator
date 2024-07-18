@@ -8,7 +8,6 @@
 #' @param ... Additional arguments affecting the summary produced.
 #'
 #' @examples
-#'
 #' \dontrun{
 #' # Estimate seroincidence
 #' seroincidence <- est.incidence.by(...)
@@ -21,8 +20,7 @@
 #' }
 #'
 #' @export
-print.seroincidence <- function(x, ...)
-{
+print.seroincidence <- function(x, ...) {
   cat("`seroincidence` object estimated given the following setup:\n")
   cat(paste("a) `antigen_isos`: ", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")
   cat(paste("b) `lambda_start`: ", attr(x, "lambda_start"), "\n"))

@@ -10,7 +10,7 @@
 \item{log.lambda}{natural logarithm of incidence rate}
 
 \item{...}{
-  Arguments passed on to \code{\link[=llik]{llik}}
+  Arguments passed on to \code{\link[=log_likelihood]{log_likelihood}}
   \describe{
     \item{\code{pop_data}}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns}
     \item{\code{antigen_isos}}{Character vector listing one or more antigen isotypes. Values must match \code{pop_data}.}
@@ -39,6 +39,6 @@
 the negative log-likelihood of the data with the current parameter values
 }
 \description{
-Same as \code{\link[=llik]{llik()}}, except negated and requiring lambda on log scale (used in combination with \code{nlm()}, to ensure that the optimization search doesn't stray into negative values of \code{lambda}).
+Same as \code{\link[=log_likelihood]{log_likelihood()}}, except negated and requiring lambda on log scale (used in combination with \code{nlm()}, to ensure that the optimization search doesn't stray into negative values of \code{lambda}).
 }
 \keyword{internal}

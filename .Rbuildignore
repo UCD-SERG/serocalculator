@@ -23,3 +23,5 @@ allpopsamples_hlye.csv$
 ^CRAN-SUBMISSION$
 ^vignettes/rsconnect$
 ^rsconnect$
+^README\.qmd$
+^codecov\.yml$

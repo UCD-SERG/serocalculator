@@ -22,5 +22,4 @@ curve <- load_curve_params("https://osf.io/download/rtw5k/")
 
 print(curve)
 
-
 }

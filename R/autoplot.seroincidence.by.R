@@ -12,8 +12,7 @@
 #' library(ggplot2)
 #'
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#'   load_pop_data() %>%
-#'   clean_pop_data
+#'   load_pop_data()
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
@@ -37,40 +36,39 @@
 autoplot.seroincidence.by = function(
     object,
     ncol = min(3, length(object)),
-    ...)
-{
-
-  if(length(object) == 0)
-  {
+    ...) {
+  if (length(object) == 0) {
     stop("The input doesn't contain any fits. Did subsetting go wrong?")
   }
 
-  if(!attr(object,"graphs_included"))
-  {
-
+  if (!attr(object, "graphs_included")) {
     stop(
       "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `est.incidence.by()`")
-    figure = NULL
+      "`build_graph` was not `TRUE` in the call to `est.incidence.by()`"
+    )
+    figure <- NULL
   }
 
-  labels = names(object)
-  figs = lapply(object, FUN = autoplot.seroincidence, ...)
+  labels <- names(object)
+  figs <- lapply(object, FUN = autoplot.seroincidence, ...)
 
   for (i in 1:length(figs))
   {
-    figs[[i]] = figs[[i]] + ggplot2::ggtitle(labels[i])
+    figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 
 
-  nrow = ceiling(length(figs)/ncol)
+  nrow <- ceiling(length(figs) / ncol)
   figure <- do.call(
-    what = function(...) ggpubr::ggarrange(
-      ...,
-      ncol = ncol,
-      nrow = nrow),
-    args = figs)
+    what = function(...) {
+      ggpubr::ggarrange(
+        ...,
+        ncol = ncol,
+        nrow = nrow
+      )
+    },
+    args = figs
+  )
 
   return(figure)
-
 }

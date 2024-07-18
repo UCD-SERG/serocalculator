@@ -7,38 +7,28 @@
 #' @export
 #' @examples
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
-#'
 #' print(noise)
 #'
-#'
-load_noise_params = function(file_path, antigen_isos = NULL)
-{
-  if(file_path %>% substr(1,4) == "http")
-  {
-    file_path = url(file_path)
-
+load_noise_params <- function(file_path, antigen_isos = NULL) {
+  if (file_path %>% substr(1, 4) == "http") {
+    file_path <- url(file_path)
   }
 
-  noise =
+  noise <-
     file_path %>%
     readRDS() %>%
     tibble::as_tibble()
 
-  class(noise) =
+  class(noise) <-
     c("noise", class(noise))
 
-  if(is.null(antigen_isos))
-  {
-    antigen_isos = unique(noise$antigen_iso)
-  } else
-  {
+  if (is.null(antigen_isos)) {
+    antigen_isos <- unique(noise$antigen_iso)
+  } else {
     stopifnot(all(is.element(antigen_isos, noise$antigen_iso)))
-
   }
 
-  attr(noise, "antigen_isos") = antigen_isos
+  attr(noise, "antigen_isos") <- antigen_isos
 
   return(noise)
-
 }
-

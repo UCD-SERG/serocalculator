@@ -24,4 +24,8 @@ c(y0,b0,mu0,mu1,c1,alpha,shape)
 \description{
 take a random sample from longitudinal parameter set
 given age at infection, for a  list of antibodies
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\code{ldpar()} was renamed to \code{row_longitudinal_parameter()} to create a more
+consistent API.
 }
+\keyword{internal}

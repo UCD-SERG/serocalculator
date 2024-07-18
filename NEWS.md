@@ -1,5 +1,54 @@
+# serocalculator (development version)
+
+# serocalculator 1.2.0
+* Added `test-summary.pop_data` test
+
+* Modified `test-est.incidence` test
+
+* Added stratification to `summary.pop_data`
+
+* Added `verbose` option for `check_pop_data()`, changing default behavior
+to avoid printing an OK message.
+
+# serocalculator 1.1.0
+
+* Renamed `llik()` to `log_likelihood()`
+
+* Renamed `fdev()` to `f_dev()`
+
+* Renamed `df.to.array()` to `df_to_array()`
+
+* Renamed `getAdditionalData()` to `get_additional_data()`
+
+* Removed `clean_pop_data()` function
+
+* Remove `clean_pop_data()` dependency functions documentation examples
+
+* Added `age`, `value`, `id` and `standardize` arguments to `load_pop_data()`
+
+* Added the following methods to `pop_data` class:
+
+  - `set_age()`
+  - `set_value()`
+  - `set_id()`
+  - `get_age()`
+  - `get_value()`
+  - `get_id()`
+  - `get_age_var()`
+  - `get_value_var()`
+  - `get_id_var()`
+  
+* Added additional warnings to `load_pop_data()`
+
+* Added `scales::pseudo_log_trans()` to `autoplot.pop_data()` to avoid log 0
+
+* Added `test-est.incidence-status.R` test to check output when `standardize` option is FALSE on `load_pop_data()`
+
+* Replaced column name comparison on `check_pop_data()` to use attribute name on `pop_data` class
+
 # serocalculator 1.0.1
 
+* added `n_points` argument to `plot_curve_params_one_ab()`
 * Added `type = "age-scatter"` option for `autoplot.pop_data()`
 
 ## serocalculator 1.0.0
@@ -14,7 +63,6 @@
 
   - `load_pop_data()`
   - `check_pop_data()`
-  - `clean_pop_data()`
   - `summary.pop_data()`
   - `autoplot.pop_data()`
   - `load_curve_params()`

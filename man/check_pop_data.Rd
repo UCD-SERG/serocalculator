@@ -4,10 +4,12 @@
 \alias{check_pop_data}
 \title{Check the formatting of a cross-sectional antibody survey dataset.}
 \usage{
-check_pop_data(pop_data)
+check_pop_data(pop_data, verbose = FALSE)
 }
 \arguments{
 \item{pop_data}{dataset to check}
+
+\item{verbose}{whether to print an "OK" message when all checks pass}
 }
 \value{
 NULL (invisibly)
@@ -18,9 +20,7 @@ Check the formatting of a cross-sectional antibody survey dataset.
 \examples{
 library(dplyr)
 
-# Import cross-sectional data from OSF and rename required variables
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data() \%>\%
   check_pop_data()
 
 }

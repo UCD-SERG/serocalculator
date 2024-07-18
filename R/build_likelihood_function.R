@@ -1,3 +1,4 @@
+# not currently used internally or exported; can we remove it?
 build_likelihood_function <- function(
     cross_sectional_data,
     longitudinal_parameter_samples,
@@ -10,7 +11,7 @@ build_likelihood_function <- function(
     for (cur_antigen in antigen_isos)
     {
       res <- res +
-        fdev(
+        f_dev(
           lambda = lambda,
           csdata = cross_sectional_data[[cur_antigen]],
           lnpars = longitudinal_parameter_samples[[cur_antigen]],

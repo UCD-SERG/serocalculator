@@ -9,15 +9,19 @@
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#' library(magrittr)
+#' xs_data <-
+#'   "https://osf.io/download//n6cp3/" %>%
+#'   readr::read_rds() %>%
+#'   as_pop_data()
 #'
 #' print(xs_data)
 as_pop_data <- function(data,
-                          antigen_isos = NULL,
-                          age = "Age",
-                          value = "result",
-                          id = "index_id",
-                          standardize = TRUE) {
+                        antigen_isos = NULL,
+                        age = "Age",
+                        value = "result",
+                        id = "index_id",
+                        standardize = TRUE) {
 
 
   pop_data <-
@@ -38,8 +42,8 @@ as_pop_data <- function(data,
   pop_data <- pop_data %>%
     set_age(age = age, standardize = standardize) %>%
     set_value(value = value, standardize = standardize) %>%
-    set_id(id = id, standardize = standardize)
+    set_id(id = id, standardize = standardize)  %>%
+    set_biomarker_var(biomarker = "antigen_iso", standardize = standardize)
 
   return(pop_data)
 }
-

@@ -8,9 +8,7 @@
 #'
 #' @keywords internal
 #' @export
-getAdditionalData <- function(
-    fileURL,
-    savePath = NULL) {
+getAdditionalData <- function(fileURL, savePath = NULL) {
   lifecycle::deprecate_warn("1.0.0", "getAdditionalData()", "get_additional_data()")
   get_additional_data(fileURL, savePath = NULL)
 }
@@ -28,7 +26,6 @@ getAdditionalData <- function(
 #' Large datasets may timeout. If so, you can increase the download time by updating the maximum timeout time in the code below. (Ex: increase from 300 to 1000)
 #' ```options(timeout = max(300, getOption("timeout")))```
 #'
-#' `r lifecycle::badge("deprecated")`
 #' @param fileURL URL of the file to be downloaded.
 #' @param savePath Folder directory and filename to save the downloaded and unzipped (if needed) file. File is saved only
 #'   if this argument is not `NULL`. Optional. Default = `NULL`.
@@ -55,9 +52,6 @@ getAdditionalData <- function(
 get_additional_data <- function(
     fileURL,
     savePath = NULL) {
-  lifecycle::deprecate_warn("1.0.0", "getAdditionalData()", "get_additional_data()")
-
-  get_additional_data(fileURL, savePath = NULL)
 
   fileName <- basename(fileURL)
   tmpFileName <- file.path(tempdir(), fileName)

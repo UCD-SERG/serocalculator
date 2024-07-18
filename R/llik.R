@@ -4,7 +4,7 @@
 #' Calculates the log-likelihood of a set of cross-sectional antibody response data, for a given incidence rate (`lambda`) value.
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `llik()` was renamed to `log_likelihood()` to create a more
+#' `llik()` was renamed to [log_likelihood()] to create a more
 #' consistent API.
 #'
 #' @keywords internal
@@ -19,7 +19,12 @@ llik <- function(
     verbose = FALSE,
     ...) {
   lifecycle::deprecate_warn("1.0.0", "llik()", "log_likelihood()")
-  log_likelihood(lambda, pop_data, antigen_isos, curve_params, noise_params, verbose = FALSE)
+  log_likelihood(lambda,
+                 pop_data,
+                 antigen_isos,
+                 curve_params,
+                 noise_params,
+                 verbose)
 }
 
 #' Calculate log-likelihood
@@ -68,7 +73,7 @@ llik <- function(
 #' ) # high cutoff (y.high)
 #'
 #' # Calculate log-likelihood
-#' ll_AG <- llik(
+#' ll_AG <- log_likelihood(
 #'   pop_data = xs_data,
 #'   curve_params = dmcmc,
 #'   noise_params = cond,
@@ -120,14 +125,14 @@ log_likelihood <- function(
     }
 
     nllSingle <-
-      fdev(
+      f_dev(
         lambda = lambda,
         csdata = cur_data,
         lnpars = cur_curve_params,
         cond = cur_noise_params
       )
 
-    # if (!is.na(nllSingle))  # not meaningful for vectorized fdev()
+    # if (!is.na(nllSingle))  # not meaningful for vectorized f_dev()
     {
       nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
     }

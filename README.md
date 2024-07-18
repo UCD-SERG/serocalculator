@@ -126,8 +126,12 @@ package](man/figures/Rtools1.png)
 
 ## Getting Help
 
-If you need assistance or encounter a clear bug, please file an issue
-with a minimal reproducible example on
+If you have questions about using this software package, please use the
+[Q&A
+forum](https://github.com/UCD-SERG/serocalculator/discussions/categories/q-a).
+
+If you encounter a clear bug, please file an issue with a [minimal
+reproducible example](https://reprex.tidyverse.org/) on
 [GitHub](https://github.com/UCD-SERG/serocalculator/issues).
 
 Another great resource is **The Epidemiologist R Handbook**, which

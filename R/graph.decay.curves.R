@@ -74,8 +74,8 @@ plot_curve_params_one_ab = function(
       alpha = alpha,
       # aes(color = cur_row),
       fun = ab0,
-      n = n_points,
       args = list(curve_params = cur_params),
+      n = n_points,
       ...)
   }
 

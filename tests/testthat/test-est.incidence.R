@@ -45,7 +45,8 @@ test_that(
     expect_snapshot_value(x = typhoid_results_summary,
                           style = "deparse",
                           tolerance = 10 ^ -5)
-  })
+  }
+)
 
 test_that("`est.incidence()` produces the same results regardless of name standardization", {
   # get curve data

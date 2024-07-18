@@ -64,7 +64,7 @@ est.incidence <- function(
       pop_data %>% get_age_var(),
       "antigen_iso"
     ) %>%
-    tidyr::drop_na()
+    filter(if_all(everything(), ~!is.na(.x)))
 
   curve_params <- curve_params %>%
     ungroup() %>%
@@ -139,6 +139,10 @@ est.incidence <- function(
     graph <- NULL
   }
 
+
+  # [stats::nlm()] expects an objective function `f` "returning a single numeric value",
+  # but [.nll()] is vectorized via its subfunction [f_dev()].
+  # The vectorization doesn't appear to cause a problem for [nlm()].
 
   if (verbose) message("about to call `nlm()`")
   # Estimate lambda

@@ -1,3 +1,4 @@
+# not currently used internally or exported; can we remove it?
 build_likelihood_function <- function(
     cross_sectional_data,
     longitudinal_parameter_samples,

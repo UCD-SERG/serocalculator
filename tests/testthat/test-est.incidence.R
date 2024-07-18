@@ -83,7 +83,7 @@ test_that("`est.incidence()` produces the same results regardless of name standa
     slice_head(n = 100, by = "antigen_iso")
 
   est_false <- est.incidence(
-    pop_data = xs_data_false %>% filter(Country == "Pakistan"),
+    pop_data = xs_data_false,
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")

@@ -43,7 +43,7 @@ test_that(
     expect_snapshot_value(
       x = strat_ests_summary,
       tolerance = 10^-3,
-      style = "deparse"
+      style = "serialize"
     )
 
   }

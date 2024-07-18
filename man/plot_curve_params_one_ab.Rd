@@ -34,7 +34,7 @@ plot_curve_params_one_ab(
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
 
-\item{log_y}{should the Y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
+\item{log_y}{should the y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
 \item{rows_to_graph}{which rows of \code{curve_params} to plot (overrides \code{n_curves}).}
 

@@ -32,7 +32,7 @@
 \item 1 = fully opaque
 }}
     \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
-    \item{\code{log_y}}{should the Y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
+    \item{\code{log_y}}{should the y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
   }}
 }
 \value{

@@ -183,13 +183,13 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
       attr(object, "age_var") <- age_var
 
       # create warning when using searched age instead of provided age
-      cli::inform('Proceeding to use "{age_var}"')
+      cli::cli_inform('Proceeding to use "{.var {age_var}}"')
     } else if (length(age_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(age_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {age_var}")
-      cli::cli_alert_warning("Using first match: {age_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {age_var}}")
+      cli::cli_warn("Using first match: {.var {age_var[1]}}")
       attr(object, "age_var") <- age_var[1]
     }
   }
@@ -216,7 +216,7 @@ set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...
   if (value %in% colnames(object)) {
     attr(object, "value_var") <- value
   } else {
-    cli::cli_alert_warning('The specified `value` column "{value}" does not exist.')
+    cli::cli_warn('The specified `value` column "{.var {value}}" does not exist.')
 
     # search value variable from pop_data
     value_var <-
@@ -231,13 +231,13 @@ set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...
       attr(object, "value_var") <- value_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_info('Proceeding to use "{value_var}"')
+      cli::cli_inform('Proceeding to use "{.var {value_var}}"')
     } else if (length(value_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(value_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {value_var}")
-      cli::cli_alert_warning("Using first match: {value_var[1]}")
+      cli::cli_alert_warning("Multiple potential matches found: {.var {value_var}}")
+      cli::cli_alert_warning("Using first match: {.var {value_var[1]}}")
       attr(object, "value_var") <- value_var[1]
     }
   }

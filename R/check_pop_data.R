@@ -10,27 +10,31 @@
 #'             as_pop_data()
 #'   check_pop_data(xs_data, verbose = TRUE)
 #'
-check_pop_data <- function(pop_data,
-                           verbose = FALSE) {
+check_pop_data <- function(pop_data, verbose = FALSE) {
   if (!is.data.frame(pop_data)) {
-    cli::cli_abort(message = .pasteN(
-      "Argument `pop_data` is not a `data.frame()`.",
-      "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."
-    ))
+    cli::cli_abort(
+      message = .pasteN(
+        "Argument `pop_data` is not a `data.frame()`.",
+        "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."
+      )
+    )
   }
 
   missing_age <- is.element(attributes(pop_data)$age_var, names(pop_data))
 
   if (!missing_age) {
-    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$age_var,  "(age, in years)"))
+    "Argument {.arg pop_data} is missing column {.var {attributes(pop_data)$age_var}} (age, in years)" %>%
+      cli::cli_abort(class = "missing-var")
   }
 
   missing_value <- is.element(attributes(pop_data)$value_var, names(pop_data))
 
   if (!missing_value) {
-    cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
+    "Argument {.arg pop_data} is missing column {.var {pop_data %>% get_value_var()}} (antibody measurement)" %>%
+      cli::cli_abort(class = "missing-var")
   }
 
-  if(verbose) cli::cli_inform("data format is as expected.")
+  if (verbose)
+    cli::cli_inform("data format is as expected.")
   invisible(NULL)
 }

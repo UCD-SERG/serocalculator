@@ -183,7 +183,7 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
       attr(object, "age_var") <- age_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_info('Proceeding to use "{age_var}"')
+      cli::inform('Proceeding to use "{age_var}"')
     } else if (length(age_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(age_var) > 1)

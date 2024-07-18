@@ -31,6 +31,6 @@ check_pop_data <- function(pop_data,
     cli::cli_abort(message = paste("Argument `pop_data` is missing column", attributes(pop_data)$value_var, "(antibody measurement)"))
   }
 
-  if(verbose) cli::cli_alert_info("data format is as expected.")
+  if(verbose) cli::cli_inform("data format is as expected.")
   invisible(NULL)
 }

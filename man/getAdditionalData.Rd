@@ -9,7 +9,7 @@ getAdditionalData(fileURL, savePath = NULL)
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-\code{getAdditionalData()} was renamed to \code{get_additional_data()} to create a more
+\code{getAdditionalData()} was renamed to \code{\link[=get_additional_data]{get_additional_data()}} to create a more
 consistent API.
 }
 \keyword{internal}

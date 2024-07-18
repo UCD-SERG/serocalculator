@@ -59,7 +59,7 @@ test_that("`est.incidence()` produces the same results regardless of name standa
     value = "result",
     id = "index_id",
     standardize = TRUE
-  )  %>%
+  ) %>%
     filter(Country == "Pakistan") %>%
     slice_head(n = 100, by = "antigen_iso")
 
@@ -76,7 +76,7 @@ test_that("`est.incidence()` produces the same results regardless of name standa
     value = "result",
     id = "index_id",
     standardize = FALSE
-  )  %>%
+  ) %>%
     filter(Country == "Pakistan") %>%
     slice_head(n = 100, by = "antigen_iso")
 

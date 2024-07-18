@@ -16,4 +16,7 @@ test_that("`check_pop_data()` works", {
   xs_data_no_value = xs_data %>% select(-value)
   xs_data_no_value %>% check_pop_data() |>
     expect_error(class = "missing-var")
+
+  "string" %>% check_pop_data() |>
+    expect_error(class = "not a data.frame")
 })

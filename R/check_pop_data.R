@@ -13,7 +13,8 @@
 check_pop_data <- function(pop_data, verbose = FALSE) {
   if (!is.data.frame(pop_data)) {
     cli::cli_abort(
-      message = .pasteN(
+      class = "not a data.frame",
+      message = c(
         "Argument `pop_data` is not a `data.frame()`.",
         "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."
       )

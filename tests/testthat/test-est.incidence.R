@@ -48,13 +48,12 @@ test_that(
   })
 
 test_that("`est.incidence()` produces the same results regardless of name standardization", {
-  # get noise data
-  noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
-    filter(Country == "Pakistan")
-
   # get curve data
   curves <- load_curve_params("https://osf.io/download/rtw5k/") %>%
     slice_head(n = 100, by = "antigen_iso")
+  # get noise data
+  noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
+    filter(Country == "Pakistan")
   xs_data_true <- load_pop_data(
     file_path = "https://osf.io/download//n6cp3/",
     age = "Age",

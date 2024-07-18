@@ -11,7 +11,14 @@ count_strata <- function(data, strata_varnames) {
     )
 
   if (nrow(uneven_counts) > 0) {
-    warning("The number of observations in `data` varies between antigen isotypes, for at least one stratum. Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes.\n")
+
+    c(
+      "The number of observations in `data` varies between antigen
+      isotypes, for at least one stratum.",
+      "Sample size for each stratum will be calculated as
+      the minimum number of observations across all antigen isotypes."
+    ) %>%
+    cli::cli_warn(class = "incomplete-obs")
   }
 
   to_return <-
@@ -29,7 +36,12 @@ count_strata <- function(data, strata_varnames) {
   }
 
   if (any(duplicated(to_return$Stratum))) {
-    stop("The data contain multiple strata with the same value of the `Stratum` variable. Please disambiguate.")
+    c(
+      "The data contain multiple strata with the same value
+      of the {.var Stratum} variable.",
+      "Please disambiguate."
+    ) %>%
+    cli::cli_abort()
   }
 
   attr(to_return, "strata_vars") <- strata_varnames

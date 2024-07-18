@@ -47,8 +47,7 @@ test_that(
                           tolerance = 10 ^ -5)
   })
 
-test_that("`est.incidence()` produces the same results regardless of name standardization",
-          {
+test_that("`est.incidence()` produces the same results regardless of name standardization", {
             # get noise data
             noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
               filter(Country == "Pakistan")

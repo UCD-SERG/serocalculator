@@ -71,12 +71,12 @@ plot_curve_params_one_ab = function(
   layer_function <- function(cur_row) {
     cur_params <- object[cur_row, ]
     ggplot2::geom_function(
-        alpha = alpha,
-        # aes(color = cur_row),
-        fun = ab0,
-        n = n_points,
-        args = list(curve_params = cur_params),
-        ...)
+      alpha = alpha,
+      # aes(color = cur_row),
+      fun = ab0,
+      n = n_points,
+      args = list(curve_params = cur_params),
+      ...)
   }
 
   layers <-

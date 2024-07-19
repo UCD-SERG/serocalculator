@@ -168,7 +168,7 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
   if (age %in% colnames(object)) {
     attr(object, "age_var") <- age
   } else {
-    cli::cli_alert_warning('The specified `age` column "{age}" does not exist.')
+    cli::cli_warn('The specified `age` column "{age}" does not exist.')
 
     # search age variable from object
     age_var <-
@@ -183,14 +183,17 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
       attr(object, "age_var") <- age_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_info('Proceeding to use "{age_var}"')
+      cli::cli_inform('Proceeding to use "{.var {age_var}}"')
     } else if (length(age_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
-    } else # if (length(age_var) > 1)
+    } else if (length(age_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {age_var}")
-      cli::cli_alert_warning("Using first match: {age_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {age_var}}")
+      cli::cli_warn("Using first match: {.var {age_var[1]}}")
       attr(object, "age_var") <- age_var[1]
+    } else
+    {
+      cli::cli_abort("{.code length(age_var)} = {.val {length(age_var)}}")
     }
   }
 
@@ -216,7 +219,7 @@ set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...
   if (value %in% colnames(object)) {
     attr(object, "value_var") <- value
   } else {
-    cli::cli_alert_warning('The specified `value` column "{value}" does not exist.')
+    cli::cli_warn('The specified `value` column "{.var {value}}" does not exist.')
 
     # search value variable from pop_data
     value_var <-
@@ -231,13 +234,13 @@ set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...
       attr(object, "value_var") <- value_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_info('Proceeding to use "{value_var}"')
+      cli::cli_inform('Proceeding to use "{.var {value_var}}"')
     } else if (length(value_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(value_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {value_var}")
-      cli::cli_alert_warning("Using first match: {value_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {value_var}}")
+      cli::cli_inform("Using first match: {.var {value_var[1]}}")
       attr(object, "value_var") <- value_var[1]
     }
   }
@@ -263,7 +266,7 @@ set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id
   } else {
-    cli::cli_alert_warning('The specified `id` column "{id}" does not exist.')
+    cli::cli_warn('The specified {.var id} column {.val {id}} does not exist.')
 
     # search id variable from object
     id_var <-
@@ -278,13 +281,13 @@ set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
       attr(object, "id_var") <- id_var
 
       # create warning when using searched id instead of provided id
-      cli::cli_alert_info('Proceeding to use "{id_var}"')
+      cli::cli_inform('Proceeding to use "{id_var}"')
     } else if (length(id_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(id_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {id_var}")
-      cli::cli_alert_warning("Using first match: {id_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {id_var}}")
+      cli::cli_inform("Using first match: {.var {id_var[1]}}")
       attr(object, "id_var") <- id_var[1]
     }
   }

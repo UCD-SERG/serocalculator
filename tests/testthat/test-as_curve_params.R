@@ -19,7 +19,8 @@ test_that("`as_curve_params()` produces expected results", {
 
 
   expect_snapshot_value(
-    x = test_data,
+    x = test_data %>%
+      print(),
     style = "serialize"
   )
 })

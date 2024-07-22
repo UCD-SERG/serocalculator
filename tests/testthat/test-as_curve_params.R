@@ -14,8 +14,9 @@ test_that("`as_curve_params()` produces expected results", {
   library(dplyr)
   test_data <- "https://osf.io/download/rtw5k/" %>% # curve data
     readr::read_rds() %>%
-    as_curve_params() %>%
-    slice_head(n = 100)
+    slice_head(n = 100) %>%
+    as_curve_params()
+
 
   expect_snapshot_value(
     x = test_data,

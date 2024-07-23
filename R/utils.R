@@ -62,10 +62,8 @@
 
   if (length(missing_AIs) != 0)
   {
-    message = c(
-      "`pop_data` has no observations for the following {pop_data %>% get_biomarker_names_var()}s: ",
-      paste0('"', missing_AIs, '"') %>% and::and()
-    )
+    message = "`pop_data` has no observations for the following {pop_data %>% get_biomarker_names_var()}s: {missing_AIs"
+
     cli::cli_warn(message = message, class = "missing_biomarker")
   }
 
@@ -123,9 +121,12 @@
 
   if(any(antigen_iso_counts == 0L))
   {
-    cli::cli_inform(
-        class = "missing_biomarker",
-        message = "Some strata are completely missing one or more biomarkers.")
+    rlang::warn(
+        class = "strata missing some biomarkers",
+        message =
+          "Some strata are completely missing one or more biomarkers.",
+        body = antigen_iso_counts %>% capture.output())
+
   }
 
   invisible(NULL)

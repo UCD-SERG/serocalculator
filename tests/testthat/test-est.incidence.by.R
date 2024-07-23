@@ -58,6 +58,39 @@ test_that("est.incidence.by() warns about missing data", {
     read_rds("https://osf.io/download//n6cp3/")  %>%
     as_pop_data() %>%
     filter(Country == "Nepal") %>%
+    filter(catchment == "kavre" | antigen_iso == "HlyE_IgA") %>%
+    slice_head(n = 100, by = "antigen_iso")
+
+  curve <-
+    load_curve_params("https://osf.io/download/rtw5k/") %>%
+    filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+    slice_head(n = 100, by = antigen_iso) # Reduce dataset for the purposes of this example
+
+  noise <-
+    load_noise_params("https://osf.io/download//hqy4v/") %>%
+    filter(Country == "Nepal")
+
+  est.incidence.by(
+    pop_data = xs_data,
+    curve_params = curve,
+    noise_params = noise,
+    strata = "catchment",
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL
+  ) |>
+    expect_warning(class = "strata missing some biomarkers")
+})
+
+
+test_that("est.incidence.by() warns about missing data", {
+
+  library(dplyr)
+  library(readr)
+
+  xs_data <-
+    read_rds("https://osf.io/download//n6cp3/")  %>%
+    as_pop_data() %>%
+    filter(Country == "Nepal") %>%
     slice_head(n = 100, by = "antigen_iso")
 
   curve <-

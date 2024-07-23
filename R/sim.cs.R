@@ -154,9 +154,12 @@ sim.cs <- function(
         class = c("pop_data", class(to_return)),
         format = "long"
       ) %>%
-      set_value(value = "value") %>%
-      set_age(age = "age") %>%
-      set_id(id = "id")
+      as_pop_data(
+        value = "value",
+        age = "age",
+        id = "id"
+      )
+
   } else {
     if (verbose) message("outputting wide format data")
     to_return <-

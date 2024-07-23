@@ -11,7 +11,7 @@ stratify_data(
   strata_varnames = "",
   curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
-  antigen_isos = data \%>\% attr("antigen_isos")
+  antigen_isos = data \%>\% get_biomarker_levels()
 )
 }
 \arguments{

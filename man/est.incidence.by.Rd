@@ -114,24 +114,26 @@ you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata} argument t
 
 library(dplyr)
 
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
+  filter(Country == "Pakistan")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 
-noise <- load_noise_params("https://osf.io/download//hqy4v/")
+noise <- load_noise_params("https://osf.io/download//hqy4v/")  \%>\%
+   filter(Country == "Pakistan")
 
 est2 <- est.incidence.by(
-  strata = c("catchment"),
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  strata = "catchment",
+  pop_data = xs_data,
   curve_params = curve,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8 # Allow for parallel processing to decrease run time
   iterlim = 5 # limit iterations for the purpose of this example
 )
-
+print(est2)
 summary(est2)
 
 }

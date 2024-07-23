@@ -20,6 +20,9 @@
       10 9.57   13   HlyE_IgG   
       # i 578 more rows
       
+      $antigen_isos
+      [1] "HlyE_IgA" "HlyE_IgG"
+      
       $curve_params
       # A tibble: 200 x 4
             y1     alpha     r antigen_iso
@@ -62,6 +65,9 @@
        9  7.12    7.6 HlyE_IgA   
       10 11.6     7.6 HlyE_IgG   
       # i 390 more rows
+      
+      $antigen_isos
+      [1] "HlyE_IgA" "HlyE_IgG"
       
       $curve_params
       # A tibble: 200 x 4

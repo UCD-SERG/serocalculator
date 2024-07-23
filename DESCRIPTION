@@ -31,7 +31,8 @@ Imports:
     tidyr,
     utils,
     tidyselect,
-    cli
+    cli,
+    and
 Suggests:
     parallel,
     knitr,
@@ -43,7 +44,8 @@ Suggests:
     bookdown,
     ggbeeswarm,
     DT,
-    spelling
+    spelling,
+    withr
 LazyData: true
 Encoding: UTF-8
 URL: https://github.com/UCD-SERG/serocalculator, https://ucd-serg.github.io/serocalculator/

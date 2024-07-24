@@ -24,7 +24,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   if (!all(is.element(curve_cols, curve_data %>% names()))) {
     cli::cli_abort(
       class = "not curve_params",
-      message = c("Please provide curve data.")
+      message = c("Please provide curve data.") # TO DO: 'or check variable names' (message)
     )
   }
 

@@ -51,24 +51,6 @@ est.incidence <- function(
     print(environment() %>% as.list())
   }
 
-  if (verbose) {
-    message("Checking if input data frames are empty...")
-    message("pop_data: ", nrow(pop_data), " rows")
-    message("curve_params: ", nrow(curve_params), " rows")
-    message("noise_params: ", nrow(noise_params), " rows")
-  }
-
-  if (nrow(pop_data) == 0) {
-    stop("No data provided.")
-  }
-  if (nrow(curve_params) == 0) {
-    stop("Curve parameters data is empty.")
-  }
-  if (nrow(noise_params) == 0) {
-    stop("Noise parameters data is empty.")
-  }
-
-
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,

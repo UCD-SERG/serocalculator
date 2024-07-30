@@ -10,7 +10,7 @@
 #' * 0 = fully transparent (invisible)
 #' * 1 = fully opaque
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
-#' @param log_y should the Y-axis be on a logarithmic scale (default, `TRUE`) or linear scale (`FALSE`)?
+#' @param log_y should the y-axis be on a logarithmic scale (default, `TRUE`) or linear scale (`FALSE`)?
 #' @inheritParams ggplot2::geom_function
 #' @inheritDotParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
@@ -25,8 +25,9 @@
 #'
 #' load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   dplyr::filter(antigen_iso == "HlyE_IgG") %>%
-#'   serocalculator:::plot_curve_params_one_ab()
-#'
+#'   serocalculator::plot_curve_params_one_ab()
+#' @export
+#' @keywords internal
 plot_curve_params_one_ab = function(
     object,
     verbose = FALSE,
@@ -75,8 +76,8 @@ plot_curve_params_one_ab = function(
       # aes(color = cur_row),
       fun = ab0,
       args = list(curve_params = cur_params),
-      n = n_points
-    )
+      n = n_points,
+      ...)
   }
 
   layers <-

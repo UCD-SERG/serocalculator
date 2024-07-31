@@ -22,9 +22,17 @@ as_curve_params <- function(data, antigen_isos = NULL) {
 
   # check if object is curve (with columns)
   if (!all(is.element(curve_cols, curve_data %>% names()))) {
+
+    # get columns from provided data
+    data_cols <- data %>% names()
+
+    # get the missing columns
+    missing_cols <- setdiff(x = curve_cols, y = data_cols)
+
+
     cli::cli_abort(
       class = "not curve_params",
-      message = c("Please provide curve data.") # TO DO: 'or check variable names' (message)
+      message = cli::cli_text("Can't find column(s): {.strong {missing_cols}}.")
     )
   }
 

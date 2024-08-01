@@ -49,7 +49,7 @@
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   #num_cores = 8 # Allow for parallel processing to decrease run time
+#'   # num_cores = 8 # Allow for parallel processing to decrease run time
 #'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
@@ -99,6 +99,27 @@ est.incidence.by <- function(
         ...
       )
     return(to_return)
+  }
+
+  if (!all(is.element(strata, pop_data %>% names()))) {
+    # search strata variable from pop_data
+    strata_var <-
+      grep(
+        x = pop_data %>% names(),
+        value = TRUE,
+        pattern = strata,
+        ignore.case = TRUE
+      )
+
+    cli::cli_abort(
+      class = "missing_var",
+      message = c(
+        "Can't find the column {.var {strata}} in {.envvar pop_data}.",
+        if (length(strata_var) > 0) {
+          "i" = "Did you mean {.var {strata_var}}."
+        }
+      )
+    )
   }
 
   .checkStrata(data = pop_data, strata = strata)

@@ -21,15 +21,14 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
   # define pop data columns
-  pop_cols <- c("antigen_iso","age")
+  pop_cols <- c("antigen_iso", "age")
 
   # check if object is curve (with columns)
   if (!all(is.element(curve_cols, curve_data %>% names()))) {
-
     # get columns from provided data
     data_cols <- data %>% names()
 
-    # get any missing columns
+    # get any missing column(s)
     missing_cols <- setdiff(x = curve_cols, y = data_cols)
 
     cli::cli_abort(
@@ -37,7 +36,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
       message = c(
         "Can't convert {.envvar data} to curve_params.",
         "i" = "The column(s):{.strong {.var {missing_cols}}} are missing.",
-        "x" = "You have supplied {.cls {class(data)}}"
+        "x" = "You have supplied {.cls {class(data)}}."
       )
     )
   }

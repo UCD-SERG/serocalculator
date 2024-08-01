@@ -20,9 +20,6 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   # define curve columns
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
-  # define pop data columns
-  pop_cols <- c("antigen_iso", "age")
-
   # check if object is curve (with columns)
   if (!all(is.element(curve_cols, curve_data %>% names()))) {
     # get columns from provided data

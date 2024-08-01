@@ -101,7 +101,12 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  if (!all(is.element(strata, pop_data %>% names()))) {
+  if (!(
+    is.element(
+      strata,
+      pop_data %>% names()
+    )
+  )) {
     # search strata variable from pop_data
     strata_var <-
       grep(
@@ -116,7 +121,7 @@ est.incidence.by <- function(
       message = c(
         "Can't find the column {.var {strata}} in {.envvar pop_data}.",
         if (length(strata_var) > 0) {
-          "i" = "Did you mean {.var {strata_var}}."
+          "i" <- "Did you mean {.var {strata_var}}."
         }
       )
     )

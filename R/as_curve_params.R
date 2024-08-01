@@ -29,12 +29,8 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     # get columns from provided data
     data_cols <- data %>% names()
 
-    # get the missing columns
+    # get any missing columns
     missing_cols <- setdiff(x = curve_cols, y = data_cols)
-
-    # object name
-    object_name <- deparse(substitute(curve_data))
-
 
     cli::cli_abort(
       class = "not curve_params",

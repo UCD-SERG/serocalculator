@@ -17,18 +17,7 @@ load_noise_params <- function(file_path, antigen_isos = NULL) {
   noise <-
     file_path %>%
     readRDS() %>%
-    tibble::as_tibble()
-
-  class(noise) <-
-    c("noise", class(noise))
-
-  if (is.null(antigen_isos)) {
-    antigen_isos <- unique(noise$antigen_iso)
-  } else {
-    stopifnot(all(is.element(antigen_isos, noise$antigen_iso)))
-  }
-
-  attr(noise, "antigen_isos") <- antigen_isos
+    as_noise_params()
 
   return(noise)
 }

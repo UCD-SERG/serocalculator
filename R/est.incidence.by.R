@@ -101,12 +101,7 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  if (!(
-    is.element(
-      strata,
-      pop_data %>% names()
-    )
-  )) {
+  if (!any(is.element(strata,pop_data %>% names()))) {
     # search strata variable from pop_data
     strata_var <-
       grep(

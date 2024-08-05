@@ -1,4 +1,4 @@
-# `as_noise_params()` produces expected results
+# `as_curve_params()` produces expected results
 
     Code
       test_data

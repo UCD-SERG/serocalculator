@@ -1,4 +1,4 @@
-test_that("`as_curve_params()` produces an error when non-curve data is provided", {
+test_that("`as_noise_params()` produces an error when non-noise data is provided", {
   library(magrittr)
   expect_error(
     object = noise_data <-

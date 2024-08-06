@@ -13,6 +13,20 @@
 #'
 #' print(curve_data)
 as_curve_params <- function(data, antigen_isos = NULL) {
+
+  if(!is.data.frame(data))
+  {
+    cli::cli_abort(
+      class = "not data.frame",
+      message = c(
+        "Can't convert {.arg data} to {.cls curve_params}.",
+        "x" = "{.arg data} must be a {.cls data.frame}
+        (or a subclass of {.cls data.frame}).",
+        "i" = "You have supplied a {.cls {class(data)}}."
+      )
+    )
+  }
+
   curve_data <-
     data %>%
     tibble::as_tibble()
@@ -31,9 +45,8 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     cli::cli_abort(
       class = "not curve_params",
       message = c(
-        "Can't convert {.envvar data} to curve_params.",
-        "i" = "The column(s):{.strong {.var {missing_cols}}} are missing.",
-        "x" = "You have supplied {.cls {class(data)}}."
+        "Can't convert {.arg data} to {.cls curve_params}.",
+        "x" = "The column{?s}: {.strong {.var {missing_cols}}} are missing."
       )
     )
   }

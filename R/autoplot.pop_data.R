@@ -37,8 +37,11 @@ autoplot.pop_data <- function(
     density_plot(object, strata, log)
   } else {
     cli::cli_abort(
-      '`type = "{type}"` is not a valid input;
-      the currently available options for `type` are "density" or "age-scatter"'
+      class = "unavailable_type",
+      message = c(
+        "Can't create plotting facets with the specified `type` = {.arg {type}}.",
+        "i" = "The `type` argument accepts 'density' or 'age-scatter' options."
+      )
     )
   }
 }
@@ -51,11 +54,11 @@ age_scatter <- function(
   if (is.null(strata)) {
     plot1 <-
       object %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_age_var()]],
-                                   y = .data[[object %>% get_value_var()]],
-                                   col = get(strata)
-                                   )
-                      )
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data[[object %>% get_age_var()]],
+        y = .data[[object %>% get_value_var()]],
+        col = get(strata)
+      ))
   } else {
     plot1 <-
       object %>%

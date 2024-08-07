@@ -21,15 +21,12 @@ test_that("`as_noise_params()` produces expected results", {
     x = test_data,
     style = "serialize"
   )
-
-
 })
 
 test_that("`as_noise_params()` produces error when wrong antigen_iso is provided", {
   library(dplyr)
 
   expect_error(object = "https://osf.io/download//hqy4v/" %>% # noise data
-                     readr::read_rds() %>%
-                     as_noise_params(antigen_iso = 'HlyE_IgB')
-               )
+    readr::read_rds() %>%
+    as_noise_params(antigen_iso = "HlyE_IgB"))
 })

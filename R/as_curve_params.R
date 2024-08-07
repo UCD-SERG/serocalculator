@@ -32,7 +32,6 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   class(curve_data) <-
     c("curve_params", class(curve_data))
 
-
   if (is.null(antigen_isos)) {
     antigen_isos <- unique(curve_data$antigen_iso)
   } else {

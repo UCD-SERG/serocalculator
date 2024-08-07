@@ -22,6 +22,12 @@ test_that("`as_curve_params()` produces expected results", {
     x = test_data,
     style = "serialize"
   )
+})
 
+test_that("`as_curve_params()` produces error when wrong antigen_iso is provided", {
+  library(dplyr)
 
+  expect_error(object = "https://osf.io/download/rtw5k/" %>% # noise data
+    readr::read_rds() %>%
+    as_curve_params(antigen_iso = "HlyE_IgB"))
 })

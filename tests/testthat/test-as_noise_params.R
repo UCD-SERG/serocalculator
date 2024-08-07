@@ -13,7 +13,6 @@ test_that("`as_noise_params()` produces expected results", {
   library(dplyr)
   test_data <- "https://osf.io/download//hqy4v/" %>% # noise data
     readr::read_rds() %>%
-    slice_head(n = 100) %>%
     as_noise_params()
 
   expect_snapshot(test_data)
@@ -24,4 +23,13 @@ test_that("`as_noise_params()` produces expected results", {
   )
 
 
+})
+
+test_that("`as_noise_params()` produces error when wrong antigen_iso is provided", {
+  library(dplyr)
+
+  expect_error(object = "https://osf.io/download//hqy4v/" %>% # noise data
+                     readr::read_rds() %>%
+                     as_noise_params(antigen_iso = 'HlyE_IgB')
+               )
 })

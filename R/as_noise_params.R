@@ -32,7 +32,7 @@ as_noise_params <- function(data, antigen_isos = NULL) {
     cli::cli_abort(
       class = "not noise_params",
       message = c(
-        "Can't convert {.envvar data} to noise_params.",
+        "Can't convert {.arg data} to noise_params.",
         "i" = "The column(s):{.strong {.var {missing_cols}}} are missing.",
         "x" = "You have supplied {.cls {class(data)}}."
       )

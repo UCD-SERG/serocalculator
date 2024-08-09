@@ -172,7 +172,7 @@ names must <em>exactly</em> match follow the naming conventions:</p>
 <p>We can graph the decay curves with an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>
 method:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">curves</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op">==</span> <span class="st">"HlyE_IgA"</span><span class="op">|</span> <span class="va">antigen_iso</span> <span class="op">==</span> <span class="st">"HlyE_IgG"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">curves</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op">==</span> <span class="st">"HlyE_IgA"</span><span class="op">|</span> <span class="va">antigen_iso</span> <span class="op">==</span> <span class="st">"HlyE_IgG"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 </div>
 <div class="section level4">
@@ -332,10 +332,16 @@ and errors that may need to be accounted for. This will differ based on
 background knowledge of the data.</p>
 <p>The biological noise,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ν</mi><annotation encoding="application/x-tex">\nu</annotation></semantics></math>
-(“nu”), represents error from cross-reactivity to other antibodies.
-Measurement noise,
+(“nu”), represents error from cross-reactivity to other antibodies. It
+is defined as the 95th percentile of the distribution of antibody
+responses to the antigen-isotype in a populaiton with no exposure.</p>
+<p>Measurement noise,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ε</mi><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math>
-(“epsilon”), represents error from the laboratory testing process.</p>
+(“epsilon”), represents measurement error from the laboratory testing
+process. It is defined by a CV (coeficient of variation) as the ratio of
+the standard deviation to the mean for replicates. Note that the CV
+should ideally me measured accross plates rather than within the same
+plate.</p>
 <p><em>Formatting Specifications</em>: Noise parameter data should be a
 dataframe with one row for each antigen isotype and columns for each
 noise parameter below.</p>
@@ -347,7 +353,7 @@ noise parameter below.</p>
 <tbody>
 <tr class="odd">
 <td>y.low</td>
-<td>Lower limit of detection of the antibody assay</td>
+<td>Lower limit of detection of the assay</td>
 </tr>
 <tr class="even">
 <td>nu</td>
@@ -355,7 +361,7 @@ noise parameter below.</p>
 </tr>
 <tr class="odd">
 <td>y.high</td>
-<td>Upper limit of detection of the antibody assay</td>
+<td>Upper limit of detection of the assay</td>
 </tr>
 <tr class="even">
 <td>eps</td>

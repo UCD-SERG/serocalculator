@@ -10,7 +10,6 @@
 #' print(xs_data)
 load_pop_data <- function(file_path,
                           ...) {
-
   pop_data <-
     file_path %>%
     readr::read_rds() %>%
@@ -96,21 +95,20 @@ set_biomarker_var <- function(object, ...) {
 }
 
 #' @export
-set_biomarker_var.pop_data = function(object,
-                                      biomarker = "antigen_iso",
-                                      standardize = TRUE,
-                                      ...)
-{
-  if (biomarker %in% colnames(object))
-  {
+set_biomarker_var.pop_data <- function(object,
+                                       biomarker = "antigen_iso",
+                                       standardize = TRUE,
+                                       ...) {
+  if (biomarker %in% colnames(object)) {
     attr(object, "biomarker_var") <- biomarker
-  } else
-  {
-    cli::cli_abort('data does not include column "{biomarker}"')
+  } else {
+    cli::cli_abort(
+      class = "no biomarker",
+      message = c('data does not include column "{biomarker}"')
+    )
   }
 
-  if (standardize)
-  {
+  if (standardize) {
     object <- object %>%
       rename(c("antigen_iso" = attr(object, "biomarker_var")))
 
@@ -119,17 +117,14 @@ set_biomarker_var.pop_data = function(object,
   }
 
   return(object)
-
 }
 
-get_biomarker_levels <- function(object, ...)
-{
+get_biomarker_levels <- function(object, ...) {
   UseMethod("get_biomarker_levels", object)
 }
 
 #' @export
-get_biomarker_levels.pop_data <- function(object, ...)
-{
+get_biomarker_levels.pop_data <- function(object, ...) {
   attr(object, "antigen_isos")
 }
 
@@ -186,13 +181,11 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
       cli::cli_inform('Proceeding to use "{.var {age_var}}"')
     } else if (length(age_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
-    } else if (length(age_var) > 1)
-    {
+    } else if (length(age_var) > 1) {
       cli::cli_warn("Multiple potential matches found: {.var {age_var}}")
       cli::cli_warn("Using first match: {.var {age_var[1]}}")
       attr(object, "age_var") <- age_var[1]
-    } else
-    {
+    } else {
       cli::cli_abort("{.code length(age_var)} = {.val {length(age_var)}}")
     }
   }
@@ -266,7 +259,7 @@ set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id
   } else {
-    cli::cli_warn('The specified {.var id} column {.val {id}} does not exist.')
+    cli::cli_warn("The specified {.var id} column {.val {id}} does not exist.")
 
     # search id variable from object
     id_var <-

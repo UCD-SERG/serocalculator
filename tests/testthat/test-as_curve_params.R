@@ -9,6 +9,14 @@ test_that("`as_curve_params()` produces an error when non-curve data is provided
   )
 })
 
+test_that("`as_curve_params()` produces an error when `data` is not a data.frame",
+          {
+            library(magrittr)
+            expect_error(object =
+                           "https://osf.io/download//n6cp3/" %>% # pop data
+                           as_curve_params(), class = "not data.frame")
+          })
+
 test_that("`as_curve_params()` produces expected results", {
   library(dplyr)
   test_data <- "https://osf.io/download/rtw5k/" %>% # curve data
@@ -23,6 +31,7 @@ test_that("`as_curve_params()` produces expected results", {
     style = "serialize"
   )
 })
+
 
 test_that("`as_curve_params()` produces error when wrong antigen_iso is provided", {
   library(dplyr)

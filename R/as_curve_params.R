@@ -13,6 +13,20 @@
 #'
 #' print(curve_data)
 as_curve_params <- function(data, antigen_isos = NULL) {
+
+  if(!is.data.frame(data))
+  {
+    cli::cli_abort(
+      class = "not data.frame",
+      message = c(
+        "Can't convert {.arg data} to {.cls curve_params}.",
+        "x" = "{.arg data} must be a {.cls data.frame}
+        (or a subclass of {.cls data.frame}).",
+        "i" = "You have supplied a {.cls {class(data)}}."
+      )
+    )
+  }
+
   curve_data <-
     data %>%
     tibble::as_tibble()
@@ -22,9 +36,18 @@ as_curve_params <- function(data, antigen_isos = NULL) {
 
   # check if object is curve (with columns)
   if (!all(is.element(curve_cols, curve_data %>% names()))) {
+    # get columns from provided data
+    data_cols <- data %>% names()
+
+    # get any missing column(s)
+    missing_cols <- setdiff(x = curve_cols, y = data_cols)
+
     cli::cli_abort(
       class = "not curve_params",
-      message = c("Please provide curve data.") # TO DO: 'or check variable names' (message)
+      message = c(
+        "Can't convert {.arg data} to {.cls curve_params}.",
+        "x" = "The column{?s}: {.strong {.var {missing_cols}}} are missing."
+      )
     )
   }
 

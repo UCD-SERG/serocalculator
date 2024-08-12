@@ -175,7 +175,7 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
       grep(
         x = colnames(object),
         value = TRUE,
-        pattern = age,
+        pattern = paste0("^", age),
         ignore.case = TRUE
       )
 

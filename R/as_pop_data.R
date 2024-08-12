@@ -1,4 +1,4 @@
-#' Load a cross-sectional antibody survey data set
+ #' Load a cross-sectional antibody survey data set
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses

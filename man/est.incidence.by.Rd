@@ -111,11 +111,10 @@ with no strata instead of calling \code{\link[=est.incidence]{est.incidence()}},
 you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata} argument to avoid that warning.
 }
 \examples{
-
-library(dplyr)
 \donttest{
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
+library(dplyr)
+
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%

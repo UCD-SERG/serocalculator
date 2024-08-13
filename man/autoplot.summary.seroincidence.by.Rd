@@ -26,13 +26,12 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Plot method for \code{summary.seroincidence.by} objects
 }
 \examples{
-
+\donttest{
 library(dplyr)
 library(ggplot2)
 
-\donttest{
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
+
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%

@@ -13,13 +13,13 @@ bibliography: references.bib
 
 
 ---
-## Introduction
+# Introduction
 
 This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplified version of the analysis, the results here will differ slightly from those presented in the publication.
 
 In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the SeroEpidemiology and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries. 
 
-
+# Data Setup
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   fig.height = 4, fig.width = 7,
@@ -30,32 +30,24 @@ knitr::opts_chunk$set(
 ```
 
 
-### Load packages
+## Load packages
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
-```{r setup, message=FALSE}
+```{r load_packages, message=FALSE}
 #devtools::install_github("ucd-serg/serocalculator")
 library(serocalculator)
 #install.packages("tidyverse")
 library(tidyverse)
 ```
 
-
-```{r load_packages}
-library(serocalculator)
-#install.packages("tidyverse")
-library(tidyverse)
-``` 
-
-
-### Load data
+## Load data
 
 Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
 
 Note that each dataset has specific formatting and variable name requirements.
 
 
-#### Load and prepare longitudinal parameter data
+### Load and prepare longitudinal parameter data
 
 We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
@@ -79,7 +71,7 @@ curves <-
   load_curve_params()
 ```
 
-#### Visualize curve parameters
+### Visualize curve parameters
 
 We can graph the decay curves with an `autoplot()` method:
 
@@ -88,7 +80,7 @@ curves %>% filter(antigen_iso == "HlyE_IgA"| antigen_iso == "HlyE_IgG") %>% auto
 ```
 
 
-#### Load and prepare cross-sectional data 
+### Load and prepare cross-sectional data 
 Next, we load our sample cross-sectional data. We will use a subset of results from the SEES dataset. Ideally, this will be a representative sample of the general population without regard to disease status. Later, we will limit our analysis to cross-sectional data from Pakistan. 
 
 We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to the names required by **serocalculator**. 
@@ -112,7 +104,7 @@ xs_data <-
 
 ```
 
-#### Check formatting
+### Check formatting
 
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
@@ -120,7 +112,7 @@ We can check that `xs_data` has the correct formatting using the `check_pop_data
 xs_data %>% check_pop_data(verbose = TRUE)
 ```
 
-#### Summarize antibody data
+### Summarize antibody data
 
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
@@ -129,7 +121,7 @@ xs_data %>% summary()
 ```
 
 
-#### Visualize antibody data
+### Visualize antibody data
 
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
@@ -188,14 +180,14 @@ ggplot(data=xs_data, aes(x=age, y=value, color=Country)) +
 In this plot, a steeper slope indicates a higher incidence. We can see that the highest burden is in Bangladesh. Nepal has a slightly higher incidence in the older group (higher slope).
 
 
-### Load noise parameters
+## Load noise parameters
 
 Next, we must set conditions based on some assumptions about the data and errors that may need to be accounted for. This will differ based on background knowledge of the data. 
 
 
-The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. It is defined as the 95th percentile of the distribution of antibody responses to the antigen-isotype in a populaiton with no exposure. 
+The biological noise, $\nu$ ("nu"), represents error from cross-reactivity to other antibodies. It is defined as the 95th percentile of the distribution of antibody responses to the antigen-isotype in a population with no exposure. 
 
-Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from the laboratory testing process. It is defined by a CV (coeficient of variation) as the ratio of the standard deviation to the mean for replicates. Note that the CV should ideally me measured accross plates rather than within the same plate. 
+Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from the laboratory testing process. It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. Note that the CV should ideally me measured across plates rather than within the same plate. 
 
 *Formatting Specifications*: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.
 
@@ -214,10 +206,10 @@ Column Name | Description
 noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
 ```
 
-## Estimate Seroincidence 
+# Estimate Seroincidence 
 Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
 
-### Overall Seroincidence
+## Overall Seroincidence
 Using the function `est.incidence`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
 
 ```{r est}
@@ -234,7 +226,7 @@ summary(est1)
 ```
 
 
-### Stratified Seroincidence
+## Stratified Seroincidence
 
 We can also produce stratified seroincidence estimates. Let's compare estimates across all countries. 
 
@@ -333,7 +325,7 @@ rate_ratio_bangla_nepal <- round(rate_bangla/rate_nepal)
 
 ```
 
-## Conclusions
+# Conclusions
 We find that Bangladesh has the highest overall seroincidence of enteric fever with a rate of `r rate_bangla` per 1000 person-years, as well as the highest seroincidence by age category.
 In comparison, Nepal has a seroincidence rate over `r rate_ratio_bangla_nepal` times lower than that of Bangladesh (`r rate_nepal` per 1000 person-years) and the lowest age-specific seroincidence rates of the three countries in the study. 
 **serocalculator** provides an efficient tool to conduct this analysis and produce actionable results. 
@@ -345,4 +337,4 @@ We gratefully acknowledge the study participants for their valuable time and int
 ## Funding
 This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation. 
 
-## References
+# References

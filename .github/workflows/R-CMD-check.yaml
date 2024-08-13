@@ -4,7 +4,6 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
 
 name: R-CMD-check
 
@@ -47,4 +46,5 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+          error-on: '"warning"'
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'

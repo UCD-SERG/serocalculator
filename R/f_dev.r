@@ -5,7 +5,6 @@
 #'
 #' `fdev()` was renamed to [f_dev()] to create a more
 #' consistent API.
-#'
 #' @keywords internal
 #' @export
 fdev <- function(
@@ -20,11 +19,13 @@ fdev <- function(
 
 #' Calculate negative log-likelihood (deviance) for one antigen:isotype pair
 #'
-#' more description to be added here
 #' @param lambda [numeric()] incidence parameter, in events per person-year
 #' @param csdata cross-sectional sample data containing variables `value` and `age`
 #' @param lnpars longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
 #' @param cond measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
+#' @returns a [numeric()] negative log-likelihood,
+#' corresponding to input `lambda`
+#' @keywords internal
 #' @export
 #' @returns a [numeric()] vector of negative log-likelihoods,
 #' corresponding to the elements of input `lambda`
@@ -80,7 +81,6 @@ fdev <- function(
 #'     cond = cur_noise_params
 #'   )
 #' }
-
 #' @keywords internal
 f_dev <- Vectorize(
   vectorize.args = "lambda",

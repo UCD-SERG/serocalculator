@@ -8,7 +8,6 @@
 #' @export
 #' @examples
 #'
-#'
 #' library(dplyr)
 #' library(ggplot2)
 #'\donttest{
@@ -37,21 +36,21 @@ autoplot.seroincidence =
 {
   to_return = attr(object, "ll_graph")
 
-  if(is.null(to_return))
-  {
-    stop(
-      "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `est.incidence()`")
-    figure = NULL
-  }
+    if (is.null(to_return)) {
+      stop(
+        "Graphs cannot be extracted; ",
+        "`build_graph` was not `TRUE` in the call to `est.incidence()`"
+      )
+      figure <- NULL
+    }
 
-  if(log_x)
-  {
-    to_return = to_return +
-      ggplot2::scale_x_log10(
-        labels = scales::label_comma()) +
-      ggplot2::theme_linedraw()
-  }
+    if (log_x) {
+      to_return <- to_return +
+        ggplot2::scale_x_log10(
+          labels = scales::label_comma()
+        ) +
+        ggplot2::theme_linedraw()
+    }
 
-  return(to_return)
-}
+    return(to_return)
+  }

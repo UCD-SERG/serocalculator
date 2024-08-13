@@ -6,16 +6,6 @@
 \usage{
 df.to.array(df, dim_var_names, value_var_name = "value")
 }
-\arguments{
-\item{df}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) in long format (each row contains one value for the intended array)}
-
-\item{dim_var_names}{a \code{\link[=character]{character()}} vector of variable names in \code{df}. All of these variables should be factors, or a warning will be produced.}
-
-\item{value_var_name}{a \code{\link[=character]{character()}} variable containing a variable name from \code{df} which contains the values for the intended array.}
-}
-\value{
-an \code{\link[=array]{array()}} with dimensions defined by the variables in \code{df} listed in \code{dim_var_names}
-}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 

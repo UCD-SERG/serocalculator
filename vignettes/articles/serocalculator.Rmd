@@ -30,7 +30,8 @@ The **serocalculator app** is a web based tool that takes the 5 curve parameters
 
 ```{r,echo=FALSE}
 knitr::include_app("https://ucdserg.shinyapps.io/shiny_decay_curve/",
-  height = "600px")
+  height = "600px"
+)
 ```
 
 ## References

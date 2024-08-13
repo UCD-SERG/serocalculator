@@ -26,31 +26,33 @@ autoplot.curve_params = function(
     object,
     antigen_isos = unique(object$antigen_iso),
     ncol = min(3, length(antigen_isos)),
-    ...)
-{
-
-  split_data = object %>%
+    ...) {
+  split_data <- object %>%
     filter(.data$antigen_iso %in% antigen_isos) %>%
     droplevels() %>%
     split(~antigen_iso)
 
-  labels = names(split_data)
-  figs = split_data %>%
+  labels <- names(split_data)
+  figs <- split_data %>%
     lapply(FUN = plot_curve_params_one_ab, ...)
 
   for (i in 1:length(figs))
   {
-    figs[[i]] = figs[[i]] + ggplot2::ggtitle(labels[i])
+    figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 
 
-  nrow = ceiling(length(figs)/ncol)
+  nrow <- ceiling(length(figs) / ncol)
   figure <- do.call(
-    what = function(...) ggpubr::ggarrange(
-      ...,
-      ncol = ncol,
-      nrow = nrow),
-    args = figs)
+    what = function(...) {
+      ggpubr::ggarrange(
+        ...,
+        ncol = ncol,
+        nrow = nrow
+      )
+    },
+    args = figs
+  )
 
   return(figure)
 }

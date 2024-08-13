@@ -1,4 +1,3 @@
-
 #' Calculate negative log-likelihood
 #' @description
 #' Same as [log_likelihood()], except negated and requiring lambda on log scale (used in combination with `nlm()`, to ensure that the optimization search doesn't stray into negative values of `lambda`).
@@ -10,4 +9,5 @@
 .nll = function(log.lambda, ...)
 {
   -log_likelihood(lambda = exp(log.lambda),...)
+
 }

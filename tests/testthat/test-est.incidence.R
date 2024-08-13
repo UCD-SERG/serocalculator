@@ -1,60 +1,81 @@
 test_that(
   "est.incidence() produces expected results for typhoid data",
   {
-
-    skip(message = "Skipping test of `est.incidence()` for now, because github was producing miniscule differences in SE (and thus CIs) for some reason that I don't have time to hunt down.")
-
-    library(readr)
     library(dplyr)
-    c.hlye.IgG <-
-      fs::path_package(
-        "extdata",
-        "dmcmc_hlyeigg_09.30.rds",
-        package = "serocalculator") %>% #Load longitudinal parameters dataset
-      readRDS()%>%
-      select(y1, alpha, r, antigen_iso)
+    # get pop data
+    xs_data <- load_pop_data(
+      file_path = "https://osf.io/download//n6cp3/",
+      age = "Age",
+      value = "result",
+      id = "index_id",
+      standardize = TRUE
+    ) %>%
+      filter(Country == "Pakistan") %>%
+      slice_head(n = 100)
 
-    p.hlye.IgG  <-
-      fs::path_package(
-        package = "serocalculator",
-        "extdata/simpophlyeigg.2.csv") %>% #Load simulated cross-sectional dataset
-      read_csv(
-        col_types = cols(
-          a.smpl = col_double(),
-          y.smpl = col_double(),
-          i = col_double(),
-          t = col_double()
-        )
-      ) %>%
-      rename( #rename variables
-        y = y.smpl,
-        a = a.smpl) %>%
-      select(y, a) %>%
-      mutate(antigen_iso = "HlyE_IgG")
+    # get noise data
+    noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
+      filter(Country == "Pakistan")
 
-    cond.hlye.IgG <- data.frame(
-      nu = 1.027239,             # B noise
-      eps = 0.2,            # M noise
-      y.low = 0.0,          # low cutoff
-      y.high = 5e4,
-      antigen_iso = "HlyE_IgG");
+    # get curve data
+    curve <- load_curve_params("https://osf.io/download/rtw5k/") # slice if test is too slow (.by = antigen_iso))
 
+    # set start
     start <- .05
 
-    fit = est.incidence(
-      dpop = p.hlye.IgG,
-      dmcmc = c.hlye.IgG,
-      c.age = NULL,
-      antigen_isos = "HlyE_IgG",
-      noise_params = cond.hlye.IgG,
-      start = start,
-      print.level = 2,
-      iterlim = 100,
-      stepmax = 1)
+    typhoid_results <- est.incidence(
+      pop_data = xs_data,
+      curve_param = curve,
+      noise_param = noise,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    ) %>%
+      summary.seroincidence(
+        coverage = .95,
+        start = start
+      )
 
-    # compare with `typhoid_results` from data-raw/typhoid_results.qmd
+    expect_snapshot(x = typhoid_results)
+  }
+)
 
-    expect_equal(
-      object = fit,
-      expected = typhoid_results)
-  })
+test_that("`est.incidence()` produces expected results", {
+  curves <- load_curve_params("https://osf.io/download/rtw5k/")
+  noise <- load_noise_params("https://osf.io/download//hqy4v/")
+  xs_data_true <- load_pop_data(
+    file_path = "https://osf.io/download//n6cp3/",
+    age = "Age",
+    value = "result",
+    id = "index_id",
+    standardize = TRUE
+  ) %>%
+    filter(Country == "Pakistan") %>%
+    slice_head(n = 100)
+
+
+  est_true <- est.incidence(
+    pop_data = xs_data_true,
+    curve_params = curves,
+    noise_params = noise %>% filter(Country == "Pakistan"),
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  xs_data_false <- load_pop_data(
+    file_path = "https://osf.io/download//n6cp3/",
+    age = "Age",
+    value = "result",
+    id = "index_id",
+    standardize = FALSE
+  ) %>%
+    filter(Country == "Pakistan") %>%
+    slice_head(n = 100)
+
+
+  est_false <- est.incidence(
+    pop_data = xs_data_false,
+    curve_params = curves,
+    noise_params = noise %>% filter(Country == "Pakistan"),
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  expect_equal(est_true, est_false)
+})

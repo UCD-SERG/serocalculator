@@ -102,7 +102,8 @@ nrep <- 100
 # Biologic noise distribution
 dlims <- rbind(
   "HlyE_IgA" = c(min = 0, max = 0.5),
-  "HlyE_IgG" = c(min = 0, max = 0.5))
+  "HlyE_IgG" = c(min = 0, max = 0.5)
+)
 
 # Generate cross-sectional data
 csdata <- sim.cs(

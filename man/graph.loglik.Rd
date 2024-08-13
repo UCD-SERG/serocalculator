@@ -73,8 +73,7 @@ library(dplyr)
 library(tibble)
 
 # Load cross-sectional data
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
+xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 # Load curve parameters and subset for the purposes of this example
 dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%

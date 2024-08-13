@@ -16,11 +16,14 @@ f_dev(lambda, csdata, lnpars, cond)
 \item{cond}{measurement noise parameters \code{nu}, \code{eps}, \code{y.low}, and \code{y.high}}
 }
 \value{
+a \code{\link[=numeric]{numeric()}} negative log-likelihood,
+corresponding to input \code{lambda}
+
 a \code{\link[=numeric]{numeric()}} vector of negative log-likelihoods,
 corresponding to the elements of input \code{lambda}
 }
 \description{
-more description to be added here
+Calculate negative log-likelihood (deviance) for one antigen:isotype pair
 }
 \examples{
 \donttest{

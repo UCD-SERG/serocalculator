@@ -43,24 +43,27 @@ autoplot.summary.seroincidence.by = function(
     alpha = .7,
     shape = 1,
     width = 0.001,
-    ...)
-{
+    ...) {
   object %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = get(xvar),
-        y = .data$incidence.rate)) +
+        y = .data$incidence.rate
+      )
+    ) +
     ggplot2::geom_jitter(
       width = width,
       height = 0,
       aes(
-        col = .data$nlm.convergence.code),
+        col = .data$nlm.convergence.code
+      ),
       shape = shape,
-      alpha = alpha) +
+      alpha = alpha
+    ) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_linedraw() +
     ggplot2::expand_limits(x = 0, y = 0) +
     ggplot2::labs(col = "`nlm()` convergence code") +
-    ggplot2::theme(legend.position="bottom")
+    ggplot2::theme(legend.position = "bottom")
 }

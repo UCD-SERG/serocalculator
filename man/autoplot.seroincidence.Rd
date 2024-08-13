@@ -21,7 +21,6 @@ Plot the log-likelihood curve for the incidence rate estimate
 }
 \examples{
 
-
 library(dplyr)
 library(ggplot2)
 \donttest{

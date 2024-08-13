@@ -38,65 +38,64 @@ plot_curve_params_one_ab = function(
     log_y = TRUE,
     rows_to_graph = 1:min(n_curves, nrow(object)),
     xlim = c(10^-1, 10^3.1),
-    ...)
-{
-
-  plot1 =
+    ...) {
+  plot1 <-
     ggplot2::ggplot() +
     # ggplot2::scale_x_log10() +
-    ggplot2::theme_linedraw()  +
+    ggplot2::theme_linedraw() +
     ggplot2::theme(
-      axis.line = ggplot2::element_line()) +
+      axis.line = ggplot2::element_line()
+    ) +
     ggplot2::labs(
       x = "Days since fever onset",
-      y = "Antibody Concentration") +
-    ggplot2::ggtitle('Decay Curve') +
+      y = "Antibody Concentration"
+    ) +
+    ggplot2::ggtitle("Decay Curve") +
     ggplot2::theme(
       plot.title =
         ggplot2::element_text(
           size = 20,
-          face = "bold"))
+          face = "bold"
+        )
+    )
 
-  if(log_y)
-  {
-    plot1 = plot1 +
+  if (log_y) {
+    plot1 <- plot1 +
       ggplot2::scale_y_log10(
         # limits = c(0.9, 2000),
         labels = scales::label_comma(),
         # breaks = c(0.1, 1, 10, 100, 1000),
         minor_breaks = NULL
       )
-
   }
 
-  layer_function = function(cur_row)
-  {
-    cur_params = object[cur_row, ]
+  layer_function <- function(cur_row) {
+    cur_params <- object[cur_row, ]
     ggplot2::geom_function(
       alpha = alpha,
       # aes(color = cur_row),
       fun = ab0,
       args = list(curve_params = cur_params),
-      n = n_points)
+      n = n_points
+    )
   }
 
-  layers =
+  layers <-
     lapply(
       X = rows_to_graph,
-      FUN = layer_function)
+      FUN = layer_function
+    )
 
-  plot1 = plot1 + layers
+  plot1 <- plot1 + layers
 
-  if(log_x)
-  {
-    plot1 = plot1 +
+  if (log_x) {
+    plot1 <- plot1 +
       ggplot2::scale_x_log10(
         limits = xlim,
-        labels = scales::label_comma())
-  } else
-  {
-    plot1 = plot1 + ggplot2::xlim(xlim)
-
+        labels = scales::label_comma()
+      )
+  } else {
+    plot1 <- plot1 + ggplot2::xlim(xlim)
   }
 
   return(plot1)

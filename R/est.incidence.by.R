@@ -101,22 +101,31 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  if (!any(is.element(strata, pop_data %>% names()))) {
+  if (!all(is.element(strata, pop_data %>% names()))) {
+    # accommodate multiple strata
+    combined_pattern <- paste(strata, collapse = "|")
+
     # search strata variable from pop_data
-    strata_var <-
+    present_vars <-
       grep(
         x = pop_data %>% names(),
         value = TRUE,
-        pattern = strata,
+        pattern = combined_pattern,
         ignore.case = TRUE
       )
+
+    not_present_vars <- setdiff(
+      x = strata,
+      y = present_vars
+    )
 
     cli::cli_abort(
       class = "missing_var",
       message = c(
-        "Can't find the column {.arg {strata}} in {.arg pop_data}.",
-        if (length(strata_var) > 0) {
-          "i" <- "Did you mean {.var {strata_var}}."
+        "x" = "Can't stratify with the provided strata.",
+        "i" = "The {.arg strata} option{?s} {.arg {not_present_vars}} {?is/are} missing in {.arg pop_data}.",
+        if (length(present_vars) > 0) {
+          "i" <- "Did you mean {.var {present_vars}}?"
         }
       )
     )

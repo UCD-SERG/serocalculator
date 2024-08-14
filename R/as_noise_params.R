@@ -15,12 +15,24 @@
 #' print(noise_data)
 #'
 as_noise_params <- function(data, antigen_isos = NULL) {
+  if (!is.data.frame(data)) {
+    cli::cli_abort(
+      class = "not data.frame",
+      message = c(
+        "Can't convert {.arg data} to {.cls noise_params}.",
+        "x" = "{.arg data} must be a {.cls data.frame}
+        (or a subclass of {.cls data.frame}).",
+        "i" = "You have supplied a {.cls {class(data)}}."
+      )
+    )
+  }
+
   noise_data <-
     data %>%
     tibble::as_tibble()
 
   # define noise columns
-  noise_cols <- c("antigen_iso", "Country", "y.low", "eps", "nu", "y.high")
+  noise_cols <- c("antigen_iso", "y.low", "eps", "nu", "y.high")
 
   # get columns from provided data
   data_cols <- data %>% names()
@@ -32,8 +44,8 @@ as_noise_params <- function(data, antigen_isos = NULL) {
     cli::cli_abort(
       class = "not noise_params",
       message = c(
-        "Can't convert {.arg data} to noise_params.",
-        "i" = "The column(s):{.strong {.var {missing_cols}}} are missing.",
+        "Can't convert {.arg data} to {.cls noise_params}.",
+        "i" = "The column{?s}: {.strong {.var {missing_cols}}} {?is/are} missing.",
         "x" = "You have supplied {.cls {class(data)}}."
       )
     )
@@ -47,9 +59,17 @@ as_noise_params <- function(data, antigen_isos = NULL) {
   if (is.null(antigen_isos)) {
     antigen_isos <- unique(noise_data$antigen_iso)
   } else {
-    stopifnot(all(
+    if (!all(
       is.element(antigen_isos, noise_data$antigen_iso)
-    ))
+    )) {
+      cli::cli_abort(
+        class = "missing_antigen",
+        message = c(
+          "x" = "Can't convert {.envvar noise_data} to {.cls noise_params}.",
+          "i" = ""
+        )
+      )
+    }
   }
 
   # assign antigen attribute

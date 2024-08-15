@@ -2,7 +2,7 @@
 % Please edit documentation in R/f_dev.r
 \name{fdev}
 \alias{fdev}
-\title{Calculate negative log-likelihood (deviance) for one antigen-isotype}
+\title{Calculate negative log-likelihood (deviance)}
 \usage{
 fdev(lambda, csdata, lnpars, cond)
 }

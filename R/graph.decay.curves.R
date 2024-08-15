@@ -14,7 +14,6 @@
 #' @inheritParams ggplot2::geom_function
 #' @inheritDotParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
-#' @export
 #' @details
 #' ## `n_curves` and `rows_to_graph`
 #' In most cases, `curve_params` will contain too many rows of MCMC samples for all of these samples to be plotted at once.

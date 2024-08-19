@@ -4,13 +4,13 @@
 * Published to CRAN
 
 ## serocalculator 1.0.2
-* Updated documentation and functionality based on CRAN resubmission
+* Updated documentation and functionality based on CRAN re-submission
 * Deleted get_additional_data.R as it is no longer used
 
 # serocalculator (development versions)
 
 ## serocalculator 1.0.3.9000
-* Reconciled CRAN version 1.0.3 with Github main branch (version)
+* Reconciled CRAN version 1.0.3 with GitHub main branch (version)
 
 ## serocalculator 1.2.0
 * Added `test-summary.pop_data` test

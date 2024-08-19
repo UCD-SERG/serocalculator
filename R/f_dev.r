@@ -7,8 +7,7 @@
 #' consistent API.
 #' @keywords internal
 #' @export
-fdev <- function(lambda, csdata, lnpars, cond)
-{
+fdev <- function(lambda, csdata, lnpars, cond) {
   lifecycle::deprecate_warn("1.0.0", "fdev()", "f_dev()")
   f_dev(lambda, csdata, lnpars, cond)
 }

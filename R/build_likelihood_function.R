@@ -10,7 +10,7 @@ build_likelihood_function <- function(
     # add terms, e.g. for other antibodies
     for (cur_antigen in antigen_isos)
     {
-      res = res +
+      res <- res +
         f_dev(
           lambda = lambda,
           csdata = cross_sectional_data[[cur_antigen]],

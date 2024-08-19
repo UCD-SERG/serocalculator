@@ -79,7 +79,7 @@ graph.loglik <- function(
       )
     )
 
-  if(is.null(previous_plot))
+  if (is.null(previous_plot))
   {
     plot1 <- plot_data %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +

@@ -16,6 +16,7 @@
 #' * `renew.params = TRUE` generates a new parameter set for each infection
 #' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
 #' @param add.noise a [logical()] indicating whether to add biological and measurement noise
+#' @inheritDotParams simcs.tinf
 #' @inheritParams log_likelihood
 
 #' @param noise_limits biologic noise distribution parameters

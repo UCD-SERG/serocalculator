@@ -36,7 +36,7 @@
 #'
 #' autoplot(est2sum, "catchment")
 #' }
-autoplot.summary.seroincidence.by = function(
+autoplot.summary.seroincidence.by <- function(
     object,
     xvar,
     alpha = .7,

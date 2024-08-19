@@ -6,7 +6,7 @@
 
 #' @return the negative log-likelihood of the data with the current parameter values
 #' @keywords internal
-.nll = function(log.lambda, ...)
+.nll <- function(log.lambda, ...)
 {
   -log_likelihood(lambda = exp(log.lambda),...)
 

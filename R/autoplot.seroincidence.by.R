@@ -34,7 +34,7 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est2)
 #' }
-autoplot.seroincidence.by = function(
+autoplot.seroincidence.by <- function(
     object,
     ncol = min(3, length(object)),
     ...) {

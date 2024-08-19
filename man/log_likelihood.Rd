@@ -25,7 +25,7 @@ log_likelihood(
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
-\item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
 \item \code{y1}: antibody peak level (ELISA units)
 \item \code{t1}: duration of infection
 \item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
@@ -55,8 +55,8 @@ Calculates the log-likelihood of a set of cross-sectional antibody response data
 library(dplyr)
 library(tibble)
 
-#load in longitudinal parameters
-dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+# load in longitudinal parameters
+dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
  \donttest{
 xs_data <- "https://osf.io/download//n6cp3/" \%>\%
   load_pop_data()
@@ -71,11 +71,12 @@ cond <- tibble(
 ) # high cutoff (y.high)
 
 #Calculate log-likelihood
-  ll_AG = log_likelihood(
+  ll_AG <- log_likelihood(
   pop_data = xs_data,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-  lambda = 0.1) \%>\% print()
+  lambda = 0.1
+  ) \%>\% print()
 }
 }

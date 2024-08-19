@@ -21,9 +21,9 @@
 #'    * 5: maximum step size `stepmax` exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or `stepmax` is too small.
 #' @export
 #' @examples
-#'
-#' library(dplyr)
 #' \donttest{
+#' library(dplyr)
+#'
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #' curves <- load_curve_params("https://osf.io/download/rtw5k/") %>%

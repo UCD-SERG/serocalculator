@@ -16,7 +16,7 @@ The API for this package includes the following functions:\tabular{ll}{
    \code{\link[=autoplot.pop_data]{autoplot.pop_data()}} \tab graphs of antibody data distributions \cr
    \code{\link[=load_curve_params]{load_curve_params()}} \tab loading antibody decay curve models \cr
    \code{\link[=autoplot.curve_params]{autoplot.curve_params()}} \tab graphing antibody decay curves \cr
-   \code{\link[=log_likelihood]{log_likelihood()}} \tab computing log-likelihoods \cr
+   \code{\link[=llik]{llik()}} \tab computing log-likelihoods \cr
    \code{\link[=graph.loglik]{graph.loglik()}} \tab graphing log-likelihood functions \cr
    \code{\link[=autoplot.seroincidence]{autoplot.seroincidence()}} \tab graphing log-likelihood functions \cr
    \code{\link[=autoplot.seroincidence.by]{autoplot.seroincidence.by()}} \tab graphing log-likelihood functions \cr

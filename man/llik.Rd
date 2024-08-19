@@ -15,6 +15,8 @@ llik(
 )
 }
 \description{
+Calculates the log-likelihood of a set of cross-sectional antibody response data,
+for a given incidence rate (\code{lambda}) value.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{llik()} was renamed to \code{\link[=log_likelihood]{log_likelihood()}} to create a more

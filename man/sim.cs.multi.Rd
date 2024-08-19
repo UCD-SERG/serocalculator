@@ -57,7 +57,7 @@ sim.cs.multi(
 \itemize{
 \item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
-\item \code{y0}: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
 \item \code{y1}: antibody peak level (ELISA units)
 \item \code{t1}: duration of infection
 \item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)

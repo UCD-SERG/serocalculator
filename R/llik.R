@@ -1,5 +1,7 @@
 #' Calculate log-likelihood
 #' @description
+#' Calculates the log-likelihood of a set of cross-sectional antibody response data,
+#' for a given incidence rate (`lambda`) value.
 #' `r lifecycle::badge("deprecated")`
 #'
 #' `llik()` was renamed to [log_likelihood()] to create a more
@@ -34,7 +36,7 @@ llik <- function(
 #' @param curve_params a [data.frame()] containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 #' - `antigen_iso`: a [character()] vector indicating antigen-isotype combinations
 #' - `iter`: an [integer()] vector indicating MCMC sampling iterations
-#' - `y0`: baseline antibody level at \eqn{t=0} (\eqn{y(t=0)})
+#' - `y0`: baseline antibody level at $t=0$ ($y(t=0)$)
 #' - `y1`: antibody peak level (ELISA units)
 #' - `t1`: duration of infection
 #' - `alpha`: antibody decay rate (1/days for the current longitudinal parameter sets)
@@ -54,8 +56,8 @@ llik <- function(
 #' library(dplyr)
 #' library(tibble)
 #'
-#' #load in longitudinal parameters
-#' dmcmc = load_curve_params("https://osf.io/download/rtw5k")
+#' # load in longitudinal parameters
+#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'  \donttest{
 #' xs_data <- "https://osf.io/download//n6cp3/" %>%
 #'   load_pop_data()
@@ -70,12 +72,13 @@ llik <- function(
 #' ) # high cutoff (y.high)
 #'
 #' #Calculate log-likelihood
-#'   ll_AG = log_likelihood(
+#'   ll_AG <- log_likelihood(
 #'   pop_data = xs_data,
 #'   curve_params = dmcmc,
 #'   noise_params = cond,
 #'   antigen_isos = c("HlyE_IgG","HlyE_IgA"),
-#'   lambda = 0.1) %>% print()
+#'   lambda = 0.1
+#'   ) %>% print()
 #' }
 log_likelihood <- function(
     lambda,

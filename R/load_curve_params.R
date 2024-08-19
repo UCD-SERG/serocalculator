@@ -10,14 +10,11 @@
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/")
 #'
 #' print(curve)
-#'}
+#' }
 #'
-load_curve_params = function(file_path, antigen_isos = NULL)
-{
-  if(file_path %>% substr(1,4) == "http")
-  {
+load_curve_params <- function(file_path, antigen_isos = NULL){
+  if(file_path %>% substr(1,4) == "http"){
     file_path = url(file_path)
-
   }
 
   curve_params <-

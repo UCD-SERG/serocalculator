@@ -22,7 +22,7 @@
 #'
 #' curve
 #'}
-autoplot.curve_params = function(
+autoplot.curve_params <- function(
     object,
     antigen_isos = unique(object$antigen_iso),
     ncol = min(3, length(antigen_isos)),

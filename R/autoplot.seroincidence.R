@@ -30,10 +30,12 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est1)
 #' }
-autoplot.seroincidence =
-  function(object, log_x = FALSE, ...)
-{
-  to_return = attr(object, "ll_graph")
+autoplot.seroincidence <-function(
+    object,
+    log_x = FALSE,
+    ...)
+  {
+    to_return = attr(object, "ll_graph")
 
     if (is.null(to_return)) {
       stop(
@@ -45,9 +47,7 @@ autoplot.seroincidence =
 
     if (log_x) {
       to_return <- to_return +
-        ggplot2::scale_x_log10(
-          labels = scales::label_comma()
-        ) +
+        ggplot2::scale_x_log10(labels = scales::label_comma()) +
         ggplot2::theme_linedraw()
     }
 

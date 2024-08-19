@@ -35,7 +35,7 @@
 #'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
-#' # estimate seroincidence#'
+#' # estimate seroincidence'
 #' est2 <- est.incidence.by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data %>% filter(Country == "Pakistan"),

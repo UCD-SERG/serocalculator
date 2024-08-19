@@ -44,7 +44,7 @@
 #'
 #' lik_HlyE_IgA
 #' }
-graph.loglik = function(
+graph.loglik <- function(
     pop_data,
     curve_params,
     noise_params,
@@ -81,7 +81,7 @@ graph.loglik = function(
 
   if(is.null(previous_plot))
   {
-    plot1 = plot_data %>%
+    plot1 <- plot_data %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
       # ggplot2::geom_point() +
       ggplot2::geom_line(aes(color = curve_label)) +

@@ -20,14 +20,8 @@
 #' * Setting the  `n_curves` argument to a value smaller than the number of rows in `curve_params` will cause this function to select the first `n_curves` rows to graph.
 #' * Setting `n_curves` larger than the number of rows in ` will result all curves being plotted.
 #' * If the user directly specifies the `rows_to_graph` argument, then `n_curves` has no effect.
-#' @examples
-#' library(dplyr) # loads the `%>%` operator and `dplyr::filter()`
-#' \donttest{
-#' load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   dplyr::filter(antigen_iso == "HlyE_IgG") %>%
-#'   serocalculator::plot_curve_params_one_ab()
-#' }
-plot_curve_params_one_ab = function(
+
+plot_curve_params_one_ab <- function(
     object,
     verbose = FALSE,
     alpha = .4,
@@ -100,13 +94,3 @@ plot_curve_params_one_ab = function(
   return(plot1)
 }
 
-
-# ggplot() +
-#   geom_line(data = serocourse.all, aes(x= t, y = res, group = iter)) +
-#   facet_wrap(~antigen_iso, ncol=2) +
-#   scale_y_log10(limits = c(0.9, 2000), breaks = c(1, 10, 100, 1000), minor_breaks = NULL) +
-#   theme_minimal()  +
-#   theme(axis.line=element_line()) +
-#   labs(x="Days since fever onset", y="ELISA units")
-
-# mcmc %>% ungroup() %>% slice_head(by = antigen_iso, n = 10) %>% droplevels() %>% plot_curve_params_one_ab(alpha  = .4) %>% print()

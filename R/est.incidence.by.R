@@ -102,31 +102,54 @@ est.incidence.by <- function(
   }
 
   if (!all(is.element(strata, pop_data %>% names()))) {
-    # accommodate multiple strata
-    combined_pattern <- paste(strata, collapse = "|")
 
-    # search strata variable from pop_data
-    present_vars <-
+    # find strata with full match
+    present_vars <- purrr::map(.x = strata, .f = function(pattern) {
       grep(
         x = pop_data %>% names(),
         value = TRUE,
-        pattern = combined_pattern,
+        pattern = paste0("^", pattern, "$"),
         ignore.case = TRUE
       )
+    }) %>%
+      purrr::keep(~ length(.x) > 0) %>%
+      unlist()
 
-    not_present_vars <- setdiff(
-      x = strata,
-      y = present_vars
-    )
+     # find strata with partial matches
+    present_partial_vars <- purrr::keep(strata,
+       function(pattern) {
+       length(
+         grep(
+           pattern,
+           pop_data %>% names(),
+           ignore.case = TRUE)) > 0
+     }) %>%
+     setdiff(y = present_vars)
+
+    # get partial matches
+    partial_match <- purrr::map(.x = present_partial_vars, .f = function(pattern) {
+      grep(
+        x = pop_data %>% names(),
+        value = TRUE,
+        pattern = pattern,
+        ignore.case = TRUE
+      )
+    }) %>%
+      purrr::keep(~ length(.x) > 0) %>%
+      unlist()
+
+    # strata with no match
+    no_match_vars <- strata %>%
+      setdiff(pop_data %>% names()) %>%
+      setdiff(present_partial_vars)
 
     cli::cli_abort(
       class = "missing_var",
       message = c(
         "x" = "Can't stratify with the provided strata.",
-        "i" = "The {.arg strata} option{?s} {.arg {not_present_vars}} {?is/are} missing in {.arg pop_data}.",
-        if (length(present_vars) > 0) {
-          "i" <- "Did you mean {.var {present_vars}}?"
-        }
+        "i" = "The {.var {no_match_vars}} option for `strata` are missing in {.arg pop_data}.",
+        "i" = "The {.var {present_partial_vars}} option for `strata` are likely misspelled.",
+        "i" = "Did you mean {.var {partial_match}}?"
       )
     )
   }

@@ -29,7 +29,8 @@ Imports:
     tidyr,
     utils,
     tidyselect,
-    cli
+    cli,
+    readr
 Suggests:
     parallel,
     knitr,
@@ -37,7 +38,6 @@ Suggests:
     tidyverse,
     fs,
     testthat (>= 3.0.0),
-    readr,
     bookdown,
     ggbeeswarm,
     DT,

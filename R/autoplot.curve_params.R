@@ -11,14 +11,17 @@
 #' @export
 #' @examples
 #' \donttest{
+#'
 #' library(dplyr)
 #' library(ggplot2)
 #' library(magrittr)
 #'
-#' curve = load_curve_params("https://osf.io/download/rtw5k/") %>%
+#' curve =
+#'   readr::read_rds("https://osf.io/download/rtw5k/") %>%
+#'   as_curve_params() %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by = antigen_iso)  %>% # Reduce dataset for the purposes of this example
-#'   autoplot()
+#'   slice(1:20, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#' curve %>% autoplot()
 #'
 #' curve
 #'}

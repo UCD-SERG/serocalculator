@@ -13,9 +13,7 @@
 #'
 #' print(curve_data)
 as_curve_params <- function(data, antigen_isos = NULL) {
-
-  if(!is.data.frame(data))
-  {
+  if (!is.data.frame(data)) {
     cli::cli_abort(
       class = "not data.frame",
       message = c(

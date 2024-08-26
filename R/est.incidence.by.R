@@ -147,9 +147,11 @@ est.incidence.by <- function(
       class = "missing_var",
       message = c(
         "x" = "Can't stratify with the provided strata.",
-        "i" = "The {.var {no_match_vars}} option for `strata` are missing in {.arg pop_data}.",
-        "i" = "The {.var {present_partial_vars}} option for `strata` are likely misspelled.",
-        "i" = "Did you mean {.var {partial_match}}?"
+        "i" = "The {.var {no_match_vars}} option{?s} for `strata` {?is/are} missing in {.arg pop_data}.",
+        if(length(present_partial_vars) > 0){
+          c( "i" = "The {.var {present_partial_vars}} option for `strata` {?is/are} likely misspelled.",
+             "i" = "Did you mean {.var {partial_match}}?")
+        }
       )
     )
   }

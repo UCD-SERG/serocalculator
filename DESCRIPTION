@@ -32,7 +32,8 @@ Imports:
     utils,
     tidyselect,
     cli,
-    purrr
+    purrr,
+    testthat
 Suggests:
     parallel,
     knitr,

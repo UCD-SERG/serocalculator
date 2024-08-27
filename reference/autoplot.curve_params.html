@@ -141,73 +141,9 @@
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, .by <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Reduce dataset for the purposes of this example</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot open URL 'https://osf.io/download/rtw5k/': HTTP status was '500 Internal Server Error'</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in readRDS(.):</span> cannot open the connection to 'https://osf.io/download/rtw5k/'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">curve</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (expr, from = NULL, to = NULL, n = 101, add = FALSE, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     type = "l", xname = "x", xlab = xname, ylab = NULL, log = NULL, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     xlim = NULL, ...) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     sexpr &lt;- substitute(expr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (is.name(sexpr)) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         expr &lt;- call(as.character(sexpr), as.name(xname))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         if (!((is.call(sexpr) || is.expression(sexpr)) &amp;&amp; xname %in% </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             all.vars(sexpr))) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             stop(gettextf("'expr' must be a function, or a call or an expression containing '%s'", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 xname), domain = NA)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         expr &lt;- sexpr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (dev.cur() == 1L &amp;&amp; !isFALSE(add)) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         warning("'add' will be ignored as there is no existing plot")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         add &lt;- FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     addF &lt;- isFALSE(add)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (is.null(ylab)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ylab &lt;- deparse(expr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (is.null(from) || is.null(to)) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         xl &lt;- xlim %||% if (!addF) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             pu &lt;- par("usr")[1L:2L]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             if (par("xaxs") == "r") </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 pu &lt;- extendrange(pu, f = -1/27)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             if (par("xlog")) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 10^pu</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             else pu</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         else c(0, 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(from)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             from &lt;- xl[1L]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(to)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             to &lt;- xl[2L]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     lg &lt;- if (length(log)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         log</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!addF &amp;&amp; par("xlog")) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "x"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (length(lg) == 0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         lg &lt;- ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (grepl("x", lg, fixed = TRUE)) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         if (from &lt;= 0 || to &lt;= 0) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             stop("'from' and 'to' must be &gt; 0 with log=\"x\"")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         x &lt;- exp(seq.int(log(from), log(to), length.out = n))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else x &lt;- seq.int(from, to, length.out = n)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ll &lt;- list(x = x)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     names(ll) &lt;- xname</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     y &lt;- eval(expr, envir = ll, enclos = parent.frame())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (length(y) != length(x)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("'expr' did not evaluate to an object of length 'n'")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     if (isTRUE(add)) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         lines(x = x, y = y, type = type, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else plot(x = x, y = y, type = type, xlab = xlab, ylab = ylab, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         xlim = xlim, log = lg, ...)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     invisible(list(x = x, y = y))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x560650fd0848&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:graphics&gt;</span>
+<span class="r-plt img"><img src="autoplot.curve_params-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

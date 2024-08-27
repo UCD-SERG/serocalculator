@@ -101,54 +101,38 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  if (!all(is.element(strata, pop_data %>% names()))) {
+  present_strata_vars = intersect(strata, names(pop_data))
+  missing_strata_vars = setdiff(strata, present_strata_vars)
 
-    # find strata with full match
-    present_vars <- purrr::map(.x = strata, .f = function(pattern) {
-      grep(
-        x = pop_data %>% names(),
-        value = TRUE,
-        pattern = paste0("^", pattern, "$"),
-        ignore.case = TRUE
-      )
-    }) %>%
-      purrr::keep(~ length(.x) > 0) %>%
-      unlist()
+  if (length(missing_strata_vars) > 0) {
 
-     # find strata with partial matches
-    present_partial_vars <- purrr::keep(strata,
-       function(pattern) {
-       length(
-         grep(
-           pattern,
-           pop_data %>% names(),
-           ignore.case = TRUE)) > 0
-     }) %>%
-     setdiff(y = present_vars)
-
-    # get partial matches
-    partial_match <- purrr::map(.x = present_partial_vars, .f = function(pattern) {
-      grep(
-        x = pop_data %>% names(),
-        value = TRUE,
-        pattern = pattern,
-        ignore.case = TRUE
-      )
-    }) %>%
-      purrr::keep(~ length(.x) > 0) %>%
-      unlist()
+    partial_matches =
+      purrr::map(
+        missing_strata_vars,
+        function(x)
+          stringr::str_subset(
+            string = names(pop_data),
+            pattern = x
+          )
+      ) %>%
+      setNames(missing_strata_vars) %>%
+      purrr::keep(~ length(.x) > 0)g
 
     # strata with no match
-    no_match_vars <- strata %>%
-      setdiff(pop_data %>% names()) %>%
-      setdiff(present_partial_vars)
+    no_match_vars <- missing_strata_vars %>%
+      setdiff(names(partial_matches))
+
+    possible_matches_strings = names(partial_matches) %>% sapply(
+      F = function(x)
+        glue::glue("{x}: {partial_matches[[x]] %>% and::or()}")
+    )
 
     cli::cli_abort(
       class = "missing_var",
       message = c(
-        "x" = "Can't stratify with the provided strata.",
-        "i" = "The {.var {no_match_vars}} option{?s} for `strata` {?is/are} missing in {.arg pop_data}.",
-        if(length(present_partial_vars) > 0){
+        "x" = "Can't stratify with the provided {.arg strata}.",
+        "i" = "{.var {missing_strata_vars}} {?is/are} missing in {.arg pop_data}.",
+        if(length(partial_matches) > 0){
           c( "i" = "The {.var {present_partial_vars}} option for `strata` {?is/are} likely misspelled.",
              "i" = "Did you mean {.var {partial_match}}?")
         }

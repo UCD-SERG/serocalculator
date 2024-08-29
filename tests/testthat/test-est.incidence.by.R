@@ -39,7 +39,7 @@ test_that("est.incidence.by() aborts when multiple elements that don't exactly m
 
   expect_error(
     object = est.incidence.by(
-      strata = c("catch","Count"),
+      strata = c("ag", "catch","Count"),
       pop_data = xs_data %>% filter(Country == "Pakistan"),
       curve_params = curve,
       noise_params = noise %>% filter(Country == "Pakistan"),

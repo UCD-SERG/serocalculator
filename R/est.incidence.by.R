@@ -1,5 +1,4 @@
 #' Estimate Seroincidence
-#'
 #' @description
 #' Function to estimate seroincidences based on cross-section serology data and longitudinal
 #' response model.

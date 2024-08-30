@@ -62,14 +62,15 @@ as_noise_params <- function(data, antigen_isos = NULL) {
     if (!all(
       is.element(antigen_isos, noise_data$antigen_iso)
     )) {
-
-      missing_antigen <- setdiff(antigen_isos,
-                                 unique(noise_data$antigen_iso))
+      missing_antigen <- setdiff(
+        antigen_isos,
+        unique(noise_data$antigen_iso)
+      )
       cli::cli_abort(
         class = "missing_antigen",
         message = c(
           "x" = "Can't convert {.var data} to {.cls noise_params}.",
-          "i" = "The antigen type{?s} {missing_antigen} {?is/are} missing in {.var data}"
+          "i" = "The antigen type{?s} {.str {missing_antigen}} {?is/are} missing in {.var data}"
         )
       )
     }

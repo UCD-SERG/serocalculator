@@ -31,6 +31,14 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
+
+  if(!is.element(strata, names(object))){
+    cli::cli_abort(
+      class = "unavailable_strata",
+      message = c("x"="The option {.var {strata}} for argument {.arg strata} does not exist",
+                  "i" = "Provide a column that exist in {.envvar object}")
+    )
+  }
   if (type == "age-scatter") {
     age_scatter(object, strata)
   } else if (type == "density") {
@@ -39,7 +47,7 @@ autoplot.pop_data <- function(
     cli::cli_abort(
       class = "unavailable_type",
       message = c(
-        "Can't create plotting facets with the specified `type` = {.arg {type}}.",
+        "x"= "Can't create plotting facets with the specified `type` = {.arg {type}}.",
         "i" = "The `type` argument accepts 'density' or 'age-scatter' options."
       )
     )

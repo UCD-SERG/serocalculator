@@ -9,6 +9,7 @@
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
+
 <!-- badges: end -->
 
 Antibody levels measured in a cross–sectional population sample can be
@@ -29,11 +30,13 @@ Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html)
 
 ## Installing R
 
-The **serocalculator** package is written in R, a free, open-source
-software program. The end user of this package must have access to a
-working installation of the R software. We recommend installing [base
-R](https://cran.r-project.org/) and a Graphical User Interfaces (GUI)
-for R such as [RStudio](https://posit.co/products/open-source/rstudio/).
+The **serocalculator** package is designed for use in
+[R](https://www.r-project.org/), which is a free, open-source software
+environment for statistical computing and graphics. The end user of this
+package must have access to a working installation of the R software. We
+recommend installing [base R](https://cran.r-project.org/) and a
+Graphical User Interface (GUI) for R such as
+[RStudio](https://posit.co/products/open-source/rstudio/).
 
 If you need to download and install R and/or RStudio, we recommend
 following the tutorial below from *Hands On Programming in R* by Garrett
@@ -94,8 +97,11 @@ devtools::install_github("ucd-serg/serocalculator")
 Before launching the development version of **serocalculator**, Windows
 users will need to install Rtools, which contains a collection of tools
 for building and employing R packages that are still in development.
-This can be done either: (1) during the *devtools* package installation,
-**or** (2) independently if *devtools* is already installed.
+This can be done either: 
+
+(1) [during the *devtools* package
+installation](#during-devtools-installation), **or** 
+(2) [independently](#independently), if *devtools* is already installed.
 
 ##### During devtools installation
 
@@ -126,10 +132,21 @@ package](man/figures/Rtools1.png)
 
 ## Getting Help
 
-If you need assistance or encounter a clear bug, please file an issue
-with a minimal reproducible example on
+If you have questions about using this software package, please use the
+[Q&A
+forum](https://github.com/UCD-SERG/serocalculator/discussions/categories/q-a).
+
+If you encounter a clear bug, please file an issue with a [minimal
+reproducible example](https://reprex.tidyverse.org/) on
 [GitHub](https://github.com/UCD-SERG/serocalculator/issues).
 
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
 GitHub: https://epirhandbook.com/en/getting-help.html
+
+## Contributing to this project
+
+We welcome contributions to this project - anything from typo
+corrections to new features. Please see our [Contributor
+guide](https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html#fixing-typos)
+for more information.

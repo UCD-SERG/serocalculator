@@ -9,10 +9,12 @@ as_noise_params(data, antigen_isos = NULL)
 \arguments{
 \item{data}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
-\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
+\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes
+to be used in analyses}
 }
 \value{
-a \code{noise_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})
+a \code{noise_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with
+extra attribute \code{antigen_isos})
 }
 \description{
 Load noise parameters

@@ -1,9 +1,11 @@
 #' Load noise parameters
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
-#' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
+#' @param antigen_isos [character()] vector of antigen isotypes
+#' to be used in analyses
 #'
-#' @returns a `noise_params` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @returns a `noise_params` object (a [tibble::tbl_df] with
+#' extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' library(magrittr)
@@ -45,7 +47,8 @@ as_noise_params <- function(data, antigen_isos = NULL) {
       class = "not noise_params",
       message = c(
         "Can't convert {.arg data} to {.cls noise_params}.",
-        "i" = "The column{?s} : {.strong {.var {missing_cols}}} {?is/are} missing.",
+        "i" = "The column{?s} : {.strong {.var {missing_cols}}}
+        {?is/are} missing.",
         "x" = "You have supplied {.cls {class(data)}}."
       )
     )
@@ -67,10 +70,11 @@ as_noise_params <- function(data, antigen_isos = NULL) {
         unique(noise_data$antigen_iso)
       )
       cli::cli_abort(
-        class = "missing_antigen",
+        class = "missing-antigen",
         message = c(
           "x" = "Can't convert {.var data} to {.cls noise_params}.",
-          "i" = "The antigen type{?s} {.str {missing_antigen}} {?is/are} missing in {.var data}"
+          "i" = "The antigen type{?s} {.str {missing_antigen}}
+          {?is/are} missing in {.var data}"
         )
       )
     }

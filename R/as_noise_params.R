@@ -22,65 +22,55 @@ as_noise_params <- function(data, antigen_isos = NULL) {
       class = "not data.frame",
       message = c(
         "Can't convert {.arg data} to {.cls noise_params}.",
-        "x" = "{.arg data} must be a {.cls data.frame}
-        (or a subclass of {.cls data.frame}).",
+        "x" = "{.arg data} must be a {.cls data.frame}" %>%
+          "(or a subclass of {.cls data.frame}).",
         "i" = "You have supplied a {.cls {class(data)}}."
       )
     )
   }
 
-  noise_data <-
-    data %>%
-    tibble::as_tibble()
+  noise_data <- data %>% tibble::as_tibble()
 
-  # define noise columns
+  # Define noise columns
   noise_cols <- c("antigen_iso", "y.low", "eps", "nu", "y.high")
 
-  # get columns from provided data
-  data_cols <- data %>% names()
+  # Get any missing columns
+  missing_cols <- setdiff(x = noise_cols, y = names(data))
 
-  # get any missing column(s)
-  missing_cols <- setdiff(x = noise_cols, y = data_cols)
-
-  if (!all(is.element(noise_cols, noise_data %>% names()))) {
+  if (length(missing_cols) > 0) {
     cli::cli_abort(
       class = "not noise_params",
       message = c(
         "Can't convert {.arg data} to {.cls noise_params}.",
-        "i" = "The column{?s} : {.strong {.var {missing_cols}}}
-        {?is/are} missing.",
+        "i" = "The column{?s} : {.strong {.var {missing_cols}}}" %>%
+          "{?is/are} missing.",
         "x" = "You have supplied {.cls {class(data)}}."
       )
     )
   }
 
+  # Assign noise_params class
+  class(noise_data) <- c("noise_params", class(noise_data))
 
-  # assign curve class
-  class(noise_data) <-
-    c("noise_params", class(noise_data))
-
+  # Handle antigen_isos
   if (is.null(antigen_isos)) {
     antigen_isos <- unique(noise_data$antigen_iso)
   } else {
-    if (!all(
-      is.element(antigen_isos, noise_data$antigen_iso)
-    )) {
-      missing_antigen <- setdiff(
-        antigen_isos,
-        unique(noise_data$antigen_iso)
-      )
+    missing_antigen <- setdiff(antigen_isos, unique(noise_data$antigen_iso))
+
+    if (length(missing_antigen) > 0) {
       cli::cli_abort(
         class = "missing-antigen",
         message = c(
           "x" = "Can't convert {.var data} to {.cls noise_params}.",
-          "i" = "The antigen type{?s} {.str {missing_antigen}}
-          {?is/are} missing in {.var data}"
+          "i" = "The antigen type{?s} {.str {missing_antigen}}" %>%
+            "{?is/are} missing in {.var data}."
         )
       )
     }
   }
 
-  # assign antigen attribute
+  # Assign antigen attribute
   attr(noise_data, "antigen_isos") <- antigen_isos
 
   return(noise_data)

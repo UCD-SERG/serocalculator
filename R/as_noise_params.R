@@ -22,8 +22,9 @@ as_noise_params <- function(data, antigen_isos = NULL) {
       class = "not data.frame",
       message = c(
         "Can't convert {.arg data} to {.cls noise_params}.",
-        "x" = "{.arg data} must be a {.cls data.frame}" %>%
-          "(or a subclass of {.cls data.frame}).",
+        paste("x" = "{.arg data} must be a {.cls data.frame}",
+          "(or a subclass of {.cls data.frame})."
+        ),
         "i" = "You have supplied a {.cls {class(data)}}."
       )
     )
@@ -42,8 +43,9 @@ as_noise_params <- function(data, antigen_isos = NULL) {
       class = "not noise_params",
       message = c(
         "Can't convert {.arg data} to {.cls noise_params}.",
-        "i" = "The column{?s} : {.strong {.var {missing_cols}}}" %>%
-          "{?is/are} missing.",
+        "i" = paste("The column{?s} : {.strong {.var {missing_cols}}}",
+          "{?is/are} missing."
+        ),
         "x" = "You have supplied {.cls {class(data)}}."
       )
     )
@@ -63,8 +65,8 @@ as_noise_params <- function(data, antigen_isos = NULL) {
         class = "missing-antigen",
         message = c(
           "x" = "Can't convert {.var data} to {.cls noise_params}.",
-          "i" = "The antigen type{?s} {.str {missing_antigen}}" %>%
-            "{?is/are} missing in {.var data}."
+          "i" = paste("The antigen type{?s} {.str {missing_antigen}}",
+                      "{?is/are} missing in {.var data}.")
         )
       )
     }

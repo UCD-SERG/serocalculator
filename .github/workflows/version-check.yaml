@@ -4,7 +4,7 @@ on:
     branches:
       - main
 
-name: Version check
+name: Version increment check
 
 jobs:
   version-check:
@@ -51,8 +51,8 @@ jobs:
           Rscript -e " \
             install.packages('desc'); \
             working_version <- desc::desc_get_version('working/DESCRIPTION'); \
-            message('working version: ', working_version); \
+            message('PR branch version: ', working_version); \
             compare_version <- desc::desc_get_version('compare/DESCRIPTION'); \
-            message('compare version: ', compare_version); \
+            message('main branch version: ', compare_version); \
             stopifnot(working_version > compare_version); \
           "

@@ -60,7 +60,7 @@
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   #num_cores = 8 # Allow for parallel processing to decrease run time
+#'   # num_cores = 8 # Allow for parallel processing to decrease run time
 #'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
@@ -96,9 +96,9 @@ est.incidence.by <- function(
 
   strata_is_empty <-
     missing(strata) ||
-    is.null(strata) ||
-    setequal(strata, NA) ||
-    setequal(strata, "")
+      is.null(strata) ||
+      setequal(strata, NA) ||
+      setequal(strata, "")
 
   if (strata_is_empty) {
     to_return <-
@@ -179,7 +179,7 @@ est.incidence.by <- function(
       "when using load_all() in development"
       require(dplyr)
     })
-  {
+    {
       fits <- parallel::parLapplyLB(
         cl = cl,
         X = stratumDataList,
@@ -208,9 +208,8 @@ est.incidence.by <- function(
     }
   } else {
     fits <- list()
-
     { # time progress
-      for (cur_stratum in names(stratumDataList)){
+      for (cur_stratum in names(stratumDataList)) {
         cur_stratum_vars <-
           strata_table %>%
           dplyr::filter(.data$Stratum == cur_stratum)

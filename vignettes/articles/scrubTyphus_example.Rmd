@@ -123,7 +123,7 @@ Let's also take a look at how antibody responses change by age.
 
 ```{r "plot age"}
 # Plot antibody responses by age
-autoplot(object = xs_data, type = "age-scatter", strata = "Country")
+autoplot(object = xs_data, type = "age-scatter", strata = "country")
 ```
 
 

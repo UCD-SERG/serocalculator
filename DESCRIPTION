@@ -1,7 +1,11 @@
 Package: serocalculator
 Type: Package
 Title: Estimating Infection Rates from Serological Data
+<<<<<<< HEAD
 Version: 1.3.0
+=======
+Version: 1.2.0.9001
+>>>>>>> 00948ca81c61a7664c00793863a84628800dabd0
 Authors@R: c(
   person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
   person(given = "Kristina", family = "Lai", email = "kwlai@ucdavis.edu", role = c("aut", "cre")), 

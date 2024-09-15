@@ -4,9 +4,11 @@
 #'
 #' @param object A `pop_data` object (from [load_pop_data()])
 #' @param log whether to show antibody responses on logarithmic scale
-#' @param strata the name of a variable in `pop_data` to stratify by (or `NULL` for no stratification)
+#' @param strata the name of a variable in `pop_data`
+#' to stratify by (or `NULL` for no stratification)
 #' @param ... unused
-#' @param type an option to choose type of chart: the current options are `"density"` or `"age-scatter"`
+#' @param type an option to choose type of chart:
+#' the current options are `"density"` or `"age-scatter"`
 #'
 #' @return a [ggplot2::ggplot] object
 #'
@@ -31,12 +33,14 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
-
-  if(!is.element(strata, names(object))){
+  if (!is.element(strata, names(object))) {
     cli::cli_abort(
       class = "unavailable_strata",
-      message = c("x"="The option {.var {strata}} for argument {.arg strata} does not exist",
-                  "i" = "Provide a column that exist in {.envvar object}")
+      message = c(
+        "x" = paste0("The option {.var {strata}}",
+                     "for argument {.arg strata} does not exist"),
+        "i" = "Provide a column that exist in {.envvar object}"
+      )
     )
   }
   if (type == "age-scatter") {
@@ -47,7 +51,8 @@ autoplot.pop_data <- function(
     cli::cli_abort(
       class = "unavailable_type",
       message = c(
-        "x"= "Can't create plotting facets with the specified `type` = {.arg {type}}.",
+        "x" = paste0("Can't create plotting facets",
+                     " with the specified `type` = {.arg {type}}."),
         "i" = "The `type` argument accepts 'density' or 'age-scatter' options."
       )
     )
@@ -84,7 +89,7 @@ age_scatter <- function(
     ggplot2::theme_linedraw() +
     # ggplot2::scale_y_log10() +
 
-    # avoid log 0 (https://forum.posit.co/t/using-log-transformation-but-need-to-preserve-0/129197/4)
+    # avoid log 0 (https://bit.ly/4eqDkT4)
     ggplot2::scale_y_continuous(
       trans = scales::pseudo_log_trans(sigma = 0.01),
       breaks = c(-1, -0.1, 0, 0.1, 1, 10),

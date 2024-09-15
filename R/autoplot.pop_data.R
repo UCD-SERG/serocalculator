@@ -140,9 +140,11 @@ density_plot <- function(
   if (log) {
     min_nonzero_val <-
       object %>%
-      filter(object %>% get_value() > 0) %>%
+      filter(object %>%
+               get_value() > 0) %>%
       get_value() %>%
       min()
+
 
     max_val <-
       object %>%

@@ -45,15 +45,10 @@ knitr::opts_chunk$set(
 ### Load packages
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
-```{r setup, message=FALSE}
-# devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
-```
 
 ```{r load_packages}
 library(serocalculator)
-# install.packages("tidyverse")
 library(tidyverse)
-# install.packages("mixtools")
 library(mixtools)
 ```
 
@@ -155,12 +150,20 @@ b.noise <- xs_data %>%
   do({
     set.seed(54321)
     # Fit the mixture model
-    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
+    mixmod <- normalmixEM(.$value,
+      k = 2,
+      maxit = 1000
+    )
+    # k is the number of components, adjust as necessary
     # Assuming the first component is the lower distribution
     lower_mu <- mixmod$mu[1]
     lower_sigma <- sqrt(mixmod$sigma[1])
     # Calculate the 90th percentile of the lower distribution
-    percentile75 <- qnorm(0.75, lower_mu, lower_sigma)
+    percentile75 <- qnorm(
+      0.75,
+      lower_mu,
+      lower_sigma
+    )
     # Return the results
     data.frame(antigen_iso = .$antigen_iso[1], percentile75 = percentile75)
   })
@@ -241,7 +244,10 @@ est.comb <- rbind(estdf, est2df)
 
 # Create barplot (rescale incidence rate and CIs)
 ggplot(est.comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
+  geom_bar(
+    stat = "identity",
+    position = position_dodge2(width = 0.8, preserve = "single")
+  ) +
   geom_linerange(aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000),
     position = position_dodge2(width = 0.8, preserve = "single")
   ) +

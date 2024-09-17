@@ -27,9 +27,10 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     )
   }
 
-  curve_data <- data %>% tibble::as_tibble()
+  curve_data <-
+    data %>% tibble::as_tibble()
 
-  # Define curve columns
+  # define curve columns
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
   # Check if object is a curve (with columns)

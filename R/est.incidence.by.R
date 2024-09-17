@@ -60,7 +60,7 @@
 #'   curve_params = curve,
 #'   noise_params = noise %>% filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   # num_cores = 8 # Allow for parallel processing to decrease run time
+#'   #num_cores = 8 # Allow for parallel processing to decrease run time
 #'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
@@ -102,16 +102,17 @@ est.incidence.by <- function(
     setequal(strata, "")
 
   if (strata_is_empty) {
-    to_return <- est.incidence(
-      pop_data = pop_data,
-      curve_params = curve_params,
-      noise_params = noise_params,
-      lambda_start = lambda_start,
-      antigen_isos = antigen_isos,
-      build_graph = build_graph,
-      verbose = verbose,
-      ...
-    )
+    to_return <-
+      est.incidence(
+        pop_data = pop_data,
+        curve_params = curve_params,
+        noise_params = noise_params,
+        lambda_start = lambda_start,
+        antigen_isos = antigen_isos,
+        build_graph = build_graph,
+        verbose = verbose,
+        ...
+      )
     return(to_return)
   }
 

@@ -28,7 +28,8 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   }
 
   curve_data <-
-    data %>% tibble::as_tibble()
+    data %>%
+    tibble::as_tibble()
 
   # define curve columns
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
@@ -39,14 +40,15 @@ as_curve_params <- function(data, antigen_isos = NULL) {
       class = "not curve_params",
       message = c(
         "Can't convert {.arg data} to {.cls curve_params}.",
-        "x" = "The column{?s}: {.strong {.var " %>%
-          "{setdiff(curve_cols, names(data))}}} are missing."
+        "x" = paste0("The column{?s}: {.strong {.var ",
+          "{setdiff(curve_cols, names(data))}}} are missing.")
       )
     )
   }
 
   # Assign curve_params class
-  class(curve_data) <- c("curve_params", class(curve_data))
+  class(curve_data) <-
+    c("curve_params", class(curve_data))
 
   # Handle antigen_isos
   if (is.null(antigen_isos)) {
@@ -55,7 +57,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     stopifnot(all(is.element(antigen_isos, curve_data$antigen_iso)))
   }
 
-  # Assign antigen attribute
+  # assign antigen attribute
   attr(curve_data, "antigen_isos") <- antigen_isos
 
   return(curve_data)

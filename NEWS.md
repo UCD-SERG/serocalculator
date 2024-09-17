@@ -1,4 +1,7 @@
-# serocalculator (development version)
+# serocalculator 1.3.0
+* Add test for `est.incidence` 
+
+* Add option to test `strata` in `pop_data`
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

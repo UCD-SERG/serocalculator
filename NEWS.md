@@ -1,6 +1,8 @@
 # serocalculator 1.3.0
 
-* add `as_noise_params`
+* Add `as_noise_params`
+
+* Added test for `as_curve_params`
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

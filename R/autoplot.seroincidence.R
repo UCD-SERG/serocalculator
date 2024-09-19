@@ -30,7 +30,7 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est1)
 #' }
-autoplot.seroincidence <-function(
+autoplot.seroincidence <- function(
     object,
     log_x = FALSE,
     ...)

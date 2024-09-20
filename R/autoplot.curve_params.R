@@ -36,7 +36,7 @@ autoplot.curve_params <- function(
   figs <- split_data %>%
     lapply(FUN = plot_curve_params_one_ab, ...)
 
-  for (i in 1:length(figs))
+  for (i in seq_along(figs))
   {
     figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }

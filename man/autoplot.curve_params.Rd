@@ -14,7 +14,7 @@
 \arguments{
 \item{object}{a \code{\link[=data.frame]{data.frame()}} of curve parameters (one or more MCMC samples)}
 
-\item{antigen_isos}{antigen isotypes to analyze (can be used to subset \code{curve_params})}
+\item{antigen_isos}{antigen isotypes to analyze (can subset \code{curve_params})}
 
 \item{ncol}{how many columns of subfigures to use in panel plot}
 
@@ -44,7 +44,15 @@ graph antibody decay curves by antigen isotype
 \details{
 \subsection{\code{rows_to_graph}}{
 
-Note that if you directly specify \code{rows_to_graph} when calling this function, the row numbers are enumerated separately for each antigen isotype; in other words, for the purposes of this argument, row numbers start over at 1 for each antigen isotype. There is currently no way to specify different row numbers for different antigen isotypes; if you want to do that, you will could call \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab()}} directly for each antigen isotype and combine the resulting panels yourself. Or you could subset \code{curve_params} manually, before passing it to this function, and set the \code{n_curves} argument to \code{Inf}.
+Note that if you directly specify \code{rows_to_graph} when calling this function,
+the row numbers are enumerated separately for each antigen isotype;
+in other words, for the purposes of this argument,
+row numbers start over at 1 for each antigen isotype. There is currently
+no way to specify different row numbers for different antigen isotypes;
+if you want to do that, you could call \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab()}}
+directly for each antigen isotype and combine the resulting panels yourself.
+Or you could subset \code{curve_params} manually, before passing it to this
+function, and set the \code{n_curves} argument to \code{Inf}.
 }
 }
 \examples{

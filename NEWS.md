@@ -9,8 +9,8 @@
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:
-  - check for change log (`NEWS.md`)
-  - lint changed files
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

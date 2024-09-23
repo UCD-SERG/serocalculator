@@ -1,5 +1,5 @@
 # serocalculator (development version)
-* Added additional automated checks through Github actions, including:
+* Added additional automated checks through GitHub actions, including:
   - change log (`NEWS.md`)
   - lint changed files
 

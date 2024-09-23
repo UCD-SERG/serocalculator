@@ -35,7 +35,8 @@ test_that("est.incidence.by() aborts when strata is missing in `pop_data`", {
   )
 })
 
-test_that("est.incidence.by() aborts when multiple elements that don't exactly match the columns of `pop_data` are provided", {
+test_that("est.incidence.by() aborts when multiple elements that don't exactly
+          match the columns of `pop_data` are provided", {
 
   expect_error(
     object = est.incidence.by(

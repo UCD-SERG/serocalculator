@@ -1,4 +1,11 @@
 # serocalculator (development version)
+
+## New features
+
+(to be added by future PRs)
+
+## Developer-facing changes
+
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:

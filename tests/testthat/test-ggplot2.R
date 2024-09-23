@@ -1,3 +1,4 @@
 test_that("consistent theme", {
-  expect_snapshot(theme_get())
+  ggplot2::theme_get() |>
+  expect_snapshot()
 })

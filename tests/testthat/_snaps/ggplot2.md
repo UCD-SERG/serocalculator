@@ -1,7 +1,7 @@
 # consistent theme
 
     Code
-      theme_get()
+      ggplot2::theme_get()
     Output
       List of 136
        $ line                            :List of 6

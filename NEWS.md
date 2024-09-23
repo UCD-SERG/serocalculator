@@ -1,4 +1,7 @@
 # serocalculator (development version)
+* Added additional automated checks through Github actions, including:
+  - change log (`NEWS.md`)
+  - lint changed files
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

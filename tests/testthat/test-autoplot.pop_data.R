@@ -42,7 +42,7 @@ test_that("`autoplot.pop_data()` produces stable results for `type = 'density'`"
                 width = 8,
                 height = 8
               ) %>%
-              expect_snapshot_file(name = "autoplot.pop_data.density.svg")
+              expect_snapshot_file(name = "autoplot.pop_data_density.svg")
           })
 
 test_that("`autoplot.pop_data()` produces stable results for
@@ -62,7 +62,7 @@ test_that("`autoplot.pop_data()` produces stable results for
                 width = 8,
                 height = 8
               ) %>%
-              expect_snapshot_file(name = "autoplot_pop_data_age_scatter-strat_country.svg")
+              expect_snapshot_file(name = "autoplot_pop_data_age_scatter_strat_country.svg")
           })
 
 test_that("`autoplot.pop_data()` produces stable results
@@ -82,5 +82,5 @@ test_that("`autoplot.pop_data()` produces stable results
                 width = 8,
                 height = 8
               ) %>%
-              expect_snapshot_file(name = "autoplot_pop_data_age_scatter-no_strat.svg")
+              expect_snapshot_file(name = "autoplot_pop_data_age_scatter_no_strat.svg")
           })

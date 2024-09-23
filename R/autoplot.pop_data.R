@@ -33,16 +33,18 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
-  if (!is.element(strata, names(object))) {
+
+  if (!is.null(strata) && !is.element(strata, names(object))) {
     cli::cli_abort(
       class = "unavailable_strata",
       message = c(
-        "x" = paste0("The option {.var {strata}}",
-                     "for argument {.arg strata} does not exist"),
-        "i" = "Provide a column that exist in {.envvar object}"
+        x = "The variable {.var {strata}} specified by argument {.arg strata}
+        does not exist in {.arg object}.",
+        i = "Please choose a column that exists in {.arg object}."
       )
     )
   }
+
   if (type == "age-scatter") {
     age_scatter(object, strata)
   } else if (type == "density") {
@@ -51,9 +53,9 @@ autoplot.pop_data <- function(
     cli::cli_abort(
       class = "unavailable_type",
       message = c(
-        "x" = paste0("Can't create plotting facets",
-                     " with the specified `type` = {.arg {type}}."),
-        "i" = "The `type` argument accepts 'density' or 'age-scatter' options."
+        x = "{.fn autoplot.pop_data} does not currently have an option for
+         {.arg type} = {.str {type}}.",
+        i = "The {.arg type} argument accepts options {.str density} or {.str age-scatter}."
       )
     )
   }
@@ -61,26 +63,27 @@ autoplot.pop_data <- function(
 
 age_scatter <- function(
     object,
-    strata = NULL) {
+    strata = NULL,
+    age_var = object %>% get_age_var(),
+    value_var = object %>% get_value_var()) {
   # create default plotting
 
   if (is.null(strata)) {
     plot1 <-
       object %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data[[object %>% get_age_var()]],
-        y = .data[[object %>% get_value_var()]],
-        col = get(strata)
-      ))
+      ggplot2::ggplot() +
+      ggplot2::aes(
+        x = .data[[age_var]],
+        y = .data[[value_var]]
+      )
   } else {
     plot1 <-
       object %>%
-      ggplot2::ggplot(
-        ggplot2::aes(
-          x = .data[[object %>% get_age_var()]],
-          y = .data[[object %>% get_value_var()]]
-        ),
-        col = get(strata)
+      ggplot2::ggplot() +
+      ggplot2::aes(
+        col = .data[[strata]],
+        x = .data[[age_var]],
+        y = .data[[value_var]]
       ) +
       ggplot2::labs(colour = strata)
   }
@@ -138,13 +141,12 @@ density_plot <- function(
       ggplot2::labs(fill = strata)
   }
   if (log) {
+
     min_nonzero_val <-
       object %>%
-      filter(object %>%
-               get_value() > 0) %>%
       get_value() %>%
+      purrr::keep(~ . > 0) %>%
       min()
-
 
     max_val <-
       object %>%

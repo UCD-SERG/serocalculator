@@ -55,7 +55,7 @@
 #' )
 #'
 #' # Generate cross-sectional data
-#' csdata <- sim.cs(
+#' csdata <- simulate_pop_data(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,
 #'   n.smpl = nrep,
@@ -68,7 +68,7 @@
 #'   format = "long"
 #' )
 #'
-sim.cs <- function(
+simulate_pop_data <- function(
     lambda = 0.1,
     n.smpl = 100,
     age.rng = c(0, 20),
@@ -83,9 +83,24 @@ sim.cs <- function(
     verbose = FALSE,
     ...) {
   if (verbose > 1) {
-    message("inputs to `sim.cs()`:")
+    message("inputs to `simulate_pop_data()`:")
     print(environment() %>% as.list())
   }
+
+#' Simulate a cross-sectional serosurvey with noise
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `sim.cs()` was renamed to [simulate_pop_data()] to create a more
+#' consistent API.
+#'
+#' @keywords internal
+sim.cs = function(...)
+  {
+  lifecycle::deprecate_warn("2.0.0", "sim.cs()", "simulate_pop_data()")
+  simulate_pop_data(...)
+}
 
   # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 

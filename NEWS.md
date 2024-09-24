@@ -75,7 +75,7 @@ to avoid printing an OK message.
 
 * added visualization of curve parameters
 
-* `sim.cs()` now has `format` argument to specify long or wide format for output.
+* `simulate_pop_data()` now has `format` argument to specify long or wide format for output.
 
 ### serocalculator 0.3.2
 

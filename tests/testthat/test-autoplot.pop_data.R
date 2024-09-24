@@ -36,13 +36,7 @@ test_that("`autoplot.pop_data()` produces stable results for `type = 'density'`"
               standardize = TRUE
             ) %>%
               autoplot(strata = "Country", type = "density") %>%
-              ggplot2::ggsave(
-                filename = tempfile(),
-                device = "svg",
-                width = 8,
-                height = 8
-              ) %>%
-              expect_snapshot_file(name = "density.svg")
+              vdiffr::expect_doppelganger(title = "density")
           })
 
 test_that("`autoplot.pop_data()` produces stable results for
@@ -56,13 +50,7 @@ test_that("`autoplot.pop_data()` produces stable results for
               standardize = TRUE
             ) %>%
               autoplot(strata = "Country", type = "age-scatter") %>%
-              ggplot2::ggsave(
-                filename = tempfile(),
-                device = "svg",
-                width = 8,
-                height = 8
-              ) %>%
-              expect_snapshot_file(name = "age_scatter_strat_country.svg")
+              vdiffr::expect_doppelganger(title = "age_scatter_strat_country")
           })
 
 test_that("`autoplot.pop_data()` produces stable results
@@ -76,11 +64,5 @@ test_that("`autoplot.pop_data()` produces stable results
               standardize = TRUE
             ) %>%
               autoplot(strata = NULL, type = "age-scatter") %>%
-              ggplot2::ggsave(
-                filename = tempfile(),
-                device = "svg",
-                width = 8,
-                height = 8
-              ) %>%
-              expect_snapshot_file(name = "age_scatter_no_strat.svg")
+              vdiffr::expect_doppelganger(title = "age_scatter_no_strat")
           })

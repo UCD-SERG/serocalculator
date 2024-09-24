@@ -28,6 +28,7 @@ test_that("`autoplot.pop_data()` raise
 
 test_that("`autoplot.pop_data()` produces stable results for `type = 'density'`",
           {
+            skip_if(getRversion() < "4.4.1")
             xs_data <- load_pop_data(
               file_path = "https://osf.io/download//n6cp3/",
               age = "Age",
@@ -42,6 +43,7 @@ test_that("`autoplot.pop_data()` produces stable results for `type = 'density'`"
 test_that("`autoplot.pop_data()` produces stable results for
           `type = 'age-scatter'`",
           {
+
             xs_data <- load_pop_data(
               file_path = "https://osf.io/download//n6cp3/",
               age = "Age",
@@ -54,7 +56,7 @@ test_that("`autoplot.pop_data()` produces stable results for
           })
 
 test_that("`autoplot.pop_data()` produces stable results
-          for `type = 'age-scatter' no strat`",
+          for `type = 'age-scatter', strata = NULL`",
           {
             xs_data <- load_pop_data(
               file_path = "https://osf.io/download//n6cp3/",

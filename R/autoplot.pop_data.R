@@ -118,10 +118,12 @@ age_scatter <- function(
 density_plot <- function(
     object,
     strata = NULL,
-    log = FALSE) {
+    log = FALSE,
+    value_var = object %>% get_value_var()) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_value_var()]])) +
+    ggplot2::ggplot() +
+    ggplot2::aes(x = .data[[value_var]]) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 

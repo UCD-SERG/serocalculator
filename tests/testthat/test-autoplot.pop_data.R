@@ -28,7 +28,7 @@ test_that("`autoplot.pop_data()` raise
 
 test_that("`autoplot.pop_data()` produces stable results for `type = 'density'`",
           {
-            skip_if(getRversion() < "4.4.1")
+            skip_if(getRversion() < "4.4.1") # 4.3.3 had issues
             xs_data <- load_pop_data(
               file_path = "https://osf.io/download//n6cp3/",
               age = "Age",

@@ -21,5 +21,7 @@ allpopsamples_hlye.csv$
 ^serocalculator.*\.tgz$
 ^inst/extdata
 ^CRAN-SUBMISSION$
+^vignettes/rsconnect$
+^rsconnect$
 ^README\.qmd$
 ^codecov\.yml$

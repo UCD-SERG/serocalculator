@@ -1,4 +1,23 @@
 test_that(
+  "`est.incidence()` handles age 0 correctly",
+  {
+
+    noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
+      filter(Country == "Pakistan")
+
+    # get curve data
+    curve <- load_curve_params("https://osf.io/download/rtw5k/")
+
+    xs_data = sim.cs(
+       age.rng = c(0,5),
+       curve_params = curve,
+       noise_params = noise,
+       antigen_isos =
+    )
+
+})
+
+test_that(
   "est.incidence() produces expected results for typhoid data",
   {
     library(dplyr)

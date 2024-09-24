@@ -6,7 +6,7 @@
 \usage{
 \method{autoplot}{curve_params}(
   object,
-  antigen_isos = object$antigen_iso \%>\% unique(),
+  antigen_isos = unique(object$antigen_iso),
   ncol = min(3, length(antigen_isos)),
   ...
 )
@@ -14,7 +14,7 @@
 \arguments{
 \item{object}{a \code{\link[=data.frame]{data.frame()}} of curve parameters (one or more MCMC samples)}
 
-\item{antigen_isos}{antigen isotypes to analyze (can be used to subset \code{curve_params})}
+\item{antigen_isos}{antigen isotypes to analyze (can subset \code{curve_params})}
 
 \item{ncol}{how many columns of subfigures to use in panel plot}
 
@@ -58,14 +58,16 @@ and set the \code{n_curves} argument to \code{Inf}.
 }
 }
 \examples{
+\donttest{
 library(dplyr)
 library(ggplot2)
+library(magrittr)
 
 curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) \%>\% # Reduce dataset for the purposes of this example
+  slice(1:100, .by = antigen_iso) \%>\% # Reduce dataset for this example
   autoplot()
 
 curve
-
+}
 }

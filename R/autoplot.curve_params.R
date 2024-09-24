@@ -2,7 +2,7 @@
 #'
 #' @inheritParams plot_curve_params_one_ab
 #' @inheritDotParams plot_curve_params_one_ab
-#' @param antigen_isos antigen isotypes to analyze (can be used to subset `curve_params`)
+#' @param antigen_isos antigen isotypes to analyze (can subset `curve_params`)
 #' @param ncol how many columns of subfigures to use in panel plot
 #' @details
 #' ## `rows_to_graph`
@@ -20,19 +20,21 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' library(ggplot2)
+#' library(magrittr)
 #'
 #' curve = load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by = antigen_iso) %>% # Reduce dataset for the purposes of this example
+#'   slice(1:100, .by = antigen_iso) %>% # Reduce dataset for this example
 #'   autoplot()
 #'
 #' curve
-#'
-autoplot.curve_params = function(
+#'}
+autoplot.curve_params <- function(
     object,
-    antigen_isos = object$antigen_iso %>% unique(),
+    antigen_isos = unique(object$antigen_iso),
     ncol = min(3, length(antigen_isos)),
     ...) {
   split_data <- object %>%
@@ -44,8 +46,7 @@ autoplot.curve_params = function(
   figs <- split_data %>%
     lapply(FUN = plot_curve_params_one_ab, ...)
 
-  for (i in 1:length(figs))
-  {
+  for (i in seq_along(figs)) {
     figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 

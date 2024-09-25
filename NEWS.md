@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+* created unit test for `df_to_array()`
+* fixed `dplyr::select()` deprecation warning in `df_to_array()`
 * Generalized `get_()` methods from `pop_data`-specific to `default`.
 
 # serocalculator 1.2.0

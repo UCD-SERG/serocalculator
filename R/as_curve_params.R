@@ -67,5 +67,8 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   # assign antigen attribute
   attr(curve_data, "antigen_isos") <- antigen_isos
 
+  curve_data <- curve_data %>%
+    set_biomarker_var(biomarker = "antigen_iso", standardize = FALSE)
+
   return(curve_data)
 }

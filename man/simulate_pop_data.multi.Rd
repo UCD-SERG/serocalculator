@@ -24,24 +24,30 @@ simulate_pop_data.multi(
 
 \item{rng_seed}{starting seed for random number generator, passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 
-\item{renew.params}{whether to generate a new parameter set for each infection
+\item{renew.params}{whether to generate a new parameter set for each
+infection
 \itemize{
 \item \code{renew.params = TRUE} generates a new parameter set for each infection
-\item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
+\item \code{renew.params = FALSE} keeps the one selected at birth,
+but updates baseline y0
 }}
 
-\item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
+\item{add.noise}{a \code{\link[=logical]{logical()}} indicating
+whether to add biological and measurement noise}
 
 \item{verbose}{whether to report verbose information}
 
 \item{...}{
   Arguments passed on to \code{\link[=simulate_pop_data]{simulate_pop_data}}
   \describe{
-    \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate (in events per person-years)}
+    \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
+(in events per person-years)}
     \item{\code{n.smpl}}{number of samples to simulate}
     \item{\code{age.rng}}{age range of sampled individuals, in years}
-    \item{\code{age.fx}}{specify the curve parameters to use by age (does nothing at present?)}
-    \item{\code{antigen_isos}}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
+    \item{\code{age.fx}}{specify the curve parameters to use by age
+(does nothing at present?)}
+    \item{\code{antigen_isos}}{Character vector with one or more antibody names.
+Values must match \code{curve_params}.}
     \item{\code{n.mc}}{how many MCMC samples to use:
 \itemize{
 \item when \code{n.mc} is in \code{1:4000} a fixed posterior sample is used

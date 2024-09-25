@@ -21,15 +21,18 @@ simulate_pop_data(
 )
 }
 \arguments{
-\item{lambda}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate (in events per person-years)}
+\item{lambda}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
+(in events per person-years)}
 
 \item{n.smpl}{number of samples to simulate}
 
 \item{age.rng}{age range of sampled individuals, in years}
 
-\item{age.fx}{specify the curve parameters to use by age (does nothing at present?)}
+\item{age.fx}{specify the curve parameters to use by age
+(does nothing at present?)}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
+\item{antigen_isos}{Character vector with one or more antibody names.
+Values must match \code{curve_params}.}
 
 \item{n.mc}{how many MCMC samples to use:
 \itemize{
@@ -37,13 +40,16 @@ simulate_pop_data(
 \item when \code{n.mc} = \code{0}, a random sample is chosen
 }}
 
-\item{renew.params}{whether to generate a new parameter set for each infection
+\item{renew.params}{whether to generate a new parameter set for each
+infection
 \itemize{
 \item \code{renew.params = TRUE} generates a new parameter set for each infection
-\item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
+\item \code{renew.params = FALSE} keeps the one selected at birth,
+but updates baseline y0
 }}
 
-\item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
+\item{add.noise}{a \code{\link[=logical]{logical()}} indicating
+whether to add biological and measurement noise}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -73,7 +79,8 @@ simulate_pop_data(
   }}
 }
 \value{
-a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey data, with columns:
+a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey
+data, with columns:
 \itemize{
 \item \code{age}: age (in days)
 \item one column for each element in the \code{antigen_iso} input argument

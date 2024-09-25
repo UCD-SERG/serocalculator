@@ -1,5 +1,8 @@
 # serocalculator (development version)
 
+
+* initialized `lintr` with `lintr::use_lint()`.
+
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
 

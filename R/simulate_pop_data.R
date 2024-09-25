@@ -100,10 +100,10 @@ simulate_pop_data <- function(
 
 
 
-# predpar is an [array()] containing MCMC samples from the Bayesian distribution
-# of longitudinal decay curve model parameters.
-# NOTE: most users should leave `predpar` at its default value and provide
-# `curve_params` instead.
+  # predpar is an [array()] containing MCMC samples from the Bayesian distribution
+  # of longitudinal decay curve model parameters.
+  # NOTE: most users should leave `predpar` at its default value and provide
+  # `curve_params` instead.
 
   predpar <-
     curve_params %>%
@@ -153,7 +153,7 @@ simulate_pop_data <- function(
     ysim %>%
     as_tibble() %>%
     mutate(
-      id = as.character(1:n()),
+      id = as.character(row_number()),
       age = round(.data$age / day2yr, 2)
     )
 
@@ -195,8 +195,7 @@ simulate_pop_data <- function(
 #' consistent API.
 #'
 #' @keywords internal
-sim.cs = function(...)
-{
+sim.cs <- function(...) { # nolint: object_name_linter
   lifecycle::deprecate_warn("2.0.0", "sim.cs()", "simulate_pop_data()")
   simulate_pop_data(...)
 }

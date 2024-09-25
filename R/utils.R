@@ -1,21 +1,20 @@
-.pasteN <- function(...)
-{
+.pasteN <- function(...) {
   paste(..., sep = "\n")
 }
 
-.appendNames <- function(abNames)
-{
+.appendNames <- function(abNames) {
   res <- c()
   for (k in seq_len(length(abNames))) {
-    res <- c(res,
-             paste0(abNames[k], ".lo"),
-             paste0(abNames[k], ".hi"))
+    res <- c(
+      res,
+      paste0(abNames[k], ".lo"),
+      paste0(abNames[k], ".hi")
+    )
   }
   return(res)
 }
 
-.stripNames <- function(abNames)
-{
+.stripNames <- function(abNames) {
   if (grepl(".", abNames, fixed = TRUE)) {
     return(substr(abNames, 1, nchar(abNames) - 3))
   }
@@ -23,72 +22,61 @@
   return(abNames)
 }
 
-.errorCheck <- function(data, antibodies, strata, params)
-{
-  .checkAntibodies(antibodies = antibodies)
-  .checkCsData(data = data, antibodies = antibodies)
-  .checkStrata(data = data, strata = strata)
-  .checkParams(antibodies = antibodies, params = params)
+.errorCheck <- function(data, antigen_isos, curve_params) {
+  .checkAntibodies(antigen_isos = antigen_isos)
+  check_pop_data(pop_data = data)
+  .checkParams(antigen_isos = antigen_isos, params = curve_params)
 
   invisible(NULL)
 }
 
-.checkAntibodies <- function(antibodies)
-{
-  stopifnot(!missing(antibodies))
-
-  if (!is.character(antibodies)) {
-    stop(.pasteN("Argument `antibodies` is not a character vector.",
-                 "Provide a character vector with at least one antibody name."))
+.checkAntibodies <- function(antigen_isos) {
+  if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
+    stop(
+      paste0(
+        "In `est.incidence()`, the argument `antigen_isos` should be a `character()` or `factor()` variable, but ",
+        'currently, `class(antigen_isos) == "', class(antigen_isos), '"`.',
+        "\nPlease provide a character vector with at least one antibody name."
+      )
+    )
   }
 
-  if (all(antibodies == "")) {
-    stop(.pasteN("Argument `antibodies` is empty.",
-                 "Provide a character vector with at least one antibody name."))
-  }
-
-  invisible(NULL)
-}
-
-.checkCsData <- function(data, antibodies)
-{
-  if (!is.data.frame(data)) {
-    stop(.pasteN("Argument `data` is not a `data.frame()`.",
-                 "Provide a `data.frame()` with cross-sectional serology data per antibody."))
-  }
-
-  if (!is.element("a", names(data))) {
-    stop("Argument `data` is missing column `a` (age, in years).")
+  if (setequal(antigen_isos, "")) {
+    stop(.pasteN(
+      "Argument `antigen_isos` is empty.",
+      "Provide a character vector with at least one antibody name."
+    ))
   }
 
   invisible(NULL)
 }
 
-.checkParams <- function(antibodies, params)
-{
-
-  message1 = paste(
+.checkParams <- function(antigen_isos, params) {
+  message1 <- paste(
     "Please provide a `data.frame()` containing Monte Carlo samples of the longitudinal parameters",
     "`y1`, `alpha`, and `r`",
-    "for each value of `antigen_iso` in `data`")
-
+    "for each value of `antigen_iso` in `pop_data`"
+  )
 
   if (!is.data.frame(params)) {
     stop(
       .pasteN(
         "Argument `params` is not a `data.frame()`.",
-        message1))
+        message1
+      )
+    )
   }
 
-  if (!all(c("y1", "alpha", "r") %in% names(params)))
-  {
+  if (!all(c("y1", "alpha", "r") %in% names(params))) {
     stop(
       .pasteN(
         "The parameter names do not match.",
-        message1))
+        message1
+      )
+    )
   }
 
-  if (!all(antibodies %in% params$antigen_iso)) {
+  if (!all(antigen_isos %in% params$antigen_iso)) {
     stop("Some `antigen_iso` values are missing.")
   }
 
@@ -97,8 +85,10 @@
 
 .checkStrata <- function(data, strata) {
   if (!is.character(strata)) {
-    stop(.pasteN("Argument \"strata\" is not a character vector.",
-                 "Provide a character vector with names of stratifying variables."))
+    stop(.pasteN(
+      "Argument `strata` is not a character vector.",
+      "Provide a character vector with names of stratifying variables."
+    ))
   }
 
   if (!all(is.element(strata, union("", names(data))))) {
@@ -107,7 +97,3 @@
 
   invisible(NULL)
 }
-
-
-
-

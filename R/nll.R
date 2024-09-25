@@ -1,48 +1,11 @@
-#' Calculate log-likelihood
-#'
-#' @param data Data frame with cross-sectional serology data per antibody and age, and additional columns
-#' @param antigen_isos Character vector with one or more antibody names. Values must match `data`.
-#' @param curve_params List of data frames of all longitudinal parameters. Each data frame contains
-#'   Monte Carlo samples for each antibody type.
-#' @param noise_params a [list()] (or [data.frame()], or [tibble()]) containing noise parameters
-#' @param verbose logical: if TRUE, print verbose log information to console
-#' @param ... additional arguments passed to other functions (not currently used).
-#' @inheritParams fdev
+#' Calculate negative log-likelihood
+#' @description
+#' Same as [log_likelihood()], except negated and requiring lambda on log scale (used in combination with `nlm()`, to ensure that the optimization search doesn't stray into negative values of `lambda`).
+#' @param log.lambda natural logarithm of incidence rate
+#' @inheritDotParams log_likelihood -lambda
 
-#' @return the log-likelihood of the data with the current parameter values
-.nll <- function(
-    log.lambda,
-    data,
-    antigen_isos,
-    curve_params,
-    noise_params,
-    verbose = FALSE,
-    ...)
-{
-  # Start with zero total
-  nllTotal <- 0
-
-  # Loop over antibodies
-  for (cur_antibody in antigen_isos)
-  {
-    cur_data = data[[cur_antibody]]
-    cur_curve_params = curve_params[[cur_antibody]]
-    cur_noise_params = noise_params[[cur_antibody]]
-
-    nllSingle <-
-      fdev(
-        log.lambda = log.lambda,
-        csdata = cur_data,
-        lnpars = cur_curve_params,
-        cond = cur_noise_params
-      )
-
-    if (!is.na(nllSingle)) {
-      nllTotal <- nllTotal + nllSingle # DEM note: summing log likelihoods represents an independence assumption for multiple Antibodies, given time since seroconversion
-    }
-
-  }
-
-  # Return total log-likelihood
-  return(nllTotal)
+#' @return the negative log-likelihood of the data with the current parameter values
+#' @keywords internal
+.nll <- function(log.lambda, ...) {
+  -log_likelihood(lambda = exp(log.lambda), ...)
 }

@@ -13,6 +13,7 @@ double NLLFf (double lambda, double *yy, double *aa, int nsubj,
 
   /* Calculate LLF */
   llf = 0;
+  rho = 0;
   if(0 < nu){                            /* B noise */
     for(subj=1; subj <= nsubj; subj++){ /* over all subjects */
       y = yy[subj-1];
@@ -118,7 +119,7 @@ double dnsF (double lambda, double y, double age, double Pa,
 
   ya = A/pow((1+d*(pow(A,d))*k*age),(1/d));
   dns_f = 0;
-  if((ya <= y) && (y <= A)){
+  if((ya <= y) && (y <= A)){ // should A be age here? compare p_f(y|a) in eq 8
     tau = (pow(y,-d) - pow(A,-d))/(k*d);
     dns_f = Pa*(lambda*exp(-lambda*tau)+EXPla)/(k*(pow(y,1+d)));
   }
@@ -156,7 +157,7 @@ double dnsB (double lambda, double y, double age, double nu,
 /* SIM equation 12: probability function for y with B noise present */
 double prbB (double lambda, double y, double age, double nu, double step,
              double Pa, double Qa, double EXPla, double A, double k, double d){
-  double ya,y1,zmin,zmax,z,dz,integ,prb_b;
+  double ya,zmin,zmax,z,dz,integ,prb_b;
   int Nstep, kstep;
 
   ya = A/pow((1+d*(pow(A,d))*k*age),(1/d));
@@ -201,6 +202,7 @@ double dnsM (double lambda, double y, double age, double eps, double step,
     Nstep = dint((zmax - zmin)/step) + 1;
     dz = (zmax - zmin)/Nstep;
     integ = 0;
+    /* riemann integral over possible true underlying values: */
     for(kstep = 1; kstep <= Nstep; kstep++){
       z = zmin + (kstep - 0.5)*dz;
       integ = integ + dz*dnsF(lambda,z,age,Pa,EXPla,A,k,d)/z;

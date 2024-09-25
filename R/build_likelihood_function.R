@@ -1,28 +1,25 @@
-build_likelihood_function = function(
+# not currently used internally or exported; can we remove it?
+build_likelihood_function <- function(
     cross_sectional_data,
     longitudinal_parameter_samples,
     noise_params,
-    antigen_isos = names(cross_sectional_data))
-{
-
-  likelihood_function = function(llam)
-  {
-
-    res = 0
+    antigen_isos = names(cross_sectional_data)) {
+  likelihood_function <- function(lambda) {
+    res <- 0
 
     # add terms, e.g. for other antibodies
     for (cur_antigen in antigen_isos)
     {
-      res = res +
-        fdev(
-          llam,
-          cross_sectional_data[[cur_antigen]],
-          longitudinal_parameter_samples[[cur_antigen]],
-          noise_params[[cur_antigen]])
+      res <- res +
+        f_dev(
+          lambda = lambda,
+          csdata = cross_sectional_data[[cur_antigen]],
+          lnpars = longitudinal_parameter_samples[[cur_antigen]],
+          cond = noise_params[[cur_antigen]]
+        )
     }
 
     return(res)
-
   }
 
   return(likelihood_function)

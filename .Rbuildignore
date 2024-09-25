@@ -19,3 +19,7 @@ allpopsamples_hlye.csv$
 ^serocalculator\.Rcheck$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
+^inst/extdata
+^CRAN-SUBMISSION$
+^README\.qmd$
+^codecov\.yml$

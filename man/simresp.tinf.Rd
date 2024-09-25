@@ -7,10 +7,10 @@
 simresp.tinf(
   lambda,
   t.end,
-  age.fx,
+  age_fixed,
   antigen_isos,
-  n.mc = 0,
-  renew.params,
+  n_mcmc_samples = 0,
+  renew_params,
   predpar,
   ...
 )
@@ -20,16 +20,16 @@ simresp.tinf(
 
 \item{t.end}{end of time interval (beginning is time 0) in days(?)}
 
-\item{age.fx}{parameter estimates for fixed age (age.fx in years) or not.
-when age.fx = NA then age at infection is used.}
+\item{age_fixed}{parameter estimates for fixed age (age_fixed in years) or not.
+when age_fixed = NA then age at infection is used.}
 
 \item{antigen_isos}{antigen isotypes}
 
-\item{n.mc}{a posterior sample may be selected (1:4000), or not
-when n.mc = 0 a posterior sample is chosen at random.}
+\item{n_mcmc_samples}{a posterior sample may be selected (1:4000), or not
+when n_mcmc_samples = 0 a posterior sample is chosen at random.}
 
-\item{renew.params}{At infection, a new parameter sample may be generated (when \code{renew.params = TRUE}).
-Otherwise (when \code{renew.params = FALSE}), a sample is generated at birth and kept,
+\item{renew_params}{At infection, a new parameter sample may be generated (when \code{renew_params = TRUE}).
+Otherwise (when \code{renew_params = FALSE}), a sample is generated at birth and kept,
 but baseline y0 are carried over from prior infections.}
 
 \item{predpar}{an \code{\link[=array]{array()}} with dimensions named:

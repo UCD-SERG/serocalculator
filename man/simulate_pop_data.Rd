@@ -6,13 +6,13 @@
 \usage{
 simulate_pop_data(
   lambda = 0.1,
-  n.smpl = 100,
-  age.rng = c(0, 20),
-  age.fx = NA,
+  n_samples = 100,
+  age_range = c(0, 20),
+  age_fixed = NA,
   antigen_isos = intersect(get_biomarker_levels(curve_params), rownames(noise_limits)),
-  n.mc = 0,
-  renew.params = FALSE,
-  add.noise = FALSE,
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
+  add_noise = FALSE,
   curve_params,
   noise_limits,
   format = "wide",
@@ -23,27 +23,27 @@ simulate_pop_data(
 \arguments{
 \item{lambda}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate (in events per person-years)}
 
-\item{n.smpl}{number of samples to simulate}
+\item{n_samples}{number of samples to simulate}
 
-\item{age.rng}{age range of sampled individuals, in years}
+\item{age_range}{age range of sampled individuals, in years}
 
-\item{age.fx}{specify the curve parameters to use by age (does nothing at present?)}
+\item{age_fixed}{specify the curve parameters to use by age (does nothing at present?)}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
 
-\item{n.mc}{how many MCMC samples to use:
+\item{n_mcmc_samples}{how many MCMC samples to use:
 \itemize{
-\item when \code{n.mc} is in \code{1:4000} a fixed posterior sample is used
-\item when \code{n.mc} = \code{0}, a random sample is chosen
+\item when \code{n_mcmc_samples} is in \code{1:4000} a fixed posterior sample is used
+\item when \code{n_mcmc_samples} = \code{0}, a random sample is chosen
 }}
 
-\item{renew.params}{whether to generate a new parameter set for each infection
+\item{renew_params}{whether to generate a new parameter set for each infection
 \itemize{
-\item \code{renew.params = TRUE} generates a new parameter set for each infection
-\item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
+\item \code{renew_params = TRUE} generates a new parameter set for each infection
+\item \code{renew_params = FALSE} keeps the one selected at birth, but updates baseline y0
 }}
 
-\item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
+\item{add_noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -112,12 +112,12 @@ dlims <- rbind(
 csdata <- simulate_pop_data(
   curve_params = dmcmc,
   lambda = lambda,
-  n.smpl = nrep,
-  age.rng = lifespan,
+  n_samples = nrep,
+  age_range = lifespan,
   antigen_isos = antibodies,
-  n.mc = 0,
-  renew.params = TRUE,
-  add.noise = TRUE,
+  n_mcmc_samples = 0,
+  renew_params = TRUE,
+  add_noise = TRUE,
   noise_limits = dlims,
   format = "long"
 )

@@ -9,8 +9,8 @@ simulate_pop_data.multi(
   lambdas = c(0.05, 0.1, 0.15, 0.2, 0.3),
   num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
-  renew.params = TRUE,
-  add.noise = TRUE,
+  renew_params = TRUE,
+  add_noise = TRUE,
   verbose = FALSE,
   ...
 )
@@ -24,13 +24,13 @@ simulate_pop_data.multi(
 
 \item{rng_seed}{starting seed for random number generator, passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 
-\item{renew.params}{whether to generate a new parameter set for each infection
+\item{renew_params}{whether to generate a new parameter set for each infection
 \itemize{
-\item \code{renew.params = TRUE} generates a new parameter set for each infection
-\item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
+\item \code{renew_params = TRUE} generates a new parameter set for each infection
+\item \code{renew_params = FALSE} keeps the one selected at birth, but updates baseline y0
 }}
 
-\item{add.noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
+\item{add_noise}{a \code{\link[=logical]{logical()}} indicating whether to add biological and measurement noise}
 
 \item{verbose}{whether to report verbose information}
 
@@ -38,14 +38,14 @@ simulate_pop_data.multi(
   Arguments passed on to \code{\link[=simulate_pop_data]{simulate_pop_data}}
   \describe{
     \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate (in events per person-years)}
-    \item{\code{n.smpl}}{number of samples to simulate}
-    \item{\code{age.rng}}{age range of sampled individuals, in years}
-    \item{\code{age.fx}}{specify the curve parameters to use by age (does nothing at present?)}
+    \item{\code{n_samples}}{number of samples to simulate}
+    \item{\code{age_range}}{age range of sampled individuals, in years}
+    \item{\code{age_fixed}}{specify the curve parameters to use by age (does nothing at present?)}
     \item{\code{antigen_isos}}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
-    \item{\code{n.mc}}{how many MCMC samples to use:
+    \item{\code{n_mcmc_samples}}{how many MCMC samples to use:
 \itemize{
-\item when \code{n.mc} is in \code{1:4000} a fixed posterior sample is used
-\item when \code{n.mc} = \code{0}, a random sample is chosen
+\item when \code{n_mcmc_samples} is in \code{1:4000} a fixed posterior sample is used
+\item when \code{n_mcmc_samples} = \code{0}, a random sample is chosen
 }}
     \item{\code{noise_limits}}{biologic noise distribution parameters}
     \item{\code{format}}{a \code{\link[=character]{character()}} variable, containing either:

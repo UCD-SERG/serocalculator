@@ -17,8 +17,8 @@ simulate_pop_data.multi <- function(
     lambdas = c(.05, .1, .15, .2, .3),
     num_cores = max(1, parallel::detectCores() - 1),
     rng_seed = 1234,
-    renew.params = TRUE,
-    add.noise = TRUE,
+    renew_params = TRUE,
+    add_noise = TRUE,
     verbose = FALSE,
     ...) {
   if (verbose) {
@@ -57,8 +57,8 @@ simulate_pop_data.multi <- function(
       rngtools::setRNG(r)
       simulate_pop_data(
         lambda = l,
-        renew.params = renew.params,
-        add.noise = add.noise,
+        renew_params = renew_params,
+        add_noise = add_noise,
         ...
       ) %>%
         mutate(lambda.sim = l, cluster = n)

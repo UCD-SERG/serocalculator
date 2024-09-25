@@ -6,21 +6,21 @@
 
 #' @param lambda a [numeric()] scalar indicating the incidence rate
 #' (in events per person-years)
-#' @param n.smpl number of samples to simulate
-#' @param age.rng age range of sampled individuals, in years
-#' @param age.fx specify the curve parameters to use by age
+#' @param n_samples number of samples to simulate
+#' @param age_range age range of sampled individuals, in years
+#' @param age_fixed specify the curve parameters to use by age
 #' (does nothing at present?)
 #' @param antigen_isos Character vector with one or more antibody names.
 #' Values must match `curve_params`.
-#' @param n.mc how many MCMC samples to use:
-#' * when `n.mc` is in `1:4000` a fixed posterior sample is used
-#' * when `n.mc` = `0`, a random sample is chosen
-#' @param renew.params whether to generate a new parameter set for each
+#' @param n_mcmc_samples how many MCMC samples to use:
+#' * when `n_mcmc_samples` is in `1:4000` a fixed posterior sample is used
+#' * when `n_mcmc_samples` = `0`, a random sample is chosen
+#' @param renew_params whether to generate a new parameter set for each
 #' infection
-#' * `renew.params = TRUE` generates a new parameter set for each infection
-#' * `renew.params = FALSE` keeps the one selected at birth,
+#' * `renew_params = TRUE` generates a new parameter set for each infection
+#' * `renew_params = FALSE` keeps the one selected at birth,
 #' but updates baseline y0
-#' @param add.noise a [logical()] indicating
+#' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @inheritParams log_likelihood
 
@@ -67,27 +67,27 @@
 #' csdata <- simulate_pop_data(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,
-#'   n.smpl = nrep,
-#'   age.rng = lifespan,
+#'   n_samples = nrep,
+#'   age_range = lifespan,
 #'   antigen_isos = antibodies,
-#'   n.mc = 0,
-#'   renew.params = TRUE,
-#'   add.noise = TRUE,
+#'   n_mcmc_samples = 0,
+#'   renew_params = TRUE,
+#'   add_noise = TRUE,
 #'   noise_limits = dlims,
 #'   format = "long"
 #' )
 #'
 simulate_pop_data <- function(
     lambda = 0.1,
-    n.smpl = 100,
-    age.rng = c(0, 20),
-    age.fx = NA,
+    n_samples = 100,
+    age_range = c(0, 20),
+    age_fixed = NA,
     antigen_isos = intersect(
       get_biomarker_levels(curve_params),
       rownames(noise_limits)),
-    n.mc = 0,
-    renew.params = FALSE,
-    add.noise = FALSE,
+    n_mcmc_samples = 0,
+    renew_params = FALSE,
+    add_noise = FALSE,
     curve_params,
     noise_limits,
     format = "wide",
@@ -116,7 +116,7 @@ simulate_pop_data <- function(
 
   day2yr <- 365.25
   lambda <- lambda / day2yr
-  age.rng <- age.rng * day2yr
+  age_range <- age_range * day2yr
   npar <- dimnames(predpar)$parameter %>% length()
 
 
@@ -124,19 +124,19 @@ simulate_pop_data <- function(
 
   ysim <- simcs.tinf(
     lambda = lambda,
-    n.smpl = n.smpl,
-    age.rng = age.rng,
-    age.fx = age.fx,
+    n_samples = n_samples,
+    age_range = age_range,
+    age_fixed = age_fixed,
     antigen_isos = antigen_isos,
-    n.mc = n.mc,
-    renew.params = renew.params,
+    n_mcmc_samples = n_mcmc_samples,
+    renew_params = renew_params,
     predpar = predpar,
     blims = baseline_limits,
     npar = npar,
     ...
   )
 
-  if (add.noise) {
+  if (add_noise) {
     for (k.ab in 1:(ncol(ysim) - 1)) {
       ysim[, 1 + k.ab] <-
         ysim[, 1 + k.ab] +

@@ -28,12 +28,12 @@ test_that("`simulate_pop_data()` produces consistent results", {
   csdata <- simulate_pop_data(
     curve_params = dmcmc,
     lambda = lambda,
-    n.smpl = nrep,
-    age.rng = lifespan,
+    n_samples = nrep,
+    age_range = lifespan,
     antigen_isos = antibodies,
-    n.mc = 0,
-    renew.params = TRUE,
-    add.noise = TRUE,
+    n_mcmc_samples = 0,
+    renew_params = TRUE,
+    add_noise = TRUE,
     noise_limits = dlims,
     format = "long"
   ) %>%

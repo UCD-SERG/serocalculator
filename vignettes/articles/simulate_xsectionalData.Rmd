@@ -25,20 +25,20 @@ The size of the sample is `nrep`.
 Each individual is simulated separately, but different antibodies are
 modelled jointly.
 
-Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
-However, when `age.fx` is set to NA then the age at infection is used.
+Longitudinal parameters are calculated for an age: `age_fixed` (fixed age).
+However, when `age_fixed` is set to NA then the age at infection is used.
 
-The boolean `renew.params` determines whether each infection uses a
+The boolean `renew_params` determines whether each infection uses a
 new set of longitudinal parameters, sampled at random from the
 posterior predictive output of  the longitudinal model. If set to `FALSE`
 a parameter set is chosen at birth and kept, but:
 1. the baseline antibody levels (`y0`) are updated with the simulated level
 (just) prior to infection, and
-2. when `is.na(age.fx)` then the selected parameter sample is updated for the
+2. when `is.na(age_fixed)` then the selected parameter sample is updated for the
 age when infection occurs.
 
-There is also a variable `n.mc`: when `n.mc==0` then a random MC
-sample is chosen out of the posterior set (1:4000). When `n.mc` is
+There is also a variable `n_mcmc_samples`: when `n_mcmc_samples==0` then a random MC
+sample is chosen out of the posterior set (1:4000). When `n_mcmc_samples` is
 given a value in 1:4000 then the chosen number is fixed and reused
 in any subsequent infection. This is for diagnostic purposes.
 
@@ -119,12 +119,12 @@ dlims <- rbind(
 csdata <- simulate_pop_data(
   curve_params = dmcmc,
   lambda = lambda,
-  n.smpl = nrep,
-  age.rng = lifespan,
+  n_samples = nrep,
+  age_range = lifespan,
   antigen_isos = antibodies,
-  n.mc = 0,
-  renew.params = TRUE,
-  add.noise = TRUE,
+  n_mcmc_samples = 0,
+  renew_params = TRUE,
+  add_noise = TRUE,
   noise_limits = dlims,
   format = "long"
 )
@@ -289,11 +289,11 @@ sim.df <-
     n_cores = n_cores,
     lambdas = lmbdaVec,
     nclus = nclus,
-    n.smpl = nrep,
-    age.rng = lifespan,
+    n_samples = nrep,
+    age_range = lifespan,
     antigen_isos = antibodies,
-    renew.params = TRUE,
-    add.noise = TRUE,
+    renew_params = TRUE,
+    add_noise = TRUE,
     curve_params = dmcmc,
     noise_limits = dlims,
     format = "long"

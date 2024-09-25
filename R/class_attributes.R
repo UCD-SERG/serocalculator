@@ -33,7 +33,6 @@ set_biomarker_var <- function(object, ...) {
   UseMethod("set_biomarker_var", object)
 }
 
-#' @export
 set_biomarker_var <- function(object,
                               biomarker = "antigen_iso",
                               standardize = TRUE,

@@ -82,11 +82,6 @@ a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectiona
 \description{
 Makes a cross-sectional data set (age, y(t) set)
 and adds noise, if desired.
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
-
-\code{sim.cs()} was renamed to \code{\link[=simulate_pop_data]{simulate_pop_data()}} to create a more
-consistent API.
 }
 \examples{
 # Load curve parameters
@@ -127,7 +122,4 @@ csdata <- simulate_pop_data(
   format = "long"
 )
 
-Simulate a cross-sectional serosurvey with noise
-
 }
-\keyword{internal}

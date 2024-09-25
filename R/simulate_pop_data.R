@@ -89,22 +89,12 @@ simulate_pop_data <- function(
     print(environment() %>% as.list())
   }
 
-#' Simulate a cross-sectional serosurvey with noise
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `sim.cs()` was renamed to [simulate_pop_data()] to create a more
-#' consistent API.
-#'
-#' @keywords internal
-sim.cs = function(...)
-  {
-  lifecycle::deprecate_warn("2.0.0", "sim.cs()", "simulate_pop_data()")
-  simulate_pop_data(...)
-}
 
-  # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
+
+# predpar is an [array()] containing MCMC samples from the Bayesian distribution
+# of longitudinal decay curve model parameters.
+# NOTE: most users should leave `predpar` at its default value and provide
+# `curve_params` instead.
 
   predpar <-
     curve_params %>%
@@ -185,4 +175,19 @@ sim.cs = function(...)
   }
 
   return(to_return)
+}
+
+#' @title Simulate a cross-sectional serosurvey with noise
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `sim.cs()` was renamed to [simulate_pop_data()] to create a more
+#' consistent API.
+#'
+#' @keywords internal
+sim.cs = function(...)
+{
+  lifecycle::deprecate_warn("2.0.0", "sim.cs()", "simulate_pop_data()")
+  simulate_pop_data(...)
 }

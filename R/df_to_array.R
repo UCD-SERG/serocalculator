@@ -8,7 +8,7 @@
 #'
 #' @keywords internal
 #'
-df.to.array <- function(
+df.to.array <- function( # nolint: object_name_linter
     df,
     dim_var_names,
     value_var_name = "value") {

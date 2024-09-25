@@ -12,7 +12,7 @@ test_that("df_to_array() produces consistent results", {
       )
     ) %>%
     mutate(parameter = factor(parameter, levels = unique(parameter)))
-  arr <- df %>% serocalculator:::df_to_array(
-    dim_var_names = c("parameter", "Species"))
+  arr <- df %>%
+    serocalculator:::df_to_array(dim_var_names = c("parameter", "Species"))
   arr %>% expect_snapshot_value(style = "serialize")
 })

@@ -96,7 +96,7 @@ dmcmc %>%
 
 ## Simulate cross-sectional data
 
-```{r "simulate_pop_data"}
+```{r "sim.cs"}
 # set seed to reproduce results
 set.seed(54321)
 
@@ -116,7 +116,7 @@ dlims <- rbind(
 
 ```{r}
 # generate cross-sectional data
-csdata <- simulate_pop_data(
+csdata <- sim.cs(
   curve_params = dmcmc,
   lambda = lambda,
   n.smpl = nrep,
@@ -284,7 +284,7 @@ nrep <- 100
 lmbdaVec <- c(.05, .1, .15, .2)
 
 sim.df <-
-  simulate_pop_data.multi(
+  sim.cs.multi(
     # verbose = TRUE,
     n_cores = n_cores,
     lambdas = lmbdaVec,

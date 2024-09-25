@@ -1,7 +1,6 @@
 #' Load a cross-sectional antibody survey data set
 #'
-#' @param file_path path to an RDS file containing a cross-sectional antibody
-#' survey data set, stored as a [data.frame()] or [tibble::tbl_df]
+#' @param file_path path to an RDS file containing a cross-sectional antibody survey data set, stored as a [data.frame()] or [tibble::tbl_df]
 #' @inheritDotParams as_pop_data
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attributes)
 #' @export
@@ -9,7 +8,9 @@
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #' print(xs_data)
-load_pop_data <- function(file_path, ...) {
+load_pop_data <- function(file_path,
+                          ...) {
+
   pop_data <-
     file_path %>%
     readr::read_rds() %>%
@@ -23,7 +24,7 @@ get_age <- function(object, ...) {
 }
 
 #' @export
-get_age.default <- function(object, ...) {
+get_age.pop_data <- function(object, ...) {
   # get age data
   age_data <- object %>% pull(attr(object, "age_var"))
 
@@ -35,7 +36,7 @@ get_age_var <- function(object, ...) {
 }
 
 #' @export
-get_age_var.default <- function(object, ...) {
+get_age_var.pop_data <- function(object, ...) {
   # get value attribute
   age_var <- attributes(object)$age_var
 
@@ -47,7 +48,7 @@ get_value <- function(object, ...) {
 }
 
 #' @export
-get_value.default <- function(object, ...) {
+get_value.pop_data <- function(object, ...) {
   # get age data
   value_data <- object %>% pull(attr(object, "value_var"))
 
@@ -59,7 +60,7 @@ get_value_var <- function(object, ...) {
 }
 
 #' @export
-get_value_var.default <- function(object, ...) {
+get_value_var.pop_data <- function(object, ...) {
   # get value attribute
   value_var <- attributes(object)$value_var
 
@@ -71,7 +72,7 @@ get_id <- function(object, ...) {
 }
 
 #' @export
-get_id.default <- function(object, ...) {
+get_id.pop_data <- function(object, ...) {
   # get age data
   id_data <- object %>% pull(attr(object, "id_var"))
 
@@ -83,7 +84,7 @@ get_id_var <- function(object, ...) {
 }
 
 #' @export
-get_id_var.default <- function(object, ...) {
+get_id_var.pop_data <- function(object, ...) {
   # get value attribute
   id_var <- attributes(object)$id_var
 
@@ -95,17 +96,21 @@ set_biomarker_var <- function(object, ...) {
 }
 
 #' @export
-set_biomarker_var.default <- function(object,
+set_biomarker_var.pop_data = function(object,
                                       biomarker = "antigen_iso",
                                       standardize = TRUE,
-                                      ...) {
-  if (biomarker %in% colnames(object)) {
+                                      ...)
+{
+  if (biomarker %in% colnames(object))
+  {
     attr(object, "biomarker_var") <- biomarker
-  } else {
+  } else
+  {
     cli::cli_abort('data does not include column "{biomarker}"')
   }
 
-  if (standardize) {
+  if (standardize)
+  {
     object <- object %>%
       rename(c("antigen_iso" = attr(object, "biomarker_var")))
 
@@ -117,12 +122,14 @@ set_biomarker_var.default <- function(object,
 
 }
 
-get_biomarker_levels <- function(object, ...) {
+get_biomarker_levels <- function(object, ...)
+{
   UseMethod("get_biomarker_levels", object)
 }
 
 #' @export
-get_biomarker_levels.default <- function(object, ...) {
+get_biomarker_levels.pop_data <- function(object, ...)
+{
   attr(object, "antigen_isos")
 }
 
@@ -131,7 +138,7 @@ get_biomarker_names <- function(object, ...) {
 }
 
 #' @export
-get_biomarker_names.default <- function(object, ...) {
+get_biomarker_names.pop_data <- function(object, ...) {
   # get biomarker name data
   biomarker_data <- object %>% pull(get_biomarker_names_var(object))
 
@@ -143,7 +150,7 @@ get_biomarker_names_var <- function(object, ...) {
 }
 
 #' @export
-get_biomarker_names_var.default <- function(object, ...) {
+get_biomarker_names_var.pop_data <- function(object, ...) {
   # get value attribute
   biomarker_var <- attributes(object)[["biomarker_var"]]
 
@@ -156,10 +163,7 @@ set_age <- function(object, ...) {
 }
 
 #' @export
-set_age.default <- function(object,
-                            age = "Age",
-                            standardize = TRUE,
-                            ...) {
+set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
   # check if age column exists
   if (age %in% colnames(object)) {
     attr(object, "age_var") <- age
@@ -182,11 +186,13 @@ set_age.default <- function(object,
       cli::cli_inform('Proceeding to use "{.var {age_var}}"')
     } else if (length(age_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
-    } else if (length(age_var) > 1) {
+    } else if (length(age_var) > 1)
+    {
       cli::cli_warn("Multiple potential matches found: {.var {age_var}}")
       cli::cli_warn("Using first match: {.var {age_var[1]}}")
       attr(object, "age_var") <- age_var[1]
-    } else {
+    } else
+    {
       cli::cli_abort("{.code length(age_var)} = {.val {length(age_var)}}")
     }
   }
@@ -208,16 +214,12 @@ set_value <- function(object, ...) {
 }
 
 #' @export
-set_value.default <- function(object,
-                              value = "result",
-                              standardize = TRUE,
-                              ...) {
+set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...) {
   # check if value column exists
   if (value %in% colnames(object)) {
     attr(object, "value_var") <- value
   } else {
-    cli::cli_warn('The specified `value` column "{.var {value}}"
-                  does not exist.')
+    cli::cli_warn('The specified `value` column "{.var {value}}" does not exist.')
 
     # search value variable from pop_data
     value_var <-
@@ -235,7 +237,8 @@ set_value.default <- function(object,
       cli::cli_inform('Proceeding to use "{.var {value_var}}"')
     } else if (length(value_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
-    } else { # i.e. if (length(value_var) > 1)
+    } else # if (length(value_var) > 1)
+    {
       cli::cli_warn("Multiple potential matches found: {.var {value_var}}")
       cli::cli_inform("Using first match: {.var {value_var[1]}}")
       attr(object, "value_var") <- value_var[1]
@@ -258,15 +261,12 @@ set_id <- function(object, ...) {
 }
 
 #' @export
-set_id.default <- function(object,
-                           id = "index_id",
-                           standardize = TRUE,
-                           ...) {
+set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
   # check if id column exists
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id
   } else {
-    cli::cli_warn("The specified {.var id} column {.val {id}} does not exist.")
+    cli::cli_warn('The specified {.var id} column {.val {id}} does not exist.')
 
     # search id variable from object
     id_var <-
@@ -284,7 +284,8 @@ set_id.default <- function(object,
       cli::cli_inform('Proceeding to use "{id_var}"')
     } else if (length(id_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
-    } else { # if (length(id_var) > 1)
+    } else # if (length(id_var) > 1)
+    {
       cli::cli_warn("Multiple potential matches found: {.var {id_var}}")
       cli::cli_inform("Using first match: {.var {id_var[1]}}")
       attr(object, "id_var") <- id_var[1]

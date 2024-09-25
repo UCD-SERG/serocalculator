@@ -4,24 +4,18 @@
 #' Makes a cross-sectional data set (age, y(t) set)
 #'  and adds noise, if desired.
 
-#' @param lambda a [numeric()] scalar indicating the incidence rate
-#' (in events per person-years)
+#' @param lambda a [numeric()] scalar indicating the incidence rate (in events per person-years)
 #' @param n.smpl number of samples to simulate
 #' @param age.rng age range of sampled individuals, in years
-#' @param age.fx specify the curve parameters to use by age
-#' (does nothing at present?)
-#' @param antigen_isos Character vector with one or more antibody names.
-#' Values must match `curve_params`.
+#' @param age.fx specify the curve parameters to use by age (does nothing at present?)
+#' @param antigen_isos Character vector with one or more antibody names. Values must match `curve_params`.
 #' @param n.mc how many MCMC samples to use:
 #' * when `n.mc` is in `1:4000` a fixed posterior sample is used
 #' * when `n.mc` = `0`, a random sample is chosen
-#' @param renew.params whether to generate a new parameter set for each
-#' infection
+#' @param renew.params whether to generate a new parameter set for each infection
 #' * `renew.params = TRUE` generates a new parameter set for each infection
-#' * `renew.params = FALSE` keeps the one selected at birth,
-#' but updates baseline y0
-#' @param add.noise a [logical()] indicating
-#' whether to add biological and measurement noise
+#' * `renew.params = FALSE` keeps the one selected at birth, but updates baseline y0
+#' @param add.noise a [logical()] indicating whether to add biological and measurement noise
 #' @inheritParams log_likelihood
 
 #' @param noise_limits biologic noise distribution parameters
@@ -31,12 +25,9 @@
 #' @param ... additional arguments passed to `simcs.tinf()`
 #' @inheritDotParams simcs.tinf
 #' @inheritParams log_likelihood # verbose
-#' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
-#' data, with columns:
-#'
+#' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
 #' * one column for each element in the `antigen_iso` input argument
-#'
 #' @export
 #' @examples
 #' # Load curve parameters
@@ -64,7 +55,7 @@
 #' )
 #'
 #' # Generate cross-sectional data
-#' csdata <- simulate_pop_data(
+#' csdata <- sim.cs(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,
 #'   n.smpl = nrep,
@@ -77,14 +68,12 @@
 #'   format = "long"
 #' )
 #'
-simulate_pop_data <- function(
+sim.cs <- function(
     lambda = 0.1,
     n.smpl = 100,
     age.rng = c(0, 20),
     age.fx = NA,
-    antigen_isos = intersect(
-      get_biomarker_levels(curve_params),
-      rownames(noise_limits)),
+    antigen_isos,
     n.mc = 0,
     renew.params = FALSE,
     add.noise = FALSE,
@@ -94,16 +83,11 @@ simulate_pop_data <- function(
     verbose = FALSE,
     ...) {
   if (verbose > 1) {
-    message("inputs to `simulate_pop_data()`:")
+    message("inputs to `sim.cs()`:")
     print(environment() %>% as.list())
   }
 
-
-
-  # predpar is an [array()] containing MCMC samples from the Bayesian distribution
-  # of longitudinal decay curve model parameters.
-  # NOTE: most users should leave `predpar` at its default value and provide
-  # `curve_params` instead.
+  # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 
   predpar <-
     curve_params %>%
@@ -153,7 +137,7 @@ simulate_pop_data <- function(
     ysim %>%
     as_tibble() %>%
     mutate(
-      id = as.character(row_number()),
+      id = as.character(1:n()),
       age = round(.data$age / day2yr, 2)
     )
 
@@ -162,7 +146,7 @@ simulate_pop_data <- function(
     to_return <-
       to_return %>%
       pivot_longer(
-        cols = all_of(antigen_isos),
+        cols = antigen_isos,
         values_to = c("value"),
         names_to = c("antigen_iso")
       ) %>%
@@ -184,18 +168,4 @@ simulate_pop_data <- function(
   }
 
   return(to_return)
-}
-
-#' @title Simulate a cross-sectional serosurvey with noise
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `sim.cs()` was renamed to [simulate_pop_data()] to create a more
-#' consistent API.
-#'
-#' @keywords internal
-sim.cs <- function(...) { # nolint: object_name_linter
-  lifecycle::deprecate_warn("2.0.0", "sim.cs()", "simulate_pop_data()")
-  simulate_pop_data(...)
 }

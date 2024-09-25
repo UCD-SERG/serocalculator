@@ -2,7 +2,6 @@
 
 * created unit test for `df_to_array()`
 * fixed `dplyr::select()` deprecation warning in `df_to_array()`
-* Generalized `get_()` methods from `pop_data`-specific to `default`.
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
@@ -79,7 +78,7 @@ to avoid printing an OK message.
 
 * added visualization of curve parameters
 
-* `simulate_pop_data()` now has `format` argument to specify long or wide format for output.
+* `sim.cs()` now has `format` argument to specify long or wide format for output.
 
 ### serocalculator 0.3.2
 

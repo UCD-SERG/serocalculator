@@ -57,32 +57,18 @@ set_biomarker_var <- function(object,
 }
 
 get_biomarker_levels <- function(object, ...) {
-  UseMethod("get_biomarker_levels", object)
-}
-
-#' @export
-get_biomarker_levels.default <- function(object, ...) {
   attr(object, "antigen_isos")
 }
 
 get_biomarker_names <- function(object, ...) {
-  UseMethod("get_biomarker_names", object)
-}
-
-#' @export
-get_biomarker_names.default <- function(object, ...) {
   # get biomarker name data
-  biomarker_data <- object %>% pull(get_biomarker_names_var(object))
+  biomarker_names_var = get_biomarker_names_var(object)
+  biomarker_data <- object %>% pull(biomarker_names_var)
 
   return(biomarker_data)
 }
 
 get_biomarker_names_var <- function(object, ...) {
-  UseMethod("get_biomarker_names_var", object)
-}
-
-#' @export
-get_biomarker_names_var.default <- function(object, ...) {
   # get value attribute
   biomarker_var <- attributes(object)[["biomarker_var"]]
 
@@ -90,15 +76,10 @@ get_biomarker_names_var.default <- function(object, ...) {
 }
 
 
-set_age <- function(object, ...) {
-  UseMethod("set_age", object)
-}
-
-#' @export
-set_age.default <- function(object,
-                            age = "Age",
-                            standardize = TRUE,
-                            ...) {
+set_age <- function(object,
+                    age = "Age",
+                    standardize = TRUE,
+                    ...) {
   # check if age column exists
   if (age %in% colnames(object)) {
     attr(object, "age_var") <- age
@@ -142,15 +123,10 @@ set_age.default <- function(object,
 }
 
 
-set_value <- function(object, ...) {
-  UseMethod("set_value", object)
-}
-
-#' @export
-set_value.default <- function(object,
-                              value = "result",
-                              standardize = TRUE,
-                              ...) {
+set_value <- function(object,
+                      value = "result",
+                      standardize = TRUE,
+                      ...) {
   # check if value column exists
   if (value %in% colnames(object)) {
     attr(object, "value_var") <- value
@@ -193,15 +169,10 @@ set_value.default <- function(object,
   return(object)
 }
 
-set_id <- function(object, ...) {
-  UseMethod("set_id", object)
-}
-
-#' @export
-set_id.default <- function(object,
-                           id = "index_id",
-                           standardize = TRUE,
-                           ...) {
+set_id <- function(object,
+                   id = "index_id",
+                   standardize = TRUE,
+                   ...) {
   # check if id column exists
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id

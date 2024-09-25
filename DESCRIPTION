@@ -54,3 +54,4 @@ LinkingTo:
 Language: en-US
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
+BugReports: https://github.com/UCD-SERG/serocalculator/issues

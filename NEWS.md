@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+* Generalized `get_()` methods from `pop_data`-specific to `default`.
+
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
 

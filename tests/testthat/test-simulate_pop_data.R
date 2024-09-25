@@ -36,6 +36,7 @@ test_that("`simulate_pop_data()` produces consistent results", {
     add.noise = TRUE,
     noise_limits = dlims,
     format = "long"
-  ) %>% ssdtools:::expect_snapshot_data(name = "sim_pop_data_1")
+  ) %>%
+    expect_snapshot_value(style = "serialize")
 
 })

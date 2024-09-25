@@ -73,7 +73,7 @@ simulate_pop_data <- function(
     n.smpl = 100,
     age.rng = c(0, 20),
     age.fx = NA,
-    antigen_isos,
+    antigen_isos = get_biomarker_names(curve_params),
     n.mc = 0,
     renew.params = FALSE,
     add.noise = FALSE,

@@ -38,6 +38,4 @@ test_that("`simulate_pop_data()` produces consistent results", {
     format = "long"
   ) %>% ssdtools:::expect_snapshot_data(name = "sim_pop_data_1")
 
-  expect_dop
-
 })

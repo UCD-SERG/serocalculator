@@ -1,15 +1,17 @@
-test_that("`as_curve_params()` produces an error when non-curve data is provided", {
-  library(magrittr)
-  expect_error(
-    object = curve_data <-
-      "https://osf.io/download//n6cp3/" %>% # pop data
-      readr::read_rds() %>%
-      as_curve_params(),
-    class = "not curve_params"
-  )
-})
+test_that("`as_curve_params()` produces an error
+          when non-curve data is provided", {
+            library(magrittr)
+            expect_error(
+              object = curve_data <-
+                "https://osf.io/download//n6cp3/" %>% # pop data
+                readr::read_rds() %>%
+                as_curve_params(),
+              class = "not curve_params"
+            )
+          })
 
-test_that("`as_curve_params()` produces an error when `data` is not a data.frame",
+test_that("`as_curve_params()` produces an error
+          when `data` is not a data.frame",
           {
             library(magrittr)
             expect_error(object =

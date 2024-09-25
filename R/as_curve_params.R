@@ -1,8 +1,10 @@
 #' Load antibody decay curve parameter
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
-#' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
-#' @returns a `curve_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @param antigen_isos a [character()] vector of antigen isotypes
+#' to be used in analyses
+#' @returns a `curve_data` object
+#' (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' library(magrittr)
@@ -14,8 +16,7 @@
 #' print(curve_data)
 as_curve_params <- function(data, antigen_isos = NULL) {
 
-  if(!is.data.frame(data))
-  {
+  if (!is.data.frame(data)) {
     cli::cli_abort(
       class = "not data.frame",
       message = c(

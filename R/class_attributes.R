@@ -15,7 +15,7 @@ get_value_var <- function(object, ...) {
 }
 
 get_value <- function(object, ...) {
-  value_var_name = object %>% get_value_var()
+  value_var_name <- object %>% get_value_var()
   value_data <- object %>% pull(value_var_name)
   return(value_data)
 }
@@ -26,7 +26,7 @@ get_id_var <- function(object, ...) {
 }
 
 get_id <- function(object, ...) {
-  id_var_name = object %>% get_id_var()
+  id_var_name <- object %>% get_id_var()
   id_data <- object %>% pull(id_var_name)
   return(id_data)
 }

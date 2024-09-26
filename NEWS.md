@@ -9,10 +9,10 @@
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:
-  - check `NEWS.md` for updated change log (#257)
-  - lint changed files (#256)
   - check that `README.qmd` still compiles 
   (advice from [preventive-r-package-care](https://indrajeetpatil.github.io/preventive-r-package-care)) (#259)
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

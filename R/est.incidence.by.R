@@ -82,9 +82,9 @@ est.incidence.by <- function(
 
   strata_is_empty <-
     missing(strata) ||
-    is.null(strata) ||
-    setequal(strata, NA) ||
-    setequal(strata, "")
+      is.null(strata) ||
+      setequal(strata, NA) ||
+      setequal(strata, "")
 
   if (strata_is_empty) {
     to_return <-

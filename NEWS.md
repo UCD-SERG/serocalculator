@@ -1,5 +1,18 @@
 # serocalculator (development version)
 
+## New features
+
+(to be added by future PRs)
+
+## Developer-facing changes
+
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
+* Added additional automated checks through 
+[GitHub actions](https://docs.github.com/en/actions), 
+including:
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
+
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
 

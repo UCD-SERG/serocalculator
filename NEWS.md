@@ -1,6 +1,7 @@
 # serocalculator (development version)
 
-* generalized `set_biomarker_var()` to work with any object class.
+* Generalized `get_()` and `set_()` methods to be general-purpose
+(no S3 class-specific methods needed yet) (#274).
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

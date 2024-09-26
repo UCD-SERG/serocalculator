@@ -17,4 +17,3 @@ load_pop_data <- function(file_path, ...) {
 
   return(pop_data)
 }
-

@@ -1,6 +1,7 @@
 # serocalculator (development version)
 
-* Generalized `get_()` methods from `pop_data`-specific to `default`.
+* Generalized `get_()` and `set_()` methods to be general-purpose
+(no S3 class-specific methods needed yet) (#274).
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

@@ -2,7 +2,7 @@
 
 ## New features
 
-(to be added by future PRs)
+* Added template for pull requests (borrowed from https://github.com/bcgov/ssdtools) (#265)
 
 ## Developer-facing changes
 

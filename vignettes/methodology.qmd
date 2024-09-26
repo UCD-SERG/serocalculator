@@ -95,7 +95,8 @@ log_likelihood(
 graph.loglik(
   pop_data = xs_data,
   curve_params = curves,
-  noise_params = noise)
+  noise_params = noise,
+  antigen_isos = "HlyE_IgA")
   
 ```
 

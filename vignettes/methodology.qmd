@@ -67,7 +67,7 @@ Then we could find the value of $\lambda$ that maximizes this likelihood by taki
 library(serocalculator)
 library(dplyr)
 #Import longitudinal antibody parameters from OSF
-curve = 
+curves = 
   "https://osf.io/download/rtw5k/" %>% 
   load_curve_params()
 
@@ -78,9 +78,23 @@ xs_data <-
 
 noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() 
 
+```
+
+```{r}
+log_likelihood(
+  lambda = 0.1,
+   pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = 
+)
+
+```
+
+```{r}
 graph.loglik(
   pop_data = xs_data,
-  curve_params = curve,
+  curve_params = curves,
   noise_params = noise)
   
 ```
@@ -183,15 +197,21 @@ $b(0) = b_{0}$. The serum antibody response $y(t)$ can be written as
 $$
 y(t) = y_{+}(t) + y_{-}(t)
 $$
+
 where
-\begin{align*}
+
+$$
+\begin{align}
 y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\le t <t_{1}]\\
 y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
-\end{align*}
+\end{align}
+$$
+
 Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the (unobservable) growth rate $\mu$ can 
 be written as 
 $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
 
+$$
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.6\linewidth]{fig/response.pdf}
@@ -199,6 +219,7 @@ $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
 $t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any antibody level 
 $y_{0} \le y(t) < y_{1}$ occurs twice.}
 \end{figure}
+$$
 
 Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$, 
 log concentrations decrease rapidly after infection has terminated, but decay then slows down and 
@@ -248,12 +269,15 @@ the joint distribution of backward recurrence time and cross--sectional interval
 product $u_{f}\cdot q$ because these probabilities are independent.
 
 The distribution of backward recurrence time is the marginal distribution
-\begin{align*}
+
+$$
+\begin{align}
 u(\tau) & = \int_{\Delta t=0}^{\infty} u_{f}(\tau;\Delta t)\cdot q(\Delta t)\text{d}\Delta t\\
         & = \int_{0}^{\infty}\frac{[0\le\tau\le\Delta t]}{\Delta t}\cdot \frac{p(\Delta t)\cdot
             \Delta t}{\overline{\Delta t_{p}}}\text{d}\Delta t\\
         & = \frac{1}{\overline{\Delta t_{p}}}\int_{\tau}^{\infty}p(\Delta t)\text{d}\Delta t
-\end{align*}
+\end{align}
+$$
 
 # Incidence of seroconversions
 
@@ -262,6 +286,7 @@ $p(\Delta t)$ of intervals $\Delta t$ between seroconversions, is important. Ass
 sampled completely at random during their intervals between seroconversions, and accounting for 
 interval length bias [@satten_etal04; @zelen04], the distribution of backward recurrence times 
 $\tau$ can be written as [@Teunis_2012]
+
 $$
 u(\tau) = \frac{1}{\overline{\Delta t}} \int_{\tau=0}^{\infty}p(\Delta t)\text{d}\Delta t 
         = \frac{1-P(\Delta t)}{\overline{\Delta t}}
@@ -278,10 +303,14 @@ $$
 \tau(y) = \tau_{+}(y) + \tau_{-}(y)
 $$
 where
-\begin{align*}
+
+$$
+\begin{align}
 \tau_{+}(y) & = \displaystyle{\frac{1}{\mu}} \log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right) [0\le \tau<t_{1}]\\
 \tau_{-}(y) & = \left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)[t_{1}\le \tau < \infty]
-\end{align*}
+\end{align}
+$$
+
 with corresponding derivatives
 $$
 \frac{\text{d}\tau_{+}}{\text{d}y} = \frac{1}{\mu y_{+}} \quad \text{ and } \quad
@@ -290,24 +319,24 @@ $$
 
 Now, consider the probability that an antibody level $y^{\prime}$, corresponding to a time since 
 infection $\tau^{\prime}$, is less than or equal to $y$ (see Figure \ref{response_graph}) 
-\begin{align*}
+\begin{align}
 P(y^{\prime} \le y) & = P\left(y_{0} \le y_{+}(\tau^{\prime})\le y_{+}(\tau) \vee y_{-}(\tau^{\prime}) 
                         \le y_{-}(\tau) \le t_{1}\right) + [y_{1} < y]\\
                     & = P\left(0 \le \tau^{\prime}\le \frac{1}{\mu} 
                         \log\left(\frac{y_{+}}{y_{0}}\right)\right)\\
                     &   \qquad {} + P\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)} \le 
                         \tau^{\prime} < \infty\right) + [y_{1} < y]
-\end{align*}
+\end{align}
 
 The probability density for $y$ then is 
-\begin{align*}
+\begin{align}
 \rho(y) & = \frac{\text{d}}{\text{d}y} P(y^{\prime}\le y)\\
         & = \frac{\text{d}}{\text{d}\tau_{+}}\frac{\text{d}\tau_{+}}{\text{d}y_{+}} 
             P\left(0\le\tau^{\prime}\le\tau_{+}(y)\right) +
             \frac{\text{d}}{\text{d}\tau_{-}}\frac{\text{d}\tau_{-}}{\text{d}y_{-}} 
             P\left(t_{1}+\tau_{-}(y)\le\tau^{\prime}<\infty\right)\\
         & = \rho_{+}(y_{+}) + \rho_{-}(y_{-})
-\end{align*}
+\end{align}
 
 So that
 \begin{equation}\label{rho_y}
@@ -425,37 +454,52 @@ $$
 U_{m}(\tau) = \frac{1}{m+1}\sum_{j=0}^{m} P_{j}(\tau\vert\lambda)
 $$
 while the cumulative distribution of antibody levels $y$ is
-\begin{align*}
+
+$$
+\begin{align}
 P(y^{\prime} \le y) & = U\left(\frac{1}{\mu}\log\left(\frac{y}{y_{0}} \right)\right) [y_{0}\le y < y_{1}] +\\
                     &   \qquad {} \left(1-U\left(t_{1}+\frac{y^{-(r-1)}-y_{1}^{-(r-1)}}
                         {\alpha(r-1)}\right)\right) [y\le y_{1}] + [y_{1} < y]
-\end{align*}
+\end{align}
+$$
+
 so that
-\begin{align*}
+
+$$
+\begin{align}
 R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}P_{j} \left(\frac{1}{\mu}\log
          \left(\frac{y}{y_{0}}\right)\vert\lambda\right) [y_{0} \le y < y_{1}]\\
      &   \qquad {} + \left(1 - \frac{1}{m+1}\sum_{j=0}^{m}P_{j}\left(t_{1}+
          \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\vert\lambda\right)\right)[y \le y_{1}]\\
      &   \qquad {} + [y_{1} < y]
-\end{align*}
+\end{align}
+$$
+
 
 Using equation \eqref{pm_cumul} this can be written in terms of incomplete gamma functions 
-\begin{align*}
+
+$$
+\begin{align}
 R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}  \left(1-\frac{\Gamma\left(j+1,\frac{\lambda}{\mu}
          \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
      &   \qquad {} + \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \left(1-\frac{\Gamma\left(j+1,\lambda\left(t_{1} +
          \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!}\right)\right)[y < y_{1}]\\
      &   \qquad {} + [y_{1} < y]
-\end{align*}
+\end{align}
+$$
+
 or
-\begin{align*}
+
+$$
+\begin{align}
 R(y) & = \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\frac{\lambda}{\mu} 
          \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
      &   \qquad {} + \frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\lambda\left(t_{1} + 
          \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!} [y < y_{1}]\\
      &   \qquad {} + [y_{1} < y]
-\end{align*}
+\end{align}
+$$
 
-\newpage
+---
 
 # References

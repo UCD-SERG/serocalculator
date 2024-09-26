@@ -1,0 +1,278 @@
+
+# Other innovations in the `serocalculator` package
+
+The `serocalculator` package provides three refinements to the method for
+calculating seroincidence published earlier [@Teunis_2012] and implemented in R package
+`seroincidence`, versions 1.x:
+
+(1) inclusion of infection episode with rising antibody levels,
+
+(2) non--exponential decay of serum antibodies after infection, and
+
+(3) age--dependent correction for subjects who have never seroconverted.
+
+It is important to note that, although the implemented
+methods use a specific parametric model, as proposed in [@de_Graaf_2014] and augmented in
+[@Teunis_2016], the methods used to calculate the likelihood function allow
+seroresponses of arbitrary shape.
+
+
+# Backward recurrence time
+
+Considering the (fundamental) uniform distribution $u_{f}$ of sampling within a given interval, the
+interval length distribution $p(\Delta t)$ and the distribution of (cross--sectionally) sampled
+interval length [@Teunis_2012]
+$$
+q(\Delta t) = \frac{p(\Delta t)\cdot\Delta t}{\overline{\Delta t_{p}}}
+$$
+the joint distribution of backward recurrence time and cross--sectional interval length is the
+product $u_{f}\cdot q$ because these probabilities are independent.
+
+The distribution of backward recurrence time is the marginal distribution
+
+$$
+\begin{align}
+u(\tau) & = \int_{\Delta t=0}^{\infty} u_{f}(\tau;\Delta t)\cdot q(\Delta t)\text{d}\Delta t\\
+        & = \int_{0}^{\infty}\frac{[0\le\tau\le\Delta t]}{\Delta t}\cdot \frac{p(\Delta t)\cdot
+            \Delta t}{\overline{\Delta t_{p}}}\text{d}\Delta t\\
+        & = \frac{1}{\overline{\Delta t_{p}}}\int_{\tau}^{\infty}p(\Delta t)\text{d}\Delta t
+\end{align}
+$$
+
+# Incidence of seroconversions
+
+To calculate the incidence of seroconversions, as in [@Teunis_2012], the distribution
+$p(\Delta t)$ of intervals $\Delta t$ between seroconversions, is important. Assuming any subject is
+sampled completely at random during their intervals between seroconversions, and accounting for
+interval length bias [@satten_etal04; @zelen04], the distribution of backward recurrence times
+$\tau$ can be written as [@Teunis_2012]
+
+$$
+u(\tau) = \frac{1}{\overline{\Delta t}} \int_{\tau=0}^{\infty}p(\Delta t)\text{d}\Delta t
+        = \frac{1-P(\Delta t)}{\overline{\Delta t}}
+$$
+where $\overline{\Delta t}$ is the $p$--distribution expected value of $\Delta t$.
+
+This density is employed to estimate seroconversion rates. The antibody concentration $y$ is the
+observable quantity, and we need to express the probability (density) of observed $y$ in terms of
+the density of backward recurrence time.
+
+First, the backward recurrence time can $\tau$ be expressed as a function of the serum antibody
+concentration $y$
+$$
+\tau(y) = \tau_{+}(y) + \tau_{-}(y)
+$$
+where
+
+$$
+\begin{align}
+\tau_{+}(y) & = \displaystyle{\frac{1}{\mu}} \log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right) [0\le \tau<t_{1}]\\
+\tau_{-}(y) & = \left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)[t_{1}\le \tau < \infty]
+\end{align}
+$$
+
+with corresponding derivatives
+$$
+\frac{\text{d}\tau_{+}}{\text{d}y} = \frac{1}{\mu y_{+}} \quad \text{ and } \quad
+\frac{\text{d}\tau_{-}}{\text{d}y} = - \frac{1}{\alpha y_{-}^{r}}
+$$
+
+Now, consider the probability that an antibody level $y^{\prime}$, corresponding to a time since
+infection $\tau^{\prime}$, is less than or equal to $y$ (see Figure \ref{response_graph})
+
+$$
+\begin{align}
+P(y^{\prime} \le y) & = P\left(y_{0} \le y_{+}(\tau^{\prime})\le y_{+}(\tau) \vee y_{-}(\tau^{\prime})
+                        \le y_{-}(\tau) \le t_{1}\right) + [y_{1} < y]\\
+                    & = P\left(0 \le \tau^{\prime}\le \frac{1}{\mu}
+                        \log\left(\frac{y_{+}}{y_{0}}\right)\right)\\
+                    &   \qquad {} + P\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)} \le
+                        \tau^{\prime} < \infty\right) + [y_{1} < y]
+\end{align}
+$$
+
+The probability density for $y$ then is
+
+$$
+\begin{align}
+\rho(y) & = \frac{\text{d}}{\text{d}y} P(y^{\prime}\le y)\\
+        & = \frac{\text{d}}{\text{d}\tau_{+}}\frac{\text{d}\tau_{+}}{\text{d}y_{+}}
+            P\left(0\le\tau^{\prime}\le\tau_{+}(y)\right) +
+            \frac{\text{d}}{\text{d}\tau_{-}}\frac{\text{d}\tau_{-}}{\text{d}y_{-}}
+            P\left(t_{1}+\tau_{-}(y)\le\tau^{\prime}<\infty\right)\\
+        & = \rho_{+}(y_{+}) + \rho_{-}(y_{-})
+\end{align}
+$$
+
+So that
+
+$$
+\begin{equation}\label{rho_y}
+\begin{aligned}
+\rho_{+}(y_{+}) & = \displaystyle{\frac{1}{\mu y_{+}}} u\left(\displaystyle{\frac{1}{\mu}}\log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right)\right)\\
+\rho_{-}(y_{-}) & = \displaystyle{\frac{1}{\alpha y_{-}^{r}}} u\left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)
+\end{aligned}
+\end{equation}
+$$
+
+when $[y_{0} \le y < y_{1}]$ there are two contributions to the density, one from the rising and one
+from the decaying branch of the antibody response.
+
+If, as assumed before [@Teunis_2012], intervals between incident infections are
+generated by a process with Gamma probability density, $\overline{\Delta t} = (m+1)/\lambda$. The
+cumulative distribution function for $\tau$ is
+
+$$
+\begin{equation}\label{pm_cumul}
+P_{m}(\tau) = 1-\frac{\Gamma(m+1, \lambda\tau)}{m!}
+\end{equation}
+and the density of backward recurrence times is
+\begin{equation}\label{bwrectime_pdf}
+u_{m}(\tau) = \frac{1-P_{m}(\tau)}{\overline{\Delta t}} =
+  \frac{\lambda\Gamma(m+1,\lambda\tau)}{(m+1)!} =
+  \frac{\lambda\text{e}^{-\lambda\tau}}{m+1}
+  \sum_{j=0}^{m}\frac{(\lambda\tau)^{j}}{j!}
+\end{equation}
+$$
+
+Combining equations $\eqref{rho_y}$ and $\eqref{bwrectime_pdf}$ the marginal density of $y$ can be found
+
+$$
+\begin{equation}
+\label{margdist_y_increase}
+\rho_{+}(y_{+}) = [y_{0} \le y_{+} < y_{1}] \frac{\lambda y_{0}}{\mu(m+1)}
+                  \left(\frac{y_{+}}{y_{0}}\right)^{-(1+\lambda/\mu)}
+                  \sum_{j=0}^{m} \frac{\left(\frac{\lambda}{\mu}\log(y_{+}/y_{0})\right)^{j}}{j!}
+\end{equation}
+$$
+
+and
+\begin{align}\label{margdist_y_decay}
+\rho_{-}(y_{-}) & = [0< y_{-} \le y_{1}] \frac{\lambda}{\alpha y_{-}^{r}(m+1)}
+                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)} \nonumber\\
+                &   \qquad {} \times\sum_{j=0}^{m}\frac{\lambda^{j}}{j!}\left(t_{1}+
+                    \frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)^{j}
+\end{align}
+where $\rho_{+}$ and $\rho_{-}$ refer to the contributions of the rising and decaying part of the
+seroresponse to the density of $y$.
+
+The within--host parameters $\boldsymbol{\theta} = (y_{0}, y_{1}, t_{1}, \alpha, r)$ vary among
+responses of individual subjects. Heterogeneity in these parameters may be described by their joint
+distribution, which can be used to calculate the marginal distribution $\rho(y)$
+[@Teunis_2012]. Since a Monte Carlo sample of the posterior joint distribution is
+available from the longitudinal model [@Teunis_2016] the marginal distribution of
+$\rho(y)$ may be approximated by the sum
+\begin{equation}\label{rho_numsum}
+\rho(y) = \frac{1}{N}\sum_{n=1}^{N} \rho_{+}(y\vert \lambda, m, \boldsymbol{\theta}_{n}) +
+          \rho_{-}(y\vert \lambda, m, \boldsymbol{\theta}_{n})
+\end{equation}
+for a Monte Carlo sample
+$(\boldsymbol{\theta}_{1}, \boldsymbol{\theta}_{2}, \dots, \boldsymbol{\theta}_{N})$. A
+cross--sectional sample of antibody concentrations $(Y_{1}, Y_{2}, \dots, Y_{K})$ can now be used to
+calculate a likelihood
+$$
+\ell(\lambda,m) = \prod_{k=1}^{K}\rho(Y_{k}\vert \lambda, m)
+$$
+that can be used to estimate $(\lambda, m)$.
+
+# True seronegative subjects
+
+At the time that a cross--sectional serum sample is collected, the subject whose blood is drawn may
+have never been infected in their lifetime. The antibody concentration $y$ in that sample then
+represents a true seronegative. For such a sample, the backward recurrence time does not exist. For
+a given longitudinal response, the backward recurrence time $\tau$ corresponding with measured
+antibody concentration $Y$ can be calculated. If that backward recurrence time is longer than the
+age of the person (at time of sampling), their antibody concentration $Y$ cannot have resulted from
+prior seroconversion.
+
+If, in the summation in equation \eqref{rho_numsum}, terms not satisfying the condition
+$\tau(y) < a$ are discarded, the resulting partial sum
+$$
+\rho^{\ast}(y,a) = \frac{1}{N}\sum_{n=1}^{N}[\tau(y,\boldsymbol{\theta}_{n}) < a]
+                   (\rho_{+}(y\vert\lambda,m,\boldsymbol{\theta}_{n}) +
+                   (\rho_{-}(y\vert\lambda,m,\boldsymbol{\theta}_{n})
+$$
+counts only those seroconversions that can have occurred during the lifespan of the person whose
+serum was sampled.
+
+Serum from a true seronegative subject is expected to have a low antibody concentration,
+representative of a ``true'' negative sample [@degreeff_etal12]. The antibody concentrations $y$ in
+sera from such truly negative subjects are not expected to decay over time: the baseline
+distribution $\rho_{0}(y)$ may be assumed fixed and independent of $m$ and $\lambda$. Note that also
+when $y$ corresponds to a backward recurrence time within the lifespan of a person, that same
+antibody concentration $y$ could still result from the baseline distribution $\rho_{0}(y)$.
+
+Given the interval distribution for incident infections, the probability that a sampled subject has
+never seroconverted depends on their age. For the gamma process assumed above, the survival function
+$P_{m}(a\vert m, \lambda)$ gives the probability of a subject having not seroconverted before age
+$a$ (equation \eqref{pm_cumul}).
+
+Thus, for a serum sample with antibody concentration $y$ from a subject of age $a$ the probability
+density is
+$$
+\psi (\lambda, m\vert y, a, \boldsymbol{\theta}, \boldsymbol{\theta}_{0}) =
+\rho^{\ast}(y, a) + P_{m}(a\vert m, \lambda)\rho_{0}(y\vert \boldsymbol{\theta}_{0})
+$$
+
+When the seroconversion rate is low, or a subject is young, or both, the probability of a true
+negative may be considerable.
+
+# Censored observations
+
+In case observations are censored at $y_{c}$ such that an observed $Y = \max(Y,y_{c})$, then for
+$y_{c} < Y$ the density $\rho(y)$ as in equations \eqref{margdist_y_increase} and
+\eqref{margdist_y_decay} holds, but the likelihood of any $Y \le y_{c}$ can be calculated
+$$
+\ell(\lambda, m \vert y \le y_{c}) = \int_{z=0}^{y_{c}} \rho(z, \lambda, m) \text{d}z = R(y_{c}\vert\lambda,m)
+$$
+We need the cumulative distribution $R(y)$ for the backward recurrence time, from equation
+\eqref{bwrectime_pdf}.
+$$
+U_{m}(\tau) = \frac{1}{m+1}\sum_{j=0}^{m} P_{j}(\tau\vert\lambda)
+$$
+while the cumulative distribution of antibody levels $y$ is
+
+$$
+\begin{align}
+P(y^{\prime} \le y) & = U\left(\frac{1}{\mu}\log\left(\frac{y}{y_{0}} \right)\right) [y_{0}\le y < y_{1}] +\\
+                    &   \qquad {} \left(1-U\left(t_{1}+\frac{y^{-(r-1)}-y_{1}^{-(r-1)}}
+                        {\alpha(r-1)}\right)\right) [y\le y_{1}] + [y_{1} < y]
+\end{align}
+$$
+
+so that
+
+$$
+\begin{align}
+R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}P_{j} \left(\frac{1}{\mu}\log
+         \left(\frac{y}{y_{0}}\right)\vert\lambda\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \left(1 - \frac{1}{m+1}\sum_{j=0}^{m}P_{j}\left(t_{1}+
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\vert\lambda\right)\right)[y \le y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align}
+$$
+
+
+Using equation \eqref{pm_cumul} this can be written in terms of incomplete gamma functions
+
+$$
+\begin{align}
+R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}  \left(1-\frac{\Gamma\left(j+1,\frac{\lambda}{\mu}
+         \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \left(1-\frac{\Gamma\left(j+1,\lambda\left(t_{1} +
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!}\right)\right)[y < y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align}
+$$
+
+or
+
+$$
+\begin{align}
+R(y) & = \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\frac{\lambda}{\mu}
+         \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\lambda\left(t_{1} +
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!} [y < y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align}
+$$

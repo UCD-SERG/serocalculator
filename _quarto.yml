@@ -19,4 +19,4 @@ format:
     number-sections: true
     number-depth: 2
     fig-cap-location: top
-bibliography: references.bib
+bibliography: vignettes/references.bib

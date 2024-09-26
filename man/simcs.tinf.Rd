@@ -6,34 +6,34 @@
 \usage{
 simcs.tinf(
   lambda,
-  n.smpl,
-  age.rng,
-  age.fx = NA,
+  n_samples,
+  age_range,
+  age_fixed = NA,
   antigen_isos,
-  n.mc = 0,
-  renew.params = FALSE,
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
   ...
 )
 }
 \arguments{
 \item{lambda}{seroconversion rate (in events/person-day)}
 
-\item{n.smpl}{number of samples n.smpl (= nr of simulated records)}
+\item{n_samples}{number of samples n_samples (= nr of simulated records)}
 
-\item{age.rng}{age range to use for simulating data, in days}
+\item{age_range}{age range to use for simulating data, in days}
 
-\item{age.fx}{age.fx for parameter sample (age.fx = NA for age at infection)}
+\item{age_fixed}{age_fixed for parameter sample (age_fixed = NA for age at infection)}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
 
-\item{n.mc}{\itemize{
-\item when \code{n.mc} is in 1:4000 a fixed posterior sample is used
-\item when n.mc = 0 a random sample is chosen
+\item{n_mcmc_samples}{\itemize{
+\item when \code{n_mcmc_samples} is in 1:4000 a fixed posterior sample is used
+\item when n_mcmc_samples = 0 a random sample is chosen
 }}
 
-\item{renew.params}{\itemize{
-\item \code{renew.params = TRUE} generates a new parameter set for each infection
-\item \code{renew.params = FALSE} keeps the one selected at birth, but updates baseline y0
+\item{renew_params}{\itemize{
+\item \code{renew_params = TRUE} generates a new parameter set for each infection
+\item \code{renew_params = FALSE} keeps the one selected at birth, but updates baseline y0
 }}
 
 \item{...}{arguments passed to \code{\link[=simresp.tinf]{simresp.tinf()}}}

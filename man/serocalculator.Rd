@@ -24,7 +24,7 @@ The API for this package includes the following functions:\tabular{ll}{
    \code{\link[=est.incidence.by]{est.incidence.by()}} \tab estimating incidence rates by strata \cr
    \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}} \tab summarizing stratified incidence rate estimates \cr
    \code{\link[=autoplot.summary.seroincidence.by]{autoplot.summary.seroincidence.by()}} \tab graphing incidence rate estimates \cr
-   \code{\link[=sim.cs]{sim.cs()}} \tab simulating cross-sectional population antibody data using longitudinal seroresponse models \cr
+   \code{\link[=simulate_pop_data]{simulate_pop_data()}} \tab simulating cross-sectional population antibody data using longitudinal seroresponse models \cr
 }
 }
 \details{

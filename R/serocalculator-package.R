@@ -29,7 +29,7 @@
 #' [est.incidence.by()]                   | estimating incidence rates by strata
 #' [summary.seroincidence.by()]           | summarizing stratified incidence rate estimates
 #' [autoplot.summary.seroincidence.by()]  | graphing incidence rate estimates
-#' [sim.cs()]                             | simulating cross-sectional population antibody data using longitudinal seroresponse models
+#' [simulate_pop_data()]                             | simulating cross-sectional population antibody data using longitudinal seroresponse models
 #'
 #'
 #' @author

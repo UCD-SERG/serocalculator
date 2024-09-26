@@ -1,7 +1,18 @@
 # serocalculator (development version)
 
+## New features
 
-* initialized `lintr` with `lintr::use_lint()`.
+(to be added by future PRs)
+
+## Developer-facing changes
+
+* initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
+
+* Added additional automated checks through 
+[GitHub actions](https://docs.github.com/en/actions), 
+including:
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
 
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test

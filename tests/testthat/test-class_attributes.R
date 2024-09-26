@@ -3,8 +3,8 @@ test_that("`get_biomarker_levels()` works", {
     load_pop_data()
   biomarker_levels <- xs_data %>% get_biomarker_levels()
   expected_levels <- structure(1:2,
-                              levels = c("HlyE_IgA", "HlyE_IgG"),
-                              class = "factor")
+                               levels = c("HlyE_IgA", "HlyE_IgG"),
+                               class = "factor")
   expect_equal(object = biomarker_levels, expected = expected_levels)
 })
 

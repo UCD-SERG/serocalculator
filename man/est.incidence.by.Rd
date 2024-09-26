@@ -21,9 +21,7 @@ est.incidence.by(
 )
 }
 \arguments{
-\item{pop_data}{a \link{data.frame} with cross-sectional serology data per
-antibody and age, and additional columns corresponding to
-each element of the \code{strata} input}
+\item{pop_data}{a \link{data.frame} with cross-sectional serology data per antibody and age, and additional columns corresponding to each element of the \code{strata} input}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
 \itemize{
@@ -45,14 +43,11 @@ each element of the \code{strata} input}
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{a \link{character} vector of stratum-defining variables.
-Values must be variable names in \code{pop_data}.}
+\item{strata}{a \link{character} vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
 
-\item{curve_strata_varnames}{A subset of \code{strata}.
-Values must be variable names in \code{curve_params}. Default = "".}
+\item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
 
-\item{noise_strata_varnames}{A subset of \code{strata}.
-Values must be variable names in \code{noise_params}. Default = "".}
+\item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 
@@ -60,10 +55,7 @@ Values must be variable names in \code{noise_params}. Default = "".}
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
-\item{num_cores}{Number of processor cores to use for
-calculations when computing by strata. If set to
-more than 1 and package \pkg{parallel} is available,
-then the computations are executed in parallel. Default = 1L.}
+\item{num_cores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
@@ -101,15 +93,13 @@ then the computations are executed in parallel. Default = 1L.}
 \value{
 \itemize{
 \item if \code{strata} has meaningful inputs:
-An object of class \code{"seroincidence.by"}; i.e., a list of \code{ "seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
-with some meta-data attributes.
+An object of class \code{"seroincidence.by"}; i.e., a list of \code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
 \item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
 An object of class \code{"seroincidence"}.
 }
 }
 \description{
-Function to estimate seroincidences based on cross-section
-serology data and longitudinal
+Function to estimate seroincidences based on cross-section serology data and longitudinal
 response model.
 }
 \details{
@@ -118,8 +108,7 @@ recommending that you use \code{\link[=est.incidence]{est.incidence()}} for unst
 and then the data will be passed to \code{\link[=est.incidence]{est.incidence()}}.
 If for some reason you want to use \code{\link[=est.incidence.by]{est.incidence.by()}}
 with no strata instead of calling \code{\link[=est.incidence]{est.incidence()}},
-you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata}
-argument to avoid that warning.
+you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata} argument to avoid that warning.
 }
 \examples{
 
@@ -129,7 +118,7 @@ xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso)
+  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
 

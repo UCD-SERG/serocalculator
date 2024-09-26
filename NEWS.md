@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+* generalized `set_biomarker_var()` to work with any object class.
+
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
 

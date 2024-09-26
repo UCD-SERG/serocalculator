@@ -91,37 +91,6 @@ get_id_var.pop_data <- function(object, ...) {
   return(id_var)
 }
 
-set_biomarker_var <- function(object, ...) {
-  UseMethod("set_biomarker_var", object)
-}
-
-#' @export
-set_biomarker_var.pop_data = function(object,
-                                      biomarker = "antigen_iso",
-                                      standardize = TRUE,
-                                      ...)
-{
-  if (biomarker %in% colnames(object))
-  {
-    attr(object, "biomarker_var") <- biomarker
-  } else
-  {
-    cli::cli_abort('data does not include column "{biomarker}"')
-  }
-
-  if (standardize)
-  {
-    object <- object %>%
-      rename(c("antigen_iso" = attr(object, "biomarker_var")))
-
-    # update attribute
-    attr(object, "biomarker_var") <- "antigen_iso"
-  }
-
-  return(object)
-
-}
-
 get_biomarker_levels <- function(object, ...)
 {
   UseMethod("get_biomarker_levels", object)

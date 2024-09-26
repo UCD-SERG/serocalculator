@@ -23,3 +23,4 @@ allpopsamples_hlye.csv$
 ^CRAN-SUBMISSION$
 ^README\.qmd$
 ^codecov\.yml$
+^_quarto\.yml$

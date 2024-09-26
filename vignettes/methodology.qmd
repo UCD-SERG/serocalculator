@@ -1,25 +1,9 @@
 ---
 title: "Serocalculator package methodology"
-author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
-date: '`r Sys.Date()`'
-format: 
-  html:
-    number-sections: true
-    toc: true
-    html-math-method: mathjax
-    fig-cap-location: top
-    echo: false
-  revealjs: 
-    echo: false
-    html-math-method: mathjax
-    scrollable: true
-    auto-stretch: true
-    fig-height: 3
-    fig-width: 7
-    number-sections: true
-    number-depth: 2
-    fig-cap-location: top
-bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{Serocalculator package methodology}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction to seroincidence estimation
@@ -77,11 +61,11 @@ Then we could find the value of $\lambda$ that maximizes this likelihood by taki
 ## Example log-likelihood curves
 
 ```{r}
-
 #| fig-cap: "Example log-likelihood curves"
 #| label: fig-ex-lik-curves
 
 library(serocalculator)
+library(dplyr)
 #Import longitudinal antibody parameters from OSF
 curve = 
   "https://osf.io/download/rtw5k/" %>% 
@@ -90,8 +74,7 @@ curve =
 #Import cross-sectional data from OSF and rename required variables:
 xs_data <- 
   "https://osf.io/download//n6cp3/" %>% 
-  load_pop_data() %>% 
-  clean_pop_data()
+  load_pop_data()
 
 noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() 
 

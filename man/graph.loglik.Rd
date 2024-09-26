@@ -8,7 +8,7 @@ graph.loglik(
   pop_data,
   curve_params,
   noise_params,
-  antigen_isos,
+  antigen_isos = pop_data \%>\% get_biomarker_levels(),
   x = 10^seq(-3, 0, by = 0.1),
   highlight_points = NULL,
   highlight_point_names = "highlight_points",

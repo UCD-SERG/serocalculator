@@ -1,0 +1,20 @@
+author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
+date: '`r Sys.Date()`'
+format:
+  html:
+    number-sections: true
+    toc: true
+    html-math-method: mathjax
+    fig-cap-location: top
+    echo: false
+  revealjs:
+    echo: false
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
+bibliography: references.bib

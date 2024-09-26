@@ -11,21 +11,9 @@
 #' @keywords internal
 #' @export
 
-llik <- function(
-    lambda,
-    pop_data,
-    antigen_isos,
-    curve_params,
-    noise_params,
-    verbose = FALSE,
-    ...) {
+llik <- function(...) {
   lifecycle::deprecate_warn("1.0.0", "llik()", "log_likelihood()")
-  log_likelihood(lambda,
-                 pop_data,
-                 antigen_isos,
-                 curve_params,
-                 noise_params,
-                 verbose)
+  log_likelihood(...)
 }
 
 #' Calculate log-likelihood

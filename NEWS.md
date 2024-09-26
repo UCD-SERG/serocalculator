@@ -2,7 +2,7 @@
 
 ## New features
 
-(to be added by future PRs)
+* Added more details about contributing PRs in `Contributing.md` (#280)
 
 ## Developer-facing changes
 

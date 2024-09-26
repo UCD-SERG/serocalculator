@@ -1,47 +1,20 @@
 #' Load a cross-sectional antibody survey data set
 #'
 #' @param file_path path to an RDS file containing a cross-sectional antibody survey data set, stored as a [data.frame()] or [tibble::tbl_df]
-#' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
-#' @param age a [character()] identifying the age column
-#' @param id a [character()] identifying the id column
-#' @param value a [character()] identifying the value column
-#' @param standardize a [logical()] to determine standardization of columns
-#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @inheritDotParams as_pop_data
+#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attributes)
 #' @export
 #' @examples
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #' print(xs_data)
 load_pop_data <- function(file_path,
-                          antigen_isos = NULL,
-                          age = "Age",
-                          value = "result",
-                          id = "index_id",
-                          standardize = TRUE) {
-  if (file_path %>% substr(1, 4) == "http") {
-    file_path <- url(file_path)
-  }
+                          ...) {
 
   pop_data <-
     file_path %>%
-    readRDS() %>%
-    tibble::as_tibble()
-
-  class(pop_data) <-
-    c("pop_data", class(pop_data))
-
-  if (is.null(antigen_isos)) {
-    antigen_isos <- unique(pop_data$antigen_iso)
-  } else {
-    stopifnot(all(is.element(antigen_isos, pop_data$antigen_iso)))
-  }
-
-  attr(pop_data, "antigen_isos") <- antigen_isos
-
-  pop_data <- pop_data %>%
-    set_age(age = age, standardize = standardize) %>%
-    set_value(value = value, standardize = standardize) %>%
-    set_id(id = id, standardize = standardize)
+    readr::read_rds() %>%
+    as_pop_data(...)
 
   return(pop_data)
 }
@@ -118,6 +91,72 @@ get_id_var.pop_data <- function(object, ...) {
   return(id_var)
 }
 
+set_biomarker_var <- function(object, ...) {
+  UseMethod("set_biomarker_var", object)
+}
+
+#' @export
+set_biomarker_var.pop_data = function(object,
+                                      biomarker = "antigen_iso",
+                                      standardize = TRUE,
+                                      ...)
+{
+  if (biomarker %in% colnames(object))
+  {
+    attr(object, "biomarker_var") <- biomarker
+  } else
+  {
+    cli::cli_abort('data does not include column "{biomarker}"')
+  }
+
+  if (standardize)
+  {
+    object <- object %>%
+      rename(c("antigen_iso" = attr(object, "biomarker_var")))
+
+    # update attribute
+    attr(object, "biomarker_var") <- "antigen_iso"
+  }
+
+  return(object)
+
+}
+
+get_biomarker_levels <- function(object, ...)
+{
+  UseMethod("get_biomarker_levels", object)
+}
+
+#' @export
+get_biomarker_levels.pop_data <- function(object, ...)
+{
+  attr(object, "antigen_isos")
+}
+
+get_biomarker_names <- function(object, ...) {
+  UseMethod("get_biomarker_names", object)
+}
+
+#' @export
+get_biomarker_names.pop_data <- function(object, ...) {
+  # get biomarker name data
+  biomarker_data <- object %>% pull(get_biomarker_names_var(object))
+
+  return(biomarker_data)
+}
+
+get_biomarker_names_var <- function(object, ...) {
+  UseMethod("get_biomarker_names_var", object)
+}
+
+#' @export
+get_biomarker_names_var.pop_data <- function(object, ...) {
+  # get value attribute
+  biomarker_var <- attributes(object)[["biomarker_var"]]
+
+  return(biomarker_var)
+}
+
 
 set_age <- function(object, ...) {
   UseMethod("set_age", object)
@@ -129,7 +168,7 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
   if (age %in% colnames(object)) {
     attr(object, "age_var") <- age
   } else {
-    cli::cli_alert_warning('The specified `age` column "{age}" does not exist.')
+    cli::cli_warn('The specified `age` column "{age}" does not exist.')
 
     # search age variable from object
     age_var <-
@@ -144,14 +183,17 @@ set_age.pop_data <- function(object, age = "Age", standardize = TRUE, ...) {
       attr(object, "age_var") <- age_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_info('Proceeding to use "{age_var}"')
+      cli::cli_inform('Proceeding to use "{.var {age_var}}"')
     } else if (length(age_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
-    } else # if (length(age_var) > 1)
+    } else if (length(age_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {age_var}")
-      cli::cli_alert_warning("Using first match: {age_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {age_var}}")
+      cli::cli_warn("Using first match: {.var {age_var[1]}}")
       attr(object, "age_var") <- age_var[1]
+    } else
+    {
+      cli::cli_abort("{.code length(age_var)} = {.val {length(age_var)}}")
     }
   }
 
@@ -177,7 +219,7 @@ set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...
   if (value %in% colnames(object)) {
     attr(object, "value_var") <- value
   } else {
-    cli::cli_alert_warning('The specified `value` column "{value}" does not exist.')
+    cli::cli_warn('The specified `value` column "{.var {value}}" does not exist.')
 
     # search value variable from pop_data
     value_var <-
@@ -192,13 +234,13 @@ set_value.pop_data <- function(object, value = "result", standardize = TRUE, ...
       attr(object, "value_var") <- value_var
 
       # create warning when using searched age instead of provided age
-      cli::cli_alert_info('Proceeding to use "{value_var}"')
+      cli::cli_inform('Proceeding to use "{.var {value_var}}"')
     } else if (length(value_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(value_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {value_var}")
-      cli::cli_alert_warning("Using first match: {value_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {value_var}}")
+      cli::cli_inform("Using first match: {.var {value_var[1]}}")
       attr(object, "value_var") <- value_var[1]
     }
   }
@@ -224,7 +266,7 @@ set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id
   } else {
-    cli::cli_alert_warning('The specified `id` column "{id}" does not exist.')
+    cli::cli_warn('The specified {.var id} column {.val {id}} does not exist.')
 
     # search id variable from object
     id_var <-
@@ -239,13 +281,13 @@ set_id.pop_data <- function(object, id = "index_id", standardize = TRUE, ...) {
       attr(object, "id_var") <- id_var
 
       # create warning when using searched id instead of provided id
-      cli::cli_alert_info('Proceeding to use "{id_var}"')
+      cli::cli_inform('Proceeding to use "{id_var}"')
     } else if (length(id_var) == 0) {
       cli::cli_abort("No similar column name was detected.")
     } else # if (length(id_var) > 1)
     {
-      cli::cli_alert_warning("Multiple potential matches found: {id_var}")
-      cli::cli_alert_warning("Using first match: {id_var[1]}")
+      cli::cli_warn("Multiple potential matches found: {.var {id_var}}")
+      cli::cli_inform("Using first match: {.var {id_var[1]}}")
       attr(object, "id_var") <- id_var[1]
     }
   }

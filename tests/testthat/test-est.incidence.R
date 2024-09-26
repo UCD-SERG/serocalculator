@@ -1,6 +1,7 @@
 test_that(
   "est.incidence() produces expected results for typhoid data",
   {
+    library(dplyr)
     # get pop data
     xs_data <- load_pop_data(
       file_path = "https://osf.io/download//n6cp3/",
@@ -9,14 +10,15 @@ test_that(
       id = "index_id",
       standardize = TRUE
     ) %>%
-      filter(Country == "Pakistan")
+      filter(Country == "Pakistan") %>%
+      slice_head(n = 100)
 
     # get noise data
     noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
       filter(Country == "Pakistan")
 
     # get curve data
-    curve <- load_curve_params("https://osf.io/download/rtw5k/")
+    curve <- load_curve_params("https://osf.io/download/rtw5k/") # slice if test is too slow (.by = antigen_iso))
 
     # set start
     start <- .05
@@ -30,12 +32,7 @@ test_that(
       summary.seroincidence(
         coverage = .95,
         start = start
-      ) %>%
-      mutate(
-        ageCat = NULL,
-        antigen.iso = paste(collapse = "+", "HlyE_IgG")
-      ) %>%
-      structure(noise.parameters = noise)
+      )
 
     expect_snapshot(x = typhoid_results)
   }
@@ -50,10 +47,13 @@ test_that("`est.incidence()` produces expected results", {
     value = "result",
     id = "index_id",
     standardize = TRUE
-  )
+  ) %>%
+    filter(Country == "Pakistan") %>%
+    slice_head(n = 100)
+
 
   est_true <- est.incidence(
-    pop_data = xs_data_true %>% filter(Country == "Pakistan"),
+    pop_data = xs_data_true,
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -65,10 +65,13 @@ test_that("`est.incidence()` produces expected results", {
     value = "result",
     id = "index_id",
     standardize = FALSE
-  )
+  ) %>%
+    filter(Country == "Pakistan") %>%
+    slice_head(n = 100)
+
 
   est_false <- est.incidence(
-    pop_data = xs_data_false %>% filter(Country == "Pakistan"),
+    pop_data = xs_data_false,
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")

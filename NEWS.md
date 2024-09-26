@@ -2,7 +2,7 @@
 
 ## New features
 
-(to be added by future PRs)
+* Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
 
 ## Developer-facing changes
 

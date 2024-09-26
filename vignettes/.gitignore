@@ -2,3 +2,5 @@
 *.R
 methodology.log
 methodology_files
+~$*.pptx
+~$*.docx

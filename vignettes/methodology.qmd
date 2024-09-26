@@ -1,13 +1,9 @@
 ---
-title: "Serocalculator package methodology"
-format: pptx
-vignette: >
-  %\VignetteIndexEntry{Serocalculator package methodology}
-  %\VignetteEngine{quarto::html}
-  %\VignetteEncoding{UTF-8}
+title: "Introduction to seroincidence estimation"
+format: revealjs
 ---
 
-# Introduction to seroincidence estimation
+# Methodology
 
 ## Estimating incidence
 
@@ -15,11 +11,17 @@ The **incidence rate** of a disease over a **specific time period** is
 the rate at which individuals in a population are acquiring that disease 
 during that time period. 
 
+---
+
 Example: if ten people in a population of 1000 contract typhoid over a one month time period, then the incidence rate for that time period is *"10 new cases per 1000 persons per month"*.
+
+---
 
 More mathematically, the incidence rate *at a given time point* is 
 the *derivative* (i.e., the current rate of change over time) 
 of the cumulative count of infections per person, at that time point.
+
+---
 
 ## Scale of incidence rates
 
@@ -158,7 +160,13 @@ $$
 
 ## Antibody response decay curves
 
-![Antibody response decay curves, $p(Y=y|T=t)$, for typhoid](fig1a-1.svg){width=100% #fig-decay}
+::: {#fig-decay}
+
+![](fig/fig1a-1.svg)
+
+Antibody response decay curves, $p(Y=y|T=t)$, for typhoid
+
+:::
 
 ## Putting it all together
 
@@ -234,15 +242,66 @@ Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the (unobservable) g
 be written as 
 $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
 
+---
+
 ::: {#fig-response-graph}
 
-![](fig/response.pdf)
+```{r}
 
-The antibody level at $t=0$ is $y_{0}$; the rising branch ends at 
-$t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any antibody level 
-$y_{0} \le y(t) < y_{1}$ occurs twice.
+curve1 = 
+  curves %>% 
+  filter(
+    # iter %in% 1:10,
+    iter == 5,
+         antigen_iso == "HlyE_IgG")
+
+library(ggplot2)
+
+curve1 %>% 
+serocalculator:::plot_curve_params_one_ab(
+  log_y = FALSE
+) +
+  xlim(0, 100) +
+  theme_minimal() +
+  geom_vline(
+    aes(xintercept = curve1$t1,
+        col = "t1")
+  ) +
+  
+  geom_hline(
+    aes(yintercept = curve1$y0,
+        col = "y0")
+  ) +
+  
+  
+  geom_hline(
+    aes(yintercept = curve1$y1,
+        col = "y1")
+  ) +
+  # geom_point(
+  #   data = curve1,
+  #   aes(
+  #     x = t1,
+  #     y = y1,
+  #     col = "(t1,y1)"
+  #   )
+  # ) + 
+  theme(legend.position = "bottom") +
+  labs(col = "")
+
+```
+
+
+:::: notes
+The antibody level at $t=0$ is $y_{0}$; 
+the rising branch ends at $t = t_{1}$ 
+where the peak antibody level $y_{1}$ is reached. 
+Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
+::::
 
 :::
+
+---
 
 Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$, 
 log concentrations decrease rapidly after infection has terminated, but decay then slows down and 

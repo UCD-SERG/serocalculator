@@ -7,7 +7,8 @@
 load_pop_data(file_path, ...)
 }
 \arguments{
-\item{file_path}{path to an RDS file containing a cross-sectional antibody survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
+\item{file_path}{path to an RDS file containing a cross-sectional antibody
+survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
 \item{...}{
   Arguments passed on to \code{\link[=as_pop_data]{as_pop_data}}

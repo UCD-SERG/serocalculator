@@ -3,6 +3,7 @@ project:
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
 date: '`r Sys.Date()`'
 format:
+  pptx: default
   html:
     number-sections: true
     toc: true

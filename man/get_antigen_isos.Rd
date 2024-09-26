@@ -17,8 +17,8 @@ Extract antigen-isotype combinations list from an object
 }
 \examples{
 
-"https://osf.io/download//n6cp3/" |>
- load_pop_data() |>
- clean_pop_data() |>
+"https://osf.io/download//n6cp3/" %>%
+ load_pop_data() %>%
+ clean_pop_data() %>%
  get_antigen_isos()
 }

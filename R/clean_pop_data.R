@@ -15,7 +15,7 @@
 #'
 clean_pop_data = function(pop_data)
 {
-  pop_data = pop_data |>
+  pop_data = pop_data %>%
     rename(
       id = .data$index_id,
       value = .data$result,

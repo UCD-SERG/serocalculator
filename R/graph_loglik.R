@@ -15,7 +15,7 @@ graph.loglik = function(
     pop_data,
     curve_params,
     noise_params,
-    antigen_isos = pop_data |> get_antigen_isos(),
+    antigen_isos = pop_data %>% get_antigen_isos(),
     x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,
     highlight_point_names = "highlight_points",
@@ -29,7 +29,7 @@ graph.loglik = function(
      !is.element("d", names(curve_params)))
   {
     curve_params =
-      curve_params |>
+      curve_params %>%
       dplyr::mutate(
         alpha = .data$alpha * 365.25,
         d = .data$r - 1)
@@ -37,7 +37,7 @@ graph.loglik = function(
 
   plot_data =
     tibble(
-      x = x |> sort(),
+      x = x %>% sort(),
       y = llik(
         pop_data = pop_data,
         curve_params = curve_params,
@@ -49,7 +49,7 @@ graph.loglik = function(
 
   if(is.null(previous_plot))
   {
-    plot1 = plot_data |>
+    plot1 = plot_data %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$x, y = .data$y)) +
       # ggplot2::geom_point() +
       ggplot2::geom_line(aes(color = curve_label)) +

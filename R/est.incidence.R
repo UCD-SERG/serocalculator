@@ -17,7 +17,7 @@ est.incidence <- function(
     pop_data,
     curve_params,
     noise_params,
-    antigen_isos = pop_data$antigen_iso |> unique(),
+    antigen_isos = pop_data$antigen_iso %>% unique(),
     lambda_start = 0.1,
     stepmin = 1e-8,
     stepmax = 3,
@@ -30,7 +30,7 @@ est.incidence <- function(
   if(verbose > 1)
   {
     message('inputs to `est.incidence()`:')
-    print(environment() |> as.list())
+    print(environment() %>% as.list())
   }
 
   .errorCheck(
@@ -38,22 +38,22 @@ est.incidence <- function(
     antigen_isos = antigen_isos,
     curve_params = curve_params)
 
-  pop_data = pop_data |>
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select("value", "age", "antigen_iso") |>
+  pop_data = pop_data %>%
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
+    dplyr::select("value", "age", "antigen_iso") %>%
     tidyr::drop_na()
 
-  curve_params = curve_params |>
+  curve_params = curve_params %>%
     ungroup() %>%
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
-      d = .data$r - 1) |>
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select("y1", "alpha", "d", "antigen_iso") |>
+      d = .data$r - 1) %>%
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
+    dplyr::select("y1", "alpha", "d", "antigen_iso") %>%
     droplevels()
 
-  noise_params = noise_params |>
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+  noise_params = noise_params %>%
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
     droplevels()
 
   # incidence can not be calculated if there are zero observations.
@@ -69,9 +69,9 @@ est.incidence <- function(
   if(nrow(noise_params) != length(antigen_isos))
     stop("too many rows of noise parameters.")
 
-  pop_data = pop_data |> split(~antigen_iso)
-  curve_params = curve_params |> split(~antigen_iso)
-  noise_params = noise_params |> split(~antigen_iso)
+  pop_data = pop_data %>% split(~antigen_iso)
+  curve_params = curve_params %>% split(~antigen_iso)
+  noise_params = noise_params %>% split(~antigen_iso)
 
   # First, check if we find numeric results...
   res <- .nll(
@@ -133,7 +133,7 @@ est.incidence <- function(
         verbose = verbose,
         print.level = ifelse(verbose, 2, 0),
         ...)
-    } |>
+    } %>%
     system.time()
 
   code_text = nlm_exit_codes[fit$code]
@@ -156,7 +156,7 @@ est.incidence <- function(
   if(build_graph)
   {
     graph =
-      graph |>
+      graph %>%
       add_point_to_graph(
         fit = fit,
         pop_data = pop_data,
@@ -175,7 +175,7 @@ est.incidence <- function(
 
   }
 
-  fit = fit |>
+  fit = fit %>%
     structure(
       class = union("seroincidence", class(fit)),
       lambda_start = lambda_start,

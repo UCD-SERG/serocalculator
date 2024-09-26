@@ -8,12 +8,12 @@
 #' @examples
 #' library(dplyr)
 #' library(tidyr)
-#' df = iris |>
+#' df = iris %>%
 #'   tidyr::pivot_longer(
 #'   names_to = "parameter",
-#'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) |>
+#'   cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length") ) %>%
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
-#'   df |> serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
+#'   df %>% serocalculator:::df.to.array(dim_var_names = c("parameter", "Species"))
 #' @keywords internal
 df.to.array = function(
     df,
@@ -22,14 +22,14 @@ df.to.array = function(
 {
 
   stopifnot(all(dim_var_names %in% names(df)))
-  stopifnot(value_var_name |> length() == 1)
+  stopifnot(value_var_name %>% length() == 1)
   stopifnot(value_var_name %in% names(df))
   if(is.grouped_df(df)) {
     stop("ungroup the data frame first before running")
   }
 
   all_factors  =
-    df |> select(dim_var_names) |> sapply(FUN = is.factor) |> all()
+    df %>% select(dim_var_names) %>% sapply(FUN = is.factor) %>% all()
 
   if(!all_factors)
   {
@@ -39,7 +39,7 @@ df.to.array = function(
       "\nCheck results using `dimnames()`")
   }
 
-  df = df |>
+  df = df %>%
     mutate(
       across(
         all_of(dim_var_names),
@@ -53,7 +53,7 @@ df.to.array = function(
       paste(c( dim_var_names, "obs"), collapse = " + ")
     )
 
-  df |>
-    mutate(.by = all_of(dim_var_names), obs = 1:n()) |>
+  df %>%
+    mutate(.by = all_of(dim_var_names), obs = 1:n()) %>%
     xtabs(formula = formula(xtabs_formula))
 }

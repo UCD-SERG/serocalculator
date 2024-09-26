@@ -18,7 +18,7 @@ autoplot.summary.seroincidence.by = function(
     width = 0.001,
     ...)
 {
-  object |>
+  object %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = get(xvar),

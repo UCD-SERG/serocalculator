@@ -51,21 +51,21 @@ llik <- function(
     } else
     {
       cur_data =
-        pop_data |>
+        pop_data %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_curve_params =
-        curve_params |>
+        curve_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_noise_params =
-        noise_params |>
+        noise_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       if(!is.element('d', names(cur_curve_params)))
       {
         cur_curve_params =
-          cur_curve_params |>
+          cur_curve_params %>%
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
             d = .data$r - 1)

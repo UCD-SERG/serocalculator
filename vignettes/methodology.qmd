@@ -84,16 +84,16 @@ Then we could find the value of $\lambda$ that maximizes this likelihood by taki
 library(serocalculator)
 #Import longitudinal antibody parameters from OSF
 curve = 
-  "https://osf.io/download/rtw5k/" |> 
+  "https://osf.io/download/rtw5k/" %>% 
   load_curve_params()
 
 #Import cross-sectional data from OSF and rename required variables:
 xs_data <- 
-  "https://osf.io/download//n6cp3/" |> 
-  load_pop_data() |> 
+  "https://osf.io/download//n6cp3/" %>% 
+  load_pop_data() %>% 
   clean_pop_data()
 
-noise <- url("https://osf.io/download//hqy4v/") |> readRDS() 
+noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() 
 
 graph.loglik(
   pop_data = xs_data,

@@ -23,7 +23,7 @@ graph.curve.params = function(
       "Graphing curves for antigen isotypes: ",
       paste(antigen_isos, collapse = ", "))
 
-  curve_params = curve_params |>
+  curve_params = curve_params %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   day2yr <- 365.25
@@ -82,7 +82,7 @@ graph.curve.params = function(
       .data$y1,
       .data$t1,
       .data$alpha,
-      .data$r)) |>
+      .data$r)) %>%
     ungroup()
 
   if (verbose) message('starting to compute quantiles')

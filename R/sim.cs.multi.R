@@ -26,12 +26,12 @@ sim.cs.multi = function(
   if(verbose)
   {
     message('inputs to `sim.cs.multi()`:')
-    print(environment() |> as.list())
+    print(environment() %>% as.list())
   }
 
   if (num_cores > 1L)
   {
-    num_cores = num_cores |> check_parallel_cores()
+    num_cores = num_cores %>% check_parallel_cores()
 
     if(verbose)
     {

@@ -56,19 +56,19 @@ summary.seroincidence.by <- function(
   }
 
   results =
-    object |>
+    object %>%
     lapply(
       FUN = summary.seroincidence,
-      coverage = confidence_level) |>
+      coverage = confidence_level) %>%
     bind_rows(.id = "Stratum")
 
   results =
     inner_join(
-      object |> attr("Strata"),
+      object %>% attr("Strata"),
       results,
       by = "Stratum",
       relationship = "one-to-one"
-    ) |>
+    ) %>%
     relocate("Stratum", .before = everything())
 
 
@@ -77,7 +77,7 @@ summary.seroincidence.by <- function(
   }
 
   if (showConvergence) {
-    results = results |>
+    results = results %>%
       relocate("nlm.convergence.code", .after = everything())
   } else
   {
@@ -87,13 +87,13 @@ summary.seroincidence.by <- function(
 
 
   output <-
-    results |>
+    results %>%
     structure(
       antigen_isos = attr(object, "antigen_isos"),
-      Strata = attr(object, "Strata") |> attr("strata_vars"),
+      Strata = attr(object, "Strata") %>% attr("strata_vars"),
       Quantiles = quantiles,
       class =
-        "summary.seroincidence.by" |>
+        "summary.seroincidence.by" %>%
         union(class(results))
     )
 

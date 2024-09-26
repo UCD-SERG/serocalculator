@@ -27,8 +27,8 @@ summary.seroincidence = function(
     coverage = .95,
     ...)
 {
-  start = object |> attr("lambda_start")
-  antigen_isos = object |> attr("antigen_isos")
+  start = object %>% attr("lambda_start")
+  antigen_isos = object %>% attr("antigen_isos")
 
   alpha = 1 - coverage
   h.alpha = alpha/2
@@ -39,7 +39,7 @@ summary.seroincidence = function(
       "\nThe standard error of the incidence rate estimate cannot be calculated.")
 
   log.lambda = object$estimate
-  var.log.lambda = 1/object$hessian |> as.vector()
+  var.log.lambda = 1/object$hessian %>% as.vector()
   se.log.lambda = sqrt(var.log.lambda)
 
   to_return = tibble::tibble(
@@ -52,13 +52,13 @@ summary.seroincidence = function(
     coverage = coverage,
     log.lik = -object$minimum,
     iterations = object$iterations,
-    antigen.isos = antigen_isos |> paste(collapse = "+"),
-    nlm.convergence.code = object$code |> factor(levels = 1:5, ordered = TRUE)
-    #|> factor(levels = 1:5, labels = nlm_exit_codes)
+    antigen.isos = antigen_isos %>% paste(collapse = "+"),
+    nlm.convergence.code = object$code %>% factor(levels = 1:5, ordered = TRUE)
+    #%>% factor(levels = 1:5, labels = nlm_exit_codes)
     )
 
   class(to_return) =
-    "summary.seroincidence" |>
+    "summary.seroincidence" %>%
     union(class(to_return))
 
   return(to_return)

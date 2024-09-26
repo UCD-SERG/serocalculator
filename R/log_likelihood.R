@@ -1,8 +1,9 @@
-#' Calculate log-likelihood
+#' @title Calculate log-likelihood
 #'
 #' @description
 #' Calculates the log-likelihood of a set of cross-sectional antibody response
 #' data, for a given incidence rate (`lambda`) value.
+#'
 #' `r lifecycle::badge("deprecated")`
 #'
 #' `llik()` was renamed to [log_likelihood()] to create a more
@@ -10,13 +11,12 @@
 #'
 #' @keywords internal
 #' @export
-
 llik <- function(...) {
   lifecycle::deprecate_warn("1.0.0", "llik()", "log_likelihood()")
   log_likelihood(...)
 }
 
-#' Calculate log-likelihood
+#' @title Calculate log-likelihood
 #'
 #' @description
 #' Calculates the log-likelihood of a set of cross-sectional antibody response

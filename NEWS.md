@@ -1,6 +1,6 @@
 # serocalculator (development version)
 
-## New features
+* Added default value for `antigen_isos` argument in `log_likelihood()` (#286)
 
 (to be added by future PRs)
 

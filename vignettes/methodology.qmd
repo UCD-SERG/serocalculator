@@ -1,0 +1,478 @@
+---
+title: "Serocalculator package methodology"
+author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
+date: '`r Sys.Date()`'
+format: 
+  html:
+    number-sections: true
+    toc: true
+    html-math-method: mathjax
+    fig-cap-location: top
+    echo: false
+  revealjs: 
+    echo: false
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
+bibliography: references.bib
+---
+
+# Introduction to seroincidence estimation
+
+## Estimating incidence
+
+The **incidence rate** of a disease for a specific time period is the rate at which individuals in a population are acquiring that disease during that time period. 
+
+Example: if $\color{red}{\text{ten}}$ people in a population of $\color{red}1000$ contract typhoid over a one month time period, then the incidence rate for that time period is *"$\color{red}{\text{10}}$ new cases per $\color{red}1000$ persons per month"*.
+
+More mathematically, the incidence rate *at a given time point* is the *derivative* (i.e., the current rate of change over time) of the cumulative count of infections per person, at that time point.
+
+## Scale of incidence rates
+
+In both definitions, the units for an incidence rate are "# new infections per # persons at risk per time duration"; for example, "new infections per 1000 persons per year". 
+
+For convenience, we can rescale the incidence rate to make it easier to understand; for example, we might express incidence as "# new infections per 1000 persons per year" or "# new infections per 100,000 persons per day", etc.
+
+## Incidence rate from an individual's perspective
+
+From the perspective of an individual in the population, the incidence rate is the probability of becoming infected at that time point.
+
+## Notation
+
+We often use the greek letter $\color{red}\lambda$ ("lambda") to denote the incidence rate.
+
+## Estimating incidence from cross-sectional data
+
+Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so. In particular, if we assume that the incidence rate is constant over time, then we can make some progress.
+
+Suppose we measure disease antibody levels $Y$ for a simple cross-sectional random sample of a population. For a given member of the sample, let $\color{red}T$ denote the time since they were last exposed to typhoid. We don't get to observe $T$ - it is a "latent variable". Instead, we only observe $Y$.
+
+## Time since infection and incidence
+
+If we assume the incidence rate is constant, then the probability that our individual was **last** infected $t$ days ago, $p(T=t)$, is equal to the probability of being infected at time $t$ (i.e., the incidence rate at time $t$, $\lambda$) times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
+
+That is:
+
+$$p(T=t) = \lambda \exp(-\lambda t)$$
+
+## Likelihood for observed infection times
+
+If we could observe $T$ for each individual in our sample, we could compute the likelihood of the data:
+
+$$
+\begin{aligned}
+\mathcal{L}^*(\lambda)
+&= \prod_{i=1}^n p(T=t_i)
+= \prod_{i=1}^n \lambda \exp(-\lambda t_i)\\
+\end{aligned}
+$$
+
+Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.
+
+## Example log-likelihood curves
+
+```{r}
+
+#| fig-cap: "Example log-likelihood curves"
+#| label: fig-ex-lik-curves
+
+library(serocalculator)
+#Import longitudinal antibody parameters from OSF
+curve = 
+  "https://osf.io/download/rtw5k/" %>% 
+  load_curve_params()
+
+#Import cross-sectional data from OSF and rename required variables:
+xs_data <- 
+  "https://osf.io/download//n6cp3/" %>% 
+  load_pop_data() %>% 
+  clean_pop_data()
+
+noise <- url("https://osf.io/download//hqy4v/") %>% readRDS() 
+
+graph.loglik(
+  pop_data = xs_data,
+  curve_params = curve,
+  noise_params = noise)
+  
+```
+
+![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-4-1.png){width=100% #fig-loglik}
+
+## standard error
+
+The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:
+
+more curvature -> likelihood peak is clearer -> smaller standard errors
+
+![Example log(likelihood) curves](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData_files/figure-html/unnamed-chunk-9-1.png){}
+
+## The plot thickens
+
+Unfortunately, we don't observe infection times $T$; we only observe antibody levels $\color{red}{Y}$. So things get a little more complicated.
+
+In short, we are hoping that we can estimate $T$ (time since last infection) from $Y$ (current antibody levels). If we could do that, then we could plug in our estimates $\hat t_i$ into that likelihood above, and estimate $\lambda$ as previously.
+
+We're actually going to do something a little more nuanced; instead of just using one value for $\hat t$, we are going to consider all possible values of $t$ for each individual.
+
+## Likelihood of observed data
+
+The likelihood of our individual's observed data, $P(Y=y)$, can be expressed as an integral over the joint probability of $Y$ and $T$ (using the Law of Total Probability):
+
+$$
+\begin{aligned}
+p(Y=y) 
+&= \int_t p(Y=y,T=t)dt
+\end{aligned}
+$$
+
+Further, we can express the joint probability $p(Y=y,T=t)$ as the product of $p(T=t)$ and 
+$p(Y=y|T=t)$ the "antibody response curve after infection". That is:
+
+$$
+p(Y=y,T=t) = p(Y=y|T=t)P(T=t)
+$$
+
+## Antibody response decay curves
+
+![Antibody response decay curves, $p(Y=y|T=t)$, for typhoid](fig1a-1.svg){width=100% #fig-decay}
+
+## Putting it all together
+
+Substituting $p(Y=y,T=t) = p(Y=y|T=t)P(T=t)$ into the previous expression for $p(Y=y)$:
+
+$$
+\begin{aligned}
+p(Y=y)
+&= \int_t p(Y=y|T=t)P(T=t) dt
+\end{aligned}
+$$
+
+Now, the likelihood of the observed data $\vec{y} = (y_1, y_2, ..., y_n)$ is:
+
+$$
+\begin{aligned}
+\mathcal{L}(\lambda) 
+&= \prod_{i=1}^n p(Y=y_i)
+= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+\end{aligned}
+$$
+
+If we know $p(Y=y|T=t)$, then we can maximize $p(Y=y)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
+
+## Finding the MLE numerically
+
+The likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
+
+$$
+\begin{aligned}
+\log \mathcal{L} (\lambda) 
+&= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+&= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
+\end{aligned}
+$$
+
+The derivative of this expression doesn't come out cleanly, so we will use a *numerical method* (specifically, a Newton-type algorithm, implemented by `stats::nlm()`) to find the MLE and corresponding standard error.
+
+# Modeling $p(Y=y|T=t)$
+
+## A simple model for the seroresponse
+
+Now, the big problem becomes modeling $p(Y=y|T=t)$.
+
+The current version of the serocalculator package uses the model proposed in @Teunis_2016 for 
+the shape of the seroresponse:
+$$
+\begin{array}{l@{\qquad}l}
+\text{Infection/colonization episode} & \text{Waning immunity episode}\\
+b^{\prime}(t) = \mu_{0}b(t) - cy(t) & b(t) = 0 \\
+y^{\prime}(t) = \mu y(t) & y^{\prime}(t) = -\alpha y(t)^r \\
+\end{array}
+$$
+
+With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen concentration 
+$b(0) = b_{0}$. The serum antibody response $y(t)$ can be written as
+$$
+y(t) = y_{+}(t) + y_{-}(t)
+$$
+where
+\begin{align*}
+y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\le t <t_{1}]\\
+y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
+\end{align*}
+Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the (unobservable) growth rate $\mu$ can 
+be written as 
+$$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.6\linewidth]{fig/response.pdf}
+\caption{\label{response_graph}The antibody level at $t=0$ is $y_{0}$; the rising branch ends at 
+$t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any antibody level 
+$y_{0} \le y(t) < y_{1}$ occurs twice.}
+\end{figure}
+
+Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$, 
+log concentrations decrease rapidly after infection has terminated, but decay then slows down and 
+low antibody concentrations are maintained for a long period. When $r$ approaches 1, exponential 
+decay is restored.
+
+
+## Biological noise
+
+When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).
+
+We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren't actually the ones we are looking for (overcount, false positives, cross-reactivity).
+
+We are more concerned about overcount (cross-reactivity) than undercount. For a given antibody, we can do some analytical work beforehand to estimate the distribution of overcounts, and add that to our model $p(Y=y|T=t)$.
+
+## Measurement noise
+
+There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
+
+# Other innovations in the `serocalculator` package
+
+The `serocalculator` package provides three refinements to the method for 
+calculating seroincidence published earlier [@Teunis_2012] and implemented in R package
+`seroincidence`, versions 1.x: 
+
+(1) inclusion of infection episode with rising antibody levels, 
+
+(2) non--exponential decay of serum antibodies after infection, and 
+
+(3) age--dependent correction for subjects who have never seroconverted. 
+
+It is important to note that, although the implemented 
+methods use a specific parametric model, as proposed in [@de_Graaf_2014] and augmented in 
+[@Teunis_2016], the methods used to calculate the likelihood function allow 
+seroresponses of arbitrary shape.
+
+
+# Backward recurrence time
+
+Considering the (fundamental) uniform distribution $u_{f}$ of sampling within a given interval, the 
+interval length distribution $p(\Delta t)$ and the distribution of (cross--sectionally) sampled 
+interval length [@Teunis_2012]
+$$
+q(\Delta t) = \frac{p(\Delta t)\cdot\Delta t}{\overline{\Delta t_{p}}}
+$$
+the joint distribution of backward recurrence time and cross--sectional interval length is the 
+product $u_{f}\cdot q$ because these probabilities are independent.
+
+The distribution of backward recurrence time is the marginal distribution
+\begin{align*}
+u(\tau) & = \int_{\Delta t=0}^{\infty} u_{f}(\tau;\Delta t)\cdot q(\Delta t)\text{d}\Delta t\\
+        & = \int_{0}^{\infty}\frac{[0\le\tau\le\Delta t]}{\Delta t}\cdot \frac{p(\Delta t)\cdot
+            \Delta t}{\overline{\Delta t_{p}}}\text{d}\Delta t\\
+        & = \frac{1}{\overline{\Delta t_{p}}}\int_{\tau}^{\infty}p(\Delta t)\text{d}\Delta t
+\end{align*}
+
+# Incidence of seroconversions
+
+To calculate the incidence of seroconversions, as in [@Teunis_2012], the distribution 
+$p(\Delta t)$ of intervals $\Delta t$ between seroconversions, is important. Assuming any subject is 
+sampled completely at random during their intervals between seroconversions, and accounting for 
+interval length bias [@satten_etal04; @zelen04], the distribution of backward recurrence times 
+$\tau$ can be written as [@Teunis_2012]
+$$
+u(\tau) = \frac{1}{\overline{\Delta t}} \int_{\tau=0}^{\infty}p(\Delta t)\text{d}\Delta t 
+        = \frac{1-P(\Delta t)}{\overline{\Delta t}}
+$$
+where $\overline{\Delta t}$ is the $p$--distribution expected value of $\Delta t$.
+
+This density is employed to estimate seroconversion rates. The antibody concentration $y$ is the 
+observable quantity, and we need to express the probability (density) of observed $y$ in terms of 
+the density of backward recurrence time.
+
+First, the backward recurrence time can $\tau$ be expressed as a function of the serum antibody 
+concentration $y$
+$$
+\tau(y) = \tau_{+}(y) + \tau_{-}(y)
+$$
+where
+\begin{align*}
+\tau_{+}(y) & = \displaystyle{\frac{1}{\mu}} \log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right) [0\le \tau<t_{1}]\\
+\tau_{-}(y) & = \left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)[t_{1}\le \tau < \infty]
+\end{align*}
+with corresponding derivatives
+$$
+\frac{\text{d}\tau_{+}}{\text{d}y} = \frac{1}{\mu y_{+}} \quad \text{ and } \quad
+\frac{\text{d}\tau_{-}}{\text{d}y} = - \frac{1}{\alpha y_{-}^{r}}
+$$
+
+Now, consider the probability that an antibody level $y^{\prime}$, corresponding to a time since 
+infection $\tau^{\prime}$, is less than or equal to $y$ (see Figure \ref{response_graph}) 
+\begin{align*}
+P(y^{\prime} \le y) & = P\left(y_{0} \le y_{+}(\tau^{\prime})\le y_{+}(\tau) \vee y_{-}(\tau^{\prime}) 
+                        \le y_{-}(\tau) \le t_{1}\right) + [y_{1} < y]\\
+                    & = P\left(0 \le \tau^{\prime}\le \frac{1}{\mu} 
+                        \log\left(\frac{y_{+}}{y_{0}}\right)\right)\\
+                    &   \qquad {} + P\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)} \le 
+                        \tau^{\prime} < \infty\right) + [y_{1} < y]
+\end{align*}
+
+The probability density for $y$ then is 
+\begin{align*}
+\rho(y) & = \frac{\text{d}}{\text{d}y} P(y^{\prime}\le y)\\
+        & = \frac{\text{d}}{\text{d}\tau_{+}}\frac{\text{d}\tau_{+}}{\text{d}y_{+}} 
+            P\left(0\le\tau^{\prime}\le\tau_{+}(y)\right) +
+            \frac{\text{d}}{\text{d}\tau_{-}}\frac{\text{d}\tau_{-}}{\text{d}y_{-}} 
+            P\left(t_{1}+\tau_{-}(y)\le\tau^{\prime}<\infty\right)\\
+        & = \rho_{+}(y_{+}) + \rho_{-}(y_{-})
+\end{align*}
+
+So that
+\begin{equation}\label{rho_y}
+\begin{aligned}
+\rho_{+}(y_{+}) & = \displaystyle{\frac{1}{\mu y_{+}}} u\left(\displaystyle{\frac{1}{\mu}}\log\left(\displaystyle{\frac{y_{+}}{y_{0}}}\right)\right)\\
+\rho_{-}(y_{-}) & = \displaystyle{\frac{1}{\alpha y_{-}^{r}}} u\left(t_{1} + \displaystyle{\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}}\right)
+\end{aligned}
+\end{equation}
+when $[y_{0} \le y < y_{1}]$ there are two contributions to the density, one from the rising and one 
+from the decaying branch of the antibody response.
+
+If, as assumed before [@Teunis_2012], intervals between incident infections are 
+generated by a process with Gamma probability density, $\overline{\Delta t} = (m+1)/\lambda$. The 
+cumulative distribution function for $\tau$ is
+\begin{equation}\label{pm_cumul}
+P_{m}(\tau) = 1-\frac{\Gamma(m+1, \lambda\tau)}{m!}
+\end{equation}
+and the density of backward recurrence times is
+\begin{equation}\label{bwrectime_pdf}
+u_{m}(\tau) = \frac{1-P_{m}(\tau)}{\overline{\Delta t}} =
+  \frac{\lambda\Gamma(m+1,\lambda\tau)}{(m+1)!} =
+  \frac{\lambda\text{e}^{-\lambda\tau}}{m+1}
+  \sum_{j=0}^{m}\frac{(\lambda\tau)^{j}}{j!}
+\end{equation}
+
+Combining equations \eqref{rho_y} and \eqref{bwrectime_pdf} the marginal density of $y$ can be found
+\begin{equation}
+\label{margdist_y_increase}
+\rho_{+}(y_{+}) = [y_{0} \le y_{+} < y_{1}] \frac{\lambda y_{0}}{\mu(m+1)}
+                  \left(\frac{y_{+}}{y_{0}}\right)^{-(1+\lambda/\mu)}
+                  \sum_{j=0}^{m} \frac{\left(\frac{\lambda}{\mu}\log(y_{+}/y_{0})\right)^{j}}{j!}
+\end{equation}
+and
+\begin{align}\label{margdist_y_decay}
+\rho_{-}(y_{-}) & = [0< y_{-} \le y_{1}] \frac{\lambda}{\alpha y_{-}^{r}(m+1)} 
+                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)} \nonumber\\
+                &   \qquad {} \times\sum_{j=0}^{m}\frac{\lambda^{j}}{j!}\left(t_{1}+
+                    \frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)^{j}
+\end{align}
+where $\rho_{+}$ and $\rho_{-}$ refer to the contributions of the rising and decaying part of the 
+seroresponse to the density of $y$.
+
+The within--host parameters $\boldsymbol{\theta} = (y_{0}, y_{1}, t_{1}, \alpha, r)$ vary among 
+responses of individual subjects. Heterogeneity in these parameters may be described by their joint 
+distribution, which can be used to calculate the marginal distribution $\rho(y)$ 
+[@Teunis_2012]. Since a Monte Carlo sample of the posterior joint distribution is 
+available from the longitudinal model [@Teunis_2016] the marginal distribution of 
+$\rho(y)$ may be approximated by the sum
+\begin{equation}\label{rho_numsum}
+\rho(y) = \frac{1}{N}\sum_{n=1}^{N} \rho_{+}(y\vert \lambda, m, \boldsymbol{\theta}_{n}) + 
+          \rho_{-}(y\vert \lambda, m, \boldsymbol{\theta}_{n})
+\end{equation}
+for a Monte Carlo sample 
+$(\boldsymbol{\theta}_{1}, \boldsymbol{\theta}_{2}, \dots, \boldsymbol{\theta}_{N})$. A 
+cross--sectional sample of antibody concentrations $(Y_{1}, Y_{2}, \dots, Y_{K})$ can now be used to 
+calculate a likelihood
+$$
+\ell(\lambda,m) = \prod_{k=1}^{K}\rho(Y_{k}\vert \lambda, m)
+$$
+that can be used to estimate $(\lambda, m)$.
+
+# True seronegative subjects
+
+At the time that a cross--sectional serum sample is collected, the subject whose blood is drawn may 
+have never been infected in their lifetime. The antibody concentration $y$ in that sample then 
+represents a true seronegative. For such a sample, the backward recurrence time does not exist. For 
+a given longitudinal response, the backward recurrence time $\tau$ corresponding with measured 
+antibody concentration $Y$ can be calculated. If that backward recurrence time is longer than the 
+age of the person (at time of sampling), their antibody concentration $Y$ cannot have resulted from 
+prior seroconversion.
+
+If, in the summation in equation \eqref{rho_numsum}, terms not satisfying the condition 
+$\tau(y) < a$ are discarded, the resulting partial sum
+$$
+\rho^{\ast}(y,a) = \frac{1}{N}\sum_{n=1}^{N}[\tau(y,\boldsymbol{\theta}_{n}) < a]
+                   (\rho_{+}(y\vert\lambda,m,\boldsymbol{\theta}_{n}) +
+                   (\rho_{-}(y\vert\lambda,m,\boldsymbol{\theta}_{n})
+$$
+counts only those seroconversions that can have occurred during the lifespan of the person whose 
+serum was sampled.
+
+Serum from a true seronegative subject is expected to have a low antibody concentration, 
+representative of a ``true'' negative sample [@degreeff_etal12]. The antibody concentrations $y$ in 
+sera from such truly negative subjects are not expected to decay over time: the baseline 
+distribution $\rho_{0}(y)$ may be assumed fixed and independent of $m$ and $\lambda$. Note that also 
+when $y$ corresponds to a backward recurrence time within the lifespan of a person, that same 
+antibody concentration $y$ could still result from the baseline distribution $\rho_{0}(y)$.
+
+Given the interval distribution for incident infections, the probability that a sampled subject has 
+never seroconverted depends on their age. For the gamma process assumed above, the survival function
+$P_{m}(a\vert m, \lambda)$ gives the probability of a subject having not seroconverted before age 
+$a$ (equation \eqref{pm_cumul}).
+
+Thus, for a serum sample with antibody concentration $y$ from a subject of age $a$ the probability 
+density is
+$$
+\psi (\lambda, m\vert y, a, \boldsymbol{\theta}, \boldsymbol{\theta}_{0}) =
+\rho^{\ast}(y, a) + P_{m}(a\vert m, \lambda)\rho_{0}(y\vert \boldsymbol{\theta}_{0})
+$$
+
+When the seroconversion rate is low, or a subject is young, or both, the probability of a true 
+negative may be considerable.
+
+# Censored observations
+
+In case observations are censored at $y_{c}$ such that an observed $Y = \max(Y,y_{c})$, then for 
+$y_{c} < Y$ the density $\rho(y)$ as in equations \eqref{margdist_y_increase} and 
+\eqref{margdist_y_decay} holds, but the likelihood of any $Y \le y_{c}$ can be calculated 
+$$
+\ell(\lambda, m \vert y \le y_{c}) = \int_{z=0}^{y_{c}} \rho(z, \lambda, m) \text{d}z = R(y_{c}\vert\lambda,m)
+$$
+We need the cumulative distribution $R(y)$ for the backward recurrence time, from equation 
+\eqref{bwrectime_pdf}.
+$$
+U_{m}(\tau) = \frac{1}{m+1}\sum_{j=0}^{m} P_{j}(\tau\vert\lambda)
+$$
+while the cumulative distribution of antibody levels $y$ is
+\begin{align*}
+P(y^{\prime} \le y) & = U\left(\frac{1}{\mu}\log\left(\frac{y}{y_{0}} \right)\right) [y_{0}\le y < y_{1}] +\\
+                    &   \qquad {} \left(1-U\left(t_{1}+\frac{y^{-(r-1)}-y_{1}^{-(r-1)}}
+                        {\alpha(r-1)}\right)\right) [y\le y_{1}] + [y_{1} < y]
+\end{align*}
+so that
+\begin{align*}
+R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}P_{j} \left(\frac{1}{\mu}\log
+         \left(\frac{y}{y_{0}}\right)\vert\lambda\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \left(1 - \frac{1}{m+1}\sum_{j=0}^{m}P_{j}\left(t_{1}+
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\vert\lambda\right)\right)[y \le y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align*}
+
+Using equation \eqref{pm_cumul} this can be written in terms of incomplete gamma functions 
+\begin{align*}
+R(y) & = \frac{1}{m+1}\sum_{j=0}^{m}  \left(1-\frac{\Gamma\left(j+1,\frac{\lambda}{\mu}
+         \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \left(1-\frac{\Gamma\left(j+1,\lambda\left(t_{1} +
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!}\right)\right)[y < y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align*}
+or
+\begin{align*}
+R(y) & = \left(1-\frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\frac{\lambda}{\mu} 
+         \log\left(\frac{y}{y_{0}}\right)\right)}{j!}\right) [y_{0} \le y < y_{1}]\\
+     &   \qquad {} + \frac{1}{m+1}\sum_{j=0}^{m} \frac{\Gamma\left(j+1,\lambda\left(t_{1} + 
+         \frac{y^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)\right)}{j!} [y < y_{1}]\\
+     &   \qquad {} + [y_{1} < y]
+\end{align*}
+
+\newpage
+
+# References

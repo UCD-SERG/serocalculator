@@ -2,7 +2,8 @@
 
 ## New features
 
-* Added template for pull requests (borrowed from https://github.com/bcgov/ssdtools) (#265)
+* Added template for pull requests 
+(borrowed from https://github.com/bcgov/ssdtools) (#265)
 
 ## Developer-facing changes
 

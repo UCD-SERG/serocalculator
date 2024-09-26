@@ -38,7 +38,8 @@ set_biomarker_var <- function(object,
   if (biomarker %in% colnames(object)) {
     attr(object, "biomarker_var") <- biomarker
   } else {
-    cli::cli_abort('data does not include column "{biomarker}"', class = "missing variable")
+    cli::cli_abort('data does not include column "{biomarker}"',
+                   class = "missing variable")
   }
 
   if (standardize) {
@@ -82,7 +83,7 @@ set_age <- function(object,
     attr(object, "age_var") <- age
   } else {
     cli::cli_warn(class = "missing variable",
-                   'The specified `age` column "{age}" does not exist.')
+                  'The specified `age` column "{age}" does not exist.')
 
     # search age variable from object
     age_var <-

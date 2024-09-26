@@ -20,7 +20,8 @@ test_that("`get_id()` works", {
   xs_data <- "https://osf.io/download//n6cp3/" %>%
     load_pop_data()
 
-  xs_data %>% get_id() %>%
+  xs_data %>%
+    get_id() %>%
     sort() %>%
     expect_snapshot_value(style = "deparse")
 
@@ -38,6 +39,6 @@ test_that("`get_biomarker_names_var() works", {
 
 test_that("`set_age()` detects partial matches", {
   "https://osf.io/download//n6cp3/" %>%
-    load_pop_data(age = 'age$') %>%
+    load_pop_data(age = "age$") %>%
     expect_warning(class = "missing variable")
 })

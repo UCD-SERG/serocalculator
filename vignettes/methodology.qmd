@@ -207,7 +207,7 @@ The current version of the serocalculator package uses the model proposed in @Te
 the shape of the seroresponse:
 
 $$
-\begin{array}{l@{\qquad}l}
+\begin{array}{}
 \text{Infection/colonization episode} & \text{Waning immunity episode}\\
 b^{\prime}(t) = \mu_{0}b(t) - cy(t) & b(t) = 0 \\
 y^{\prime}(t) = \mu y(t) & y^{\prime}(t) = -\alpha y(t)^r \\

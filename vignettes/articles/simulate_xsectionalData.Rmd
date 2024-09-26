@@ -60,12 +60,12 @@ knitr::opts_chunk$set(
 library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
-
+library(dplyr)
 # load in longitudinal parameters, these are modeled from all SEES cases across all ages and countries
 dmcmc <-
   "https://osf.io/download/rtw5k" %>%
   load_curve_params() %>%
-  filter(iter < 500) # reduce number of mcmc samples for speed
+  dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 
 ## visualize antibody decay model
@@ -173,7 +173,8 @@ ll_A <- log_likelihood(
   noise_params = cond,
   antigen_isos = "HlyE_IgA",
   lambda = 0.1
-) %>% print()
+) %>% 
+  print()
 
 ll_G <- log_likelihood(
   pop_data = csdata,
@@ -181,15 +182,17 @@ ll_G <- log_likelihood(
   noise_params = cond,
   antigen_isos = "HlyE_IgG",
   lambda = 0.1
-) %>% print()
+) %>% 
+  print()
 
-ll_AG <- llik(
+ll_AG <- log_likelihood(
   pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   lambda = 0.1
-) %>% print()
+) %>% 
+  print()
 
 print(ll_A + ll_G)
 ```

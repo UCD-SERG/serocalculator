@@ -2,7 +2,8 @@
 
 ## New features
 
-(to be added by future PRs)
+* Added template for reporting Issues 
+(adapted from https://github.com/bcgov/ssdtools) (#270)
 
 ## Developer-facing changes
 

@@ -9,8 +9,9 @@
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
-
 <!-- badges: end -->
+
+![A QR code displaying the value ‘QR CODE’](man/figures/qr.svg)
 
 Antibody levels measured in a cross–sectional population sample can be
 translated into an estimate of the frequency with which seroconversions
@@ -30,7 +31,7 @@ Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html)
 
 ## Installing R
 
-The **serocalculator** package is designed for use in
+The **serocalculator** package is designed to be used in
 [R](https://www.r-project.org/), which is a free, open-source software
 environment for statistical computing and graphics. The end user of this
 package must have access to a working installation of the R software. We
@@ -97,11 +98,9 @@ devtools::install_github("ucd-serg/serocalculator")
 Before launching the development version of **serocalculator**, Windows
 users will need to install Rtools, which contains a collection of tools
 for building and employing R packages that are still in development.
-This can be done either: 
-
-(1) [during the *devtools* package
-installation](#during-devtools-installation), **or** 
-(2) [independently](#independently), if *devtools* is already installed.
+This can be done either: (1) [during the *devtools* package
+installation](#during-devtools-installation), **or** (2)
+[independently](#independently), if *devtools* is already installed.
 
 ##### During devtools installation
 

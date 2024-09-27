@@ -218,7 +218,7 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 # Modeling $p(Y=y|T=t)$
 
-## fA simple model for the seroresponse {.smaller}
+## A simple model for the seroresponse {.smaller}
 
 Now, the big problem becomes modeling $p(Y=y|T=t)$.
 

@@ -6,6 +6,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
 # Overview
 
 ## Defining incidence
@@ -48,16 +50,15 @@ for example, we might express incidence as
 "# new infections per 1000 persons per year" 
 or "# new infections per 100,000 persons per day", etc.
 
-## Incidence rate from an individual's perspective
+## Incidence from an individual's perspective
 
-From the perspective of an individual in the population, 
-the incidence rate at a given time point ($t$)
-is the instantaneous **probability (density) of 
-becoming infected at that time point ($T=t$), 
-given that thye are at risk at that time point** 
-(i.e., the *hazard rate*):
+From the perspective of an individual in the population:
 
-$$\lambda(t) = p(T=t | R(t))$$
+the **incidence rate** at a given time point ($t$)
+is the instantaneous probability (density) of 
+*becoming infected* at that time point,
+*given* that they are *at risk* at that time point
+(i.e., the *hazard rate*).
 
 ## Notation
 
@@ -65,28 +66,28 @@ We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
 # Estimating incidence from cross-sectional antibody surveys
 
-## Cross-sectional antibody surveys {.smaller}
+## Cross-sectional antibody surveys
 
 ::: notes
 Typically, it is difficult to estimate changes from a single time point. 
 However, we can sometimes make assumptions that allow us to do so. 
 In particular, if we assume that the incidence rate is constant over time, 
-then we can make some progress.
+then we can estimate incidence from a single cross-sectional survey.
+
+We will need two pieces of notation to formalize this process.
 
 :::
 
-* In a cross-sectional seroincidence survey, 
-we attempt to recruit a random sample (uniform or survey-weighted) 
-from the population of interest.
+* We recruit participants from the population of interest.
 
 * For each survey participant, we measure antibody levels for the disease of interest ($Y$)
 
 * Each participant has been last been infected at some time duration ($T$)
-*prior* to when we measured their antibodies (if they have never been infected, $T$ is infinite).
+*prior* to when we measured their antibodies.^[If they have never been infected, $T$ is infinite.]
 
-* We don't get to observe $T$ - it is a "latent variable". 
+    * We can't directly observe $T$ - it is a "latent variable". 
 
-* Instead, we only observe $Y$.
+    * Instead, we only observe $Y$.
 
 ## Time since infection and incidence
 

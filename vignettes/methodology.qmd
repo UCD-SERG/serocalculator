@@ -51,9 +51,13 @@ or "# new infections per 100,000 persons per day", etc.
 ## Incidence rate from an individual's perspective
 
 From the perspective of an individual in the population, 
-the incidence rate at a given time point
-is the probability of becoming infected at that time point, 
-given that you are at risk.
+the incidence rate at a given time point ($t$)
+is the instantaneous **probability (density) of 
+becoming infected at that time point ($T=t$), 
+given that thye are at risk at that time point** 
+(i.e., the *hazard rate*):
+
+$$\lambda(t) = p(T=t | R(t))$$
 
 ## Notation
 
@@ -361,8 +365,6 @@ the rising branch ends at $t = t_{1}$
 where the peak antibody level $y_{1}$ is reached. 
 Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
 ::::
-
-:::
 
 ---
 

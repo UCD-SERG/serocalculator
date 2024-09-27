@@ -5,6 +5,7 @@ date: '`r Sys.Date()`'
 format:
   pptx:
     number-sections: false
+    slide-level: 2
     # reference-doc: vignettes/articles/templates/Gates_template.pptx
   html:
     number-sections: true

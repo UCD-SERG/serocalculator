@@ -1,5 +1,9 @@
 ---
 title: "Introduction to seroincidence estimation"
+vignette: >
+  %\VignetteIndexEntry{Whatever}
+  %\VignetteEngine{TOPSECRET::quarto}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # Methodology
@@ -7,8 +11,8 @@ title: "Introduction to seroincidence estimation"
 ## Estimating incidence
 
 The **incidence rate** of a disease over a **specific time period** is 
-the rate at which individuals in a population are acquiring that disease 
-during that time period. 
+the rate at which individuals in a population are *acquiring* that disease 
+during that time period [@Noordzij2010diseasemeasures].
 
 Example: if ten people in a population of 1000 contract typhoid over a one month time period, 
 then the incidence rate for that time period is *"10 new cases per 1000 persons per month"*.

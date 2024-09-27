@@ -34,17 +34,11 @@ knitr::opts_chunk$set(
 ### Load packages
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
-```{r setup, eval=FALSE}
-# devtools::install_github("ucd-serg/serocalculator")
-```
-
-
 ```{r load_packages}
 library(serocalculator)
 library(tidyverse)
 library(forcats)
 ``` 
-
 
 ## Load data
 
@@ -133,9 +127,9 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 
 #color palette
-country.pal <- c('#EA6552', '#8F4B86', '#0099B4FF')
+country.pal <- c("#EA6552", "#8F4B86", "#0099B4FF")
 
-xs_data %>% autoplot(strata = "Country", type = 'density') +
+xs_data %>% autoplot(strata = "Country", type = "density") +
   scale_fill_manual(values = country.pal)
 
 ```
@@ -147,7 +141,7 @@ We see that across countries, our data is highly skewed with the majority of res
 
 xs_data %>%
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
-  autoplot(strata = "Country", type = 'density') +
+  autoplot(strata = "Country", type = "density") +
   scale_fill_manual(values = country.pal) +
   scale_x_log10(labels = scales::label_comma())
 
@@ -161,7 +155,7 @@ Let's also take a look at how antibody responses change by age.
 
 #Plot antibody responses by age
 ggplot(data = xs_data %>%
-         mutate(Country = fct_relevel(
+  mutate(Country = fct_relevel(
            Country, "Bangladesh", "Pakistan", "Nepal"
          )),
        aes(x = age, y = value, color = Country)) +
@@ -169,7 +163,7 @@ ggplot(data = xs_data %>%
   geom_smooth(method = "lm", se = FALSE) +
   scale_y_log10() +
   theme_linedraw() +
-  labs(title = "Quantitative Antibody Responses by Age", x = "Age", y = "Value") +
+  labs(title = "Quantitative Antibody Results by Age", x = "Age", y = "Value") +
   scale_color_manual(values = country.pal)
 
 ```
@@ -231,7 +225,7 @@ Let's compare estimates across all countries and by age group.
 ```{r estbycountry}
 #Using est.incidence.by (strata)
 
-est_country_age = est.incidence.by(
+est_country_age <- est.incidence.by(
   strata = c("Country", "ageCat"),
   pop_data = xs_data,
   curve_params = curves,
@@ -257,18 +251,18 @@ est_country_agedf <- summary(est_country_age) %>%
     ageCat = factor(ageCat)
   )
 
-## Create barplot with bars for each age category (rescale incidence rate and CIs)
+## Create plot by country and age category
 ggplot(est_country_agedf,
        aes(
          y = fct_rev(ageCat),
-         x = incidence.rate * 1000,
+         x = incidence.rate * 1000, #rescale incidence
          fill = Country
        )) +
   geom_bar(stat = "identity",
            position = position_dodge(),
            show.legend = TRUE) +
   geom_errorbar(
-    aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000),
+    aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000), #rescale CIs
     position = position_dodge(width = 0.9),
     width = .2
   ) +
@@ -292,7 +286,6 @@ rate_bangla <- round(est_country_agedf$incidence.rate[3] * 1000)
 rate_nepal <- round(est_country_agedf$incidence.rate[1] * 1000)
 
 rate_ratio_bangla_nepal <- round(rate_bangla / rate_nepal)
-
 ```
 
 ## Conclusions

@@ -47,9 +47,9 @@ plot_curve_params_one_ab = function(
     ) +
     ggplot2::labs(
       x = "Days since fever onset",
-      y = "Antibody Concentration"
+      y = "Antibody concentration"
     ) +
-    ggplot2::ggtitle("Decay Curve") +
+    ggplot2::ggtitle("Antibody Response Curve") +
     ggplot2::theme(
       plot.title =
         ggplot2::element_text(

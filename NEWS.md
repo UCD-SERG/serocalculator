@@ -2,6 +2,8 @@
 
 ## New features
 
+* Added `Methodology` vignette (#284)
+
 * Added template for pull requests 
 (borrowed from https://github.com/bcgov/ssdtools) (#265)
 

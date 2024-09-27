@@ -1,5 +1,18 @@
 # serocalculator (development version)
 
+## New features
+
+* Added template for pull requests 
+(borrowed from https://github.com/bcgov/ssdtools) (#265)
+
+## Developer-facing changes
+
+* Added additional automated checks through 
+[GitHub actions](https://docs.github.com/en/actions), 
+including:
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
+
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
 

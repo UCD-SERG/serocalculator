@@ -113,8 +113,7 @@ Column Name | Description
 
 #Import cross-sectional data from OSF and rename required variables
 xs_data <- "https://osf.io/download//n6cp3/" %>%
-  load_pop_data() %>%
-  rename(value = result, age = Age, id = index_id)
+  load_pop_data()
 
 ```
 

@@ -51,16 +51,17 @@ or "# new infections per 100,000 persons per day", etc.
 ## Incidence rate from an individual's perspective
 
 From the perspective of an individual in the population, 
-the incidence rate is the probability of becoming infected at that time point, 
+the incidence rate at a given time point
+is the probability of becoming infected at that time point, 
 given that you are at risk.
-
-# Estimating incidence from cross-sectional antibody surveys
 
 ## Notation
 
 We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
-## Cross-sectional antibody surveys
+# Estimating incidence from cross-sectional antibody surveys
+
+## Cross-sectional antibody surveys {.smaller}
 
 ::: notes
 Typically, it is difficult to estimate changes from a single time point. 
@@ -68,25 +69,38 @@ However, we can sometimes make assumptions that allow us to do so.
 In particular, if we assume that the incidence rate is constant over time, 
 then we can make some progress.
 
-Suppose we measure disease antibody levels $Y$ 
-for a simple cross-sectional random sample of a population. 
-For a given member of the sample, 
-let $T$ denote the time since they were last exposed to typhoid. 
-We don't get to observe $T$ - it is a "latent variable". 
-Instead, we only observe $Y$.
 :::
 
+* In a cross-sectional seroincidence survey, 
+we attempt to recruit a random sample (uniform or survey-weighted) 
+from the population of interest.
 
+* For each survey participant, we measure antibody levels for the disease of interest ($Y$)
+
+* Each participant has been last been infected at some time duration ($T$)
+*prior* to when we measured their antibodies (if they have never been infected, $T$ is infinite).
+
+* We don't get to observe $T$ - it is a "latent variable". 
+
+* Instead, we only observe $Y$.
 
 ## Time since infection and incidence
 
-If we assume the incidence rate is constant, 
-then the probability that our individual was **last** infected $t$ days ago, $p(T=t)$, 
+We assume the incidence rate is approximately constant:
+
+$$\lambda(t) = \lambda$$
+
+Then:
+
+::: notes
+The probability that our individual was **last** infected $t$ days ago, $p(T=t)$, 
 is equal to the probability of being infected at time $t$ 
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
 
 That is:
+
+:::
 
 $$p(T=t) = \lambda \exp(-\lambda t)$$
 
@@ -245,7 +259,7 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 :::
 
-# Modeling $p(Y=y|T=t)$
+# Modeling the seroresponse kinetics curve
 
 ## A simple model for the seroresponse {.smaller}
 

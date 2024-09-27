@@ -7,6 +7,8 @@
 
 ## Developer-facing changes
 
+* lint entire package on PR (#163)
+
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:

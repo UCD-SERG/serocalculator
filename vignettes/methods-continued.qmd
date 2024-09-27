@@ -162,10 +162,14 @@ distribution, which can be used to calculate the marginal distribution $\rho(y)$
 [@Teunis_2012]. Since a Monte Carlo sample of the posterior joint distribution is
 available from the longitudinal model [@Teunis_2016] the marginal distribution of
 $\rho(y)$ may be approximated by the sum
+
+$$
 \begin{equation}\label{rho_numsum}
 \rho(y) = \frac{1}{N}\sum_{n=1}^{N} \rho_{+}(y\vert \lambda, m, \boldsymbol{\theta}_{n}) +
           \rho_{-}(y\vert \lambda, m, \boldsymbol{\theta}_{n})
 \end{equation}
+$$
+
 for a Monte Carlo sample
 $(\boldsymbol{\theta}_{1}, \boldsymbol{\theta}_{2}, \dots, \boldsymbol{\theta}_{N})$. A
 cross--sectional sample of antibody concentrations $(Y_{1}, Y_{2}, \dots, Y_{K})$ can now be used to

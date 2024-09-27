@@ -290,11 +290,13 @@ $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
 
 ---
 
-::: {#fig-response-graph}
+```{r}
+cur_ai = "HlyE_IgG"
+```
 
 ```{r}
-
-cur_ai = "HlyE_IgG"
+#| label: fig-response-graph
+#| fig-cap: An example kinetics curve for `r cur_ai`
 curve1 = 
   curves %>% 
   filter(
@@ -345,8 +347,6 @@ the rising branch ends at $t = t_{1}$
 where the peak antibody level $y_{1}$ is reached. 
 Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
 ::::
-
-An example kinetics curve for `r cur_ai`
 
 :::
 

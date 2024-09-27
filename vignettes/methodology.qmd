@@ -6,9 +6,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Methodology
+# Overview
 
-## Estimating incidence
+## Defining incidence
 
 The **incidence rate** of a disease over a **specific time period** is 
 the rate at which individuals in a population are *acquiring* the disease 
@@ -54,12 +54,15 @@ From the perspective of an individual in the population,
 the incidence rate is the probability of becoming infected at that time point, 
 given that you are at risk.
 
+# Estimating incidence from cross-sectional antibody surveys
+
 ## Notation
 
 We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
-## Estimating incidence from cross-sectional data
+## Cross-sectional antibody surveys
 
+::: notes
 Typically, it is difficult to estimate changes from a single time point. 
 However, we can sometimes make assumptions that allow us to do so. 
 In particular, if we assume that the incidence rate is constant over time, 
@@ -71,6 +74,9 @@ For a given member of the sample,
 let $T$ denote the time since they were last exposed to typhoid. 
 We don't get to observe $T$ - it is a "latent variable". 
 Instead, we only observe $Y$.
+:::
+
+
 
 ## Time since infection and incidence
 

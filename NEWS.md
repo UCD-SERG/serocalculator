@@ -7,7 +7,8 @@
 
 ## Developer-facing changes
 
-
+* Added `devtag` to package (using `devtag::use_devtag()`) (#292)
+* Added `@dev` tag to `?df_to_array()` (#292)
 
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 

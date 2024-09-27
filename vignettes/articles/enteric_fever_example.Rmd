@@ -13,7 +13,7 @@ bibliography: references.bib
 
 
 ---
-## Introduction
+# Introduction
 
 This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplified version of the analysis, the results here will differ slightly from those presented in the publication.
 
@@ -22,7 +22,8 @@ In this example, users will determine the seroincidence of enteric fever in cros
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  fig.height = 4, fig.width = 7,
+  fig.height = 4,
+  fig.width = 7,
   message = FALSE,
   collapse = TRUE,
   comment = "#>"
@@ -30,7 +31,7 @@ knitr::opts_chunk$set(
 ```
 
 
-### Load packages
+## Load packages
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, eval=FALSE}
@@ -40,19 +41,19 @@ The first step in conducting this analysis is to load our necessary packages. If
 
 ```{r load_packages}
 library(serocalculator)
-#install.packages("tidyverse")
 library(tidyverse)
+library(forcats)
 ``` 
 
 
-### Load data
+## Load data
 
-Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
+Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Data Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
 
 Note that each dataset has specific formatting and variable name requirements.
 
 
-#### Load and prepare longitudinal parameter data
+### Load and prepare longitudinal parameter data
 
 We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases. 
 
@@ -76,23 +77,24 @@ curves <-
   load_curve_params()
 ```
 
-#### Visualize curve parameters
+### Visualize curve parameters
 
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r, fig.width=12, fig.height=4}
 # Import longitudinal antibody parameters from OSF
-curves <- "https://osf.io/download/rtw5k/" %>%  	load_curve_params()
+curves <- "https://osf.io/download/rtw5k/" %>%
+  load_curve_params()
 
 # Visualize curve parameters
-curves %>% filter(
-	antigen_iso == "HlyE_IgA"| antigen_iso == "HlyE_IgG") %>% 
-	autoplot()
+curves %>% filter(antigen_iso == "HlyE_IgA" |
+                    antigen_iso == "HlyE_IgG") %>%
+  autoplot()
 
 ```
 
 
-#### Load and prepare cross-sectional data 
+### Load and prepare cross-sectional data 
 Next, we load our sample cross-sectional data. We will use a subset of results from the SEES dataset. Ideally, this will be a representative sample of the general population without regard to disease status. Later, we will limit our analysis to cross-sectional data from Pakistan. 
 
 We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to the names required by **serocalculator**. 
@@ -118,7 +120,7 @@ xs_data <- "https://osf.io/download//n6cp3/" %>%
 
 ```
 
-#### Summarize antibody data
+### Summarize antibody data
 
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
@@ -127,7 +129,7 @@ xs_data %>% summary()
 ```
 
 
-#### Visualize antibody data
+### Visualize antibody data
 
 We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.
 
@@ -148,9 +150,11 @@ We see that across countries, our data is highly skewed with the majority of res
 
 
 xs_data %>% 
-  autoplot(strata = "Country", type='density') + 
-  scale_fill_manual(values = country.pal) + 
+  mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
+  autoplot(strata = "Country", type='density') +   
+  scale_fill_manual(values = country.pal) +   
   scale_x_log10(labels = scales::label_comma())
+
 
 ```
 
@@ -161,18 +165,18 @@ Let's also take a look at how antibody responses change by age.
 ```{r "plot age"}
 
 #Plot antibody responses by age
-
-
-ggplot(data=xs_data, aes(x=age, y=value, color=Country)) + 
-         geom_point(size=.6, alpha=.7)+
-         geom_smooth(method=lm, se=FALSE)+
-         scale_y_log10() +
-         theme_linedraw()+
-          labs(
-            title = "Quantitative Antibody Responses by Age",
-            x = "Age",
-            y = "Value"
-          ) + 
+ggplot(data = xs_data %>% 
+         mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")), 
+       aes(x = age, y = value, color = Country)) + 
+  geom_point(size = 0.6, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_log10() +
+  theme_linedraw() +
+  labs(
+    title = "Quantitative Antibody Responses by Age",
+    x = "Age",
+    y = "Value"
+  ) + 
   scale_color_manual(values = country.pal)
 
 ```
@@ -228,13 +232,14 @@ summary(est1)
 
 ### Stratified Seroincidence
 
-We can also produce stratified seroincidence estimates. Let's compare estimates across all countries. 
+We can also produce stratified seroincidence estimates. Users can select one or more stratification variables in their cross-sectional population dataset. 
+Let's compare estimates across all countries and by age group. 
 
 ```{r estbycountry}
 #Using est.incidence.by (strata)
 
-est_country = est.incidence.by(
-  strata = c("Country"),
+est_country_age = est.incidence.by(
+  strata = c("Country", "ageCat"),
   pop_data = xs_data,
   curve_params = curves, 
   noise_params = noise,
@@ -242,7 +247,7 @@ est_country = est.incidence.by(
   num_cores = 8 # Allow for parallel processing to decrease run time
 )
 
-summary(est_country)
+summary(est_country_age)
 
 
 ```
@@ -253,73 +258,44 @@ Let's visualize our seroincidence estimates by strata.
 ```{r}
 # Plot seroincidence estimates
 
-#Save summary(est2) as a dataframe and sort by incidence rate
-est_countrydf<- summary(est_country) %>%
-  arrange(incidence.rate) 
+## Save summary(est_country_age) as a dataframe and sort by incidence rate
+est_country_agedf<- summary(est_country_age) %>%
+   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal"),
+         ageCat = factor(ageCat)) 
 
-#Create barplot (rescale incidence rate and CIs)
-ggplot(est_countrydf, aes(y=reorder(Country,incidence.rate), x=incidence.rate*1000, fill=Country)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
-  geom_errorbar(aes(xmin =CI.lwr*1000, xmax=CI.upr*1000, width=.05))+
-  labs(
-      title= "Enteric Fever Seroincidence by Country",
-        x="Seroincidence rate per 1000 person-years",
-        y="Country"
-      ) +
+## Create barplot with bars for each age category (rescale incidence rate and CIs)
+ggplot(est_country_agedf,
+       aes(
+         y = fct_rev(ageCat),
+         x = incidence.rate * 1000,
+         fill = Country
+       )) +
+  geom_bar(stat = "identity",
+           position = position_dodge(),
+           show.legend = TRUE) +
+  geom_errorbar(
+    aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000),
+    position = position_dodge(width = 0.9),
+    width = .2
+  ) +
+  labs(title = "Enteric Fever Seroincidence by Country and Age",
+       x = "Seroincidence rate per 1000 person-years",
+       y = "Age Category",
+       fill = "Country") +
   theme_linedraw() +
-  theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11)) + 
-  scale_x_continuous(expand = c(0,10)) +
+  theme(axis.text.y = element_text(size = 11),
+        axis.text.x = element_text(size = 11)) +
+  scale_x_continuous(expand = c(0, 10)) +
   scale_fill_manual(values = country.pal)
 
 ```
 
-Users can select any stratification variable in their cross-sectional population dataset. For example, we can also stratify by catchment area within Pakistan.
 
-
-```{r estby}
-#Using est.incidence.by (strata)
-
-est2 = est.incidence.by(
-  strata = c("catchment"),
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
-  curve_params = curves, 
-  noise_params = noise %>% filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  num_cores = 8 #Allow for parallel processing to decrease run time 
-  )
-
-summary(est2)
-
-#Plot seroincidence estimates
-
-#Save summary(est2) as a dataframe
-est2df<- summary(est2) %>%
-  mutate(catchment = factor(catchment, levels = c("kgh", "aku"), labels = c("KGH", "AKU")))
-
-
-# Create barplot (rescale incidence rate and CIs)
-ggplot(est2df, aes(y = catchment, x = incidence.rate * 1000, fill = catchment)) +
-  geom_bar(stat = "identity", show.legend = FALSE) +
-  geom_errorbar(aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000, width = .05)) +
-  labs(
-      title= "Enteric Fever Seroincidence in Pakistan by Catchment Area",
-        x="Seroincience rate per 1000 person-years",
-        y="Catchment Area",
-        caption = "AKU = Aga Khan University Hospital, Karachi, Pakistan; KGH = Kharadar General Hospital, Karachi, Pakistan"
-      ) +
-  theme_linedraw() +
-  theme(axis.text.y = element_text(size=11),
-        axis.text.x = element_text(size=11)) +
-   scale_x_continuous(expand = c(0,10)) +
-  scale_fill_manual(values = c("#8F4B86", "#9D83BC"))
-
-```
 ```{r include=FALSE}
 #Calculate output values
-rate_bangla <- round(est_countrydf$incidence.rate[3] * 1000) 
+rate_bangla <- round(est_country_agedf$incidence.rate[3] * 1000) 
 
-rate_nepal <- round(est_countrydf$incidence.rate[1] *1000)
+rate_nepal <- round(est_country_agedf$incidence.rate[1] *1000)
 
 rate_ratio_bangla_nepal <- round(rate_bangla/rate_nepal)
 

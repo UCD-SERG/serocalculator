@@ -13,7 +13,7 @@ bibliography: references.bib
 
 
 ---
-# Introduction
+## Introduction
 
 This vignette provides users with an example analysis using the [**serocalculator**](https://github.com/UCD-SERG/serocalculator) package by reproducing the analysis for: [**Estimating typhoid incidence from community-based serosurveys: a multicohort study**](https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext) (@Aiemjoy_2022_Lancet). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplified version of the analysis, the results here will differ slightly from those presented in the publication.
 
@@ -29,9 +29,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+## Methods
 
-
-## Load packages
+### Load packages
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
 ```{r setup, eval=FALSE}
@@ -81,7 +81,7 @@ curves <-
 
 We can graph the decay curves with an `autoplot()` method:
 
-```{r, fig.width=12, fig.height=4}
+```{r, fig.width=7, fig.height=4}
 # Import longitudinal antibody parameters from OSF
 curves <- "https://osf.io/download/rtw5k/" %>%
   load_curve_params()
@@ -112,11 +112,9 @@ Column Name | Description
 ```{r data, message = FALSE}
 
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- "https://osf.io/download//n6cp3/" %>%   	
-  load_pop_data() %>%  
-  rename(value = result,
-         age = Age,
-         id = index_id) 
+xs_data <- "https://osf.io/download//n6cp3/" %>%
+  load_pop_data() %>%
+  rename(value = result, age = Age, id = index_id)
 
 ```
 
@@ -136,9 +134,9 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 
 #color palette
-country.pal <- c('#EA6552', '#8F4B86','#0099B4FF')
+country.pal <- c('#EA6552', '#8F4B86', '#0099B4FF')
 
-xs_data %>% autoplot(strata = "Country",type='density') + 
+xs_data %>% autoplot(strata = "Country", type = 'density') +
   scale_fill_manual(values = country.pal)
 
 ```
@@ -148,13 +146,11 @@ We see that across countries, our data is highly skewed with the majority of res
 ```{r logplot, message = FALSE}
 # Create log transformed plots
 
-
-xs_data %>% 
+xs_data %>%
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
-  autoplot(strata = "Country", type='density') +   
-  scale_fill_manual(values = country.pal) +   
+  autoplot(strata = "Country", type = 'density') +
+  scale_fill_manual(values = country.pal) +
   scale_x_log10(labels = scales::label_comma())
-
 
 ```
 
@@ -165,18 +161,16 @@ Let's also take a look at how antibody responses change by age.
 ```{r "plot age"}
 
 #Plot antibody responses by age
-ggplot(data = xs_data %>% 
-         mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")), 
-       aes(x = age, y = value, color = Country)) + 
+ggplot(data = xs_data %>%
+         mutate(Country = fct_relevel(
+           Country, "Bangladesh", "Pakistan", "Nepal"
+         )),
+       aes(x = age, y = value, color = Country)) +
   geom_point(size = 0.6, alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_y_log10() +
   theme_linedraw() +
-  labs(
-    title = "Quantitative Antibody Responses by Age",
-    x = "Age",
-    y = "Value"
-  ) + 
+  labs(title = "Quantitative Antibody Responses by Age", x = "Age", y = "Value") +
   scale_color_manual(values = country.pal)
 
 ```
@@ -241,14 +235,13 @@ Let's compare estimates across all countries and by age group.
 est_country_age = est.incidence.by(
   strata = c("Country", "ageCat"),
   pop_data = xs_data,
-  curve_params = curves, 
+  curve_params = curves,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 8 # Allow for parallel processing to decrease run time
 )
 
 summary(est_country_age)
-
 
 ```
 We are warned that "curve_params is missing all strata variables, and will be used unstratified". This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
@@ -259,9 +252,11 @@ Let's visualize our seroincidence estimates by strata.
 # Plot seroincidence estimates
 
 ## Save summary(est_country_age) as a dataframe and sort by incidence rate
-est_country_agedf<- summary(est_country_age) %>%
-   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal"),
-         ageCat = factor(ageCat)) 
+est_country_agedf <- summary(est_country_age) %>%
+  mutate(
+    Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal"),
+    ageCat = factor(ageCat)
+  )
 
 ## Create barplot with bars for each age category (rescale incidence rate and CIs)
 ggplot(est_country_agedf,
@@ -293,11 +288,11 @@ ggplot(est_country_agedf,
 
 ```{r include=FALSE}
 #Calculate output values
-rate_bangla <- round(est_country_agedf$incidence.rate[3] * 1000) 
+rate_bangla <- round(est_country_agedf$incidence.rate[3] * 1000)
 
-rate_nepal <- round(est_country_agedf$incidence.rate[1] *1000)
+rate_nepal <- round(est_country_agedf$incidence.rate[1] * 1000)
 
-rate_ratio_bangla_nepal <- round(rate_bangla/rate_nepal)
+rate_ratio_bangla_nepal <- round(rate_bangla / rate_nepal)
 
 ```
 
@@ -314,3 +309,4 @@ We gratefully acknowledge the study participants for their valuable time and int
 This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation. 
 
 ## References
+

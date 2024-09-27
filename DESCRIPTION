@@ -43,7 +43,8 @@ Suggests:
     bookdown,
     ggbeeswarm,
     DT,
-    spelling
+    spelling,
+    devtag (>= 0.0.0.9000)
 LazyData: true
 Encoding: UTF-8
 URL: https://github.com/UCD-SERG/serocalculator, https://ucd-serg.github.io/serocalculator/
@@ -55,3 +56,5 @@ Language: en-US
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 Config/testthat/edition: 3
 Config/Needs/build: moodymudskipper/devtag
+Remotes:  
+    moodymudskipper/devtag

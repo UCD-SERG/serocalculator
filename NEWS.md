@@ -7,6 +7,7 @@
 
 ## Developer-facing changes
 
+* Added QR code to `README.qmd`
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:

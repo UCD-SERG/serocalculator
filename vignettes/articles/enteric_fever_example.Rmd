@@ -127,10 +127,10 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 ```{r plots}
 
 #color palette
-country.pal <- c("#EA6552", "#8F4B86", "#0099B4FF")
+country_pal <- c("#EA6552", "#8F4B86", "#0099B4FF")
 
 xs_data %>% autoplot(strata = "Country", type = "density") +
-  scale_fill_manual(values = country.pal)
+  scale_fill_manual(values = country_pal)
 
 ```
 
@@ -142,7 +142,7 @@ We see that across countries, our data is highly skewed with the majority of res
 xs_data %>%
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
   autoplot(strata = "Country", type = "density") +
-  scale_fill_manual(values = country.pal) +
+  scale_fill_manual(values = country_pal) +
   scale_x_log10(labels = scales::label_comma())
 
 ```
@@ -156,15 +156,15 @@ Let's also take a look at how antibody responses change by age.
 #Plot antibody responses by age
 ggplot(data = xs_data %>%
   mutate(Country = fct_relevel(
-           Country, "Bangladesh", "Pakistan", "Nepal"
-         )),
-       aes(x = age, y = value, color = Country)) +
+    Country, "Bangladesh", "Pakistan", "Nepal"
+  )),
+aes(x = age, y = value, color = Country)) +
   geom_point(size = 0.6, alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_y_log10() +
   theme_linedraw() +
   labs(title = "Quantitative Antibody Results by Age", x = "Age", y = "Value") +
-  scale_color_manual(values = country.pal)
+  scale_color_manual(values = country_pal)
 
 ```
 
@@ -274,7 +274,7 @@ ggplot(est_country_agedf,
   theme(axis.text.y = element_text(size = 11),
         axis.text.x = element_text(size = 11)) +
   scale_x_continuous(expand = c(0, 10)) +
-  scale_fill_manual(values = country.pal)
+  scale_fill_manual(values = country_pal)
 
 ```
 

@@ -1,8 +1,8 @@
 ---
 title: "Introduction to seroincidence estimation"
 vignette: >
-  %\VignetteIndexEntry{Whatever}
-  %\VignetteEngine{TOPSECRET::quarto}
+  %\VignetteIndexEntry{Introduction to seroincidence estimation}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -11,17 +11,22 @@ vignette: >
 ## Estimating incidence
 
 The **incidence rate** of a disease over a **specific time period** is 
-the rate at which individuals in a population are *acquiring* that disease 
+the rate at which individuals in a population are *acquiring* the disease 
 during that time period [@Noordzij2010diseasemeasures].
 
-Example: if ten people in a population of 1000 contract typhoid over a one month time period, 
-then the incidence rate for that time period is *"10 new cases per 1000 persons per month"*.
+**Example:**
+if ten people in a population of 1000 contract typhoid 
+over a one month time period, 
+then the incidence rate for that time period is 
+*"10 new cases per 1000 persons per month"*.
 
 ---
 
-More mathematically, the incidence rate *at a given time point* is 
+More mathematically, 
+the incidence rate *at a given time point* is 
 the *derivative* (i.e., the current rate of change over time) 
-of the expected cumulative count of infections per person at risk, at that time:
+of the expected cumulative count of infections per person at risk, 
+at that time:
 
 $$\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]$$
 
@@ -32,16 +37,22 @@ and $N(t)$ is the number of individuals at risk at time $t$.
 
 ## Scale of incidence rates
 
-In both definitions, the units for an incidence rate are "# new infections per # persons at risk per time duration"; 
+In both definitions, 
+the units for an incidence rate are 
+"# new infections per # persons at risk per time duration"; 
 for example, "new infections per 1000 persons per year". 
 
-For convenience, we can rescale the incidence rate to make it easier to understand; 
+For convenience, 
+we can rescale the incidence rate to make it easier to understand; 
 for example, we might express incidence as 
-"# new infections per 1000 persons per year" or "# new infections per 100,000 persons per day", etc.
+"# new infections per 1000 persons per year" 
+or "# new infections per 100,000 persons per day", etc.
 
 ## Incidence rate from an individual's perspective
 
-From the perspective of an individual in the population, the incidence rate is the probability of becoming infected at that time point, given that you are at risk.
+From the perspective of an individual in the population, 
+the incidence rate is the probability of becoming infected at that time point, 
+given that you are at risk.
 
 ## Notation
 
@@ -49,14 +60,22 @@ We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
 ## Estimating incidence from cross-sectional data
 
-Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so. In particular, if we assume that the incidence rate is constant over time, then we can make some progress.
+Typically, it is difficult to estimate changes from a single time point. 
+However, we can sometimes make assumptions that allow us to do so. 
+In particular, if we assume that the incidence rate is constant over time, 
+then we can make some progress.
 
-Suppose we measure disease antibody levels $Y$ for a simple cross-sectional random sample of a population. For a given member of the sample, 
-let $T$ denote the time since they were last exposed to typhoid. We don't get to observe $T$ - it is a "latent variable". Instead, we only observe $Y$.
+Suppose we measure disease antibody levels $Y$ 
+for a simple cross-sectional random sample of a population. 
+For a given member of the sample, 
+let $T$ denote the time since they were last exposed to typhoid. 
+We don't get to observe $T$ - it is a "latent variable". 
+Instead, we only observe $Y$.
 
 ## Time since infection and incidence
 
-If we assume the incidence rate is constant, then the probability that our individual was **last** infected $t$ days ago, $p(T=t)$, 
+If we assume the incidence rate is constant, 
+then the probability that our individual was **last** infected $t$ days ago, $p(T=t)$, 
 is equal to the probability of being infected at time $t$ 
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.

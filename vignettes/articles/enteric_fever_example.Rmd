@@ -65,7 +65,6 @@ Column Name    |  Description
 
 ```{r curve, message=FALSE}
 # Import longitudinal antibody parameters from OSF
-
 curves <-
   "https://osf.io/download/rtw5k/" %>%
   load_curve_params()
@@ -76,10 +75,6 @@ curves <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r, fig.width=7, fig.height=4}
-# Import longitudinal antibody parameters from OSF
-curves <- "https://osf.io/download/rtw5k/" %>%
-  load_curve_params()
-
 # Visualize curve parameters
 curves %>% filter(antigen_iso == "HlyE_IgA" |
                     antigen_iso == "HlyE_IgG") %>%
@@ -104,10 +99,9 @@ Column Name | Description
 
 
 ```{r data, message = FALSE}
-
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- "https://osf.io/download//n6cp3/" %>%
-  load_pop_data()
+xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
+  as_pop_data()
 
 ```
 
@@ -151,7 +145,7 @@ Once log transformed, our data looks much more normally distributed. In most cas
 
 Let's also take a look at how antibody responses change by age.
 
-```{r "plot age"}
+```{r "plot age", message=FALSE, warning = FALSE}
 
 #Plot antibody responses by age
 ggplot(data = xs_data %>%
@@ -230,6 +224,7 @@ est_country_age <- est.incidence.by(
   pop_data = xs_data,
   curve_params = curves,
   noise_params = noise,
+  noise_strata_varnames = "Country",
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 8 # Allow for parallel processing to decrease run time
 )
@@ -237,9 +232,9 @@ est_country_age <- est.incidence.by(
 summary(est_country_age)
 
 ```
-We are warned that "curve_params is missing all strata variables, and will be used unstratified". This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
+We are warned that "curve_params is missing all strata variables, and will be used unstratified". Because the "curves" dataset does not include stratification variables, this warning can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. If you wanted to specify stratification variables that exist in a longitudinal curve parameters dataset, you could specify them using the `curve_strata_varnames` argument.
 
-Let's visualize our seroincidence estimates by strata.
+Let's visualize our seroincidence estimates by country and age category.
 
 ```{r}
 # Plot seroincidence estimates

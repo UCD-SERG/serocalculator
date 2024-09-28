@@ -1,5 +1,8 @@
 # serocalculator (development version)
 
+# serocalculator 1.2.9.9007
+* Updated enteric fever example article with upgraded code and visualizations
+
 ## New features
 
 * Added template for pull requests 

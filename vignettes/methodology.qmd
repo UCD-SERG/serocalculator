@@ -85,12 +85,16 @@ We will need two pieces of notation to formalize this process.
 * For each survey participant, we measure antibody levels ($Y$) 
 for the disease of interest
 
-* Each participant had their most recent infection at some time duration ($T$)
-*prior* to when we measured their antibodies.^[If they have never been infected, $T$ is infinite.]
+* Each participant had their **most recent infection** at some time duration ($T$)
+**prior** to when we measured their antibodies.
 
-* We can't directly observe $T$ - it is a "latent variable". 
+* We **don't directly observe $T$** - it is a "latent variable". 
 
-* Instead, we only observe $Y$.
+* Instead, we **only observe $Y$**, which we hope tells us something about $T$.
+
+::: notes
+* If they have never been infected, $T$ is infinite.
+:::
 
 :::
 

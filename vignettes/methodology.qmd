@@ -66,7 +66,7 @@ We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
 
 # Estimating incidence from cross-sectional antibody surveys
 
-## Cross-sectional antibody surveys
+## Cross-sectional antibody surveys {.incremental}
 
 ::: notes
 Typically, it is difficult to estimate changes from a single time point. 
@@ -78,50 +78,60 @@ We will need two pieces of notation to formalize this process.
 
 :::
 
+::: incremental
+
 * We recruit participants from the population of interest.
 
-* For each survey participant, we measure antibody levels for the disease of interest ($Y$)
+* For each survey participant, we measure antibody levels ($Y$) 
+for the disease of interest
 
-* Each participant has been last been infected at some time duration ($T$)
+* Each participant had their most recent infection at some time duration ($T$)
 *prior* to when we measured their antibodies.^[If they have never been infected, $T$ is infinite.]
 
-    * We can't directly observe $T$ - it is a "latent variable". 
+* We can't directly observe $T$ - it is a "latent variable". 
 
-    * Instead, we only observe $Y$.
-
-## Time since infection and incidence
-
-We assume the incidence rate is approximately constant:
-
-$$\lambda(t) = \lambda$$
-
-Then:
-
-::: notes
-The probability that our individual was **last** infected $t$ days ago, $p(T=t)$, 
-is equal to the probability of being infected at time $t$ 
-(i.e., the incidence rate at time $t$, $\lambda$) 
-times the probability of not being infected after time $t$, which turns out to be $\exp(-\lambda t)$.
-
-That is:
+* Instead, we only observe $Y$.
 
 :::
 
+## Time since infection and incidence
+
+* We assume the incidence rate is approximately constant 
+**over time** and **across the population**
+^[we can analyze subpopulations separately to make homogeneity more plausible]:
+
+$$\lambda_{i,t} = \lambda, \forall i,t$$
+
+* Then $T$ has an exponential distribution 
+whose rate parameter is the incidence rate:
+
 $$p(T=t) = \lambda \exp(-\lambda t)$$
+
+::: notes
+That is, the probability that 
+an individual was **last** infected $t$ days ago, $p(T=t)$, 
+is equal to the probability of being infected at time $t$ 
+(i.e., the incidence rate at time $t$, $\lambda$) 
+times the probability of not being infected after time $t$, 
+which turns out to be $\exp(-\lambda t)$.
+:::
+
 
 ## Likelihood for observed infection times
 
-If we could observe $T$ for each individual in our sample, we could compute the likelihood of the data:
+If we could observe $T$, we could compute the likelihood of the data:
 
 $$
 \begin{aligned}
 \mathcal{L}^*(\lambda)
 &= \prod_{i=1}^n p(T=t_i)
-= \prod_{i=1}^n \lambda \exp(-\lambda t_i)\\
+\\ &= \prod_{i=1}^n \lambda \exp(-\lambda t_i)\\
 \end{aligned}
 $$
 
-Then we could find the value of $\lambda$ that maximizes this likelihood by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.
+::: notes
+Then we could estimate $\lambda$ by maximizing this likelihood.^[by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.]
+:::
 
 ## Example log-likelihood curves
 

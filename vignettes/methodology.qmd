@@ -96,13 +96,26 @@ for the disease of interest
 
 ## Time since infection and incidence
 
-* We assume the incidence rate is approximately constant 
-**over time** and **across the population**
-^[we can analyze subpopulations separately to make homogeneity more plausible]:
+We assume that:
+
+* the incidence rate is approximately constant 
+**over time** and **across the population**:
 
 $$\lambda_{i,t} = \lambda, \forall i,t$$
 
-* Then $T$ has an exponential distribution 
+::: notes
+(We can analyze subpopulations separately to make homogeneity more plausible.)
+:::
+
+* Participants are always at risk of a new infection
+
+::: notes
+(For diseases like typhoid, this assumption may not hold exactly,
+but hopefully approximately; 
+modeling the effects of re-exposure during an active infection is [on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
+:::
+
+Then $T$ has an exponential distribution 
 whose rate parameter is the incidence rate:
 
 $$p(T=t) = \lambda \exp(-\lambda t)$$

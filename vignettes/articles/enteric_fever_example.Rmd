@@ -223,6 +223,7 @@ est_country_age <- est.incidence.by(
   strata = c("Country", "ageCat"),
   pop_data = xs_data,
   curve_params = curves,
+  curve_strata_varnames = NULL,
   noise_params = noise,
   noise_strata_varnames = "Country",
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
@@ -232,7 +233,8 @@ est_country_age <- est.incidence.by(
 summary(est_country_age)
 
 ```
-We are warned that "curve_params is missing all strata variables, and will be used unstratified". Because the "curves" dataset does not include stratification variables, this warning can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. If you wanted to specify stratification variables that exist in a longitudinal curve parameters dataset, you could specify them using the `curve_strata_varnames` argument.
+
+Here we specify that the "curves" dataset does not include any stratifcation variables by using `curve_strata_varnames = NULL`. If you do not specify this, you will see a warning that "curve_params is missing all strata variables, and will be used unstratified". If you want to specify stratification variables that exist in a longitudinal curve parameters dataset, you could specify them using the `curve_strata_varnames` argument, as we did for "noise" using the `noise_strata_varnames` argument.
 
 Let's visualize our seroincidence estimates by country and age category.
 

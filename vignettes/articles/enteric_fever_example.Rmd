@@ -111,6 +111,8 @@ We can compute numerical summaries of our cross-sectional antibody data with a `
 
 ```{r}
 xs_data %>% summary()
+
+
 ```
 
 
@@ -233,16 +235,15 @@ est_country_age <- est.incidence.by(
 summary(est_country_age)
 
 ```
-Note that we get a warning related to uneven numbers of observations between antigen isotypes, meaning that some participants do not have data for both "HlyE_IgA" and "HlyE_IgG". 
-The warning indicates that the "*Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes*", meaning that only those observations that have both specified antigen isotypes will be included in the analysis. 
-To avoid this warning, you could filter your cross-sectional dataset to only records with values for all antigen isotypes specified in the `antigen_isos` argument. 
+Note that we get a warning about uneven observations between antigen isotypes, meaning some participants do not have results for both *HlyE IgA* and *HlyE IgG*. 
+The warning indicates that the "*Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes*", so only participants with both antigen isotypes are included. To avoid this, filter the dataset to include only records with all specified antigen isotypes.
+
+We set `curve_strata_varnames = NULL` to avoid stratification in the "curves" dataset because it does not include our strata variables. 
+Without this, a warning appears: "*curve_params is missing all strata variables, and will be used unstratified*". 
+To stratify based on variables that exist in a longitudinal curve parameters dataset, specify variables using `curve_strata_varnames`, similar to how `noise_strata_varnames` is used for "noise" above.
 
 
-We also specified that the "curves" dataset does not include any stratification variables by using `curve_strata_varnames = NULL`. 
-If you do not specify this, you will see a warning that "*curve_params is missing all strata variables, and will be used unstratified*". 
-If you want to specify stratification variables that exist in a longitudinal curve parameters dataset, you could specify them using the `curve_strata_varnames` argument, as we did for "noise" using the `noise_strata_varnames` argument.
-
-Let's visualize our seroincidence estimates by country and age category.
+Finally, let's visualize our seroincidence estimates by country and age category.
 
 ```{r}
 # Plot seroincidence estimates

@@ -3,6 +3,27 @@
 
 * Add option to test `strata` in `pop_data`
 
+## New features
+
+* Added template for reporting Issues 
+(from `usethis::use_tidy_issue_template()`) (#270)
+
+* Added template for pull requests 
+(from <https://github.com/bcgov/ssdtools>) (#265)
+
+## Developer-facing changes
+
+* Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
+copied from <https://github.com/tidyverse/ggplot2>
+
+* Added additional automated checks through 
+[GitHub actions](https://docs.github.com/en/actions), 
+including:
+  - check that `README.qmd` still compiles 
+  (advice from [preventive-r-package-care](https://indrajeetpatil.github.io/preventive-r-package-care)) (#259)
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
+
 # serocalculator 1.2.0
 * Added `test-summary.pop_data` test
 

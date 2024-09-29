@@ -43,6 +43,7 @@ knitr::opts_chunk$set(
 
 
 ```{r setup, message=FALSE}
+install.packages("devtools")
 devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
 ```
 

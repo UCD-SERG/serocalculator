@@ -22,6 +22,8 @@ including:
   - lint changed files (#256)
 
 # serocalculator 1.2.0
+* Added `test-autoplot.pop_data` test
+
 * Added `test-summary.pop_data` test
 
 * Modified `test-est.incidence` test

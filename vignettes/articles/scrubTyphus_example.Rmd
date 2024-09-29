@@ -51,6 +51,7 @@ devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
 
 ```{r load_packages}
 library(serocalculator)
+library(devtools)
 install.packages("tidyverse", eval=FALSE)
 library(tidyverse)
 install.packages("mixtools", eval=FALSE)

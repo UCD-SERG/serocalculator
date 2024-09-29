@@ -2,10 +2,16 @@
 
 ## New features
 
+* Added template for reporting Issues 
+(from `usethis::use_tidy_issue_template()`) (#270)
+
 * Added template for pull requests 
-(borrowed from https://github.com/bcgov/ssdtools) (#265)
+(from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Developer-facing changes
+
+* Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
+copied from <https://github.com/tidyverse/ggplot2>
 
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 

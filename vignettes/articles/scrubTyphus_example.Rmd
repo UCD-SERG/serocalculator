@@ -45,10 +45,6 @@ knitr::opts_chunk$set(
 ### Load packages
 The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading.
 
-```{r setup, message=FALSE}
-devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
-```
-
 ```{r load_packages}
 library(serocalculator)
 library(devtools)
@@ -56,6 +52,10 @@ install.packages("tidyverse", eval=FALSE)
 library(tidyverse)
 install.packages("mixtools", eval=FALSE)
 library(mixtools)
+```
+
+```{r setup, message=FALSE}
+devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
 ```
 
 ### Load data

@@ -9,6 +9,9 @@
 
 ## Developer-facing changes
 
+* Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
+copied from <https://github.com/tidyverse/ggplot2>
+
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:

@@ -16,6 +16,8 @@
 
 * fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)
 
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
+
 * Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
 copied from <https://github.com/tidyverse/ggplot2>
 

@@ -24,3 +24,4 @@ allpopsamples_hlye.csv$
 ^README\.qmd$
 ^codecov\.yml$
 ^man/df_to_array\.Rd$
+^\.lintr$

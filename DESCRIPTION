@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.2.0.9009
+Version: 1.2.0.9010
 Authors@R: c(
     person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
            comment = "Author of the method and original code."),
@@ -50,6 +50,7 @@ Suggests:
     readr,
     rmarkdown,
     spelling,
+    ssdtools (>= 1.0.6.9016),
     testthat (>= 3.0.0),
     tidyverse
 LinkingTo: 
@@ -64,3 +65,5 @@ Remotes:
     moodymudskipper/devtag
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
+Remotes: 
+    bcgov/ssdtools

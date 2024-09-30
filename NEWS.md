@@ -18,6 +18,10 @@
 
 * Added `devtag` to package (using `devtag::use_devtag()`) (#292)
 * Added `@dev` tag to `?df_to_array()` (#292)
+
+* Generalized `get_()` and `set_()` methods to be general-purpose
+(no S3 class-specific methods needed yet) (#274).
+
 * Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
 * Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
 copied from <https://github.com/tidyverse/ggplot2>

@@ -2,16 +2,29 @@
 
 * Add `as_noise_params`
 
+# serocalculator 1.2.9.9007
+* Updated enteric fever example article with upgraded code and visualizations
+
 ## New features
 
+* Added template for reporting Issues 
+(from `usethis::use_tidy_issue_template()`) (#270)
+
 * Added template for pull requests 
-(borrowed from https://github.com/bcgov/ssdtools) (#265)
+(from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Developer-facing changes
+
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
+
+* Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
+copied from <https://github.com/tidyverse/ggplot2>
 
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:
+  - check that `README.qmd` still compiles 
+  (advice from [preventive-r-package-care](https://indrajeetpatil.github.io/preventive-r-package-care)) (#259)
   - check `NEWS.md` for updated change log (#257)
   - lint changed files (#256)
 

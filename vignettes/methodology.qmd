@@ -8,8 +8,12 @@ vignette: >
 
 \def\pdf{\text{p}}
 \def\pmf{\text{P}}
+\def\Lik{\mathcal{L}}
+\def\llik{\ell}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \providecommand{\expf}[1]{\exp{\left\{#1\right\}}}
+\providecommand{\logf}[1]{\log{\left\{#1\right\}}}
+\providecommand{\invf}[1]{#1^{-1}}
 
 # Overview
 
@@ -25,7 +29,7 @@ over a one month time period,
 then the incidence rate for that time period is 
 *"10 new cases per 1000 persons per month"*.
 
----
+## Mathematical definition of incidence {visibility="hidden"}
 
 More mathematically, 
 the incidence rate *at a given time point* is 
@@ -38,9 +42,10 @@ $$\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]$$
 where $C(t)$ is the cumulative total number of infections in the population of interest,
 and $N(t)$ is the number of individuals at risk at time $t$.
 
----
+:::
 
-## Scale of incidence rates
+
+## Scale of incidence rates {visibility="hidden"}
 
 In both definitions, 
 the units for an incidence rate are 
@@ -165,27 +170,9 @@ which turns out to be $\exp(-\lambda t)$.
 :::
 
 
-## Likelihood for observed infection times
+## Likelihood of latent infection times {.smaller}
 
-If we could observe $T$, 
-then we could estimate $\lambda$
-using a typical maximum likelihood approach:
-
-$$
-\begin{aligned}
-\mathcal{L}^*(\lambda)
-&= \prod_{i=1}^n p(T=t_i)
-\\ &= \prod_{i=1}^n \lambda \exp(-\lambda t_i)\\
-\end{aligned}
-$$
-
-::: notes
-We would maximize this likelihood,
-by taking the logarithm of the likelihood, 
-taking the derivative of that "log-likelihood", 
-setting it equal to 0, 
-and solving for $\lambda$.
-:::
+{{< include sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 

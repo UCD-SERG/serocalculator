@@ -337,6 +337,6 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 <!-- {{< include methods-continued.qmd >}} -->
 
-## References
+## References {.smaller}
 
 

@@ -6,6 +6,7 @@ format:
   pptx:
     number-sections: false
     slide-level: 2
+    reference-location: document
     # reference-doc: vignettes/articles/templates/Gates_template.pptx
   html:
     number-sections: true
@@ -14,6 +15,7 @@ format:
     fig-cap-location: top
     echo: false
   revealjs:
+    reference-location: document
     echo: false
     html-math-method: mathjax
     scrollable: true

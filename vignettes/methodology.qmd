@@ -363,7 +363,7 @@ Notation | Interpretation
 $x(t)$   | Pathogen concentration at time $t$
 $y(t)$   | Antibody concentration at time $t$
 
-: {#tbl-seroresponse-model-notation}
+: Notation for antibody response model {#tbl-seroresponse-model-notation}
 
 $$x'(t) = \alpha x(t) - \beta y(t)$$
 $$y'(t) = \delta y(t)$$
@@ -396,7 +396,6 @@ These omissions were made to simplify the estimation process,
 under the assumption that they are negligible 
 compared to the other terms in the model.
 :::
-
 
 ::: hidden
 
@@ -515,4 +514,8 @@ There are also some other sources of noise in our bioassays; user differences in
 
 ---
 
-# References
+# Notes
+
+## References
+
+

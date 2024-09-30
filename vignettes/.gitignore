@@ -4,3 +4,6 @@ methodology.log
 methodology_files
 ~$*.pptx
 ~$*.docx
+*_files/
+*.pptx
+*.docx

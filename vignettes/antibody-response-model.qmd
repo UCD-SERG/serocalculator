@@ -23,7 +23,7 @@ Notation | Interpretation
 $x(t)$   | Pathogen concentration at time $t$
 $y(t)$   | Antibody concentration at time $t$
 
-: Notation for antibody response model {#tbl-seroresponse-model-notation}
+: Notation for antibody response model
 
 $$x'(t) = \alpha x(t) - \beta y(t)$$
 $$y'(t) = \delta y(t)$$
@@ -69,13 +69,6 @@ If $r = 1$, this model reduces to exponential decay with decay rate $\alpha$.
 :::
 
 ## Putting it all together
-
-Infection/colonization episode | Waning immunity episode
--------- | -------
-$b'(t) = \mu_0 b(t) - cy(t)$   | $b(t) = 0$
-$y^{\prime}(t) = \mu y(t)$   | $y^{\prime}(t) = -\alpha y(t)^r$
-
----
 
 The serum antibody response $y(t)$ can be written as
 

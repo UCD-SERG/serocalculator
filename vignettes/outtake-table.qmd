@@ -1,0 +1,5 @@
+Infection/colonization episode | Waning immunity episode
+-------- | -------
+$b'(t) = \mu_0 b(t) - cy(t)$   | $b(t) = 0$
+$y^{\prime}(t) = \mu y(t)$   | $y^{\prime}(t) = -\alpha y(t)^r$
+

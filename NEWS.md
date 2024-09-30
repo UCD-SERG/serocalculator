@@ -12,6 +12,9 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Developer-facing changes
+* created unit test for `df_to_array()` (#276)
+
+* fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)
 
 * Added `devtag` to package (using `devtag::use_devtag()`) (#292)
 * Added `@dev` tag to `?df_to_array()` (#292)

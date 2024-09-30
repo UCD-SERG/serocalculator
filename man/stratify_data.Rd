@@ -37,9 +37,11 @@ stratify_data(
 
 \item{strata_varnames}{\code{\link[=character]{character()}} vector of names of variables in \code{data} to stratify by}
 
-\item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
+\item{curve_strata_varnames}{A subset of \code{strata}.
+Values must be variable names in \code{curve_params}. Default = "".}
 
-\item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
+\item{noise_strata_varnames}{A subset of \code{strata}.
+Values must be variable names in \code{noise_params}. Default = "".}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 }

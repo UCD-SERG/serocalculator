@@ -32,7 +32,21 @@ knitr::opts_chunk$set(
 ## Methods
 
 ### Load packages
-The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
+
+The first step in conducting this analysis is to load our necessary packages. 
+**If you haven't installed already, you will need to do so before loading:**
+
+```{r, eval = FALSE}
+install.packages("serocalculator")
+```
+
+See the 
+[Installation instructions](https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package) for more details.
+
+Once the `serocalculator` package has been installed, 
+load it into your R environment using `library()`,
+along with any other packages you may need for data management;
+For this example, we will load `tidyverse` and `forcats`:
 
 ```{r load_packages}
 library(serocalculator)

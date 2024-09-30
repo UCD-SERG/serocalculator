@@ -13,6 +13,8 @@
 
 ## Developer-facing changes
 
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
+
 * Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
 copied from <https://github.com/tidyverse/ggplot2>
 

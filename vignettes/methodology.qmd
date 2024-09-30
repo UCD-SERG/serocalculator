@@ -7,6 +7,7 @@ vignette: >
 ---
 
 \def\pdf{\text{p}}
+\def\pmf{\text{P}}
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \providecommand{\expf}[1]{\exp{\left\{#1\right\}}}
 
@@ -108,16 +109,12 @@ which we hope tells us something about $T$ and $\lambda$.
 
 ## Modeling assumptions
 
-::: notes
-
-We assume that:
-
-:::
+We **assume** that:
 
 ::: incremental
 
-* The incidence rate is approximately constant 
-**over time** and **across the population**
+* The incidence rate is approximately **constant** 
+**over time** and **across the population** ("**constant and homogenous incidence**")
 
 ::: notes
 
@@ -143,23 +140,28 @@ modeling the effects of re-exposure during an active infection is
 
 ## Time since infection and incidence
 
-Under those assumptions,
-then **$T$ has an exponential distribution** 
-whose rate parameter is the incidence rate:
+Under those assumptions:
 
+::: incremental
+
+* $T$ has an **exponential distribution**:
 $$\pdf(T=t) = \lambda \expf{-\lambda t}$$
 
+* the rate parameter is the incidence rate
+
+:::
+
 ::: notes
-That is, the probability that 
+This is a time-to-event model, 
+looking **backwards in time** from the survey date 
+(when the blood sample was collected).
+
+The probability that 
 an individual was **last** infected $t$ days ago, $p(T=t)$, 
 is equal to the probability of being infected at time $t$ 
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, 
 which turns out to be $\exp(-\lambda t)$.
-
-This is a time-to-event model, 
-looking **backwards in time** from the survey date 
-(when the blood sample was collected).
 :::
 
 
@@ -249,41 +251,56 @@ The standard error of the estimate is approximately equal to the inverse of the 
 
 more curvature -> likelihood peak is clearer -> smaller standard errors
 
-## The plot thickens
-
-Unfortunately, we don't observe infection times $T$; we only observe antibody levels ${Y}$. So things get a little more complicated.
-
-In short, we are hoping that we can estimate $T$ (time since last infection) from $Y$ (current antibody levels). If we could do that, then we could plug in our estimates $\hat t_i$ into that likelihood above, and estimate $\lambda$ as previously.
-
-We're actually going to do something a little more nuanced; instead of just using one value for $\hat t$, we are going to consider all possible values of $t$ for each individual.
-
 ## Likelihood of observed data
 
-The likelihood of our individual's observed data, $P(Y=y)$, can be expressed as an integral over the joint probability of $Y$ and $T$ (using the Law of Total Probability):
+::: notes
+Unfortunately, we don't observe infection times $T$; 
+we only observe antibody levels ${Y}$. 
+So things get a little more complicated.
 
-$$
-\begin{aligned}
-p(Y=y) 
-&= \int_t p(Y=y,T=t)dt
-\end{aligned}
-$$
+In short, we are hoping that we can estimate 
+$T$ (time since last infection) 
+from $Y$ (current antibody levels). 
+If we could do that, 
+then we could plug in our estimates $\hat t_i$ 
+into that likelihood above, 
+and estimate $\lambda$ as previously.
 
----
+We're actually going to do something a little more nuanced; 
+instead of just using one value for $\hat t$, 
+we are going to consider all possible values of $t$ for each individual.
 
-Further, we can express the joint probability $p(Y=y,T=t)$ as the product of $p(T=t)$ and 
-$p(Y=y|T=t)$ the "antibody response curve after infection". That is:
+We need to link the data we actually observed to the incidence rate.
 
-$$
-p(Y=y,T=t) = p(Y=y|T=t)P(T=t)
-$$
+The likelihood of an individual's observed data, 
+$\pdf(Y=y)$, 
+can be expressed as an integral over 
+the joint likelihood of $Y$ and $T$ 
+(using the Law of Total Probability):
+:::
 
-## Antibody response decay curves
+::: incremental
+
+* $$\pdf(Y=y) = \int_t \pdf(Y=y,T=t)dt$$
+
+:::: notes
+Further, we can express the joint probability $p(Y=y,T=t)$ as the product of 
+$p(T=t)$ and 
+$p(Y=y|T=t)$ the "antibody response curve after infection". 
+That is:
+::::
+
+* $$\pdf(Y=y,T=t) = \pdf(Y=y|T=t) \pdf(T=t)$$
+
+:::
+
+## Antibody response curves
 
 ::: {#fig-decay}
 
 ![](fig/fig1a-1.svg)
 
-Antibody response decay curves, $p(Y=y|T=t)$, for typhoid
+Antibody response curves, $p(Y=y|T=t)$, for typhoid
 
 :::
 
@@ -300,7 +317,9 @@ $$
 
 ## Composing the likelihood {.smaller}
 
+::: notes
 Now, the likelihood of the observed data $\vec{y} = (y_1, y_2, ..., y_n)$ is:
+:::
 
 $$
 \begin{aligned}
@@ -310,11 +329,15 @@ $$
 \end{aligned}
 $$
 
+::: notes
 If we know $p(Y=y|T=t)$, then we can maximize $\mathcal{L}(\lambda)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
+:::
 
 ## Finding the MLE numerically
 
+::: notes
 The likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
+:::
 
 $$
 \begin{aligned}
@@ -332,23 +355,69 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 # Modeling the seroresponse kinetics curve
 
-## A simple model for the seroresponse {.smaller}
+::: notes
+Now, we need a model for the antibody response to infection, $\pdf(Y=y|T=t)$.
+The current version of the `{serocalculator}` package uses 
+a two-phase model for 
+the shape of the seroresponse [@Teunis_2016].
+:::
 
-Now, the big problem becomes modeling $p(Y=y|T=t)$.
+## Model for active infection period {.smaller}
 
-The current version of the serocalculator package uses the model proposed in @Teunis_2016 for 
-the shape of the seroresponse:
+::: notes
+The first phase of the model represents the **active infection period**, 
+and uses a simplified Lotka-Volterra predator-prey model 
+[@volterra1928variations],
+where the pathogen is the prey and the antibodies are the predator:
+:::
 
-$$
-\begin{array}{ll}
-\text{Infection/colonization episode} & \text{Waning immunity episode}\\
-b^{\prime}(t) = \mu_{0}b(t) - cy(t) & b(t) = 0 \\
-y^{\prime}(t) = \mu y(t) & y^{\prime}(t) = -\alpha y(t)^r \\
-\end{array}
-$$
+Notation | Interpretation
+-------- | -------
+$x(t)$   | Pathogen concentration at time $t$
+$y(t)$   | Antibody concentration at time $t$
 
-With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen concentration 
-$b(0) = b_{0}$. 
+: {#tbl-seroresponse-model-notation}
+
+$$x'(t) = \alpha x(t) - \beta y(t)$$
+$$y'(t) = \delta y(t)$$
+
+::: notes
+With baseline antibody concentration $y(0) = y_{0}$ and 
+initial pathogen concentration 
+$x(0) = x_{0}$. 
+:::
+
+::: notes
+Compared to the standard LV model:
+
+* the predation term with the $\beta$ coefficient is missing 
+the prey concentration $x(t)$ factor;
+we assume that the efficiency of predation 
+doesn't depend on pathogen concentration.
+
+* the differential equation for predator density is missing 
+the predator death rate term
+$-\gamma y(t)$; we assume that as long as there are any pathogens present, 
+the antibody decay rate is negligible compared to the growth rate.
+
+* the predator growth rate term $\delta y(t)$ is missing 
+the prey density factor $x(t)$
+we assume that as long as there are any pathogens present, 
+the antibody concentration grows at the same exponential rate.
+
+These omissions were made to simplify the estimation process, 
+under the assumption that they are negligible 
+compared to the other terms in the model.
+:::
+
+
+::: hidden
+
+Infection/colonization episode | Waning immunity episode
+-------- | -------
+$b'(t) = \mu_0 b(t) - cy(t)$   | $b(t) = 0$
+$y^{\prime}(t) = \mu y(t)$   | $y^{\prime}(t) = -\alpha y(t)^r$
+
 
 ---
 

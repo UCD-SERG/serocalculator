@@ -18,15 +18,15 @@ and uses a simplified Lotka-Volterra predator-prey model
 where the pathogen is the prey and the antibodies are the predator:
 :::
 
-Notation | Interpretation
--------- | -------
-$x(t)$   | Pathogen concentration at time $t$
-$y(t)$   | Antibody concentration at time $t$
+Notation:
 
-: Notation for antibody response model
+* $x(t)$: Pathogen concentration at time $t$ 
+* $y(t)$: Antibody concentration at time $t$ 
 
-$$x'(t) = \alpha x(t) - \beta y(t)$$
-$$y'(t) = \delta y(t)$$
+Model: 
+
+* $$x'(t) = \alpha x(t) - \beta y(t)$$
+* $$y'(t) = \delta y(t)$$
 
 ::: notes
 With baseline antibody concentration $y(0) = y_{0}$ and

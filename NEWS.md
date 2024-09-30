@@ -16,6 +16,9 @@
 
 * fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)
 
+* Generalized `get_()` and `set_()` methods to be general-purpose
+(no S3 class-specific methods needed yet) (#274).
+
 * Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
 
 * Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)

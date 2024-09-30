@@ -6,7 +6,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+\def\pdf{\text{p}}
 \renewcommand{\vec}[1]{\mathbf{#1}}
+\providecommand{\expf}[1]{\exp{\left\{#1\right\}}}
 
 # Overview
 
@@ -54,15 +56,16 @@ or "# new infections per 100,000 persons per day", etc.
 
 From the perspective of an individual in the population:
 
-the **incidence rate** at a given time point ($t$)
+* the **incidence rate** at a given time point ($t$)
 is the instantaneous probability (density) of 
-*becoming infected* at that time point,
-*given* that they are *at risk* at that time point
-(i.e., the *hazard rate*).
+**becoming infected** at that time point,
+**given** that they are **at risk** at that time point.
+
+* That is, the incidence rate is a **hazard** rate.
 
 ## Notation
 
-We often use the greek letter $\lambda$ ("lambda") to denote the incidence rate.
+Let's use $\lambda$ to denote the incidence rate.
 
 # Estimating incidence from cross-sectional antibody surveys
 
@@ -82,47 +85,69 @@ We will need two pieces of notation to formalize this process.
 
 * We recruit participants from the population of interest.
 
-* For each survey participant, we measure antibody levels ($Y$) 
+* For each survey participant, we measure antibody levels $(Y)$ 
 for the disease of interest
 
-* Each participant had their **most recent infection** at some time duration ($T$)
+* Each participant was **most recently infected** at some time $(T)$
 **prior** to when we measured their antibodies.
-
-* We **don't directly observe $T$** - it is a "latent variable". 
-
-* Instead, we **only observe $Y$**, which we hope tells us something about $T$.
 
 ::: notes
 * If they have never been infected, $T$ is infinite.
+
 :::
 
+* $T$ is a **latent, unobserved variable**.
+
+::: notes
+* We **don't directly observe $T$**; we **only observe $Y$**, 
+which we hope tells us something about $T$ and $\lambda$.
+
+:::
+
+:::
+
+## Modeling assumptions
+
+::: notes
+
+We assume that:
+
+:::
+
+::: incremental
+
+* The incidence rate is approximately constant 
+**over time** and **across the population**
+
+::: notes
+
+* that is:
+$$\lambda_{i,t} = \lambda, \forall i,t$$
+
+(We can analyze subpopulations separately to make homogeneity more plausible.)
+:::
+
+* Participants are always at risk of a new infection, 
+regardless of how recently they have been infected
+("**no lasting immunity**").
+
+:::
+
+::: notes
+(For diseases like typhoid, 
+the no-immunity assumption may not hold exactly,
+but hopefully approximately; 
+modeling the effects of re-exposure during an active infection is 
+[on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
 :::
 
 ## Time since infection and incidence
 
-We assume that:
-
-* the incidence rate is approximately constant 
-**over time** and **across the population**:
-
-$$\lambda_{i,t} = \lambda, \forall i,t$$
-
-::: notes
-(We can analyze subpopulations separately to make homogeneity more plausible.)
-:::
-
-* Participants are always at risk of a new infection
-
-::: notes
-(For diseases like typhoid, this assumption may not hold exactly,
-but hopefully approximately; 
-modeling the effects of re-exposure during an active infection is [on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
-:::
-
-Then $T$ has an exponential distribution 
+Under those assumptions,
+then **$T$ has an exponential distribution** 
 whose rate parameter is the incidence rate:
 
-$$p(T=t) = \lambda \exp(-\lambda t)$$
+$$\pdf(T=t) = \lambda \expf{-\lambda t}$$
 
 ::: notes
 That is, the probability that 
@@ -131,12 +156,18 @@ is equal to the probability of being infected at time $t$
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, 
 which turns out to be $\exp(-\lambda t)$.
+
+This is a time-to-event model, 
+looking **backwards in time** from the survey date 
+(when the blood sample was collected).
 :::
 
 
 ## Likelihood for observed infection times
 
-If we could observe $T$, we could compute the likelihood of the data:
+If we could observe $T$, 
+then we could estimate $\lambda$
+using a typical maximum likelihood approach:
 
 $$
 \begin{aligned}
@@ -147,10 +178,18 @@ $$
 $$
 
 ::: notes
-Then we could estimate $\lambda$ by maximizing this likelihood.^[by taking the logarithm of the likelihood, taking the derivative of that "log-likelihood", setting it equal to 0, and solving for $\lambda$.]
+We would maximize this likelihood,
+by taking the logarithm of the likelihood, 
+taking the derivative of that "log-likelihood", 
+setting it equal to 0, 
+and solving for $\lambda$.
 :::
 
 ## Example log-likelihood curves
+
+::: notes
+Here's what that would look like:
+:::
 
 ```{r}
 #| fig-cap: "Example log-likelihood curves"

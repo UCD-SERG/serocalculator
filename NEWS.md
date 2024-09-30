@@ -1,5 +1,8 @@
 # serocalculator (development version)
 
+# serocalculator 1.2.9.9007
+* Updated enteric fever example article with upgraded code and visualizations
+
 ## New features
 
 * Added template for reporting Issues 
@@ -10,6 +13,8 @@
 
 ## Developer-facing changes
 * initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
+
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
 
 * Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
 copied from <https://github.com/tidyverse/ggplot2>

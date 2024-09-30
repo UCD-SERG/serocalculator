@@ -1,0 +1,8 @@
+\def\pdf{\text{p}}
+\def\pmf{\text{P}}
+\def\Lik{\mathcal{L}}
+\def\llik{\ell}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\providecommand{\expf}[1]{\exp{\left\{#1\right\}}}
+\providecommand{\logf}[1]{\log{\left\{#1\right\}}}
+\providecommand{\invf}[1]{#1^{-1}}

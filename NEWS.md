@@ -3,6 +3,9 @@
 
 * Add option to test `strata` in `pop_data`
 
+# serocalculator 1.2.9.9007
+* Updated enteric fever example article with upgraded code and visualizations
+
 ## New features
 
 * Added template for reporting Issues 

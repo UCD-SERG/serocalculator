@@ -354,7 +354,7 @@ the shape of the seroresponse [@Teunis_2016].
 ::: notes
 The first phase of the model represents the **active infection period**, 
 and uses a simplified Lotka-Volterra predator-prey model 
-[@volterra1928variations],
+[@volterra1928variations]
 where the pathogen is the prey and the antibodies are the predator:
 :::
 
@@ -395,15 +395,25 @@ the antibody concentration grows at the same exponential rate.
 These omissions were made to simplify the estimation process, 
 under the assumption that they are negligible 
 compared to the other terms in the model.
+
 :::
 
-::: hidden
+## Model for post-infection antibody decay
+
+* $$b(t) = 0$$
+
+* $$y^{\prime}(t) = -\alpha y(t)^r$$
+
+::: notes
+If $r = 1$, this model reduces to exponential decay with decay rate $\alpha$.
+:::
+
+## Putting it all together
 
 Infection/colonization episode | Waning immunity episode
 -------- | -------
 $b'(t) = \mu_0 b(t) - cy(t)$   | $b(t) = 0$
 $y^{\prime}(t) = \mu y(t)$   | $y^{\prime}(t) = -\alpha y(t)^r$
-
 
 ---
 
@@ -436,7 +446,7 @@ cur_ai = "HlyE_IgG"
 
 ```{r}
 #| label: fig-response-graph
-#| fig-cap: An example kinetics curve for `r cur_ai`
+#| fig-cap: An example kinetics curve for HlyE IgG
 curve1 = 
   curves %>% 
   filter(

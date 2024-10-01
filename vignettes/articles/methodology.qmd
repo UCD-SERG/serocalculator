@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-{{< include macros.qmd >}}
+{{< include _macros.qmd >}}
 
 # Overview
 
@@ -89,7 +89,8 @@ for the disease of interest
 **prior** to when we measured their antibodies.
 
 ::: notes
-* If they have never been infected, $T$ is infinite.
+* If a participant has never been infected since birth, then $T$ is infinite.
+
 
 :::
 
@@ -158,12 +159,16 @@ is equal to the probability of being infected at time $t$
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, 
 which turns out to be $\exp(-\lambda t)$.
-:::
 
+The distribution of $T$ is truncated by the patient's birth date;
+the probability that they have never been infected is
+$\expf{-\lambda a}$, 
+where $a$ is the patient's age at the time of the survey.
+:::
 
 ## Likelihood of latent infection times {.smaller}
 
-{{< include sec-latent-likelihood.qmd >}}
+{{< include _sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 
@@ -333,7 +338,7 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 :::
 
-{{< include antibody-response-model.qmd >}}
+{{< include _antibody-response-model.qmd >}}
 
 <!-- {{< include methods-continued.qmd >}} -->
 

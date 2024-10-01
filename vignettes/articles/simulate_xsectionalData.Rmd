@@ -60,12 +60,12 @@ knitr::opts_chunk$set(
 library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
-
+library(dplyr)
 # load in longitudinal parameters, these are modeled from all SEES cases across all ages and countries
 dmcmc <-
   "https://osf.io/download/rtw5k" %>%
   load_curve_params() %>%
-  filter(iter < 500) # reduce number of mcmc samples for speed
+  dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 
 ## visualize antibody decay model
@@ -183,23 +183,24 @@ ll_G <- log_likelihood(
   lambda = 0.1
 ) %>% print()
 
-ll_AG <- llik(
+ll_AG <- log_likelihood(
   pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   lambda = 0.1
-) %>% print()
+) %>% 
+  print()
 
 print(ll_A + ll_G)
 ```
 
 ## graph log-likelihood
 
-We can also graph the log-likelihoods, even without finding the MLEs, using `graph.loglik()`:
+We can also graph the log-likelihoods, even without finding the MLEs, using `graph_loglik()`:
 
 ```{r}
-lik_HlyE_IgA <- graph.loglik(
+lik_HlyE_IgA <- graph_loglik(
   pop_data = csdata,
   curve_params = dmcmc,
   noise_params = cond,
@@ -207,7 +208,7 @@ lik_HlyE_IgA <- graph.loglik(
   log_x = TRUE
 )
 
-lik_HlyE_IgG <- graph.loglik(
+lik_HlyE_IgG <- graph_loglik(
   previous_plot = lik_HlyE_IgA,
   pop_data = csdata,
   curve_params = dmcmc,
@@ -216,7 +217,7 @@ lik_HlyE_IgG <- graph.loglik(
   log_x = TRUE
 )
 
-lik_both <- graph.loglik(
+lik_both <- graph_loglik(
   previous_plot = lik_HlyE_IgG,
   pop_data = csdata,
   curve_params = dmcmc,

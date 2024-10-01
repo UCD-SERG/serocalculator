@@ -184,7 +184,7 @@ code <- qr_code("https://ucdserg.shinyapps.io/antibody-kinetics-model-2/")
 generate_svg(code, filename = "man/figures/qr_akm2.svg")
 ```
 
-![QR code for shiny app](man/figures/qr_akm2.svg)
+![QR code for shiny app](../man/figures/qr_akm2.svg)
 
 ## Biological noise
 

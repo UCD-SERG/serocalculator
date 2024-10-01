@@ -146,7 +146,8 @@ Under those assumptions:
 $$\pdf(T=t) = \lambda \expf{-\lambda t}$$
 
   * More precisely, the distribution is exponential truncated by age at observation ($a$):
-$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA \expf{-\lambda a}$$
+
+$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
 
 * the rate parameter $\lambda$ is the incidence rate
 

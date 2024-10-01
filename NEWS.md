@@ -2,6 +2,8 @@
 
 ## New features
 
+* Added default value for `antigen_isos` argument in `log_likelihood()` (#286)
+
 * Updated enteric fever example article with upgraded code and visualizations (#290)
 
 * Added `Methodology` vignette (#284)

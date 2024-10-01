@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-{{< include _macros.qmd >}}
+{{< include articles/_macros.qmd >}}
 
 # Overview
 
@@ -172,7 +172,7 @@ where $a$ is the patient's age at the time of the survey.
 
 ## Likelihood of latent infection times {.smaller}
 
-{{< include _sec-latent-likelihood.qmd >}}
+{{< include articles/_sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 
@@ -285,7 +285,7 @@ That is:
 
 ::: {#fig-decay}
 
-![](../fig/fig1a-1.svg)
+![](fig/fig1a-1.svg)
 
 Antibody response curves, $p(Y=y|T=t)$, for typhoid
 
@@ -342,9 +342,9 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 :::
 
-{{< include _antibody-response-model.qmd >}}
+{{< include articles/_antibody-response-model.qmd >}}
 
-<!-- {{< include _methods-continued.qmd >}} -->
+<!-- {{< include articles/_methods-continued.qmd >}} -->
 
 ## References {.smaller}
 

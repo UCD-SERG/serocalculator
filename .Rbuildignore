@@ -27,3 +27,5 @@ allpopsamples_hlye.csv$
 ^\.lintr$
 ^vignettes$
 ^man/df_to_array\.Rd$
+^vignettes/\.quarto$
+^vignettes/methodology\.qmd$

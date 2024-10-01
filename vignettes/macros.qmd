@@ -1,5 +1,5 @@
-\def\pdf{\text{p}}
-\def\pmf{\text{P}}
+\def\pdf{\mathbb{p}}
+\def\pmf{\mathbb{P}}
 \def\Lik{\mathcal{L}}
 \def\llik{\ell}
 \renewcommand{\vec}[1]{\mathbf{#1}}

@@ -55,16 +55,14 @@ or "# new infections per 100,000 persons per day", etc.
 
 From the perspective of an individual in the population:
 
-* the **incidence rate** at a given time point ($t$)
-is the instantaneous probability (density) of 
+* the **incidence rate** (at a given time point ($t$)
+is the instantaneous **probability** (density) of 
 **becoming infected** at that time point,
 **given** that they are **at risk** at that time point.
 
 * That is, the incidence rate is a **hazard** rate.
 
-## Notation
-
-Let's use $\lambda$ to denote the incidence rate.
+* Let's use $\lambda_{t}$ to denote the incidence rate at time $t$.
 
 # Estimating incidence from cross-sectional antibody surveys
 
@@ -286,7 +284,8 @@ Antibody response curves, $p(Y=y|T=t)$, for typhoid
 
 ## Putting it all together
 
-Substituting $p(Y=y,T=t) = p(Y=y|T=t)P(T=t)$ into the previous expression for $p(Y=y)$:
+Substituting $p(Y=y,T=t) = p(Y=y|T=t)P(T=t)$ 
+into the previous expression for $p(Y=y)$:
 
 $$
 \begin{aligned}
@@ -298,7 +297,8 @@ $$
 ## Composing the likelihood {.smaller}
 
 ::: notes
-Now, the likelihood of the observed data $\vec{y} = (y_1, y_2, ..., y_n)$ is:
+Now, the likelihood of the observed data 
+$\vec{y} = (y_1, y_2, ..., y_n)$ is:
 :::
 
 $$

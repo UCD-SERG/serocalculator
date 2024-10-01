@@ -69,5 +69,4 @@ Remotes:
     moodymudskipper/devtag
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
-VignetteBuilder: 
-    quarto
+

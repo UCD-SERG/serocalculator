@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,22 +72,30 @@
 
 
 <dl><dt id="arg-pop-data">pop_data<a class="anchor" aria-label="anchor" href="#arg-pop-data"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with cross-sectional serology data per antibody and age, and additional columns</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with cross-sectional serology data
+by antibody and age, and additional columns</p></dd>
 
 
 <dt id="arg-curve-params">curve_params<a class="anchor" aria-label="anchor" href="#arg-curve-params"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype combinations</p></li>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype
+combinations</p></li>
 <li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
 <li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
 <li><p><code>y1</code>: antibody peak level (ELISA units)</p></li>
 <li><p><code>t1</code>: duration of infection</p></li>
-<li><p><code>alpha</code>: antibody decay rate (1/days for the current longitudinal parameter sets)</p></li>
+<li><p><code>alpha</code>: antibody decay rate
+(1/days for the current longitudinal parameter sets)</p></li>
 <li><p><code>r</code>: shape factor of antibody decay</p></li>
 </ul></dd>
 
 
 <dt id="arg-noise-params">noise_params<a class="anchor" aria-label="anchor" href="#arg-noise-params"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p></li>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>)
+containing the following variables,
+specifying noise parameters for each antigen isotype:</p><ul><li><p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified
+on each row</p></li>
 <li><p><code>nu</code>: biological noise</p></li>
 <li><p><code>eps</code>: measurement noise</p></li>
 <li><p><code>y.low</code>: lower limit of detection for the current antigen isotype</p></li>
@@ -96,7 +104,8 @@
 
 
 <dt id="arg-antigen-isos">antigen_isos<a class="anchor" aria-label="anchor" href="#arg-antigen-isos"></a></dt>
-<dd><p>Character vector listing one or more antigen isotypes. Values must match <code>pop_data</code>.</p></dd>
+<dd><p>Character vector listing one or more antigen isotypes.
+Values must match <code>pop_data</code>.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>

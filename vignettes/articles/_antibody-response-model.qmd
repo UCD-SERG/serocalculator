@@ -169,15 +169,48 @@ low antibody concentrations are maintained for a long period.
 When $r$ approaches 1, exponential
 decay is restored.
 
+---
+
+::: notes
+An interactive Shiny app that allows the user to manipulate the model parameters is available at:
+
+<https://ucdserg.shinyapps.io/antibody-kinetics-model-2/>
+:::
+
+
 
 ## Biological noise
 
+::: notes
 When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).
 
 We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren't actually the ones we are looking for (overcount, false positives, cross-reactivity).
 
 We are more concerned about overcount (cross-reactivity) than undercount. For a given antibody, we can do some analytical work beforehand to estimate the distribution of overcounts, and add that to our model $p(Y=y|T=t)$.
+:::
+
+Notation:
+
+* $y_\text{obs}$: measured serum antibody concentration
+* $y_\text{true}$: "true" serum antibody concentration
+* $\epsilon_b$: noise due to probe cross-reactivity
+
+Model:
+
+* $y_\text{obs} = y_\text{true} + \epsilon_b$
+* $\epsilon_b \sim \text{Unif}(0, \nu)$
+
+$\nu$ needs to be pre-estimated using negative controls,
+typically using the 95th percentile of the distribution of 
+antibody responses to the antigen-isotype 
+in a population with no exposure.
 
 ## Measurement noise
 
-There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
+There are also some other sources of noise in our bioassays; 
+user differences in pipetting technique, random ELISA plate effects, etc. 
+This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
+
+Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from the laboratory testing process. 
+It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. 
+Note that the CV should ideally be measured across plates rather than within the same plate. 

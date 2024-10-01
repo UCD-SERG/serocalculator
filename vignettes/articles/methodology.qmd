@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-{{< include_macros.qmd >}}
+{{< include _macros.qmd >}}
 
 # Overview
 
@@ -17,10 +17,11 @@ the rate at which individuals in a population are *acquiring* the disease
 during that time period [@Noordzij2010diseasemeasures].
 
 **Example:**
-if ten people in a population of 1000 contract typhoid 
-over a one month time period, 
-then the incidence rate for that time period is 
-*"10 new cases per 1000 persons per month"*.
+if there are **10 new cases** of typhoid 
+in a population of **1000 persons** 
+during a **one month** time period, 
+then the incidence rate for that time period is
+**10 new cases per 1000 persons per month**.
 
 ## Mathematical definition of incidence {visibility="hidden"}
 

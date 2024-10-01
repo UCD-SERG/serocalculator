@@ -172,7 +172,7 @@ where $a$ is the patient's age at the time of the survey.
 
 ## Likelihood of latent infection times {.smaller}
 
-{{< include_sec-latent-likelihood.qmd >}}
+{{< include _sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 
@@ -342,7 +342,7 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 :::
 
-{{< include_antibody-response-model.qmd >}}
+{{< include _antibody-response-model.qmd >}}
 
 <!-- {{< includemethods-continued.qmd >}} -->
 

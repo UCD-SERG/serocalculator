@@ -7,3 +7,5 @@ methodology_files
 *_files/
 *.pptx
 *.docx
+
+/.quarto/

@@ -1,5 +1,3 @@
-{{< include _macros.qmd >}}
-
 # Modeling the seroresponse kinetics curve
 
 ::: notes

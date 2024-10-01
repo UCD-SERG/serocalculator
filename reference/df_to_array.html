@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,20 +60,24 @@
 
 
 <dl><dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) in long format (each row contains one value for the intended array)</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code>) in long format
+(each row contains one value for the intended array)</p></dd>
 
 
 <dt id="arg-dim-var-names">dim_var_names<a class="anchor" aria-label="anchor" href="#arg-dim-var-names"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector of variable names in <code>df</code>. All of these variables should be factors, or a warning will be produced.</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector of variable names in <code>df</code>.
+All of these variables should be factors, or a warning will be produced.</p></dd>
 
 
 <dt id="arg-value-var-name">value_var_name<a class="anchor" aria-label="anchor" href="#arg-value-var-name"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> variable containing a variable name from <code>df</code> which contains the values for the intended array.</p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> variable containing a variable name
+from <code>df</code> which contains the values for the intended array.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>an <code><a href="https://rdrr.io/r/base/array.html" class="external-link">array()</a></code> with dimensions defined by the variables in <code>df</code> listed in <code>dim_var_names</code></p>
+    <p>an <code><a href="https://rdrr.io/r/base/array.html" class="external-link">array()</a></code> with dimensions defined by the variables in <code>df</code>
+listed in <code>dim_var_names</code></p>
     </div>
 
     <div class="section level2">
@@ -92,460 +96,24 @@
 <span class="r-in"><span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Width"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">parameter</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">parameter</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">serocalculator</span><span class="fu">:::</span><span class="fu"><a href="df.to.array.html">df.to.array</a></span><span class="op">(</span>dim_var_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parameter"</span>, <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`df.to.array()` was deprecated in serocalculator 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `df_to_array()` instead.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        7.0       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.5        3.2       3.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.4       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.7       6.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.9        6.4       5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.0        3.2       2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.5       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.7        6.9       7.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.2        3.1       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       2.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.9       5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.6        5.5       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.1        2.3       2.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        4.0       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        6.5       6.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.6        2.8       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       2.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.6       5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.4        5.7       7.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.9        2.8       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.3       2.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.7        4.5       6.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.6        6.3       4.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        3.3       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.6       1.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.7       4.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        4.9       7.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        2.4       2.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.0       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.3       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.4        6.6       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     2.9        2.9       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.6       5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.9        5.2       7.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.1        2.7       3.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.1        1.4       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.9       6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.4        5.0       6.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.7        2.0       3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.0       2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.5       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.8        5.9       6.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        3.0       2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        4.2       5.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.8        6.0       6.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.0        2.2       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.1        1.0       2.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.0       5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.3        6.1       5.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.0        2.9       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.1        1.4       2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.1        4.7       5.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.8        5.6       5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     4.0        2.9       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       2.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.2        3.6       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.7        6.7       6.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     4.4        3.1       3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.4       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        4.4       5.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.4        5.6       6.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.9        3.0       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.5       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.5       5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        5.8       7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.5        2.7       3.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.0       2.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.1       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.7        6.2       7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.8        2.2       2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.5       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.7        4.5       6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        5.6       6.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.8        2.5       2.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.1       1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.9       5.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.4        5.9       6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        3.2       3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.8       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.7        4.8       5.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        6.1       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.7        2.8       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.3       2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        4.0       4.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.6        6.3       7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.6        2.5       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.0        4.9       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        6.1       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.3        2.8       2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.5        1.2       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.7        4.7       4.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.8        6.4       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        2.9       3.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       2.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.9        4.3       5.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        6.6       7.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.0        3.0       3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.4       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        4.4       6.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        6.8       6.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        2.8       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.4       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        4.8       4.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.2        6.7       6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.5        3.0       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.7       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        5.0       4.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.2        6.0       6.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        2.9       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       2.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.5       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.7        5.7       7.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.2        2.6       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.0       1.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        3.5       5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.8        5.5       7.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.1        2.4       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.1       1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        3.8       6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.4        5.5       7.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        2.4       3.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.0       2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.7       6.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.2        5.8       6.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     4.1        2.7       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.1        1.2       2.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.9       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.5        6.0       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     4.2        2.7       2.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.6       1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        5.1       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.9        5.4       6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.1        3.0       2.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        4.5       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        6.0       7.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.2        3.4       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.6       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.2        4.5       6.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.5        6.7       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.5        3.1       3.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.5       2.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.7       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.9        6.3       6.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.6        2.3       3.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.1        1.3       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.4       5.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.4        5.6       6.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.0        3.0       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.1       4.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        5.5       6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.4        2.5       3.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       2.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        4.0       5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        5.5       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.5        2.6       3.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.2       2.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.4       5.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.5        6.1       6.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     2.3        3.0       3.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.4       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.6       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.4        5.8       5.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.2        2.6       2.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.2       1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.3        4.0       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        5.0       6.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.5        2.3       3.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.6        1.0       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        3.3       5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        5.6       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.8        2.7       3.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.4        1.3       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.9        4.2       5.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.8        5.7       6.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.0        3.0       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.3        1.2       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.2       5.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.1        5.7       6.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.8        2.9       2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       1.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.6        4.2       5.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    4.6        6.2       6.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.2        2.9       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.3       5.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.3        5.1       6.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.7        2.5       3.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.1       2.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.5        3.0       5.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> , , obs = 50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Species</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> parameter      setosa versicolor virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length    5.0        5.7       5.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width     3.3        2.8       3.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width     0.2        1.3       1.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length    1.4        4.1       5.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">arr</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">serocalculator</span><span class="fu">:::</span><span class="fu">df_to_array</span><span class="op">(</span></span></span>
+<span class="r-in"><span>     dim_var_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"parameter"</span>, <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html" class="external-link">ftable</a></span><span class="op">(</span><span class="va">arr</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         obs   1   2   3   4   5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> parameter    Species                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Length setosa         5.1 4.9 4.7 4.6 5.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              versicolor     7.0 6.4 6.9 5.5 6.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              virginica      6.3 5.8 7.1 6.3 6.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Width  setosa         3.5 3.0 3.2 3.1 3.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              versicolor     3.2 3.2 3.1 2.3 2.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              virginica      3.3 2.7 3.0 2.9 3.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width  setosa         0.2 0.2 0.2 0.2 0.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              versicolor     1.4 1.5 1.5 1.3 1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              virginica      2.5 1.9 2.1 1.8 2.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length setosa         1.4 1.4 1.3 1.5 1.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              versicolor     4.7 4.5 4.9 4.0 4.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              virginica      6.0 5.1 5.9 5.6 5.8</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -557,7 +125,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

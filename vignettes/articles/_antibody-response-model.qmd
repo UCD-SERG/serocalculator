@@ -178,10 +178,10 @@ An interactive Shiny app that allows the user to manipulate the model parameters
 
 :::
 
-```{r svg}
+```{r}
 #| echo: false
 #| eval: false
-#| label: fig-qr-code
+#| label: qr-code
 library(qrcode)
 code <- qr_code("https://ucdserg.shinyapps.io/antibody-kinetics-model-2/")
 generate_svg(code, filename = "man/figures/qr_akm2.svg")

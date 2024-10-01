@@ -25,3 +25,4 @@ allpopsamples_hlye.csv$
 ^codecov\.yml$
 ^_quarto\.yml$
 ^\.lintr$
+^vignettes$

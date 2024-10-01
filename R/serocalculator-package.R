@@ -22,7 +22,7 @@
 #' [load_curve_params()]                  | loading antibody decay curve models
 #' [autoplot.curve_params()]              | graphing antibody decay curves
 #' [llik()]                               | computing log-likelihoods
-#' [graph.loglik()]                       | graphing log-likelihood functions
+#' [graph_loglik()]                       | graphing log-likelihood functions
 #' [autoplot.seroincidence()]             | graphing log-likelihood functions
 #' [autoplot.seroincidence.by()]          | graphing log-likelihood functions
 #' [est.incidence()]                      | estimating incidence rates

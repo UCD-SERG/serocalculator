@@ -204,7 +204,7 @@ noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
 ```{r}
 #| fig-cap: "Example log(likelihood) curves"
 #| label: fig-loglik
-lik_HlyE_IgA <- graph.loglik(
+lik_HlyE_IgA <- graph_loglik(
   pop_data = xs_data,
   curve_params = curves,
   noise_params = noise,
@@ -212,7 +212,7 @@ lik_HlyE_IgA <- graph.loglik(
   log_x = TRUE
 )
 
-lik_HlyE_IgG <- graph.loglik(
+lik_HlyE_IgG <- graph_loglik(
   previous_plot = lik_HlyE_IgA,
   pop_data = xs_data,
   curve_params = curves,
@@ -221,7 +221,7 @@ lik_HlyE_IgG <- graph.loglik(
   log_x = TRUE
 )
 
-lik_both <- graph.loglik(
+lik_both <- graph_loglik(
   previous_plot = lik_HlyE_IgG,
   pop_data = xs_data,
   curve_params = curves,

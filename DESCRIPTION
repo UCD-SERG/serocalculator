@@ -41,10 +41,12 @@ Imports:
     utils
 Suggests:
     bookdown,
+    devtag (>= 0.0.0.9000),
     DT,
     fs,
     ggbeeswarm,
     knitr,
+    pak,
     parallel,
     readr,
     rmarkdown,
@@ -55,11 +57,13 @@ Suggests:
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
+Config/Needs/build: moodymudskipper/devtag
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Remotes: 
-    bcgov/ssdtools
+    bcgov/ssdtools,
+    moodymudskipper/devtag
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
+RoxygenNote: 7.3.2

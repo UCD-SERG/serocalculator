@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-{{< include articles/_macros.qmd >}}
+{{< include_macros.qmd >}}
 
 # Overview
 
@@ -168,7 +168,7 @@ where $a$ is the patient's age at the time of the survey.
 
 ## Likelihood of latent infection times {.smaller}
 
-{{< include articles/_sec-latent-likelihood.qmd >}}
+{{< include_sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 
@@ -338,9 +338,9 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 :::
 
-{{< include articles/_antibody-response-model.qmd >}}
+{{< include_antibody-response-model.qmd >}}
 
-<!-- {{< include articles/methods-continued.qmd >}} -->
+<!-- {{< includemethods-continued.qmd >}} -->
 
 ## References {.smaller}
 

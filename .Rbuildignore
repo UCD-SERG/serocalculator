@@ -23,3 +23,5 @@ allpopsamples_hlye.csv$
 ^CRAN-SUBMISSION$
 ^README\.qmd$
 ^codecov\.yml$
+^\.lintr$
+^man/df_to_array\.Rd$

@@ -19,14 +19,18 @@ seroresponses of arbitrary shape.
 
 # Backward recurrence time
 
-Considering the (fundamental) uniform distribution $u_{f}$ of sampling within a given interval, the
-interval length distribution $p(\Delta t)$ and the distribution of (cross--sectionally) sampled
+Considering the (fundamental) uniform distribution $u_{f}$ of sampling within a given interval, 
+the interval length distribution $p(\Delta t)$ 
+and the distribution of (cross-sectionally) sampled
 interval length [@Teunis_2012]
+
 $$
 q(\Delta t) = \frac{p(\Delta t)\cdot\Delta t}{\overline{\Delta t_{p}}}
 $$
-the joint distribution of backward recurrence time and cross--sectional interval length is the
-product $u_{f}\cdot q$ because these probabilities are independent.
+the joint distribution of backward recurrence time 
+and cross--sectional interval length 
+is the product $u_{f}\cdot q$,
+because these probabilities are independent.
 
 The distribution of backward recurrence time is the marginal distribution
 
@@ -145,7 +149,7 @@ and
 $$
 \begin{align}
 \rho_{-}(y_{-}) & = [0< y_{-} \le y_{1}] \frac{\lambda}{\alpha y_{-}^{r}(m+1)}
-                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)} \nonumber\\
+                    \text{e}^{-\lambda\left(t_{1}+\frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)}\\
                 &   \qquad {} \times\sum_{j=0}^{m}\frac{\lambda^{j}}{j!}\left(t_{1}+
                     \frac{y_{-}^{-(r-1)}-y_{1}^{-(r-1)}}{\alpha(r-1)}\right)^{j}
 \end{align}
@@ -190,7 +194,7 @@ If, in the summation in equation @eq-rho_numsum,
 terms not satisfying the condition
 $\tau(y) < a$ are discarded, the resulting partial sum
 $$
-\rho^{\ast}(y,a) = \frac{1}{N}\sum_{n=1}^{N}[\tau(y,\boldsymbol{\theta}_{n}) < a]
+\rho^{*}(y,a) = \frac{1}{N}\sum_{n=1}^{N}[\tau(y,\boldsymbol{\theta}_{n}) < a]
  (\rho_{+}(y\vert\lambda,m,\boldsymbol{\theta}_{n}) +
 (\rho_{-}(y\vert\lambda,m,\boldsymbol{\theta}_{n})
 $$
@@ -205,7 +209,8 @@ when $y$ corresponds to a backward recurrence time within the lifespan of a pers
 antibody concentration $y$ could still result from the baseline distribution $\rho_{0}(y)$.
 
 Given the interval distribution for incident infections, the probability that a sampled subject has
-never seroconverted depends on their age. For the gamma process assumed above, the survival function
+never seroconverted depends on their age. 
+For the gamma process assumed above, the survival function
 $P_{m}(a\vert m, \lambda)$ gives the probability of a subject having not seroconverted before age
 $a$ (@eq-pm_cumul).
 

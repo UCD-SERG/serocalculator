@@ -80,7 +80,7 @@ where
 
 $$
 \begin{align}
-y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\le t <t_{1}]\\
+y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\leq t <t_{1}]\\
 y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
 \end{align}
 $$

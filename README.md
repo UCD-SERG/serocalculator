@@ -13,7 +13,7 @@
 
     #> Warning: package 'qrcode' was built under R version 4.4.1
 
-![A QR code displaying the value ‘QR CODE’](man/figures/qr.svg)
+![QR code for {serocalculator} website](man/figures/qr.svg)
 
 Antibody levels measured in a cross–sectional population sample can be
 translated into an estimate of the frequency with which seroconversions

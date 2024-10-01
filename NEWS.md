@@ -5,6 +5,7 @@
 * Updated enteric fever example article with upgraded code and visualizations (#290)
 
 * Added `Methodology` vignette (#284)
+
 * Added template for reporting Issues 
 (from `usethis::use_tidy_issue_template()`) (#270)
 
@@ -12,6 +13,9 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Developer-facing changes
+
+* initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
+
 * created unit test for `df_to_array()` (#276)
 
 * fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)

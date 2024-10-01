@@ -24,3 +24,4 @@ allpopsamples_hlye.csv$
 ^README\.qmd$
 ^codecov\.yml$
 ^_quarto\.yml$
+^\.lintr$

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul>
@@ -83,23 +84,22 @@ Seroepidemiology Research Group (SERG)</h4>
 </h2>
 <p>This vignette reproduces the analysis for: <a href="https://www.medrxiv.org/content/10.1101/2022.11.07.22282017v2" class="external-link"><strong>Estimating
 the seroincidence of scrub typhus using antibody dynamics following
-infection</strong></a> (<span class="citation">Aiemjoy et al. (Accepted
-Feb 2024)</span>).</p>
+infection</strong></a> (<span class="citation">@Aiemjoy_2024_scrub</span>).</p>
 </div>
 <div class="section level2">
 <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a>
 </h2>
 <p>The <strong>serocalculator</strong> R package provides a rapid and
 computationally simple method for calculating seroconversion rates, as
-originally published in <span class="citation">Simonsen et al.
-(2009)</span> and <span class="citation">Teunis et al. (2012)</span>,
-and further developed in subsequent publications by <span class="citation">deGraaf et al. (2014)</span>, <span class="citation">Teunis et al. (2016)</span>, and <span class="citation">Teunis and Eijkeren (2020)</span>. In short,
-longitudinal seroresponses from confirmed cases with a known symptom
-onset date are assumed to represent the time course of human serum
-antibodies against a specific pathogen. Therefore, by using these
-longitudinal antibody dynamics with any cross–sectional sample of the
-same antibodies in a human population, an incidence estimate can be
-calculated.</p>
+originally published in <span class="citation">@Simonsen_2009</span> and
+<span class="citation">@Teunis_2012</span>, and further developed in
+subsequent publications by <span class="citation">@de_Graaf_2014</span>,
+<span class="citation">@Teunis_2016</span>, and <span class="citation">@Teunis_2020</span>. In short, longitudinal
+seroresponses from confirmed cases with a known symptom onset date are
+assumed to represent the time course of human serum antibodies against a
+specific pathogen. Therefore, by using these longitudinal antibody
+dynamics with any cross–sectional sample of the same antibodies in a
+human population, an incidence estimate can be calculated.</p>
 <div class="section level3">
 <h3 id="the-seroincidence-estimator">The Seroincidence Estimator<a class="anchor" aria-label="anchor" href="#the-seroincidence-estimator"></a>
 </h3>
@@ -247,7 +247,7 @@ objects:</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">xs_data</span>, type <span class="op">=</span> <span class="st">"age-scatter"</span>, strata <span class="op">=</span> <span class="st">"Country"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 1105 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<p><img src="scrubTyphus_example_files/figure-html/plot%20age-1.png" width="672"></p>
+<p><img src="scrubTyphus_example_files/figure-html/plot-age-1.png" width="672"></p>
 </div>
 </div>
 <div class="section level3">
@@ -455,47 +455,9 @@ time and interest in participating in these studies</p>
 International Center (FIC) at [K01 TW012177] and the National Institute
 of Allergy and Infectious Diseases (NIAID) [R21 1AI176416]</p>
 </div>
-<div class="section level2 unnumbered">
-<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-Aiemjoy_2024_scrub" class="csl-entry">
-Aiemjoy, K, N Katuwal, K Vaidya, S Shrestha, M Thapa, PFM Teunis, II
-Bogoch, et al. Accepted Feb 2024. <span>“Estimating the Seroincidence of
-Scrub Typhus Using Antibody Dynamics Following Infection.”</span>
-<em>American Journal of Tropical Medicine and Hygiene</em>, Accepted Feb
-2024.
-</div>
-<div id="ref-de_Graaf_2014" class="csl-entry">
-deGraaf, WF, MEE Kretzschmar, PFM Teunis, and O Diekmann. 2014. <span>“A
-Two-Phase Within-Host Model for Immune Response and Its Application to
-Serological Profiles of Pertussis.”</span> <em>Epidemics</em> 9
-(December): 1–7. <a href="https://doi.org/10.1016/j.epidem.2014.08.002" class="external-link">https://doi.org/10.1016/j.epidem.2014.08.002</a>.
-</div>
-<div id="ref-Simonsen_2009" class="csl-entry">
-Simonsen, J, K Mølbak, G Falkenhorst, KA Krogfelt, A Linneberg, and PFM
-Teunis. 2009. <span>“Estimation of Incidences of Infectious Diseases
-Based on Antibody Measurements.”</span> <em>Statistics in Medicine</em>
-28 (14): 1882–95. <a href="https://doi.org/10.1002/sim.3592" class="external-link">https://doi.org/10.1002/sim.3592</a>.
-</div>
-<div id="ref-Teunis_2020" class="csl-entry">
-Teunis, PFM, and JCH van Eijkeren. 2020. <span>“Estimation of
-Seroconversion Rates for Infectious Diseases: Effects of Age and
-Noise.”</span> <em>Statistics in Medicine</em> 39 (21): 2799–2814. <a href="https://doi.org/10.1002/sim.8578" class="external-link">https://doi.org/10.1002/sim.8578</a>.
-</div>
-<div id="ref-Teunis_2012" class="csl-entry">
-Teunis, PFM, JCH van Eijkeren, CW Ang, YTHP van Duynhoven, JB Simonsen,
-MA Strid, and W van Pelt. 2012. <span>“Biomarker Dynamics: Estimating
-Infection Rates from Serological Data.”</span> <em>Statistics in
-Medicine</em> 31 (20): 2240–48. <a href="https://doi.org/10.1002/sim.5322" class="external-link">https://doi.org/10.1002/sim.5322</a>.
-</div>
-<div id="ref-Teunis_2016" class="csl-entry">
-Teunis, PFM, JCH van Eijkeren, WF deGraaf, A Bonačić Marinović, and MEE
-Kretzschmar. 2016. <span>“Linking the Seroresponse to Infection to
-Within-Host Heterogeneity in Antibody Production.”</span>
-<em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001" class="external-link">https://doi.org/10.1016/j.epidem.2016.04.001</a>.
-</div>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -4,6 +4,7 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/articles/index.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/articles/methodology.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/articles/scrubTyphus_example.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/articles/serocalculator.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.html</loc></url>
@@ -30,7 +31,7 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/getAdditionalData.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/get_additional_data.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/graph.loglik.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/graph_loglik.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/index.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/ldpar.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/llik.html</loc></url>
@@ -44,6 +45,7 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.by.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/print.seroincidence.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/print.summary.seroincidence.by.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/reference/reexports.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/row_longitudinal_parameter.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/serocalculator.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/sim.cs.html</loc></url>

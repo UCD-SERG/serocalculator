@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul></li>
@@ -60,7 +61,7 @@
 <span>  n_points <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  log_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  log_y <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rows_to_graph <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n_curves</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  rows_to_graph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n_curves</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">^</span><span class="fl">3.1</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -79,7 +80,8 @@
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>(passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>) how transparent the curves should be:</p><ul><li><p>0 = fully transparent (invisible)</p></li>
+<dd><p>(passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)
+how transparent the curves should be:</p><ul><li><p>0 = fully transparent (invisible)</p></li>
 <li><p>1 = fully opaque</p></li>
 </ul></dd>
 
@@ -89,19 +91,23 @@
 
 
 <dt id="arg-n-points">n_points<a class="anchor" aria-label="anchor" href="#arg-n-points"></a></dt>
-<dd><p>Number of points to interpolate along the x axis (passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)</p></dd>
+<dd><p>Number of points to interpolate along the x axis
+(passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)</p></dd>
 
 
 <dt id="arg-log-x">log_x<a class="anchor" aria-label="anchor" href="#arg-log-x"></a></dt>
-<dd><p>should the x-axis be on a logarithmic scale (<code>TRUE</code>) or linear scale (<code>FALSE</code>, default)?</p></dd>
+<dd><p>should the x-axis be on a logarithmic scale (<code>TRUE</code>)
+or linear scale (<code>FALSE</code>, default)?</p></dd>
 
 
 <dt id="arg-log-y">log_y<a class="anchor" aria-label="anchor" href="#arg-log-y"></a></dt>
-<dd><p>should the Y-axis be on a logarithmic scale (default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
+<dd><p>should the Y-axis be on a logarithmic scale
+(default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
 
 
 <dt id="arg-rows-to-graph">rows_to_graph<a class="anchor" aria-label="anchor" href="#arg-rows-to-graph"></a></dt>
-<dd><p>which rows of <code>curve_params</code> to plot (overrides <code>n_curves</code>).</p></dd>
+<dd><p>which rows of <code>curve_params</code> to plot
+(overrides <code>n_curves</code>).</p></dd>
 
 
 <dt id="arg-xlim">xlim<a class="anchor" aria-label="anchor" href="#arg-xlim"></a></dt>
@@ -174,9 +180,14 @@ the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.or
 <h3 id="n-curves-and-rows-to-graph"><code>n_curves</code> and <code>rows_to_graph</code><a class="anchor" aria-label="anchor" href="#n-curves-and-rows-to-graph"></a></h3>
 
 
-<p>In most cases, <code>curve_params</code> will contain too many rows of MCMC samples for all of these samples to be plotted at once.</p><ul><li><p>Setting the  <code>n_curves</code> argument to a value smaller than the number of rows in <code>curve_params</code> will cause this function to select the first <code>n_curves</code> rows to graph.</p></li>
-<li><p>Setting <code>n_curves</code> larger than the number of rows in ` will result all curves being plotted.</p></li>
-<li><p>If the user directly specifies the <code>rows_to_graph</code> argument, then <code>n_curves</code> has no effect.</p></li>
+<p>In most cases, <code>curve_params</code> will contain too many rows of MCMC
+samples for all of these samples to be plotted at once.</p><ul><li><p>Setting the  <code>n_curves</code> argument to a value smaller than the
+number of rows in <code>curve_params</code> will cause this function to select
+the first <code>n_curves</code> rows to graph.</p></li>
+<li><p>Setting <code>n_curves</code> larger than the number of rows in ` will
+result all curves being plotted.</p></li>
+<li><p>If the user directly specifies the <code>rows_to_graph</code> argument,
+then <code>n_curves</code> has no effect.</p></li>
 </ul></div>
 
     </div>

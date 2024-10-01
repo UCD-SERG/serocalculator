@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul></li>
@@ -53,7 +54,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'curve_params'</span></span>
-<span><span class="fu">autoplot</span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">antigen_iso</span><span class="op">)</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">antigen_isos</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -88,21 +89,26 @@
 <dd><p>how many curves to plot (see details).</p></dd>
 
     <dt><code>n_points</code></dt>
-<dd><p>Number of points to interpolate along the x axis (passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)</p></dd>
+<dd><p>Number of points to interpolate along the x axis
+(passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)</p></dd>
 
     <dt><code>rows_to_graph</code></dt>
-<dd><p>which rows of <code>curve_params</code> to plot (overrides <code>n_curves</code>).</p></dd>
+<dd><p>which rows of <code>curve_params</code> to plot
+(overrides <code>n_curves</code>).</p></dd>
 
     <dt><code>alpha</code></dt>
-<dd><p>(passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>) how transparent the curves should be:</p><ul><li><p>0 = fully transparent (invisible)</p></li>
+<dd><p>(passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)
+how transparent the curves should be:</p><ul><li><p>0 = fully transparent (invisible)</p></li>
 <li><p>1 = fully opaque</p></li>
 </ul></dd>
 
     <dt><code>log_x</code></dt>
-<dd><p>should the x-axis be on a logarithmic scale (<code>TRUE</code>) or linear scale (<code>FALSE</code>, default)?</p></dd>
+<dd><p>should the x-axis be on a logarithmic scale (<code>TRUE</code>)
+or linear scale (<code>FALSE</code>, default)?</p></dd>
 
     <dt><code>log_y</code></dt>
-<dd><p>should the Y-axis be on a logarithmic scale (default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
+<dd><p>should the Y-axis be on a logarithmic scale
+(default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
 
 
 </dl></dd>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul></li>
@@ -51,6 +52,7 @@
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Added default value for <code>antigen_isos</code> argument in <code><a href="../reference/log_likelihood.html">log_likelihood()</a></code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/286" class="external-link">#286</a>)</p></li>
 <li><p>Updated enteric fever example article with upgraded code and visualizations (<a href="https://github.com/UCD-SERG/serocalculator/issues/290" class="external-link">#290</a>)</p></li>
+<li><p>Added <code>Methodology</code> vignette (<a href="https://github.com/UCD-SERG/serocalculator/issues/284" class="external-link">#284</a>)</p></li>
 <li><p>Added template for reporting Issues (from <code>usethis::use_tidy_issue_template()</code>) (<a href="https://github.com/UCD-SERG/serocalculator/issues/270" class="external-link">#270</a>)</p></li>
 <li><p>Added template for pull requests (from <a href="https://github.com/bcgov/ssdtools" class="external-link uri">https://github.com/bcgov/ssdtools</a>) (<a href="https://github.com/UCD-SERG/serocalculator/issues/265" class="external-link">#265</a>)</p></li>
 </ul></div>
@@ -64,6 +66,7 @@
 <li><p>Generalized <code>get_()</code> and <code>set_()</code> methods to be general-purpose (no S3 class-specific methods needed yet) (<a href="https://github.com/UCD-SERG/serocalculator/issues/274" class="external-link">#274</a>).</p></li>
 <li><p>Updated GitHub Action files and reformatted <code>DESCRIPTION</code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/268" class="external-link">#268</a>)</p></li>
 <li><p>Added <code>.gitattributes</code> file (<a href="https://git-scm.com/docs/gitattributes" class="external-link uri">https://git-scm.com/docs/gitattributes</a>) copied from <a href="https://github.com/tidyverse/ggplot2" class="external-link uri">https://github.com/tidyverse/ggplot2</a></p></li>
+<li><p>Added QR code to <code>README.qmd</code></p></li>
 <li>
 <p>Added additional automated checks through <a href="https://docs.github.com/en/actions" class="external-link">GitHub actions</a>, including:</p>
 <ul><li>check that <code>README.qmd</code> still compiles (advice from <a href="https://indrajeetpatil.github.io/preventive-r-package-care" class="external-link">preventive-r-package-care</a>) (<a href="https://github.com/UCD-SERG/serocalculator/issues/259" class="external-link">#259</a>)</li>

@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Methodology • serocalculator</title>
+<title>Overview • serocalculator</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Methodology">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Overview">
 <meta name="description" content="A summary of the methods behind serocalculator.
 ">
 <meta property="og:description" content="A summary of the methods behind serocalculator.
@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul>
@@ -71,7 +72,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Methodology</h1>
+      <h1>Overview</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/serocalculator.Rmd" class="external-link"><code>vignettes/articles/serocalculator.Rmd</code></a></small>
@@ -85,15 +86,16 @@
 </h2>
 <p>The <strong>serocalculator</strong> R package provides a rapid and
 computationally simple method for calculating seroconversion rates, as
-originally published in <span class="citation">Simonsen et al.
-(2009)</span> and <span class="citation">Teunis et al. (2012)</span>,
-and further developed in subsequent publications by <span class="citation">deGraaf et al. (2014)</span>, <span class="citation">Teunis et al. (2016)</span>, and <span class="citation">Teunis and Eijkeren (2020)</span>. In short,
-longitudinal seroresponses from confirmed cases with a known symptom
-onset date are assumed to represent the time course of human serum
-antibodies against a specific pathogen. Therefore, by using these
-longitudinal antibody dynamics with any cross–sectional sample of the
-same antibodies in a human population, an incidence estimate can be
-calculated. Further details are below.</p>
+originally published in <span class="citation">@Simonsen_2009</span> and
+<span class="citation">@Teunis_2012</span>, and further developed in
+subsequent publications by <span class="citation">@de_Graaf_2014</span>,
+<span class="citation">@Teunis_2016</span>, and <span class="citation">@Teunis_2020</span>. In short, longitudinal
+seroresponses from confirmed cases with a known symptom onset date are
+assumed to represent the time course of human serum antibodies against a
+specific pathogen. Therefore, by using these longitudinal antibody
+dynamics with any cross–sectional sample of the same antibodies in a
+human population, an incidence estimate can be calculated. Further
+details are below.</p>
 <div class="section level3">
 <h3 id="a-proxy-for-infection">A Proxy for Infection<a class="anchor" aria-label="anchor" href="#a-proxy-for-infection"></a>
 </h3>
@@ -139,40 +141,9 @@ curve on antibody concentration.</p>
 </iframe>
 </div>
 </div>
-<div class="section level2 unnumbered">
-<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-de_Graaf_2014" class="csl-entry">
-deGraaf, WF, MEE Kretzschmar, PFM Teunis, and O Diekmann. 2014. <span>“A
-Two-Phase Within-Host Model for Immune Response and Its Application to
-Serological Profiles of Pertussis.”</span> <em>Epidemics</em> 9
-(December): 1–7. <a href="https://doi.org/10.1016/j.epidem.2014.08.002" class="external-link">https://doi.org/10.1016/j.epidem.2014.08.002</a>.
-</div>
-<div id="ref-Simonsen_2009" class="csl-entry">
-Simonsen, J, K Mølbak, G Falkenhorst, KA Krogfelt, A Linneberg, and PFM
-Teunis. 2009. <span>“Estimation of Incidences of Infectious Diseases
-Based on Antibody Measurements.”</span> <em>Statistics in Medicine</em>
-28 (14): 1882–95. <a href="https://doi.org/10.1002/sim.3592" class="external-link">https://doi.org/10.1002/sim.3592</a>.
-</div>
-<div id="ref-Teunis_2020" class="csl-entry">
-Teunis, PFM, and JCH van Eijkeren. 2020. <span>“Estimation of
-Seroconversion Rates for Infectious Diseases: Effects of Age and
-Noise.”</span> <em>Statistics in Medicine</em> 39 (21): 2799–2814. <a href="https://doi.org/10.1002/sim.8578" class="external-link">https://doi.org/10.1002/sim.8578</a>.
-</div>
-<div id="ref-Teunis_2012" class="csl-entry">
-Teunis, PFM, JCH van Eijkeren, CW Ang, YTHP van Duynhoven, JB Simonsen,
-MA Strid, and W van Pelt. 2012. <span>“Biomarker Dynamics: Estimating
-Infection Rates from Serological Data.”</span> <em>Statistics in
-Medicine</em> 31 (20): 2240–48. <a href="https://doi.org/10.1002/sim.5322" class="external-link">https://doi.org/10.1002/sim.5322</a>.
-</div>
-<div id="ref-Teunis_2016" class="csl-entry">
-Teunis, PFM, JCH van Eijkeren, WF deGraaf, A Bonačić Marinović, and MEE
-Kretzschmar. 2016. <span>“Linking the Seroresponse to Infection to
-Within-Host Heterogeneity in Antibody Production.”</span>
-<em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001" class="external-link">https://doi.org/10.1016/j.epidem.2016.04.001</a>.
-</div>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

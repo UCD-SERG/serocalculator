@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
+    <li><a class="dropdown-item" href="articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul>
@@ -69,6 +70,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <hr>
 <!-- badges: start -->
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; Warning: package 'qrcode' was built under R version 4.4.1</span></span></code></pre></div>
+<div class="float">
+<img src="reference/figures/qr.svg" alt="QR code for {serocalculator} website"><div class="figcaption">QR code for {serocalculator} website</div>
+</div>
 <p>Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, while low titers indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.</p>
 <p>The <strong>serocalculator</strong> package was designed to use the longitudinal response characteristics using a set of modeled parameters characterizing the longitudinal response of the selected serum antibodies. More details on the underlying methods can be found in <a href="https://ucd-serg.github.io/serocalculator/articles/serocalculator.html">Getting Started</a>.</p>
 <div class="section level2">
@@ -82,21 +87,21 @@
 <h2 id="installing-the-serocalculator-package">Installing the Serocalculator Package<a class="anchor" aria-label="anchor" href="#installing-the-serocalculator-package"></a>
 </h2>
 <p>The <strong>serocalculator</strong> package must be installed in R before first use.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install package</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="post-installation">Post-installation<a class="anchor" aria-label="anchor" href="#post-installation"></a>
 </h3>
 <p>Successful installation can be confirmed by loading the package into the RStudio workspace and exploring help files and manuals distributed with the package:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load package "seroincidence".</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Show R help for the package.</span></span>
 <span><span class="op">?</span><span class="va">serocalculator</span></span></code></pre></div>
 <p>Additionally, most package details can be found when executing the following commands:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show description.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageDescription</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span>
 <span></span>
@@ -107,7 +112,7 @@
 <h3 id="development-version">Development Version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h3>
 <p>To install the development version, you must install the <strong>devtools</strong> R package and then download <strong>serocalculator</strong> from <a href="https://github.com/" class="external-link">GitHub</a>. Enter the code below into the R console to install both packages.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install the devtools package and the development version of serocalculator</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ucd-serg/serocalculator"</span><span class="op">)</span></span></code></pre></div>

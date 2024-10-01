@@ -1,3 +1,4 @@
+\def{\NA}{\text{NA}}
 \def\pdf{\mathbb{p}}
 \def\pmf{\mathbb{P}}
 \def\Lik{\mathcal{L}}

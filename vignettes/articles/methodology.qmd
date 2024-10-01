@@ -89,7 +89,7 @@ for the disease of interest
 **prior** to when we measured their antibodies.
 
 ::: notes
-* If a participant has never been infected since birth, then $T$ is infinite.
+* If a participant has never been infected since birth, then $T$ is undefined.
 
 
 :::
@@ -144,7 +144,10 @@ Under those assumptions:
 * $T$ has an **exponential distribution**:
 $$\pdf(T=t) = \lambda \expf{-\lambda t}$$
 
-* the rate parameter is the incidence rate
+  * More precisely, the distribution is exponential truncated by age at observation ($a$):
+$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA \expf{-\lambda a}$$
+
+* the rate parameter $\lambda$ is the incidence rate
 
 :::
 

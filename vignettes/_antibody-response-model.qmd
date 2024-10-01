@@ -65,7 +65,13 @@ compared to the other terms in the model.
 * $$y^{\prime}(t) = -\alpha y(t)^r$$
 
 ::: notes
-If $r = 1$, this model reduces to exponential decay with decay rate $\alpha$.
+Antibody decay is different from exponential (log--linear) decay. 
+When the shape parameter $r > 1$,
+log concentrations decrease rapidly after infection has terminated,
+but decay then slows down and
+low antibody concentrations are maintained for a long period.
+If $r = 1$, 
+this model reduces to exponential decay with decay rate $\alpha$.
 :::
 
 ## Putting it all together
@@ -162,15 +168,6 @@ Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
 
 ---
 
-Antibody decay is different from exponential (log--linear) decay. When the shape parameter $r > 1$,
-log concentrations decrease rapidly after infection has terminated,
-but decay then slows down and
-low antibody concentrations are maintained for a long period.
-When $r$ approaches 1, exponential
-decay is restored.
-
----
-
 ::: notes
 An interactive Shiny app that allows the user to manipulate the model parameters is available at:
 
@@ -188,7 +185,6 @@ generate_svg(code, filename = "man/figures/qr_akm2.svg")
 ```
 
 ![QR code for shiny app](man/figures/qr_akm2.svg)
-![]()
 
 ## Biological noise
 

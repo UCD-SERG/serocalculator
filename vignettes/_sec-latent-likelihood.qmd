@@ -15,7 +15,7 @@ to find the maximum likelihood estimate:
 
 :::: incremental
 
-* $$\Lik^*(\lambda) = \prod_{i=1}^n p(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)$$
+* $$\Lik^*(\lambda) = \prod_{i=1}^n \pdf(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)$$
 
 * $$\llik^*(\lambda) = \logf{\Lik^*(\lambda)} = \sum_{i=1}^n \logf{\lambda} -\lambda t_i$$
 

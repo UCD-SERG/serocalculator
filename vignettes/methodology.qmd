@@ -36,9 +36,6 @@ $$\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]$$
 where $C(t)$ is the cumulative total number of infections in the population of interest,
 and $N(t)$ is the number of individuals at risk at time $t$.
 
-:::
-
-
 ## Scale of incidence rates {visibility="hidden"}
 
 In both definitions, 
@@ -63,7 +60,7 @@ is the instantaneous **probability** (density) of
 
 * That is, the incidence rate is a **hazard** rate.
 
-* Let's use $\lambda_{t}$ to denote the incidence rate at time $t$.
+* Notation: let's use **$\lambda_{t}$** to denote the incidence rate at time $t$.
 
 # Estimating incidence from cross-sectional antibody surveys
 
@@ -143,9 +140,11 @@ Under those assumptions:
 ::: incremental
 
 * $T$ has an **exponential distribution**:
+
 $$\pdf(T=t) = \lambda \expf{-\lambda t}$$
 
-  * More precisely, the distribution is exponential truncated by age at observation ($a$):
+  * More precisely, the distribution is exponential 
+  **truncated by age** at observation ($a$):
 
 $$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
 

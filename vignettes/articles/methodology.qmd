@@ -344,7 +344,7 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 {{< include _antibody-response-model.qmd >}}
 
-<!-- {{< includemethods-continued.qmd >}} -->
+<!-- {{< include methods-continued.qmd >}} -->
 
 ## References {.smaller}
 

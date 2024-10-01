@@ -64,7 +64,6 @@ library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
 library(dplyr)
-
 dmcmc <-
   "https://osf.io/download/rtw5k" %>%
   load_curve_params() %>%
@@ -210,7 +209,7 @@ print(ll_A + ll_G)
 
 ## graph log-likelihood
 
-We can also graph the log-likelihoods, even without finding the MLEs, using `graph.loglik()`:
+We can also graph the log-likelihoods, even without finding the MLEs, using `graph_loglik()`:
 
 ```{r}
 lik_HlyE_IgA <-
@@ -222,7 +221,7 @@ lik_HlyE_IgA <-
     log_x = TRUE
   )
 
-lik_HlyE_IgG <- graph.loglik(
+lik_HlyE_IgG <- graph_loglik(
   previous_plot = lik_HlyE_IgA,
   pop_data = csdata,
   curve_params = dmcmc,
@@ -231,7 +230,7 @@ lik_HlyE_IgG <- graph.loglik(
   log_x = TRUE
 )
 
-lik_both <- graph.loglik(
+lik_both <- graph_loglik(
   previous_plot = lik_HlyE_IgG,
   pop_data = csdata,
   curve_params = dmcmc,

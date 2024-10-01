@@ -49,11 +49,13 @@ Suggests:
     pak,
     parallel,
     readr,
+    quarto,
     rmarkdown,
     spelling,
     ssdtools (>= 1.0.6.9016),
     testthat (>= 3.0.0),
-    tidyverse
+    tidyverse,
+    qrcode
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
@@ -67,3 +69,5 @@ Remotes:
     moodymudskipper/devtag
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
+VignetteBuilder: 
+    quarto

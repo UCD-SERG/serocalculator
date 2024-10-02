@@ -23,3 +23,9 @@ allpopsamples_hlye.csv$
 ^CRAN-SUBMISSION$
 ^README\.qmd$
 ^codecov\.yml$
+^_quarto\.yml$
+^\.lintr$
+^vignettes$
+^man/df_to_array\.Rd$
+^vignettes/\.quarto$
+^vignettes/methodology\.qmd$

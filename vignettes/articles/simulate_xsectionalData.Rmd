@@ -14,33 +14,38 @@ vignette: >
   ---
   
   
-  This vignette shows how to simulate a cross-sectional sample of 
-  seroresponses for incident infections as a Poisson process with frequency `lambda`. 
-  Responses are generated for the antibodies given in the `antigen_isos` argument.
+This vignette shows how to simulate a cross-sectional sample of 
+seroresponses for incident infections as a Poisson process with 
+frequency `lambda`. 
+Responses are generated for the antibodies given in the `antigen_isos` 
+argument.
+
+Age range of the simulated cross-sectional record is `lifespan`.
+
+The size of the sample is `nrep`.
+
+Each individual is simulated separately, but different antibodies are
+modelled jointly.
+
+Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
+However, when `age.fx` is set to NA then the age at infection is used.
+
+The boolean `renew.params` determines whether each infection uses a
+new set of longitudinal parameters, sampled at random from the
+posterior predictive output of  the longitudinal model. 
+If set to `FALSE`,
+a parameter set is chosen at birth and kept, but:
+
+1. the baseline antibody levels (`y0`) are updated with the simulated 
+level (just) prior to infection, and
+
+2. when `is.na(age.fx)` then the selected parameter sample is updated 
+for the age when infection occurs.
   
-  Age range of the simulated cross-sectional record is `lifespan`.
-  
-  The size of the sample is `nrep`.
-  
-  Each individual is simulated separately, but different antibodies are
-  modelled jointly.
-  
-  Longitudinal parameters are calculated for an age: `age.fx` (fixed age).
-  However, when `age.fx` is set to NA then the age at infection is used.
-  
-  The boolean `renew.params` determines whether each infection uses a
-  new set of longitudinal parameters, sampled at random from the
-  posterior predictive output of  the longitudinal model. If set to `FALSE`
-  a parameter set is chosen at birth and kept, but:
-  1. the baseline antibody levels (`y0`) are updated with the simulated level
-  (just) prior to infection, and
-  2. when `is.na(age.fx)` then the selected parameter sample is updated for the
-  age when infection occurs.
-  
-  There is also a variable `n.mc`: when `n.mc==0` then a random MC
-  sample is chosen out of the posterior set (1:4000). When `n.mc` is
-  given a value in 1:4000 then the chosen number is fixed and reused
-  in any subsequent infection. This is for diagnostic purposes.
+There is also a variable `n.mc`: when `n.mc==0` then a random MC
+sample is chosen out of the posterior set (1:4000). When `n.mc` is
+given a value in 1:4000 then the chosen number is fixed and reused
+in any subsequent infection. This is for diagnostic purposes.
   
   
 ```{r, include = FALSE}
@@ -72,7 +77,9 @@ dmcmc <-
 
 ## visualize antibody decay model
 
-We can graph individual MCMC samples from the posterior distribution of model parameters using a `autoplot.curve_params()` method for the `autoplot()` function:
+We can graph individual MCMC samples from the posterior distribution 
+of model parameters using a `autoplot.curve_params()` method for the 
+`autoplot()` function:
 
 ```{r}
 dmcmc %>% autoplot(n_curves = 50)
@@ -174,7 +181,7 @@ ggplot(csdata, aes(
 We can calculate the log-likelihood of the data as a function of the incidence rate directly:
 
 ```{r}
-ll_A <-
+ll_a <-
   log_likelihood(
     pop_data = csdata,
     curve_params = dmcmc,
@@ -184,7 +191,7 @@ ll_A <-
   ) %>%
   print()
 
-ll_G <-
+ll_g <-
   log_likelihood(
     pop_data = csdata,
     curve_params = dmcmc,
@@ -194,7 +201,7 @@ ll_G <-
   ) %>%
   print()
 
-ll_AG <-
+ll_ag <-
   log_likelihood(
     pop_data = csdata,
     curve_params = dmcmc,
@@ -204,7 +211,7 @@ ll_AG <-
   ) %>%
   print()
 
-print(ll_A + ll_G)
+print(ll_a + ll_g)
 ```
 
 ## graph log-likelihood

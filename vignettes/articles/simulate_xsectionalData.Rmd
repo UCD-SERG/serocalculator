@@ -334,7 +334,7 @@ sim_df %>% ggplot() +
 
 ```{r, "est-by-stratum"}
 ests <-
-  # sim.df %>%
+  sim.df %>%
   est.incidence.by(
     pop_data = sim.df,
     curve_params = dmcmc,

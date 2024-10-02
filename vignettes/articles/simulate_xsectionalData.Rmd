@@ -213,7 +213,7 @@ We can also graph the log-likelihoods, even without finding the MLEs, using `gra
 
 ```{r}
 lik_HlyE_IgA <-
-  graph.loglik(
+  graph_loglik(
     pop_data = csdata,
     curve_params = dmcmc,
     noise_params = cond,

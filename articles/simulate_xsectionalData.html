@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Generate a simulated cross-sectional sample and estimate seroincidence • serocalculator</title>
+<title> • serocalculator</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generate a simulated cross-sectional sample and estimate seroincidence">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@
 <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">UNKNOWN TITLE</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -72,9 +72,7 @@
 <script src="simulate_xsectionalData_files/crosstalk-1.2.1/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Generate a simulated cross-sectional sample and estimate seroincidence</h1>
-            <h3 data-toc-skip class="subtitle">Enteric Fever using HlyE
-IgG and/or HlyE IgA</h3>
+      <h1></h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/simulate_xsectionalData.Rmd" class="external-link"><code>vignettes/articles/simulate_xsectionalData.Rmd</code></a></small>
@@ -83,6 +81,45 @@ IgG and/or HlyE IgA</h3>
 
     
     
+<table class="table"><tbody>
+<tr class="odd">
+<td>title: “Generate a simulated cross-sectional sample and estimate
+seroincidence”</td>
+</tr>
+<tr class="even">
+<td>subtitle: “Enteric Fever using HlyE IgG and/or HlyE IgA”</td>
+</tr>
+<tr class="odd">
+<td>output:</td>
+</tr>
+<tr class="even">
+<td>bookdown::html_document2:</td>
+</tr>
+<tr class="odd">
+<td>base_format: rmarkdown::html_document</td>
+</tr>
+<tr class="even">
+<td>toc: true</td>
+</tr>
+<tr class="odd">
+<td>toc_float:</td>
+</tr>
+<tr class="even">
+<td>collapsed: false</td>
+</tr>
+<tr class="odd">
+<td>vignette: &gt;</td>
+</tr>
+<tr class="even">
+<td>%</td>
+</tr>
+<tr class="odd">
+<td>%</td>
+</tr>
+<tr class="even">
+<td>%</td>
+</tr>
+</tbody></table>
 <p>This vignette shows how to simulate a cross-sectional sample of
 seroresponses for incident infections as a Poisson process with
 frequency <code>lambda</code>. Responses are generated for the
@@ -98,11 +135,14 @@ set to NA then the age at infection is used.</p>
 <p>The boolean <code>renew.params</code> determines whether each
 infection uses a new set of longitudinal parameters, sampled at random
 from the posterior predictive output of the longitudinal model. If set
-to <code>FALSE</code> a parameter set is chosen at birth and kept, but:
-1. the baseline antibody levels (<code>y0</code>) are updated with the
-simulated level (just) prior to infection, and 2. when
-<code>is.na(age.fx)</code> then the selected parameter sample is updated
-for the age when infection occurs.</p>
+to <code>FALSE</code>, a parameter set is chosen at birth and kept,
+but:</p>
+<ol style="list-style-type: decimal">
+<li><p>the baseline antibody levels (<code>y0</code>) are updated with
+the simulated level (just) prior to infection, and</p></li>
+<li><p>when <code>is.na(age.fx)</code> then the selected parameter
+sample is updated for the age when infection occurs.</p></li>
+</ol>
 <p>There is also a variable <code>n.mc</code>: when <code>n.mc==0</code>
 then a random MC sample is chosen out of the posterior set (1:4000).
 When <code>n.mc</code> is given a value in 1:4000 then the chosen number
@@ -114,6 +154,8 @@ purposes.</p>
 <div class="section level3">
 <h3 id="load-model-parameters">load model parameters<a class="anchor" aria-label="anchor" href="#load-model-parameters"></a>
 </h3>
+<p>Here we load in longitudinal parameters; these are modeled from all
+SEES cases across all ages and countries:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
@@ -129,7 +171,6 @@ purposes.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use the conflicted package (<span style="color: #0000BB; font-style: italic;">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm" class="external-link">ggbeeswarm</a></span><span class="op">)</span> <span class="co"># for plotting</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co"># load in longitudinal parameters, these are modeled from all SEES cases across all ages and countries</span></span>
 <span><span class="va">dmcmc</span> <span class="op">&lt;-</span></span>
 <span>  <span class="st">"https://osf.io/download/rtw5k"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -220,7 +261,12 @@ simulated data.</p>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">value</span></span>
 <span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.2</span>, alpha <span class="op">=</span> <span class="fl">.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span></span>
+<span>    size <span class="op">=</span> <span class="fl">.2</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">.3</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.colour <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -233,35 +279,40 @@ simulated data.</p>
 <p>We can calculate the log-likelihood of the data as a function of the
 incidence rate directly:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ll_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
-<span>  lambda <span class="op">=</span> <span class="fl">0.1</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ll_a</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
+<span>    lambda <span class="op">=</span> <span class="fl">0.1</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -240.1535</span></span>
 <span></span>
-<span><span class="va">ll_G</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>,</span>
-<span>  lambda <span class="op">=</span> <span class="fl">0.1</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">ll_g</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>,</span>
+<span>    lambda <span class="op">=</span> <span class="fl">0.1</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -339.8803</span></span>
 <span></span>
-<span><span class="va">ll_AG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
-<span>  lambda <span class="op">=</span> <span class="fl">0.1</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">ll_ag</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>    lambda <span class="op">=</span> <span class="fl">0.1</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -580.0338</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ll_A</span> <span class="op">+</span> <span class="va">ll_G</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ll_a</span> <span class="op">+</span> <span class="va">ll_g</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -580.0338</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -270,13 +321,14 @@ incidence rate directly:</p>
 <p>We can also graph the log-likelihoods, even without finding the MLEs,
 using <code><a href="../reference/graph_loglik.html">graph_loglik()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lik_HlyE_IgA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph_loglik.html">graph_loglik</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
-<span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">lik_HlyE_IgA</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/graph_loglik.html">graph_loglik</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">csdata</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>,</span>
+<span>    log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">lik_HlyE_IgG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/graph_loglik.html">graph_loglik</a></span><span class="op">(</span></span>
 <span>  previous_plot <span class="op">=</span> <span class="va">lik_HlyE_IgA</span>,</span>
@@ -309,9 +361,10 @@ using <code><a href="../reference/graph_loglik.html">graph_loglik()</a></code>:<
 <span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
 <span>  lambda_start <span class="op">=</span> <span class="fl">.1</span>,</span>
-<span>  build_graph <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">T</span>, <span class="co"># print updates as the function runs</span></span>
-<span>  print_graph <span class="op">=</span> <span class="cn">F</span>, <span class="co"># display the log-likelihood curve while `est.incidence()` is running</span></span>
+<span>  build_graph <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># print updates as the function runs</span></span>
+<span>  print_graph <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># display the log-likelihood curve while</span></span>
+<span>  <span class="co">#`est.incidence()` is running</span></span>
 <span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; nrow(curve_params) = 998</span></span>
@@ -406,7 +459,7 @@ using <code><a href="../reference/graph_loglik.html">graph_loglik()</a></code>:<
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Elapsed time:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.436   0.000   0.436</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.432   0.000   0.431</span></span></code></pre></div>
 <p>We can extract summary statistics with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
@@ -432,7 +485,6 @@ using <code><a href="../reference/graph_loglik.html">graph_loglik()</a></code>:<
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span></span>
 <span><span class="va">n_cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co"># n_cores = 1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">n_cores</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 <p>In the preceding code chunk, we have determined that we can use 3 CPU
@@ -444,13 +496,12 @@ cores to run computations in parallel.</p>
 <span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span></span>
 <span><span class="co"># incidence rate in e</span></span>
-<span><span class="va">lmbdaVec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span><span class="op">)</span></span>
+<span><span class="va">lambdas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">sim.df</span> <span class="op">&lt;-</span></span>
+<span><span class="va">sim_df</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/sim.cs.multi.html">sim.cs.multi</a></span><span class="op">(</span></span>
-<span>    <span class="co"># verbose = TRUE,</span></span>
 <span>    n_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
-<span>    lambdas <span class="op">=</span> <span class="va">lmbdaVec</span>,</span>
+<span>    lambdas <span class="op">=</span> <span class="va">lambdas</span>,</span>
 <span>    nclus <span class="op">=</span> <span class="va">nclus</span>,</span>
 <span>    n.smpl <span class="op">=</span> <span class="va">nrep</span>,</span>
 <span>    age.rng <span class="op">=</span> <span class="va">lifespan</span>,</span>
@@ -462,7 +513,7 @@ cores to run computations in parallel.</p>
 <span>    format <span class="op">=</span> <span class="st">"long"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim.df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8,000 × 6</span></span></span>
 <span><span class="co">#&gt;      age id    antigen_iso value lambda.sim cluster</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
@@ -479,10 +530,11 @@ cores to run computations in parallel.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7,990 more rows</span></span></span></code></pre></div>
 <p>We can plot the distributions of the simulated responses:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">sim.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">cluster</span><span class="op">)</span>,</span>
-<span>  y <span class="op">=</span> <span class="va">value</span></span>
-<span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="va">sim_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">cluster</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">value</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.2</span>, alpha <span class="op">=</span> <span class="fl">.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>outlier.colour <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -494,9 +546,8 @@ cores to run computations in parallel.</p>
 </h3>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ests</span> <span class="op">&lt;-</span></span>
-<span>  <span class="co"># sim.df %&gt;%</span></span>
 <span>  <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
-<span>    pop_data <span class="op">=</span> <span class="va">sim.df</span>,</span>
+<span>    pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
 <span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
 <span>    num_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
@@ -506,7 +557,6 @@ cores to run computations in parallel.</p>
 <span>    verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    build_graph <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># slows down the function substantially</span></span>
 <span>    antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
-<span>    <span class="co"># antigen_isos = "HlyE_IgA"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Data has been stratified.</span></span>
 <span><span class="co">#&gt; Here are the strata that will be analyzed:</span></span>
@@ -527,7 +577,7 @@ cores to run computations in parallel.</p>
 <span><span class="co">#&gt; Setting up parallel processing with `num_cores` = 3.</span></span>
 <span><span class="co">#&gt; Elapsed time for parallelized code:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.154   0.023  17.403</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.148   0.028  17.434</span></span></code></pre></div>
 <p><code>summary(ests)</code> produces a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> with some
 extra meta-data:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">

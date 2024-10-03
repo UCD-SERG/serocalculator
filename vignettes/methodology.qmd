@@ -347,6 +347,7 @@ The derivative of this expression doesn't come out cleanly, so we will use a *nu
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->
 
-## References {.smaller}
+## References {.smaller .unnumbered}
 
-
+::: {#refs}
+:::

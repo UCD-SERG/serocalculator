@@ -11,7 +11,7 @@ vignette: >
   %\VignetteIndexEntry{simulate_xsectionalData}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: vignettes/references.bib
+bibliography: ../references.bib
 ---
   
   

@@ -1,10 +1,10 @@
 ---
-title: "Overview"
+title: "Introduction to serocalculator"
 description: >
   A summary of the methods behind serocalculator.
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Overview}
+  %\VignetteIndexEntry{Introduction to serocalculator}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

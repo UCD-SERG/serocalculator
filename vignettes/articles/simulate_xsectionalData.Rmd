@@ -11,7 +11,8 @@ vignette: >
   %\VignetteIndexEntry{simulate_xsectionalData}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  ---
+bibliography: vignettes/references.bib
+---
   
   
 This vignette shows how to simulate a cross-sectional sample of 

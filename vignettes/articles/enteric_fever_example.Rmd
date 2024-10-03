@@ -9,7 +9,7 @@ vignette: >
   %\VignetteIndexEntry{Enteric Fever Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: references.bib
+bibliography: vignettes/references.bib
 ---
 ## Introduction
 

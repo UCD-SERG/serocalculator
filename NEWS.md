@@ -2,11 +2,13 @@
 
 ## New features
 
+* Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
+
 * Added default value for `antigen_isos` argument in `log_likelihood()` (#286)
 
 * Updated enteric fever example article with upgraded code and visualizations (#290)
 
-* Added `Methodology` vignette (#284)
+* Added `Methodology` vignette (#284, #302)
 
 * Added template for reporting Issues 
 (from `usethis::use_tidy_issue_template()`) (#270)

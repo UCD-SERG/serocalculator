@@ -33,7 +33,8 @@ at that time:
 
 $$\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]$$
 
-where $C(t)$ is the cumulative total number of infections in the population of interest,
+where $C(t)$ is the cumulative total number of infections in 
+the population of interest,
 and $N(t)$ is the number of individuals at risk at time $t$.
 
 ## Scale of incidence rates {visibility="hidden"}

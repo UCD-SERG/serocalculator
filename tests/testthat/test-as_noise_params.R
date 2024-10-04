@@ -35,3 +35,14 @@ test_that("`as_noise_params()` produces error when
               class = "missing-antigen"
             )
           })
+
+test_that("`as_noise_params()` produces error when
+          non-data frame is provided", {
+            library(dplyr)
+
+            expect_error(
+              object = "a string sample" %>% # random string
+                as_noise_params(),
+              class = "not data.frame"
+            )
+          })

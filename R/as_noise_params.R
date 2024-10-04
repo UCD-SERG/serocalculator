@@ -45,8 +45,7 @@ as_noise_params <- function(data, antigen_isos = NULL) {
         "Can't convert {.arg data} to {.cls noise_params}.",
         "i" = paste("The column{?s} : {.strong {.var {missing_cols}}}",
           "{?is/are} missing."
-        ),
-        "x" = "You have supplied {.cls {class(data)}}."
+        )
       )
     )
   }

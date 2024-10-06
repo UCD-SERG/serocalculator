@@ -39,7 +39,7 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    vdiffr
+    purrr
 Suggests:
     bookdown,
     devtag (>= 0.0.0.9000),
@@ -56,7 +56,9 @@ Suggests:
     ssdtools (>= 1.0.6.9016),
     testthat (>= 3.0.0),
     tidyverse,
-    qrcode
+    qrcode,
+    svglite,
+    vdiffr
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3

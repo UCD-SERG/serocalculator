@@ -38,7 +38,8 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    utils
+    utils,
+    vdiffr
 Suggests:
     bookdown,
     devtag (>= 0.0.0.9000),

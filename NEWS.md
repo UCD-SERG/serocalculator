@@ -1,9 +1,8 @@
 # serocalculator (development version)
 
 # serocalculator 1.2.9.9007
-* Add `as_noise_params` (#228) 
 
-* Updated enteric fever example article with upgraded code and visualizations
+* Add `as_noise_params` (#228) 
 
 ## New features
 

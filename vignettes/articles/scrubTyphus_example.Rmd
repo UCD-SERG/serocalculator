@@ -9,7 +9,6 @@ vignette: >
   %\VignetteIndexEntry{Scrub Typhus Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: references.bib
 
 
 ---
@@ -121,7 +120,7 @@ xs_data %>% summary(strata = "country")
 
 Let's also take a look at how antibody responses change by age.
 
-```{r "plot age"}
+```{r plot-age}
 # Plot antibody responses by age
 autoplot(object = xs_data, type = "age-scatter", strata = "Country")
 ```

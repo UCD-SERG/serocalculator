@@ -1,0 +1,30 @@
+::: notes
+If we could observe $T$, 
+then we could estimate $\lambda$
+using a typical maximum likelihood approach.
+:::
+
+::::: notes
+Starting with the likelihood:
+Taking the logarithm of the likelihood:
+Taking the derivative of that log-likelihood to find the score function:
+Setting the score function equal to 0 to find the score equation, 
+and solving the score equation for $\lambda$ 
+to find the maximum likelihood estimate:
+:::::
+
+:::: incremental
+
+* $$\Lik^*(\lambda) = \prod_{i=1}^n \pdf(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)$$
+
+* $$\llik^*(\lambda) = \logf{\Lik^*(\lambda)} = \sum_{i=1}^n \logf{\lambda} -\lambda t_i$$
+
+* $$\llik^{*'}(\lambda) = \sum_{i=1}^n \invf{\lambda} - t_i$$
+
+* $$\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
+
+::::
+
+::: notes
+The MLE turns out to be the inverse of the mean.
+:::

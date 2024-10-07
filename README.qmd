@@ -1,7 +1,6 @@
 ---
 title: "serocalculator"
 format: gfm
-bibliography: vignettes/articles/references.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -22,6 +21,15 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
+```{r svg}
+#| echo: false
+#| label: fig-qr-code
+library(qrcode)
+code <- qr_code("https://ucd-serg.github.io/serocalculator/")
+generate_svg(code, filename = "man/figures/qr.svg")
+```
+
+![QR code for {serocalculator} website](man/figures/qr.svg)
 
 Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. 
 In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, 
@@ -86,7 +94,11 @@ devtools::install_github("ucd-serg/serocalculator")
 #### A Note for Windows Users
 
 Before launching the development version of **serocalculator**, Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. 
-This can be done either: (1) [during the *devtools* package installation](#during-devtools-installation), **or** (2) [independently](#independently), if *devtools* is already installed.
+This can be done either: 
+
+(1) [during the *devtools* package installation](#during-devtools-installation), **or** 
+
+(2) [independently](#independently), if *devtools* is already installed.
 
 ##### During devtools installation
 

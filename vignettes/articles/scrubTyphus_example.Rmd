@@ -43,18 +43,21 @@ knitr::opts_chunk$set(
 ### Load packages
 The first step in conducting this analysis is to load our necessary packages. 
 If you haven't installed already, you will need to do so before loading.
-We will also need to have the `{tidyverse}` packages installed
-for data manipulation and graphics.
-Please see the [`serocalculator` installation instructions](https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package)
-for more details on installing `{serocalculator}`,
-and see the [`tidyverse` installation instructions](https://tidyverse.tidyverse.org/#installation)
-for more details on installing `{tidyverse}`.
+We will also need to have the `{tidyverse}` and `{mixtools}` packages installed
+for data manipulation and graphics operations we will perform in this vignette.
+Please see the websites for 
+[`{serocalculator}](https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package),
+[`{tidyverse}`](https://tidyverse.tidyverse.org/#installation),
+and [`{mixtools}`](https://github.com/dsy109/mixtools?tab=readme-ov-file#installation)
+for guidance on installing these packages into your R package library.
 
-Once those packages are installed, load them:
+Once all three of those packages are installed, we can load them into 
+our active R session environment:
 
 ```{r load_packages}
 library(serocalculator)
 library(tidyverse)
+library(mixtools)
 ```
 
 ### Load data

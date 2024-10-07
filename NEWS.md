@@ -2,9 +2,9 @@
 
 # serocalculator 1.2.9.9007
 
-* Add `as_noise_params` (#228) 
-
 ## New features
+
+* Add `as_noise_params` (#228) 
 
 * Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
 

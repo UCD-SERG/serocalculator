@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title> • serocalculator</title>
+<title>Generate a simulated cross-sectional sample and estimate seroincidence • serocalculator</title>
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generate a simulated cross-sectional sample and estimate seroincidence">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,9 +35,9 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
-    <li><a class="dropdown-item" href="../articles/methodology.html">Introduction to seroincidence estimation</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">UNKNOWN TITLE</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -72,7 +72,9 @@
 <script src="simulate_xsectionalData_files/crosstalk-1.2.1/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1></h1>
+      <h1>Generate a simulated cross-sectional sample and estimate seroincidence</h1>
+            <h3 data-toc-skip class="subtitle">Enteric Fever using HlyE
+IgG and/or HlyE IgA</h3>
             
       
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/simulate_xsectionalData.Rmd" class="external-link"><code>vignettes/articles/simulate_xsectionalData.Rmd</code></a></small>
@@ -81,45 +83,6 @@
 
     
     
-<table class="table"><tbody>
-<tr class="odd">
-<td>title: “Generate a simulated cross-sectional sample and estimate
-seroincidence”</td>
-</tr>
-<tr class="even">
-<td>subtitle: “Enteric Fever using HlyE IgG and/or HlyE IgA”</td>
-</tr>
-<tr class="odd">
-<td>output:</td>
-</tr>
-<tr class="even">
-<td>bookdown::html_document2:</td>
-</tr>
-<tr class="odd">
-<td>base_format: rmarkdown::html_document</td>
-</tr>
-<tr class="even">
-<td>toc: true</td>
-</tr>
-<tr class="odd">
-<td>toc_float:</td>
-</tr>
-<tr class="even">
-<td>collapsed: false</td>
-</tr>
-<tr class="odd">
-<td>vignette: &gt;</td>
-</tr>
-<tr class="even">
-<td>%</td>
-</tr>
-<tr class="odd">
-<td>%</td>
-</tr>
-<tr class="even">
-<td>%</td>
-</tr>
-</tbody></table>
 <p>This vignette shows how to simulate a cross-sectional sample of
 seroresponses for incident infections as a Poisson process with
 frequency <code>lambda</code>. Responses are generated for the
@@ -459,7 +422,7 @@ using <code><a href="../reference/graph_loglik.html">graph_loglik()</a></code>:<
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Elapsed time:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.439   0.002   0.441</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.434   0.000   0.434</span></span></code></pre></div>
 <p>We can extract summary statistics with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
@@ -577,7 +540,7 @@ cores to run computations in parallel.</p>
 <span><span class="co">#&gt; Setting up parallel processing with `num_cores` = 3.</span></span>
 <span><span class="co">#&gt; Elapsed time for parallelized code:</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.144   0.031  17.236</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.149   0.019  15.746</span></span></code></pre></div>
 <p><code>summary(ests)</code> produces a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> with some
 extra meta-data:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">

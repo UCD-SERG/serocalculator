@@ -43,7 +43,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 install.packages("devtools")
-devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
+devtools::install_github("ucd-serg/serocalculator", eval = FALSE)
 ```
 
 
@@ -53,9 +53,9 @@ The first step in conducting this analysis is to load our necessary packages. If
 ```{r load_packages}
 library(serocalculator)
 library(devtools)
-install.packages("tidyverse", eval=FALSE)
+install.packages("tidyverse", eval = FALSE)
 library(tidyverse)
-install.packages("mixtools", eval=FALSE)
+install.packages("mixtools", eval = FALSE)
 library(mixtools)
 ```
 
@@ -151,7 +151,7 @@ Column Name | Description
 
 ```{r message=FALSE, warning=FALSE}
 # biologic noise
-b.noise <- xs_data %>%
+b_noise <- xs_data %>%
   group_by(antigen_iso) %>%
   filter(!is.na(value)) %>%
   filter(age < 40) %>% # restrict to young ages to capture recent exposures
@@ -181,7 +181,7 @@ b.noise <- xs_data %>%
 # define conditional parameters
 noise <- data.frame(
   antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
-  nu = as.numeric(c(b.noise[2, 2], b.noise[1, 2])), # Biologic noise (nu)
+  nu = as.numeric(c(b_noise[2, 2], b_noise[1, 2])), # Biologic noise (nu)
   eps = c(0.2, 0.2), # M noise (eps)
   y.low = c(0.2, 0.2), # low cutoff (llod)
   y.high = c(200, 200)

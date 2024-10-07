@@ -26,7 +26,8 @@ test_that("`autoplot.pop_data()` raise
                            autoplot(strata = "strat1", type = "density"))
           })
 
-test_that("`autoplot.pop_data()` produces stable results for `type = 'density'`",
+test_that("`autoplot.pop_data()` produces
+          stable results for `type = 'density'`",
           {
             skip_if(getRversion() < "4.4.1") # 4.3.3 had issues
             xs_data <- load_pop_data(

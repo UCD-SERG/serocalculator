@@ -2,6 +2,8 @@
 
 ## New features
 
+* Add `as_noise_params` (#228) 
+
 * Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
 
 * Added default value for `antigen_isos` argument in `log_likelihood()` (#286)

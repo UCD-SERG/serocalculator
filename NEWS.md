@@ -1,7 +1,5 @@
 # serocalculator (development version)
 
-# serocalculator 1.2.9.9007
-
 ## New features
 
 * Add `as_noise_params` (#228) 

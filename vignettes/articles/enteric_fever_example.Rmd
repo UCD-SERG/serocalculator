@@ -243,13 +243,14 @@ est_country = est.incidence.by(
   pop_data = xs_data,
   curve_params = curves, 
   noise_params = noise,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  antigen_isos = c("HlyE_IgA", "LPS_IgA"),
   num_cores = 8 # Allow for parallel processing to decrease run time
 )
 
-summary(est_country)
+test <- summary(est_country)
 
 
+table(curves$antigen_iso)
 ```
 We are warned that "curve_params is missing all strata variables, and will be used unstratified". This can be ignored, as the unstratified parameters will simply give us the overall seroincidence estimate. 
 

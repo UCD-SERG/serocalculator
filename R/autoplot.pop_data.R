@@ -55,7 +55,8 @@ autoplot.pop_data <- function(
       message = c(
         x = "{.fn autoplot.pop_data} does not currently have an option for
          {.arg type} = {.str {type}}.",
-        i = "The {.arg type} argument accepts options {.str density} or {.str age-scatter}."
+        i = "The {.arg type} argument accepts options
+        {.str density} or {.str age-scatter}."
       )
     )
   }

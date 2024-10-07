@@ -40,25 +40,22 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-```{r setup, message=FALSE}
-install.packages("devtools")
-devtools::install_github("ucd-serg/serocalculator", eval = FALSE)
-```
-
-
 ### Load packages
-The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading.
+The first step in conducting this analysis is to load our necessary packages. 
+If you haven't installed already, you will need to do so before loading.
+We will also need to have the `{tidyverse}` packages installed
+for data manipulation and graphics.
+Please see the [`serocalculator` installation instructions](https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package)
+for more details on installing `{serocalculator}`,
+and see the [`tidyverse` installation instructions](https://tidyverse.tidyverse.org/#installation)
+for more details on installing `{tidyverse}`.
+
+Once those packages are installed, load them:
 
 ```{r load_packages}
 library(serocalculator)
-library(devtools)
-install.packages("tidyverse", eval = FALSE)
 library(tidyverse)
-install.packages("mixtools", eval = FALSE)
-library(mixtools)
 ```
-
 
 ### Load data
 

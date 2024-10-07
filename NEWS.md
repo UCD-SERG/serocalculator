@@ -2,7 +2,9 @@
 
 ## New features
 
-* Improved error messaging for `autoplot.pop_data()`
+* Improved error messaging for `autoplot.pop_data()` (#234).
+
+* Clarified package installation instructions in scrub typhus vignette (#234).
 
 * Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
 

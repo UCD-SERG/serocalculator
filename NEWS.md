@@ -2,6 +2,10 @@
 
 ## New features
 
+* Improved error messaging for `autoplot.pop_data()` (#234).
+
+* Clarified package installation instructions in scrub typhus vignette (#234).
+
 * Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
 
 * Added default value for `antigen_isos` argument in `log_likelihood()` (#286)
@@ -17,6 +21,8 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Developer-facing changes
+
+* Added `test-autoplot.pop_data` test (#234)
 
 * initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
 
@@ -44,7 +50,6 @@ including:
   - lint changed files (#256)
 
 # serocalculator 1.2.0
-* Added `test-autoplot.pop_data` test
 
 * Added `test-summary.pop_data` test
 

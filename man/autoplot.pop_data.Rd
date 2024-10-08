@@ -11,9 +11,11 @@
 
 \item{log}{whether to show antibody responses on logarithmic scale}
 
-\item{type}{an option to choose type of chart: the current options are \code{"density"} or \code{"age-scatter"}}
+\item{type}{an option to choose type of chart:
+the current options are \code{"density"} or \code{"age-scatter"}}
 
-\item{strata}{the name of a variable in \code{pop_data} to stratify by (or \code{NULL} for no stratification)}
+\item{strata}{the name of a variable in \code{pop_data}
+to stratify by (or \code{NULL} for no stratification)}
 
 \item{...}{unused}
 }

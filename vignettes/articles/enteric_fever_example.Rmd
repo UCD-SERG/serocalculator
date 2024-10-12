@@ -151,7 +151,9 @@ xs_data %>%
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
   autoplot(strata = "Country", type = "density") +
   scale_fill_manual(values = country_pal) +
-  scale_x_log10(labels = scales::label_comma())
+  scale_x_log10(labels = scales::label_comma()) +
+  labs(x = "Log Antibody Response Value")
+  
 
 ```
 

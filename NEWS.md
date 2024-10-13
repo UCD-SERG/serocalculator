@@ -1,9 +1,7 @@
 # serocalculator 1.3.0
-* Add test for `est.incidence` 
 
-* Add option to test `strata` in `pop_data`
-
-## New features
+## New features*
+* Add test for missing strata in `est.incidence.by` (#227)
 
 * Add `as_noise_params` (#228) 
 

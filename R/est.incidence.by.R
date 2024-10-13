@@ -1,6 +1,6 @@
 #' Estimate Seroincidence
 #' @description
-#' Function to estimate seroincidences based on cross-section
+#' Function to estimate seroincidences based on cross-sectional
 #' serology data and longitudinal
 #' response model.
 #'
@@ -50,6 +50,7 @@
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'  # Reduce dataset for the purposes of this example
 #'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
@@ -137,13 +138,13 @@ est.incidence.by <- function(
   strata_table <- stratumDataList %>% attr("strata")
 
   if (verbose) {
-    message("Data has been stratified.")
-    message("Here are the strata that will be analyzed:")
+    cli::cli_inform("Data has been stratified.")
+    cli::cli_inform("Here are the strata that will be analyzed:")
     print(strata_table)
   }
 
   if (num_cores > 1L && !requireNamespace("parallel", quietly = TRUE)) {
-    warning(
+    cli::cli_warn(
       "The `parallel` package is not installed,
       so `num_cores > 1` has no effect.",
       "To install `parallel`, run `install.packages('parallel')`
@@ -162,7 +163,6 @@ est.incidence.by <- function(
               `num_cores` = ", num_cores, ".")
     }
 
-
     libPaths <- .libPaths()
     cl <-
       num_cores %>%
@@ -172,14 +172,19 @@ est.incidence.by <- function(
       parallel::stopCluster(cl)
     })
 
+    # Export library paths to the cluster
     parallel::clusterExport(cl, c("libPaths"), envir = environment())
+
+    # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {
       .libPaths(libPaths)
-      require(serocalculator) # note - this gets out of sync" %>%
-      "when using load_all() in development"
+      # note - this gets out of sync when using load_all() in development
+      require(serocalculator)
       require(dplyr)
     })
-    {
+
+    # Perform parallel computation and record execution time
+    time <- system.time({
       fits <- parallel::parLapplyLB(
         cl = cl,
         X = stratumDataList,
@@ -200,41 +205,39 @@ est.incidence.by <- function(
           )
         }
       )
-    } %>% system.time() -> time
+    })
 
     if (verbose) {
       message("Elapsed time for parallelized code: ")
       print(time)
     }
   } else {
-    fits <- list()
-    { # time progress
-      for (cur_stratum in names(stratumDataList)) {
-        cur_stratum_vars <-
-          strata_table %>%
-          dplyr::filter(.data$Stratum == cur_stratum)
+    fits <- list()  # Initialize an empty list for fits
 
-        if (verbose) {
-          message("starting new stratum: ", cur_stratum)
-          print(cur_stratum_vars)
-        }
+    # Time progress
+    for (cur_stratum in names(stratumDataList)) {
+      cur_stratum_vars <- strata_table %>%
+        dplyr::filter(.data$Stratum == cur_stratum)
 
-        fits[[cur_stratum]] <-
-          do.call(
-            what = est.incidence,
-            args = c(
-              stratumDataList[[cur_stratum]],
-              list(
-                lambda_start = lambda_start,
-                antigen_isos = antigen_isos,
-                build_graph = build_graph,
-                print_graph = print_graph,
-                verbose = verbose,
-                ...
-              )
-            )
-          )
+      if (verbose) {
+        message("starting new stratum: ", cur_stratum)
+        print(cur_stratum_vars)
       }
+
+      fits[[cur_stratum]] <- do.call(
+        what = est.incidence,
+        args = c(
+          stratumDataList[[cur_stratum]],
+          list(
+            lambda_start = lambda_start,
+            antigen_isos = antigen_isos,
+            build_graph = build_graph,
+            print_graph = print_graph,
+            verbose = verbose,
+            ...
+          )
+        )
+      )
     }
 
 

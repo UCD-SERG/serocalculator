@@ -115,7 +115,7 @@ An object of class \code{"seroincidence"}.
 }
 }
 \description{
-Function to estimate seroincidences based on cross-section
+Function to estimate seroincidences based on cross-sectional
 serology data and longitudinal
 response model.
 }
@@ -136,6 +136,7 @@ xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+ # Reduce dataset for the purposes of this example
   slice(1:100, .by = antigen_iso)
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")

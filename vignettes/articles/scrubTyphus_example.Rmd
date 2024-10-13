@@ -9,8 +9,7 @@ vignette: >
   %\VignetteIndexEntry{Scrub Typhus Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: references.bib
-
+bibliography: ../references.bib
 
 ---
 ## Introduction
@@ -43,17 +42,23 @@ knitr::opts_chunk$set(
 
 
 ### Load packages
-The first step in conducting this analysis is to load our necessary packages. If you haven't installed already, you will need to do so before loading. 
 
-```{r setup, message=FALSE}
-# devtools::install_github("ucd-serg/serocalculator", eval=FALSE)
-```
+The first step in conducting this analysis is to load our necessary packages. 
+If you haven't installed already, you will need to do so before loading. 
+We will also need to have the `tidyverse` and `mixtools` packages installed
+for data manipulation and graphics operations we will perform in this vignette.
+Please see the websites for 
+[`serocalculator`](https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package),
+[`tidyverse`](https://tidyverse.tidyverse.org/#installation),
+and [`mixtools`](https://github.com/dsy109/mixtools?tab=readme-ov-file#installation)
+for guidance on installing these packages into your R package library.
+
+Once all three of those packages are installed, we can load them into 
+our active R session environment:
 
 ```{r load_packages}
 library(serocalculator)
-# install.packages("tidyverse")
 library(tidyverse)
-# install.packages("mixtools")
 library(mixtools)
 ```
 
@@ -121,7 +126,7 @@ xs_data %>% summary(strata = "country")
 
 Let's also take a look at how antibody responses change by age.
 
-```{r "plot age"}
+```{r plot-age}
 # Plot antibody responses by age
 autoplot(object = xs_data, type = "age-scatter", strata = "Country")
 ```
@@ -148,21 +153,23 @@ Column Name | Description
 
 ```{r message=FALSE, warning=FALSE}
 # biologic noise
-b.noise <- xs_data %>%
+b_noise <- xs_data %>%
   group_by(antigen_iso) %>%
   filter(!is.na(value)) %>%
   filter(age < 40) %>% # restrict to young ages to capture recent exposures
   do({
     set.seed(54321)
     # Fit the mixture model
-    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000) # k is the number of components, adjust as necessary
-    # Assuming the first component is the lower distribution
+    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000)
+    # k is the number of components, adjust as necessary
+    # Assuming the first component is the lower distribution:
     lower_mu <- mixmod$mu[1]
     lower_sigma <- sqrt(mixmod$sigma[1])
     # Calculate the 90th percentile of the lower distribution
     percentile75 <- qnorm(0.75, lower_mu, lower_sigma)
     # Return the results
-    data.frame(antigen_iso = .$antigen_iso[1], percentile75 = percentile75)
+    data.frame(antigen_iso = .$antigen_iso[1],
+               percentile75 = percentile75)
   })
 
 
@@ -170,7 +177,7 @@ b.noise <- xs_data %>%
 # define conditional parameters
 noise <- data.frame(
   antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
-  nu = as.numeric(c(b.noise[2, 2], b.noise[1, 2])), # Biologic noise (nu)
+  nu = as.numeric(c(b_noise[2, 2], b_noise[1, 2])), # Biologic noise (nu)
   eps = c(0.2, 0.2), # M noise (eps)
   y.low = c(0.2, 0.2), # low cutoff (llod)
   y.high = c(200, 200)
@@ -237,25 +244,22 @@ estdf <- summary(est) %>%
 est2df <- summary(est2)
 
 
-est.comb <- rbind(estdf, est2df)
+est_comb <- rbind(estdf, est2df)
 
 # Create barplot (rescale incidence rate and CIs)
-ggplot(est.comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.8, preserve = "single")) +
+ggplot(est_comb) +
+  aes(y = ageQ, x = incidence.rate * 1000, fill = country) +
+  geom_bar(stat = "identity",
+           position = position_dodge2(width = 0.8, preserve = "single")) +
   geom_linerange(aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000),
-    position = position_dodge2(width = 0.8, preserve = "single")
-  ) +
-  labs(
-    title = "Enteric Fever Seroincidence by Catchment Area",
-    x = "Seroincience rate per 1000 person-years",
-    y = "Catchment"
-  ) +
+                 position = position_dodge2(width = 0.8, preserve = "single")) +
+  labs(title = "Enteric Fever Seroincidence by Catchment Area",
+       x = "Seroincience rate per 1000 person-years",
+       y = "Catchment") +
   theme_bw() +
-  facet_wrap(~country) +
-  theme(
-    axis.text.y = element_text(size = 11),
-    axis.text.x = element_text(size = 11)
-  ) +
+  facet_wrap(~ country) +
+  theme(axis.text.y = element_text(size = 11),
+        axis.text.x = element_text(size = 11)) +
   scale_fill_manual(values = c("orange2", "#39558CFF", "red"))
 ```
 

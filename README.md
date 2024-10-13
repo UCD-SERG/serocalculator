@@ -11,6 +11,15 @@
 [![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
+<div id="fig-website-QR">
+
+![](man/figures/qr.svg)
+
+
+Figure 1: QR code for `serocalculator` website
+
+</div>
+
 Antibody levels measured in a cross–sectional population sample can be
 translated into an estimate of the frequency with which seroconversions
 (infections) occur in the sampled population. In other words, the

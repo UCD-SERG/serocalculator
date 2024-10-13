@@ -9,9 +9,7 @@ vignette: >
   %\VignetteIndexEntry{Enteric Fever Seroincidence Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: references.bib
-
-
+bibliography: ../references.bib
 ---
 ## Introduction
 
@@ -161,7 +159,7 @@ Once log transformed, our data looks much more normally distributed. In most cas
 
 Let's also take a look at how antibody responses change by age.
 
-```{r "plot age", message=FALSE, warning = FALSE}
+```{r plot-age, message=FALSE, warning = FALSE}
 
 #Plot antibody responses by age
 ggplot(data = xs_data %>%

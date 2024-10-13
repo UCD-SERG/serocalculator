@@ -3,10 +3,18 @@
 
 * Add option to test `strata` in `pop_data`
 
-# serocalculator 1.2.9.9007
-* Updated enteric fever example article with upgraded code and visualizations
-
 ## New features
+
+* Add `as_noise_params` (#228) 
+
+* Updated `simulate_xsectionalData.Rmd` (linting, removing deprecated functions)
+(#289)
+
+* Added default value for `antigen_isos` argument in `log_likelihood()` (#286)
+
+* Updated enteric fever example article with upgraded code and visualizations (#290)
+
+* Added `Methodology` vignette (#284, #302, #303)
 
 * Added template for reporting Issues 
 (from `usethis::use_tidy_issue_template()`) (#270)
@@ -16,9 +24,23 @@
 
 ## Developer-facing changes
 
+* initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
+
+* created unit test for `df_to_array()` (#276)
+
+* fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)
+
+* Added `devtag` to package (using `devtag::use_devtag()`) (#292)
+* Added `@dev` tag to `?df_to_array()` (#292)
+
+* Generalized `get_()` and `set_()` methods to be general-purpose
+(no S3 class-specific methods needed yet) (#274).
+
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
 * Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
 copied from <https://github.com/tidyverse/ggplot2>
 
+* Added QR code to `README.qmd`
 * Added additional automated checks through 
 [GitHub actions](https://docs.github.com/en/actions), 
 including:

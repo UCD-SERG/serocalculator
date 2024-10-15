@@ -27,7 +27,7 @@ test_that(
       strata = c("catchment"),
       pop_data = xs_data,
       curve_param = curve,
-      curve_strata_varnames = NULL,
+      curve_strata_varnames = "catchment",
       noise_strata_varnames = "catchment",
       noise_param = noise,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
@@ -59,7 +59,8 @@ test_that("`est.incidence.by()` produces expected results", {
     pop_data = xs_data_true,
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    num_cores = 8 # Allow for parallel processing to decrease run time
   )
 
   xs_data_false <- load_pop_data(
@@ -78,7 +79,8 @@ test_that("`est.incidence.by()` produces expected results", {
     pop_data = xs_data_false,
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    num_cores = 8 # Allow for parallel processing to decrease run time
   )
 
   expect_equal(est_true, est_false)

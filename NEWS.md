@@ -1,6 +1,9 @@
 # serocalculator (development version)
 
 ## New features
+* Improved error messaging for `autoplot.pop_data()` (#234).
+
+* Clarified package installation instructions in scrub typhus vignette (#234).
 
 * Add `as_noise_params` (#228) 
 
@@ -22,6 +25,8 @@
 ## Internal changes
 
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
+
+* Added `test-autoplot.pop_data` test (#234)
 
 * initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
 
@@ -50,6 +55,7 @@ including:
   - lint changed files (#256)
 
 # serocalculator 1.2.0
+
 * Added `test-summary.pop_data` test
 
 * Modified `test-est.incidence` test

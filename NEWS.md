@@ -5,8 +5,6 @@
 
 * Clarified package installation instructions in scrub typhus vignette (#234).
 
-* Updated `simulate_xsectionalData.Rmd()` (linting, removing deprecated functions).
-
 * Add `as_noise_params` (#228) 
 
 * Updated `simulate_xsectionalData.Rmd` (linting, removing deprecated functions) (#289)

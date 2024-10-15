@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.2.0.9017
+Version: 1.2.0.9018
 Authors@R: c(
     person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
            comment = "Author of the method and original code."),
@@ -38,7 +38,8 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    utils
+    utils,
+    purrr
 Suggests:
     bookdown,
     devtag (>= 0.0.0.9000),
@@ -55,7 +56,9 @@ Suggests:
     ssdtools (>= 1.0.6.9016),
     testthat (>= 3.0.0),
     tidyverse,
-    qrcode
+    qrcode,
+    svglite,
+    vdiffr
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3

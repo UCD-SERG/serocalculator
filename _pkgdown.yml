@@ -4,3 +4,6 @@ template:
   light-switch: true
 
 bibliography: vignettes/references.bib
+
+search:
+  exclude: ['preview/']

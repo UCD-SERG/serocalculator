@@ -52,7 +52,8 @@ test_that(
       filter(Country == "Pakistan")
 
     # get curve data
-    curve <- load_curve_params("https://osf.io/download/rtw5k/") # slice if test is too slow (.by = antigen_iso))
+    curve <- load_curve_params("https://osf.io/download/rtw5k/")
+    # slice if test is too slow (.by = antigen_iso))
 
     # set start
     start <- .05

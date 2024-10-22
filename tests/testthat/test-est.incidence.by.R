@@ -71,7 +71,7 @@ test_that(
 
     expect_snapshot(x = typhoid_results)
 
-    #expect_snapshot_value(typhoid_results, style = "deparse")
+    expect_snapshot_value(typhoid_results, style = "deparse")
   }
 )
 

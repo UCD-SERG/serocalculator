@@ -7,12 +7,17 @@
 load_noise_params(file_path, antigen_isos = NULL)
 }
 \arguments{
-\item{file_path}{path to an RDS file containing biologic and measurement noise of antibody decay curve parameters \code{y.low}, \code{eps}, \code{nu}, and \code{y.high}, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
+\item{file_path}{path to an RDS file containing biologic
+and measurement noise of antibody decay curve parameters
+\code{y.low}, \code{eps}, \code{nu}, and \code{y.high},
+stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
-\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
+\item{antigen_isos}{\code{\link[=character]{character()}} vector
+of antigen isotypes to be used in analyses}
 }
 \value{
-a \code{noise} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})
+a \code{noise} object (a \link[tibble:tbl_df-class]{tibble::tbl_df}
+with extra attribute \code{antigen_isos})
 }
 \description{
 Load noise parameters

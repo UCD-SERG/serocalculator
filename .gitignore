@@ -16,3 +16,5 @@ serocalculator*.tgz
 rsconnect
 README.html
 README_files
+
+/.quarto/

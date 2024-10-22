@@ -25,3 +25,10 @@ allpopsamples_hlye.csv$
 ^rsconnect$
 ^README\.qmd$
 ^codecov\.yml$
+^_quarto\.yml$
+^\.lintr$
+^vignettes$
+^vignettes/\.quarto$
+^vignettes/methodology\.qmd$
+^\.quarto$
+^man/df_to_array\.Rd$

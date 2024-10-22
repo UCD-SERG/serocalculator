@@ -4,9 +4,11 @@
 #'
 #' @param object A `pop_data` object (from [load_pop_data()])
 #' @param log whether to show antibody responses on logarithmic scale
-#' @param strata the name of a variable in `pop_data` to stratify by (or `NULL` for no stratification)
+#' @param strata the name of a variable in `pop_data`
+#' to stratify by (or `NULL` for no stratification)
 #' @param ... unused
-#' @param type an option to choose type of chart: the current options are `"density"` or `"age-scatter"`
+#' @param type an option to choose type of chart:
+#' the current options are `"density"` or `"age-scatter"`
 #'
 #' @return a [ggplot2::ggplot] object
 #'
@@ -31,40 +33,58 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
+
+  if (!is.null(strata) && !is.element(strata, names(object))) {
+    cli::cli_abort(
+      class = "unavailable_strata",
+      message = c(
+        x = "The variable {.var {strata}} specified by argument {.arg strata}
+        does not exist in {.arg object}.",
+        i = "Please choose a column that exists in {.arg object}."
+      )
+    )
+  }
+
   if (type == "age-scatter") {
     age_scatter(object, strata)
   } else if (type == "density") {
     density_plot(object, strata, log)
   } else {
     cli::cli_abort(
-      '`type = "{type}"` is not a valid input;
-      the currently available options for `type` are "density" or "age-scatter"'
+      class = "unavailable_type",
+      message = c(
+        x = "{.fn autoplot.pop_data} does not currently have an option for
+         {.arg type} = {.str {type}}.",
+        i = "The {.arg type} argument accepts options
+        {.str density} or {.str age-scatter}."
+      )
     )
   }
 }
 
 age_scatter <- function(
     object,
-    strata = NULL) {
+    strata = NULL,
+    age_var = object %>% get_age_var(),
+    value_var = object %>% get_value_var()) {
   # create default plotting
 
   if (is.null(strata)) {
     plot1 <-
       object %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_age_var()]],
-                                   y = .data[[object %>% get_value_var()]],
-                                   col = get(strata)
-                                   )
-                      )
+      ggplot2::ggplot() +
+      ggplot2::aes(
+        x = .data[[age_var]],
+        y = .data[[value_var]]
+      )
   } else {
     plot1 <-
       object %>%
-      ggplot2::ggplot(
-        ggplot2::aes(
-          x = .data[[object %>% get_age_var()]],
-          y = .data[[object %>% get_value_var()]]
-        ),
-        col = get(strata)
+      ggplot2::ggplot() +
+      ggplot2::aes(
+        col = .data[[strata]],
+        x = .data[[age_var]],
+        y = .data[[value_var]]
       ) +
       ggplot2::labs(colour = strata)
   }
@@ -73,7 +93,7 @@ age_scatter <- function(
     ggplot2::theme_linedraw() +
     # ggplot2::scale_y_log10() +
 
-    # avoid log 0 (https://forum.posit.co/t/using-log-transformation-but-need-to-preserve-0/129197/4)
+    # avoid log 0 (https://bit.ly/4eqDkT4)
     ggplot2::scale_y_continuous(
       trans = scales::pseudo_log_trans(sigma = 0.01),
       breaks = c(-1, -0.1, 0, 0.1, 1, 10),
@@ -99,10 +119,12 @@ age_scatter <- function(
 density_plot <- function(
     object,
     strata = NULL,
-    log = FALSE) {
+    log = FALSE,
+    value_var = object %>% get_value_var()) {
   plot1 <-
     object %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data[[object %>% get_value_var()]])) +
+    ggplot2::ggplot() +
+    ggplot2::aes(x = .data[[value_var]]) +
     ggplot2::theme_linedraw() +
     ggplot2::facet_wrap(~antigen_iso, nrow = 3)
 
@@ -122,10 +144,11 @@ density_plot <- function(
       ggplot2::labs(fill = strata)
   }
   if (log) {
+
     min_nonzero_val <-
       object %>%
-      filter(object %>% get_value() > 0) %>%
       get_value() %>%
+      purrr::keep(~ . > 0) %>%
       min()
 
     max_val <-

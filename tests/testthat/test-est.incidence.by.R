@@ -62,8 +62,8 @@ test_that(
       strata = c("catchment"),
       pop_data = xs_data,
       curve_param = curve,
-      curve_strata_varnames = "catchment",
-      noise_strata_varnames = "catchment",
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
       noise_param = noise,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
       # Allow for parallel processing to decrease run time
@@ -80,6 +80,7 @@ test_that("`est.incidence.by()` produces expected results", {
   library(dplyr)
   curves <- load_curve_params("https://osf.io/download/rtw5k/")
   noise <- load_noise_params("https://osf.io/download//hqy4v/")
+
   xs_data_true <- load_pop_data(
     file_path = "https://osf.io/download//n6cp3/",
     age = "Age",
@@ -97,6 +98,8 @@ test_that("`est.incidence.by()` produces expected results", {
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
     num_cores = 1 # Allow for parallel processing to decrease run time
   )
 
@@ -116,6 +119,8 @@ test_that("`est.incidence.by()` produces expected results", {
     pop_data = xs_data_false,
     curve_params = curves,
     noise_params = noise %>% filter(Country == "Pakistan"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
     num_cores = 1 # Allow for parallel processing to decrease run time
   )

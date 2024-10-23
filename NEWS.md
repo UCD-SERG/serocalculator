@@ -1,6 +1,8 @@
-# serocalculator (development version)
+# serocalculator 1.3.0
 
 ## New features
+* Add test for missing strata in `est.incidence.by` (#227)
+
 * Improved error messaging for `autoplot.pop_data()` (#234).
 
 * Clarified package installation instructions in scrub typhus vignette (#234).

@@ -1,6 +1,8 @@
 # serocalculator (development version)
 
 ## New features
+* Replace `%>%` pipe with `|>` (#310)
+
 * Improved error messaging for `autoplot.pop_data()` (#234).
 
 * Clarified package installation instructions in scrub typhus vignette (#234).

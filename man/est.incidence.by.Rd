@@ -11,7 +11,7 @@ est.incidence.by(
   strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  antigen_isos = pop_data \%>\% pull("antigen_iso") \%>\% unique(),
+  antigen_isos = unique(pull(pop_data, "antigen_iso")),
   lambda_start = 0.1,
   build_graph = FALSE,
   num_cores = 1L,
@@ -123,17 +123,17 @@ library(dplyr)
 
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
 
 est2 <- est.incidence.by(
   strata = c("catchment"),
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   curve_params = curve,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8 # Allow for parallel processing to decrease run time
   iterlim = 5 # limit iterations for the purpose of this example

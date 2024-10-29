@@ -9,12 +9,12 @@ test_that(
       value = "result",
       id = "index_id",
       standardize = TRUE
-    ) %>%
-      filter(Country == "Pakistan") %>%
+    ) |>
+      filter(Country == "Pakistan") |>
       slice_head(n = 100)
 
     # get noise data
-    noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
+    noise <- load_noise_params("https://osf.io/download//hqy4v/") |>
       filter(Country == "Pakistan")
 
     # get curve data
@@ -28,7 +28,7 @@ test_that(
       curve_param = curve,
       noise_param = noise,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-    ) %>%
+    ) |>
       summary.seroincidence(
         coverage = .95,
         start = start
@@ -47,15 +47,15 @@ test_that("`est.incidence()` produces expected results", {
     value = "result",
     id = "index_id",
     standardize = TRUE
-  ) %>%
-    filter(Country == "Pakistan") %>%
+  ) |>
+    filter(Country == "Pakistan") |>
     slice_head(n = 100)
 
 
   est_true <- est.incidence(
     pop_data = xs_data_true,
     curve_params = curves,
-    noise_params = noise %>% filter(Country == "Pakistan"),
+    noise_params = noise |> filter(Country == "Pakistan"),
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
@@ -65,15 +65,15 @@ test_that("`est.incidence()` produces expected results", {
     value = "result",
     id = "index_id",
     standardize = FALSE
-  ) %>%
-    filter(Country == "Pakistan") %>%
+  ) |>
+    filter(Country == "Pakistan") |>
     slice_head(n = 100)
 
 
   est_false <- est.incidence(
     pop_data = xs_data_false,
     curve_params = curves,
-    noise_params = noise %>% filter(Country == "Pakistan"),
+    noise_params = noise |> filter(Country == "Pakistan"),
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 

@@ -10,8 +10,8 @@
 #' @examples
 #' library(magrittr)
 #' noise_data <-
-#'   "https://osf.io/download//hqy4v/" %>%
-#'   readr::read_rds() %>%
+#'   "https://osf.io/download//hqy4v/" |>
+#'   readr::read_rds() |>
 #'   as_noise_params()
 #'
 #' print(noise_data)
@@ -31,7 +31,7 @@ as_noise_params <- function(data, antigen_isos = NULL) {
     )
   }
 
-  noise_data <- data %>% tibble::as_tibble()
+  noise_data <- data |> tibble::as_tibble()
 
   # Define noise columns
   noise_cols <- c("antigen_iso", "y.low", "eps", "nu", "y.high")

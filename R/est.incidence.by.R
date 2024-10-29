@@ -37,17 +37,17 @@
 #'
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
-#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#' curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
 #'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
 #' est2 <- est.incidence.by(
 #'   strata = c("catchment"),
-#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   pop_data = xs_data |> filter(Country == "Pakistan"),
 #'   curve_params = curve,
-#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   noise_params = noise |> filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   #num_cores = 8 # Allow for parallel processing to decrease run time
 #'   iterlim = 5 # limit iterations for the purpose of this example
@@ -62,8 +62,8 @@ est.incidence.by <- function(
     strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    antigen_isos = pop_data %>%
-      pull("antigen_iso") %>%
+    antigen_isos = pop_data |>
+      pull("antigen_iso") |>
       unique(),
     lambda_start = 0.1,
     build_graph = FALSE,
@@ -112,15 +112,15 @@ est.incidence.by <- function(
   # Split data per stratum
   stratumDataList <- stratify_data(
     antigen_isos = antigen_isos,
-    data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
-    curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
-    noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
+    data = pop_data |> filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = curve_params |> filter(.data$antigen_iso %in% antigen_isos),
+    noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames
   )
 
-  strata_table <- stratumDataList %>% attr("strata")
+  strata_table <- stratumDataList |> attr("strata")
 
   if (verbose) {
     message("Data has been stratified.")
@@ -139,7 +139,7 @@ est.incidence.by <- function(
   if (num_cores > 1L) {
     requireNamespace("parallel", quietly = FALSE)
 
-    num_cores <- num_cores %>% check_parallel_cores()
+    num_cores <- num_cores |> check_parallel_cores()
 
     if (verbose) {
       message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
@@ -148,8 +148,8 @@ est.incidence.by <- function(
 
     libPaths <- .libPaths()
     cl <-
-      num_cores %>%
-      parallel::makeCluster() %>%
+      num_cores |>
+      parallel::makeCluster() |>
       suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
@@ -183,7 +183,7 @@ est.incidence.by <- function(
           )
         }
       )
-    } %>% system.time() -> time
+    } |> system.time() -> time
 
     if (verbose) {
       message("Elapsed time for parallelized code: ")
@@ -201,7 +201,7 @@ est.incidence.by <- function(
       for (cur_stratum in names(stratumDataList))
       {
         cur_stratum_vars <-
-          strata_table %>%
+          strata_table |>
           dplyr::filter(.data$Stratum == cur_stratum)
 
         if (verbose) {
@@ -225,7 +225,7 @@ est.incidence.by <- function(
             )
           )
       }
-    } %>% system.time() -> time
+    } |> system.time() -> time
 
     if (verbose) {
       message("Elapsed time for loop over strata: ")
@@ -238,7 +238,7 @@ est.incidence.by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.by" %>% union(class(fits))
+    class = "seroincidence.by" |> union(class(fits))
   )
 
   return(incidenceData)

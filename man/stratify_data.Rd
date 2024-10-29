@@ -11,7 +11,7 @@ stratify_data(
   strata_varnames = "",
   curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
-  antigen_isos = data \%>\% attr("antigen_isos")
+  antigen_isos = attr(data, "antigen_isos")
 )
 }
 \arguments{
@@ -63,8 +63,8 @@ library(dplyr)
 
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")

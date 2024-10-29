@@ -69,7 +69,7 @@ library(tibble)
 # load in longitudinal parameters
 dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
+xs_data <- "https://osf.io/download//n6cp3/" |>
   load_pop_data()
 
 # Load noise params
@@ -88,6 +88,6 @@ ll_AG <- log_likelihood(
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   lambda = 0.1
-) \%>\% print()
+) |> print()
 
 }

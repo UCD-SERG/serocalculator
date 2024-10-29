@@ -1,22 +1,22 @@
 test_that("`check_pop_data()` works", {
   library(dplyr)
-  xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
+  xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
     as_pop_data()
 
-  xs_data %>% check_pop_data() |>
+  xs_data |> check_pop_data() |>
     expect_no_condition()
 
-  xs_data %>% check_pop_data(verbose = TRUE) |>
+  xs_data |> check_pop_data(verbose = TRUE) |>
     expect_message("data format is as expected.")
 
-  xs_data_no_age = xs_data %>% select(-age)
-  xs_data_no_age %>% check_pop_data() |>
+  xs_data_no_age = xs_data |> select(-age)
+  xs_data_no_age |> check_pop_data() |>
     expect_error(class = "missing-var")
 
-  xs_data_no_value = xs_data %>% select(-value)
-  xs_data_no_value %>% check_pop_data() |>
+  xs_data_no_value = xs_data |> select(-value)
+  xs_data_no_value |> check_pop_data() |>
     expect_error(class = "missing-var")
 
-  "string" %>% check_pop_data() |>
+  "string" |> check_pop_data() |>
     expect_error(class = "not a data.frame")
 })

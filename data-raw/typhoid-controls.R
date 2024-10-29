@@ -1,7 +1,7 @@
 library(readr)
 
 tc <- read_csv("inst/extdata/typhoidcontrols.csv")
-tc %>%
+tc |>
   summarize(
     .by = c(, antigen_iso),
     nu = quantile(

@@ -5,7 +5,7 @@ test_that("`f_dev0()` and `f_dev()` produce stable results", {
 
   # load in longitudinal parameters
   curve_params = load_curve_params("https://osf.io/download/rtw5k")
-  xs_data <- "https://osf.io/download//n6cp3/" %>% load_pop_data()
+  xs_data <- "https://osf.io/download//n6cp3/" |> load_pop_data()
 
   #Load noise params
   noise_params <- tibble(
@@ -18,25 +18,25 @@ test_that("`f_dev0()` and `f_dev()` produce stable results", {
   cur_antibody = "HlyE_IgA"
 
   cur_data =
-    xs_data %>%
+    xs_data |>
     dplyr::filter(
      .data$catchment == "dhaka",
-     .data$antigen_iso == cur_antibody) %>%
+     .data$antigen_iso == cur_antibody) |>
     slice_head(n = 100)
 
   cur_curve_params =
-    curve_params %>%
-    dplyr::filter(.data$antigen_iso == cur_antibody)  %>%
+    curve_params |>
+    dplyr::filter(.data$antigen_iso == cur_antibody)  |>
     slice_head(n = 100)
 
   cur_noise_params =
-    noise_params %>%
+    noise_params |>
     dplyr::filter(.data$antigen_iso == cur_antibody)
 
   if(!is.element('d', names(cur_curve_params)))
   {
     cur_curve_params =
-      cur_curve_params %>%
+      cur_curve_params |>
       dplyr::mutate(
         alpha = .data$alpha * 365.25,
         d = .data$r - 1)

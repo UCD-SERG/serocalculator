@@ -37,6 +37,6 @@ xs_data <- load_pop_data(
   standardize = TRUE
 )
 
-xs_data \%>\% autoplot(strata = "Country", type = "density")
-xs_data \%>\% autoplot(strata = "Country", type = "age-scatter")
+xs_data |> autoplot(strata = "Country", type = "density")
+xs_data |> autoplot(strata = "Country", type = "age-scatter")
 }

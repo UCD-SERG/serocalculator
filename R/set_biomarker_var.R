@@ -10,7 +10,7 @@ set_biomarker_var <- function(object,
   }
 
   if (standardize) {
-    object <- object %>%
+    object <- object |>
       rename(c("antigen_iso" = attr(object, "biomarker_var")))
 
     # update attribute

@@ -71,8 +71,8 @@ library(tidyverse)
 library(ggbeeswarm) # for plotting
 library(dplyr)
 dmcmc <-
-  "https://osf.io/download/rtw5k" %>%
-  load_curve_params() %>%
+  "https://osf.io/download/rtw5k" |>
+  load_curve_params() |>
   dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 
@@ -83,13 +83,13 @@ of model parameters using a `autoplot.curve_params()` method for the
 `autoplot()` function:
 
 ```{r}
-dmcmc %>% autoplot(n_curves = 50)
+dmcmc |> autoplot(n_curves = 50)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-dmcmc %>% autoplot(log_x = TRUE, n_curves = 50)
+dmcmc |> autoplot(log_x = TRUE, n_curves = 50)
 ```
 
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
@@ -98,8 +98,8 @@ We can graph the median, 10%, and 90% quantiles of the model using the `graph.cu
 # Specify the antibody-isotype responses to include in analyses
 antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
-dmcmc %>%
-  graph.curve.params(antigen_isos = antibodies) %>%
+dmcmc |>
+  graph.curve.params(antigen_isos = antibodies) |>
   print()
 ```
 
@@ -189,7 +189,7 @@ ll_a <-
     noise_params = cond,
     antigen_isos = "HlyE_IgA",
     lambda = 0.1
-  ) %>%
+  ) |>
   print()
 
 ll_g <-
@@ -199,7 +199,7 @@ ll_g <-
     noise_params = cond,
     antigen_isos = "HlyE_IgG",
     lambda = 0.1
-  ) %>%
+  ) |>
   print()
 
 ll_ag <-
@@ -209,7 +209,7 @@ ll_ag <-
     noise_params = cond,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
     lambda = 0.1
-  ) %>%
+  ) |>
   print()
 
 print(ll_a + ll_g)
@@ -326,7 +326,7 @@ print(sim_df)
 We can plot the distributions of the simulated responses:
 
 ```{r}
-sim_df %>% ggplot() +
+sim_df |> ggplot() +
   aes(
     x = as.factor(cluster),
     y = value
@@ -366,8 +366,8 @@ We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
 library(DT)
-summary(ests) %>%
-  DT::datatable() %>%
+summary(ests) |>
+  DT::datatable() |>
   DT::formatRound(
     columns = c(
       "incidence.rate",
@@ -403,9 +403,9 @@ autoplot(ests[1:5], log_x = TRUE)
 Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r "check-codes"}
-summary(ests) %>%
-  as_tibble() %>% # removes extra meta-data
-  select(Stratum, nlm.convergence.code) %>%
+summary(ests) |>
+  as_tibble() |> # removes extra meta-data
+  select(Stratum, nlm.convergence.code) |>
   filter(nlm.convergence.code > 2)
 ```
 
@@ -419,7 +419,7 @@ We can extract the indices of problematic strata, if there are any:
 
 ```{r}
 problem_strata <-
-  which(summary(ests)$nlm.convergence.code > 2) %>%
+  which(summary(ests)$nlm.convergence.code > 2) |>
   print()
 ```
 
@@ -439,7 +439,7 @@ Finally, we can look at our simulation results:
 
 ```{r, "graph"}
 library(ggplot2)
-summary(ests) %>%
+summary(ests) |>
   autoplot(xvar = "lambda.sim") +
   ggplot2::geom_abline(
     ggplot2::aes(intercept = 0, slope = 1)

@@ -25,8 +25,8 @@
 #' @export
 print.summary.seroincidence.by <- function(x, ...) {
   cat("Seroincidence estimated given the following setup:\n")
-  cat(paste("a) Antigen isotypes   :", paste(x %>% attr("antigen_isos"), collapse = ", ")), "\n")
-  cat(paste("b) Strata       :", paste(x %>% attr("Strata"), collapse = ", ")), "\n")
+  cat(paste("a) Antigen isotypes   :", paste(x |> attr("antigen_isos"), collapse = ", ")), "\n")
+  cat(paste("b) Strata       :", paste(x |> attr("Strata"), collapse = ", ")), "\n")
   cat("\n Seroincidence estimates:\n")
   print(as_tibble(x))
   invisible(x)

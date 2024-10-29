@@ -145,8 +145,8 @@ simresp.tinf <- function(
     b <- rbind(b, b.now)
     ymat <- rbind(ymat, y.now)
 
-    b.end <- b %>% tail(1)
-    y.end <- ymat %>% tail(1)
+    b.end <- b |> tail(1)
+    y.end <- ymat |> tail(1)
 
     if (renew.params) {
       if (n.mc == 0) {

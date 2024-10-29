@@ -9,8 +9,8 @@
 #' @examples
 #' library(magrittr)
 #' curve_data <-
-#'   "https://osf.io/download/rtw5k/" %>%
-#'   readr::read_rds() %>%
+#'   "https://osf.io/download/rtw5k/" |>
+#'   readr::read_rds() |>
 #'   as_curve_params()
 #'
 #' print(curve_data)
@@ -29,7 +29,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   }
 
   curve_data <-
-    data %>%
+    data |>
     tibble::as_tibble()
 
   # check if object has expected columns:
@@ -38,7 +38,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
   # get columns from provided data
-  data_cols <- data %>% names()
+  data_cols <- data |> names()
 
   # get any missing column(s)
   missing_cols <- setdiff(x = curve_cols, y = data_cols)
@@ -70,7 +70,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   # assign antigen attribute
   attr(curve_data, "antigen_isos") <- antigen_isos
 
-  curve_data <- curve_data %>%
+  curve_data <- curve_data |>
     set_biomarker_var(biomarker = "antigen_iso", standardize = FALSE)
 
   return(curve_data)

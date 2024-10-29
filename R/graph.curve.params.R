@@ -23,7 +23,7 @@ graph.curve.params <- function(
     )
   }
 
-  curve_params <- curve_params %>%
+  curve_params <- curve_params |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   day2yr <- 365.25
@@ -53,19 +53,19 @@ graph.curve.params <- function(
 
 
   d <- curve_params
-  # %>%
+  # |>
   #   mutate(alpha = .data$alpha / day2yr)
 
 
 
   dT <-
-    data.frame(t = tx2) %>%
-    mutate(ID = 1:n()) %>%
+    data.frame(t = tx2) |>
+    mutate(ID = 1:n()) |>
     pivot_wider(
       names_from = .data$ID,
       values_from = .data$t,
       names_prefix = "time"
-    ) %>%
+    ) |>
     dplyr::slice(
       rep(1:dplyr::n(),
         each = nrow(d)
@@ -74,13 +74,13 @@ graph.curve.params <- function(
 
 
   serocourse.all <-
-    cbind(d, dT) %>%
+    cbind(d, dT) |>
     tidyr::pivot_longer(
       cols = dplyr::starts_with("time"),
       values_to = "t"
-    ) %>%
-    select(-"name") %>%
-    rowwise() %>%
+    ) |>
+    select(-"name") |>
+    rowwise() |>
     mutate(res = ab(
       .data$t,
       .data$y0,
@@ -88,11 +88,11 @@ graph.curve.params <- function(
       .data$t1,
       .data$alpha,
       .data$r
-    )) %>%
+    )) |>
     ungroup()
 
   if (verbose) message("starting to compute quantiles")
-  serocourse.sum <- serocourse.all %>%
+  serocourse.sum <- serocourse.all |>
     summarise(
       .by = c("antigen_iso", "t"),
       res.med = quantile(.data$res, 0.5),
@@ -102,7 +102,7 @@ graph.curve.params <- function(
       res.p25 = quantile(.data$res, 0.25),
       res.p10 = quantile(.data$res, 0.10),
       res.p90 = quantile(.data$res, 0.90)
-    ) %>%
+    ) |>
     pivot_longer(
       names_to = "quantile",
       cols = c(
@@ -122,7 +122,7 @@ graph.curve.params <- function(
 
   ggplot2::ggplot() +
     ggplot2::geom_line(
-      data = serocourse.sum %>%
+      data = serocourse.sum |>
         filter(.data$quantile == "med"),
       ggplot2::aes(
         x = .data$t,
@@ -131,7 +131,7 @@ graph.curve.params <- function(
       linewidth = 1
     ) +
     ggplot2::geom_line(
-      data = serocourse.sum %>% filter(quantile == "p10"),
+      data = serocourse.sum |> filter(quantile == "p10"),
       ggplot2::aes(
         x = .data$t,
         y = .data$res
@@ -139,7 +139,7 @@ graph.curve.params <- function(
       linewidth = .5
     ) +
     ggplot2::geom_line(
-      data = serocourse.sum %>%
+      data = serocourse.sum |>
         filter(quantile == "p90"),
       ggplot2::aes(
         x = .data$t,

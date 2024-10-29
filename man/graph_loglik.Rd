@@ -8,7 +8,7 @@ graph_loglik(
   pop_data,
   curve_params,
   noise_params,
-  antigen_isos = pop_data \%>\% get_biomarker_levels(),
+  antigen_isos = get_biomarker_levels(pop_data),
   x = 10^seq(-3, 0, by = 0.1),
   highlight_points = NULL,
   highlight_point_names = "highlight_points",
@@ -88,8 +88,8 @@ xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 
 # Load curve parameters and subset for the purposes of this example
-dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") |>
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
   slice(1:100, .by = antigen_iso)
 
 # Load noise parameters

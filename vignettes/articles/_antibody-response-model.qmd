@@ -109,12 +109,12 @@ library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
 curves <-
-  "https://osf.io/download/rtw5k/" %>%
-  load_curve_params() %>%
+  "https://osf.io/download/rtw5k/" |>
+  load_curve_params() |>
   filter(iter < 50)
 
 curve1 =
-  curves %>%
+  curves |>
   filter(
     # iter %in% 1:10,
     iter == 5,
@@ -122,7 +122,7 @@ curve1 =
 
 library(ggplot2)
 
-curve1 %>%
+curve1 |>
 serocalculator:::plot_curve_params_one_ab(
   log_y = FALSE
 ) +

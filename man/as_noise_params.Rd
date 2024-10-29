@@ -22,8 +22,8 @@ Load noise parameters
 \examples{
 library(magrittr)
 noise_data <-
-  "https://osf.io/download//hqy4v/" \%>\%
-  readr::read_rds() \%>\%
+  "https://osf.io/download//hqy4v/" |>
+  readr::read_rds() |>
   as_noise_params()
 
 print(noise_data)

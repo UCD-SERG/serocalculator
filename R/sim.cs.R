@@ -84,16 +84,16 @@ sim.cs <- function(
     ...) {
   if (verbose > 1) {
     message("inputs to `sim.cs()`:")
-    print(environment() %>% as.list())
+    print(environment() |> as.list())
   }
 
   # @param predpar an [array()] containing MCMC samples from the Bayesian distribution of longitudinal decay curve model parameters. NOTE: most users should leave `predpar` at its default value and provide `curve_params` instead.
 
   predpar <-
-    curve_params %>%
-    filter(.data$antigen_iso %in% antigen_isos) %>%
-    droplevels() %>%
-    prep_curve_params_for_array() %>%
+    curve_params |>
+    filter(.data$antigen_iso %in% antigen_isos) |>
+    droplevels() |>
+    prep_curve_params_for_array() |>
     df_to_array(dim_var_names = c("antigen_iso", "parameter"))
 
   stopifnot(length(lambda) == 1)
@@ -101,7 +101,7 @@ sim.cs <- function(
   day2yr <- 365.25
   lambda <- lambda / day2yr
   age.rng <- age.rng * day2yr
-  npar <- dimnames(predpar)$parameter %>% length()
+  npar <- dimnames(predpar)$parameter |> length()
 
 
   baseline_limits <- noise_limits
@@ -134,8 +134,8 @@ sim.cs <- function(
   colnames(ysim) <- c("age", antigen_isos)
 
   to_return <-
-    ysim %>%
-    as_tibble() %>%
+    ysim |>
+    as_tibble() |>
     mutate(
       id = as.character(1:n()),
       age = round(.data$age / day2yr, 2)
@@ -144,23 +144,23 @@ sim.cs <- function(
   if (format == "long") {
     if (verbose) message("outputting long format data")
     to_return <-
-      to_return %>%
+      to_return |>
       pivot_longer(
         cols = antigen_isos,
         values_to = c("value"),
         names_to = c("antigen_iso")
-      ) %>%
+      ) |>
       structure(
         class = c("pop_data", class(to_return)),
         format = "long"
-      ) %>%
-      set_value(value = "value") %>%
-      set_age(age = "age") %>%
+      ) |>
+      set_value(value = "value") |>
+      set_age(age = "age") |>
       set_id(id = "id")
   } else {
     if (verbose) message("outputting wide format data")
     to_return <-
-      to_return %>%
+      to_return |>
       structure(
         class = c("pop_data_wide", class(to_return)),
         format = "wide"

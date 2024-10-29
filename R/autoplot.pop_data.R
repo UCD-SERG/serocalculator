@@ -24,8 +24,8 @@
 #'   standardize = TRUE
 #' )
 #'
-#' xs_data %>% autoplot(strata = "Country", type = "density")
-#' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
+#' xs_data |> autoplot(strata = "Country", type = "density")
+#' xs_data |> autoplot(strata = "Country", type = "age-scatter")
 #' @export
 autoplot.pop_data <- function(
     object,
@@ -65,13 +65,13 @@ autoplot.pop_data <- function(
 age_scatter <- function(
     object,
     strata = NULL,
-    age_var = object %>% get_age_var(),
-    value_var = object %>% get_value_var()) {
+    age_var = object |> get_age_var(),
+    value_var = object |> get_value_var()) {
   # create default plotting
 
   if (is.null(strata)) {
     plot1 <-
-      object %>%
+      object |>
       ggplot2::ggplot() +
       ggplot2::aes(
         x = .data[[age_var]],
@@ -79,7 +79,7 @@ age_scatter <- function(
       )
   } else {
     plot1 <-
-      object %>%
+      object |>
       ggplot2::ggplot() +
       ggplot2::aes(
         col = .data[[strata]],
@@ -120,9 +120,9 @@ density_plot <- function(
     object,
     strata = NULL,
     log = FALSE,
-    value_var = object %>% get_value_var()) {
+    value_var = object |> get_value_var()) {
   plot1 <-
-    object %>%
+    object |>
     ggplot2::ggplot() +
     ggplot2::aes(x = .data[[value_var]]) +
     ggplot2::theme_linedraw() +
@@ -146,19 +146,19 @@ density_plot <- function(
   if (log) {
 
     min_nonzero_val <-
-      object %>%
-      get_value() %>%
-      purrr::keep(~ . > 0) %>%
+      object |>
+      get_value() |>
+      purrr::keep(~ . > 0) |>
       min()
 
     max_val <-
-      object %>%
-      get_value() %>%
+      object |>
+      get_value() |>
       max()
 
     breaks1 <- c(0, 10^seq(
-      min_nonzero_val %>% log10() %>% floor(),
-      max_val %>% log10() %>% ceiling()
+      min_nonzero_val |> log10() |> floor(),
+      max_val |> log10() |> ceiling()
     ))
 
     plot1 <- plot1 +

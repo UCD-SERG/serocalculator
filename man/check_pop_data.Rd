@@ -19,7 +19,7 @@ Check the formatting of a cross-sectional antibody survey dataset.
 }
 \examples{
 library(dplyr)
-xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") \%>\%
+xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
   as_pop_data()
 check_pop_data(xs_data, verbose = TRUE)
 

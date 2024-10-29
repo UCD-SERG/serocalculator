@@ -1,7 +1,7 @@
 # `summary.pop_data()` produces stable results when `strata = NULL`
 
     Code
-      xs_data %>% summary(strata = NULL)
+      summary(xs_data, strata = NULL)
     Output
       
       n = 3336 
@@ -25,7 +25,7 @@
 # `summary.pop_data()` produces stable results with stratification
 
     Code
-      xs_data %>% summary(strata = "Country")
+      summary(xs_data, strata = "Country")
     Output
       
       n = 3336 

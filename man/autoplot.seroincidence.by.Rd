@@ -14,11 +14,13 @@
 \item{...}{
   Arguments passed on to \code{\link[=autoplot.seroincidence]{autoplot.seroincidence}}
   \describe{
-    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale
+(\code{TRUE}) or linear scale (\code{FALSE}, default)?}
   }}
 }
 \value{
-an object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
+an object of class \code{"ggarrange"},
+which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
 }
 \description{
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
@@ -33,7 +35,8 @@ xs_data <- "https://osf.io/download//n6cp3/" |>
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+  # Reduce dataset for the purposes of this example
+  slice(1:100, .by = antigen_iso)
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
 

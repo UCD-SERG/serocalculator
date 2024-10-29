@@ -11,7 +11,8 @@ graph.curve.params(
 )
 }
 \arguments{
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}}
+containing MCMC samples of antibody decay curve parameters}
 
 \item{antigen_isos}{antigen isotypes}
 

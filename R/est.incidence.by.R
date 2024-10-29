@@ -179,7 +179,8 @@ message("Setting up parallel processing with
       # note - this gets out of sync when using load_all() in development
       require(serocalculator)
       require(dplyr)
-    }) {
+    })
+
       fits <- parallel::parLapplyLB(
         cl = cl,
         X = stratumDataList,
@@ -259,5 +260,4 @@ message("Setting up parallel processing with
   )
 
   return(incidenceData)
-}
 }

@@ -15,29 +15,36 @@
 \arguments{
 \item{object}{A dataframe containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
 
-\item{confidence_level}{desired confidence interval coverage probability}
+\item{confidence_level}{desired confidence
+interval coverage probability}
 
 \item{showDeviance}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting deviance
 (-2*log(likelihood) at estimated seroincidence. Default = \code{TRUE}.}
 
-\item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
+\item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE})
+for reporting convergence (see
 help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
-A \code{summary.seroincidence.by} object, which is a \link[tibble:tibble]{tibble::tibble}, with the following columns:
+A \code{summary.seroincidence.by} object,
+which is a \link[tibble:tibble]{tibble::tibble}, with the following columns:
 \itemize{
 \item \code{incidence.rate} maximum likelihood estimate of \code{lambda} (seroincidence)
 \item \code{CI.lwr} lower confidence bound for lambda
 \item \code{CI.upr} upper confidence bound for lambda
-\item \code{Deviance} (included if \code{showDeviance = TRUE}) Negative log likelihood (NLL) at estimated (maximum likelihood)
+\item \code{Deviance} (included if \code{showDeviance = TRUE})
+Negative log likelihood (NLL) at estimated (maximum likelihood)
 \code{lambda})
 \itemize{
-\item \code{nlm.convergence.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
-The object also has the following metadata (accessible through \code{\link[base:attr]{base::attr()}}):
+\item \code{nlm.convergence.code} (included if \code{showConvergence = TRUE})
+Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
+The object also has the following
+metadata (accessible through \code{\link[base:attr]{base::attr()}}):
 }
-\item \code{antigen_isos} Character vector with names of input antigen isotypes used in \code{\link[=est.incidence.by]{est.incidence.by()}}
+\item \code{antigen_isos} Character vector with names
+of input antigen isotypes used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 \item \code{Strata} Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}
 }
 }
@@ -52,7 +59,8 @@ xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+  # Reduce dataset for the purposes of this example
+  slice(1:100, .by = antigen_iso)
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
 

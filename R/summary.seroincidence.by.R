@@ -9,19 +9,26 @@
 #' @param ... Additional arguments affecting the summary produced.
 #' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
-#' @param showConvergence Logical flag (`FALSE`/`TRUE`) for reporting convergence (see
+#' @param showConvergence Logical flag (`FALSE`/`TRUE`)
+#' for reporting convergence (see
 #'   help for [optim()] for details). Default = `FALSE`.
-#' @param confidence_level desired confidence interval coverage probability
+#' @param confidence_level desired confidence
+#' interval coverage probability
 #' @return
-#' A `summary.seroincidence.by` object, which is a [tibble::tibble], with the following columns:
+#' A `summary.seroincidence.by` object,
+#' which is a [tibble::tibble], with the following columns:
 #'  * `incidence.rate` maximum likelihood estimate of `lambda` (seroincidence)
 #'  *  `CI.lwr` lower confidence bound for lambda
 #'  * `CI.upr` upper confidence bound for lambda
-#'  * `Deviance` (included if `showDeviance = TRUE`) Negative log likelihood (NLL) at estimated (maximum likelihood)
+#'  * `Deviance` (included if `showDeviance = TRUE`)
+#'  Negative log likelihood (NLL) at estimated (maximum likelihood)
 #'    `lambda`)
-#'    * `nlm.convergence.code` (included if `showConvergence = TRUE`) Convergence information returned by [stats::nlm()]
-#' The object also has the following metadata (accessible through [base::attr()]):
-#' * `antigen_isos` Character vector with names of input antigen isotypes used in [est.incidence.by()]
+#'    * `nlm.convergence.code` (included if `showConvergence = TRUE`)
+#'    Convergence information returned by [stats::nlm()]
+#' The object also has the following
+#' metadata (accessible through [base::attr()]):
+#' * `antigen_isos` Character vector with names
+#' of input antigen isotypes used in [est.incidence.by()]
 #' * `Strata` Character with names of strata used in [est.incidence.by()]
 #'
 #'
@@ -32,7 +39,8 @@
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
-#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'   # Reduce dataset for the purposes of this example
+#'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
@@ -70,7 +78,8 @@ summary.seroincidence.by <- function(
   }
 
   if (quantiles[1] > quantiles[2]) {
-    stop("Quantile for upper bound of incidence estimate cannot be less than the lower bound.")
+    stop("Quantile for upper bound of incidence
+         estimate cannot be less than the lower bound.")
   }
 
   results <-
@@ -111,8 +120,8 @@ summary.seroincidence.by <- function(
       Strata = attr(object, "Strata") |> attr("strata_vars"),
       Quantiles = quantiles,
       class =
-        "summary.seroincidence.by" |>
-          union(class(results))
+      "summary.seroincidence.by" |>
+      union(class(results))
     )
 
   return(output)

@@ -4,7 +4,8 @@
 #' @param object a '"seroincidence.by"' object (from [est.incidence.by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams autoplot.seroincidence
-#' @return an object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
+#' @return an object of class `"ggarrange"`,
+#' which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
 #' @export
 #' @examples
 #'
@@ -16,7 +17,8 @@
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
-#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'   # Reduce dataset for the purposes of this example
+#'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
@@ -33,7 +35,7 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est2)
 #'
-autoplot.seroincidence.by = function(
+autoplot.seroincidence.by <- function(
     object,
     ncol = min(3, length(object)),
     ...) {
@@ -52,8 +54,7 @@ autoplot.seroincidence.by = function(
   labels <- names(object)
   figs <- lapply(object, FUN = autoplot.seroincidence, ...)
 
-  for (i in 1:length(figs))
-  {
+  for (i in 1:length(figs)) {
     figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 

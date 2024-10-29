@@ -1,7 +1,8 @@
 #' Plot the log-likelihood curve for the incidence rate estimate
 #'
 #' @param object a `seroincidence` object (from [est.incidence()])
-#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
+#' @param log_x should the x-axis be on a logarithmic scale
+#'(`TRUE`) or linear scale (`FALSE`, default)?
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()]
@@ -14,8 +15,9 @@
 #' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
-#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG
+#'   # Reduce dataset for the purposes of this example
+#'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
@@ -30,10 +32,9 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est1)
 #'
-autoplot.seroincidence =
-  function(object, log_x = FALSE, ...)
-{
-  to_return = attr(object, "ll_graph")
+autoplot.seroincidence <-
+  function(object, log_x = FALSE, ...) {
+    to_return <- attr(object, "ll_graph")
 
     if (is.null(to_return)) {
       stop(

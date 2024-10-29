@@ -1,6 +1,7 @@
 #' Graph estimated antibody decay curve
 #'
-#' @param curve_params a [data.frame()] containing MCMC samples of antibody decay curve parameters
+#' @param curve_params a [data.frame()]
+#' containing MCMC samples of antibody decay curve parameters
 #' @param verbose verbose output
 #' @param antigen_isos antigen isotypes
 #' @returns a [ggplot2::ggplot()] object
@@ -53,10 +54,6 @@ graph.curve.params <- function(
 
 
   d <- curve_params
-  # |>
-  #   mutate(alpha = .data$alpha / day2yr)
-
-
 
   dT <-
     data.frame(t = tx2) |>
@@ -160,11 +157,3 @@ graph.curve.params <- function(
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(x = "Days since fever onset", y = "ELISA units")
 }
-
-# ggplot() +
-#   geom_line(data = serocourse.all, aes(x= t, y = res, group = iter)) +
-#   facet_wrap(~antigen_iso, ncol=2) +
-#   scale_y_log10(limits = c(0.9, 2000), breaks = c(1, 10, 100, 1000), minor_breaks = NULL) +
-#   theme_minimal()  +
-#   theme(axis.line=element_line()) +
-#   labs(x="Days since fever onset", y="ELISA units")

@@ -1,9 +1,13 @@
 #' Load antibody decay curve parameter samples
 #'
-#' @param file_path path to an RDS file containing MCMC samples of antibody decay curve parameters `y0`, `y1`, `t1`, `alpha`, and `r`, stored as a [data.frame()] or [tibble::tbl_df]
-#' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
+#' @param file_path path to an RDS file containing MCMC samples
+#' of antibody decay curve parameters `y0`, `y1`, `t1`, `alpha`, and `r`,
+#' stored as a [data.frame()] or [tibble::tbl_df]
+#' @param antigen_isos [character()]
+#' vector of antigen isotypes to be used in analyses
 #'
-#' @returns a `curve_params` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @returns a `curve_params` object (a [tibble::tbl_df]
+#' with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/")

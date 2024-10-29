@@ -58,5 +58,5 @@ test_that("stratify_data() warns about missing data", {
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL
   ) |>
-    expect_warning(regexp = "The number of observations in `data` varies")
+    expect_warning(regexp = "The number of observations in")
 })

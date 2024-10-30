@@ -1,6 +1,9 @@
 # serocalculator (development version)
 
 ## New features
+* Improved error messaging for `autoplot.pop_data()` (#234).
+
+* Clarified package installation instructions in scrub typhus vignette (#234).
 
 * Add `as_noise_params` (#228) 
 
@@ -19,7 +22,11 @@
 * Added template for pull requests 
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
-## Developer-facing changes
+## Internal changes
+
+* Added online preview builds for PRs that change the `pkgdown` website (#309)
+
+* Added `test-autoplot.pop_data` test (#234)
 
 * initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
 
@@ -28,6 +35,7 @@
 * fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)
 
 * Added `devtag` to package (using `devtag::use_devtag()`) (#292)
+
 * Added `@dev` tag to `?df_to_array()` (#292)
 
 * Generalized `get_()` and `set_()` methods to be general-purpose
@@ -47,6 +55,7 @@ including:
   - lint changed files (#256)
 
 # serocalculator 1.2.0
+
 * Added `test-summary.pop_data` test
 
 * Modified `test-est.incidence` test

@@ -53,6 +53,7 @@ Nadu
 OSF
 Orientia
 PLoS
+PRs
 Pebody
 Polina
 RStudio
@@ -84,9 +85,6 @@ Valk
 Vectorized
 Vellore
 Versteegh
-VignetteEncoding
-VignetteEngine
-VignetteIndexEntry
 Volterra
 Wetering
 Wiens
@@ -97,7 +95,6 @@ behaviour
 bioassays
 biomarker
 boldsymbol
-bookdown
 callout
 campylobacteriosis
 cdot
@@ -125,7 +122,6 @@ isotypes
 jinf
 jitter
 kDa
-knitr
 le
 leq
 llik
@@ -155,7 +151,6 @@ qquad
 recombinant
 renewcommand
 rescale
-rmarkdown
 savePath
 sectionally
 sera
@@ -178,11 +173,9 @@ subfigures
 th
 tibble
 titers
-toc
 tsutsugamushi
 undercount
 unstratified
 varepsilon
 vec
 vee
-xsectionalData

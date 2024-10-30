@@ -149,9 +149,8 @@ We see that across countries, our data is highly skewed with the majority of res
 
 xs_data %>%
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
-  autoplot(strata = "Country", type = "density") +
+  autoplot(strata = "Country", type = "density", log = TRUE) +
   scale_fill_manual(values = country_pal) +
-  scale_x_log10(labels = scales::label_comma()) +
   labs(x = "Log Antibody Response Value")
 
 ```

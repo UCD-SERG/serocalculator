@@ -24,6 +24,8 @@
 
 ## Internal changes
 
+* Specified to use R version 4.4.1 for linting and checking Rd files (#313)
+
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
 
 * Added `test-autoplot.pop_data` test (#234)

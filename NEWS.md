@@ -1,7 +1,7 @@
 # serocalculator (development version)
 
 ## New features
-* Change default pipe setting
+* Change default pipe setting (#312)
 
 * Improved error messaging for `autoplot.pop_data()` (#234).
 

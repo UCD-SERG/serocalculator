@@ -1,8 +1,6 @@
 # serocalculator (development version)
 
 ## New features
-* Change default pipe setting (#312)
-
 * Improved error messaging for `autoplot.pop_data()` (#234).
 
 * Clarified package installation instructions in scrub typhus vignette (#234).
@@ -25,6 +23,8 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+
+* Change default pipe setting (#312)
 
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
 

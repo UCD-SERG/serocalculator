@@ -72,11 +72,17 @@ est.incidence.by <- function(
     print_graph = FALSE,
     ...) {
   if (missing(strata)) {
-    warning(
-      "The `strata` argument to `est.incidence.by()` is missing.",
-      "\n\n  If you do not want to stratify your data, ",
-      "consider using the `est.incidence()` function to simplify your code and avoid this warning.",
-      "\n\n Since the `strata` argument is empty, `est.incidence.by()` will return a `seroincidence` object, instead of a `seroincidence.by` object.\n"
+    cli::cli_warn(
+      c(
+        "The {.arg strata} argument to {.fn est.incidence.by} is missing.",
+        "h" = "If you do not want to stratify your data,
+               consider using the {.fn est.incidence} function to
+               simplify your code and avoid this warning.",
+        "i" = "Since the {.arg strata} argument is empty,
+               {.fn est.incidence.by()}
+               will return a {.cls seroincidence} object, instead of a
+               {.cls seroincidence.by} object."
+      )
     )
   }
 
@@ -116,7 +122,7 @@ est.incidence.by <- function(
           )
       ) %>%
       setNames(missing_strata_vars) %>%
-      purrr::keep(~ length(.x) > 0)g
+      purrr::keep(~ length(.x) > 0)
 
     # strata with no match
     no_match_vars <- missing_strata_vars %>%

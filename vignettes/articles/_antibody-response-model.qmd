@@ -1,0 +1,221 @@
+# Modeling the seroresponse kinetics curve
+
+::: notes
+Now, we need a model for the antibody response to infection, $\pdf(Y=y|T=t)$.
+The current version of the `{serocalculator}` package uses
+a two-phase model for
+the shape of the seroresponse [@Teunis_2016].
+:::
+
+## Model for active infection period {.smaller}
+
+::: notes
+The first phase of the model represents the **active infection period**,
+and uses a simplified Lotka-Volterra predator-prey model
+[@volterra1928variations]
+where the pathogen is the prey and the antibodies are the predator:
+:::
+
+Notation:
+
+* $x(t)$: Pathogen concentration at time $t$ 
+* $y(t)$: Antibody concentration at time $t$ 
+
+Model: 
+
+* $$x'(t) = \alpha x(t) - \beta y(t)$$
+* $$y'(t) = \delta y(t)$$
+
+::: notes
+With baseline antibody concentration $y(0) = y_{0}$ and
+initial pathogen concentration
+$x(0) = x_{0}$.
+:::
+
+::: notes
+Compared to the standard LV model:
+
+* the predation term with the $\beta$ coefficient is missing
+the prey concentration $x(t)$ factor;
+we assume that the efficiency of predation
+doesn't depend on pathogen concentration.
+
+* the differential equation for predator density is missing
+the predator death rate term
+$-\gamma y(t)$; we assume that as long as there are any pathogens present,
+the antibody decay rate is negligible compared to the growth rate.
+
+* the predator growth rate term $\delta y(t)$ is missing
+the prey density factor $x(t)$
+we assume that as long as there are any pathogens present,
+the antibody concentration grows at the same exponential rate.
+
+These omissions were made to simplify the estimation process,
+under the assumption that they are negligible
+compared to the other terms in the model.
+
+:::
+
+## Model for post-infection antibody decay
+
+* $$b(t) = 0$$
+
+* $$y^{\prime}(t) = -\alpha y(t)^r$$
+
+::: notes
+Antibody decay is different from exponential (log--linear) decay. 
+When the shape parameter $r > 1$,
+log concentrations decrease rapidly after infection has terminated,
+but decay then slows down and
+low antibody concentrations are maintained for a long period.
+If $r = 1$, 
+this model reduces to exponential decay with decay rate $\alpha$.
+:::
+
+## Putting it all together
+
+The serum antibody response $y(t)$ can be written as
+
+$$
+y(t) = y_{+}(t) + y_{-}(t)
+$$
+
+where
+
+$$
+\begin{align}
+y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\leq t <t_{1}]\\
+y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
+\end{align}
+$$
+
+---
+
+Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$
+the growth rate $\mu$ can be written as
+$$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
+
+---
+
+```{r}
+cur_ai = "HlyE_IgG"
+```
+
+```{r}
+#| label: fig-response-graph
+#| fig-cap: An example kinetics curve for HlyE IgG
+
+library(serocalculator)
+library(dplyr)
+# Import longitudinal antibody parameters from OSF
+curves <-
+  "https://osf.io/download/rtw5k/" %>%
+  load_curve_params() %>%
+  filter(iter < 50)
+
+curve1 =
+  curves %>%
+  filter(
+    # iter %in% 1:10,
+    iter == 5,
+         antigen_iso == cur_ai)
+
+library(ggplot2)
+
+curve1 %>%
+serocalculator:::plot_curve_params_one_ab(
+  log_y = FALSE
+) +
+  xlim(0, 100) +
+  theme_minimal() +
+  geom_vline(
+    aes(xintercept = curve1$t1,
+        col = "t1")
+  ) +
+
+  geom_hline(
+    aes(yintercept = curve1$y0,
+        col = "y0")
+  ) +
+
+
+  geom_hline(
+    aes(yintercept = curve1$y1,
+        col = "y1")
+  ) +
+  # geom_point(
+  #   data = curve1,
+  #   aes(
+  #     x = t1,
+  #     y = y1,
+  #     col = "(t1,y1)"
+  #   )
+  # ) +
+  theme(legend.position = "bottom") +
+  labs(col = "")
+
+```
+
+
+:::: notes
+The antibody level at $t=0$ is $y_{0}$;
+the rising branch ends at $t = t_{1}$
+where the peak antibody level $y_{1}$ is reached.
+Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
+::::
+
+---
+
+::: notes
+An interactive Shiny app that allows the user to manipulate the model parameters is available at:
+
+<https://ucdserg.shinyapps.io/antibody-kinetics-model-2/>
+
+:::
+
+```{r}
+#| echo: false
+#| eval: false
+#| label: qr-code
+library(qrcode)
+code <- qr_code("https://ucdserg.shinyapps.io/antibody-kinetics-model-2/")
+generate_svg(code, filename = "man/figures/qr_akm2.svg")
+```
+
+![QR code for shiny app](../man/figures/qr_akm2.svg)
+
+## Biological noise
+
+::: notes
+When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).
+
+We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren't actually the ones we are looking for (overcount, false positives, cross-reactivity).
+
+We are more concerned about overcount (cross-reactivity) than undercount. For a given antibody, we can do some analytical work beforehand to estimate the distribution of overcounts, and add that to our model $p(Y=y|T=t)$.
+:::
+
+Notation:
+
+* $y_\text{obs}$: measured serum antibody concentration
+* $y_\text{true}$: "true" serum antibody concentration
+* $\epsilon_b$: noise due to probe cross-reactivity
+
+Model:
+
+* $y_\text{obs} = y_\text{true} + \epsilon_b$
+* $\epsilon_b \sim \text{Unif}(0, \nu)$
+
+$\nu$ needs to be pre-estimated using negative controls,
+typically using the 95th percentile of the distribution of 
+antibody responses to the antigen-isotype 
+in a population with no exposure.
+
+## Measurement noise
+
+There are also some other sources of noise in our bioassays; 
+user differences in pipetting technique, random ELISA plate effects, etc. 
+This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
+
+Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from the laboratory testing process. 
+It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. 
+Note that the CV should ideally be measured across plates rather than within the same plate. 

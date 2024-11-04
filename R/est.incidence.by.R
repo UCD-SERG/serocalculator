@@ -1,14 +1,22 @@
 #' Estimate Seroincidence
-#'
 #' @description
-#' Function to estimate seroincidences based on cross-section serology data and longitudinal
+#' Function to estimate seroincidences based on cross-sectional
+#' serology data and longitudinal
 #' response model.
 #'
-#' @param pop_data a [data.frame] with cross-sectional serology data per antibody and age, and additional columns corresponding to each element of the `strata` input
-#' @param strata a [character] vector of stratum-defining variables. Values must be variable names in `pop_data`.
-#' @param curve_strata_varnames A subset of `strata`. Values must be variable names in `curve_params`. Default = "".
-#' @param noise_strata_varnames A subset of `strata`. Values must be variable names in `noise_params`. Default = "".
-#' @param num_cores Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.
+#' @param pop_data a [data.frame] with cross-sectional serology data per
+#' antibody and age, and additional columns corresponding to
+#' each element of the `strata` input
+#' @param strata a [character] vector of stratum-defining variables.
+#' Values must be variable names in `pop_data`.
+#' @param curve_strata_varnames A subset of `strata`.
+#' Values must be variable names in `curve_params`. Default = "".
+#' @param noise_strata_varnames A subset of `strata`.
+#' Values must be variable names in `noise_params`. Default = "".
+#' @param num_cores Number of processor cores to use for
+#' calculations when computing by strata. If set to
+#' more than 1 and package \pkg{parallel} is available,
+#' then the computations are executed in parallel. Default = 1L.
 
 #' @details
 #'
@@ -17,7 +25,8 @@
 #' and then the data will be passed to [est.incidence()].
 #' If for some reason you want to use [est.incidence.by()]
 #' with no strata instead of calling [est.incidence()],
-#' you may use `NA`, `NULL`, or `""` as the `strata` argument to avoid that warning.
+#' you may use `NA`, `NULL`, or `""` as the `strata`
+#' argument to avoid that warning.
 #'
 #'
 #' @inheritParams est.incidence
@@ -26,7 +35,9 @@
 #'
 #' @return
 #' * if `strata` has meaningful inputs:
-#' An object of class `"seroincidence.by"`; i.e., a list of `"seroincidence"` objects from [est.incidence()], one for each stratum, with some meta-data attributes.
+#' An object of class `"seroincidence.by"`; i.e., a list of `
+#' "seroincidence"` objects from [est.incidence()], one for each stratum,
+#' with some meta-data attributes.
 #' * if `strata` is missing, `NULL`, `NA`, or `""`:
 #' An object of class `"seroincidence"`.
 #'
@@ -39,7 +50,8 @@
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#'  # Reduce dataset for the purposes of this example
+#'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
 #'
@@ -71,7 +83,14 @@ est.incidence.by <- function(
     verbose = FALSE,
     print_graph = FALSE,
     ...) {
-  if (missing(strata)) {
+
+  strata_is_empty <-
+    missing(strata) ||
+    is.null(strata) ||
+    setequal(strata, NA) ||
+    setequal(strata, "")
+
+  if (strata_is_empty) {
     cli::cli_warn(
       c(
         "The {.arg strata} argument to {.fn est.incidence.by} is missing.",
@@ -84,15 +103,7 @@ est.incidence.by <- function(
                {.cls seroincidence.by} object."
       )
     )
-  }
 
-  strata_is_empty <-
-    missing(strata) ||
-      is.null(strata) ||
-      setequal(strata, NA) ||
-      setequal(strata, "")
-
-  if (strata_is_empty) {
     to_return <-
       est.incidence(
         pop_data = pop_data,
@@ -107,46 +118,7 @@ est.incidence.by <- function(
     return(to_return)
   }
 
-  present_strata_vars = intersect(strata, names(pop_data))
-  missing_strata_vars = setdiff(strata, present_strata_vars)
-
-  if (length(missing_strata_vars) > 0) {
-
-    partial_matches =
-      purrr::map(
-        missing_strata_vars,
-        function(x)
-          stringr::str_subset(
-            string = names(pop_data),
-            pattern = x
-          )
-      ) %>%
-      setNames(missing_strata_vars) %>%
-      purrr::keep(~ length(.x) > 0)
-
-    # strata with no match
-    no_match_vars <- missing_strata_vars %>%
-      setdiff(names(partial_matches))
-
-    possible_matches_strings = names(partial_matches) %>% sapply(
-      F = function(x)
-        glue::glue("{x}: {partial_matches[[x]] %>% and::or()}")
-    )
-
-    cli::cli_abort(
-      class = "missing_var",
-      message = c(
-        "x" = "Can't stratify with the provided {.arg strata}.",
-        "i" = "{.var {missing_strata_vars}} {?is/are} missing in {.arg pop_data}.",
-        if(length(partial_matches) > 0){
-          c( "i" = "The {.var {present_partial_vars}} option for `strata` {?is/are} likely misspelled.",
-             "i" = "Did you mean {.var {partial_match}}?")
-        }
-      )
-    )
-  }
-
-  .checkStrata(data = pop_data, strata = strata)
+  pop_data %>% check_strata(, strata = strata)
 
   .errorCheck(
     data = pop_data,
@@ -168,15 +140,17 @@ est.incidence.by <- function(
   strata_table <- stratumDataList %>% attr("strata")
 
   if (verbose) {
-    message("Data has been stratified.")
-    message("Here are the strata that will be analyzed:")
+    cli::cli_inform("Data has been stratified.")
+    cli::cli_inform("Here are the strata that will be analyzed:")
     print(strata_table)
   }
 
   if (num_cores > 1L && !requireNamespace("parallel", quietly = TRUE)) {
-    warning(
-      "The `parallel` package is not installed, so `num_cores > 1` has no effect.",
-      "To install `parallel`, run `install.packages('parallel')` in the console."
+    cli::cli_warn(
+      "The `parallel` package is not installed,
+      so `num_cores > 1` has no effect.",
+      "To install `parallel`, run `install.packages('parallel')`
+      in the console."
     )
   }
 
@@ -187,9 +161,9 @@ est.incidence.by <- function(
     num_cores <- num_cores %>% check_parallel_cores()
 
     if (verbose) {
-      message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
+      message("Setting up parallel processing with
+              `num_cores` = ", num_cores, ".")
     }
-
 
     libPaths <- .libPaths()
     cl <-
@@ -200,14 +174,19 @@ est.incidence.by <- function(
       parallel::stopCluster(cl)
     })
 
+    # Export library paths to the cluster
     parallel::clusterExport(cl, c("libPaths"), envir = environment())
+
+    # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {
       .libPaths(libPaths)
-      require(serocalculator) # note - this gets out of sync when using load_all() in development
+      # note - this gets out of sync when using load_all() in development
+      require(serocalculator)
       require(dplyr)
     })
 
-    {
+    # Perform parallel computation and record execution time
+    time <- system.time({
       fits <- parallel::parLapplyLB(
         cl = cl,
         X = stratumDataList,
@@ -228,49 +207,41 @@ est.incidence.by <- function(
           )
         }
       )
-    } %>% system.time() -> time
+    })
 
     if (verbose) {
       message("Elapsed time for parallelized code: ")
       print(time)
     }
   } else {
-    # fits <- lapply(
-    #   X = stratumDataList,
-    #   FUN = function(x) est.incidence(dataList = x, verbose = verbose, ...))
+    fits <- list()  # Initialize an empty list for fits
 
-    fits <- list()
+    # Time progress
+    for (cur_stratum in names(stratumDataList)) {
+      cur_stratum_vars <- strata_table %>%
+        dplyr::filter(.data$Stratum == cur_stratum)
 
-    { # time progress
-
-      for (cur_stratum in names(stratumDataList))
-      {
-        cur_stratum_vars <-
-          strata_table %>%
-          dplyr::filter(.data$Stratum == cur_stratum)
-
-        if (verbose) {
-          message("starting new stratum: ", cur_stratum)
-          print(cur_stratum_vars)
-        }
-
-        fits[[cur_stratum]] <-
-          do.call(
-            what = est.incidence,
-            args = c(
-              stratumDataList[[cur_stratum]],
-              list(
-                lambda_start = lambda_start,
-                antigen_isos = antigen_isos,
-                build_graph = build_graph,
-                print_graph = print_graph,
-                verbose = verbose,
-                ...
-              )
-            )
-          )
+      if (verbose) {
+        message("starting new stratum: ", cur_stratum)
+        print(cur_stratum_vars)
       }
-    } %>% system.time() -> time
+
+      fits[[cur_stratum]] <- do.call(
+        what = est.incidence,
+        args = c(
+          stratumDataList[[cur_stratum]],
+          list(
+            lambda_start = lambda_start,
+            antigen_isos = antigen_isos,
+            build_graph = build_graph,
+            print_graph = print_graph,
+            verbose = verbose,
+            ...
+          )
+        )
+      )
+    }
+
 
     if (verbose) {
       message("Elapsed time for loop over strata: ")

@@ -1,6 +1,63 @@
-# serocalculator (development version)
+# serocalculator 1.3.0
+
+## New features
+* Add test for missing strata in `est.incidence.by` (#227)
+
+* Improved error messaging for `autoplot.pop_data()` (#234).
+
+* Clarified package installation instructions in scrub typhus vignette (#234).
+
+* Add `as_noise_params` (#228) 
+
+* Updated `simulate_xsectionalData.Rmd` (linting, removing deprecated functions)
+(#289)
+
+* Added default value for `antigen_isos` argument in `log_likelihood()` (#286)
+
+* Updated enteric fever example article with upgraded code and visualizations (#290)
+
+* Added `Methodology` vignette (#284, #302, #303)
+
+* Added template for reporting Issues 
+(from `usethis::use_tidy_issue_template()`) (#270)
+
+* Added template for pull requests 
+(from <https://github.com/bcgov/ssdtools>) (#265)
+
+## Internal changes
+
+* Added online preview builds for PRs that change the `pkgdown` website (#309)
+
+* Added `test-autoplot.pop_data` test (#234)
+
+* initialized [`lintr`](https://lintr.r-lib.org/) with `lintr::use_lint()` (#278)
+
+* created unit test for `df_to_array()` (#276)
+
+* fixed `dplyr::select()` deprecation warning in `df_to_array()` (#276)
+
+* Added `devtag` to package (using `devtag::use_devtag()`) (#292)
+
+* Added `@dev` tag to `?df_to_array()` (#292)
+
+* Generalized `get_()` and `set_()` methods to be general-purpose
+(no S3 class-specific methods needed yet) (#274).
+
+* Updated GitHub Action files and reformatted `DESCRIPTION` (#268)
+* Added `.gitattributes` file (<https://git-scm.com/docs/gitattributes>)
+copied from <https://github.com/tidyverse/ggplot2>
+
+* Added QR code to `README.qmd`
+* Added additional automated checks through 
+[GitHub actions](https://docs.github.com/en/actions), 
+including:
+  - check that `README.qmd` still compiles 
+  (advice from [preventive-r-package-care](https://indrajeetpatil.github.io/preventive-r-package-care)) (#259)
+  - check `NEWS.md` for updated change log (#257)
+  - lint changed files (#256)
 
 # serocalculator 1.2.0
+
 * Added `test-summary.pop_data` test
 
 * Modified `test-est.incidence` test

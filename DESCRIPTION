@@ -40,7 +40,9 @@ Imports:
     tidyselect,
     utils,
     purrr,
-    and
+    and,
+    glue,
+    stringr
 Suggests:
     bookdown,
     devtag (>= 0.0.0.9000),

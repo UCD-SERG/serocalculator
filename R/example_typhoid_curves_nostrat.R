@@ -3,7 +3,8 @@
 #' A subset of data from the SEES study, for examples and testing.
 #'
 #' @format ## `typhoid_curves_nostrat_100`
-#' A `curve_params` object (from [as_curve_params()]) with 500 rows and 7 columns:
+#' A `curve_params` object (from [as_curve_params()]) with 500 rows and 7
+#' columns:
 #' \describe{
 #'   \item{antigen_iso}{which antigen and isotype are being measured
 #'   (data is in long format)}

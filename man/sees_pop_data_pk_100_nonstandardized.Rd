@@ -5,7 +5,7 @@
 \alias{sees_pop_data_pk_100_nonstandardized}
 \title{Small example cross-sectional data set}
 \format{
-\subsection{\code{sees_pop_data_pk_100_standardized}}{
+\subsection{\code{sees_pop_data_pk_100_nonstandardized}}{
 
 A \code{pop_data} object (from \code{\link[=as_pop_data]{as_pop_data()}}) with 200 rows and 8 columns:
 \describe{

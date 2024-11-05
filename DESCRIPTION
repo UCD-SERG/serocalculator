@@ -1,19 +1,27 @@
-Package: serocalculator
 Type: Package
+Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.2.0.9003
+Version: 1.2.0.9018
 Authors@R: c(
-  person(given = "Peter", family = "Teunis", email = "p.teunis@emory.edu", role = c("aut", "cph"), comment = "Author of the method and original code."),
-  person(given = "Kristina", family = "Lai", email = "kwlai@ucdavis.edu", role = c("aut", "cre")), 
-  person(given = "Chris", family = "Orwa", role = "aut"), 
-  person(given = "Kristen", family = "Aiemjoy", email = "kaiemjoy@ucdavis.edu", role = c("aut")),
-  person(given = "Douglas Ezra", family = "Morrison", email = "demorrison@ucdavis.edu", role = c("aut")))
-Description: Translates antibody levels measured in cross-sectional population 
-  samples into estimates of the frequency with which seroconversions (infections) 
-  occur in the sampled populations. Replaces the previous `seroincidence` package.
-Depends: R (>= 4.1.0)
+    person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
+           comment = "Author of the method and original code."),
+    person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
+    person("Chris", "Orwa", role = "aut"),
+    person("Kristen", "Aiemjoy", , "kaiemjoy@ucdavis.edu", role = "aut"),
+    person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = "aut")
+  )
+Description: Translates antibody levels measured in cross-sectional
+    population samples into estimates of the frequency with which
+    seroconversions (infections) occur in the sampled populations.
+    Replaces the previous `seroincidence` package.
 License: GPL-3
+URL: https://github.com/UCD-SERG/serocalculator,
+    https://ucd-serg.github.io/serocalculator/
+BugReports: https://github.com/UCD-SERG/serocalculator/issues
+Depends: 
+    R (>= 4.1.0)
 Imports: 
+    cli,
     doParallel,
     dplyr (>= 1.1.1),
     foreach,
@@ -29,31 +37,38 @@ Imports:
     stats,
     tibble,
     tidyr,
-    utils,
     tidyselect,
-    cli
+    utils,
+    purrr
 Suggests:
-    parallel,
-    knitr,
-    rmarkdown,
-    tidyverse,
-    fs,
-    testthat (>= 3.0.0),
-    readr,
     bookdown,
-    ggbeeswarm,
+    devtag (>= 0.0.0.9000),
     DT,
+    fs,
+    ggbeeswarm,
+    knitr,
+    pak,
+    parallel,
+    readr,
+    quarto,
+    rmarkdown,
     spelling,
-    ssdtools (>= 1.0.6.9016)
-LazyData: true
-Encoding: UTF-8
-URL: https://github.com/UCD-SERG/serocalculator, https://ucd-serg.github.io/serocalculator/
-RoxygenNote: 7.3.2
-NeedsCompilation: no
+    ssdtools (>= 1.0.6.9016),
+    testthat (>= 3.0.0),
+    tidyverse,
+    qrcode,
+    svglite,
+    vdiffr
 LinkingTo: 
     Rcpp
-Language: en-US
-Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
-Remotes:  
-    bcgov/ssdtools
+Config/Needs/build: moodymudskipper/devtag
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+NeedsCompilation: no
+Remotes: 
+    bcgov/ssdtools,
+    moodymudskipper/devtag
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
+RoxygenNote: 7.3.2

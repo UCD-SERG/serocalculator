@@ -11,12 +11,15 @@ vignette: >
   %\VignetteIndexEntry{simulate_xsectionalData}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: ../references.bib
 ---
-
-
+  
+  
 This vignette shows how to simulate a cross-sectional sample of 
-seroresponses for incident infections as a Poisson process with frequency `lambda`. 
-Responses are generated for the antibodies given in the `antigen_isos` argument.
+seroresponses for incident infections as a Poisson process with 
+frequency `lambda`. 
+Responses are generated for the antibodies given in the `antigen_isos` 
+argument.
 
 Age range of the simulated cross-sectional record is `lifespan`.
 
@@ -30,19 +33,22 @@ However, when `age.fx` is set to NA then the age at infection is used.
 
 The boolean `renew.params` determines whether each infection uses a
 new set of longitudinal parameters, sampled at random from the
-posterior predictive output of  the longitudinal model. If set to `FALSE`
+posterior predictive output of  the longitudinal model. 
+If set to `FALSE`,
 a parameter set is chosen at birth and kept, but:
-1. the baseline antibody levels (`y0`) are updated with the simulated level
-(just) prior to infection, and
-2. when `is.na(age.fx)` then the selected parameter sample is updated for the
-age when infection occurs.
 
+1. the baseline antibody levels (`y0`) are updated with the simulated 
+level (just) prior to infection, and
+
+2. when `is.na(age.fx)` then the selected parameter sample is updated 
+for the age when infection occurs.
+  
 There is also a variable `n.mc`: when `n.mc==0` then a random MC
 sample is chosen out of the posterior set (1:4000). When `n.mc` is
 given a value in 1:4000 then the chosen number is fixed and reused
 in any subsequent infection. This is for diagnostic purposes.
-
-
+  
+  
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -56,21 +62,25 @@ knitr::opts_chunk$set(
 
 ## load model parameters
 
+Here we load in longitudinal parameters;
+these are modeled from all SEES cases across all ages and countries:
+
 ```{r setup}
 library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
-
-# load in longitudinal parameters, these are modeled from all SEES cases across all ages and countries
+library(dplyr)
 dmcmc <-
   "https://osf.io/download/rtw5k" %>%
   load_curve_params() %>%
-  filter(iter < 500) # reduce number of mcmc samples for speed
+  dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 
 ## visualize antibody decay model
 
-We can graph individual MCMC samples from the posterior distribution of model parameters using a `autoplot.curve_params()` method for the `autoplot()` function:
+We can graph individual MCMC samples from the posterior distribution 
+of model parameters using a `autoplot.curve_params()` method for the 
+`autoplot()` function:
 
 ```{r}
 dmcmc %>% autoplot(n_curves = 50)
@@ -96,7 +106,7 @@ dmcmc %>%
 
 ## Simulate cross-sectional data
 
-```{r "simulate_pop_data"}
+```{r "sim.cs"}
 # set seed to reproduce results
 set.seed(54321)
 
@@ -116,7 +126,7 @@ dlims <- rbind(
 
 ```{r}
 # generate cross-sectional data
-csdata <- simulate_pop_data(
+csdata <- sim.cs(
   curve_params = dmcmc,
   lambda = lambda,
   n.smpl = nrep,
@@ -155,7 +165,12 @@ ggplot(csdata, aes(
   x = as.factor(antigen_iso),
   y = value
 )) +
-  geom_beeswarm(size = .2, alpha = .3, aes(color = antigen_iso), show.legend = F) +
+  geom_beeswarm(
+    size = .2,
+    alpha = .3,
+    aes(color = antigen_iso),
+    show.legend = FALSE
+  ) +
   geom_boxplot(outlier.colour = NA, fill = NA) +
   scale_y_log10() +
   theme_linedraw() +
@@ -167,47 +182,54 @@ ggplot(csdata, aes(
 We can calculate the log-likelihood of the data as a function of the incidence rate directly:
 
 ```{r}
-ll_A <- log_likelihood(
-  pop_data = csdata,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgA",
-  lambda = 0.1
-) %>% print()
+ll_a <-
+  log_likelihood(
+    pop_data = csdata,
+    curve_params = dmcmc,
+    noise_params = cond,
+    antigen_isos = "HlyE_IgA",
+    lambda = 0.1
+  ) %>%
+  print()
 
-ll_G <- log_likelihood(
-  pop_data = csdata,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgG",
-  lambda = 0.1
-) %>% print()
+ll_g <-
+  log_likelihood(
+    pop_data = csdata,
+    curve_params = dmcmc,
+    noise_params = cond,
+    antigen_isos = "HlyE_IgG",
+    lambda = 0.1
+  ) %>%
+  print()
 
-ll_AG <- llik(
-  pop_data = csdata,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  lambda = 0.1
-) %>% print()
+ll_ag <-
+  log_likelihood(
+    pop_data = csdata,
+    curve_params = dmcmc,
+    noise_params = cond,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    lambda = 0.1
+  ) %>%
+  print()
 
-print(ll_A + ll_G)
+print(ll_a + ll_g)
 ```
 
 ## graph log-likelihood
 
-We can also graph the log-likelihoods, even without finding the MLEs, using `graph.loglik()`:
+We can also graph the log-likelihoods, even without finding the MLEs, using `graph_loglik()`:
 
 ```{r}
-lik_HlyE_IgA <- graph.loglik(
-  pop_data = csdata,
-  curve_params = dmcmc,
-  noise_params = cond,
-  antigen_isos = "HlyE_IgA",
-  log_x = TRUE
-)
+lik_HlyE_IgA <-
+  graph_loglik(
+    pop_data = csdata,
+    curve_params = dmcmc,
+    noise_params = cond,
+    antigen_isos = "HlyE_IgA",
+    log_x = TRUE
+  )
 
-lik_HlyE_IgG <- graph.loglik(
+lik_HlyE_IgG <- graph_loglik(
   previous_plot = lik_HlyE_IgA,
   pop_data = csdata,
   curve_params = dmcmc,
@@ -216,7 +238,7 @@ lik_HlyE_IgG <- graph.loglik(
   log_x = TRUE
 )
 
-lik_both <- graph.loglik(
+lik_both <- graph_loglik(
   previous_plot = lik_HlyE_IgG,
   pop_data = csdata,
   curve_params = dmcmc,
@@ -238,9 +260,10 @@ est1 <- est.incidence(
   curve_params = dmcmc,
   noise_params = cond,
   lambda_start = .1,
-  build_graph = T,
-  verbose = T, # print updates as the function runs
-  print_graph = F, # display the log-likelihood curve while `est.incidence()` is running
+  build_graph = TRUE,
+  verbose = TRUE, # print updates as the function runs
+  print_graph = FALSE, # display the log-likelihood curve while
+  #`est.incidence()` is running
   antigen_isos = antibodies
 )
 ```
@@ -268,7 +291,6 @@ autoplot(est1, log_x = TRUE)
 ```{r "init-parallel"}
 library(parallel)
 n_cores <- max(1, parallel::detectCores() - 1)
-# n_cores = 1
 print(n_cores)
 ```
 
@@ -281,13 +303,12 @@ nclus <- 10
 nrep <- 100
 
 # incidence rate in e
-lmbdaVec <- c(.05, .1, .15, .2)
+lambdas <- c(.05, .1, .15, .2)
 
-sim.df <-
-  simulate_pop_data.multi(
-    # verbose = TRUE,
+sim_df <-
+  sim.cs.multi(
     n_cores = n_cores,
-    lambdas = lmbdaVec,
+    lambdas = lambdas,
     nclus = nclus,
     n.smpl = nrep,
     age.rng = lifespan,
@@ -299,16 +320,17 @@ sim.df <-
     format = "long"
   )
 
-print(sim.df)
+print(sim_df)
 ```
 
 We can plot the distributions of the simulated responses:
 
 ```{r}
-ggplot(sim.df, aes(
-  x = as.factor(cluster),
-  y = value
-)) +
+sim_df %>% ggplot() +
+  aes(
+    x = as.factor(cluster),
+    y = value
+  ) +
   geom_beeswarm(size = .2, alpha = .3, aes(color = antigen_iso)) +
   geom_boxplot(outlier.colour = NA, fill = NA) +
   scale_y_log10() +
@@ -320,9 +342,8 @@ ggplot(sim.df, aes(
 
 ```{r, "est-by-stratum"}
 ests <-
-  # sim.df %>%
   est.incidence.by(
-    pop_data = sim.df,
+    pop_data = sim_df,
     curve_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,
@@ -332,7 +353,6 @@ ests <-
     verbose = TRUE,
     build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-    # antigen_isos = "HlyE_IgA"
   )
 ```
 

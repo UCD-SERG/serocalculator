@@ -127,7 +127,7 @@ est.incidence.by <- function(
   )
 
   # Split data per stratum
-  stratumDataList <- stratify_data(
+  stratum_data_list <- stratify_data(
     antigen_isos = antigen_isos,
     data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
     curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
@@ -137,7 +137,7 @@ est.incidence.by <- function(
     noise_strata_varnames = noise_strata_varnames
   )
 
-  strata_table <- stratumDataList %>% attr("strata")
+  strata_table <- stratum_data_list %>% attr("strata")
 
   if (verbose) {
     cli::cli_inform("Data has been stratified.")
@@ -165,7 +165,7 @@ est.incidence.by <- function(
               `num_cores` = ", num_cores, ".")
     }
 
-    libPaths <- .libPaths()
+    lib_paths <- .libPaths()
     cl <-
       num_cores %>%
       parallel::makeCluster() %>%
@@ -179,7 +179,7 @@ est.incidence.by <- function(
 
     # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {
-      .libPaths(libPaths)
+      .libPaths(lib_paths)
       # note - this gets out of sync when using load_all() in development
       require(serocalculator)
       require(dplyr)
@@ -189,7 +189,7 @@ est.incidence.by <- function(
     time <- system.time({
       fits <- parallel::parLapplyLB(
         cl = cl,
-        X = stratumDataList,
+        X = stratum_data_list,
         fun = function(x) {
           do.call(
             what = est.incidence,
@@ -217,7 +217,7 @@ est.incidence.by <- function(
     fits <- list()  # Initialize an empty list for fits
 
     # Time progress
-    for (cur_stratum in names(stratumDataList)) {
+    for (cur_stratum in names(stratum_data_list)) {
       cur_stratum_vars <- strata_table %>%
         dplyr::filter(.data$Stratum == cur_stratum)
 
@@ -229,7 +229,7 @@ est.incidence.by <- function(
       fits[[cur_stratum]] <- do.call(
         what = est.incidence,
         args = c(
-          stratumDataList[[cur_stratum]],
+          stratum_data_list[[cur_stratum]],
           list(
             lambda_start = lambda_start,
             antigen_isos = antigen_isos,
@@ -249,7 +249,7 @@ est.incidence.by <- function(
     }
   }
 
-  incidenceData <- structure(
+  incidence_data <- structure(
     fits,
     antigen_isos = antigen_isos,
     Strata = strata_table,
@@ -257,5 +257,5 @@ est.incidence.by <- function(
     class = "seroincidence.by" %>% union(class(fits))
   )
 
-  return(incidenceData)
+  return(incidence_data)
 }

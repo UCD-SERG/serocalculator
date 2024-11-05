@@ -18,7 +18,7 @@ check_strata(pop_data, strata)
 Check a \code{pop_data} object for requested strata variables
 }
 \examples{
-sees_pop_data_pk_100_standardized |>
+sees_pop_data_pk_100 |>
    check_strata(strata = c("ag", "catch","Count"))
 }
 \keyword{internal}

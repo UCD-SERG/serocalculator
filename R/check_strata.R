@@ -3,7 +3,7 @@
 #' @param strata a [character] vector
 #' @returns [NULL], invisibly
 #' @examples
-#' sees_pop_data_pk_100_standardized |>
+#' sees_pop_data_pk_100 |>
 #'    check_strata(strata = c("ag", "catch","Count"))
 #' @dev
 check_strata <- function(pop_data, strata) {

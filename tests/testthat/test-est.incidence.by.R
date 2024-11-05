@@ -5,7 +5,7 @@
 test_that("`est.incidence.by()` warns user when strata is missing", {
   expect_warning(
     est.incidence.by(
-      pop_data = sees_pop_data_pk_100_standardized,
+      pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -21,7 +21,7 @@ test_that(
     expect_error(
       object = est.incidence.by(
         strata = c("ag", "catch", "Count"),
-        pop_data = sees_pop_data_pk_100_standardized,
+        pop_data = sees_pop_data_pk_100,
         curve_params = typhoid_curves_nostrat_100,
         noise_params = example_noise_params_pk,
         antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
@@ -40,7 +40,7 @@ test_that("`est.incidence.by()` produces consistent results for typhoid data",
           {
             typhoid_results <- est.incidence.by(
               strata = "catchment",
-              pop_data = sees_pop_data_pk_100_standardized,
+              pop_data = sees_pop_data_pk_100,
               curve_param = typhoid_curves_nostrat_100,
               curve_strata_varnames = NULL,
               noise_strata_varnames = NULL,
@@ -61,7 +61,7 @@ test_that(
   {
     est_true <- est.incidence.by(
       strata = c("catchment"),
-      pop_data = sees_pop_data_pk_100_standardized,
+      pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
@@ -72,7 +72,7 @@ test_that(
 
     est_false <- est.incidence.by(
       strata = c("catchment"),
-      pop_data = sees_pop_data_pk_100_nonstandardized,
+      pop_data = sees_pop_data_pk_100_old_names,
       curve_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       curve_strata_varnames = NULL,

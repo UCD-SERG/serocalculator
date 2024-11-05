@@ -1,6 +1,9 @@
 # serocalculator (development version)
 
 ## New features
+
+* Added example datasets with documentation for examples and testing (#314)
+
 * Improved error messaging for `autoplot.pop_data()` (#234).
 
 * Clarified package installation instructions in scrub typhus vignette (#234).

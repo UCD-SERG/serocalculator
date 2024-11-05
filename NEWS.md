@@ -29,6 +29,8 @@
 
 ## Internal changes
 
+* Added `snapshot_value` test for `est.incidence()` (#315)
+
 * Sped up `lint-changed-files` GitHub Action (#317)
 
 * Added online preview builds for PRs that change the `pkgdown` website (#309)

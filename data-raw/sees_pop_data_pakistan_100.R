@@ -1,4 +1,4 @@
-sees_pop_data_pakistan_100_standardized <- load_pop_data(
+sees_pop_data_pk_100_standardized <- load_pop_data(
   file_path = "https://osf.io/download//n6cp3/",
   age = "Age",
   value = "result",
@@ -8,4 +8,16 @@ sees_pop_data_pakistan_100_standardized <- load_pop_data(
   filter(Country == "Pakistan") %>%
   slice_head(n = 100, by = antigen_iso)
 
-usethis::use_data(sees_pop_data_pakistan_100_standardized, overwrite = TRUE)
+usethis::use_data(sees_pop_data_pk_100_standardized, overwrite = TRUE)
+
+sees_pop_data_pk_100_nonstandardized <- load_pop_data(
+  file_path = "https://osf.io/download//n6cp3/",
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = FALSE
+) %>%
+  filter(Country == "Pakistan") %>%
+  slice_head(n = 100, by = antigen_iso)
+
+usethis::use_data(sees_pop_data_pk_100_nonstandardized, overwrite = TRUE)

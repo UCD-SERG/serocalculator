@@ -30,11 +30,11 @@ check_strata <- function(pop_data, strata) {
 
     partial_matches <-
       purrr::map(missing_strata_vars, function(x) {
-        stringr::str_subset(string = names(pop_data), pattern = x) %>%
-          glue::backtick() %>%
+        stringr::str_subset(string = names(pop_data), pattern = x) |>
+          glue::backtick() |>
           and::or()
-      }) %>%
-      rlang::set_names(missing_strata_vars) %>%
+      }) |>
+      rlang::set_names(missing_strata_vars) |>
       purrr::keep(~ length(.x) > 0)
 
     inputs_with_partial_matches <- names(partial_matches) # nolint: object_usage_linter
@@ -49,7 +49,7 @@ check_strata <- function(pop_data, strata) {
                   might be misspelled:
                   {.str {inputs_with_partial_matches}}",
         "i" = "Did you mean:",
-        partial_matches %>% rlang::set_names("*")
+        partial_matches |> rlang::set_names("*")
       )
     }
 

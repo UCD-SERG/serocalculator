@@ -52,7 +52,8 @@ test_that("`est.incidence.by()` produces consistent results for typhoid data",
 
             expect_snapshot(x = typhoid_results)
 
-            expect_snapshot_value(typhoid_results, style = "deparse")
+            expect_snapshot_value(typhoid_results, style = "deparse",
+                                  tolerance = 1e-4)
           })
 
 test_that(

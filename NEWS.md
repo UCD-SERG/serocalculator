@@ -1,6 +1,9 @@
 # serocalculator 1.3.0
 
 ## New features
+
+* Added example datasets with documentation for examples and testing (#314)
+
 * Add test for missing strata in `est.incidence.by` (#227)
 
 * Improved error messaging for `autoplot.pop_data()` (#234).
@@ -25,6 +28,8 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+
+* Added `snapshot_value` test for `est.incidence()` (#315)
 
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
 

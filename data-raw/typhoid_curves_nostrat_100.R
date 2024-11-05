@@ -1,4 +1,4 @@
-typhoid_curves_nostrat_100 =
+typhoid_curves_nostrat_100 <-
   load_curve_params("https://osf.io/download/rtw5k/") %>%
   dplyr::filter(iter %in% 1:100)
 

@@ -36,10 +36,10 @@ test_that(
 )
 
 
-test_that("est.incidence.by() produces expected results for typhoid data",
+test_that("`est.incidence.by()` produces consistent results for typhoid data",
           {
             typhoid_results <- est.incidence.by(
-              strata = c("catchment"),
+              strata = "catchment",
               pop_data = sees_pop_data_pk_100_standardized,
               curve_param = typhoid_curves_nostrat_100,
               curve_strata_varnames = NULL,

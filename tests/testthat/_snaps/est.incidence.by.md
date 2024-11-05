@@ -1,4 +1,4 @@
-# est.incidence.by() produces expected results for typhoid data
+# `est.incidence.by()` produces consistent results for typhoid data
 
     Code
       typhoid_results

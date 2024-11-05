@@ -7,10 +7,13 @@ test_that(
       curve_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-    ) %>%
-      summary(coverage = .95)
+    )
 
-    expect_snapshot(x = typhoid_results)
+    expect_snapshot(x = summary(typhoid_results))
+
+    expect_snapshot_value(
+      typhoid_results, style = "deparse"
+    )
   }
 )
 

@@ -17,7 +17,8 @@ A \code{curve_params} object (from \code{\link[=as_curve_params]{as_curve_params
 as the ratio of the standard deviation to the mean for replicates.
 Note that the CV should ideally be measured across plates
 rather than within the same plate.}
-\item{nu}{Biological noise: error from cross-reactivity to other antibodies.
+\item{nu}{Biological noise: error from
+cross-reactivity to other antibodies.
 It is defined as the 95th percentile of
 the distribution of antibody responses to the antigen-isotype
 in a population with no exposure.}

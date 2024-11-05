@@ -1,8 +1,10 @@
-# serocalculator (development version)
+# serocalculator 1.3.0
 
 ## New features
 
 * Added example datasets with documentation for examples and testing (#314)
+
+* Add test for missing strata in `est.incidence.by` (#227)
 
 * Improved error messaging for `autoplot.pop_data()` (#234).
 

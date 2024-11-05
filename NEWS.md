@@ -27,6 +27,8 @@
 
 ## Internal changes
 
+* Added `snapshot_value` test for `est.incidence()` (#315)
+
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
 
 * Added `test-autoplot.pop_data` test (#234)

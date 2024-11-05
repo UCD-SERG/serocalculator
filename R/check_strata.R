@@ -7,42 +7,32 @@
 #'    check_strata(strata = c("ag", "catch","Count"))
 #' @dev
 check_strata <- function(pop_data, strata) {
-
   if (!is.character(strata)) {
-    cli::cli_abort(c(
-      "x" = "Argument `strata` is not a character vector.",
-      "i" = "Provide a character vector with names of stratifying variables."
-    ))
+    cli::cli_abort(
+      class = "strata are not strings",
+      c("x" = "Argument `strata` is not a character vector.", "i" = "Provide a character vector with names of stratifying variables.")
+    )
   }
 
   present_strata_vars = intersect(strata, names(pop_data))
   missing_strata_vars = setdiff(strata, present_strata_vars)
 
   if (length(missing_strata_vars) > 0) {
-
-    message0 = c(
-      "Can't stratify provided {.arg pop_data} with the provided {.arg strata}:",
-      "i" = "variable {.var {missing_strata_vars}} {?is/are} missing in {.arg pop_data}.")
+    message0 = c("Can't stratify provided {.arg pop_data} with the provided {.arg strata}:",
+                 "i" = "variable {.var {missing_strata_vars}} {?is/are} missing in {.arg pop_data}.")
 
     partial_matches =
-      purrr::map(
-        missing_strata_vars,
-        function(x)
-          stringr::str_subset(
-            string = names(pop_data),
-            pattern = x
-          ) %>%
+      purrr::map(missing_strata_vars, function(x)
+        stringr::str_subset(string = names(pop_data), pattern = x) %>%
           glue::backtick() %>%
-          and::or()
-      ) %>%
+          and::or()) %>%
       rlang::set_names(missing_strata_vars) %>%
-      purrr::keep(~ length(.x) > 0)
+      purrr::keep( ~ length(.x) > 0)
 
     inputs_with_partial_matches = names(partial_matches)
 
-    if(length(partial_matches) > 0)
+    if (length(partial_matches) > 0)
     {
-
       partial_matches =
         glue::glue("\"{names(partial_matches)}\": {partial_matches}")
 

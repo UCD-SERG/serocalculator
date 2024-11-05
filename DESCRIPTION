@@ -39,7 +39,8 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    purrr
+    purrr,
+    and
 Suggests:
     bookdown,
     devtag (>= 0.0.0.9000),

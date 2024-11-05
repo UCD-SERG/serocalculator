@@ -95,7 +95,7 @@ est.incidence.by <- function(
       class = "strata_empty",
       c(
         "The {.arg strata} argument to {.fn est.incidence.by} is missing.",
-        "h" = "If you do not want to stratify your data,
+        "i" = "If you do not want to stratify your data,
                consider using the {.fn est.incidence} function to
                simplify your code and avoid this warning.",
         "i" = "Since the {.arg strata} argument is empty,

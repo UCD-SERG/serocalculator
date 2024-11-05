@@ -27,6 +27,8 @@
 
 ## Internal changes
 
+* Sped up `lint-changed-files` GitHub Action (#317)
+
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
 
 * Added `test-autoplot.pop_data` test (#234)

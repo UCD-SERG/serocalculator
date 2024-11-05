@@ -19,19 +19,15 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |
+          packages: |
             any::gh
             any::lintr
             any::purrr
-          needs: check
 
       - name: Add lintr options
         run: |
           cat('\noptions(lintr.linter_file = ".lintr")\n', file = "~/.Rprofile", append = TRUE)
         shell: Rscript {0}
-
-      - name: Install package
-        run: R CMD INSTALL .
 
       - name: Extract and lint files changed by this PR
         run: |

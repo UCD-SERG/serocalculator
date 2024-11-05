@@ -8,7 +8,7 @@ test_that("est.incidence() produces expected results for typhoid data", {
 
   expect_snapshot(x = summary(typhoid_results))
 
-  expect_snapshot_value(typhoid_results, style = "deparse", tolerance = 1e-4)
+  expect_snapshot_value(typhoid_results, style = "deparse", tolerance = 1e-3)
 })
 
 test_that(

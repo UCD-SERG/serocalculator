@@ -23,7 +23,6 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
-
 * Change default pipe setting (#312)
 
 * Added online preview builds for PRs that change the `pkgdown` website (#309)

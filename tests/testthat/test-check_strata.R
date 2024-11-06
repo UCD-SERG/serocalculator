@@ -11,6 +11,6 @@ test_that(
 test_that("`check_strata()` throws an error when `strata` is not a `character`",
           {
             sees_pop_data_pk_100 |>
-              check_strata(strata = c(1,4)) |>
+              check_strata(strata = c(1, 4)) |>
               expect_error(class = "strata are not strings")
           })

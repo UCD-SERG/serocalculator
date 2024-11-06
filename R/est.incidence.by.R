@@ -35,8 +35,8 @@
 #'
 #' @return
 #' * if `strata` has meaningful inputs:
-#' An object of class `"seroincidence.by"`; i.e., a list of `
-#' "seroincidence"` objects from [est.incidence()], one for each stratum,
+#' An object of class `"seroincidence.by"`; i.e., a list of
+#' `"seroincidence"` objects from [est.incidence()], one for each stratum,
 #' with some meta-data attributes.
 #' * if `strata` is missing, `NULL`, `NA`, or `""`:
 #' An object of class `"seroincidence"`.

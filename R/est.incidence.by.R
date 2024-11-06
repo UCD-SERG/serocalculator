@@ -140,9 +140,12 @@ est.incidence.by <- function(
   strata_table <- stratum_data_list %>% attr("strata")
 
   if (verbose) {
-    cli::cli_inform("Data has been stratified.")
-    cli::cli_inform("Here are the strata that will be analyzed:")
-    print(strata_table)
+    cli::cli_inform(
+      c(
+        "i" = "Data has been stratified.",
+        "i" = "Here are the strata that will be analyzed:",
+        ""),
+      body = strata_table |> capture.output())
   }
 
   if (num_cores > 1L && !requireNamespace("parallel", quietly = TRUE)) {
@@ -213,40 +216,43 @@ est.incidence.by <- function(
       cli::cli_inform("Elapsed time for parallelized code: {time}")
     }
   } else {
-    fits <- list()  # Initialize an empty list for fits
 
-    # Time progress
-    for (cur_stratum in names(stratum_data_list)) {
-      cur_stratum_vars <- strata_table %>%
-        dplyr::filter(.data$Stratum == cur_stratum)
+    # Time progress:
+    time <- system.time({
 
-      if (verbose) {
-        cli::cli_inform("starting new stratum: {cur_stratum}")
-        print(cur_stratum_vars)
-      }
+      fits <- list()  # Initialize an empty list for fits
 
-      fits[[cur_stratum]] <- do.call(
-        what = est.incidence,
-        args = c(
-          stratum_data_list[[cur_stratum]],
-          list(
-            lambda_start = lambda_start,
-            antigen_isos = antigen_isos,
-            build_graph = build_graph,
-            print_graph = print_graph,
-            verbose = verbose,
-            ...
+      for (cur_stratum in names(stratum_data_list)) {
+        cur_stratum_vars <- strata_table %>%
+          dplyr::filter(.data$Stratum == cur_stratum)
+
+        if (verbose) {
+          cli::cli_inform("starting new stratum: {cur_stratum}")
+          print(cur_stratum_vars)
+        }
+
+        fits[[cur_stratum]] <- do.call(
+          what = est.incidence,
+          args = c(
+            stratum_data_list[[cur_stratum]],
+            list(
+              lambda_start = lambda_start,
+              antigen_isos = antigen_isos,
+              build_graph = build_graph,
+              print_graph = print_graph,
+              verbose = verbose,
+              ...
+            )
           )
         )
-      )
-    }
+      }
 
+    })
 
     if (verbose) {
-      message("Elapsed time for loop over strata: ")
-      print(time)
+      cli::cli_inform("Elapsed time for loop over strata: {time}")
     }
-  }
+    }
 
   incidence_data <- structure(
     fits,
@@ -257,4 +263,4 @@ est.incidence.by <- function(
   )
 
   return(incidence_data)
-}
+  }

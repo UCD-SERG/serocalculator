@@ -116,10 +116,11 @@ test_that(
 
 test_that(
   "`est.incidence.by()` produces expected results
-          regardless of whether using verbose messaging or not.",
+          regardless of whether using verbose messaging or not.
+          with single core.",
   {
 
-    ests_verbose <- est.incidence.by(
+    ests_verbose_sc <- est.incidence.by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
@@ -127,10 +128,11 @@ test_that(
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
-      verbose = TRUE
+      verbose = TRUE,
+      num_cores = 1
     )
 
-    ests_non_verbose <- est.incidence.by(
+    ests_non_verbose_sc <- est.incidence.by(
       verbose = FALSE,
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
@@ -138,10 +140,11 @@ test_that(
       noise_params = example_noise_params_pk,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
-      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      num_cores = 1
     )
 
-    expect_equal(ests_verbose, ests_non_verbose)
+    expect_equal(ests_verbose_sc, ests_non_verbose_sc)
   }
 )
 
@@ -178,3 +181,7 @@ test_that(
     expect_equal(ests_verbose_mc, ests_non_verbose_mc)
   }
 )
+
+# note: no need to check multi-core verbose vs single-core, nonverbose,
+# or the other diagonal, because of transitive equality and the three checks
+# made above

@@ -23,7 +23,7 @@ jobs:
             any::gh
             any::lintr
             any::purrr
-          needs: check
+          needs: lint
 
       - name: Add lintr options
         run: |

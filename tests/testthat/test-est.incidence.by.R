@@ -88,7 +88,6 @@ test_that(
           regardless of whether using parallel processing or not.",
   {
 
-    skip_if(parallel::detectCores() == 1)
     ests_1_core <- est.incidence.by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
@@ -143,5 +142,39 @@ test_that(
     )
 
     expect_equal(ests_verbose, ests_non_verbose)
+  }
+)
+
+test_that(
+  "`est.incidence.by()` produces expected results
+          regardless of whether using verbose messaging or not
+          with multi-core processing.",
+  {
+
+    ests_verbose_mc <- est.incidence.by(
+      strata = c("catchment"),
+      pop_data = sees_pop_data_pk_100,
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      verbose = TRUE,
+      num_cores = 2
+    )
+
+    ests_non_verbose_mc <- est.incidence.by(
+      verbose = FALSE,
+      strata = c("catchment"),
+      pop_data = sees_pop_data_pk_100_old_names,
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_pk,
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      num_cores = 2
+    )
+
+    expect_equal(ests_verbose_mc, ests_non_verbose_mc)
   }
 )

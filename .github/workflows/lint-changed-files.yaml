@@ -19,10 +19,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@HEAD
         with:
-          packages: |
+          extra-packages: |
             any::gh
             any::lintr
             any::purrr
+          needs: check
 
       - name: Add lintr options
         run: |

@@ -17,4 +17,3 @@
 #' }
 #' @source <https://osf.io/rtw5k>
 "typhoid_curves_nostrat_100"
-"typhoid_curves_nostrat_100"

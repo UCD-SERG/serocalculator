@@ -50,7 +50,7 @@
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'  # Reduce dataset for the purposes of this example
+#'   # Reduce dataset for the purposes of this example
 #'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")
@@ -144,8 +144,10 @@ est.incidence.by <- function(
       c(
         "i" = "Data has been stratified.",
         "i" = "Here are the strata that will be analyzed:",
-        ""),
-      body = strata_table |> capture.output())
+        ""
+      ),
+      body = strata_table |> capture.output()
+    )
   }
 
   if (num_cores > 1L && !requireNamespace("parallel", quietly = TRUE)) {
@@ -214,14 +216,13 @@ est.incidence.by <- function(
 
     if (verbose) {
       cli::cli_inform(c("i" = "Elapsed time for parallelized code:"),
-                      body = capture.output(time))
+        body = capture.output(time)
+      )
     }
   } else {
-
     # Time progress:
     time <- system.time({
-
-      fits <- list()  # Initialize an empty list for fits
+      fits <- list() # Initialize an empty list for fits
 
       for (cur_stratum in names(stratum_data_list)) {
         cur_stratum_vars <- strata_table %>%
@@ -247,13 +248,13 @@ est.incidence.by <- function(
           )
         )
       }
-
     })
 
     if (verbose) {
       cli::cli_inform(
         c("i" = "Elapsed time for loop over strata: "),
-        body = capture.output(time))
+        body = capture.output(time)
+      )
     }
   }
 

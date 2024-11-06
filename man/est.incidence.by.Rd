@@ -108,7 +108,8 @@ then the computations are executed in parallel. Default = 1L.}
 \value{
 \itemize{
 \item if \code{strata} has meaningful inputs:
-An object of class \code{"seroincidence.by"}; i.e., a list of \code{ "seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
+An object of class \code{"seroincidence.by"}; i.e., a list of
+\code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
 with some meta-data attributes.
 \item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
 An object of class \code{"seroincidence"}.
@@ -136,7 +137,7 @@ xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
 curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
- # Reduce dataset for the purposes of this example
+ # Reduce dataset for the purposes of this example:
   slice(1:100, .by = antigen_iso)
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")

@@ -1,7 +1,5 @@
 # serocalculator (development version)
 
-# serocalculator 1.3.0
-
 ## New features
 
 * Add test for missing strata in `est.incidence.by` (#227)

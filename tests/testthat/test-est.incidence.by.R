@@ -87,6 +87,8 @@ test_that(
   "`est.incidence.by()` produces expected results
           regardless of whether using parallel processing or not.",
   {
+
+    skip_if(parallel::detectCores() == 1)
     ests_1_core <- est.incidence.by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,

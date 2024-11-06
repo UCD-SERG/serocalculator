@@ -1,7 +1,3 @@
-
-
-
-
 test_that("`est.incidence.by()` warns user when strata is missing", {
   expect_warning(
     est.incidence.by(
@@ -83,5 +79,36 @@ test_that(
     )
 
     expect_equal(est_true, est_false)
+  }
+)
+
+
+test_that(
+  "`est.incidence.by()` produces expected results
+          regardless of whether using parallel processing or not.",
+  {
+    ests_1_core <- est.incidence.by(
+      strata = c("catchment"),
+      pop_data = sees_pop_data_pk_100,
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      num_cores = 1
+    )
+
+    ests_2_cores <- est.incidence.by(
+      strata = c("catchment"),
+      pop_data = sees_pop_data_pk_100_old_names,
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_pk,
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      num_cores = 2
+    )
+
+    expect_equal(ests_1_core, ests_2_cores)
   }
 )

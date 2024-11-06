@@ -175,7 +175,7 @@ est.incidence.by <- function(
     })
 
     # Export library paths to the cluster
-    parallel::clusterExport(cl, c("libPaths"), envir = environment())
+    parallel::clusterExport(cl, "lib_paths", envir = environment())
 
     # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {

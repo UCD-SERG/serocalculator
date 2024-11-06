@@ -213,7 +213,8 @@ est.incidence.by <- function(
     })
 
     if (verbose) {
-      cli::cli_inform("Elapsed time for parallelized code: {time}")
+      cli::cli_inform(c("i" = "Elapsed time for parallelized code:"),
+                      body = capture.output(time))
     }
   } else {
 
@@ -250,9 +251,11 @@ est.incidence.by <- function(
     })
 
     if (verbose) {
-      cli::cli_inform("Elapsed time for loop over strata: {time}")
+      cli::cli_inform(
+        c("i" = "Elapsed time for loop over strata: "),
+        body = capture.output(time))
     }
-    }
+  }
 
   incidence_data <- structure(
     fits,
@@ -263,4 +266,4 @@ est.incidence.by <- function(
   )
 
   return(incidence_data)
-  }
+}

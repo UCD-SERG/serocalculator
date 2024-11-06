@@ -204,7 +204,8 @@ then the computations are executed in parallel. Default = 1L.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
 <ul><li><p>if <code>strata</code> has meaningful inputs:
-An object of class <code>"seroincidence.by"</code>; i.e., a list of <code> "seroincidence"</code> objects from <code><a href="est.incidence.html">est.incidence()</a></code>, one for each stratum,
+An object of class <code>"seroincidence.by"</code>; i.e., a list of
+<code>"seroincidence"</code> objects from <code><a href="est.incidence.html">est.incidence()</a></code>, one for each stratum,
 with some meta-data attributes.</p></li>
 <li><p>if <code>strata</code> is missing, <code>NULL</code>, <code>NA</code>, or <code>""</code>:
 An object of class <code>"seroincidence"</code>.</p></li>
@@ -229,7 +230,7 @@ argument to avoid that warning.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">curve</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span> <span class="co"># Reduce dataset for the purposes of this example</span></span></span>
+<span class="r-in"><span> <span class="co"># Reduce dataset for the purposes of this example:</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, .by <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_noise_params.html">load_noise_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span></span></span>

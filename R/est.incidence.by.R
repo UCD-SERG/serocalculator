@@ -35,8 +35,8 @@
 #'
 #' @return
 #' * if `strata` has meaningful inputs:
-#' An object of class `"seroincidence.by"`; i.e., a list of `
-#' "seroincidence"` objects from [est.incidence()], one for each stratum,
+#' An object of class `"seroincidence.by"`; i.e., a list of
+#' `"seroincidence"` objects from [est.incidence()], one for each stratum,
 #' with some meta-data attributes.
 #' * if `strata` is missing, `NULL`, `NA`, or `""`:
 #' An object of class `"seroincidence"`.
@@ -50,7 +50,7 @@
 #'
 #' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'  # Reduce dataset for the purposes of this example
+#'  # Reduce dataset for the purposes of this example:
 #'   slice(1:100, .by = antigen_iso)
 #'
 #' noise <- load_noise_params("https://osf.io/download//hqy4v/")

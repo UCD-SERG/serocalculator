@@ -161,8 +161,8 @@ est.incidence.by <- function(
     num_cores <- num_cores %>% check_parallel_cores()
 
     if (verbose) {
-      message("Setting up parallel processing with
-              `num_cores` = ", num_cores, ".")
+      cli::cli_inform("Setting up parallel processing with
+              `num_cores` = {num_cores}.")
     }
 
     lib_paths <- .libPaths()
@@ -210,8 +210,7 @@ est.incidence.by <- function(
     })
 
     if (verbose) {
-      message("Elapsed time for parallelized code: ")
-      print(time)
+      cli::cli_inform("Elapsed time for parallelized code: {time}")
     }
   } else {
     fits <- list()  # Initialize an empty list for fits
@@ -222,7 +221,7 @@ est.incidence.by <- function(
         dplyr::filter(.data$Stratum == cur_stratum)
 
       if (verbose) {
-        message("starting new stratum: ", cur_stratum)
+        cli::cli_inform("starting new stratum: {cur_stratum}")
         print(cur_stratum_vars)
       }
 

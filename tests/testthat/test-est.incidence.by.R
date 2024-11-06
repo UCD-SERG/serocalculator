@@ -114,3 +114,34 @@ test_that(
     expect_equal(ests_1_core, ests_2_cores)
   }
 )
+
+test_that(
+  "`est.incidence.by()` produces expected results
+          regardless of whether using verbose messaging or not.",
+  {
+
+    ests_verbose <- est.incidence.by(
+      strata = c("catchment"),
+      pop_data = sees_pop_data_pk_100,
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      verbose = TRUE
+    )
+
+    ests_non_verbose <- est.incidence.by(
+      verbose = FALSE,
+      strata = c("catchment"),
+      pop_data = sees_pop_data_pk_100_old_names,
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_pk,
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    )
+
+    expect_equal(ests_verbose, ests_non_verbose)
+  }
+)

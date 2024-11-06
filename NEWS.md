@@ -2,8 +2,6 @@
 
 ## New features
 
-* Add test for missing strata in `est.incidence.by` (#227)
-
 * Added example datasets with documentation for examples and testing (#314)
 
 * Improved error messaging for `autoplot.pop_data()` (#234).
@@ -29,6 +27,7 @@
 
 ## Internal changes
 
+* Add test for missing strata in `est.incidence.by` (#227)
 * Added `snapshot_value` test for `est.incidence()` (#315)
 
 * Sped up `lint-changed-files` GitHub Action (#317)

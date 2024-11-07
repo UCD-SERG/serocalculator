@@ -2,6 +2,8 @@
 
 ## New features
 
+* Added more details about contributing PRs in `Contributing.md` (#280)
+
 * Added example datasets with documentation for examples and testing (#314)
 
 * Improved error messaging for `autoplot.pop_data()` (#234).

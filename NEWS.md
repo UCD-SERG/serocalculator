@@ -1,6 +1,9 @@
 # serocalculator (development version)
 
 ## New features
+
+* Added example datasets with documentation for examples and testing (#314)
+
 * Improved error messaging for `autoplot.pop_data()` (#234).
 
 * Clarified package installation instructions in scrub typhus vignette (#234).
@@ -24,6 +27,10 @@
 
 ## Internal changes
 * Change default pipe setting (#312)
+
+* Added `snapshot_value` test for `est.incidence()` (#315)
+
+* Sped up `lint-changed-files` GitHub Action (#317)
 
 * Added online preview builds for PRs that change the `pkgdown` website (#309)
 

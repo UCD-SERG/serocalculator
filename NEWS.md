@@ -27,6 +27,7 @@
 
 ## Internal changes
 
+* Add test for missing strata in `est.incidence.by` (#227)
 * Added `snapshot_value` test for `est.incidence()` (#315)
 
 * Sped up `lint-changed-files` GitHub Action (#317)

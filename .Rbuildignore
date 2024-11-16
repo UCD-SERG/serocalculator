@@ -29,4 +29,5 @@ allpopsamples_hlye.csv$
 ^vignettes/\.quarto$
 ^vignettes/methodology\.qmd$
 ^\.quarto$
+^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$

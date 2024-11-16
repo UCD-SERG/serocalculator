@@ -26,6 +26,7 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+* Change default pipe setting (#312)
 
 * Add test for missing strata in `est.incidence.by` (#227)
 * Added `snapshot_value` test for `est.incidence()` (#315)

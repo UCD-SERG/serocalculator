@@ -25,6 +25,8 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+* Replace pipes to base R pipes (#310)
+
 * Change default pipe setting (#312)
 
 * Add test for missing strata in `est.incidence.by` (#227)

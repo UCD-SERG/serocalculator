@@ -22,8 +22,8 @@ Load antibody decay curve parameter
 \examples{
 library(magrittr)
 curve_data <-
-  "https://osf.io/download/rtw5k/" \%>\%
-  readr::read_rds() \%>\%
+  "https://osf.io/download/rtw5k/" |>
+  readr::read_rds() |>
   as_curve_params()
 
 print(curve_data)

@@ -11,8 +11,8 @@
 #' print(xs_data)
 load_pop_data <- function(file_path, ...) {
   pop_data <-
-    file_path %>%
-    readr::read_rds() %>%
+    file_path |>
+    readr::read_rds() |>
     as_pop_data(...)
 
   return(pop_data)

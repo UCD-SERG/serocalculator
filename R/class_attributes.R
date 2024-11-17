@@ -4,8 +4,8 @@ get_age_var <- function(object, ...) {
 }
 
 get_age <- function(object, ...) {
-  age_var <- object %>% get_age_var()
-  age_data <- object %>% pull(age_var)
+  age_var <- object |> get_age_var()
+  age_data <- object |> pull(age_var)
   return(age_data)
 }
 
@@ -15,8 +15,8 @@ get_value_var <- function(object, ...) {
 }
 
 get_value <- function(object, ...) {
-  value_var_name <- object %>% get_value_var()
-  value_data <- object %>% pull(value_var_name)
+  value_var_name <- object |> get_value_var()
+  value_data <- object |> pull(value_var_name)
   return(value_data)
 }
 
@@ -26,8 +26,8 @@ get_id_var <- function(object, ...) {
 }
 
 get_id <- function(object, ...) {
-  id_var_name <- object %>% get_id_var()
-  id_data <- object %>% pull(id_var_name)
+  id_var_name <- object |> get_id_var()
+  id_data <- object |> pull(id_var_name)
   return(id_data)
 }
 
@@ -45,7 +45,7 @@ get_biomarker_names_var <- function(object, ...) {
 get_biomarker_names <- function(object, ...) {
   # get biomarker name data
   biomarker_names_var <- get_biomarker_names_var(object)
-  biomarker_data <- object %>% pull(biomarker_names_var)
+  biomarker_data <- object |> pull(biomarker_names_var)
 
   return(biomarker_data)
 }
@@ -88,7 +88,7 @@ set_age <- function(object,
   }
 
   if (standardize) {
-    object <- object %>%
+    object <- object |>
       rename(c("age" = attr(object, "age_var")))
 
     # set age attribute
@@ -135,7 +135,7 @@ set_value <- function(object,
   }
 
   if (standardize) {
-    object <- object %>%
+    object <- object |>
       rename(c("value" = attr(object, "value_var")))
 
     # set id attribute
@@ -180,7 +180,7 @@ set_id <- function(object,
   }
 
   if (standardize) {
-    object <- object %>%
+    object <- object |>
       rename(c("id" = attr(object, "id_var")))
 
     # set id attribute

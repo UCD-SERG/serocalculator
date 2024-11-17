@@ -2,16 +2,19 @@
 % Please edit documentation in R/f_dev.r
 \name{f_dev0}
 \alias{f_dev0}
-\title{Calculate negative log-likelihood (deviance) for one antigen:isotype pair and incidence rate}
+\title{Calculate negative log-likelihood (deviance)
+for one antigen:isotype pair and incidence rate}
 \usage{
 f_dev0(lambda, csdata, lnpars, cond)
 }
 \arguments{
 \item{lambda}{\code{\link[=numeric]{numeric()}} incidence parameter, in events per person-year}
 
-\item{csdata}{cross-sectional sample data containing variables \code{value} and \code{age}}
+\item{csdata}{cross-sectional sample data
+containing variables \code{value} and \code{age}}
 
-\item{lnpars}{longitudinal antibody decay model parameters \code{alpha}, \code{y1}, and \code{d}}
+\item{lnpars}{longitudinal antibody
+decay model parameters \code{alpha}, \code{y1}, and \code{d}}
 
 \item{cond}{measurement noise parameters \code{nu}, \code{eps}, \code{y.low}, and \code{y.high}}
 }
@@ -20,7 +23,8 @@ a \code{\link[=numeric]{numeric()}} negative log-likelihood,
 corresponding to input \code{lambda}
 }
 \description{
-Calculate negative log-likelihood (deviance) for one antigen:isotype pair and incidence rate
+Calculate negative log-likelihood (deviance)
+for one antigen:isotype pair and incidence rate
 }
 \details{
 interface with C lib \code{serocalc.so}
@@ -31,7 +35,7 @@ library(tibble)
 
 # load in longitudinal parameters
 curve_params = load_curve_params("https://osf.io/download/rtw5k")
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
+xs_data <- "https://osf.io/download//n6cp3/" |>
 load_pop_data()
 
 #Load noise params
@@ -45,25 +49,25 @@ noise_params <- tibble(
 cur_antibody = "HlyE_IgA"
 
 cur_data <-
-  xs_data \%>\%
+  xs_data |>
   dplyr::filter(
    .data$catchment == "dhaka",
-   .data$antigen_iso == cur_antibody) \%>\%
+   .data$antigen_iso == cur_antibody) |>
   dplyr::slice_head(n = 100)
 
 cur_curve_params <-
-  curve_params \%>\%
-  dplyr::filter(.data$antigen_iso == cur_antibody) \%>\%
+  curve_params |>
+  dplyr::filter(.data$antigen_iso == cur_antibody) |>
   dplyr::slice_head(n = 100)
 
 cur_noise_params <-
-  noise_params \%>\%
+  noise_params |>
   dplyr::filter(.data$antigen_iso == cur_antibody)
 
 if(!is.element('d', names(cur_curve_params)))
 {
   cur_curve_params <-
-    cur_curve_params \%>\%
+    cur_curve_params |>
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
       d = .data$r - 1)

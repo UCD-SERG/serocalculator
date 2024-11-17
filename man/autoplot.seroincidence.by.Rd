@@ -14,11 +14,13 @@
 \item{...}{
   Arguments passed on to \code{\link[=autoplot.seroincidence]{autoplot.seroincidence}}
   \describe{
-    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale
+(\code{TRUE}) or linear scale (\code{FALSE}, default)?}
   }}
 }
 \value{
-an object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
+an object of class \code{"ggarrange"},
+which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
 }
 \description{
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
@@ -28,20 +30,21 @@ Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
 library(dplyr)
 library(ggplot2)
 
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
+xs_data <- "https://osf.io/download//n6cp3/" |>
   load_pop_data()
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
+  # Reduce dataset for the purposes of this example
+  slice(1:100, .by = antigen_iso)
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
 
 est2 <- est.incidence.by(
   strata = c("catchment"),
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   curve_params = curve,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8, #Allow for parallel processing to decrease run time
   build_graph = TRUE

@@ -31,13 +31,13 @@ df.to.array <- function( # nolint: object_name_linter
 #' library(dplyr)
 #' library(tidyr)
 #'
-#' df <- iris %>%
+#' df <- iris |>
 #'   tidyr::pivot_longer(
 #'     names_to = "parameter",
 #'     cols = c("Sepal.Length", "Sepal.Width", "Petal.Width", "Petal.Length")
-#'   ) %>%
+#'   ) |>
 #'   mutate(parameter = factor(parameter, levels = unique(parameter)))
-#' arr <- df %>%
+#' arr <- df |>
 #'   serocalculator:::df_to_array(
 #'      dim_var_names = c("parameter", "Species"))
 #' ftable(arr[,,1:5])
@@ -47,16 +47,16 @@ df_to_array <- function(
     dim_var_names,
     value_var_name = "value") {
   stopifnot(all(dim_var_names %in% names(df)))
-  stopifnot(value_var_name %>% length() == 1)
+  stopifnot(value_var_name |> length() == 1)
   stopifnot(value_var_name %in% names(df))
   if (is.grouped_df(df)) {
     stop("ungroup the data frame first before running")
   }
 
   all_factors <-
-    df %>%
-    select(all_of(dim_var_names)) %>%
-    sapply(FUN = is.factor) %>%
+    df |>
+    select(all_of(dim_var_names)) |>
+    sapply(FUN = is.factor) |>
     all()
 
   if (!all_factors) {
@@ -67,7 +67,7 @@ df_to_array <- function(
     )
   }
 
-  df <- df %>%
+  df <- df |>
     mutate(
       across(
         all_of(dim_var_names),
@@ -82,7 +82,7 @@ df_to_array <- function(
       paste(c(dim_var_names, "obs"), collapse = " + ")
     )
 
-  df %>%
-    mutate(.by = all_of(dim_var_names), obs = row_number()) %>%
+  df |>
+    mutate(.by = all_of(dim_var_names), obs = row_number()) |>
     xtabs(formula = formula(xtabs_formula))
 }

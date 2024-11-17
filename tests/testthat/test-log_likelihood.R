@@ -1,5 +1,4 @@
 test_that("`log_likelihood()` gives consistent results", {
-
   # Calculate log-likelihood
   ll_ag <- log_likelihood(
     pop_data = sees_pop_data_pk_100,

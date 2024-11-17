@@ -60,7 +60,7 @@ llik <- function(...) {
 #' # load in longitudinal parameters
 #' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
+#' xs_data <- "https://osf.io/download//n6cp3/" |>
 #'   load_pop_data()
 #'
 #' # Load noise params
@@ -79,7 +79,7 @@ llik <- function(...) {
 #'   noise_params = cond,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   lambda = 0.1
-#' ) %>% print()
+#' ) |> print()
 #'
 log_likelihood <- function(
     lambda,
@@ -103,20 +103,20 @@ log_likelihood <- function(
       cur_noise_params <- noise_params[[cur_antibody]]
     } else {
       cur_data <-
-        pop_data %>%
+        pop_data |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_curve_params <-
-        curve_params %>%
+        curve_params |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_noise_params <-
-        noise_params %>%
+        noise_params |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       if (!is.element("d", names(cur_curve_params))) {
         cur_curve_params <-
-          cur_curve_params %>%
+          cur_curve_params |>
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
             d = .data$r - 1

@@ -8,7 +8,7 @@ test_that("`autoplot.pop_data()` raise
               value = "result",
               standardize = TRUE
             )
-            expect_error(object = xs_data %>%
+            expect_error(object = xs_data |>
                            autoplot(strata = "Country", type = "den"))
           })
 
@@ -22,7 +22,7 @@ test_that("`autoplot.pop_data()` raise
               value = "result",
               standardize = TRUE
             )
-            expect_error(object = xs_data %>%
+            expect_error(object = xs_data |>
                            autoplot(strata = "strat1", type = "density"))
           })
 
@@ -36,8 +36,8 @@ test_that("`autoplot.pop_data()` produces
               id = "index_id",
               value = "result",
               standardize = TRUE
-            ) %>%
-              autoplot(strata = "Country", type = "density") %>%
+            ) |>
+              autoplot(strata = "Country", type = "density") |>
               vdiffr::expect_doppelganger(title = "density")
           })
 
@@ -51,8 +51,8 @@ test_that("`autoplot.pop_data()` produces stable results for
               id = "index_id",
               value = "result",
               standardize = TRUE
-            ) %>%
-              autoplot(strata = "Country", type = "age-scatter") %>%
+            ) |>
+              autoplot(strata = "Country", type = "age-scatter") |>
               vdiffr::expect_doppelganger(title = "age_scatter_strat_country")
           })
 
@@ -65,7 +65,7 @@ test_that("`autoplot.pop_data()` produces stable results
               id = "index_id",
               value = "result",
               standardize = TRUE
-            ) %>%
-              autoplot(strata = NULL, type = "age-scatter") %>%
+            ) |>
+              autoplot(strata = NULL, type = "age-scatter") |>
               vdiffr::expect_doppelganger(title = "age_scatter_no_strat")
           })

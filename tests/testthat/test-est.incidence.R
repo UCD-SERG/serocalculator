@@ -1,3 +1,4 @@
+
 test_that("est.incidence() produces expected results for typhoid data", {
   typhoid_results <- est.incidence(
     pop_data = sees_pop_data_pk_100,

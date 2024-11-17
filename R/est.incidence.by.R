@@ -57,9 +57,9 @@
 #'
 #' est2 <- est.incidence.by(
 #'   strata = c("catchment"),
-#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   pop_data = xs_data |> filter(Country == "Pakistan"),
 #'   curve_params = curve,
-#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   noise_params = noise |> filter(Country == "Pakistan"),
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time
 #'   iterlim = 5 # limit iterations for the purpose of this example
@@ -119,13 +119,7 @@ est.incidence.by <- function(
   }
 
   check_strata(pop_data, strata = strata)
-
-  .errorCheck(
-    data = pop_data,
-    antigen_isos = antigen_isos,
-    curve_params = curve_params
-  )
-
+  
   # Split data per stratum
   stratum_data_list <- stratify_data(
     antigen_isos = antigen_isos,
@@ -159,21 +153,26 @@ est.incidence.by <- function(
     )
   }
 
-  # Loop over data per stratum
-  if (num_cores > 1L) {
-    requireNamespace("parallel", quietly = FALSE)
+if (num_cores > 1L && !requireNamespace("parallel", quietly = TRUE)) {
+  warning(
+    "The `parallel` package is not installed,
+    so `num_cores > 1` has no effect.",
+    "To install `parallel`, run
+    `install.packages('parallel')` in the console."
+  )
+}
 
-    num_cores <- num_cores %>% check_parallel_cores()
-
+# Loop over data per stratum
+if (num_cores > 1L) {
+requireNamespace("parallel", quietly = FALSE)
     if (verbose) {
       cli::cli_inform("Setting up parallel processing with
               `num_cores` = {num_cores}.")
     }
-
     lib_paths <- .libPaths()
     cl <-
-      num_cores %>%
-      parallel::makeCluster() %>%
+      num_cores |>
+      parallel::makeCluster() |>
       suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
@@ -223,7 +222,6 @@ est.incidence.by <- function(
     # Time progress:
     time <- system.time({
       fits <- list() # Initialize an empty list for fits
-
       for (cur_stratum in names(stratum_data_list)) {
         cur_stratum_vars <- strata_table %>%
           dplyr::filter(.data$Stratum == cur_stratum)
@@ -263,7 +261,7 @@ est.incidence.by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.by" %>% union(class(fits))
+    class = "seroincidence.by" |> union(class(fits))
   )
 
   return(incidence_data)

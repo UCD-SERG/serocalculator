@@ -144,9 +144,9 @@ noise <- load_noise_params("https://osf.io/download//hqy4v/")
 
 est2 <- est.incidence.by(
   strata = c("catchment"),
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   curve_params = curve,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   # num_cores = 8 # Allow for parallel processing to decrease run time
   iterlim = 5 # limit iterations for the purpose of this example

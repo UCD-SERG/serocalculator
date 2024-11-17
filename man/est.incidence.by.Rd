@@ -11,7 +11,7 @@ est.incidence.by(
   strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  antigen_isos = unique(pop_data),
+  antigen_isos = pop_data \%>\% pull("antigen_iso") \%>\% unique(),
   lambda_start = 0.1,
   build_graph = FALSE,
   num_cores = 1L,
@@ -24,6 +24,7 @@ est.incidence.by(
 \item{pop_data}{a \link{data.frame} with cross-sectional serology data per
 antibody and age, and additional columns corresponding to
 each element of the \code{strata} input}
+
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
 from the Bayesian posterior distribution of a longitudinal decay curve model.
 The parameter columns must be named:

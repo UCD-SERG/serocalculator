@@ -21,10 +21,9 @@ est.incidence.by(
 )
 }
 \arguments{
-\item{pop_data}{a \link{data.frame} with cross-sectional
-serology data per antibody and age, and additional
-columns corresponding to each element of the \code{strata} input}
-
+\item{pop_data}{a \link{data.frame} with cross-sectional serology data per
+antibody and age, and additional columns corresponding to
+each element of the \code{strata} input}
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
 from the Bayesian posterior distribution of a longitudinal decay curve model.
 The parameter columns must be named:
@@ -68,9 +67,9 @@ Values must be variable names in \code{noise_params}. Default = "".}
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
 \item{num_cores}{Number of processor cores to use for
-calculations when computing by strata. If set to more
-than 1 and package \pkg{parallel} is available, then
-the computations are executed in parallel. Default = 1L.}
+calculations when computing by strata. If set to
+more than 1 and package \pkg{parallel} is available,
+then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
@@ -108,17 +107,16 @@ the computations are executed in parallel. Default = 1L.}
 \value{
 \itemize{
 \item if \code{strata} has meaningful inputs:
-An object of class \code{"seroincidence.by"};
-i.e., a list of \code{"seroincidence"} objects
-from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
+An object of class \code{"seroincidence.by"}; i.e., a list of
+\code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
 with some meta-data attributes.
 \item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
 An object of class \code{"seroincidence"}.
 }
 }
 \description{
-Function to estimate seroincidences based
-on cross-section serology data and longitudinal
+Function to estimate seroincidences based on cross-sectional
+serology data and longitudinal
 response model.
 }
 \details{
@@ -136,9 +134,9 @@ library(dplyr)
 
 xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") |>
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
-  # Reduce dataset for the purposes of this example
+curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+ # Reduce dataset for the purposes of this example:
   slice(1:100, .by = antigen_iso)
 
 noise <- load_noise_params("https://osf.io/download//hqy4v/")
@@ -149,7 +147,7 @@ est2 <- est.incidence.by(
   curve_params = curve,
   noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  #num_cores = 8 # Allow for parallel processing to decrease run time
+  # num_cores = 8 # Allow for parallel processing to decrease run time
   iterlim = 5 # limit iterations for the purpose of this example
 )
 

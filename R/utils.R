@@ -83,17 +83,4 @@
   invisible(NULL)
 }
 
-.checkStrata <- function(data, strata) {
-  if (!is.character(strata)) {
-    stop(.pasteN(
-      "Argument `strata` is not a character vector.",
-      "Provide a character vector with names of stratifying variables."
-    ))
-  }
 
-  if (!all(is.element(strata, union("", names(data))))) {
-    stop("Strata names in argument \"data\" and argument \"strata\" do not match.")
-  }
-
-  invisible(NULL)
-}

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.2.0.9019</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.2.0.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -418,10 +418,12 @@ age group.</p>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in count_strata(data, strata_varnames): The number of observations in `data` varies between antigen isotypes, for at least one stratum. Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes.</span></span>
-<span><span class="co">#&gt; Warning in check_parallel_cores(num_cores): This computer appears to have 4</span></span>
-<span><span class="co">#&gt; cores available. `est.incidence.by()` has reduced its `num_cores` argument to 3</span></span>
-<span><span class="co">#&gt; to avoid destabilizing the computer.</span></span>
+<span><span class="co">#&gt; Warning in count_strata(data, strata_varnames): The number of observations in `data`</span></span>
+<span><span class="co">#&gt;             varies between antigen isotypes, for</span></span>
+<span><span class="co">#&gt;             at least one stratum. Sample size for</span></span>
+<span><span class="co">#&gt;             each stratum will be calculated as the</span></span>
+<span><span class="co">#&gt;             minimum number of observations across</span></span>
+<span><span class="co">#&gt;             all antigen isotypes.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est_country_age</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>

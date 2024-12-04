@@ -14,6 +14,8 @@ ab0 <- function(t, curve_params) {
   if (shape == 1) {
     yt_phase_2 <- y1 * exp(-alpha * (t - t1))
     # see wolfram alpha result: https://bit.ly/3ZB69Yn
+    # this is a version the product-limit characterization of the
+    # exponential function
   } else {
     yt_phase_2 <- (y1 ^ (1 - shape) - (1 - shape) * alpha * (t - t1)) ^ (1 / (1 - shape))
   }

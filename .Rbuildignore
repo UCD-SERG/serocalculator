@@ -31,4 +31,3 @@ allpopsamples_hlye.csv$
 ^\.quarto$
 ^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$
-^man/plot_curve_params_one_ab\.Rd$

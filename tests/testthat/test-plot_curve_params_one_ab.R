@@ -13,11 +13,11 @@ test_that("`plot_curve_params_one_ab()` produces consistent results", {
 
   fig1 <-
     params |>
-    plot_curve_params_one_ab(n_points = 10^5,
-                             xlim = c(0,25),
+    plot_curve_params_one_ab(n_points = 10 ^ 5,
+                             xlim = c(0, 25),
                              log_y = FALSE)
 
   fig1 |>
-  vdiffr::expect_doppelganger(title = "curve_r1")
+    vdiffr::expect_doppelganger(title = "curve_r1")
 
 })

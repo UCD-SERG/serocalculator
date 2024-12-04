@@ -118,5 +118,5 @@ library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
 load_curve_params("https://osf.io/download/rtw5k/") \%>\%
   dplyr::filter(antigen_iso == "HlyE_IgG") \%>\%
   serocalculator:::plot_curve_params_one_ab()
-
 }
+\keyword{internal}

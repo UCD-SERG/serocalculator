@@ -98,7 +98,7 @@ $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
 ---
 
 ```{r}
-cur_ai = "HlyE_IgG"
+cur_ai <- "HlyE_IgG"
 ```
 
 ```{r}
@@ -113,47 +113,51 @@ curves <-
   load_curve_params() %>%
   filter(iter < 50)
 
-curve1 =
+curve1 <-
   curves %>%
   filter(
-    # iter %in% 1:10,
     iter == 5,
-         antigen_iso == cur_ai)
-
+    antigen_iso == cur_ai
+  )
 library(ggplot2)
 
-curve1 %>%
-serocalculator:::plot_curve_params_one_ab(
-  log_y = FALSE
-) +
+curve1 |>
+  serocalculator:::plot_curve_params_one_ab(
+    log_y = FALSE
+  ) +
   xlim(0, 100) +
   theme_minimal() +
   geom_vline(
-    aes(xintercept = curve1$t1,
-        col = "t1")
+    aes(
+      xintercept = curve1$t1,
+      col = "t1"
+    )
   ) +
 
   geom_hline(
-    aes(yintercept = curve1$y0,
-        col = "y0")
+    aes(
+      yintercept = curve1$y0,
+      col = "y0"
+    )
   ) +
 
 
   geom_hline(
-    aes(yintercept = curve1$y1,
-        col = "y1")
+    aes(
+      yintercept = curve1$y1,
+      col = "y1"
+    )
   ) +
-  # geom_point(
-  #   data = curve1,
-  #   aes(
-  #     x = t1,
-  #     y = y1,
-  #     col = "(t1,y1)"
-  #   )
-  # ) +
+  geom_point(
+    data = curve1,
+    aes(
+      x = t1,
+      y = y1,
+      col = "(t1,y1)"
+    )
+  ) +
   theme(legend.position = "bottom") +
   labs(col = "")
-
 ```
 
 
@@ -213,9 +217,13 @@ in a population with no exposure.
 ## Measurement noise
 
 There are also some other sources of noise in our bioassays; 
-user differences in pipetting technique, random ELISA plate effects, etc. 
-This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source, and include it in $p(Y=y|T=t)$.
+user differences in pipetting technique, 
+random ELISA plate effects, etc. 
+This noise can cause both overcount and undercount. 
+We can also estimate the magnitude of this noise source
+and include it in $p(Y=y|T=t)$.
 
-Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from the laboratory testing process. 
+Measurement noise, $\varepsilon$ ("epsilon"), 
+represents measurement error from the laboratory testing process. 
 It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. 
 Note that the CV should ideally be measured across plates rather than within the same plate. 

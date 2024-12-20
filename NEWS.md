@@ -2,6 +2,8 @@
 
 ## New features
 
+* Fixed a bug in computing the antibody response curve when $r=1$ (#323)
+
 * Added example datasets with documentation for examples and testing (#314)
 
 * Improved error messaging for `autoplot.pop_data()` (#234).

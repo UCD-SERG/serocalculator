@@ -7,9 +7,11 @@ output:
     toc: true
 vignette: >
   %\VignetteIndexEntry{Enteric Fever Seroincidence Vignette}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: ../references.bib
+editor_options: 
+  chunk_output_type: console
 ---
 ## Introduction
 
@@ -281,15 +283,14 @@ ggplot(est_country_agedf,
          fill = Country
        )) +
   geom_bar(stat = "identity",
-           position = position_dodge(),
+           position = position_dodge2(reverse = TRUE),
            show.legend = TRUE) +
   geom_errorbar(
     aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000), #rescale CIs
-    position = position_dodge(width = 0.9),
-    width = .2
+    position = position_dodge2(reverse = TRUE)
   ) +
   labs(title = "Enteric Fever Seroincidence by Country and Age",
-       x = "Seroincidence rate per 1000 person-years",
+       x = "Seroconversion  rate per 1000 person-years",
        y = "Age Category",
        fill = "Country") +
   theme_linedraw() +

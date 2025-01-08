@@ -8,6 +8,7 @@ CMD
 Campylobacter
 Ceper
 Chiang
+Codecov
 De
 Dhulikhel
 Diekmann
@@ -17,6 +18,7 @@ FIC
 Falkenhorst
 Fogarty
 Friesema
+GHA
 Gageldonk
 Graaf
 Gras
@@ -98,7 +100,6 @@ boldsymbol
 callout
 campylobacteriosis
 cdot
-codecov
 de
 der
 devtools

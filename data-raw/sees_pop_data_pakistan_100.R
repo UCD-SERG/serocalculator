@@ -21,3 +21,8 @@ sees_pop_data_pk_100_old_names <- load_pop_data(
   slice_head(n = 100, by = antigen_iso)
 
 usethis::use_data(sees_pop_data_pk_100_old_names, overwrite = TRUE)
+
+readr::write_csv(
+  x = sees_pop_data_pk_100_old_names,
+  file = here::here("inst/extdata/example_pop_data.csv")
+)

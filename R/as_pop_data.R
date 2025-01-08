@@ -13,9 +13,7 @@
 #' @examples
 #' library(magrittr)
 #' xs_data <-
-#'   fs::path_package(
-#'      package = "serocalculator",
-#'      "extdata/example_pop_data.csv") %>%
+#'   serocalculator_example("example_pop_data.csv") %>%
 #'   read.csv() %>%
 #'   as_pop_data()
 #'

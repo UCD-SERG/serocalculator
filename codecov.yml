@@ -6,9 +6,9 @@ coverage:
         target: auto #default
         threshold: 1%
         base: auto
-        informational: true
+        informational: false
     patch:
       default:
-        target: 100%
+        target: auto
         threshold: 1%
-        informational: true
+        informational: false

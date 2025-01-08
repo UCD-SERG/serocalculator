@@ -35,8 +35,10 @@ Load a cross-sectional antibody survey data set
 \examples{
 library(magrittr)
 xs_data <-
-  "https://osf.io/download//n6cp3/" \%>\%
-  readr::read_rds() \%>\%
+  fs::path_package(
+     package = "serocalculator",
+     "extdata/example_pop_data.csv") \%>\%
+  read.csv() \%>\%
   as_pop_data()
 
 print(xs_data)

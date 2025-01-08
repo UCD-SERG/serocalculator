@@ -16,8 +16,8 @@
 #' serocalculator_example("example_pop_data.csv")
 serocalculator_example <- function(file = NULL) {
   if (is.null(file)) {
-    dir(system.file("extdata", package = "serocalculator"))
+    dir(fs::path_package("extdata", package = "serocalculator"))
   } else {
-    system.file("extdata", file, package = "serocalculator", mustWork = TRUE)
+    fs::path_package("extdata", file, package = "serocalculator")
   }
 }

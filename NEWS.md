@@ -29,7 +29,7 @@
 
 ## Internal changes
 
-* Updated `test-coverage.yml` GHA action to current `r-lib` standard.
+* Updated `test-coverage.yml` GHA action to current `r-lib` standard (#330)
 
 * Change default pipe setting (#312)
 

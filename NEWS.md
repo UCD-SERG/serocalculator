@@ -32,6 +32,9 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+
+* Updated `test-coverage.yml` GHA action to current `r-lib` standard (#330)
+
 * Change default pipe setting (#312)
 
 * Add test for missing strata in `est.incidence.by` (#227)

@@ -8,7 +8,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
+[![Codecov test
+coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
 <div id="fig-website-QR">

@@ -10,8 +10,7 @@
 #' @examples
 #' library(magrittr)
 #' noise_data <-
-#'   "https://osf.io/download//hqy4v/" %>%
-#'   readr::read_rds() %>%
+#'   example_noise_params_pk %>%
 #'   as_noise_params()
 #'
 #' print(noise_data)

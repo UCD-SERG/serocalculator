@@ -16,8 +16,9 @@
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
-#' summary(xs_data, strata = "Country")
+#' xs_data <-
+#'   sees_pop_data_pk_100
+#' summary(xs_data, strata = "catchment")
 #'
 summary.pop_data <- function(object, strata = NULL, ...) {
   # get relevant columns from object

@@ -16,16 +16,11 @@
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data <- load_pop_data(
-#'   file_path = "https://osf.io/download//n6cp3/",
-#'   age = "Age",
-#'   id = "index_id",
-#'   value = "result",
-#'   standardize = TRUE
-#' )
+#' xs_data <-
+#'   sees_pop_data_pk_100
 #'
-#' xs_data %>% autoplot(strata = "Country", type = "density")
-#' xs_data %>% autoplot(strata = "Country", type = "age-scatter")
+#' xs_data %>% autoplot(strata = "catchment", type = "density")
+#' xs_data %>% autoplot(strata = "catchment", type = "age-scatter")
 #' @export
 autoplot.pop_data <- function(
     object,

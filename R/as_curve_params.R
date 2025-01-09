@@ -9,8 +9,7 @@
 #' @examples
 #' library(magrittr)
 #' curve_data <-
-#'   "https://osf.io/download/rtw5k/" %>%
-#'   readr::read_rds() %>%
+#'   typhoid_curves_nostrat_100 %>%
 #'   as_curve_params()
 #'
 #' print(curve_data)

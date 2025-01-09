@@ -8,7 +8,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' plot1 <- graph.curve.params(curve_params)
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+#'
+#' plot1 <- graph.curve.params(curve)
 #'
 #' print(plot1)
 #' }

@@ -2,6 +2,10 @@
 
 ## New features
 
+* Added csv files for use in documentation examples (#329)
+
+* Added `serocalculator_example()` function to help locate example data files (#329)
+
 * Fixed a bug in computing the antibody response curve when $r=1$ (#323)
 
 * Added example datasets with documentation for examples and testing (#314)

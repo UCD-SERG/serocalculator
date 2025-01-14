@@ -21,7 +21,6 @@
 #' xs_data <-
 #'   sees_pop_data_pk_100
 #'
-#'
 #' # Load curve parameters and subset for the purposes of this example
 #' curve <-
 #'   typhoid_curves_nostrat_100 %>%

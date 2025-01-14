@@ -9,7 +9,8 @@
 #' @examples
 #' library(magrittr)
 #' curve_data <-
-#'   typhoid_curves_nostrat_100 %>%
+#'   serocalculator_example("example_curve_params.csv") %>%
+#'   read.csv() %>%
 #'   as_curve_params()
 #'
 #' print(curve_data)

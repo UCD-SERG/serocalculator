@@ -8,7 +8,7 @@ test_that("`serocalculator_example()` works", {
 
 
   files1 <- serocalculator_example()
-  files2 <- "example_pop_data.csv"
+  files2 <- c("example_curve_params.csv", "example_noise_params.csv", "example_pop_data.csv")
 
   expect_equal(files1, files2)
 })

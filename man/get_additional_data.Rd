@@ -29,15 +29,14 @@ Large datasets may timeout. If so, you can increase the download time by updatin
 }
 \examples{
 \dontrun{
-curve_param_samples <-
-  get_additional_data(
-    fileURL = "https://osf.io/download/bhfvx"
-  )
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
 # optionally, save the data to disk
-curve_param_samples <-
-  get_additional_data(
-    fileURL = "https://osf.io/download/bhfvx",
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")),
     savePath = "~/Downloads/curv_params.rds"
   )
 }

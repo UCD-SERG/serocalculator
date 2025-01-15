@@ -31,6 +31,7 @@
 #'   autoplot()
 #'
 #' curve
+#' }
 autoplot.curve_params <- function(
     object,
     antigen_isos = unique(object$antigen_iso),

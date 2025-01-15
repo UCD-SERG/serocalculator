@@ -18,9 +18,13 @@ NULL (invisibly)
 Check the formatting of a cross-sectional antibody survey dataset.
 }
 \examples{
-library(dplyr)
-xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") \%>\%
+library(magrittr)
+
+xs_data <-
+  serocalculator_example("example_pop_data.csv") \%>\%
+  read.csv() \%>\%
   as_pop_data()
+
 check_pop_data(xs_data, verbose = TRUE)
 
 }

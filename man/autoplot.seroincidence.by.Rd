@@ -28,20 +28,21 @@ Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
 library(dplyr)
 library(ggplot2)
 
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
-  load_pop_data()
+xs_data <-
+  sees_pop_data_pk_100
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
-noise <- load_noise_params("https://osf.io/download//hqy4v/")
+noise <-
+  example_noise_params_pk
 
 est2 <- est.incidence.by(
   strata = c("catchment"),
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  pop_data = xs_data,
   curve_params = curve,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8, #Allow for parallel processing to decrease run time
   build_graph = TRUE

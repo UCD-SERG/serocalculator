@@ -2,6 +2,8 @@
 
 ## New features
 
+* Removed function 'get_additional_data()' 
+
 * Updated documentation examples to include csv files (#328)
 
 * Added csv files for use in documentation examples (#329)

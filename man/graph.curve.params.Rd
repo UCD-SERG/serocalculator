@@ -24,7 +24,6 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Graph estimated antibody decay curve
 }
 \examples{
-\dontrun{
 curve <-
   typhoid_curves_nostrat_100 \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
@@ -32,5 +31,4 @@ curve <-
 plot1 <- graph.curve.params(curve)
 
 print(plot1)
-}
 }

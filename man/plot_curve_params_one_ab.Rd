@@ -117,7 +117,9 @@ library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
 
 curve <-
   typhoid_curves_nostrat_100 \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+  filter(antigen_iso == ("HlyE_IgG")) \%>\%
   serocalculator:::plot_curve_params_one_ab()
+
+  curve
 
 }

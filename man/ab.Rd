@@ -19,3 +19,4 @@ a \code{\link[=matrix]{matrix()}}
 \description{
 kinetics of the antibody (ab) response (power function decay)
 }
+\keyword{internal}

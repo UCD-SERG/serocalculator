@@ -113,6 +113,7 @@ mkbaseline <- function(kab, n = 1, blims, ...) {
 #' @param blims range of possible baseline antibody levels
 #' @param ... not currently used
 #' @return a [numeric()] vector
+#' @keywords internal
 mk_baseline <- function(kab, n = 1, blims, ...) {
   # yset <- rlnorm(n=1,meanlog=negpar[1],sdlog=negpar[2]);
   if (blims[kab, 2] == 0) {

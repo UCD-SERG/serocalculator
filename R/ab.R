@@ -5,6 +5,8 @@
 #' @param ... arguments passed to `baseline()`
 #'
 #' @returns a [matrix()]
+#' @export
+#' @keywords internal
 ab <- function(t, par, ...) {
   t1 <- t1func(par)
   y1 <- y1func(par)

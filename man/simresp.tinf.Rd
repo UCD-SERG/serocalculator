@@ -65,3 +65,4 @@ This function returns a \code{\link[=list]{list()}} with:
 \description{
 simulate antibody kinetics of y over a time interval
 }
+\keyword{internal}

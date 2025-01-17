@@ -21,3 +21,4 @@ a \code{\link[=numeric]{numeric()}} vector
 \description{
 generate random sample from baseline distribution
 }
+\keyword{internal}

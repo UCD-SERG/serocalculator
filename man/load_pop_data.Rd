@@ -14,7 +14,8 @@ survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[ti
   Arguments passed on to \code{\link[=as_pop_data]{as_pop_data}}
   \describe{
     \item{\code{data}}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
-    \item{\code{antigen_isos}}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
+    \item{\code{antigen_isos}}{\code{\link[=character]{character()}}
+vector of antigen isotypes to be used in analyses}
     \item{\code{age}}{a \code{\link[=character]{character()}} identifying the age column}
     \item{\code{id}}{a \code{\link[=character]{character()}} identifying the id column}
     \item{\code{value}}{a \code{\link[=character]{character()}} identifying the value column}

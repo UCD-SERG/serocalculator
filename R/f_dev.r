@@ -25,6 +25,7 @@ fdev <- function(lambda, csdata, lnpars, cond)
 #' @keywords internal
 #' @export
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' library(tibble)
 #'
@@ -75,6 +76,7 @@ fdev <- function(lambda, csdata, lnpars, cond)
 #'     lnpars = cur_curve_params,
 #'     cond = cur_noise_params
 #'   )
+#'}
 f_dev0 <- function(
       lambda,
       csdata,

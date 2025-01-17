@@ -26,6 +26,7 @@ Calculate negative log-likelihood (deviance) for one antigen:isotype pair and in
 interface with C lib \code{serocalc.so}
 }
 \examples{
+\donttest{
 library(dplyr)
 library(tibble)
 
@@ -76,5 +77,6 @@ f_dev0(
     lnpars = cur_curve_params,
     cond = cur_noise_params
   )
+}
 }
 \keyword{internal}

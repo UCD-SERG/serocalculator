@@ -13,6 +13,7 @@
 #' @return a [ggplot2::ggplot] object
 #'
 #' @examples
+#' \donttest{
 #' library(dplyr)
 #' library(ggplot2)
 #' library(magrittr)
@@ -24,6 +25,7 @@
 #'
 #' xs_data %>% autoplot(strata = "catchment", type = "density")
 #' xs_data %>% autoplot(strata = "catchment", type = "age-scatter")
+#' }
 #' @export
 autoplot.pop_data <- function(
     object,

@@ -26,6 +26,7 @@ a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 \code{autoplot()} method for \code{pop_data} objects
 }
 \examples{
+\donttest{
 library(dplyr)
 library(ggplot2)
 library(magrittr)
@@ -37,4 +38,5 @@ xs_data <-
 
 xs_data \%>\% autoplot(strata = "catchment", type = "density")
 xs_data \%>\% autoplot(strata = "catchment", type = "age-scatter")
+}
 }

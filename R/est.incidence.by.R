@@ -147,7 +147,7 @@ est.incidence.by <- function(
         "i" = "Here are the strata that will be analyzed:",
         ""
       ),
-      body = strata_table |> capture.output()
+      body = strata_table |> utils::capture.output()
     )
   }
 
@@ -217,7 +217,7 @@ est.incidence.by <- function(
 
     if (verbose) {
       cli::cli_inform(c("i" = "Elapsed time for parallelized code:"),
-        body = capture.output(time)
+        body = utils::capture.output(time)
       )
     }
   } else {
@@ -254,7 +254,7 @@ est.incidence.by <- function(
     if (verbose) {
       cli::cli_inform(
         c("i" = "Elapsed time for loop over strata: "),
-        body = capture.output(time)
+        body = utils::capture.output(time)
       )
     }
   }

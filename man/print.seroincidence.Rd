@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
+\value{
+Prints a list containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.
+}
 \description{
 Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=est.incidence]{est.incidence()}}.
 }

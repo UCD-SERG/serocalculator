@@ -2,7 +2,7 @@
 
 ## New features
 
-* Removed function 'get_additional_data()' 
+* Removed function 'get_additional_data()' (#332)
 
 * Updated documentation examples to include csv files (#328)
 

@@ -12,7 +12,7 @@
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
-Prints results from a "summary.seroincidence.by" object (constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})
+an \link{invisible} copy of input parameter \code{x}
 }
 \description{
 Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" objects (constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})

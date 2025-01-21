@@ -36,6 +36,7 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+* Updated documentation to align with previous CRAN feedback (#328)
 
 * Updated `test-coverage.yml` GHA action to current `r-lib` standard (#330)
 

@@ -6,7 +6,7 @@
 #'
 #' @param x A "summary.seroincidence.by" object (constructed by [summary.seroincidence.by()])
 #' @param ... Additional arguments affecting the summary produced.
-#' @returns Prints results from a "summary.seroincidence.by" object (constructed by [summary.seroincidence.by()])
+#' @inherit print.seroincidence return
 #' @examples
 #' \dontrun{
 #' # Estimate seroincidence

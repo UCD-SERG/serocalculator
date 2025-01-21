@@ -48,31 +48,27 @@ Calculate seroincidence from output of the seroincidence calculator
 \examples{
 library(dplyr)
 
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+xs_data <-
+  sees_pop_data_pk_100
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
-noise <- load_noise_params("https://osf.io/download//hqy4v/")
+noise <-
+  example_noise_params_pk
 
+# estimate seroincidence
 est2 <- est.incidence.by(
   strata = c("catchment"),
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
+  pop_data = xs_data,
   curve_params = curve,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8 # Allow for parallel processing to decrease run time
 )
 
-summary(est2)
-
-\dontrun{
-# estimate seroincidence
-seroincidence <- est.incidence.by(...)
-
 # calculate summary statistics for the seroincidence object
-seroincidenceSummary <- summary(seroincidence)
-}
+summary(est2)
 
 }

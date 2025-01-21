@@ -2,6 +2,10 @@
 
 ## New features
 
+* Removed function 'get_additional_data()' (#332)
+
+* Updated documentation examples to include csv files (#328)
+
 * Added csv files for use in documentation examples (#329)
 
 * Added `serocalculator_example()` function to help locate example data files (#329)

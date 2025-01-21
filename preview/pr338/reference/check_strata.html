@@ -76,8 +76,10 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sees_pop_data_pk_100</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">check_strata</span><span class="op">(</span>strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ag"</span>, <span class="st">"catch"</span>, <span class="st">"Count"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_strata(sees_pop_data_pk_100, strata = c("ag", "catch",     "Count")):</span> could not find function "check_strata"</span>
+<span class="r-in"><span>  <span class="fu">check_strata</span><span class="op">(</span>strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ag"</span>, <span class="st">"catch"</span>, <span class="st">"Count"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in check_strata(sees_pop_data_pk_100, strata = c("ag", "catch",  : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   could not find function "check_strata"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

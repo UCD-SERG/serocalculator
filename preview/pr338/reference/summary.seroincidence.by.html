@@ -109,19 +109,22 @@ The object also has the following metadata (accessible through <code><a href="ht
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="st">"https://osf.io/download//n6cp3/"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xs_data</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">sees_pop_data_pk_100</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">curve</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download/rtw5k/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, .by <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span> <span class="co"># Reduce dataset for the purposes of this example</span></span></span>
+<span class="r-in"><span><span class="va">curve</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">typhoid_curves_nostrat_100</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="load_noise_params.html">load_noise_params</a></span><span class="op">(</span><span class="st">"https://osf.io/download//hqy4v/"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">example_noise_params_pk</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># estimate seroincidence</span></span></span>
 <span class="r-in"><span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span></span>
 <span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">curve</span>,</span></span>
-<span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span></span>
 <span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="co">#num_cores = 8 # Allow for parallel processing to decrease run time</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -132,6 +135,7 @@ The object also has the following metadata (accessible through <code><a href="ht
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># calculate summary statistics for the seroincidence object</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Seroincidence estimated given the following setup:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span>
@@ -139,20 +143,12 @@ The object also has the following metadata (accessible through <code><a href="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Seroincidence estimates:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Stratum   catchment     n est.start incidence.rate      SE CI.lwr CI.upr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Stratum 1 aku         294       0.1          0.118 0.008<span style="text-decoration: underline;">25</span>  0.103  0.136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Stratum 2 kgh         200       0.1          0.183 0.013<span style="text-decoration: underline;">9</span>   0.157  0.212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># estimate seroincidence</span></span></span>
-<span class="r-in"><span><span class="va">seroincidence</span> <span class="op">&lt;-</span> <span class="fu"><a href="est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># calculate summary statistics for the seroincidence object</span></span></span>
-<span class="r-in"><span><span class="va">seroincidenceSummary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">seroincidence</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Stratu… aku          53       0.1          0.140 0.021<span style="text-decoration: underline;">6</span>  0.104  0.189     0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Stratu… kgh          47       0.1          0.200 0.030<span style="text-decoration: underline;">1</span>  0.149  0.268     0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: log.lik &lt;dbl&gt;, iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   nlm.convergence.code &lt;ord&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

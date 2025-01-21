@@ -6,7 +6,7 @@
 #'
 #' @param x A list containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
-#' @returns Prints a list containing output of function [est.incidence.by()].
+#' @returns an [invisible] copy of input parameter `x`
 #' @examples
 #' \dontrun{
 #' # Estimate seroincidence

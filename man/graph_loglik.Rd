@@ -84,13 +84,13 @@ library(dplyr)
 library(tibble)
 
 # Load cross-sectional data
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
-
+xs_data <-
+  sees_pop_data_pk_100
 
 # Load curve parameters and subset for the purposes of this example
-dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso)
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
 # Load noise parameters
 cond <- tibble(
@@ -104,7 +104,7 @@ cond <- tibble(
 lik_HlyE_IgA <- # nolint: object_name_linter
   graph_loglik(
     pop_data = xs_data,
-    curve_params = dmcmc,
+    curve_params = curve,
     noise_params = cond,
     antigen_isos = "HlyE_IgA",
     log_x = TRUE

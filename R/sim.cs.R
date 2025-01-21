@@ -31,7 +31,8 @@
 #' @export
 #' @examples
 #' # Load curve parameters
-#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+#' curve <-
+#'   typhoid_curves_nostrat_100
 #'
 #' # Specify the antibody-isotype responses to include in analyses
 #' antibodies <- c("HlyE_IgA", "HlyE_IgG")
@@ -56,7 +57,7 @@
 #'
 #' # Generate cross-sectional data
 #' csdata <- sim.cs(
-#'   curve_params = dmcmc,
+#'   curve_params = curve,
 #'   lambda = lambda,
 #'   n.smpl = nrep,
 #'   age.rng = lifespan,

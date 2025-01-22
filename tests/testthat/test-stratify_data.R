@@ -4,18 +4,15 @@ test_that("stratify_data() produces consistent results", {
   library(readr)
 
   xs_data <-
-    read_rds("https://osf.io/download//n6cp3/")  %>%
-    as_pop_data() %>%
-    filter(Country == "Pakistan")
+    sees_pop_data_pk_100 %>%
+    filter(catchment == "aku")
 
   curve <-
-    load_curve_params("https://osf.io/download/rtw5k/") %>%
-    filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-    slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+    typhoid_curves_nostrat_100 %>%
+    slice(1:100, .by = antigen_iso)
 
   noise <-
-    load_noise_params("https://osf.io/download//hqy4v/") %>%
-    filter(Country == "Pakistan")
+    example_noise_params_pk
 
   stratified_data =
     stratify_data(
@@ -36,18 +33,15 @@ test_that("stratify_data() warns about missing data", {
   library(readr)
 
   xs_data <-
-    read_rds("https://osf.io/download//n6cp3/")  %>%
-    as_pop_data() %>%
-    filter(Country == "Nepal")
+    sees_pop_data_pk_100 %>%
+    filter(catchment == "kgh")
 
   curve <-
-    load_curve_params("https://osf.io/download/rtw5k/") %>%
-    filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-    slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+    typhoid_curves_nostrat_100 %>%
+    slice(1:100, .by = antigen_iso)
 
   noise <-
-    load_noise_params("https://osf.io/download//hqy4v/") %>%
-    filter(Country == "Nepal")
+    example_noise_params_pk
 
   stratify_data(
     data = xs_data,

@@ -1,17 +1,9 @@
 test_that("`load_pop_data()` produces expected results", {
-  xs_data_true <- load_pop_data(
-    file_path = "https://osf.io/download//n6cp3/",
-    age = "Age",
-    value = "result",
-    id = "index_id",
+  xs_data_true <- load_pop_data(serocalculator_example("example_pop_data.rds"),
     standardize = TRUE
   )
 
-  xs_data_false <- load_pop_data(
-    file_path = "https://osf.io/download//n6cp3/",
-    age = "Age",
-    value = "result",
-    id = "index_id",
+  xs_data_false <- load_pop_data(serocalculator_example("example_pop_data.rds"),
     standardize = FALSE
   )
 

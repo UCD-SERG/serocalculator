@@ -4,8 +4,8 @@ test_that("`f_dev0()` and `f_dev()` produce stable results", {
   library(tibble)
 
   # load in longitudinal parameters
-  curve_params = load_curve_params(serocalculator_example("example_curve_params.rds"))
-  xs_data <- load_pop_data(serocalculator_example("example_pop_data.rds"))
+  curve_params = typhoid_curves_nostrat_100
+  xs_data <- sees_pop_data_pk_100
 
   #Load noise params
   noise_params <- tibble(

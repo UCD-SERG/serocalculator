@@ -36,6 +36,7 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+* Updated documentation to align with previous CRAN feedback (#328)
 
 * Updated tests to use internal testing datasets instead of external links (#328)
 

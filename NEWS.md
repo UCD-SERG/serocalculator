@@ -38,6 +38,8 @@
 ## Internal changes
 * Updated documentation to align with previous CRAN feedback (#328)
 
+* Updated tests to use internal testing datasets instead of external links (#328)
+
 * Updated `test-coverage.yml` GHA action to current `r-lib` standard (#330)
 
 * Change default pipe setting (#312)

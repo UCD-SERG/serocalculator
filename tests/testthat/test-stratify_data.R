@@ -4,8 +4,7 @@ test_that("stratify_data() produces consistent results", {
   library(readr)
 
   xs_data <-
-    sees_pop_data_pk_100 %>%
-    filter(catchment == "aku")
+    sees_pop_data_pk_100
 
   curve <-
     typhoid_curves_nostrat_100 %>%

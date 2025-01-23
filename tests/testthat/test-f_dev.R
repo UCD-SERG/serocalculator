@@ -20,7 +20,6 @@ test_that("`f_dev0()` and `f_dev()` produce stable results", {
   cur_data =
     xs_data %>%
     dplyr::filter(
-     .data$catchment == "dhaka",
      .data$antigen_iso == cur_antibody) %>%
     slice_head(n = 100)
 

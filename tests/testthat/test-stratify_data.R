@@ -34,7 +34,7 @@ test_that("stratify_data() warns about missing data", {
 
   xs_data <-
     sees_pop_data_pk_100 %>%
-    filter(catchment == "kgh")
+    filter(row_number() != 1)
 
   curve <-
     typhoid_curves_nostrat_100 %>%

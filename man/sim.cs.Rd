@@ -70,11 +70,7 @@ combinations
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{...}{
-  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{additional arguments passed to \code{simcs.tinf()}}
 }
 \value{
 a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey data, with columns:

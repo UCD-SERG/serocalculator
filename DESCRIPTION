@@ -45,7 +45,6 @@ Imports:
     stringr
 Suggests:
     bookdown,
-    devtag (>= 0.0.0.9000),
     DT,
     fs,
     ggbeeswarm,
@@ -70,8 +69,5 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
-Remotes: 
-    bcgov/ssdtools,
-    moodymudskipper/devtag
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2

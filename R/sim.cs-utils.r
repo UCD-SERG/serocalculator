@@ -82,20 +82,17 @@ transf <- function(y0, par) {
 #' @title
 #' Substitute baseline values
 #' @description
-#' whenever y is below a cutoff (blims[kab,2]) substitute a random sample
+#' whenever y is below a cutoff (`blims[kab,2]`), substitute a random sample
 #' from a baseline distribution
 #'
-#' @param kab an [integer]
 #' @param yvec a [numeric] [vector] of predicted biomarker values,
 #' for one biomarker
-#' @param blims a [numeric] [vector] of limits below which
-#' the predicted value should come from a baseline distribution
+#' @inheritParams mk_baseline
 #' @param ... unused
 #'
-#' @returns a []
+#' @returns an altered version of `yvec`
 #' @dev
 #'
-#' @examples
 baseline <- function(kab, yvec, blims, ...) {
   subst <- which(yvec < blims[kab, 2])
   k <- 1

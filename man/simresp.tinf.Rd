@@ -45,8 +45,12 @@ but baseline y0 are carried over from prior infections.}
     \item{\code{age}}{age at infection}
     \item{\code{nmc}}{mcmc sample to use}
     \item{\code{npar}}{number of parameters}
-    \item{\code{t}}{age at infection?}
-    \item{\code{par}}{parameters}
+    \item{\code{t}}{\link{numeric} \link{vector} of elapsed times since start of infection}
+    \item{\code{par}}{\link{numeric} \link{matrix} of model parameters:
+\itemize{
+\item rows are MCMC samples
+\item columns are biomarkers
+}}
     \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
     \item{\code{n}}{number of observations}
     \item{\code{blims}}{range of possible baseline antibody levels}

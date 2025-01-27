@@ -30,3 +30,5 @@ allpopsamples_hlye.csv$
 ^\.quarto$
 ^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$
+^man/baseline\.Rd$
+^man/mk_baseline\.Rd$

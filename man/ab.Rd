@@ -7,14 +7,25 @@
 ab(t, par, ...)
 }
 \arguments{
-\item{t}{age at infection?}
+\item{t}{\link{numeric} \link{vector} of elapsed times since start of infection}
 
-\item{par}{parameters}
+\item{par}{\link{numeric} \link{matrix} of model parameters:
+\itemize{
+\item rows are MCMC samples
+\item columns are biomarkers
+}}
 
-\item{...}{arguments passed to \code{baseline()}}
+\item{...}{
+  Arguments passed on to \code{\link[=baseline]{baseline}}
+  \describe{
+    \item{\code{yvec}}{a \link{numeric} \link{vector} of predicted biomarker values,
+for one biomarker}
+    \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
+    \item{\code{blims}}{range of possible baseline antibody levels}
+  }}
 }
 \value{
-a \code{\link[=matrix]{matrix()}}
+a \code{\link[=matrix]{matrix()}} of predicted biomarker values
 }
 \description{
 kinetics of the antibody (ab) response (power function decay)

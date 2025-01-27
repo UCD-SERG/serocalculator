@@ -6,7 +6,7 @@
 #'  - columns are biomarkers
 #' @inheritDotParams baseline
 #'
-#' @returns a [matrix()]
+#' @returns a [matrix()] of predicted biomarker values
 ab <- function(t, par, ...) {
   t1 <- t1func(par)
   y1 <- y1func(par)

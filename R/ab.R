@@ -1,8 +1,10 @@
 #' kinetics of the antibody (ab) response (power function decay)
 #'
-#' @param t age at infection?
-#' @param par parameters
-#' @param ... arguments passed to `baseline()`
+#' @param t [numeric] [vector] of elapsed times since start of infection
+#' @param par [numeric] [matrix] of model parameters:
+#'  - rows are MCMC samples
+#'  - columns are biomarkers
+#' @inheritDotParams baseline
 #'
 #' @returns a [matrix()]
 ab <- function(t, par, ...) {

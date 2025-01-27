@@ -79,8 +79,23 @@ transf <- function(y0, par) {
   return(y0 * (1 + cc2 / y0)^cc1)
 }
 
-# whenever y is below a cutoff (blims[kab,2]) substitute a random sample
-# from a baseline distribution
+#' @title
+#' Substitute baseline values
+#' @description
+#' whenever y is below a cutoff (blims[kab,2]) substitute a random sample
+#' from a baseline distribution
+#'
+#' @param kab an [integer]
+#' @param yvec a [numeric] [vector] of predicted biomarker values,
+#' for one biomarker
+#' @param blims a [numeric] [vector] of limits below which
+#' the predicted value should come from a baseline distribution
+#' @param ... unused
+#'
+#' @returns a []
+#' @dev
+#'
+#' @examples
 baseline <- function(kab, yvec, blims, ...) {
   subst <- which(yvec < blims[kab, 2])
   k <- 1
@@ -113,6 +128,7 @@ mkbaseline <- function(kab, n = 1, blims, ...) {
 #' @param blims range of possible baseline antibody levels
 #' @param ... not currently used
 #' @return a [numeric()] vector
+#' @dev
 mk_baseline <- function(kab, n = 1, blims, ...) {
   # yset <- rlnorm(n=1,meanlog=negpar[1],sdlog=negpar[2]);
   if (blims[kab, 2] == 0) {

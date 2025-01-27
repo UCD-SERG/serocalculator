@@ -113,6 +113,7 @@ then \code{n_curves} has no effect.
 }
 }
 \examples{
+\donttest{
 library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
 
 curve <-
@@ -121,5 +122,5 @@ curve <-
   serocalculator:::plot_curve_params_one_ab()
 
   curve
-
+}
 }

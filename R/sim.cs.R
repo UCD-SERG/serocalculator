@@ -23,7 +23,6 @@
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
 #' @param ... additional arguments passed to `simcs.tinf()`
-#' @inheritDotParams simcs.tinf
 #' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)

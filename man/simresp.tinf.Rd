@@ -48,7 +48,7 @@ but baseline y0 are carried over from prior infections.}
     \item{\code{t}}{\link{numeric} \link{vector} of elapsed times since start of infection}
     \item{\code{par}}{\link{numeric} \link{matrix} of model parameters:
 \itemize{
-\item rows are MCMC samples
+\item rows are parameters
 \item columns are biomarkers
 }}
     \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}

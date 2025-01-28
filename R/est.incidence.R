@@ -17,20 +17,21 @@
 #'
 #' library(dplyr)
 #'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data <-
+#'   sees_pop_data_pk_100
 #'
-#' curves <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
-#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#' noise <-
+#'   example_noise_params_pk
 #'
 #' est1 <- est.incidence(
-#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
-#'   curve_params = curves,
-#'   noise_params = noise %>% filter(Country == "Pakistan"),
+#'   pop_data = xs_data,
+#'   curve_params = curve,
+#'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
 #'
 #' summary(est1)

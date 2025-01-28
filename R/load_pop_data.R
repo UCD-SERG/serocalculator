@@ -6,7 +6,7 @@
 #' @returns a `pop_data` object (a [tibble::tbl_df] with extra attributes)
 #' @export
 #' @examples
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data <- load_pop_data(serocalculator_example("example_pop_data.rds"))
 #'
 #' print(xs_data)
 load_pop_data <- function(file_path, ...) {

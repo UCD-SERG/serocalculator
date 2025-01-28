@@ -1,4 +1,4 @@
 # `log_likelihood()` gives consistent results
 
-    -9268.8238
+    -533.379886031329
 

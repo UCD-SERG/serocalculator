@@ -9,6 +9,7 @@
 #' @param npar number of parameters
 #' @returns an array of parameters:
 #'  c(y0,b0,mu0,mu1,c1,alpha,shape)
+#' @dev
 ldpar <- function(age, antigen_isos, nmc, npar, ...) {
   dimnames1 <- list(
     params = c("y0", "b0", "mu0", "mu1", "c1", "alpha", "shape_r"),

@@ -16,7 +16,7 @@
 #' @param ... arguments passed to [simresp.tinf()]
 #'
 #' @return an [array()]
-#'
+#' @dev
 simcs.tinf <- function(
     lambda,
     n.smpl,

@@ -1,4 +1,5 @@
 Version: 1.0
+ProjectId: fe4b6051-b782-4d9f-9664-e16baa8cb2c3
 
 RestoreWorkspace: No
 SaveWorkspace: No
@@ -20,4 +21,4 @@ PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace,vignette
 
-UseNativePipeOperator: No
+UseNativePipeOperator: Yes

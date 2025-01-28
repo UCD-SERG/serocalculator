@@ -22,8 +22,8 @@ Load noise parameters
 \examples{
 library(magrittr)
 noise_data <-
-  "https://osf.io/download//hqy4v/" \%>\%
-  readr::read_rds() \%>\%
+  serocalculator_example("example_noise_params.csv") \%>\%
+  read.csv() \%>\%
   as_noise_params()
 
 print(noise_data)

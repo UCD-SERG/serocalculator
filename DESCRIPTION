@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.2.0.9018
+Version: 1.3.0.9005
 Authors@R: c(
     person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
            comment = "Author of the method and original code."),
@@ -39,10 +39,12 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    purrr
+    purrr,
+    and,
+    glue,
+    stringr
 Suggests:
     bookdown,
-    devtag (>= 0.0.0.9000),
     DT,
     fs,
     ggbeeswarm,
@@ -63,12 +65,10 @@ LinkingTo:
     Rcpp
 Config/testthat/edition: 3
 Config/Needs/build: moodymudskipper/devtag
+Config/Needs/lint: r-lib/lintr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
-Remotes: 
-    bcgov/ssdtools,
-    moodymudskipper/devtag
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2

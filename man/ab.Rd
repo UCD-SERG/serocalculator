@@ -20,7 +20,7 @@ ab(t, par, ...)
   \describe{
     \item{\code{yvec}}{a \link{numeric} \link{vector} of predicted biomarker values,
 for one biomarker}
-    \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
+    \item{\code{kab}}{\link{integer} indicating which row to read from \code{blims}}
     \item{\code{blims}}{range of possible baseline antibody levels}
   }}
 }

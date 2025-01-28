@@ -23,7 +23,8 @@ jobs:
         with:
           extra-packages: |
             any::gh
-            r-lib::lintr
+            any::cyclocomp
+            r-lib/lintr
             any::purrr
           needs: lint
 

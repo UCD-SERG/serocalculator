@@ -4,6 +4,7 @@
 
 ## Internal changes
 
+* Added test for `sim.cs()` (#344)
 * Added test for internal function `ab()` (#342)
 
 # serocalculator 1.3.0

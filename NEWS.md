@@ -6,6 +6,8 @@
 
 * Added test for internal function `ab()` (#342)
 
+* Reverted name change `ldpar()`-> `row_longitudinal_parameter()` (#343)
+
 # serocalculator 1.3.0
 
 ## New features

@@ -146,7 +146,7 @@ sim.cs <- function(
     to_return <-
       to_return %>%
       pivot_longer(
-        cols = antigen_isos,
+        cols = all_of(antigen_isos),
         values_to = c("value"),
         names_to = c("antigen_iso")
       ) %>%

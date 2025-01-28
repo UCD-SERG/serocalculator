@@ -23,7 +23,6 @@
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
 #' @param ... additional arguments passed to `simcs.tinf()`
-#' @inheritDotParams simcs.tinf
 #' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey data, with columns:
 #' * `age`: age (in days)
@@ -31,7 +30,8 @@
 #' @export
 #' @examples
 #' # Load curve parameters
-#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+#' curve <-
+#'   typhoid_curves_nostrat_100
 #'
 #' # Specify the antibody-isotype responses to include in analyses
 #' antibodies <- c("HlyE_IgA", "HlyE_IgG")
@@ -56,7 +56,7 @@
 #'
 #' # Generate cross-sectional data
 #' csdata <- sim.cs(
-#'   curve_params = dmcmc,
+#'   curve_params = curve,
 #'   lambda = lambda,
 #'   n.smpl = nrep,
 #'   age.rng = lifespan,
@@ -146,7 +146,7 @@ sim.cs <- function(
     to_return <-
       to_return %>%
       pivot_longer(
-        cols = antigen_isos,
+        cols = all_of(antigen_isos),
         values_to = c("value"),
         names_to = c("antigen_iso")
       ) %>%

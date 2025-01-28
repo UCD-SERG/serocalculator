@@ -31,7 +31,8 @@ a \code{summary.pop_data} object, which is a list containing two summary tables:
 \examples{
 library(dplyr)
 
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
-summary(xs_data, strata = "Country")
+xs_data <-
+  sees_pop_data_pk_100
+summary(xs_data, strata = "catchment")
 
 }

@@ -7,7 +7,7 @@
 baseline(kab, yvec, blims, ...)
 }
 \arguments{
-\item{kab}{index for which row of antibody baseline limits to read from \code{blims}}
+\item{kab}{\link{integer} indicating which row to read from \code{blims}}
 
 \item{yvec}{a \link{numeric} \link{vector} of predicted biomarker values,
 for one biomarker}

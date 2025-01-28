@@ -7,7 +7,7 @@
 mk_baseline(kab, n = 1, blims, ...)
 }
 \arguments{
-\item{kab}{index for which row of antibody baseline limits to read from \code{blims}}
+\item{kab}{\link{integer} indicating which row to read from \code{blims}}
 
 \item{n}{number of observations}
 

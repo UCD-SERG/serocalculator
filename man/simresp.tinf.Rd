@@ -51,7 +51,7 @@ but baseline y0 are carried over from prior infections.}
 \item rows are parameters
 \item columns are biomarkers
 }}
-    \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
+    \item{\code{kab}}{\link{integer} indicating which row to read from \code{blims}}
     \item{\code{n}}{number of observations}
     \item{\code{blims}}{range of possible baseline antibody levels}
   }}

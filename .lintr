@@ -1,4 +1,4 @@
 linters: linters_with_defaults(
-   return_linter(return_style = "explicit"))
+   return_linter = NULL)
 encoding: "UTF-8"
 

@@ -1,7 +1,7 @@
 ---
-title: "Introduction to seroincidence estimation"
+title: "Methodology"
 vignette: >
-  %\VignetteIndexEntry{Introduction to seroincidence estimation}
+  %\VignetteIndexEntry{Methodology}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
@@ -339,7 +339,10 @@ $$
 
 ::: notes
 
-The derivative of this expression doesn't come out cleanly, so we will use a *numerical method* (specifically, a Newton-type algorithm, implemented by `stats::nlm()`) to find the MLE and corresponding standard error.
+The derivative of this expression doesn't come out cleanly, 
+so we will use a *numerical method* 
+(specifically, a Newton-type algorithm, implemented by `stats::nlm()`) 
+to find the MLE and corresponding standard error.
 
 :::
 

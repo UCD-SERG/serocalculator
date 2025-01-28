@@ -70,11 +70,7 @@ combinations
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{...}{
-  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{additional arguments passed to \code{simcs.tinf()}}
 }
 \value{
 a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey data, with columns:
@@ -89,7 +85,8 @@ and adds noise, if desired.
 }
 \examples{
 # Load curve parameters
-dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+curve <-
+  typhoid_curves_nostrat_100
 
 # Specify the antibody-isotype responses to include in analyses
 antibodies <- c("HlyE_IgA", "HlyE_IgG")
@@ -114,7 +111,7 @@ dlims <- rbind(
 
 # Generate cross-sectional data
 csdata <- sim.cs(
-  curve_params = dmcmc,
+  curve_params = curve,
   lambda = lambda,
   n.smpl = nrep,
   age.rng = lifespan,

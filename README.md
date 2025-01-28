@@ -8,12 +8,18 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
+[![Codecov test
+coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
-    #> Warning: package 'qrcode' was built under R version 4.4.1
+<div id="fig-website-QR">
 
-![QR code for {serocalculator} website](man/figures/qr.svg)
+![](man/figures/qr.svg)
+
+
+Figure 1: QR code for `serocalculator` website
+
+</div>
 
 Antibody levels measured in a cross–sectional population sample can be
 translated into an estimate of the frequency with which seroconversions

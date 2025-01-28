@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg?token=85CXV6GN2T)](https://codecov.io/gh/UCD-SERG/serocalculator)
+[![Codecov test coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
 ```{r svg}
@@ -29,7 +29,7 @@ code <- qr_code("https://ucd-serg.github.io/serocalculator/")
 generate_svg(code, filename = "man/figures/qr.svg")
 ```
 
-![QR code for {serocalculator} website](man/figures/qr.svg)
+![QR code for `serocalculator` website](man/figures/qr.svg){#fig-website-QR}
 
 Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. 
 In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, 

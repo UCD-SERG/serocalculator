@@ -8,6 +8,7 @@ CMD
 Campylobacter
 Ceper
 Chiang
+Codecov
 De
 Dhulikhel
 Diekmann
@@ -17,6 +18,7 @@ FIC
 Falkenhorst
 Fogarty
 Friesema
+GHA
 Gageldonk
 Graaf
 Gras
@@ -53,6 +55,7 @@ Nadu
 OSF
 Orientia
 PLoS
+PRs
 Pebody
 Polina
 RStudio
@@ -84,9 +87,6 @@ Valk
 Vectorized
 Vellore
 Versteegh
-VignetteEncoding
-VignetteEngine
-VignetteIndexEntry
 Volterra
 Wetering
 Wiens
@@ -97,11 +97,11 @@ behaviour
 bioassays
 biomarker
 boldsymbol
-bookdown
 callout
 campylobacteriosis
 cdot
 codecov
+csv
 de
 der
 devtools
@@ -125,7 +125,6 @@ isotypes
 jinf
 jitter
 kDa
-knitr
 le
 leq
 llik
@@ -155,7 +154,6 @@ qquad
 recombinant
 renewcommand
 rescale
-rmarkdown
 savePath
 sectionally
 sera
@@ -178,11 +176,9 @@ subfigures
 th
 tibble
 titers
-toc
 tsutsugamushi
 undercount
 unstratified
 varepsilon
 vec
 vee
-xsectionalData

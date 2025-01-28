@@ -2,10 +2,6 @@
 #' @description
 #' take a random sample from longitudinal parameter set
 #' given age at infection, for a  list of antibodies
-#' `r lifecycle::badge("deprecated")`
-#' `ldpar()` was renamed to `row_longitudinal_parameter()` to create a more
-#' consistent API.
-#'
 #' @param age age at infection
 #' @param antigen_isos antigen isotypes
 #' @param nmc mcmc sample to use
@@ -13,24 +9,7 @@
 #' @param npar number of parameters
 #' @returns an array of parameters:
 #'  c(y0,b0,mu0,mu1,c1,alpha,shape)
-#' @keywords internal
 ldpar <- function(age, antigen_isos, nmc, npar, ...) {
-  lifecycle::deprecate_warn("1.0.0", "ldpar()", "row_longitudinal_parameter()")
-  row_longitudinal_parameter(age, antigen_isos, nmc, npar)
-}
-
-#' @title extract a row from longitudinal parameter set
-#' @description
-#' take a random sample from longitudinal parameter set
-#' given age at infection, for a  list of antibodies
-#' @param age age at infection
-#' @param antigen_isos antigen isotypes
-#' @param nmc mcmc sample to use
-#' @param ... passed to `simpar()`
-#' @param npar number of parameters
-#' @returns an array of parameters:
-#'  c(y0,b0,mu0,mu1,c1,alpha,shape)
-row_longitudinal_parameter <- function(age, antigen_isos, nmc, npar, ...) {
   dimnames1 <- list(
     params = c("y0", "b0", "mu0", "mu1", "c1", "alpha", "shape_r"),
     antigen_iso = antigen_isos

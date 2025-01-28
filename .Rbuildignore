@@ -32,6 +32,7 @@ allpopsamples_hlye.csv$
 ^man/ab\.Rd$
 ^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$
+^man/ldpar\.Rd$
 ^man/baseline\.Rd$
 ^man/mkbaseline\.Rd$
 ^man/mk_baseline\.Rd$

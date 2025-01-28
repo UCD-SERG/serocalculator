@@ -40,7 +40,7 @@ but baseline y0 are carried over from prior infections.}
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link[=row_longitudinal_parameter]{row_longitudinal_parameter}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
+  Arguments passed on to \code{\link[=ldpar]{ldpar}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
   \describe{
     \item{\code{age}}{age at infection}
     \item{\code{nmc}}{mcmc sample to use}

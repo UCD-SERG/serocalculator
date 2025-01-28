@@ -1,2 +1,3 @@
-linters: linters_with_defaults(
-  lintr::return_linter(return_style = "explicit")) # see vignette("lintr")
+linters: linters_with_defaults()
+encoding: "UTF-8"
+

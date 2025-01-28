@@ -28,7 +28,12 @@ allpopsamples_hlye.csv$
 ^vignettes/\.quarto$
 ^vignettes/methodology\.qmd$
 ^\.quarto$
+^revdep$
+^man/ab\.Rd$
 ^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$
 ^man/baseline\.Rd$
+^man/mkbaseline\.Rd$
 ^man/mk_baseline\.Rd$
+^man/simcs.tinf\.Rd$
+^man/simresp.tinf\.Rd$

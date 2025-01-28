@@ -113,7 +113,7 @@ baseline <- function(kab, yvec, blims, ...) {
 #' @param blims range of possible baseline antibody levels
 #' @param ... not currently used
 #' @return a [numeric()] vector
-#' @keywords internal
+#' @dev
 mkbaseline <- function(kab, n = 1, blims, ...) {
   lifecycle::deprecate_warn("1.0.0", "mkbaseline()", "mk_baseline()")
   mk_baseline(kab, n = 1, blims)

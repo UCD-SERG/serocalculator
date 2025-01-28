@@ -1,2 +1,2 @@
-linters: linters_with_defaults() # see vignette("lintr")
-encoding: "UTF-8"
+linters: linters_with_defaults(
+  return_linter(return_style = "explicit")) # see vignette("lintr")

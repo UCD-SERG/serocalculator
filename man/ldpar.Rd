@@ -25,3 +25,4 @@ c(y0,b0,mu0,mu1,c1,alpha,shape)
 take a random sample from longitudinal parameter set
 given age at infection, for a  list of antibodies
 }
+\keyword{internal}

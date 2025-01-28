@@ -3,8 +3,8 @@ test_that("`as_curve_params()` produces an error
             library(magrittr)
             expect_error(
               object = curve_data <-
-                "https://osf.io/download//n6cp3/" %>% # pop data
-                readr::read_rds() %>%
+                serocalculator_example("example_pop_data.csv") %>% # pop data
+                read.csv() %>%
                 as_curve_params(),
               class = "not curve_params"
             )
@@ -15,14 +15,14 @@ test_that("`as_curve_params()` produces an error
           {
             library(magrittr)
             expect_error(object =
-                           "https://osf.io/download//n6cp3/" %>% # pop data
+                           "example_curve_params.csv" %>% # string (not data frame)
                            as_curve_params(), class = "not data.frame")
           })
 
 test_that("`as_curve_params()` produces expected results", {
   library(dplyr)
-  test_data <- "https://osf.io/download/rtw5k/" %>% # curve data
-    readr::read_rds() %>%
+  test_data <- serocalculator_example("example_curve_params.csv") %>%
+    read.csv(row.names = 1) %>%
     slice_head(n = 100) %>%
     as_curve_params()
 

@@ -66,11 +66,14 @@ data, for a given incidence rate (\code{lambda}) value.
 library(dplyr)
 library(tibble)
 
-# load in longitudinal parameters
-dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+# Load cross-sectional data
+xs_data <-
+  sees_pop_data_pk_100
 
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
-  load_pop_data()
+# Load curve parameters and subset for the purposes of this example
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
 # Load noise params
 cond <- tibble(
@@ -84,7 +87,7 @@ cond <- tibble(
 # Calculate log-likelihood
 ll_AG <- log_likelihood(
   pop_data = xs_data,
-  curve_params = dmcmc,
+  curve_params = curve,
   noise_params = cond,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   lambda = 0.1

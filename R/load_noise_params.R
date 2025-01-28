@@ -11,7 +11,7 @@
 #' with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#' noise <- load_noise_params(serocalculator_example("example_noise_params.rds"))
 #' print(noise)
 #'
 load_noise_params <- function(file_path, antigen_isos = NULL) {

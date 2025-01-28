@@ -66,9 +66,11 @@ library(dplyr)
 library(ggplot2)
 library(magrittr)
 
-curve = load_curve_params("https://osf.io/download/rtw5k/") \%>\%
+curve <-
+  serocalculator_example("example_curve_params.csv") \%>\%
+  read.csv() \%>\%
+  as_curve_params() \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso)  \%>\% # Reduce dataset for this example
   autoplot()
 
 curve

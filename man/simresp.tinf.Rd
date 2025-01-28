@@ -40,14 +40,18 @@ but baseline y0 are carried over from prior infections.}
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link[=row_longitudinal_parameter]{row_longitudinal_parameter}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
+  Arguments passed on to \code{\link[=ldpar]{ldpar}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
   \describe{
     \item{\code{age}}{age at infection}
     \item{\code{nmc}}{mcmc sample to use}
     \item{\code{npar}}{number of parameters}
-    \item{\code{t}}{age at infection?}
-    \item{\code{par}}{parameters}
-    \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
+    \item{\code{t}}{\link{numeric} \link{vector} of elapsed times since start of infection}
+    \item{\code{par}}{\link{numeric} \link{matrix} of model parameters:
+\itemize{
+\item rows are parameters
+\item columns are biomarkers
+}}
+    \item{\code{kab}}{\link{integer} indicating which row to read from \code{blims}}
     \item{\code{n}}{number of observations}
     \item{\code{blims}}{range of possible baseline antibody levels}
   }}
@@ -65,3 +69,4 @@ This function returns a \code{\link[=list]{list()}} with:
 \description{
 simulate antibody kinetics of y over a time interval
 }
+\keyword{internal}

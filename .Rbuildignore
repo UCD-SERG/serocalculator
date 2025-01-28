@@ -19,7 +19,6 @@ allpopsamples_hlye.csv$
 ^serocalculator\.Rcheck$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
-^inst/extdata
 ^CRAN-SUBMISSION$
 ^README\.qmd$
 ^codecov\.yml$
@@ -29,5 +28,11 @@ allpopsamples_hlye.csv$
 ^vignettes/\.quarto$
 ^vignettes/methodology\.qmd$
 ^\.quarto$
+^revdep$
+^man/ab\.Rd$
+^man/baseline\.Rd$
+^man/mk_baseline\.Rd$
 ^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$
+^man/simcs.tinf\.Rd$
+^man/simresp.tinf\.Rd$

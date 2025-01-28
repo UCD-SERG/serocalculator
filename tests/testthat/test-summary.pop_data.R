@@ -1,10 +1,5 @@
-xs_data <- load_pop_data(
-  file_path = "https://osf.io/download//n6cp3/",
-  age = "Age",
-  value = "result",
-  id = "index_id",
-  standardize = TRUE
-)
+xs_data <-
+  sees_pop_data_pk_100
 
 test_that("`summary.pop_data()` produces an error when wrong stratification is provided", {
   expect_error(
@@ -19,5 +14,5 @@ test_that("`summary.pop_data()` produces stable results when `strata = NULL`", {
 })
 
 test_that("`summary.pop_data()` produces stable results with stratification", {
-  expect_snapshot(xs_data %>% summary(strata = "Country"))
+  expect_snapshot(xs_data %>% summary(strata = "catchment"))
 })

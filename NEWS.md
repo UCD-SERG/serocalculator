@@ -2,6 +2,25 @@
 
 ## New features
 
+## Internal changes
+
+* Added test for `sim.cs()` (#344)
+* Added test for internal function `ab()` (#342)
+
+* Reverted name change `ldpar()`-> `row_longitudinal_parameter()` (#343)
+
+# serocalculator 1.3.0
+
+## New features
+
+* Removed function 'get_additional_data()' (#332)
+
+* Updated documentation examples to include csv files (#328)
+
+* Added csv files for use in documentation examples (#329)
+
+* Added `serocalculator_example()` function to help locate example data files (#329)
+
 * Fixed a bug in computing the antibody response curve when $r=1$ (#323)
 
 * Added example datasets with documentation for examples and testing (#314)
@@ -28,6 +47,12 @@
 (from <https://github.com/bcgov/ssdtools>) (#265)
 
 ## Internal changes
+* Updated documentation to align with previous CRAN feedback (#328)
+
+* Updated tests to use internal testing datasets instead of external links (#328)
+
+* Updated `test-coverage.yml` GHA action to current `r-lib` standard (#330)
+
 * Change default pipe setting (#312)
 
 * Add test for missing strata in `est.incidence.by` (#227)
@@ -61,7 +86,7 @@ copied from <https://github.com/tidyverse/ggplot2>
 [GitHub actions](https://docs.github.com/en/actions), 
 including:
   - check that `README.qmd` still compiles 
-  (advice from [preventive-r-package-care](https://indrajeetpatil.github.io/preventive-r-package-care)) (#259)
+  (advice from [preventive-r-package-care](https://indrajeetpatil.github.io/preventive-r-package-care/#/preventive-care-for-r-packages)) (#259)
   - check `NEWS.md` for updated change log (#257)
   - lint changed files (#256)
 

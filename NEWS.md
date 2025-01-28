@@ -1,5 +1,11 @@
 # serocalculator (development version)
 
+## New features
+
+## Internal changes
+
+* Added test for internal function `ab()` (#342)
+
 # serocalculator 1.3.0
 
 ## New features

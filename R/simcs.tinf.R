@@ -41,7 +41,7 @@ simcs.tinf <- function(# nolint: object_name_linter
     start_days <- 1
   }
 
-  y.smpl <- array(
+  y_sample <- array(
     NA,
     dim = c(n_samples, length(antigen_isos) + 1),
     dimnames = list(
@@ -50,8 +50,7 @@ simcs.tinf <- function(# nolint: object_name_linter
     )
   )
   # y and age
-  for (k.smpl in 1:n_samples)
-  {
+  for (cur_sample in 1:n_samples) {
     resp <-
       simresp.tinf(
         lambda,
@@ -63,11 +62,11 @@ simcs.tinf <- function(# nolint: object_name_linter
         ...
       )
     # pick an age at random
-    tinf.smp <-
+    age_index <-
       sample((start_days:end_days), size = 1)
     # sample at randomly chosen age
-    y.smpl[k.smpl, ] <-
-      c(resp$t[tinf.smp], as.matrix(resp$y)[tinf.smp, ])
+    y_sample[cur_sample, ] <-
+      c(resp$t[age_index], as.matrix(resp$y)[age_index, ])
   }
-  return(y.smpl)
+  return(y_sample)
 }

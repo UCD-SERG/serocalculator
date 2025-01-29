@@ -12,7 +12,7 @@
 #' @export
 #'
 
-sim.cs.multi <- function(
+sim_pop_data_multi <- function(
     nclus = 10,
     lambdas = c(.05, .1, .15, .2, .3),
     num_cores = max(1, parallel::detectCores() - 1),
@@ -22,7 +22,7 @@ sim.cs.multi <- function(
     verbose = FALSE,
     ...) {
   if (verbose) {
-    message("inputs to `sim.cs.multi()`:")
+    message("inputs to `sim_pop_data_multi()`:")
     print(environment() %>% as.list())
   }
 

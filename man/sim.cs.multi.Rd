@@ -5,28 +5,6 @@
 \title{Simulate multiple data sets}
 \usage{
 sim.cs.multi(...)
-
-sim.cs.multi(...)
-}
-\arguments{
-\item{...}{
-  Arguments passed on to \code{\link[=sim.cs]{sim.cs}}
-  \describe{
-    \item{\code{}}{}
-  }}
-
-\item{nclus}{number of clusters}
-
-\item{rng_seed}{starting seed for random number generator, passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
-
-\item{lambdas}{#incidence rate, in events/person*year}
-
-\item{num_cores}{number of cores to use for parallel computations}
-
-\item{verbose}{whether to report verbose information}
-}
-\value{
-a \code{\link[tibble:tibble]{tibble::tibble()}}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}

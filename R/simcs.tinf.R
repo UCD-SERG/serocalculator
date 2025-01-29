@@ -26,12 +26,12 @@ simcs.tinf <- function(
     n_mcmc_samples = 0,
     renew_params = FALSE,
     ...) {
-  st.days <- round(age_range[1])
+  start_days <- round(age_range[1])
   # from min=age_range[1] days...
-  en.days <- round(age_range[2])
+  end_days <- round(age_range[2])
   # to   max=age_range[2] days...
-  if (st.days == 0) {
-    st.days <- 1
+  if (start_days == 0) {
+    start_days <- 1
   }
 
   # if(en.days>30000) en.days <- 30000;
@@ -49,7 +49,7 @@ simcs.tinf <- function(
     resp <-
       simresp.tinf(
         lambda,
-        t.end = en.days,
+        t.end = end_days,
         age_fixed = age_fixed,
         antigen_isos = antigen_isos,
         n_mcmc_samples = n_mcmc_samples,
@@ -58,7 +58,7 @@ simcs.tinf <- function(
       )
 
     tinf.smp <-
-      sample((st.days:en.days), size = 1)
+      sample((start_days:end_days), size = 1)
     # sample at random age
     y.smpl[k.smpl, ] <-
       c(resp$t[tinf.smp], as.matrix(resp$y)[tinf.smp, ])

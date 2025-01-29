@@ -61,7 +61,18 @@ sim_pop_data_multi <- function(
   }
 
   if (num_cores > 1L) {
-    num_cores <- num_cores %>% check_parallel_cores()
+
+    chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
+
+    if (nzchar(chk) && chk == "TRUE") {
+      # use 2 cores in CRAN/Travis/AppVeyor
+      num_cores <- 2L
+    } else {
+      # use all cores in devtools::test()
+      num_cores <- num_cores %>% check_parallel_cores()
+    }
+
+
 
     if (verbose) {
       message("Setting up parallel processing with `num_cores` = ", num_cores, ".")

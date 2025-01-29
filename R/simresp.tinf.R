@@ -60,7 +60,7 @@ simresp.tinf <- function(# nolint: object_name_linter
 
   t_next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
 
-  age = if_else(!is.na(age_fixed), age_fixed, t_next / day2yr)
+  age <- if_else(!is.na(age_fixed), age_fixed, t_next / day2yr)
 
   mcpar <- ldpar(
     age = age,

@@ -75,7 +75,8 @@ sim_pop_data_multi <- function(
 
 
     if (verbose) {
-      message("Setting up parallel processing with `num_cores` = ", num_cores, ".")
+      cli::cli_inform("Setting up parallel processing with
+                      `num_cores` = {num_cores}.")
     }
   }
 
@@ -88,9 +89,9 @@ sim_pop_data_multi <- function(
   i <- NA
   r <- NA
 
-  sim.df <-
+  sim_df <-
     foreach::foreach(
-      i = 1:length(lambdas),
+      i = seq_along(lambdas),
       .combine = bind_rows
     ) %:%
     foreach::foreach(
@@ -107,7 +108,7 @@ sim_pop_data_multi <- function(
         mutate(lambda.sim = l, cluster = n)
     }
   doParallel::stopImplicitCluster()
-  return(sim.df)
+  return(sim_df)
 }
 
 #' @title Simulate multiple data sets

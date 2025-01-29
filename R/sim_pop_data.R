@@ -49,11 +49,9 @@
 #' set.seed(54321)
 #'
 #' # Simulated incidence rate per person-year
-#' lambda <- 0.2;
-#'
+#' lambda <- 0.2
 #' # Range covered in simulations
-#' lifespan <- c(0, 10);
-#'
+#' lifespan <- c(0, 10)
 #' # Cross-sectional sample size
 #' nrep <- 100
 #'
@@ -84,7 +82,8 @@ sim_pop_data <- function(
     age_fixed = NA,
     antigen_isos = intersect(
       get_biomarker_levels(curve_params),
-      rownames(noise_limits)),
+      rownames(noise_limits)
+    ),
     n_mcmc_samples = 0,
     renew_params = FALSE,
     add_noise = FALSE,
@@ -100,10 +99,11 @@ sim_pop_data <- function(
 
 
 
-  # predpar is an [array()] containing MCMC samples from the Bayesian distribution
+  # predpar is an [array()] containing
+  # MCMC samples from the Bayesian distribution
   # of longitudinal decay curve model parameters.
-  # NOTE: most users should leave `predpar` at its default value and provide
-  # `curve_params` instead.
+  # NOTE: most users should leave `predpar` at its default value
+  # and provide `curve_params` instead.
 
   predpar <-
     curve_params %>%

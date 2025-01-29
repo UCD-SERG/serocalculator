@@ -40,7 +40,7 @@
 #' @export
 #' @examples
 #' # Load curve parameters
-#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k")
+#' dmcmc <- typhoid_curves_nostrat_100
 #'
 #' # Specify the antibody-isotype responses to include in analyses
 #' antibodies <- c("HlyE_IgA", "HlyE_IgG")

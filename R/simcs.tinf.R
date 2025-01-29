@@ -64,10 +64,10 @@ simcs.tinf <- function(# nolint: object_name_linter
         renew_params = renew_params,
         ...
       )
-
+    # pick an age at random
     tinf.smp <-
       sample((start_days:end_days), size = 1)
-    # sample at random age
+    # sample at randomly chosen age
     y.smpl[k.smpl, ] <-
       c(resp$t[tinf.smp], as.matrix(resp$y)[tinf.smp, ])
   }

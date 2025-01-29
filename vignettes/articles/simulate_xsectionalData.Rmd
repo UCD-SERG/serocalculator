@@ -111,7 +111,7 @@ dmcmc %>%
 
 ## Simulate cross-sectional data
 
-```{r "sim.cs"}
+```{r "sim_pop_data"}
 # set seed to reproduce results
 set.seed(54321)
 

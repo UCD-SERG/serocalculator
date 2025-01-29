@@ -24,12 +24,55 @@ sim_pop_data_multi(
 
 \item{rng_seed}{starting seed for random number generator, passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 
+\item{renew_params}{whether to generate a new parameter set for each
+infection
+\itemize{
+\item \code{renew_params = TRUE} generates a new parameter set for each infection
+\item \code{renew_params = FALSE} keeps the one selected at birth,
+but updates baseline y0
+}}
+
+\item{add_noise}{a \code{\link[=logical]{logical()}} indicating
+whether to add biological and measurement noise}
+
 \item{verbose}{whether to report verbose information}
 
 \item{...}{
-  Arguments passed on to \code{\link[=sim.cs]{sim.cs}}
+  Arguments passed on to \code{\link[=sim_pop_data]{sim_pop_data}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
+(in events per person-years)}
+    \item{\code{n_samples}}{number of samples to simulate}
+    \item{\code{age_range}}{age range of sampled individuals, in years}
+    \item{\code{age_fixed}}{specify the curve parameters to use by age
+(does nothing at present?)}
+    \item{\code{antigen_isos}}{Character vector with one or more antibody names.
+Values must match \code{curve_params}.}
+    \item{\code{n_mcmc_samples}}{how many MCMC samples to use:
+\itemize{
+\item when \code{n_mcmc_samples} is in \code{1:4000} a fixed posterior sample is used
+\item when \code{n_mcmc_samples} = \code{0}, a random sample is chosen
+}}
+    \item{\code{noise_limits}}{biologic noise distribution parameters}
+    \item{\code{format}}{a \code{\link[=character]{character()}} variable, containing either:
+\itemize{
+\item \code{"long"} (one measurement per row) or
+\item \code{"wide"} (one serum sample per row)
+}}
+    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:
+\itemize{
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype
+combinations
+\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
+\item \code{y1}: antibody peak level (ELISA units)
+\item \code{t1}: duration of infection
+\item \code{alpha}: antibody decay rate
+(1/days for the current longitudinal parameter sets)
+\item \code{r}: shape factor of antibody decay
+}}
   }}
 }
 \value{

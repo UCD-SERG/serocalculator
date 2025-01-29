@@ -6,12 +6,11 @@
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
 #' @param ... arguments passed to [sim.cs()]
-#' @inheritParams sim.cs
-#' @inheritDotParams sim.cs
+#' @inheritParams sim_pop_data
+#' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export
 #'
-
 sim_pop_data_multi <- function(
     nclus = 10,
     lambdas = c(.05, .1, .15, .2, .3),

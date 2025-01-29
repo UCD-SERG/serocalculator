@@ -45,10 +45,10 @@ keeps the one selected at birth, but updates baseline y0
 }
 \value{
 an \code{\link[=array]{array()}} with dimensions
-\link{n_samples, length(antigen_isos) + 1},
-where rows are observations and columns are age and biomarkers
+\code{n_samples}, \code{length(antigen_isos) + 1},
+where rows are observations and columns are age and biomarkers y(t)
 }
 \description{
-output: (age, y(t) set)
+collect cross-sectional data
 }
 \keyword{internal}

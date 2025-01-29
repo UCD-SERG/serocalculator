@@ -1,7 +1,5 @@
 #' collect cross-sectional data
 #'
-#' @description output: (age, y(t) set)
-#'
 #' @param lambda seroconversion rate (in events/person-day)
 #' @param n_samples
 #' number of samples n_samples (= nr of simulated records)
@@ -23,8 +21,8 @@
 #' @param ... arguments passed to [simresp.tinf()]
 #'
 #' @returns an [array()] with dimensions
-#' [n_samples, length(antigen_isos) + 1],
-#' where rows are observations and columns are age and biomarkers
+#' `n_samples`, `length(antigen_isos) + 1`,
+#' where rows are observations and columns are age and biomarkers y(t)
 #' @keywords internal
 simcs.tinf <- function(# nolint: object_name_linter
     lambda,

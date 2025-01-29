@@ -7,7 +7,6 @@
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
 #' @param ... arguments passed to [sim.cs()]
-#' @inheritParams sim_pop_data
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export

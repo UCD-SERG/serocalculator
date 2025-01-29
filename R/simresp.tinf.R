@@ -29,7 +29,7 @@
 #' * y = antibody level, for each antibody signal
 #' * smp = whether an infection involves a big jump or a small jump
 #' * t.inf = times when infections have occurred.
-#' @dev
+#' @keywords internal
 simresp.tinf <- function(
     lambda,
     t.end,

@@ -23,7 +23,7 @@
 #' @returns an [array()] with dimensions
 #' `n_samples`, `length(antigen_isos) + 1`,
 #' where rows are observations and columns are age and biomarkers y(t)
-#' @keywords internal
+#' @dev
 simcs.tinf <- function(# nolint: object_name_linter
     lambda,
     n_samples,

@@ -18,7 +18,7 @@
 #' generates a new parameter set for each infection
 #' * `renew_params = FALSE`
 #' keeps the one selected at birth, but updates baseline y0
-#' @inheritDotParams simresp.tinf
+#' @inheritDotParams simresp.tinf -t_end
 #'
 #' @returns an [array()] with dimensions
 #' `n_samples`, `length(antigen_isos) + 1`,

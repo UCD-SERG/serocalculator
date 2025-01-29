@@ -44,7 +44,6 @@ keeps the one selected at birth, but updates baseline y0
 \item{...}{
   Arguments passed on to \code{\link[=simresp.tinf]{simresp.tinf}}
   \describe{
-    \item{\code{t_end}}{end of time interval (beginning is time 0) in days(?)}
     \item{\code{predpar}}{an \code{\link[=array]{array()}} with dimensions named:
 \itemize{
 \item \code{antigen_iso}

@@ -35,5 +35,4 @@ allpopsamples_hlye.csv$
 ^man/check_strata\.Rd$
 ^man/df_to_array\.Rd$
 ^man/ldpar\.Rd$
-^man/simcs.tinf\.Rd$
 ^man/simresp.tinf\.Rd$

@@ -22,10 +22,10 @@
 #' keeps the one selected at birth, but updates baseline y0
 #' @param ... arguments passed to [simresp.tinf()]
 #'
-#' @return an [array()] with dimensions
+#' @returns an [array()] with dimensions
 #' [n_samples, length(antigen_isos) + 1],
 #' where rows are observations and columns are age and biomarkers
-#' @dev
+#' @keywords internal
 simcs.tinf <- function(# nolint: object_name_linter
     lambda,
     n_samples,

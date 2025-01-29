@@ -138,6 +138,7 @@
 #' @importFrom dplyr group_by
 #' @importFrom dplyr if_all
 #' @importFrom dplyr if_any
+#' @importFrom dplyr if_else
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr is.grouped_df
 #' @importFrom dplyr mutate

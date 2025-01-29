@@ -23,7 +23,7 @@ Depends:
 Imports: 
     cli,
     doParallel,
-    dplyr (>= 1.1.1),
+    dplyr,
     foreach,
     ggplot2,
     ggpubr,

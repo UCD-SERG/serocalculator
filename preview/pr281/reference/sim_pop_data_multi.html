@@ -85,13 +85,68 @@
 <dd><p>starting seed for random number generator, passed to <code><a href="https://rdrr.io/pkg/rngtools/man/RNGseq.html" class="external-link">rngtools::RNGseq()</a></code></p></dd>
 
 
+<dt id="arg-renew-params">renew_params<a class="anchor" aria-label="anchor" href="#arg-renew-params"></a></dt>
+<dd><p>whether to generate a new parameter set for each
+infection</p><ul><li><p><code>renew_params = TRUE</code> generates a new parameter set for each infection</p></li>
+<li><p><code>renew_params = FALSE</code> keeps the one selected at birth,
+but updates baseline y0</p></li>
+</ul></dd>
+
+
+<dt id="arg-add-noise">add_noise<a class="anchor" aria-label="anchor" href="#arg-add-noise"></a></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> indicating
+whether to add biological and measurement noise</p></dd>
+
+
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>whether to report verbose information</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="sim.cs.html">sim.cs</a></code></p><dl><dt><code></code></dt>
-<dd></dd>
+<dd><p>Arguments passed on to <code><a href="sim_pop_data.html">sim_pop_data</a></code></p><dl><dt><code>lambda</code></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code> scalar indicating the incidence rate
+(in events per person-years)</p></dd>
+
+    <dt><code>n_samples</code></dt>
+<dd><p>number of samples to simulate</p></dd>
+
+    <dt><code>age_range</code></dt>
+<dd><p>age range of sampled individuals, in years</p></dd>
+
+    <dt><code>age_fixed</code></dt>
+<dd><p>specify the curve parameters to use by age
+(does nothing at present?)</p></dd>
+
+    <dt><code>antigen_isos</code></dt>
+<dd><p>Character vector with one or more antibody names.
+Values must match <code>curve_params</code>.</p></dd>
+
+    <dt><code>n_mcmc_samples</code></dt>
+<dd><p>how many MCMC samples to use:</p><ul><li><p>when <code>n_mcmc_samples</code> is in <code>1:4000</code> a fixed posterior sample is used</p></li>
+<li><p>when <code>n_mcmc_samples</code> = <code>0</code>, a random sample is chosen</p></li>
+</ul></dd>
+
+    <dt><code>noise_limits</code></dt>
+<dd><p>biologic noise distribution parameters</p></dd>
+
+    <dt><code>format</code></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> variable, containing either:</p><ul><li><p><code>"long"</code> (one measurement per row) or</p></li>
+<li><p><code>"wide"</code> (one serum sample per row)</p></li>
+</ul></dd>
+
+    <dt><code>curve_params</code></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype
+combinations</p></li>
+<li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
+<li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
+<li><p><code>y1</code>: antibody peak level (ELISA units)</p></li>
+<li><p><code>t1</code>: duration of infection</p></li>
+<li><p><code>alpha</code>: antibody decay rate
+(1/days for the current longitudinal parameter sets)</p></li>
+<li><p><code>r</code>: shape factor of antibody decay</p></li>
+</ul></dd>
 
 
 </dl></dd>

@@ -9,8 +9,6 @@ sim_pop_data_multi(
   lambdas = c(0.05, 0.1, 0.15, 0.2, 0.3),
   num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
-  renew_params = TRUE,
-  add_noise = TRUE,
   verbose = FALSE,
   ...
 )
@@ -22,18 +20,8 @@ sim_pop_data_multi(
 
 \item{num_cores}{number of cores to use for parallel computations}
 
-\item{rng_seed}{starting seed for random number generator, passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
-
-\item{renew_params}{whether to generate a new parameter set for each
-infection
-\itemize{
-\item \code{renew_params = TRUE} generates a new parameter set for each infection
-\item \code{renew_params = FALSE} keeps the one selected at birth,
-but updates baseline y0
-}}
-
-\item{add_noise}{a \code{\link[=logical]{logical()}} indicating
-whether to add biological and measurement noise}
+\item{rng_seed}{starting seed for random number generator,
+passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 
 \item{verbose}{whether to report verbose information}
 
@@ -53,6 +41,15 @@ Values must match \code{curve_params}.}
 \item when \code{n_mcmc_samples} is in \code{1:4000} a fixed posterior sample is used
 \item when \code{n_mcmc_samples} = \code{0}, a random sample is chosen
 }}
+    \item{\code{renew_params}}{whether to generate a new parameter set for each
+infection
+\itemize{
+\item \code{renew_params = TRUE} generates a new parameter set for each infection
+\item \code{renew_params = FALSE} keeps the one selected at birth,
+but updates baseline y0
+}}
+    \item{\code{add_noise}}{a \code{\link[=logical]{logical()}} indicating
+whether to add biological and measurement noise}
     \item{\code{noise_limits}}{biologic noise distribution parameters}
     \item{\code{format}}{a \code{\link[=character]{character()}} variable, containing either:
 \itemize{
@@ -80,4 +77,43 @@ a \code{\link[tibble:tibble]{tibble::tibble()}}
 }
 \description{
 Simulate multiple data sets
+}
+\examples{
+# Load curve parameters
+dmcmc <- typhoid_curves_nostrat_100
+
+# Specify the antibody-isotype responses to include in analyses
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
+# Set seed to reproduce results
+set.seed(54321)
+
+# Simulated incidence rate per person-year
+lambdas = c(.05, .1, .15, .2, .3)
+
+# Range covered in simulations
+lifespan <- c(0, 10);
+
+# Cross-sectional sample size
+nrep <- 100
+
+# Biologic noise distribution
+dlims <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5)
+)
+
+sim_pop_data_multi(
+  curve_params = dmcmc,
+  lambdas = lambdas,
+  n_samples = nrep,
+  age_range = lifespan,
+  antigen_isos = antibodies,
+  n_mcmc_samples = 0,
+  renew_params = TRUE,
+  add_noise = TRUE,
+  noise_limits = dlims,
+  format = "long",
+  nclus = 10)
+
 }

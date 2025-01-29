@@ -52,7 +52,7 @@ blims <- matrix(
    ncol = 2L,
    dimnames = list(c("HlyE_IgA", "HlyE_IgG"), c("min", "max"))
    )
-preds <- ab(t = t, par = par1, blims = blims)
+preds <- serocalculator:::ab(t = t, par = par1, blims = blims)
 
 }
 \keyword{internal}

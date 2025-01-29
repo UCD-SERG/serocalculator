@@ -1,7 +1,8 @@
 #' Simulate multiple data sets
 #'
 #' @param nclus  number of clusters
-#' @param rng_seed starting seed for random number generator, passed to [rngtools::RNGseq()]
+#' @param rng_seed starting seed for random number generator,
+#' passed to [rngtools::RNGseq()]
 #' @param lambdas #incidence rate, in events/person*year
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
@@ -10,14 +11,49 @@
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export
+#' @examples
+#' # Load curve parameters
+#' dmcmc <- typhoid_curves_nostrat_100
+#'
+#' # Specify the antibody-isotype responses to include in analyses
+#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
+#'
+#' # Set seed to reproduce results
+#' set.seed(54321)
+#'
+#' # Simulated incidence rate per person-year
+#' lambdas = c(.05, .1, .15, .2, .3)
+#'
+#' # Range covered in simulations
+#' lifespan <- c(0, 10);
+#'
+#' # Cross-sectional sample size
+#' nrep <- 100
+#'
+#' # Biologic noise distribution
+#' dlims <- rbind(
+#'   "HlyE_IgA" = c(min = 0, max = 0.5),
+#'   "HlyE_IgG" = c(min = 0, max = 0.5)
+#' )
+#'
+#' sim_pop_data_multi(
+#'   curve_params = dmcmc,
+#'   lambdas = lambdas,
+#'   n_samples = nrep,
+#'   age_range = lifespan,
+#'   antigen_isos = antibodies,
+#'   n_mcmc_samples = 0,
+#'   renew_params = TRUE,
+#'   add_noise = TRUE,
+#'   noise_limits = dlims,
+#'   format = "long",
+#'   nclus = 10)
 #'
 sim_pop_data_multi <- function(
     nclus = 10,
     lambdas = c(.05, .1, .15, .2, .3),
     num_cores = max(1, parallel::detectCores() - 1),
     rng_seed = 1234,
-    renew_params = TRUE,
-    add_noise = TRUE,
     verbose = FALSE,
     ...) {
   if (verbose) {
@@ -56,8 +92,6 @@ sim_pop_data_multi <- function(
       rngtools::setRNG(r)
       sim_pop_data(
         lambda = l,
-        renew_params = renew_params,
-        add_noise = add_noise,
         ...
       ) %>%
         mutate(lambda.sim = l, cluster = n)

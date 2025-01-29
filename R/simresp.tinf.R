@@ -5,25 +5,31 @@
 #' * `parameter`
 #' * `obs`
 #' @param lambda seroconversion rate (1/days),
-#' @param age_fixed parameter estimates for fixed age (age_fixed in years) or not.
+#' @param age_fixed
+#' parameter estimates for fixed age (age_fixed in years) or not.
 #' when age_fixed = NA then age at infection is used.
 #' @param antigen_isos antigen isotypes
 #' @param n_mcmc_samples a posterior sample may be selected (1:4000), or not
 #' when n_mcmc_samples = 0 a posterior sample is chosen at random.
-#' @param renew_params At infection, a new parameter sample may be generated (when `renew_params = TRUE`).
-#' Otherwise (when `renew_params = FALSE`), a sample is generated at birth and kept,
+#' @param renew_params At infection,
+#' a new parameter sample may be generated
+#' (when `renew_params = TRUE`).
+#' Otherwise (when `renew_params = FALSE`),
+#' a sample is generated at birth and kept,
 #' but baseline y0 are carried over from prior infections.
-#' @param ... additional arguments passed to [row_longitudinal_parameter()], [mk_baseline()], and [ab()]
-#' @inheritDotParams row_longitudinal_parameter
+#' @param ... additional arguments passed to
+#' [ldpar()], [mk_baseline()], and [ab()]
+#' @inheritDotParams ldpar
 #' @inheritDotParams ab
 #' @inheritDotParams mk_baseline
 #' @returns This function returns a [list()] with:
 #' * t = times (in days, birth at day 0),
-#' * b = bacteria level, for each antibody signal (not used; probably meaningless),
+#' * b = bacteria level, for each antibody signal
+#' (not used; probably meaningless),
 #' * y = antibody level, for each antibody signal
 #' * smp = whether an infection involves a big jump or a small jump
 #' * t.inf = times when infections have occurred.
-#'
+#' @dev
 simresp.tinf <- function(
     lambda,
     t.end,
@@ -54,13 +60,14 @@ simresp.tinf <- function(
 
   # set.seed(975313579)
   t.next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
-  if (!is.na(age_fixed)) {
-    mcpar <- row_longitudinal_parameter(age_fixed, antigen_isos, nmc, predpar = predpar, ...)
-  }
 
-  if (is.na(age_fixed)) {
-    mcpar <- row_longitudinal_parameter(t.next / day2yr, antigen_isos, nmc, predpar = predpar, ...)
-  }
+    mcpar <- ldpar(
+      age =
+        if (!is.na(age_fixed)) age_fixed else t.next / day2yr,
+      antigen_isos,
+      nmc,
+      predpar = predpar,
+      ...)
 
   par.now <- mcpar
 
@@ -110,19 +117,19 @@ simresp.tinf <- function(
     t0 <- t0 + t.next
 
     if (!renew_params) {
-      if (!is.na(age_fixed)) {
-        par.now <- row_longitudinal_parameter(age_fixed, antigen_isos, nmc, predpar = predpar, ...)
-      }
-
-      if (is.na(age_fixed)) {
-        par.now <- row_longitudinal_parameter(t0 / day2yr, antigen_isos, nmc, predpar = predpar, ...)
-      }
+      par.now <- ldpar(
+        if (!is.na(age_fixed)) age_fixed else t0 / day2yr,
+        antigen_isos,
+        nmc,
+        predpar = predpar, ...)
 
       b0 <- b.inf
       # b0 <- runif(n=1,min=1,max=200); not implemented
       par.now[1, ] <- y.end
       # y0 = y at end of prior episode
-    } # note: the renew_params == TRUE case is handled many lines below
+    }
+    # note: the renew_params == TRUE case is handled many lines below
+
     t.next <- -log(runif(1, 0, 1)) / lambda
     if (t0 <= t.end & t0 + t.next > t.end) {
       t.next <- t.end - t0
@@ -153,14 +160,15 @@ simresp.tinf <- function(
         nmc <- sample.int(n = mcsize, size = 1)
       }
     }
-    # DM: it might be possible to remove these lines and remove the !renew_params condition near the top of the while() loop
-    if (!is.na(age_fixed)) {
-      par.now <- row_longitudinal_parameter(age_fixed, antigen_isos, nmc, predpar = predpar, ...)
-    }
-
-    if (is.na(age_fixed)) {
-      par.now <- row_longitudinal_parameter((t0 + t.next) / day2yr, antigen_isos, nmc, predpar = predpar, ...)
-    }
+    # DM: it might be possible to remove these lines and
+    # remove the !renew_params condition
+    # near the top of the while() loop
+      par.now <- ldpar(
+        if (!is.na(age_fixed)) age_fixed else (t0 + t.next) / day2yr,
+        antigen_isos,
+        nmc,
+        predpar = predpar,
+        ...)
   }
   return(list(
     t = t,

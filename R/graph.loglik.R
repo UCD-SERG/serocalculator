@@ -3,8 +3,10 @@
 #' @param highlight_points a possible highlighted value
 #' @param x sequence of lambda values to graph
 #' @param highlight_point_names labels for highlighted points
-#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
-#' @param previous_plot if not NULL, the current data is added to the existing graph
+#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`)
+#' or linear scale (`FALSE`, default)?
+#' @param previous_plot if not NULL, the current data is added to the
+#' existing graph
 #' @param curve_label if not NULL, add a label for the curve
 #' @inheritParams log_likelihood
 #' @inheritDotParams log_likelihood -lambda
@@ -16,13 +18,13 @@
 #' library(tibble)
 #'
 #' # Load cross-sectional data
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
-#'
+#' xs_data <-
+#'   sees_pop_data_pk_100
 #'
 #' # Load curve parameters and subset for the purposes of this example
-#' dmcmc <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by = antigen_iso)
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
 #' # Load noise parameters
 #' cond <- tibble(
@@ -33,21 +35,22 @@
 #'   y.high = c(5e6, 5e6))                      # High cutoff (y.high)
 #'
 #' # Graph the log likelihood
-#' lik_HlyE_IgA <- graph.loglik(
-#'   pop_data = xs_data,
-#'   curve_params = dmcmc,
-#'   noise_params = cond,
-#'   antigen_isos = "HlyE_IgA",
-#'   log_x = TRUE
+#' lik_HlyE_IgA <- # nolint: object_name_linter
+#'   graph_loglik(
+#'     pop_data = xs_data,
+#'     curve_params = curve,
+#'     noise_params = cond,
+#'     antigen_isos = "HlyE_IgA",
+#'     log_x = TRUE
 #' )
 #'
-#' lik_HlyE_IgA
+#' lik_HlyE_IgA # nolint: object_name_linter
 #'
-graph.loglik = function(
+graph_loglik <- function(
     pop_data,
     curve_params,
     noise_params,
-    antigen_isos,
+    antigen_isos = pop_data %>% get_biomarker_levels(),
     x = 10^seq(-3, 0, by = .1),
     highlight_points = NULL,
     highlight_point_names = "highlight_points",
@@ -55,8 +58,11 @@ graph.loglik = function(
     previous_plot = NULL,
     curve_label = paste(antigen_isos, collapse = " + "),
     ...) {
-  if (!is.list(curve_params) &&
-    !is.element("d", names(curve_params))) {
+
+  needs_rescale <-
+    !is.list(curve_params) &&
+    !is.element("d", names(curve_params))
+  if (needs_rescale) {
     curve_params <-
       curve_params %>%
       dplyr::mutate(

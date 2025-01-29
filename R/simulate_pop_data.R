@@ -196,6 +196,6 @@ simulate_pop_data <- function(
 #'
 #' @keywords internal
 sim.cs <- function(...) { # nolint: object_name_linter
-  lifecycle::deprecate_warn("2.0.0", "sim.cs()", "simulate_pop_data()")
+  lifecycle::deprecate_soft("1.3.1", "sim.cs()", "simulate_pop_data()")
   simulate_pop_data(...)
 }

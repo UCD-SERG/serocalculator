@@ -12,7 +12,7 @@ plot_curve_params_one_ab(
   n_points = 1000,
   log_x = FALSE,
   log_y = TRUE,
-  rows_to_graph = 1:min(n_curves, nrow(object)),
+  rows_to_graph = seq_len(min(n_curves, nrow(object))),
   xlim = c(10^-1, 10^3.1),
   ...
 )
@@ -22,7 +22,8 @@ plot_curve_params_one_ab(
 
 \item{verbose}{verbose output}
 
-\item{alpha}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}}) how transparent the curves should be:
+\item{alpha}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})
+how transparent the curves should be:
 \itemize{
 \item 0 = fully transparent (invisible)
 \item 1 = fully opaque
@@ -30,13 +31,17 @@ plot_curve_params_one_ab(
 
 \item{n_curves}{how many curves to plot (see details).}
 
-\item{n_points}{Number of points to interpolate along the x axis (passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
+\item{n_points}{Number of points to interpolate along the x axis
+(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
 
-\item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+\item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE})
+or linear scale (\code{FALSE}, default)?}
 
-\item{log_y}{should the Y-axis be on a logarithmic scale (default, \code{TRUE}) or linear scale (\code{FALSE})?}
+\item{log_y}{should the Y-axis be on a logarithmic scale
+(default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
-\item{rows_to_graph}{which rows of \code{curve_params} to plot (overrides \code{n_curves}).}
+\item{rows_to_graph}{which rows of \code{curve_params} to plot
+(overrides \code{n_curves}).}
 
 \item{xlim}{range of x values to graph}
 
@@ -94,19 +99,28 @@ Graph an antibody decay curve model
 \details{
 \subsection{\code{n_curves} and \code{rows_to_graph}}{
 
-In most cases, \code{curve_params} will contain too many rows of MCMC samples for all of these samples to be plotted at once.
+In most cases, \code{curve_params} will contain too many rows of MCMC
+samples for all of these samples to be plotted at once.
 \itemize{
-\item Setting the  \code{n_curves} argument to a value smaller than the number of rows in \code{curve_params} will cause this function to select the first \code{n_curves} rows to graph.
-\item Setting \code{n_curves} larger than the number of rows in ` will result all curves being plotted.
-\item If the user directly specifies the \code{rows_to_graph} argument, then \code{n_curves} has no effect.
+\item Setting the  \code{n_curves} argument to a value smaller than the
+number of rows in \code{curve_params} will cause this function to select
+the first \code{n_curves} rows to graph.
+\item Setting \code{n_curves} larger than the number of rows in ` will
+result all curves being plotted.
+\item If the user directly specifies the \code{rows_to_graph} argument,
+then \code{n_curves} has no effect.
 }
 }
 }
 \examples{
+\donttest{
 library(dplyr) # loads the `\%>\%` operator and `dplyr::filter()`
 
-load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  dplyr::filter(antigen_iso == "HlyE_IgG") \%>\%
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso == ("HlyE_IgG")) \%>\%
   serocalculator:::plot_curve_params_one_ab()
 
+  curve
+}
 }

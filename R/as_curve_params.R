@@ -9,8 +9,8 @@
 #' @examples
 #' library(magrittr)
 #' curve_data <-
-#'   "https://osf.io/download/rtw5k/" %>%
-#'   readr::read_rds() %>%
+#'   serocalculator_example("example_curve_params.csv") %>%
+#'   read.csv() %>%
 #'   as_curve_params()
 #'
 #' print(curve_data)
@@ -32,6 +32,8 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     data %>%
     tibble::as_tibble()
 
+  # check if object has expected columns:
+
   # define curve columns
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
@@ -41,7 +43,6 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   # get any missing column(s)
   missing_cols <- setdiff(x = curve_cols, y = data_cols)
 
-  # check if object is curve (with columns)
   if (length(missing_cols) > 0) {
 
     cli::cli_abort(

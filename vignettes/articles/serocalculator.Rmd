@@ -1,13 +1,13 @@
 ---
-title: "Methodology"
+title: "Introduction to serocalculator"
 description: >
   A summary of the methods behind serocalculator.
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Methodology}
+  %\VignetteIndexEntry{Introduction to serocalculator}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: references.bib
+bibliography: ../references.bib
 ---
 
 ## Overview

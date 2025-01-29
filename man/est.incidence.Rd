@@ -21,20 +21,27 @@ est.incidence(
 \arguments{
 \item{pop_data}{a \link{data.frame} with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:
 \itemize{
-\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype
+combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
 \item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
 \item \code{y1}: antibody peak level (ELISA units)
 \item \code{t1}: duration of infection
-\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
+\item \code{alpha}: antibody decay rate
+(1/days for the current longitudinal parameter sets)
 \item \code{r}: shape factor of antibody decay
 }}
 
-\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}})
+containing the following variables,
+specifying noise parameters for each antigen isotype:
 \itemize{
-\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
+\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified
+on each row
 \item \code{nu}: biological noise
 \item \code{eps}: measurement noise
 \item \code{y.low}: lower limit of detection for the current antigen isotype
@@ -92,20 +99,21 @@ This function models seroincidence using maximum likelihood estimation; that is,
 
 library(dplyr)
 
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+xs_data <-
+  sees_pop_data_pk_100
 
-curves <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
-noise <- load_noise_params("https://osf.io/download//hqy4v/")
+noise <-
+  example_noise_params_pk
 
 est1 <- est.incidence(
-  pop_data = xs_data \%>\% filter(Country == "Pakistan"),
-  curve_params = curves,
-  noise_params = noise \%>\% filter(Country == "Pakistan"),
+  pop_data = xs_data,
+  curve_params = curve,
+  noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  iterlim = 5 # limit iterations for the purpose of this example
 )
 
 summary(est1)

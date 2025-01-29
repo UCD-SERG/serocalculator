@@ -60,7 +60,7 @@ but baseline y0 are carried over from prior infections.}
   }}
 }
 \value{
-This function returns a \code{\link[=list]{list()}} with:
+a \link{list} with:
 \itemize{
 \item t = times (in days, birth at day 0),
 \item b = bacteria level, for each antibody signal

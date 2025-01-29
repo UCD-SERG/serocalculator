@@ -22,14 +22,14 @@
 #' @inheritDotParams ldpar
 #' @inheritDotParams ab
 #' @inheritDotParams mk_baseline
-#' @returns This function returns a [list()] with:
+#' @returns a [list] with:
 #' * t = times (in days, birth at day 0),
 #' * b = bacteria level, for each antibody signal
 #' (not used; probably meaningless),
 #' * y = antibody level, for each antibody signal
 #' * smp = whether an infection involves a big jump or a small jump
 #' * t.inf = times when infections have occurred.
-#' @keywords internal
+#' @dev
 simresp.tinf <- function(# nolint: object_name_linter
     lambda,
     t_end,
@@ -60,9 +60,10 @@ simresp.tinf <- function(# nolint: object_name_linter
 
   t_next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
 
+  age = if_else(!is.na(age_fixed), age_fixed, t_next / day2yr)
+
   mcpar <- ldpar(
-    age =
-      if (!is.na(age_fixed)) age_fixed else t_next / day2yr,
+    age = age,
     antigen_isos,
     nmc,
     predpar = predpar,
@@ -91,8 +92,8 @@ simresp.tinf <- function(# nolint: object_name_linter
     )
   )
 
-  for (k.ab in 1:n_ab) {
-    y_now[, k.ab] <- mk_baseline(k.ab, length(t_now), ...)
+  for (cur_ab in 1:n_ab) {
+    y_now[, cur_ab] <- mk_baseline(cur_ab, length(t_now), ...)
   }
 
   t <- c(t, t0 + t_now)

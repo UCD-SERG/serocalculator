@@ -18,12 +18,12 @@
 #' generates a new parameter set for each infection
 #' * `renew_params = FALSE`
 #' keeps the one selected at birth, but updates baseline y0
-#' @param ... arguments passed to [simresp.tinf()]
+#' @inheritDotParams simresp.tinf
 #'
 #' @returns an [array()] with dimensions
 #' `n_samples`, `length(antigen_isos) + 1`,
 #' where rows are observations and columns are age and biomarkers y(t)
-#' @dev
+#' @keywords internal
 simcs.tinf <- function(# nolint: object_name_linter
     lambda,
     n_samples,

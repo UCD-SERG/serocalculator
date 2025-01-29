@@ -41,7 +41,7 @@ df.to.array <- function( # nolint: object_name_linter
 #'   serocalculator:::df_to_array(
 #'      dim_var_names = c("parameter", "Species"))
 #' ftable(arr[,,1:5])
-#' @dev
+#' @keywords internal
 df_to_array <- function(
     df,
     dim_var_names,

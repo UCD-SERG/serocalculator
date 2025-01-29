@@ -31,11 +31,4 @@ allpopsamples_hlye.csv$
 ^revdep$
 ^NEWS_files$
 ^NEWS\.html$
-^man/ab\.Rd$
-^man/baseline\.Rd$
-^man/mk_baseline\.Rd$
 ^man/check_strata\.Rd$
-^man/df_to_array\.Rd$
-^man/ldpar\.Rd$
-^man/simcs.tinf\.Rd$
-^man/simresp.tinf\.Rd$

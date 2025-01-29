@@ -58,8 +58,6 @@
 <span>  lambdas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  rng_seed <span class="op">=</span> <span class="fl">1234</span>,</span>
-<span>  renew_params <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -82,20 +80,8 @@
 
 
 <dt id="arg-rng-seed">rng_seed<a class="anchor" aria-label="anchor" href="#arg-rng-seed"></a></dt>
-<dd><p>starting seed for random number generator, passed to <code><a href="https://rdrr.io/pkg/rngtools/man/RNGseq.html" class="external-link">rngtools::RNGseq()</a></code></p></dd>
-
-
-<dt id="arg-renew-params">renew_params<a class="anchor" aria-label="anchor" href="#arg-renew-params"></a></dt>
-<dd><p>whether to generate a new parameter set for each
-infection</p><ul><li><p><code>renew_params = TRUE</code> generates a new parameter set for each infection</p></li>
-<li><p><code>renew_params = FALSE</code> keeps the one selected at birth,
-but updates baseline y0</p></li>
-</ul></dd>
-
-
-<dt id="arg-add-noise">add_noise<a class="anchor" aria-label="anchor" href="#arg-add-noise"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> indicating
-whether to add biological and measurement noise</p></dd>
+<dd><p>starting seed for random number generator,
+passed to <code><a href="https://rdrr.io/pkg/rngtools/man/RNGseq.html" class="external-link">rngtools::RNGseq()</a></code></p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -125,6 +111,17 @@ Values must match <code>curve_params</code>.</p></dd>
 <dd><p>how many MCMC samples to use:</p><ul><li><p>when <code>n_mcmc_samples</code> is in <code>1:4000</code> a fixed posterior sample is used</p></li>
 <li><p>when <code>n_mcmc_samples</code> = <code>0</code>, a random sample is chosen</p></li>
 </ul></dd>
+
+    <dt><code>renew_params</code></dt>
+<dd><p>whether to generate a new parameter set for each
+infection</p><ul><li><p><code>renew_params = TRUE</code> generates a new parameter set for each infection</p></li>
+<li><p><code>renew_params = FALSE</code> keeps the one selected at birth,
+but updates baseline y0</p></li>
+</ul></dd>
+
+    <dt><code>add_noise</code></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> indicating
+whether to add biological and measurement noise</p></dd>
 
     <dt><code>noise_limits</code></dt>
 <dd><p>biologic noise distribution parameters</p></dd>
@@ -157,6 +154,61 @@ combinations</p></li>
     <p>a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code></p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load curve parameters</span></span></span>
+<span class="r-in"><span><span class="va">dmcmc</span> <span class="op">&lt;-</span> <span class="va">typhoid_curves_nostrat_100</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Specify the antibody-isotype responses to include in analyses</span></span></span>
+<span class="r-in"><span><span class="va">antibodies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Set seed to reproduce results</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Simulated incidence rate per person-year</span></span></span>
+<span class="r-in"><span><span class="va">lambdas</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span>, <span class="fl">.3</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Range covered in simulations</span></span></span>
+<span class="r-in"><span><span class="va">lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Cross-sectional sample size</span></span></span>
+<span class="r-in"><span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Biologic noise distribution</span></span></span>
+<span class="r-in"><span><span class="va">dlims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"HlyE_IgA"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"HlyE_IgG"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">sim_pop_data_multi</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span></span>
+<span class="r-in"><span>  lambdas <span class="op">=</span> <span class="va">lambdas</span>,</span></span>
+<span class="r-in"><span>  n_samples <span class="op">=</span> <span class="va">nrep</span>,</span></span>
+<span class="r-in"><span>  age_range <span class="op">=</span> <span class="va">lifespan</span>,</span></span>
+<span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span></span>
+<span class="r-in"><span>  n_mcmc_samples <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  renew_params <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span></span>
+<span class="r-in"><span>  format <span class="op">=</span> <span class="st">"long"</span>,</span></span>
+<span class="r-in"><span>  nclus <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10,000 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      age id    antigen_iso value lambda.sim cluster</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  3.53 1     HlyE_IgA    0.757       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  3.53 1     HlyE_IgG    0.520       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  2.27 2     HlyE_IgA    0.819       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  2.27 2     HlyE_IgG    0.707       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  9.05 3     HlyE_IgA    0.150       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  9.05 3     HlyE_IgG    0.506       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  5.94 4     HlyE_IgA    0.837       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  5.94 4     HlyE_IgG    0.870       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  9.88 5     HlyE_IgA    0.297       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  9.88 5     HlyE_IgG    0.272       0.05       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9,990 more rows</span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

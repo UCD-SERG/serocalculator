@@ -30,6 +30,7 @@ allpopsamples_hlye.csv$
 ^\.quarto$
 ^revdep$
 ^NEWS_files$
+^NEWS\.html$
 ^man/ab\.Rd$
 ^man/baseline\.Rd$
 ^man/mk_baseline\.Rd$

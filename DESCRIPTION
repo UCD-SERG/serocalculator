@@ -42,7 +42,8 @@ Imports:
     purrr,
     and,
     glue,
-    stringr
+    stringr,
+    parallel
 Suggests:
     bookdown,
     DT,
@@ -50,7 +51,6 @@ Suggests:
     ggbeeswarm,
     knitr,
     pak,
-    parallel,
     readr,
     quarto,
     rmarkdown,

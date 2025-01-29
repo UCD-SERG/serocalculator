@@ -131,7 +131,7 @@ dlims <- rbind(
 
 ```{r}
 # generate cross-sectional data
-csdata <- sim.cs(
+csdata <- sim_pop_data(
   curve_params = dmcmc,
   lambda = lambda,
   n_samples = nrep,

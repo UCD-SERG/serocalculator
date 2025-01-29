@@ -55,7 +55,7 @@ sim.cs.multi <- function(
     ) %dopar% {
       l <- lambdas[i]
       rngtools::setRNG(r)
-      sim.cs(
+      sim_pop_data(
         lambda = l,
         renew_params = renew_params,
         add_noise = add_noise,
@@ -65,4 +65,18 @@ sim.cs.multi <- function(
     }
   doParallel::stopImplicitCluster()
   return(sim.df)
+}
+
+#' @title Simulate multiple data sets
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `sim.cs.multi()` was renamed to [sim_pop_data_multi()]
+#' to create a more consistent API.
+#'
+#' @keywords internal
+sim.cs.multi <- function(...) { # nolint: object_name_linter
+  lifecycle::deprecate_soft("1.3.1", "sim.cs.multi()", "sim_pop_data_multi()")
+  sim_pop_data_multi(...)
 }

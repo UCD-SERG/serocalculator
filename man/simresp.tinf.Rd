@@ -6,7 +6,7 @@
 \usage{
 simresp.tinf(
   lambda,
-  t.end,
+  t_end,
   age_fixed,
   antigen_isos,
   n_mcmc_samples = 0,
@@ -18,7 +18,7 @@ simresp.tinf(
 \arguments{
 \item{lambda}{seroconversion rate (1/days),}
 
-\item{t.end}{end of time interval (beginning is time 0) in days(?)}
+\item{t_end}{end of time interval (beginning is time 0) in days(?)}
 
 \item{age_fixed}{parameter estimates for fixed age (age_fixed in years) or not.
 when age_fixed = NA then age at infection is used.}

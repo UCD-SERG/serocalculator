@@ -1,5 +1,5 @@
 #' @title simulate antibody kinetics of y over a time interval
-#' @param t.end end of time interval (beginning is time 0) in days(?)
+#' @param t_end end of time interval (beginning is time 0) in days(?)
 #' @param predpar an [array()] with dimensions named:
 #' * `antigen_iso`
 #' * `parameter`
@@ -159,8 +159,13 @@ simresp.tinf <- function(# nolint: object_name_linter
     # DM: it might be possible to remove these lines and
     # remove the !renew_params condition
     # near the top of the while() loop
+    age = if_else(
+      !is.na(age_fixed),
+      age_fixed,
+      (t0 + t_next) / day2yr)
+
     par_now <- ldpar(
-      if (!is.na(age_fixed)) age_fixed else (t0 + t_next) / day2yr,
+      age = age,
       antigen_isos,
       nmc,
       predpar = predpar,

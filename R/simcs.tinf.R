@@ -55,7 +55,7 @@ simcs.tinf <- function(# nolint: object_name_linter
     resp <-
       simresp.tinf(
         lambda,
-        t.end = end_days,
+        t_end = end_days,
         age_fixed = age_fixed,
         antigen_isos = antigen_isos,
         n_mcmc_samples = n_mcmc_samples,

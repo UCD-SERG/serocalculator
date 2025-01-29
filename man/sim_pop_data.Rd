@@ -105,11 +105,9 @@ antibodies <- c("HlyE_IgA", "HlyE_IgG")
 set.seed(54321)
 
 # Simulated incidence rate per person-year
-lambda <- 0.2;
-
+lambda <- 0.2
 # Range covered in simulations
-lifespan <- c(0, 10);
-
+lifespan <- c(0, 10)
 # Cross-sectional sample size
 nrep <- 100
 

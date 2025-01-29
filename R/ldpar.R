@@ -24,8 +24,7 @@ ldpar <- function(age, antigen_isos, nmc, npar, ...) {
     dimnames = dimnames1
   )
 
-  for (k.test in antigen_isos)
-  {
+  for (k.test in antigen_isos) {
     spar[, k.test] <- simpar(age, k.test, nmc, ...)
   }
   return(spar)

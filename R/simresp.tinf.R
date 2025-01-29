@@ -30,9 +30,9 @@
 #' * smp = whether an infection involves a big jump or a small jump
 #' * t.inf = times when infections have occurred.
 #' @keywords internal
-simresp.tinf <- function(
+simresp.tinf <- function(# nolint: object_name_linter
     lambda,
-    t.end,
+    t_end,
     age_fixed,
     antigen_isos,
     n_mcmc_samples = 0,
@@ -48,112 +48,108 @@ simresp.tinf <- function(
     nmc <- sample.int(n = mcsize, size = 1)
   }
 
-  n.ab <- length(antigen_isos)
+  n_ab <- length(antigen_isos)
 
   t0 <- 0
   t <- c()
   b <- c()
-  ymat <- c()
-  t.step <- 1
+  y_mat <- c()
+  t_step <- 1
   smp <- c()
-  t.inf <- c()
+  t_inf <- c()
 
-  # set.seed(975313579)
-  t.next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
+  t_next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
 
-    mcpar <- ldpar(
-      age =
-        if (!is.na(age_fixed)) age_fixed else t.next / day2yr,
-      antigen_isos,
-      nmc,
-      predpar = predpar,
-      ...)
+  mcpar <- ldpar(
+    age =
+      if (!is.na(age_fixed)) age_fixed else t_next / day2yr,
+    antigen_isos,
+    nmc,
+    predpar = predpar,
+    ...
+  )
 
-  par.now <- mcpar
+  par_now <- mcpar
 
-  b.inf <- mcpar[2, ] # b0
-  b.end <- rep(0, n.ab)
-
-  if (t.next > t.end) {
-    t.next <- t.end - t0
+  if (t_next > t_end) {
+    t_next <- t_end - t0
   }
 
-  if (t.next < t.end) {
-    t.inf <- c(t.inf, t.next)
+  if (t_next < t_end) {
+    t_inf <- c(t_inf, t_next)
   }
 
-  t.now <- seq(from = 0, to = t.next, by = t.step)
-  b.now <- array(0, dim = c(length(t.now), n.ab))
+  t_now <- seq(from = 0, to = t_next, by = t_step)
+  b_now <- array(0, dim = c(length(t_now), n_ab))
 
-  y.now <- array(
+  y_now <- array(
     0,
-    dim = c(length(t.now), n.ab),
+    dim = c(length(t_now), n_ab),
     dimnames = list(
       t = NULL,
       y = antigen_isos
     )
   )
 
-  for (k.ab in 1:n.ab) {
-    y.now[, k.ab] <- mk_baseline(k.ab, length(t.now), ...)
+  for (k.ab in 1:n_ab) {
+    y_now[, k.ab] <- mk_baseline(k.ab, length(t_now), ...)
   }
 
-  t <- c(t, t0 + t.now)
+  t <- c(t, t0 + t_now)
 
-  b <- rbind(b, b.now)
-  ymat <- rbind(ymat, y.now)
+  b <- rbind(b, b_now)
+  y_mat <- rbind(y_mat, y_now)
 
-  y.end <- as.matrix(y.now)[nrow(y.now), ]
+  y_end <- as.matrix(y_now)[nrow(y_now), ]
 
-  if (n.ab == 1 && y.end == 0) {
-    y.end <- par.now[1]
+  if (n_ab == 1 && y_end == 0) {
+    y_end <- par_now[1]
   }
 
-  if (n.ab > 1) {
-    y.end[y.end == 0] <- par.now[1, y.end == 0]
+  if (n_ab > 1) {
+    y_end[y_end == 0] <- par_now[1, y_end == 0]
   }
 
-  while (t0 < t.end - t.next) {
-    t0 <- t0 + t.next
+  while (t0 < t_end - t_next) {
+    t0 <- t0 + t_next
 
     if (!renew_params) {
-      par.now <- ldpar(
+      par_now <- ldpar(
         if (!is.na(age_fixed)) age_fixed else t0 / day2yr,
         antigen_isos,
         nmc,
-        predpar = predpar, ...)
+        predpar = predpar, ...
+      )
 
-      b0 <- b.inf
       # b0 <- runif(n=1,min=1,max=200); not implemented
-      par.now[1, ] <- y.end
+      par_now[1, ] <- y_end
       # y0 = y at end of prior episode
     }
     # note: the renew_params == TRUE case is handled many lines below
 
-    t.next <- -log(runif(1, 0, 1)) / lambda
-    if (t0 <= t.end & t0 + t.next > t.end) {
-      t.next <- t.end - t0
+    t_next <- -log(runif(1, 0, 1)) / lambda
+    if (t0 <= t_end && t0 + t_next > t_end) {
+      t_next <- t_end - t0
     }
 
-    if (t0 + t.next < t.end) {
-      t.inf <- c(t.inf, t0 + t.next)
+    if (t0 + t_next < t_end) {
+      t_inf <- c(t_inf, t0 + t_next)
     }
 
-    smp <- rbind(smp, as.vector(symp(par.now)))
+    smp <- rbind(smp, as.vector(symp(par_now)))
 
-    t.now <- seq(from = 0, to = t.next, by = t.step)
+    t_now <- seq(from = 0, to = t_next, by = t_step)
 
-    b.now <- ag(t.now, par.now)
+    b_now <- ag(t_now, par_now)
 
-    y.now <- ab(t.now, par.now, ...)
+    y_now <- ab(t_now, par_now, ...)
 
-    t <- c(t, t0 + t.now)
+    t <- c(t, t0 + t_now)
 
-    b <- rbind(b, b.now)
-    ymat <- rbind(ymat, y.now)
+    b <- rbind(b, b_now)
+    y_mat <- rbind(y_mat, y_now)
 
-    b.end <- b %>% tail(1)
-    y.end <- ymat %>% tail(1)
+    y_end <- y_mat %>% tail(1)
 
     if (renew_params) {
       if (n_mcmc_samples == 0) {
@@ -163,18 +159,19 @@ simresp.tinf <- function(
     # DM: it might be possible to remove these lines and
     # remove the !renew_params condition
     # near the top of the while() loop
-      par.now <- ldpar(
-        if (!is.na(age_fixed)) age_fixed else (t0 + t.next) / day2yr,
-        antigen_isos,
-        nmc,
-        predpar = predpar,
-        ...)
+    par_now <- ldpar(
+      if (!is.na(age_fixed)) age_fixed else (t0 + t_next) / day2yr,
+      antigen_isos,
+      nmc,
+      predpar = predpar,
+      ...
+    )
   }
   return(list(
     t = t,
     b = b,
-    y = ymat,
+    y = y_mat,
     smp = smp,
-    t.inf = t.inf
+    t.inf = t_inf
   ))
 }

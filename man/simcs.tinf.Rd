@@ -22,24 +22,31 @@ simcs.tinf(
 
 \item{age_range}{age range to use for simulating data, in days}
 
-\item{age_fixed}{age_fixed for parameter sample (age_fixed = NA for age at infection)}
+\item{age_fixed}{age_fixed for parameter sample
+(age_fixed = NA for age at infection)}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{curve_params}.}
+\item{antigen_isos}{\link{character} \link{vector} with one or more antibody names.
+Values must match \code{curve_params}.}
 
 \item{n_mcmc_samples}{\itemize{
-\item when \code{n_mcmc_samples} is in 1:4000 a fixed posterior sample is used
+\item when \code{n_mcmc_samples} is in 1:4000,
+a fixed posterior sample is used
 \item when n_mcmc_samples = 0 a random sample is chosen
 }}
 
 \item{renew_params}{\itemize{
-\item \code{renew_params = TRUE} generates a new parameter set for each infection
-\item \code{renew_params = FALSE} keeps the one selected at birth, but updates baseline y0
+\item \code{renew_params = TRUE}
+generates a new parameter set for each infection
+\item \code{renew_params = FALSE}
+keeps the one selected at birth, but updates baseline y0
 }}
 
 \item{...}{arguments passed to \code{\link[=simresp.tinf]{simresp.tinf()}}}
 }
 \value{
-an \code{\link[=array]{array()}}
+an \code{\link[=array]{array()}} with dimensions
+\link{n_samples, length(antigen_isos) + 1},
+where rows are observations and columns are age and biomarkers
 }
 \description{
 output: (age, y(t) set)

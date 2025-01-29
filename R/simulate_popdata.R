@@ -64,7 +64,7 @@
 #' )
 #'
 #' # Generate cross-sectional data
-#' csdata <- simulate_pop_data(
+#' csdata <- sim_pop_data(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,
 #'   n_samples = nrep,
@@ -77,7 +77,7 @@
 #'   format = "long"
 #' )
 #'
-simulate_pop_data <- function(
+sim_pop_data <- function(
     lambda = 0.1,
     n_samples = 100,
     age_range = c(0, 20),
@@ -94,7 +94,7 @@ simulate_pop_data <- function(
     verbose = FALSE,
     ...) {
   if (verbose > 1) {
-    message("inputs to `simulate_pop_data()`:")
+    message("inputs to `sim_pop_data()`:")
     print(environment() %>% as.list())
   }
 
@@ -191,11 +191,11 @@ simulate_pop_data <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `sim.cs()` was renamed to [simulate_pop_data()] to create a more
+#' `sim.cs()` was renamed to [sim_pop_data()] to create a more
 #' consistent API.
 #'
 #' @keywords internal
 sim.cs <- function(...) { # nolint: object_name_linter
-  lifecycle::deprecate_soft("1.3.1", "sim.cs()", "simulate_pop_data()")
-  simulate_pop_data(...)
+  lifecycle::deprecate_soft("1.3.1", "sim.cs()", "sim_pop_data()")
+  sim_pop_data(...)
 }

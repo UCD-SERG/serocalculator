@@ -1,4 +1,4 @@
-test_that("`simulate_pop_data()` produces consistent results", {
+test_that("`sim_pop_data()` produces consistent results", {
 
    # Load curve parameters
    curve <-
@@ -26,7 +26,7 @@ test_that("`simulate_pop_data()` produces consistent results", {
    )
 
    # Generate cross-sectional data
-   csdata <- simulate_pop_data(
+   csdata <- sim_pop_data(
      curve_params = curve,
      lambda = lambda,
      n.smpl = nrep,

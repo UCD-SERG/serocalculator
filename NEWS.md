@@ -2,6 +2,10 @@
 
 ## New features
 
+* Renamed variables for consistency (#281):
+  - `sim.cs()` -> `sim_pop_data()` 
+  - `sim.cs.multi()` -> `sim_pop_data_multi()`
+
 ## Internal changes
 
 * Removed `ldpar()` from API (#345)

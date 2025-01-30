@@ -34,7 +34,7 @@ df <- iris \%>\%
   ) \%>\%
   mutate(parameter = factor(parameter, levels = unique(parameter)))
 arr <- df \%>\%
-  serocalculator::df_to_array(
+  serocalculator:::df_to_array(
      dim_var_names = c("parameter", "Species"))
 ftable(arr[,,1:5])
 }

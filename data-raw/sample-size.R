@@ -34,7 +34,7 @@ simulate_seroincidence <- function(nrep, n_sim) {
   )
 
   # Perform simulations in parallel
-  results <- future_map(1:n_sim, function(i) {
+  results <- furrr::future_map(1:n_sim, function(i) {
     # Generate cross-sectional data
     csdata <- sim.cs(
       curve_params = dmcmc,
@@ -73,7 +73,8 @@ simulate_seroincidence <- function(nrep, n_sim) {
 
 ###############################################################################
 ## Run simulation
-plan(multisession)  # Use multiple sessions for parallelism (local machine)
+library(future)
+future::plan(multisession)  # Use multiple sessions for parallelism (local machine)
 
 # Run the simulations in parallel
 set.seed(129251)

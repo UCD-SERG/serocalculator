@@ -1,18 +1,20 @@
 #' Load a cross-sectional antibody survey data set
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
-#' @param antigen_isos [character()] vector of antigen isotypes to be used in analyses
+#' @param antigen_isos [character()]
+#' vector of antigen isotypes to be used in analyses
 #' @param age a [character()] identifying the age column
 #' @param id a [character()] identifying the id column
 #' @param value a [character()] identifying the value column
 #' @param standardize a [logical()] to determine standardization of columns
-#' @returns a `pop_data` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
+#' @returns a `pop_data` object (a [tibble::tbl_df]
+#' with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' library(magrittr)
 #' xs_data <-
-#'   "https://osf.io/download//n6cp3/" %>%
-#'   readr::read_rds() %>%
+#'   serocalculator_example("example_pop_data.csv") %>%
+#'   read.csv() %>%
 #'   as_pop_data()
 #'
 #' print(xs_data)

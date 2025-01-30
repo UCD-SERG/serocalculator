@@ -1,0 +1,201 @@
+index_id,Country,cluster,catchment,Age,ageCat,antigen_iso,result
+P1,Pakistan,Lyari Other,kgh,13.2,5-15,HlyE_IgA,0.56805768
+P3,Pakistan,Gillani Railway Station,aku,18,16+,HlyE_IgA,5.686082087
+P5,Pakistan,Gillani Railway Station,aku,7.3,5-15,HlyE_IgA,1.228468773
+P7,Pakistan,Civic Centre,aku,2.6,<5,HlyE_IgA,1.08478637
+P9,Pakistan,Gillani Railway Station,aku,3.9,<5,HlyE_IgA,1.429250766
+P11,Pakistan,Civic Centre,aku,13,5-15,HlyE_IgA,3.061925394
+P13,Pakistan,Machar Colony,kgh,11,5-15,HlyE_IgA,0.779258612
+P15,Pakistan,Machar Colony,kgh,12,5-15,HlyE_IgA,1.897166994
+P17,Pakistan,Machar Colony,kgh,16,16+,HlyE_IgA,1.408872902
+P19,Pakistan,Gillani Railway Station,aku,14.4,5-15,HlyE_IgA,3.10341076
+P21,Pakistan,Azizabad,aku,3.4,<5,HlyE_IgA,0.030783008
+P23,Pakistan,Machar Colony,kgh,7.6,5-15,HlyE_IgA,7.115286578
+P25,Pakistan,Machar Colony,kgh,2.3,<5,HlyE_IgA,0
+P27,Pakistan,Machar Colony,kgh,4,<5,HlyE_IgA,2.903125967
+P29,Pakistan,Azizabad,aku,22,16+,HlyE_IgA,6.39056873
+P31,Pakistan,Khada Memon Society,kgh,5.1,5-15,HlyE_IgA,1.444555778
+P33,Pakistan,Khada Memon Society,kgh,18.7,16+,HlyE_IgA,3.765179889
+P35,Pakistan,Machar Colony,kgh,7,5-15,HlyE_IgA,2.795945062
+P37,Pakistan,Machar Colony,kgh,5.4,5-15,HlyE_IgA,4.394924172
+P39,Pakistan,Machar Colony,kgh,4,<5,HlyE_IgA,26.14724504
+P41,Pakistan,Azizabad,aku,4,<5,HlyE_IgA,0.240410018
+P43,Pakistan,Azizabad,aku,14.8,5-15,HlyE_IgA,3.454038997
+P45,Pakistan,Machar Colony,kgh,20.2,16+,HlyE_IgA,2.594311555
+P47,Pakistan,Azizabad,aku,15.1,5-15,HlyE_IgA,0.583069732
+P49,Pakistan,Azizabad,aku,13,5-15,HlyE_IgA,1.203041652
+P51,Pakistan,Gillani Railway Station,aku,15.6,5-15,HlyE_IgA,14.45068664
+P53,Pakistan,Gulshan-e-Iqbal II,aku,18,16+,HlyE_IgA,13.67451493
+P55,Pakistan,Azizabad,aku,18.7,16+,HlyE_IgA,9.75485189
+P57,Pakistan,Khada Memon Society,kgh,12.2,5-15,HlyE_IgA,3.210163037
+P59,Pakistan,Azizabad,aku,7.5,5-15,HlyE_IgA,1.854591567
+P61,Pakistan,Mahmudabad,aku,23,16+,HlyE_IgA,13.47695391
+P63,Pakistan,Khada Memon Society,kgh,6.6,5-15,HlyE_IgA,0.487946981
+P65,Pakistan,Azizabad,aku,4,<5,HlyE_IgA,3.915196534
+P67,Pakistan,Aisha Manzil,aku,2.3,<5,HlyE_IgA,0.581800446
+P69,Pakistan,Khada Memon Society,kgh,9,5-15,HlyE_IgA,2.657693624
+P71,Pakistan,Khada Memon Society,kgh,7.3,5-15,HlyE_IgA,0.981110355
+P73,Pakistan,Khada Memon Society,kgh,3.2,<5,HlyE_IgA,1.466916355
+P75,Pakistan,Khada Memon Society,kgh,16.2,16+,HlyE_IgA,9.681066286
+P77,Pakistan,Azizabad,aku,9.8,5-15,HlyE_IgA,0.464968826
+P79,Pakistan,Khada Memon Society,kgh,23,16+,HlyE_IgA,45.63571588
+P81,Pakistan,Khada Memon Society,kgh,15.3,5-15,HlyE_IgA,25.49982149
+P83,Pakistan,Water pump,aku,21,16+,HlyE_IgA,0.804765886
+P85,Pakistan,Water pump,aku,14.7,5-15,HlyE_IgA,0.170707915
+P87,Pakistan,Khada Memon Society,kgh,13.9,5-15,HlyE_IgA,4.038997214
+P89,Pakistan,Water pump,aku,4,<5,HlyE_IgA,1.37100964
+P91,Pakistan,Ancholi,aku,18.1,16+,HlyE_IgA,3.117010281
+P93,Pakistan,Baghdadi,kgh,6,5-15,HlyE_IgA,3.837821108
+P95,Pakistan,Khada Memon Society,kgh,4.7,<5,HlyE_IgA,26.30945529
+P97,Pakistan,Khada Memon Society,kgh,7.8,5-15,HlyE_IgA,4.477357848
+P99,Pakistan,Ancholi,aku,11.2,5-15,HlyE_IgA,0.631406531
+P101,Pakistan,Baghdadi,kgh,10.9,5-15,HlyE_IgA,1.642269318
+P103,Pakistan,Jiwani Heights,aku,3.8,<5,HlyE_IgA,0.457043221
+P105,Pakistan,Khada Memon Society,kgh,23.3,16+,HlyE_IgA,3.786106729
+P107,Pakistan,Jiwani Heights,aku,11.5,5-15,HlyE_IgA,2.425332461
+P109,Pakistan,P.E.C.H.S.,aku,17.2,16+,HlyE_IgA,1.706190158
+P111,Pakistan,P.E.C.H.S.,aku,17,16+,HlyE_IgA,3.637831218
+P113,Pakistan,Khada Memon Society,kgh,3.8,<5,HlyE_IgA,0.928437792
+P115,Pakistan,Jiwani Heights,aku,12,5-15,HlyE_IgA,69.89535911
+P117,Pakistan,Jiwani Heights,aku,11,5-15,HlyE_IgA,2.34926128
+P119,Pakistan,Jiwani Heights,aku,16,16+,HlyE_IgA,2.421981965
+P121,Pakistan,Gulistan-e-Johar,aku,5,5-15,HlyE_IgA,5.959094924
+P123,Pakistan,Nawabad,kgh,10,5-15,HlyE_IgA,3.321372929
+P125,Pakistan,Nawabad,kgh,12,5-15,HlyE_IgA,4.069975009
+P127,Pakistan,Jiwani Heights,aku,12,5-15,HlyE_IgA,1.208630376
+P129,Pakistan,Jiwani Heights,aku,20,16+,HlyE_IgA,21.66881837
+P131,Pakistan,Jiwani Heights,aku,14,5-15,HlyE_IgA,1.980702589
+P133,Pakistan,Jiwani Heights,aku,7.3,5-15,HlyE_IgA,6.947747503
+P135,Pakistan,Jiwani Heights,aku,2.5,<5,HlyE_IgA,0.326101424
+P137,Pakistan,Jiwani Heights,aku,10.5,5-15,HlyE_IgA,1.746848591
+P139,Pakistan,Jiwani Heights,aku,4.4,<5,HlyE_IgA,5.743808809
+P141,Pakistan,Jiwani Heights,aku,11.2,5-15,HlyE_IgA,66.36882517
+P143,Pakistan,Jiwani Heights,aku,13.4,5-15,HlyE_IgA,8.592622525
+P145,Pakistan,Jiwani Heights,aku,14,5-15,HlyE_IgA,9.559545113
+P147,Pakistan,Jiwani Heights,aku,14.6,5-15,HlyE_IgA,1.463210702
+P149,Pakistan,Jiwani Heights,aku,19.2,16+,HlyE_IgA,1.675724638
+P151,Pakistan,Jiwani Heights,aku,10,5-15,HlyE_IgA,2.001794061
+P153,Pakistan,Jiwani Heights,aku,5,5-15,HlyE_IgA,1.963263676
+P155,Pakistan,Jiwani Heights,aku,4.9,<5,HlyE_IgA,0.144000922
+P157,Pakistan,Jiwani Heights,aku,9.2,5-15,HlyE_IgA,2.640976902
+P159,Pakistan,Jiwani Heights,aku,15.8,5-15,HlyE_IgA,2.639804308
+P161,Pakistan,P.E.C.H.S.,aku,18,16+,HlyE_IgA,14.97160989
+P163,Pakistan,Nawabad,kgh,24,16+,HlyE_IgA,3.222227468
+P165,Pakistan,Nawabad,kgh,15.7,5-15,HlyE_IgA,2.107109448
+P167,Pakistan,Nawabad,kgh,15,5-15,HlyE_IgA,2.841740982
+P169,Pakistan,Baghdadi,kgh,23,16+,HlyE_IgA,4.5298958560000004
+P171,Pakistan,Nawabad,kgh,19,16+,HlyE_IgA,2.606416681
+P173,Pakistan,Nawabad,kgh,2.4,<5,HlyE_IgA,0.668051556
+P175,Pakistan,Darya Abad,kgh,7,5-15,HlyE_IgA,2.835085851
+P177,Pakistan,Baghdadi,kgh,19.9,16+,HlyE_IgA,3.73113154
+P179,Pakistan,Chakiwara,kgh,20,16+,HlyE_IgA,3.561651648
+P181,Pakistan,Baghdadi,kgh,6.8,5-15,HlyE_IgA,0.886923761
+P183,Pakistan,P.E.C.H.S.,aku,21,16+,HlyE_IgA,0.581763723
+P185,Pakistan,Darya Abad,kgh,9,5-15,HlyE_IgA,3.93696242
+P187,Pakistan,Chakiwara,kgh,7.4,5-15,HlyE_IgA,3.050545536
+P189,Pakistan,Kharadar,kgh,7.5,5-15,HlyE_IgA,0.752508361
+P191,Pakistan,Soldier Bazar,aku,6.6,5-15,HlyE_IgA,1.597643699
+P193,Pakistan,Chakiwara,kgh,14,5-15,HlyE_IgA,2.097268673
+P195,Pakistan,Agra Taj Colony,kgh,17,16+,HlyE_IgA,3.644531715
+P197,Pakistan,Lyari Other,kgh,14.1,5-15,HlyE_IgA,2.16367537
+P199,Pakistan,Agra Taj Colony,kgh,12,5-15,HlyE_IgA,13.39548577
+P2,Pakistan,Lyari Other,kgh,13.2,5-15,HlyE_IgG,2.153118619
+P4,Pakistan,Gillani Railway Station,aku,18,16+,HlyE_IgG,4.211346348
+P6,Pakistan,Gillani Railway Station,aku,7.3,5-15,HlyE_IgG,3.001945296
+P8,Pakistan,Civic Centre,aku,2.6,<5,HlyE_IgG,0.216909126
+P10,Pakistan,Gillani Railway Station,aku,3.9,<5,HlyE_IgG,0.956437161
+P12,Pakistan,Civic Centre,aku,13,5-15,HlyE_IgG,9.571740156
+P14,Pakistan,Machar Colony,kgh,11,5-15,HlyE_IgG,1.893383012
+P16,Pakistan,Machar Colony,kgh,12,5-15,HlyE_IgG,8.08762942
+P18,Pakistan,Machar Colony,kgh,16,16+,HlyE_IgG,2.373491021
+P20,Pakistan,Gillani Railway Station,aku,14.4,5-15,HlyE_IgG,1.354560173
+P22,Pakistan,Azizabad,aku,3.4,<5,HlyE_IgG,1.019806649
+P24,Pakistan,Machar Colony,kgh,7.6,5-15,HlyE_IgG,11.60212088
+P26,Pakistan,Machar Colony,kgh,2.3,<5,HlyE_IgG,0.362433482
+P28,Pakistan,Machar Colony,kgh,4,<5,HlyE_IgG,1.913452493
+P30,Pakistan,Azizabad,aku,22,16+,HlyE_IgG,33.61421131
+P32,Pakistan,Khada Memon Society,kgh,5.1,5-15,HlyE_IgG,2.036945407
+P34,Pakistan,Khada Memon Society,kgh,18.7,16+,HlyE_IgG,3.092508246
+P36,Pakistan,Machar Colony,kgh,7,5-15,HlyE_IgG,5.301523285
+P38,Pakistan,Machar Colony,kgh,5.4,5-15,HlyE_IgG,4.285983067
+P40,Pakistan,Machar Colony,kgh,4,<5,HlyE_IgG,7.788005178
+P42,Pakistan,Azizabad,aku,4,<5,HlyE_IgG,0.234319736
+P44,Pakistan,Azizabad,aku,14.8,5-15,HlyE_IgG,1.969896519
+P46,Pakistan,Machar Colony,kgh,20.2,16+,HlyE_IgG,4.862865722
+P48,Pakistan,Azizabad,aku,15.1,5-15,HlyE_IgG,1.97546336
+P50,Pakistan,Azizabad,aku,13,5-15,HlyE_IgG,0.369090624
+P52,Pakistan,Gillani Railway Station,aku,15.6,5-15,HlyE_IgG,3.81341291
+P54,Pakistan,Gulshan-e-Iqbal II,aku,18,16+,HlyE_IgG,6.564569311
+P56,Pakistan,Azizabad,aku,18.7,16+,HlyE_IgG,7.044133815
+P58,Pakistan,Khada Memon Society,kgh,12.2,5-15,HlyE_IgG,2.070745908
+P60,Pakistan,Azizabad,aku,7.5,5-15,HlyE_IgG,2.419830229
+P62,Pakistan,Mahmudabad,aku,23,16+,HlyE_IgG,5.613969982
+P64,Pakistan,Khada Memon Society,kgh,6.6,5-15,HlyE_IgG,0.506932254
+P66,Pakistan,Azizabad,aku,4,<5,HlyE_IgG,0.677328316
+P68,Pakistan,Aisha Manzil,aku,2.3,<5,HlyE_IgG,0.430965682
+P70,Pakistan,Khada Memon Society,kgh,9,5-15,HlyE_IgG,12.01394122
+P72,Pakistan,Khada Memon Society,kgh,7.3,5-15,HlyE_IgG,2.785847835
+P74,Pakistan,Khada Memon Society,kgh,3.2,<5,HlyE_IgG,0.713051673
+P76,Pakistan,Khada Memon Society,kgh,16.2,16+,HlyE_IgG,9.795305577
+P78,Pakistan,Azizabad,aku,9.8,5-15,HlyE_IgG,0.982963924
+P80,Pakistan,Khada Memon Society,kgh,23,16+,HlyE_IgG,16.01929738
+P82,Pakistan,Khada Memon Society,kgh,15.3,5-15,HlyE_IgG,1.116847926
+P84,Pakistan,Water pump,aku,21,16+,HlyE_IgG,0.3471668
+P86,Pakistan,Water pump,aku,14.7,5-15,HlyE_IgG,0.678930651
+P88,Pakistan,Khada Memon Society,kgh,13.9,5-15,HlyE_IgG,16.66611701
+P90,Pakistan,Water pump,aku,4,<5,HlyE_IgG,1.373231907
+P92,Pakistan,Ancholi,aku,18.1,16+,HlyE_IgG,1.358157942
+P94,Pakistan,Baghdadi,kgh,6,5-15,HlyE_IgG,30.30856068
+P96,Pakistan,Khada Memon Society,kgh,4.7,<5,HlyE_IgG,64.52178916
+P98,Pakistan,Khada Memon Society,kgh,7.8,5-15,HlyE_IgG,1.934977226
+P100,Pakistan,Ancholi,aku,11.2,5-15,HlyE_IgG,1.607816553
+P102,Pakistan,Baghdadi,kgh,10.9,5-15,HlyE_IgG,1.875470211
+P104,Pakistan,Jiwani Heights,aku,3.8,<5,HlyE_IgG,0.661695355
+P106,Pakistan,Khada Memon Society,kgh,23.3,16+,HlyE_IgG,5.57114589
+P108,Pakistan,Jiwani Heights,aku,11.5,5-15,HlyE_IgG,3.73191269
+P110,Pakistan,P.E.C.H.S.,aku,17.2,16+,HlyE_IgG,2.028698664
+P112,Pakistan,P.E.C.H.S.,aku,17,16+,HlyE_IgG,3.084281709
+P114,Pakistan,Khada Memon Society,kgh,3.8,<5,HlyE_IgG,1.828213248
+P116,Pakistan,Jiwani Heights,aku,12,5-15,HlyE_IgG,16.42857143
+P118,Pakistan,Jiwani Heights,aku,11,5-15,HlyE_IgG,4.100071759
+P120,Pakistan,Jiwani Heights,aku,16,16+,HlyE_IgG,19.97064837
+P122,Pakistan,Gulistan-e-Johar,aku,5,5-15,HlyE_IgG,8.296130952
+P124,Pakistan,Nawabad,kgh,10,5-15,HlyE_IgG,28.57990898
+P126,Pakistan,Nawabad,kgh,12,5-15,HlyE_IgG,5.891830532
+P128,Pakistan,Jiwani Heights,aku,12,5-15,HlyE_IgG,14.04425829
+P130,Pakistan,Jiwani Heights,aku,20,16+,HlyE_IgG,6.958705357
+P132,Pakistan,Jiwani Heights,aku,14,5-15,HlyE_IgG,3.523065476
+P134,Pakistan,Jiwani Heights,aku,7.3,5-15,HlyE_IgG,9.819568452
+P136,Pakistan,Jiwani Heights,aku,2.5,<5,HlyE_IgG,0.252788832
+P138,Pakistan,Jiwani Heights,aku,10.5,5-15,HlyE_IgG,0.875601873
+P140,Pakistan,Jiwani Heights,aku,4.4,<5,HlyE_IgG,1.08911496
+P142,Pakistan,Jiwani Heights,aku,11.2,5-15,HlyE_IgG,6.30952381
+P144,Pakistan,Jiwani Heights,aku,13.4,5-15,HlyE_IgG,5.780099594
+P146,Pakistan,Jiwani Heights,aku,14,5-15,HlyE_IgG,5.30809886
+P148,Pakistan,Jiwani Heights,aku,14.6,5-15,HlyE_IgG,1.083906829
+P150,Pakistan,Jiwani Heights,aku,19.2,16+,HlyE_IgG,0.807305453
+P152,Pakistan,Jiwani Heights,aku,10,5-15,HlyE_IgG,13.32860629
+P154,Pakistan,Jiwani Heights,aku,5,5-15,HlyE_IgG,0.53330289
+P156,Pakistan,Jiwani Heights,aku,4.9,<5,HlyE_IgG,1.402155499
+P158,Pakistan,Jiwani Heights,aku,9.2,5-15,HlyE_IgG,6.947698519
+P160,Pakistan,Jiwani Heights,aku,15.8,5-15,HlyE_IgG,4.527529762
+P162,Pakistan,P.E.C.H.S.,aku,18,16+,HlyE_IgG,1.970971466
+P164,Pakistan,Nawabad,kgh,24,16+,HlyE_IgG,2.762020975
+P166,Pakistan,Nawabad,kgh,15.7,5-15,HlyE_IgG,2.608468545
+P168,Pakistan,Nawabad,kgh,15,5-15,HlyE_IgG,2.511579359
+P170,Pakistan,Baghdadi,kgh,23,16+,HlyE_IgG,3.921112027
+P172,Pakistan,Nawabad,kgh,19,16+,HlyE_IgG,8.034459143
+P174,Pakistan,Nawabad,kgh,2.4,<5,HlyE_IgG,0.423784711
+P176,Pakistan,Darya Abad,kgh,7,5-15,HlyE_IgG,8.147954857
+P178,Pakistan,Baghdadi,kgh,19.9,16+,HlyE_IgG,2.189414167
+P180,Pakistan,Chakiwara,kgh,20,16+,HlyE_IgG,7.633760362
+P182,Pakistan,Baghdadi,kgh,6.8,5-15,HlyE_IgG,2.214871279
+P184,Pakistan,P.E.C.H.S.,aku,21,16+,HlyE_IgG,4.871499117
+P186,Pakistan,Darya Abad,kgh,9,5-15,HlyE_IgG,1.046344667
+P188,Pakistan,Chakiwara,kgh,7.4,5-15,HlyE_IgG,3.678047171
+P190,Pakistan,Kharadar,kgh,7.5,5-15,HlyE_IgG,1.211093376
+P192,Pakistan,Soldier Bazar,aku,6.6,5-15,HlyE_IgG,2.123841957
+P194,Pakistan,Chakiwara,kgh,14,5-15,HlyE_IgG,2.071201694
+P196,Pakistan,Agra Taj Colony,kgh,17,16+,HlyE_IgG,14.70211286
+P198,Pakistan,Lyari Other,kgh,14.1,5-15,HlyE_IgG,2.682295412
+P200,Pakistan,Agra Taj Colony,kgh,12,5-15,HlyE_IgG,33.6648031

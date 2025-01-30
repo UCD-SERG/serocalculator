@@ -8,6 +8,8 @@
 
 ## Internal changes
 
+* Started checking for use of base pipe instead of magrittr pipe
+by linter (#347)
 * Removed `ldpar()` from API (#345)
 * Added test for `sim.cs()` (#344)
 * Added test for internal function `ab()` (#342)

@@ -1,6 +1,6 @@
 # Contributing to serocalculator
 
-This outlines how to propose a change to `serocalculator`.
+This outlines how to propose a change to `{serocalculator}`.
 For a detailed discussion on contributing to this and other tidyverse packages, please see the [development contributing guide](https://rstd.io/tidy-contrib) and our [code review principles](https://code-review.tidyverse.org/).
 
 ## Fixing typos

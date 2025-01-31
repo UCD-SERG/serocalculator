@@ -32,10 +32,6 @@ modelled jointly.
 Longitudinal parameters are calculated for an age: `age_fixed` (fixed age).
 However, when `age_fixed` is set to NA then the age at infection is used.
 
-```{r}
-renew_params = FALSE
-```
-
 The boolean `renew_params` determines whether each infection uses a
 new set of longitudinal parameters, sampled at random from the
 posterior predictive output of  the longitudinal model. 
@@ -48,6 +44,13 @@ a parameter set is chosen at birth and kept, but:
 2. when `age_fixed = NA`, 
 the selected parameter sample is updated for the
 age when infection occurs.
+
+For our initial simulations, we will set `renew_params = FALSE`:
+
+```{r}
+renew_params = FALSE
+```
+
 
 There is also a variable `n_mcmc_samples`: 
 when `n_mcmc_samples==0` then a random MC
@@ -458,6 +461,64 @@ Finally, we can look at our simulation results:
 
 library(ggplot2)
 ests_summary %>%
+  autoplot(xvar = "lambda.sim") +
+  ggplot2::geom_function(
+    fun = function(x) x,
+    col = 'red',
+    aes(linetype = "data-generating incidence rate")
+  ) +
+  labs(linetype = "") +
+  scale_x_log10()
+
+```
+
+## Effect of `renew_params`
+
+Setting `renew_params = TRUE` is more realistic, 
+but not is accounted for by the current method; 
+for population samples from populations with high incidence rates,
+there may be bias:
+
+```{r}
+sim_df_renew <-
+  sim_pop_data_multi(
+    n_cores = n_cores,
+    lambdas = lambdas,
+    nclus = nclus,
+    n_samples = nrep,
+    age_range = lifespan,
+    antigen_isos = antibodies,
+    renew_params = TRUE,
+    add_noise = TRUE,
+    curve_params = dmcmc,
+    noise_limits = dlims,
+    format = "long"
+  )
+
+ests_renew <-
+  est.incidence.by(
+    pop_data = sim_df_renew,
+    curve_params = dmcmc,
+    noise_params = cond,
+    num_cores = n_cores,
+    strata = c("lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    verbose = verbose,
+    build_graph = TRUE, # slows down the function substantially
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+ests_renew_summary <- 
+  ests_renew |> summary()
+
+
+
+```
+
+
+```{r, "graph_renew"}
+
+ests_renew_summary %>%
   autoplot(xvar = "lambda.sim") +
   ggplot2::geom_function(
     fun = function(x) x,

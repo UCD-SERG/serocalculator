@@ -2,6 +2,12 @@
 
 ## New features
 
+* Added verbose option for `summary.seroincidence()` and 
+`summary.seroincidence.by()` (#348)
+
+* Extended `simulate_xsectionalData.Rmd` article to explore
+`renew_params = TRUE` vs `renew_params = FALSE` (#348)
+
 * Renamed variables for consistency (#281):
   - `sim.cs()` -> `sim_pop_data()` 
   - `sim.cs.multi()` -> `sim_pop_data_multi()`

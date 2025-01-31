@@ -2,6 +2,8 @@
 
 ## New features
 
+* Extended simulation vignette (#353)
+
 * Renamed variables for consistency (#281):
   - `sim.cs()` -> `sim_pop_data()` 
   - `sim.cs.multi()` -> `sim_pop_data_multi()`

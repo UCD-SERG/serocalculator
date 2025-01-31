@@ -4,6 +4,7 @@ vignette: >
   %\VignetteIndexEntry{Methodology}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+bibliography: vignettes/references.bib
 ---
 
 {{< include articles/_macros.qmd >}}

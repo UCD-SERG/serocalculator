@@ -21,16 +21,16 @@ articles:
 - title: Get started
   navbar: ~
   contents:
-  - serocalculator
+  - articles/serocalculator
 
 - title: Methodology
   navbar: Methodology
   contents:
   - methodology
-  - simulate_xsectionalData
+  - articles/simulate_xsectionalData
 
 - title: Examples
   navbar: Examples
   contents:
-  - enteric_fever_example
-  - scrubTyphus_example
+  - articles/enteric_fever_example
+  - articles/scrubTyphus_example

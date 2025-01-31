@@ -14,6 +14,7 @@
 
 ## Internal changes
 
+* added test for `summary.seroincidence.by()` (#352)
 * Started checking for use of base pipe instead of magrittr pipe
 by linter (#347)
 * Removed `ldpar()` from API (#345)

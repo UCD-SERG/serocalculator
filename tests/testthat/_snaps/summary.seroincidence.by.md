@@ -1,4 +1,4 @@
-# `summary.seroincidence.by()` produces consistent results for typhoid data
+# `summary.seroincidence.by()` produces consistent results          for typhoid data
 
     Code
       typhoid_results

@@ -308,7 +308,7 @@ nclus <- 10
 nrep <- 100
 
 # incidence rate in e
-lambdas <- c(.05, .1, .15, .2)
+lambdas <- c(.05, .1, .15, .2, .5, .8)
 
 sim_df <-
   sim_pop_data_multi(

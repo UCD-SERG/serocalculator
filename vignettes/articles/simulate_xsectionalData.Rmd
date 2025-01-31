@@ -14,8 +14,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 bibliography: ../references.bib
 ---
-  
-  
+
+
 This vignette shows how to simulate a cross-sectional sample of 
 seroresponses for incident infections as a Poisson process with 
 frequency `lambda`. 
@@ -48,7 +48,7 @@ age when infection occurs.
 For our initial simulations, we will set `renew_params = FALSE`:
 
 ```{r}
-renew_params = FALSE
+renew_params <- FALSE
 ```
 
 
@@ -60,8 +60,8 @@ given a value in 1:4000,
 the chosen number is fixed and reused
 in any subsequent infection. 
 This is for diagnostic purposes.
-  
-  
+
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -84,8 +84,8 @@ library(tidyverse)
 library(ggbeeswarm) # for plotting
 library(dplyr)
 dmcmc <-
-  "https://osf.io/download/rtw5k" %>%
-  load_curve_params() %>%
+  "https://osf.io/download/rtw5k" |>
+  load_curve_params() |>
   dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 
@@ -96,13 +96,13 @@ of model parameters using a `autoplot.curve_params()` method for the
 `autoplot()` function:
 
 ```{r}
-dmcmc %>% autoplot(n_curves = 50)
+dmcmc |> autoplot(n_curves = 50)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-dmcmc %>% autoplot(log_x = TRUE, n_curves = 50)
+dmcmc |> autoplot(log_x = TRUE, n_curves = 50)
 ```
 
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
@@ -111,8 +111,8 @@ We can graph the median, 10%, and 90% quantiles of the model using the `graph.cu
 # Specify the antibody-isotype responses to include in analyses
 antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
-dmcmc %>%
-  graph.curve.params(antigen_isos = antibodies) %>%
+dmcmc |>
+  graph.curve.params(antigen_isos = antibodies) |>
   print()
 ```
 
@@ -139,7 +139,7 @@ dlims <- rbind(
 
 ```{r}
 
-verbose = FALSE # whether to print verbose updates as the function runs
+verbose <- FALSE # whether to print verbose updates as the function runs
 
 # generate cross-sectional data
 csdata <- sim_pop_data(
@@ -178,10 +178,10 @@ cond <- tibble(
 We can plot the distribution of the antibody responses in the simulated data.
 
 ```{r}
-ggplot(csdata) +
-  aes(
-    x = as.factor(antigen_iso),
-    y = value) +
+csdata |>
+  ggplot() +
+  aes(x = as.factor(antigen_iso),
+      y = value) +
   geom_beeswarm(
     size = .2,
     alpha = .3,
@@ -206,7 +206,7 @@ ll_a <-
     noise_params = cond,
     antigen_isos = "HlyE_IgA",
     lambda = 0.1
-  ) %>%
+  ) |>
   print()
 
 ll_g <-
@@ -216,7 +216,7 @@ ll_g <-
     noise_params = cond,
     antigen_isos = "HlyE_IgG",
     lambda = 0.1
-  ) %>%
+  ) |>
   print()
 
 ll_ag <-
@@ -226,7 +226,7 @@ ll_ag <-
     noise_params = cond,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
     lambda = 0.1
-  ) %>%
+  ) |>
   print()
 
 print(ll_a + ll_g)
@@ -278,7 +278,7 @@ est1 <- est.incidence(
   noise_params = cond,
   lambda_start = .1,
   build_graph = TRUE,
-  verbose = verbose, 
+  verbose = verbose,
   print_graph = FALSE, # display the log-likelihood curve while
   #`est.incidence()` is running
   antigen_isos = antibodies
@@ -343,7 +343,7 @@ print(sim_df)
 We can plot the distributions of the simulated responses:
 
 ```{r}
-sim_df %>% 
+sim_df |>
   ggplot() +
   aes(
     x = as.factor(cluster),
@@ -384,8 +384,8 @@ We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
 library(DT)
-ests_summary %>%
-  DT::datatable() %>%
+ests_summary |>
+  DT::datatable() |>
   DT::formatRound(
     columns = c(
       "incidence.rate",
@@ -421,9 +421,9 @@ autoplot(ests[1:5], log_x = TRUE)
 Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r "check-codes"}
-ests_summary %>%
-  as_tibble() %>% # removes extra meta-data
-  select(Stratum, nlm.convergence.code) %>%
+ests_summary |>
+  as_tibble() |> # removes extra meta-data
+  select(Stratum, nlm.convergence.code) |>
   filter(nlm.convergence.code > 2)
 ```
 
@@ -437,7 +437,7 @@ We can extract the indices of problematic strata, if there are any:
 
 ```{r}
 problem_strata <-
-  which(ests_summary$nlm.convergence.code > 2) %>%
+  which(ests_summary$nlm.convergence.code > 2) |>
   print()
 ```
 
@@ -460,11 +460,11 @@ Finally, we can look at our simulation results:
 ```{r, "graph"}
 
 library(ggplot2)
-ests_summary %>%
+ests_summary |>
   autoplot(xvar = "lambda.sim") +
   ggplot2::geom_function(
     fun = function(x) x,
-    col = 'red',
+    col = "red",
     aes(linetype = "data-generating incidence rate")
   ) +
   labs(linetype = "") +
@@ -508,7 +508,7 @@ ests_renew <-
     build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
-ests_renew_summary <- 
+ests_renew_summary <-
   ests_renew |> summary()
 
 
@@ -518,14 +518,13 @@ ests_renew_summary <-
 
 ```{r, "graph_renew"}
 
-ests_renew_summary %>%
+ests_renew_summary |>
   autoplot(xvar = "lambda.sim") +
   ggplot2::geom_function(
     fun = function(x) x,
-    col = 'red',
+    col = "red",
     aes(linetype = "data-generating incidence rate")
   ) +
   labs(linetype = "") +
   scale_x_log10()
-
 ```

@@ -2,7 +2,7 @@
 
 ## New features
 
-* Extended simulation vignette (#353)
+* Added outline to pkgdown website (#353)
 
 * Added verbose option for `summary.seroincidence()` and 
 `summary.seroincidence.by()` (#348)

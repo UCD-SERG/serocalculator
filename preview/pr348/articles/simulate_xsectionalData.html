@@ -342,9 +342,9 @@ using <code><a href="../reference/graph_loglik.html">graph_loglik()</a></code>:<
 <p>We can extract summary statistics with <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in summary.seroincidence(est1): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
-<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning: `nlm()` produced a negative hessian; something is wrong with the numerical</span></span>
+<span><span class="co">#&gt; derivatives.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
 <span><span class="co">#&gt;   est.start incidence.rate    SE CI.lwr CI.upr coverage log.lik iterations</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
@@ -445,21 +445,21 @@ cores to run computations in parallel.</p>
 extra meta-data:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">&lt;-</span> <span class="va">ests</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
 <span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
 <span><span class="co">#&gt; b) Strata       : lambda.sim, cluster </span></span>
@@ -625,31 +625,31 @@ populations with high incidence rates, there may be bias:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="va">ests_renew_summary</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">ests_renew</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var_log_lambda): NaNs produced</span></span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">ests_renew_summary</span> <span class="op">|&gt;</span></span>

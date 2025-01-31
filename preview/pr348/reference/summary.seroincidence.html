@@ -85,14 +85,30 @@
 <li><p><code>CI.lwr</code>: lower limit of confidence interval for incidence rate</p></li>
 <li><p><code>CI.upr</code>: upper limit of confidence interval for incidence rate</p></li>
 <li><p><code>coverage</code>: coverage probability</p></li>
-<li><p><code>log.lik</code>: log-likelihood of the data used in the call to <code><a href="est.incidence.html">est.incidence()</a></code>, evaluated at the maximum-likelihood estimate of lambda (i.e., at <code>incidence.rate</code>)</p></li>
+<li><p><code>log.lik</code>:
+log-likelihood of the data used in the call to <code><a href="est.incidence.html">est.incidence()</a></code>,
+evaluated at the maximum-likelihood estimate of lambda
+(i.e., at <code>incidence.rate</code>)</p></li>
 <li><p><code>iterations</code>: the number of iterations used</p></li>
 <li><p><code>antigen_isos</code>: a list of antigen isotypes used in the analysis</p></li>
-<li><p><code>nlm.convergence.code</code>: information about convergence of the likelihood maximization procedure performed by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code> (see "Value" section of <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>, component <code>code</code>); codes 3-5 indicate issues:</p><ul><li><p>1: relative gradient is close to zero, current iterate is probably solution.</p></li>
-<li><p>2: successive iterates within tolerance, current iterate is probably solution.</p></li>
-<li><p>3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or <code>stepmin</code> in <code><a href="est.incidence.html">est.incidence()</a></code> (a.k.a., <code>steptol</code> in <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>) is too large.</p></li>
+<li><p><code>nlm.convergence.code</code>:
+information about convergence of the likelihood maximization procedure
+performed by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">nlm()</a></code>
+(see "Value" section of <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>, component <code>code</code>);
+codes 3-5 indicate issues:</p><ul><li><p>1: relative gradient is close to zero,
+current iterate is probably solution.</p></li>
+<li><p>2: successive iterates within tolerance,
+current iterate is probably solution.</p></li>
+<li><p>3: Last global step failed to locate a point lower than x.
+Either x is an approximate local minimum of the function,
+the function is too non-linear for this algorithm,
+or <code>stepmin</code> in <code><a href="est.incidence.html">est.incidence()</a></code>
+(a.k.a., <code>steptol</code> in <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>) is too large.</p></li>
 <li><p>4: iteration limit exceeded; increase <code>iterlim</code>.</p></li>
-<li><p>5: maximum step size <code>stepmax</code> exceeded five consecutive times. Either the function is unbounded below, becomes asymptotic to a finite value from above in some direction or <code>stepmax</code> is too small.</p></li>
+<li><p>5: maximum step size <code>stepmax</code> exceeded five consecutive times.
+Either the function is unbounded below,
+becomes asymptotic to a finite value from above in some direction,
+or <code>stepmax</code> is too small.</p></li>
 </ul></li>
 </ul></div>
 
@@ -105,7 +121,7 @@
 <span class="r-in"><span>  <span class="va">sees_pop_data_pk_100</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">curve</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="va">typhoid_curves_nostrat_100</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="va">typhoid_curves_nostrat_100</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span></span></span>

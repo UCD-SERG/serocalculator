@@ -4,12 +4,14 @@
 \alias{summary.seroincidence}
 \title{Summarizing fitted seroincidence models}
 \usage{
-\method{summary}{seroincidence}(object, coverage = 0.95, ...)
+\method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, ...)
 }
 \arguments{
 \item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est.incidence]{est.incidence()}}}
 
 \item{coverage}{desired confidence interval coverage probability}
+
+\item{verbose}{whether to produce verbose messaging}
 
 \item{...}{unused}
 }

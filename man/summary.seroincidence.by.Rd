@@ -9,6 +9,7 @@
   confidence_level = 0.95,
   showDeviance = TRUE,
   showConvergence = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -22,6 +23,8 @@
 
 \item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
 help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
+
+\item{verbose}{a \link{logical} scalar indicating whether to print verbose messages to the console}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }

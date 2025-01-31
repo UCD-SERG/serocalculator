@@ -2,6 +2,7 @@
 #' @description This function is a `summary()` method for `seroincidence` objects.
 #' @param object a [list()], outputted by [stats::nlm()] or [est.incidence()]
 #' @param coverage desired confidence interval coverage probability
+#' @param verbose whether to produce verbose messaging
 #' @param ... unused
 #' @return a [tibble::tibble()] containing the following:
 #' * `est.start`: the starting guess for incidence rate
@@ -45,6 +46,7 @@
 summary.seroincidence <- function(
     object,
     coverage = .95,
+    verbose = TRUE,
     ...) {
   start <- object %>% attr("lambda_start")
   antigen_isos <- object %>% attr("antigen_isos")
@@ -52,7 +54,7 @@ summary.seroincidence <- function(
   alpha <- 1 - coverage
   h.alpha <- alpha / 2
   hessian <- object$hessian
-  if (hessian < 0) {
+  if (verbose && hessian < 0) {
     warning(
       "`nlm()` produced a negative hessian; something is wrong with the numerical derivatives.",
       "\nThe standard error of the incidence rate estimate cannot be calculated."

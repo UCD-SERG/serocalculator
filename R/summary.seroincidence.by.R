@@ -6,6 +6,7 @@
 #' [est.incidence.by()].
 #'
 #' @param object A dataframe containing output of function [est.incidence.by()].
+#' @param verbose a [logical] scalar indicating whether to print verbose messages to the console
 #' @param ... Additional arguments affecting the summary produced.
 #' @param showDeviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence. Default = `TRUE`.
@@ -57,6 +58,7 @@ summary.seroincidence.by <- function(
     confidence_level = .95,
     showDeviance = TRUE,
     showConvergence = TRUE,
+    verbose = FALSE,
     ...) {
   alpha <- 1 - confidence_level
   quantiles <- c(alpha / 2, 1 - alpha / 2)
@@ -73,7 +75,8 @@ summary.seroincidence.by <- function(
     object %>%
     lapply(
       FUN = summary.seroincidence,
-      coverage = confidence_level
+      coverage = confidence_level,
+      verbose = verbose
     ) %>%
     bind_rows(.id = "Stratum")
 

@@ -97,8 +97,6 @@ modelled jointly.</p>
 <p>Longitudinal parameters are calculated for an age:
 <code>age_fixed</code> (fixed age). However, when <code>age_fixed</code>
 is set to NA then the age at infection is used.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">renew_params</span> <span class="op">=</span> <span class="cn">FALSE</span></span></code></pre></div>
 <p>The boolean <code>renew_params</code> determines whether each
 infection uses a new set of longitudinal parameters, sampled at random
 from the posterior predictive output of the longitudinal model. If set
@@ -110,6 +108,10 @@ the simulated level (just) prior to infection, and</p></li>
 <li><p>when <code>age_fixed = NA</code>, the selected parameter sample
 is updated for the age when infection occurs.</p></li>
 </ol>
+<p>For our initial simulations, we will set
+<code>renew_params = FALSE</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">renew_params</span> <span class="op">=</span> <span class="cn">FALSE</span></span></code></pre></div>
 <p>There is also a variable <code>n_mcmc_samples</code>: when
 <code>n_mcmc_samples==0</code> then a random MC sample is chosen out of
 the posterior set (1:4000). When <code>n_mcmc_samples</code> is given a
@@ -615,6 +617,133 @@ appropriately, to be sure.</p>
 <span><span class="co">#&gt; Warning in scale_x_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced</span></span>
 <span><span class="co">#&gt; infinite values.</span></span></code></pre></div>
 <p><img src="simulate_xsectionalData_files/figure-html/graph-1.png" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="effect-of-renew_params">Effect of <code>renew_params</code><a class="anchor" aria-label="anchor" href="#effect-of-renew_params"></a>
+</h3>
+<p>Setting <code>renew_params = TRUE</code> is more realistic, but not
+is accounted for by the current method; for population samples from
+populations with high incidence rates, there may be bias:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_df_renew</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
+<span>    n_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
+<span>    lambdas <span class="op">=</span> <span class="va">lambdas</span>,</span>
+<span>    nclus <span class="op">=</span> <span class="va">nclus</span>,</span>
+<span>    n_samples <span class="op">=</span> <span class="va">nrep</span>,</span>
+<span>    age_range <span class="op">=</span> <span class="va">lifespan</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>    renew_params <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span>
+<span>    format <span class="op">=</span> <span class="st">"long"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">ests_renew</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">sim_df_renew</span>,</span>
+<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
+<span>    num_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
+<span>    strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span>
+<span>    curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="va">verbose</span>,</span>
+<span>    build_graph <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># slows down the function substantially</span></span>
+<span>    antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">ests_renew_summary</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">ests_renew</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): `nlm()` produced a negative hessian; something is wrong with the numerical derivatives.</span></span>
+<span><span class="co">#&gt; The standard error of the incidence rate estimate cannot be calculated.</span></span>
+<span><span class="co">#&gt; Warning in sqrt(var.log.lambda): NaNs produced</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">ests_renew_summary</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>xvar <span class="op">=</span> <span class="st">"lambda.sim"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">geom_function</a></span><span class="op">(</span></span>
+<span>    fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">'red'</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"data-generating incidence rate"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in scale_x_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced</span></span>
+<span><span class="co">#&gt; infinite values.</span></span></code></pre></div>
+<p><img src="simulate_xsectionalData_files/figure-html/graph_renew-1.png" width="672"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

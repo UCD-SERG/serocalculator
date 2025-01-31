@@ -1,6 +1,7 @@
 ---
 title: "Generate a simulated cross-sectional sample and estimate seroincidence"
-subtitle: "Enteric Fever using HlyE IgG and/or HlyE IgA"
+subtitle: "Simulation of Enteric Fever using HlyE IgG and/or HlyE IgA"
+description: "A demonstration of the accuracy of the estimation approach"
 output: 
   bookdown::html_document2:
     base_format: rmarkdown::html_document
@@ -30,6 +31,10 @@ modelled jointly.
 
 Longitudinal parameters are calculated for an age: `age_fixed` (fixed age).
 However, when `age_fixed` is set to NA then the age at infection is used.
+
+```{r}
+renew_params = FALSE
+```
 
 The boolean `renew_params` determines whether each infection uses a
 new set of longitudinal parameters, sampled at random from the
@@ -130,6 +135,9 @@ dlims <- rbind(
 ```
 
 ```{r}
+
+verbose = FALSE # whether to print updates as the function runs
+
 # generate cross-sectional data
 csdata <- sim_pop_data(
   curve_params = dmcmc,
@@ -138,7 +146,7 @@ csdata <- sim_pop_data(
   age_range = lifespan,
   antigen_isos = antibodies,
   n_mcmc_samples = 0,
-  renew_params = TRUE,
+  renew_params = renew_params,
   add_noise = TRUE,
   noise_limits = dlims,
   format = "long"
@@ -147,7 +155,8 @@ csdata <- sim_pop_data(
 
 ## Noise parameters
 
-We need to provide noise parameters for the analysis; here, we define them directly in our code:
+We need to provide noise parameters for the analysis; here, 
+we define them directly in our code:
 
 ```{r "noise"}
 library(tibble)
@@ -166,10 +175,10 @@ cond <- tibble(
 We can plot the distribution of the antibody responses in the simulated data.
 
 ```{r}
-ggplot(csdata, aes(
-  x = as.factor(antigen_iso),
-  y = value
-)) +
+ggplot(csdata) +
+  aes(
+    x = as.factor(antigen_iso),
+    y = value) +
   geom_beeswarm(
     size = .2,
     alpha = .3,
@@ -266,7 +275,7 @@ est1 <- est.incidence(
   noise_params = cond,
   lambda_start = .1,
   build_graph = TRUE,
-  verbose = TRUE, # print updates as the function runs
+  verbose = verbose, 
   print_graph = FALSE, # display the log-likelihood curve while
   #`est.incidence()` is running
   antigen_isos = antibodies
@@ -303,7 +312,7 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 
 ```{r "do-parallel"}
 # number of clusters
-nclus <- 10
+nclus <- 20
 # cross-sectional sample size
 nrep <- 100
 
@@ -318,7 +327,7 @@ sim_df <-
     n_samples = nrep,
     age_range = lifespan,
     antigen_isos = antibodies,
-    renew_params = TRUE,
+    renew_params = renew_params,
     add_noise = TRUE,
     curve_params = dmcmc,
     noise_limits = dlims,
@@ -331,7 +340,8 @@ print(sim_df)
 We can plot the distributions of the simulated responses:
 
 ```{r}
-sim_df %>% ggplot() +
+sim_df %>% 
+  ggplot() +
   aes(
     x = as.factor(cluster),
     y = value
@@ -355,7 +365,7 @@ ests <-
     strata = c("lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
-    verbose = TRUE,
+    verbose = verbose,
     build_graph = TRUE, # slows down the function substantially
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
@@ -364,14 +374,14 @@ ests <-
 `summary(ests)` produces a `tibble()` with some extra meta-data:
 
 ```{r}
-summary(ests)
+ests_summary <- ests |> summary() |> print()
 ```
 
 We can explore the summary table interactively using `DT::datatable()`
 
 ```{r}
 library(DT)
-summary(ests) %>%
+ests_summary %>%
   DT::datatable() %>%
   DT::formatRound(
     columns = c(
@@ -408,7 +418,7 @@ autoplot(ests[1:5], log_x = TRUE)
 Make sure to check the `nlm()` exit codes (codes 3-5 indicate possible non-convergence):
 
 ```{r "check-codes"}
-summary(ests) %>%
+ests_summary %>%
   as_tibble() %>% # removes extra meta-data
   select(Stratum, nlm.convergence.code) %>%
   filter(nlm.convergence.code > 2)
@@ -424,7 +434,7 @@ We can extract the indices of problematic strata, if there are any:
 
 ```{r}
 problem_strata <-
-  which(summary(ests)$nlm.convergence.code > 2) %>%
+  which(ests_summary$nlm.convergence.code > 2) %>%
   print()
 ```
 
@@ -436,17 +446,25 @@ if (length(problem_strata) > 0) {
 }
 ```
 
-If any of the fits don't appear to be at the maximum likelihood, we should re-run those clusters, adjusting the `nlm()` settings appropriately, to be sure.
+If any of the fits don't appear to be at the maximum likelihood, 
+we should re-run those clusters, 
+adjusting the `nlm()` settings appropriately, to be sure.
 
 ## plot distribution of estimates by simulated incidence rate
 
 Finally, we can look at our simulation results:
 
 ```{r, "graph"}
+
 library(ggplot2)
-summary(ests) %>%
+ests_summary %>%
   autoplot(xvar = "lambda.sim") +
-  ggplot2::geom_abline(
-    ggplot2::aes(intercept = 0, slope = 1)
-  )
+  ggplot2::geom_function(
+    fun = function(x) x,
+    col = 'red',
+    aes(linetype = "data-generating incidence rate")
+  ) +
+  labs(linetype = "") +
+  scale_x_log10()
+
 ```

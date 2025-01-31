@@ -139,7 +139,7 @@ dlims <- rbind(
 
 ```{r}
 
-verbose = FALSE # whether to print updates as the function runs
+verbose = FALSE # whether to print verbose updates as the function runs
 
 # generate cross-sectional data
 csdata <- sim_pop_data(

@@ -1,5 +1,4 @@
-test_that("`summary.seroincidence.by()` produces consistent results
-          for typhoid data",
+test_that("`summary.seroincidence.by()` produces consistent results",
           {
             typhoid_results <-
               est.incidence.by(

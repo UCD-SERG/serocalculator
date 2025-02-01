@@ -36,6 +36,11 @@ jobs:
   pkgdown-build:
     runs-on: ubuntu-latest
     if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed') }}
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+    permissions:
+      contents: write
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:

@@ -7,3 +7,30 @@ bibliography: vignettes/references.bib
 
 search:
   exclude: ['preview/']
+
+# reference:
+# - title: Prepare data
+#   contents:
+#   - as_pop_data
+#   - as_curve_params
+#   - as_noise_params
+# - title:
+#
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - articles/serocalculator
+
+- title: Methodology
+  navbar: Methodology
+  contents:
+  - methodology
+  - articles/simulate_xsectionalData
+
+- title: Examples
+  navbar: Examples
+  contents:
+  - articles/enteric_fever_example
+  - articles/scrubTyphus_example

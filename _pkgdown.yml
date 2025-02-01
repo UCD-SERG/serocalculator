@@ -34,3 +34,6 @@ articles:
   contents:
   - articles/enteric_fever_example
   - articles/scrubTyphus_example
+
+development:
+  mode: auto

@@ -93,6 +93,9 @@ jobs:
           pkg <- pkgdown::as_pkgdown(".")
 
           # Deploy pkgdown site to branch
+          pkgdown:::build_quarto_articles(quiet=FALSE) # todo: remove later;
+          # suggested by https://github.com/r-lib/pkgdown/issues/2844#issuecomment-2619120436
+
           pkgdown::deploy_to_branch(subdir = if (nzchar(subdir)) subdir, clean = nzchar(subdir))
 
           # Report deployed site URL

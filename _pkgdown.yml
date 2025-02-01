@@ -26,7 +26,7 @@ articles:
 - title: Methodology
   navbar: Methodology
   contents:
-  - methodology
+  # - methodology
   - articles/simulate_xsectionalData
 
 - title: Examples
@@ -35,6 +35,6 @@ articles:
   - articles/enteric_fever_example
   - articles/scrubTyphus_example
 
-- title: Other
-  contents:
-  - test
+# - title: Other
+#   contents:
+#   - test

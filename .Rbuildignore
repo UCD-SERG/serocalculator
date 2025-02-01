@@ -33,3 +33,5 @@ allpopsamples_hlye.csv$
 ^NEWS\.html$
 ^man/check_strata\.Rd$
 ^vignettes/*_files$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$

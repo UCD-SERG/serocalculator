@@ -3,6 +3,11 @@
 ## New features
 
 * Added more details about contributing PRs in `Contributing.md` (#280)
+* Added outline to pkgdown website (#353)
+* Added verbose option for `summary.seroincidence()` and 
+`summary.seroincidence.by()` (#348)
+* Extended `simulate_xsectionalData.Rmd` article to explore
+`renew_params = TRUE` vs `renew_params = FALSE` (#348)
 
 * Renamed variables for consistency (#281):
   - `sim.cs()` -> `sim_pop_data()` 
@@ -10,6 +15,7 @@
 
 ## Internal changes
 
+* added test for `summary.seroincidence.by()` (#352)
 * Started checking for use of base pipe instead of magrittr pipe
 by linter (#347)
 * Removed `ldpar()` from API (#345)

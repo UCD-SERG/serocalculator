@@ -63,6 +63,10 @@ is the instantaneous **probability** (density) of
 
 * Notation: let's use **$\lambda_{t}$** to denote the incidence rate at time $t$.
 
+## Seroconversion rate
+
+The seroconversion rate, also known as the seroincidence rate, is ...
+
 # Estimating incidence from cross-sectional antibody surveys
 
 ## Cross-sectional antibody surveys {.incremental}

@@ -34,3 +34,7 @@ articles:
   contents:
   - articles/enteric_fever_example
   - articles/scrubTyphus_example
+
+- title: Other
+  contents:
+  - articles/test-quarto-article

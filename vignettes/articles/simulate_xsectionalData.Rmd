@@ -315,7 +315,7 @@ In the preceding code chunk, we have determined that we can use `r n_cores` CPU 
 
 ```{r "do-parallel"}
 # number of clusters
-nclus <- 20
+nclus <- 5
 # cross-sectional sample size
 nrep <- 100
 

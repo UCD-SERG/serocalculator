@@ -64,7 +64,7 @@ jobs:
             website
           extra-packages: |
             local::.
-            any::pkgdown
+            r-lib/pkgdown
 
       # If events is a PR, set subdir to 'preview/pr<pr_number>'
       - name: "[PR] Set documentation subdirectory"
@@ -94,7 +94,8 @@ jobs:
           pkg <- pkgdown::as_pkgdown(".")
 
           # https://github.com/r-lib/pkgdown/issues/2844#issuecomment-2619120436:
-          pkgdown:::build_quarto_articles(quiet=FALSE)
+          pkgdown::init_site()
+          pkgdown:::build_quarto_articles(quiet = FALSE)
 
           # Deploy pkgdown site to branch
           pkgdown::deploy_to_branch(subdir = if (nzchar(subdir)) subdir, clean = nzchar(subdir))

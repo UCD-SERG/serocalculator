@@ -16,6 +16,7 @@ on:
       - 'man/**'
       - 'pkgdown/**'
       - 'vignettes/**'
+      - '_pkgdown.yml'
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'         # build on version tags

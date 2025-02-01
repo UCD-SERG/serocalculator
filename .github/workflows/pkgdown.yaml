@@ -95,9 +95,9 @@ jobs:
 
           # https://github.com/r-lib/pkgdown/issues/2844#issuecomment-2619120436:
           pkgdown::init_site()
-          cat("init site done")
+          cat("init site done", file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
           pkgdown:::build_quarto_articles(quiet = FALSE)
-          cat("build articles done")
+          cat("build articles done",  file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
 
           # Deploy pkgdown site to branch
           pkgdown::deploy_to_branch(subdir = if (nzchar(subdir)) subdir, clean = nzchar(subdir))

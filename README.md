@@ -16,7 +16,6 @@ coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https:
 
 ![](man/figures/qr.svg)
 
-
 Figure 1: QR code for `serocalculator` website
 
 </div>

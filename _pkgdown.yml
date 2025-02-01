@@ -35,5 +35,6 @@ articles:
   - articles/enteric_fever_example
   - articles/scrubTyphus_example
 
-development:
-  mode: auto
+- title: Other
+  contents:
+  - test

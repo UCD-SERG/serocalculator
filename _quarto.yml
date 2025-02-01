@@ -1,6 +1,6 @@
 project:
     render:
-    - '*.qmd'
+    - ['*.qmd']
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
 date: '`r Sys.Date()`'
 format:

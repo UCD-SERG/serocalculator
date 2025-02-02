@@ -16,6 +16,8 @@ on:
       - 'man/**'
       - 'pkgdown/**'
       - 'vignettes/**'
+      - '_quarto.yml'
+      - '.github/workflows/pkgdown.yaml'
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'         # build on version tags
@@ -63,7 +65,7 @@ jobs:
             website
           extra-packages: |
             local::.
-            any::pkgdown
+            r-lib/pkgdown
 
       # If events is a PR, set subdir to 'preview/pr<pr_number>'
       - name: "[PR] Set documentation subdirectory"

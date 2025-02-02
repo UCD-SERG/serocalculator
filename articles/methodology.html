@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 </h2>
 <section class="level2"><h3 id="defining-incidence">Defining incidence<a class="anchor" aria-label="anchor" href="#defining-incidence"></a>
 </h3>
-<p>The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">[@Noordzij2010diseasemeasures]</span>.</p>
+<p>The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">(<a href="#ref-Noordzij2010diseasemeasures" role="doc-biblioref">Noordzij et al. 2010</a>)</span>.</p>
 <p><strong>Example:</strong> if there are <strong>10 new cases</strong> of typhoid in a population of <strong>1000 persons</strong> during a <strong>one month</strong> time period, then the incidence rate for that time period is <strong>10 new cases per 1000 persons per month</strong>.</p>
 </section><section class="level2" data-visibility="hidden"><h3 data-visibility="hidden" id="mathematical-definition-of-incidence">Mathematical definition of incidence<a class="anchor" aria-label="anchor" href="#mathematical-definition-of-incidence"></a>
 </h3>
@@ -353,12 +353,12 @@ p(Y=y)
 </section></section><section class="section level2"><h2 id="modeling-the-seroresponse-kinetics-curve">Modeling the seroresponse kinetics curve<a class="anchor" aria-label="anchor" href="#modeling-the-seroresponse-kinetics-curve"></a>
 </h2>
 <div class="notes">
-<p>Now, we need a model for the antibody response to infection, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo>=</mo><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>T</mi><mo>=</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbb{p}(Y=y|T=t)</annotation></semantics></math>. The current version of the <a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a> package uses a two-phase model for the shape of the seroresponse <span class="citation" data-cites="Teunis_2016">[@Teunis_2016]</span>.</p>
+<p>Now, we need a model for the antibody response to infection, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo>=</mo><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>T</mi><mo>=</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbb{p}(Y=y|T=t)</annotation></semantics></math>. The current version of the <a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a> package uses a two-phase model for the shape of the seroresponse <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>.</p>
 </div>
 <section class="level2 smaller"><h3 class="smaller" id="model-for-active-infection-period">Model for active infection period<a class="anchor" aria-label="anchor" href="#model-for-active-infection-period"></a>
 </h3>
 <div class="notes">
-<p>The first phase of the model represents the <strong>active infection period</strong>, and uses a simplified Lotka-Volterra predator-prey model <span class="citation" data-cites="volterra1928variations">[@volterra1928variations]</span> where the pathogen is the prey and the antibodies are the predator:</p>
+<p>The first phase of the model represents the <strong>active infection period</strong>, and uses a simplified Lotka-Volterra predator-prey model <span class="citation" data-cites="volterra1928variations">(<a href="#ref-volterra1928variations" role="doc-biblioref">Volterra 1928</a>)</span> where the pathogen is the prey and the antibodies are the predator:</p>
 </div>
 <p>Notation:</p>
 <ul>
@@ -526,8 +526,16 @@ Figure 3: An example kinetics curve for HlyE IgG
 <!-- {{< include articles/_methods-continued.qmd >}} -->
 </section><section class="level2 smaller unnumbered"><h3 class="smaller unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Noordzij2010diseasemeasures" class="csl-entry" role="listitem">
+Noordzij, Marlies, Friedo W. Dekker, Carmine Zoccali, and Kitty J. Jager. 2010. <span>“<span class="nocase">Measures of Disease Frequency: Prevalence and Incidence</span>.”</span> <em>Nephron Clinical Practice</em> 115 (1): c17–20. <a href="https://doi.org/10.1159/000286345" class="external-link">https://doi.org/10.1159/000286345</a>.
+</div>
+<div id="ref-Teunis_2016" class="csl-entry" role="listitem">
+Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić Marinović, and M. E. E. Kretzschmar. 2016. <span>“Linking the Seroresponse to Infection to Within-Host Heterogeneity in Antibody Production.”</span> <em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001" class="external-link">https://doi.org/10.1016/j.epidem.2016.04.001</a>.
+</div>
+<div id="ref-volterra1928variations" class="csl-entry" role="listitem">
+Volterra, Vito. 1928. <span>“Variations and Fluctuations of the Number of Individuals in Animal Species Living Together.”</span> <em>ICES Journal of Marine Science</em> 3 (1): 3–51.
+</div>
 </div>
 </section></section><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

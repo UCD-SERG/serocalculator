@@ -2,6 +2,8 @@
 
 ## New features
 
+* Fixed citations in `methodology.qmd` article (#360)
+
 * Added outline to pkgdown website (#353)
 
 * Added verbose option for `summary.seroincidence()` and 

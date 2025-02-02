@@ -2,6 +2,8 @@
 
 ## New features
 
+* Fixed citations in `methodology.qmd` article
+
 * Renamed variables for consistency (#281):
   - `sim.cs()` -> `sim_pop_data()` 
   - `sim.cs.multi()` -> `sim_pop_data_multi()`

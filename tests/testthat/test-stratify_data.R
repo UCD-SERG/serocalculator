@@ -2,23 +2,12 @@ test_that(
   desc = "stratify_data() produces consistent results",
   code = {
     withr::local_options(width = 80)
-    library(dplyr)
-    library(readr)
-
-    xs_data <-
-      sees_pop_data_pk_100
-
-    curve <-
-      typhoid_curves_nostrat_100
-
-    noise <-
-      example_noise_params_pk
 
     stratified_data =
       stratify_data(
-        data = xs_data,
-        curve_params = curve,
-        noise_params = noise,
+        data = sees_pop_data_pk_100,
+        curve_params = typhoid_curves_nostrat_100,
+        noise_params = example_noise_params_pk,
         strata_varnames = "catchment",
         curve_strata_varnames = NULL,
         noise_strata_varnames = NULL

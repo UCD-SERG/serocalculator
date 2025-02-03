@@ -49,15 +49,17 @@ graph antibody decay curves by antigen isotype
 \details{
 \subsection{\code{rows_to_graph}}{
 
-Note that if you directly specify \code{rows_to_graph} when calling this function,
+If you directly specify \code{rows_to_graph} when calling this function,
 the row numbers are enumerated separately for each antigen isotype;
 in other words, for the purposes of this argument,
-row numbers start over at 1 for each antigen isotype. There is currently
-no way to specify different row numbers for different antigen isotypes;
-if you want to do that, you could call \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab()}}
-directly for each antigen isotype and combine the resulting panels yourself.
-Or you could subset \code{curve_params} manually, before passing it to this
-function, and set the \code{n_curves} argument to \code{Inf}.
+row numbers start over at 1 for each antigen isotype.
+There is currently no way to specify different row numbers for different antigen isotypes;
+if you want to do that,
+you will could call \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab()}} directly for each antigen isotype
+and combine the resulting panels yourself.
+Or you could subset \code{curve_params} manually,
+before passing it to this function,
+and set the \code{n_curves} argument to \code{Inf}.
 }
 }
 \examples{

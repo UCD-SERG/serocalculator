@@ -13,6 +13,7 @@ src-x64
 serocalculator.Rcheck/
 serocalculator*.tar.gz
 serocalculator*.tgz
+rsconnect
 README.html
 README_files
 /.quarto/

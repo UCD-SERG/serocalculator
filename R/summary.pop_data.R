@@ -61,7 +61,8 @@ summary.pop_data <- function(object, strata = NULL, ...) {
           `# NAs` = ~ is.na(.x) |> sum()
         ),
         .names = "{.fn}"
-      ))
+      )
+    )
 
   to_return <- list(n = nrow(ages),
                     age_summary = age_summary,

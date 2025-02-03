@@ -35,7 +35,7 @@ plot1 <- graph.curve.params(curve)
 
 print(plot1)
 
-plot1 <- graph.curve.params(curve, show_all_curves = TRUE)
+plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
 show(plot2)
 
 }

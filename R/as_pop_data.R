@@ -34,7 +34,7 @@ as_pop_data <- function(data,
     c("pop_data", class(pop_data))
 
   if (is.null(antigen_isos)) {
-    antigen_isos <- unique(pop_data$antigen_iso)
+    antigen_isos <- unique(pop_data$antigen_iso) |> as.character()
   } else {
     stopifnot(all(is.element(antigen_isos, pop_data$antigen_iso)))
   }

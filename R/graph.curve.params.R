@@ -18,6 +18,9 @@
 #'
 #' print(plot1)
 #'
+#' plot1 <- graph.curve.params(curve, show_all_curves = TRUE)
+#' show(plot2)
+#'
 graph.curve.params <- function( # nolint: object_name_linter
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),

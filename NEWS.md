@@ -2,7 +2,8 @@
 
 ## New features
 
-* Improved y-limit calculation in `graph.curve.params()` (#)
+* Improved y-limit calculation in `graph.curve.params()` (#368)
+* Added option for `graph.curve.params()` to show all curves (#368)
 * Removed `warn.missing.strata()` from API (#366)
 
 * Added more details about contributing PRs in `Contributing.md` (#280)
@@ -29,7 +30,7 @@
 
 ## Internal changes
 
-* added test for `graph.curve.params()`
+* added test for `graph.curve.params()` (#368)
 * reverted Readme source file from qmd to Rmd.
 * switched pkgdown GHA from `any::pkgdown` to `r-lib/pkgdown` (i.e., dev version) (#359)
 * added test for `summary.seroincidence.by()` (#352)

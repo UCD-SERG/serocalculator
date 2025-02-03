@@ -32,8 +32,12 @@
 #' @keywords internal
 print.seroincidence <- function(x, ...) {
   cat("`seroincidence` object estimated given the following setup:\n")
-  cat(paste("a) `antigen_isos`: ", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")
-  cat(paste("b) `lambda_start`: ", attr(x, "lambda_start"), "\n"))
+  cat("a) `antigen_isos`: ",
+      paste(attr(x, "antigen_isos"), collapse = ", "),
+      "\n")
+  cat("b) `lambda_start`: ",
+      attr(x, "lambda_start"),
+      "\n")
   cat("Call the `summary()` function to obtain output results.\n")
   cat("Call the `autoplot()` function to graph the log-likelihood curve.\n")
   invisible(x)

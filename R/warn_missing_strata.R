@@ -35,7 +35,7 @@ warn_missing_strata <- function(
   if (length(missing_strata_vars) > 0) {
     if (length(present_strata_vars) > 0) {
       message <-
-          "{.var {dataname}} is missing {.var {missing_strata_vars}}
+        "{.var {dataname}} is missing {.var {missing_strata_vars}}
           and will only be stratified by
           {.var {present_strata_vars}}"
     } else {
@@ -50,29 +50,31 @@ warn_missing_strata <- function(
       arguments to `est.incidence.by()`."
     )
 
-    cli::cli_warn(c(message, i = message2))
+    cli::cli_warn(
+      class = "missing strata vars",
+      c(message, i = message2))
   }
 
   if (length(present_strata_vars) > 0) {
-    strata2 <- data %>% count_strata(present_strata_vars)
+    strata2 <- data |> count_strata(present_strata_vars)
 
     missing_strata <-
       anti_join(
         strata,
         strata2,
         by = present_strata_vars
-      ) %>%
+      ) |>
       distinct(across(all_of(present_strata_vars)))
 
     if (nrow(missing_strata) > 0) {
       cli::cli_abort(
         class = "absent strata levels",
-        "Missing strata levels in {.arg {dataname}}",
-        body = c(
-          "The following strata variables are present,
-        but the following specific combinations of those strata are missing:",
-          missing_strata |> capture.output())
-      )
+        c(
+          "Missing strata levels in {.arg {dataname}}",
+        "i" = "The following strata variables are present,
+        but the following specific combinations of those strata are missing:"),
+        body = missing_strata |> capture.output())
+
     }
   }
 

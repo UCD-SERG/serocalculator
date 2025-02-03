@@ -3,11 +3,21 @@ test_that("`test_missing_strata()` errors on absent strata", {
 
   warn_missing_strata(iris, expected_strata, dataname = "iris") |>
     expect_error(class = "absent strata levels")
+
+  withr::local_options(width = 80)
+  warn_missing_strata(iris, expected_strata, dataname = "iris") |>
+    expect_snapshot(error = TRUE,
+                    cnd_class = TRUE)
 })
 
 test_that("`test_missing_strata()` warns on missing strata vars", {
   expected_strata <- data.frame(Species = "setosa", type = "orchid")
 
   warn_missing_strata(iris, expected_strata, dataname = "iris") |>
-    expect_warning()
+    expect_warning(class = "missing strata vars")
+
+  withr::local_options(width = 80)
+  warn_missing_strata(iris, expected_strata, dataname = "iris") |>
+    expect_snapshot(cnd_class = TRUE)
+
 })

@@ -5,8 +5,7 @@ example_noise_params_pk <-
 usethis::use_data(example_noise_params_pk, overwrite = TRUE)
 
 
-example_noise_params_np <-
-  load_noise_params("https://osf.io/download//hqy4v/") %>%
-  filter(Country == "Nepal")
+example_noise_params_sees <-
+  load_noise_params("https://osf.io/download//hqy4v/")
 
-usethis::use_data(example_noise_params_np, overwrite = TRUE)
+usethis::use_data(example_noise_params_sees, overwrite = TRUE)

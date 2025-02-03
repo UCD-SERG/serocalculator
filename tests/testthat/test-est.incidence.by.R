@@ -6,7 +6,7 @@ test_that(
   library(readr)
 
   est.incidence.by(
-    pop_data = sees_pop_data_np_100,
+    pop_data = sees_pop_data_100 |> dplyr::filter(Country == "Nepal"),
     curve_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_np,
     strata = "catchment",
@@ -23,8 +23,10 @@ test_that("est.incidence.by() warns about missing data", {
   library(readr)
 
   est.incidence.by(
-    pop_data = sees_pop_data_np_100 |>
-      filter(catchment == "kavre" | antigen_iso == "HlyE_IgA"),
+    pop_data = sees_pop_data_100 |>
+      dplyr::filter(
+        Country == "Nepal",
+        catchment == "kavre" | antigen_iso == "HlyE_IgA"),
     curve_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_np,
     strata = "catchment",
@@ -179,7 +181,8 @@ test_that(
       noise_strata_varnames = NULL,
       verbose = TRUE,
       num_cores = 1
-    )
+    ) |>
+      suppressMessages()
 
     ests_non_verbose_sc <- est.incidence.by(
       verbose = FALSE,
@@ -213,7 +216,8 @@ test_that(
       noise_strata_varnames = NULL,
       verbose = TRUE,
       num_cores = 2
-    )
+    ) |>
+      suppressMessages()
 
     ests_non_verbose_mc <- est.incidence.by(
       verbose = FALSE,

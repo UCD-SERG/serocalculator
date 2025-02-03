@@ -10,7 +10,7 @@ sees_pop_data_pk_100 <- load_pop_data(
 
 usethis::use_data(sees_pop_data_pk_100, overwrite = TRUE)
 
-sees_pop_data_np_100 <- load_pop_data(
+sees_pop_data_100 <- load_pop_data(
   file_path = "https://osf.io/download//n6cp3/",
   age = "Age",
   value = "result",
@@ -19,9 +19,9 @@ sees_pop_data_np_100 <- load_pop_data(
 ) %>%
   filter(Country == "Nepal") %>%
   slice_head(n = 100,
-             by = all_of(c("antigen_iso", "catchment")))
+             by = all_of(c("antigen_iso", "catchment", "Country")))
 
-usethis::use_data(sees_pop_data_np_100, overwrite = TRUE)
+usethis::use_data(sees_pop_data_100, overwrite = TRUE)
 
 sees_pop_data_pk_100_old_names <- load_pop_data(
   file_path = "https://osf.io/download//n6cp3/",

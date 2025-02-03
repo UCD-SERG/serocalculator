@@ -27,6 +27,7 @@ A \code{pop_data} object (from \code{\link[=as_pop_data]{as_pop_data()}}) with 2
 sees_pop_data_pk_100_old_names
 }
 \description{
-A subset of data from the SEES data, for examples and testing.
+A subset of data from the SEES data, for examples and testing,
+data from Pakistan only, variable names not normalized by \code{\link[=as_pop_data]{as_pop_data()}}.
 }
 \keyword{datasets}

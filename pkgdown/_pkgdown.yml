@@ -48,7 +48,7 @@ reference:
   contents:
   - sees_pop_data_100
   - sees_pop_data_pk_100
-  - typhoid_curves_no_strat_100
+  - typhoid_curves_nostrat_100
   - example_noise_params_sees
   - example_noise_params_pk
   - serocalculator_example

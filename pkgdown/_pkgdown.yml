@@ -5,6 +5,9 @@ template:
 
 bibliography: vignettes/references.bib
 
+development:
+  mode: auto
+
 search:
   exclude: ['preview/']
 
@@ -38,4 +41,3 @@ articles:
 - title: Other
   contents:
   - articles/test-quarto-article
-  - articles/test

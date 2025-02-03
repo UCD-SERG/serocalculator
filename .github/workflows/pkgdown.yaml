@@ -3,6 +3,7 @@
 # Tags are deployed to /<tag>/
 # copied from https://github.com/rstudio/education-workflows/blob/main/examples/pkgdown.yaml
 # referred from https://github.com/r-lib/actions/issues/865
+# more info: https://github.com/rstudio/education-workflows/tree/main/examples#deploy-pkgdown-to-github-pages-with-pr-previews-and-tagged-versions
 on:
   pull_request:
     branches:

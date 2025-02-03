@@ -26,3 +26,4 @@ expected_strata <- data.frame(Species = "banana", type = "orchid")
 warn.missing.strata(iris, expected_strata, dataname = "iris")
 }
 }
+\keyword{internal}

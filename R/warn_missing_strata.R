@@ -12,6 +12,7 @@
 #'
 #' warn.missing.strata(iris, expected_strata, dataname = "iris")
 #' }
+#' @keywords internal
 warn.missing.strata <- function(
     data,
     strata,

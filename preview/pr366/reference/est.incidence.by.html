@@ -252,12 +252,14 @@ argument to avoid that warning.</p>
 <span class="r-in"><span>  <span class="co"># num_cores = 8 # Allow for parallel processing to decrease run time</span></span></span>
 <span class="r-in"><span>  iterlim <span class="op">=</span> <span class="fl">5</span> <span class="co"># limit iterations for the purpose of this example</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>curve_params is missing all strata variables, and will be used unstratified.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>noise_params is missing all strata variables, and will be used unstratified.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`curve_params` is missing all strata variables, and will be used unstratified.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   `est.incidence.by()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`noise_params` is missing all strata variables, and will be used unstratified.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   `est.incidence.by()`.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> `seroincidence.by` object estimated given the following setup:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span>

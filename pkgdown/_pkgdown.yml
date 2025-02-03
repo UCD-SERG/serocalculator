@@ -40,7 +40,6 @@ reference:
   contents:
   - summary.seroincidence
   - summary.seroincidence.by
-  - "[].seroincidence.by"
 - title: Visualize seroconversion incidence rate estimates
   contents:
   - autoplot.seroincidence

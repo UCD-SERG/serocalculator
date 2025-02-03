@@ -5,6 +5,9 @@ template:
 
 bibliography: vignettes/references.bib
 
+development:
+  mode: auto
+
 search:
   exclude: ['preview/']
 
@@ -34,3 +37,7 @@ articles:
   contents:
   - articles/enteric_fever_example
   - articles/scrubTyphus_example
+
+- title: Other
+  contents:
+  - articles/test-quarto-article

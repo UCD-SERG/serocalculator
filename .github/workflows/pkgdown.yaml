@@ -3,6 +3,7 @@
 # Tags are deployed to /<tag>/
 # copied from https://github.com/rstudio/education-workflows/blob/main/examples/pkgdown.yaml
 # referred from https://github.com/r-lib/actions/issues/865
+# more info: https://github.com/rstudio/education-workflows/tree/main/examples#deploy-pkgdown-to-github-pages-with-pr-previews-and-tagged-versions
 on:
   pull_request:
     branches:
@@ -16,6 +17,9 @@ on:
       - 'man/**'
       - 'pkgdown/**'
       - 'vignettes/**'
+      - '_quarto.yml'
+      - '.github/workflows/pkgdown.yaml'
+      - 'Readme.md'
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'         # build on version tags
@@ -63,7 +67,7 @@ jobs:
             website
           extra-packages: |
             local::.
-            any::pkgdown
+            r-lib/pkgdown
 
       # If events is a PR, set subdir to 'preview/pr<pr_number>'
       - name: "[PR] Set documentation subdirectory"
@@ -93,7 +97,7 @@ jobs:
           pkg <- pkgdown::as_pkgdown(".")
 
           # Deploy pkgdown site to branch
-          pkgdown::deploy_to_branch(subdir = if (nzchar(subdir)) subdir, clean = nzchar(subdir), quiet = FALSE)
+          pkgdown::deploy_to_branch(subdir = if (nzchar(subdir)) subdir, clean = nzchar(subdir))
 
           # Report deployed site URL
           deployed_url <- file.path(pkg$meta$url, subdir)

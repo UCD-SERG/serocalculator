@@ -3,6 +3,13 @@
 ## New features
 
 * Added more details about contributing PRs in `Contributing.md` (#280)
+
+* Split dev and release websites into:
+   - release: https://ucd-serg.github.io/serocalculator/
+   - dev: https://ucd-serg.github.io/serocalculator/dev/
+
+* Fixed citations in `methodology.qmd` article (#360)
+
 * Added outline to pkgdown website (#353)
 * Added verbose option for `summary.seroincidence()` and 
 `summary.seroincidence.by()` (#348)
@@ -15,6 +22,8 @@
 
 ## Internal changes
 
+* reverted Readme source file from qmd to Rmd.
+* switched pkgdown GHA from `any::pkgdown` to `r-lib/pkgdown` (i.e., dev version) (#359)
 * added test for `summary.seroincidence.by()` (#352)
 * Started checking for use of base pipe instead of magrittr pipe
 by linter (#347)

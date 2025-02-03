@@ -132,15 +132,17 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
 <h3 id="rows-to-graph"><code>rows_to_graph</code><a class="anchor" aria-label="anchor" href="#rows-to-graph"></a></h3>
 
 
-<p>Note that if you directly specify <code>rows_to_graph</code> when calling this function,
+<p>If you directly specify <code>rows_to_graph</code> when calling this function,
 the row numbers are enumerated separately for each antigen isotype;
 in other words, for the purposes of this argument,
-row numbers start over at 1 for each antigen isotype. There is currently
-no way to specify different row numbers for different antigen isotypes;
-if you want to do that, you could call <code><a href="plot_curve_params_one_ab.html">plot_curve_params_one_ab()</a></code>
-directly for each antigen isotype and combine the resulting panels yourself.
-Or you could subset <code>curve_params</code> manually, before passing it to this
-function, and set the <code>n_curves</code> argument to <code>Inf</code>.</p>
+row numbers start over at 1 for each antigen isotype.
+There is currently no way to specify different row numbers for different antigen isotypes;
+if you want to do that,
+you will could call <code><a href="plot_curve_params_one_ab.html">plot_curve_params_one_ab()</a></code> directly for each antigen isotype
+and combine the resulting panels yourself.
+Or you could subset <code>curve_params</code> manually,
+before passing it to this function,
+and set the <code>n_curves</code> argument to <code>Inf</code>.</p>
 </div>
 
     </div>

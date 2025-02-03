@@ -1,7 +1,12 @@
 url: https://ucd-serg.github.io/serocalculator/
 template:
-  bootstrap: 5
-  light-switch: true
+    package: grkgdown
+
+navbar:
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/gadenbuie/js4shiny
 
 bibliography: vignettes/references.bib
 

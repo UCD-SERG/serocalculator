@@ -20,39 +20,37 @@ warn_missing_strata <- function(
     data,
     strata,
     dataname) {
-  present_strata_vars <- intersect(
-    names(strata),
-    names(data)
-  )
+  present_strata_vars <- intersect(names(strata), names(data))
 
-  missing_strata_vars <- setdiff(
-    names(strata),
-    names(data)
-  )
-
-
+  missing_strata_vars <- setdiff(names(strata), names(data))
 
   if (length(missing_strata_vars) > 0) {
     if (length(present_strata_vars) > 0) {
-      message <-
-        "{.var {dataname}} is missing {.var {missing_strata_vars}}
-          and will only be stratified by
-          {.var {present_strata_vars}}"
+      message <- paste(
+        "{.var {dataname}} is missing {.var {missing_strata_vars}}",
+        "and will only be stratified by",
+        "{.var {present_strata_vars}}"
+      )
     } else {
-      message <- "{.var {dataname}} is missing all strata variables,
-      and will be used unstratified."
+      message <- paste(
+        "{.var {dataname}} is missing all strata variables",
+        "and will be used unstratified."
+      )
 
     }
 
-    message2 <- c(
-      "To avoid this warning, specify the desired set of stratifying
-      variables in the `curve_strata_varnames` and `noise_strata_varnames`
-      arguments to `est.incidence.by()`."
+    message2 <- paste(
+      "To avoid this warning,",
+      "specify the desired set of stratifying variables",
+      "in the `curve_strata_varnames` and",
+      "`noise_strata_varnames` arguments to `est.incidence.by()`."
     )
+
 
     cli::cli_warn(
       class = "missing strata vars",
-      c(message, i = message2))
+      c(message, i = message2)
+    )
   }
 
   if (length(present_strata_vars) > 0) {
@@ -71,9 +69,10 @@ warn_missing_strata <- function(
         class = "absent strata levels",
         c(
           "Missing strata levels in {.arg {dataname}}",
-        "i" = "The following strata variables are present,
+          "i" = "The following strata variables are present,
         but the following specific combinations of those strata are missing:"),
-        body = missing_strata |> capture.output())
+        body = missing_strata |> capture.output()
+      )
 
     }
   }

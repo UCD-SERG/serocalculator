@@ -66,7 +66,7 @@ LinkingTo:
 Config/testthat/edition: 3
 Config/Needs/build: moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto-dev/quarto-r, rstudio/rmarkdown, gadenbuie/grkgdown
+Config/Needs/website: quarto-dev/quarto, rstudio/rmarkdown, gadenbuie/grkgdown
 Encoding: UTF-8
 Language: en-US
 LazyData: true

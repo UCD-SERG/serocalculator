@@ -1,10 +1,10 @@
 #' @title
-#' Print Method for `seroincidence` Object
+#' Print Method for `seroincidence` Class
 #'
 #' @description
-#' Custom [print()] function to show output of the seroincidence calculator [est.incidence()].
+#' Custom [print()] function for `seroincidence` objects from [est.incidence()]
 #'
-#' @param x A list containing output of function [est.incidence.by()].
+#' @param x A list containing output of function [est.incidence()].
 #' @param ... Additional arguments affecting the summary produced.
 #' @returns an [invisible] copy of input parameter `x`
 #' @examples

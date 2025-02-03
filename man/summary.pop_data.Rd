@@ -16,7 +16,8 @@
 
 \item{...}{unused}
 
-\item{x}{an object of class \code{"summary.pop_data"}; usually, the result of a call to \code{\link[=summary.pop_data]{summary.pop_data()}}}
+\item{x}{an object of class \code{"summary.pop_data"};
+usually, the result of a call to \code{\link[=summary.pop_data]{summary.pop_data()}}}
 }
 \value{
 a \code{summary.pop_data} object,

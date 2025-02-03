@@ -47,8 +47,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
       max = max(.data[[age_column]])
     )
 
-  ab_summary <-
-    object |>
+  ab_summary <- object |>
     dplyr::summarize(
       .by = all_of(c("antigen_iso", strata)),
       across(
@@ -68,20 +67,20 @@ summary.pop_data <- function(object, strata = NULL, ...) {
                     age_summary = age_summary,
                     ab_summary = ab_summary)
 
-  class(to_return) = "summary.pop_data"
+  class(to_return) <- "summary.pop_data"
 
   return(to_return)
 }
 
 
 #' Print method for [summary.pop_data] objects
-#' @param x an object of class `"summary.pop_data"`; usually, the result of a call to [summary.pop_data()]
+#' @param x an object of class `"summary.pop_data"`;
+#' usually, the result of a call to [summary.pop_data()]
 #' @rdname summary.pop_data
 #' @export
 #' @keywords internal
-print.summary.pop_data <- function(x, ...)
-{
-  n_obs = x$age_summary |> pull("n") |> sum()
+print.summary.pop_data <- function(x, ...) {
+  n_obs <- x$age_summary |> pull("n") |> sum()
 
   cat("\nn =", n_obs, "\n")
 

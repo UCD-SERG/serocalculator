@@ -1,19 +1,22 @@
 #' Warn about missing stratifying variables in a dataset
 #'
 #' @param data the dataset that should contain the strata
-#' @param strata a [data.frame()] showing the strata levels that are expected to be in the dataset
-#' @param dataname the name of the dataset, for use in warning messages if some strata are missing.
+#' @param strata a [data.frame()] showing the strata levels
+#' that are expected to be in the dataset
+#' @param dataname the name of the dataset,
+#' for use in warning messages if some strata are missing.
 #'
-#' @return a [character()] vector of the subset of stratifying variables that are present in `pop_data`
+#' @return a [character()] vector of the subset of stratifying variables
+#' that are present in `pop_data`
 #'
 #' @examples
 #' \dontrun{
 #' expected_strata <- data.frame(Species = "banana", type = "orchid")
 #'
-#' warn.missing.strata(iris, expected_strata, dataname = "iris")
+#' warn_missing_strata(iris, expected_strata, dataname = "iris")
 #' }
 #' @keywords internal
-warn.missing.strata <- function(
+warn_missing_strata <- function(
     data,
     strata,
     dataname) {

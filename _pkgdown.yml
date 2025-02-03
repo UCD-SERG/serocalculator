@@ -1,6 +1,0 @@
-url: https://ucd-serg.github.io/serocalculator/
-template:
-  bootstrap: 5
-  light-switch: true
-
-bibliography: vignettes/references.bib

@@ -26,13 +26,18 @@ Calculate negative log-likelihood (deviance) for one antigen:isotype pair and in
 interface with C lib \code{serocalc.so}
 }
 \examples{
+\donttest{
 library(dplyr)
 library(tibble)
 
 # load in longitudinal parameters
-curve_params = load_curve_params("https://osf.io/download/rtw5k")
-xs_data <- "https://osf.io/download//n6cp3/" \%>\%
-load_pop_data()
+curve_params <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
+
+# load in pop data
+xs_data <-
+  sees_pop_data_pk_100
 
 #Load noise params
 noise_params <- tibble(
@@ -76,5 +81,6 @@ f_dev0(
     lnpars = cur_curve_params,
     cond = cur_noise_params
   )
+}
 }
 \keyword{internal}

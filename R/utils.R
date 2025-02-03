@@ -101,33 +101,3 @@
 
   invisible(NULL)
 }
-
-.checkStrata <- function(data, strata, antigen_isos) {
-  if (!is.character(strata)) {
-    stop(.pasteN(
-      "Argument `strata` is not a character vector.",
-      "Provide a character vector with names of stratifying variables."
-    ))
-  }
-
-  if (!all(is.element(strata, union("", names(data))))) {
-    stop("Strata names in argument \"data\" and argument \"strata\" do not match.")
-  }
-
-  antigen_iso_counts =
-    data %>%
-    select(all_of(c(strata, get_biomarker_names_var(data)))) %>%
-    table()
-
-  if(any(antigen_iso_counts == 0L))
-  {
-    rlang::warn(
-        class = "strata missing some biomarkers",
-        message =
-          "Some strata are completely missing one or more biomarkers.",
-        body = antigen_iso_counts %>% capture.output())
-
-  }
-
-  invisible(NULL)
-}

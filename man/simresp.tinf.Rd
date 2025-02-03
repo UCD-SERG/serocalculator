@@ -6,11 +6,11 @@
 \usage{
 simresp.tinf(
   lambda,
-  t.end,
-  age.fx,
+  t_end,
+  age_fixed,
   antigen_isos,
-  n.mc = 0,
-  renew.params,
+  n_mcmc_samples = 0,
+  renew_params,
   predpar,
   ...
 )
@@ -18,18 +18,21 @@ simresp.tinf(
 \arguments{
 \item{lambda}{seroconversion rate (1/days),}
 
-\item{t.end}{end of time interval (beginning is time 0) in days(?)}
+\item{t_end}{end of time interval (beginning is time 0) in days(?)}
 
-\item{age.fx}{parameter estimates for fixed age (age.fx in years) or not.
-when age.fx = NA then age at infection is used.}
+\item{age_fixed}{parameter estimates for fixed age (age_fixed in years) or not.
+when age_fixed = NA then age at infection is used.}
 
 \item{antigen_isos}{antigen isotypes}
 
-\item{n.mc}{a posterior sample may be selected (1:4000), or not
-when n.mc = 0 a posterior sample is chosen at random.}
+\item{n_mcmc_samples}{a posterior sample may be selected (1:4000), or not
+when n_mcmc_samples = 0 a posterior sample is chosen at random.}
 
-\item{renew.params}{At infection, a new parameter sample may be generated (when \code{renew.params = TRUE}).
-Otherwise (when \code{renew.params = FALSE}), a sample is generated at birth and kept,
+\item{renew_params}{At infection,
+a new parameter sample may be generated
+(when \code{renew_params = TRUE}).
+Otherwise (when \code{renew_params = FALSE}),
+a sample is generated at birth and kept,
 but baseline y0 are carried over from prior infections.}
 
 \item{predpar}{an \code{\link[=array]{array()}} with dimensions named:
@@ -40,23 +43,28 @@ but baseline y0 are carried over from prior infections.}
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link[=row_longitudinal_parameter]{row_longitudinal_parameter}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
+  Arguments passed on to \code{\link[=ldpar]{ldpar}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
   \describe{
     \item{\code{age}}{age at infection}
     \item{\code{nmc}}{mcmc sample to use}
     \item{\code{npar}}{number of parameters}
-    \item{\code{t}}{age at infection?}
-    \item{\code{par}}{parameters}
-    \item{\code{kab}}{index for which row of antibody baseline limits to read from \code{blims}}
+    \item{\code{t}}{\link{numeric} \link{vector} of elapsed times since start of infection}
+    \item{\code{par}}{\link{numeric} \link{matrix} of model parameters:
+\itemize{
+\item rows are parameters
+\item columns are biomarkers
+}}
+    \item{\code{kab}}{\link{integer} indicating which row to read from \code{blims}}
     \item{\code{n}}{number of observations}
     \item{\code{blims}}{range of possible baseline antibody levels}
   }}
 }
 \value{
-This function returns a \code{\link[=list]{list()}} with:
+a \link{list} with:
 \itemize{
 \item t = times (in days, birth at day 0),
-\item b = bacteria level, for each antibody signal (not used; probably meaningless),
+\item b = bacteria level, for each antibody signal
+(not used; probably meaningless),
 \item y = antibody level, for each antibody signal
 \item smp = whether an infection involves a big jump or a small jump
 \item t.inf = times when infections have occurred.
@@ -65,3 +73,4 @@ This function returns a \code{\link[=list]{list()}} with:
 \description{
 simulate antibody kinetics of y over a time interval
 }
+\keyword{internal}

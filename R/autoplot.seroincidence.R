@@ -7,29 +7,31 @@
 #' @return a [ggplot2::ggplot()]
 #' @export
 #' @examples
-#'
+#'\donttest{
 #' library(dplyr)
 #' library(ggplot2)
 #'
-#' xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+#' xs_data <-
+#'   sees_pop_data_pk_100
 #'
-#' curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
-#'   slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
-#' noise <- load_noise_params("https://osf.io/download//hqy4v/")
+#' noise <-
+#'   example_noise_params_pk
 #'
 #' est1 <- est.incidence(
-#'   pop_data = xs_data %>% filter(Country == "Pakistan"),
+#'   pop_data = xs_data,
 #'   curve_param = curve,
-#'   noise_param = noise %>% filter(Country == "Pakistan"),
+#'   noise_param = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   build_graph = TRUE
 #' )
 #'
 #' # Plot the log-likelihood curve
 #' autoplot(est1)
-#'
+#'}
 autoplot.seroincidence =
   function(object, log_x = FALSE, ...)
 {

@@ -6,7 +6,7 @@
 #'
 #' @param x A list containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
-#'
+#' @inherit print.seroincidence return
 #' @examples
 #' \dontrun{
 #' # Estimate seroincidence

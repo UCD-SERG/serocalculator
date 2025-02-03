@@ -4,8 +4,8 @@ test_that("`f_dev0()` and `f_dev()` produce stable results", {
   library(tibble)
 
   # load in longitudinal parameters
-  curve_params = load_curve_params("https://osf.io/download/rtw5k")
-  xs_data <- "https://osf.io/download//n6cp3/" %>% load_pop_data()
+  curve_params = typhoid_curves_nostrat_100
+  xs_data <- sees_pop_data_pk_100
 
   #Load noise params
   noise_params <- tibble(
@@ -20,7 +20,6 @@ test_that("`f_dev0()` and `f_dev()` produce stable results", {
   cur_data =
     xs_data %>%
     dplyr::filter(
-     .data$catchment == "dhaka",
      .data$antigen_iso == cur_antibody) %>%
     slice_head(n = 100)
 

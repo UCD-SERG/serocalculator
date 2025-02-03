@@ -1,91 +1,44 @@
+test_that("est.incidence() produces expected results for typhoid data", {
+  typhoid_results <- est.incidence(
+    pop_data = sees_pop_data_pk_100,
+    curve_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  expect_snapshot(x = summary(typhoid_results))
+
+  expect_snapshot_value(typhoid_results, style = "deparse", tolerance = 1e-4)
+
+  typhoid_results_summary =
+    summary(typhoid_results, coverage = .95)
+
+  expect_snapshot(x = typhoid_results_summary)
+
+  expect_snapshot_value(x = typhoid_results_summary,
+                        style = "deparse",
+                        tolerance = 10 ^ -5)
+
+})
+
 test_that(
-  "est.incidence() produces expected results for typhoid data",
+  "`est.incidence()` produces consistent results
+          regardless of whether data colnames are standardized.",
   {
-    library(dplyr)
-    # get pop data
-    xs_data <- load_pop_data(
-      file_path = "https://osf.io/download//n6cp3/",
-      age = "Age",
-      value = "result",
-      id = "index_id",
-      standardize = TRUE
-    ) %>%
-      filter(Country == "Pakistan") %>%
-      slice_head(n = 100, by = "antigen_iso")
-
-    # get noise data
-    noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
-      filter(Country == "Pakistan")
-
-    # get curve data
-    curve <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-      slice_head(n = 100, by = "antigen_iso")
-
-    # set start
-    start <- .05
-
-    typhoid_results <- est.incidence(
-      pop_data = xs_data,
-      curve_param = curve,
-      noise_param = noise,
+    est_true <- est.incidence(
+      pop_data = sees_pop_data_pk_100,
+      curve_param = typhoid_curves_nostrat_100,
+      noise_param = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     )
 
-    expect_snapshot(x = typhoid_results)
+    est_false <- est.incidence(
+      pop_data = sees_pop_data_pk_100_old_names,
+      curve_param = typhoid_curves_nostrat_100,
+      noise_param = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    )
 
-    expect_snapshot_value(x = typhoid_results,
-                          style = "deparse",
-                          tolerance = 10 ^ -5)
-
-    typhoid_results_summary =
-      summary(typhoid_results, coverage = .95)
-
-    expect_snapshot(x = typhoid_results_summary)
-
-    expect_snapshot_value(x = typhoid_results_summary,
-                          style = "deparse",
-                          tolerance = 10 ^ -5)
+    expect_equal(est_true, est_false)
   }
 )
-
-test_that("`est.incidence()` produces the same results regardless of name standardization", {
-  curves <- load_curve_params("https://osf.io/download/rtw5k/") %>%
-    slice_head(n = 100, by = "antigen_iso")
-  noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
-    filter(Country == "Pakistan")
-  xs_data_true <- load_pop_data(
-    file_path = "https://osf.io/download//n6cp3/",
-    age = "Age",
-    value = "result",
-    id = "index_id",
-    standardize = TRUE
-  ) %>%
-    filter(Country == "Pakistan") %>%
-    slice_head(n = 100, by = "antigen_iso")
-
-  est_true <- est.incidence(
-    pop_data = xs_data_true,
-    curve_params = curves,
-    noise_params = noise,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  )
-
-  xs_data_false <- load_pop_data(
-    file_path = "https://osf.io/download//n6cp3/",
-    age = "Age",
-    value = "result",
-    id = "index_id",
-    standardize = FALSE
-  ) %>%
-    filter(Country == "Pakistan") %>%
-    slice_head(n = 100, by = "antigen_iso")
-
-  est_false <- est.incidence(
-    pop_data = xs_data_false,
-    curve_params = curves,
-    noise_params = noise,
-    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-  )
-
-  expect_equal(est_true, est_false)
-})

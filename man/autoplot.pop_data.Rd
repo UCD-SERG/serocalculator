@@ -11,9 +11,11 @@
 
 \item{log}{whether to show antibody responses on logarithmic scale}
 
-\item{type}{an option to choose type of chart: the current options are \code{"density"} or \code{"age-scatter"}}
+\item{type}{an option to choose type of chart:
+the current options are \code{"density"} or \code{"age-scatter"}}
 
-\item{strata}{the name of a variable in \code{pop_data} to stratify by (or \code{NULL} for no stratification)}
+\item{strata}{the name of a variable in \code{pop_data}
+to stratify by (or \code{NULL} for no stratification)}
 
 \item{...}{unused}
 }
@@ -24,17 +26,17 @@ a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 \code{autoplot()} method for \code{pop_data} objects
 }
 \examples{
+\donttest{
 library(dplyr)
 library(ggplot2)
+library(magrittr)
 
-xs_data <- load_pop_data(
-  file_path = "https://osf.io/download//n6cp3/",
-  age = "Age",
-  id = "index_id",
-  value = "result",
-  standardize = TRUE
-)
+xs_data <-
+  serocalculator_example("example_pop_data.csv") \%>\%
+  read.csv() \%>\%
+  as_pop_data()
 
-xs_data \%>\% autoplot(strata = "Country", type = "density")
-xs_data \%>\% autoplot(strata = "Country", type = "age-scatter")
+xs_data \%>\% autoplot(strata = "catchment", type = "density")
+xs_data \%>\% autoplot(strata = "catchment", type = "age-scatter")
+}
 }

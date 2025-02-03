@@ -51,7 +51,6 @@ jobs:
             any::ggbeeswarm
             any::PairedData
             any::metaviz
-            any::metaplus
 
       - name: Render README
         run: |

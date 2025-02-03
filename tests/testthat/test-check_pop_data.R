@@ -1,7 +1,7 @@
 test_that("`check_pop_data()` works", {
   library(dplyr)
-  xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
-    as_pop_data()
+
+  xs_data <- sees_pop_data_pk_100
 
   xs_data %>% check_pop_data() |>
     expect_no_condition()

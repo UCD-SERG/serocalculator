@@ -3,8 +3,8 @@ test_that("`as_noise_params()` produces an error
             library(magrittr)
             expect_error(
               object = noise_data <-
-                "https://osf.io/download//n6cp3/" %>% # pop data
-                readr::read_rds() %>%
+                serocalculator_example("example_pop_data.csv") %>% # pop data
+                read.csv() %>%
                 as_noise_params(),
               class = "not noise_params"
             )
@@ -12,8 +12,8 @@ test_that("`as_noise_params()` produces an error
 
 test_that("`as_noise_params()` produces expected results", {
   library(dplyr)
-  test_data <- "https://osf.io/download//hqy4v/" %>% # noise data
-    readr::read_rds() %>%
+  test_data <- serocalculator_example("example_noise_params.csv") %>% # noise data
+    read.csv(row.names = 1) %>%
     as_noise_params()
 
   expect_snapshot(test_data)
@@ -29,9 +29,9 @@ test_that("`as_noise_params()` produces error when
             library(dplyr)
 
             expect_error(
-              object = "https://osf.io/download//hqy4v/" %>% # noise data
-                readr::read_rds() %>%
-                as_noise_params(antigen_iso = "HlyE_IgB"),
+              object = serocalculator_example("example_noise_params.csv") %>% # noise data
+                read.csv() %>%
+                as_noise_params(antigen_iso = "HlyE_IgB"), # antigen_iso doesn't match
               class = "missing-antigen"
             )
           })

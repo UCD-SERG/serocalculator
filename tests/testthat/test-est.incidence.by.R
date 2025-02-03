@@ -90,7 +90,7 @@ test_that(
       )
 
       expect_snapshot_value(typhoid_results,
-                            style = "serialize",
+                            style = "deparse",
                             tolerance = 1e-4)
 
     })

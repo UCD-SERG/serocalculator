@@ -18,4 +18,3 @@
 \description{
 Extract the \code{Strata} attribute from an object, if present
 }
-\keyword{internal}

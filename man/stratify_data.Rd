@@ -11,7 +11,7 @@ stratify_data(
   strata_varnames = "",
   curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
-  antigen_isos = data \%>\% get_biomarker_levels()
+  antigen_isos = get_biomarker_levels(data)
 )
 }
 \arguments{
@@ -67,7 +67,7 @@ xs_data <-
   sees_pop_data_pk_100
 
 curve <-
-  typhoid_curves_nostrat_100 \%>\%
+  typhoid_curves_nostrat_100 |>
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
 noise <-

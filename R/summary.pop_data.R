@@ -79,7 +79,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
 #' @rdname summary.pop_data
 #' @export
 #' @keywords internal
-print.summary.pop_data = function(x, ...)
+print.summary.pop_data <- function(x, ...)
 {
   n_obs = x$age_summary |> pull("n") |> sum()
 

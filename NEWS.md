@@ -2,7 +2,7 @@
 
 ## New features
 
-* (#168) Added warnings for mis:
+* Added warnings for missing biomarker data (#168):
   - completely missing antigen-isotype in a stratum
   - uneven antigen-isotype counts in a stratum (likely from incomplete data)
 

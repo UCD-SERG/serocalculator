@@ -37,4 +37,5 @@ articles:
 
 - title: Other
   contents:
-  - test
+  - articles/test-quarto-article
+  - articles/test

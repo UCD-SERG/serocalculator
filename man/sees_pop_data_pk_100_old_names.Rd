@@ -30,4 +30,4 @@ sees_pop_data_pk_100_old_names
 A subset of data from the SEES data, for examples and testing,
 data from Pakistan only, variable names not normalized by \code{\link[=as_pop_data]{as_pop_data()}}.
 }
-\keyword{datasets}
+\keyword{internal}

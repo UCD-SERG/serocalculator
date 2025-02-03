@@ -36,3 +36,4 @@ xs_data <-
 summary(xs_data, strata = "catchment")
 
 }
+\keyword{internal}

@@ -2,6 +2,8 @@
 
 ## New features
 
+* Removed `warn.missing.strata()` from API
+
 * Added warnings for missing biomarker data (#168):
   - completely missing antigen-isotype in a stratum
   - uneven antigen-isotype counts in a stratum (likely from incomplete data)

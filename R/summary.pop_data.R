@@ -77,6 +77,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
 #' @param x an object of class `"summary.pop_data"`; usually, the result of a call to [summary.pop_data()]
 #' @rdname summary.pop_data
 #' @export
+#' @keywords internal
 print.summary.pop_data = function(x, ...)
 {
   n_obs = x$age_summary %>% pull("n") %>% sum()

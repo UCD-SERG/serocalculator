@@ -11,14 +11,45 @@ development:
 search:
   exclude: ['preview/']
 
-# reference:
-# - title: Prepare data
-#   contents:
-#   - as_pop_data
-#   - as_curve_params
-#   - as_noise_params
-# - title:
-#
+reference:
+- title: Prepare data
+  contents:
+  - as_pop_data
+  - load_pop_data
+  - as_curve_params
+  - load_curve_params
+  - as_noise_params
+  - load_noise_params
+  - check_pop_data
+  - strata
+- title: Summarize data
+  - summary.pop_data
+- title: Visualize data
+  - autoplot.pop_data
+  - autoplot.curve_params
+  - graph.curve.params
+  - graph_loglik
+  - log_likelihood
+- title: Estimate seroconversion incidence rates
+  - est.incidence
+  - est.incidence.by
+- title: Summarize seroconversion incidence rate estimates
+  - summary.seroincidence
+  - summary.seroincidence.by
+  - `[].seroincidence.by`
+- title: Visualize seroconversion incidence rate estimates
+  - autoplot.seroincidence
+  - autoplot.seroincidence.by
+- title: Example data sets
+  - sees_pop_data_100
+  - sees_pop_data_pk_100
+  - typhoid_curves_no_strat_100
+  - example_noise_params_sees
+  - example_noise_params_pk
+  - serocalculator_example
+- title: Simulate data sets
+  - sim_pop_data
+  - sim_pop_data_multi
 
 articles:
 - title: Get started

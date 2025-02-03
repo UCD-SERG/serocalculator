@@ -55,4 +55,5 @@
 #'   \item{result}{concentration of antigen isotype, in ELISA units}
 #' }
 #' @source <https://osf.io/n6cp3>
+#' @keywords internal
 "sees_pop_data_pk_100_old_names"

@@ -1,6 +1,7 @@
 #' Graph estimated antibody decay curve
 #'
-#' @param curve_params a [data.frame()] containing MCMC samples of antibody decay curve parameters
+#' @param curve_params
+#' a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #' @param verbose verbose output
 #' @param antigen_isos antigen isotypes
 #' @returns a [ggplot2::ggplot()] object
@@ -65,8 +66,8 @@ graph.curve.params <- function(
     data.frame(t = tx2) %>%
     mutate(ID = 1:n()) %>%
     pivot_wider(
-      names_from = .data$ID,
-      values_from = .data$t,
+      names_from = "ID",
+      values_from = "t",
       names_prefix = "time"
     ) %>%
     dplyr::slice(
@@ -122,32 +123,30 @@ graph.curve.params <- function(
     )
 
 
+  range <-
+    serocourse.sum |>
+    dplyr::filter(.data$quantile %in% c("med", "p10", "p90")) |>
+    dplyr::summarize(
+      min = min(.data$res, 0.9),
+      max = max(.data$res, 2000)
+    )
 
+
+  serocourse.sum %>%
+    filter(.data$quantile == "med") |>
   ggplot2::ggplot() +
-    ggplot2::geom_line(
-      data = serocourse.sum %>%
-        filter(.data$quantile == "med"),
-      ggplot2::aes(
-        x = .data$t,
-        y = .data$res
-      ),
-      linewidth = 1
+    ggplot2::aes(
+      x = .data$t,
+      y = .data$res
     ) +
+    ggplot2::geom_line(linewidth = 1) +
     ggplot2::geom_line(
       data = serocourse.sum %>% filter(quantile == "p10"),
-      ggplot2::aes(
-        x = .data$t,
-        y = .data$res
-      ),
       linewidth = .5
     ) +
     ggplot2::geom_line(
       data = serocourse.sum %>%
         filter(quantile == "p90"),
-      ggplot2::aes(
-        x = .data$t,
-        y = .data$res
-      ),
       linewidth = .5
     ) +
     ggplot2::facet_wrap(
@@ -155,13 +154,15 @@ graph.curve.params <- function(
       ncol = 2
     ) +
     ggplot2::scale_y_log10(
-      limits = c(0.9, 2000),
+      limits = unlist(range),
       breaks = c(1, 10, 100, 1000),
       minor_breaks = NULL
     ) +
+    # ggplot2::expand_limits(y = unlist(range)) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(x = "Days since fever onset", y = "ELISA units")
+
 }
 
 # ggplot() +

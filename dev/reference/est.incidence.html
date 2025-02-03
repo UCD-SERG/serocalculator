@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9013</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
 <span>  <span class="va">pop_data</span>,</span>
 <span>  <span class="va">curve_params</span>,</span>
 <span>  <span class="va">noise_params</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="va">pop_data</span><span class="op">$</span><span class="va">antigen_iso</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu">get_biomarker_names</span><span class="op">(</span><span class="va">pop_data</span><span class="op">)</span>,</span>
 <span>  lambda_start <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  stepmin <span class="op">=</span> <span class="fl">1e-08</span>,</span>
 <span>  stepmax <span class="op">=</span> <span class="fl">3</span>,</span>

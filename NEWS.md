@@ -2,6 +2,8 @@
 
 ## New features
 
+* Removed `warn.missing.strata()` from API (#366)
+
 * Added more details about contributing PRs in `Contributing.md` (#280)
 
 * Added warnings for missing biomarker data (#168):

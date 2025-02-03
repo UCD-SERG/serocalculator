@@ -7,7 +7,8 @@
 \method{print}{summary.seroincidence.by}(x, ...)
 }
 \arguments{
-\item{x}{A "summary.seroincidence.by" object (constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})}
+\item{x}{A "summary.seroincidence.by" object
+(constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
@@ -15,7 +16,8 @@
 an \link{invisible} copy of input parameter \code{x}
 }
 \description{
-Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" objects (constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})
+Custom \code{\link[=print]{print()}} function for "summary.seroincidence.by" objects
+(constructed by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}})
 }
 \examples{
 library(dplyr)

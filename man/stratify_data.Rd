@@ -42,7 +42,8 @@ on each row
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata_varnames}{\code{\link[=character]{character()}} vector of names of variables in \code{data} to stratify by}
+\item{strata_varnames}{\code{\link[=character]{character()}}
+vector of names of variables in \code{data} to stratify by}
 
 \item{curve_strata_varnames}{A subset of \code{strata}.
 Values must be variable names in \code{curve_params}. Default = "".}
@@ -53,10 +54,12 @@ Values must be variable names in \code{noise_params}. Default = "".}
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 }
 \value{
-a \code{"biomarker_data_and_params.list"} object (a \link{list} with extra attributes \code{"strata"}, \code{"antigen_isos"}, etc)
+a \code{"biomarker_data_and_params.list"} object
+(a \link{list} with extra attributes \code{"strata"}, \code{"antigen_isos"}, etc)
 }
 \description{
-Split biomarker data, decay curve parameters, and noise parameters
+Split biomarker data, decay curve parameters,
+and noise parameters
 to prepare for stratified incidence estimation.
 }
 \examples{

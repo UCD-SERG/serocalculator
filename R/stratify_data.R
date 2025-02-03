@@ -1,10 +1,13 @@
 #' @title Split data by stratum
-#' @description Split biomarker data, decay curve parameters, and noise parameters
+#' @description Split biomarker data, decay curve parameters,
+#' and noise parameters
 #' to prepare for stratified incidence estimation.
-#' @param strata_varnames [character()] vector of names of variables in `data` to stratify by
+#' @param strata_varnames [character()]
+#' vector of names of variables in `data` to stratify by
 #' @inheritParams est.incidence.by
 #'
-#' @returns a `"biomarker_data_and_params.list"` object (a [list] with extra attributes `"strata"`, `"antigen_isos"`, etc)
+#' @returns a `"biomarker_data_and_params.list"` object
+#' (a [list] with extra attributes `"strata"`, `"antigen_isos"`, etc)
 #' @keywords internal
 #' @examples
 #' \dontrun{
@@ -38,15 +41,15 @@ stratify_data <- function(data,
                           curve_strata_varnames = NULL,
                           noise_strata_varnames = NULL,
                           antigen_isos = get_biomarker_levels(data)) {
-  curve_params =
+  curve_params <-
     curve_params |>
     filter(.data[["antigen_iso"]] %in% antigen_isos)
 
-  noise_params =
+  noise_params <-
     noise_params |>
     filter(.data[["antigen_iso"]] %in% antigen_isos)
 
-  no_strata = is.null(strata_varnames) ||
+  no_strata <- is.null(strata_varnames) ||
     all(strata_varnames == "")
 
   if (no_strata) {
@@ -62,22 +65,19 @@ stratify_data <- function(data,
     all_data <-
       list(
         pop_data = pop_data,
-        curve_params =
-          curve_params |> select(all_of(curve_param_names)),
-        noise_params =
-          noise_params |> select(all_of(noise_param_names)),
-        antigen_isos =
-          antigen_isos |> intersect(data |> get_biomarker_names())
+        curve_params = curve_params |> select(all_of(curve_param_names)),
+        noise_params = noise_params |> select(all_of(noise_param_names)),
+        antigen_isos = antigen_isos |> intersect(data |> get_biomarker_names())
       ) |>
       structure(class = union("biomarker_data_and_params", "list"))
 
     # est.incidence.by() expects a list:
-    stratumDataList <-
+    stratum_data_list <-
       list(`all data` = all_data) |>
       structure(antigen_isos = antigen_isos, # might be able to remove
                 strata = tibble(Stratum = NA))
 
-    return(stratumDataList)
+    return(stratum_data_list)
 
   }
 
@@ -99,10 +99,9 @@ stratify_data <- function(data,
       dataname = "noise_params"
     )
 
-  stratumDataList <- list()
+  stratum_data_list <- list()
 
-  for (cur_stratum in strata$Stratum)
-  {
+  for (cur_stratum in strata$Stratum) {
     cur_stratum_vals <-
       strata |> dplyr::filter(.data$Stratum == cur_stratum)
 
@@ -115,12 +114,13 @@ stratify_data <- function(data,
         data |> get_biomarker_names_var()
       )
 
-    antigen_isos_cur_stratum =
+    antigen_isos_cur_stratum <-
       intersect(antigen_isos,
                 pop_data_cur_stratum |> get_biomarker_names())
 
     data_and_params_cur_stratum <-
-      list(pop_data = pop_data_cur_stratum, antigen_isos = antigen_isos_cur_stratum)
+      list(pop_data = pop_data_cur_stratum,
+           antigen_isos = antigen_isos_cur_stratum)
 
     if (length(strata_vars_curve_params) == 0) {
       data_and_params_cur_stratum$curve_params <-
@@ -143,7 +143,7 @@ stratify_data <- function(data,
         select(all_of(noise_param_names))
     }
 
-    stratumDataList[[cur_stratum]] <-
+    stratum_data_list[[cur_stratum]] <-
       data_and_params_cur_stratum |>
       structure(class = union(
         "biomarker_data_and_params",
@@ -152,7 +152,7 @@ stratify_data <- function(data,
   }
 
   return(structure(
-    stratumDataList,
+    stratum_data_list,
     antigen_isos = antigen_isos,
     strata = strata,
     class = c("biomarker_data_and_params.list", "list")

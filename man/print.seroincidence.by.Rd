@@ -15,7 +15,8 @@
 an \link{invisible} copy of input parameter \code{x}
 }
 \description{
-Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=est.incidence.by]{est.incidence.by()}}.
+Custom \code{\link[=print]{print()}} function for \code{seroincidence.by} objects
+(from \code{\link[=est.incidence.by]{est.incidence.by()}})
 }
 \examples{
 library(dplyr)

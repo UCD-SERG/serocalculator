@@ -13,8 +13,8 @@
 #' @examples
 #' library(magrittr)
 #' xs_data <-
-#'   serocalculator_example("example_pop_data.csv") %>%
-#'   read.csv() %>%
+#'   serocalculator_example("example_pop_data.csv") |>
+#'   read.csv() |>
 #'   as_pop_data()
 #'
 #' print(xs_data)
@@ -27,7 +27,7 @@ as_pop_data <- function(data,
 
 
   pop_data <-
-    data %>%
+    data |>
     tibble::as_tibble()
 
   class(pop_data) <-
@@ -41,10 +41,10 @@ as_pop_data <- function(data,
 
   attr(pop_data, "antigen_isos") <- antigen_isos
 
-  pop_data <- pop_data %>%
-    set_age(age = age, standardize = standardize) %>%
-    set_value(value = value, standardize = standardize) %>%
-    set_id(id = id, standardize = standardize)  %>%
+  pop_data <- pop_data |>
+    set_age(age = age, standardize = standardize) |>
+    set_value(value = value, standardize = standardize) |>
+    set_id(id = id, standardize = standardize)  |>
     set_biomarker_var(biomarker = "antigen_iso", standardize = standardize)
 
   return(pop_data)

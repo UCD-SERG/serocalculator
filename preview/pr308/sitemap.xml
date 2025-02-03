@@ -8,6 +8,7 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/articles/scrubTyphus_example.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/articles/serocalculator.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/articles/simulate_xsectionalData.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/articles/test-quarto-article.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/authors.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/index.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/news/index.html</loc></url>
@@ -29,6 +30,7 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/est.incidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/est.incidence.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/example_noise_params_pk.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/example_noise_params_sees.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/f_dev.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/f_dev0.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/fdev.html</loc></url>
@@ -47,12 +49,15 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/print.seroincidence.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/print.summary.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/reexports.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sees_pop_data_100.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sees_pop_data_pk_100.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sees_pop_data_pk_100_old_names.html</loc></url>
-<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/serocalculator.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/serocalculator-package.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/serocalculator_example.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sim.cs.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sim.cs.multi.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sim_pop_data.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/sim_pop_data_multi.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/simcs.tinf.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/simresp.tinf.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/strata.html</loc></url>
@@ -63,6 +68,6 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/summary.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/summary.seroincidence.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/typhoid_curves_nostrat_100.html</loc></url>
-<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/warn.missing.strata.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr308/reference/warn_missing_strata.html</loc></url>
 </urlset>
 

@@ -44,6 +44,7 @@ reference:
   contents:
   - autoplot.seroincidence
   - autoplot.seroincidence.by
+  - autoplot.summary.seroincidence.by
 - title: Example data sets
   contents:
   - sees_pop_data_100

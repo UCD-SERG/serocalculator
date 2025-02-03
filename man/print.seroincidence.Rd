@@ -18,15 +18,25 @@ an \link{invisible} copy of input parameter \code{x}
 Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=est.incidence]{est.incidence()}}.
 }
 \examples{
-\dontrun{
-# Estimate seroincidence
-seroincidence <- est.incidence.by(...)
+library(dplyr)
 
-# Print the seroincidence object to the console
-print(seroincidence)
+xs_data <-
+  sees_pop_data_pk_100
 
-# Or simply type (appropriate print method will be invoked automatically)
-seroincidence
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+est1 <- est.incidence(
+  pop_data = xs_data,
+  curve_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+)
+print(est1)
+
 }
-
-}
+\keyword{internal}

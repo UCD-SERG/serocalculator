@@ -18,6 +18,7 @@ strata <- function(x) {
 #' * a [tibble::tibble()] with strata in rows, or
 #' * `NULL` if `x` does not have a `"strata"` attribute
 #' @export
+#' @keywords internal
 strata.seroincidence.by <- function(x) {
   attr(x, "Strata")
 }

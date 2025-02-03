@@ -8,18 +8,33 @@
 #' @param ... Additional arguments affecting the summary produced.
 #' @inherit print.seroincidence return
 #' @examples
-#' \dontrun{
-#' # Estimate seroincidence
-#' seroincidence <- est.incidence.by(...)
+#' library(dplyr)
 #'
-#' # Print the seroincidence object to the console
-#' print(seroincidence)
+#' xs_data <-
+#'   sees_pop_data_pk_100
 #'
-#' # Or simply type (appropriate print method will be invoked automatically)
-#' seroincidence
-#' }
+#' curve <-
+#'   typhoid_curves_nostrat_100 |>
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+#'
+#' noise <-
+#'   example_noise_params_pk
+#'
+#' # estimate seroincidence
+#' est2 <- est.incidence.by(
+#'   strata = c("catchment"),
+#'   pop_data = xs_data,
+#'   curve_params = curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   # num_cores = 8 # Allow for parallel processing to decrease run time
+#' )
+#'
+#' # calculate summary statistics for the seroincidence object
+#' print(est2)
 #'
 #' @export
+#' @keywords internal
 print.seroincidence.by <- function(x, ...) {
   cat("`seroincidence.by` object estimated given the following setup:\n")
   cat(paste("a) Antigen isotypes   :", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")

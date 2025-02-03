@@ -2,12 +2,12 @@
 % Please edit documentation in R/print.seroincidence.R
 \name{print.seroincidence}
 \alias{print.seroincidence}
-\title{Print Method for \code{seroincidence} Object}
+\title{Print Method for \code{seroincidence} Class}
 \usage{
 \method{print}{seroincidence}(x, ...)
 }
 \arguments{
-\item{x}{A list containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
+\item{x}{A list containing output of function \code{\link[=est.incidence]{est.incidence()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
@@ -15,18 +15,28 @@
 an \link{invisible} copy of input parameter \code{x}
 }
 \description{
-Custom \code{\link[=print]{print()}} function to show output of the seroincidence calculator \code{\link[=est.incidence]{est.incidence()}}.
+Custom \code{\link[=print]{print()}} function for \code{seroincidence} objects from \code{\link[=est.incidence]{est.incidence()}}
 }
 \examples{
-\dontrun{
-# Estimate seroincidence
-seroincidence <- est.incidence.by(...)
+library(dplyr)
 
-# Print the seroincidence object to the console
-print(seroincidence)
+xs_data <-
+  sees_pop_data_pk_100
 
-# Or simply type (appropriate print method will be invoked automatically)
-seroincidence
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+est1 <- est.incidence(
+  pop_data = xs_data,
+  curve_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+)
+print(est1)
+
 }
-
-}
+\keyword{internal}

@@ -23,24 +23,30 @@ reference:
   - check_pop_data
   - strata
 - title: Summarize data
+  contents:
   - summary.pop_data
 - title: Visualize data
+  contents:
   - autoplot.pop_data
   - autoplot.curve_params
   - graph.curve.params
   - graph_loglik
   - log_likelihood
 - title: Estimate seroconversion incidence rates
+  contents:
   - est.incidence
   - est.incidence.by
 - title: Summarize seroconversion incidence rate estimates
+  contents:
   - summary.seroincidence
   - summary.seroincidence.by
-  - `[].seroincidence.by`
+  - "[].seroincidence.by"
 - title: Visualize seroconversion incidence rate estimates
+  contents:
   - autoplot.seroincidence
   - autoplot.seroincidence.by
 - title: Example data sets
+  contents:
   - sees_pop_data_100
   - sees_pop_data_pk_100
   - typhoid_curves_no_strat_100
@@ -48,6 +54,7 @@ reference:
   - example_noise_params_pk
   - serocalculator_example
 - title: Simulate data sets
+  contents:
   - sim_pop_data
   - sim_pop_data_multi
 

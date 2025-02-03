@@ -19,7 +19,8 @@
 \item{x}{an object of class \code{"summary.pop_data"}; usually, the result of a call to \code{\link[=summary.pop_data]{summary.pop_data()}}}
 }
 \value{
-a \code{summary.pop_data} object, which is a list containing two summary tables:
+a \code{summary.pop_data} object,
+which is a list containing two summary tables:
 \itemize{
 \item \code{age_summary} summarizing \code{age}
 \item \code{ab_summary} summarizing \code{value}, stratified by \code{antigen_iso}

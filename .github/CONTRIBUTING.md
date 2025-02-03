@@ -1,6 +1,6 @@
 # Contributing to serocalculator
 
-This outlines how to propose a change to serocalculator.
+This outlines how to propose a change to `{serocalculator}`.
 For a detailed discussion on contributing to this and other tidyverse packages, please see the [development contributing guide](https://rstd.io/tidy-contrib) and our [code review principles](https://code-review.tidyverse.org/).
 
 ## Fixing typos
@@ -11,28 +11,50 @@ You can find the `.R` file that generates the `.Rd` by reading the comment in th
 
 ## Bigger changes
 
-If you want to make a bigger change, it's a good idea to first file an issue and make sure someone from the team agrees that it’s needed. 
+If you want to make a bigger change, it's a good idea to first file an issue 
+and make sure someone from the team agrees that it’s needed. 
 If you’ve found a bug, please file an issue that illustrates the bug with a minimal 
-[reprex](https://www.tidyverse.org/help/#reprex) (this will also help you write a unit test, if needed).
-See our guide on [how to create a great issue](https://code-review.tidyverse.org/issues/) for more advice.
+[reprex](https://www.tidyverse.org/help/#reprex) 
+(this will also help you write a unit test, if needed).
+See our guide on 
+[how to create a great issue](https://code-review.tidyverse.org/issues/) 
+for more advice.
 
 ### Pull request process
 
-*   Fork the package and clone onto your computer. If you haven't done this before, we recommend using `usethis::create_from_github("UCD-SERG/serocalculator", fork = TRUE)`.
+*   Fork the package and clone onto your computer. 
+If you haven't done this before, 
+we recommend using 
+`usethis::create_from_github("UCD-SERG/serocalculator", fork = TRUE)`.
 
-*   Install all development dependencies with `devtools::install_dev_deps()`, and then make sure the package passes R CMD check by running `devtools::check()`. 
-    If R CMD check doesn't pass cleanly, it's a good idea to ask for help before continuing. 
+*   Install all development dependencies with `devtools::install_dev_deps()`, 
+and then make sure the package passes R CMD check by running `devtools::check()`. 
+    If R CMD check doesn't pass cleanly, 
+    it's a good idea to ask for help before continuing. 
+    
 *   Create a Git branch for your pull request (PR). We recommend using `usethis::pr_init("brief-description-of-change")`.
 
-*   Make your changes, commit to git, and then create a PR by running `usethis::pr_push()`, and following the prompts in your browser.
+*   Make your changes, commit to git, 
+    and then create a PR by running `usethis::pr_push()`, 
+    and following the prompts in your browser.
     The title of your PR should briefly describe the change.
     The body of your PR should contain `Fixes #issue-number`.
 
-*  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). Follow the style described in <https://style.tidyverse.org/news.html>.
+*  For user-facing changes, 
+add a bullet to the top of `NEWS.md` (i.e. just below the first header). 
+Follow the style described in <https://style.tidyverse.org/news.html>.
+
+    *  Also, please begin commit messages with `- ` 
+       when committing user-facing changes that should be included in NEWS.md. 
+       We will are testing the use of [fledge](https://github.com/krlmlr/fledge) 
+       to automatically update the NEWS.md file.
+
 
 *  GitHub will [automatically check your PR](https://github.com/r-lib/actions) to see if the package is still functional on Mac OS, Windows, and Linux; 
 if not, you will receive an email describing the problems. 
 For help decoding errors, try this resource: <https://github.com/r-lib/actions?tab=readme-ov-file#where-to-find-help>.
+
+More details [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
 ### Code style
 

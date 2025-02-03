@@ -1,29 +1,43 @@
 #' @title
-#' Print Method for `seroincidence` Object
+#' Print Method for `seroincidence` Class
 #'
 #' @description
-#' Custom [print()] function to show output of the seroincidence calculator [est.incidence()].
+#' Custom [print()] function for `seroincidence` objects from [est.incidence()]
 #'
-#' @param x A list containing output of function [est.incidence.by()].
+#' @param x A list containing output of function [est.incidence()].
 #' @param ... Additional arguments affecting the summary produced.
 #' @returns an [invisible] copy of input parameter `x`
 #' @examples
-#' \dontrun{
-#' # Estimate seroincidence
-#' seroincidence <- est.incidence.by(...)
+#' library(dplyr)
 #'
-#' # Print the seroincidence object to the console
-#' print(seroincidence)
+#' xs_data <-
+#'   sees_pop_data_pk_100
 #'
-#' # Or simply type (appropriate print method will be invoked automatically)
-#' seroincidence
-#' }
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+#'
+#' noise <-
+#'   example_noise_params_pk
+#'
+#' est1 <- est.incidence(
+#'   pop_data = xs_data,
+#'   curve_params = curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#' )
+#' print(est1)
 #'
 #' @export
+#' @keywords internal
 print.seroincidence <- function(x, ...) {
   cat("`seroincidence` object estimated given the following setup:\n")
-  cat(paste("a) `antigen_isos`: ", paste(attr(x, "antigen_isos"), collapse = ", ")), "\n")
-  cat(paste("b) `lambda_start`: ", attr(x, "lambda_start"), "\n"))
+  cat("a) `antigen_isos`: ",
+      paste(attr(x, "antigen_isos"), collapse = ", "),
+      "\n")
+  cat("b) `lambda_start`: ",
+      attr(x, "lambda_start"),
+      "\n")
   cat("Call the `summary()` function to obtain output results.\n")
   cat("Call the `autoplot()` function to graph the log-likelihood curve.\n")
   invisible(x)

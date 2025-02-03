@@ -144,7 +144,7 @@ noise <-
   example_noise_params_pk
 
 est2 <- est.incidence.by(
-  strata = c("catchment"),
+  strata = "catchment",
   pop_data = xs_data,
   curve_params = curve,
   noise_params = noise,
@@ -152,7 +152,7 @@ est2 <- est.incidence.by(
   # num_cores = 8 # Allow for parallel processing to decrease run time
   iterlim = 5 # limit iterations for the purpose of this example
 )
-
+print(est2)
 summary(est2)
 
 }

@@ -1,7 +1,7 @@
 # est.incidence() produces expected results for typhoid data
 
     Code
-      summary(typhoid_results)
+      summary(typhoid_results, coverage = 0.95)
     Output
       # A tibble: 1 x 10
         est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations

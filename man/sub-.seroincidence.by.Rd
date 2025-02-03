@@ -19,3 +19,4 @@ the subset specified
 \description{
 Extract or replace parts of a \code{seroincidence.by} object
 }
+\keyword{internal}

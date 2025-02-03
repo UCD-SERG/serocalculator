@@ -4,6 +4,7 @@
 #' @param i the indices to subset/replace
 #' @param ... passed to `[.list`
 #' @returns the subset specified
+#' @keywords internal
 #' @export
 #'
 `[.seroincidence.by` <- function(x, i, ...) {

@@ -2,7 +2,9 @@
 
 ## New features
 
-* Removed `warn.missing.strata()` from API
+* Removed `warn.missing.strata()` from API (#366)
+
+* Added more details about contributing PRs in `Contributing.md` (#280)
 
 * Added warnings for missing biomarker data (#168):
   - completely missing antigen-isotype in a stratum
@@ -15,10 +17,8 @@
 * Fixed citations in `methodology.qmd` article (#360)
 
 * Added outline to pkgdown website (#353)
-
 * Added verbose option for `summary.seroincidence()` and 
 `summary.seroincidence.by()` (#348)
-
 * Extended `simulate_xsectionalData.Rmd` article to explore
 `renew_params = TRUE` vs `renew_params = FALSE` (#348)
 

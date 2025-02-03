@@ -12,15 +12,6 @@
 coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
-<div id="fig-website-QR">
-
-![](man/figures/qr.svg)
-
-
-Figure 1: QR code for `serocalculator` website
-
-</div>
-
 Antibody levels measured in a cross–sectional population sample can be
 translated into an estimate of the frequency with which seroconversions
 (infections) occur in the sampled population. In other words, the
@@ -101,6 +92,11 @@ install.packages("devtools")
 devtools::install_github("ucd-serg/serocalculator")
 ```
 
+The documentation for the
+[`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
+development branch version of `{serocalculator}` can be accessed at
+<https://ucd-serg.github.io/serocalculator/dev/>
+
 #### A Note for Windows Users
 
 Before launching the development version of **serocalculator**, Windows
@@ -121,10 +117,8 @@ will be installed.
 ![Click Yes to install Rtools along with the *devtools*
 package](man/figures/Rtools1.png)
 
-> [!NOTE]
->
-> After installing Rtools, you may need to restart RStudio before
-> continuing to install `serocalculator`.
+**Note: After installing Rtools, you may need to restart RStudio before
+continuing to install `serocalculator`.**
 
 ##### Independently:
 
@@ -160,3 +154,16 @@ We welcome contributions to this project - anything from typo
 corrections to new features. Please see our [Contributor
 guide](https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html#fixing-typos)
 for more information.
+
+## QR code
+
+This QR code is a direct link to the latest-release version of the
+package website:
+
+<div id="fig-website-QR">
+
+![](man/figures/qr.svg)
+
+Figure 1: QR code for `serocalculator` website
+
+</div>

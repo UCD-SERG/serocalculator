@@ -1,6 +1,4 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
-
+# Workflow derived from https://github.com/IndrajeetPatil/statsExpressions/blob/main/.github/workflows/check-readme.yaml
 on:
   push:
     branches: [main, master]
@@ -44,13 +42,7 @@ jobs:
           upgrade: "TRUE"
           extra-packages: |
             local::.
-            any::gghalves
-            any::ggplot2
-            any::quarto
-            any::ggridges
-            any::ggbeeswarm
-            any::PairedData
-            any::metaviz
+            any::qrcode
 
       - name: Render README
         run: |
@@ -61,5 +53,5 @@ jobs:
             # warnPartialMatchDollar = TRUE,
             warn = 2L
           )
-          quarto::quarto_render("README.qmd")
+          rmarkdown::render("README.Rmd")
         shell: Rscript {0}

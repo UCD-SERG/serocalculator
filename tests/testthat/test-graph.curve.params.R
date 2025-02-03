@@ -6,4 +6,8 @@ test_that("results are consistent", {
    plot1 <- graph.curve.params(curve)
 
    plot1 |> vdiffr::expect_doppelganger(title = "curve-quantiles")
+
+   plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
+
+   plot2 |> vdiffr::expect_doppelganger(title = "curve-quantiles-and-samples")
 })

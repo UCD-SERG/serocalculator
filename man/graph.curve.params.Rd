@@ -7,7 +7,8 @@
 graph.curve.params(
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
-  verbose = FALSE
+  verbose = FALSE,
+  show_all_curves = FALSE
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ graph.curve.params(
 \item{antigen_isos}{antigen isotypes}
 
 \item{verbose}{verbose output}
+
+\item{show_all_curves}{whether to show individual curves under quantiles}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

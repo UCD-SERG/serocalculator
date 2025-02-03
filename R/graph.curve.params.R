@@ -135,10 +135,11 @@ graph.curve.params <- function( # nolint: object_name_linter
     serocourse_sum |>
     ggplot2::ggplot() +
     ggplot2::aes(x = .data$t,
-        y = .data$res) +
+                 y = .data$res) +
     ggplot2::geom_line(
       data = serocourse_sum |> filter(.data$quantile == "med"),
-      linewidth = 1) +
+      linewidth = 1
+    ) +
     ggplot2::geom_line(
       data = serocourse_sum |> filter(quantile == "p10"),
       linewidth = .5

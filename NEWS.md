@@ -22,6 +22,8 @@
 
 ## Internal changes
 
+* added auto-pkg-maintenance workflow from 
+https://github.com/rstudio/education-workflows/tree/main/examples#auto-package-maintenance
 * switched pkgdown GHA from `any::pkgdown` to `r-lib/pkgdown` (i.e., dev version) (#359)
 * added test for `summary.seroincidence.by()` (#352)
 * Started checking for use of base pipe instead of magrittr pipe

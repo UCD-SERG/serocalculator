@@ -6,7 +6,7 @@
 #'
 #' @param x A list containing output of function [est.incidence.by()].
 #' @param ... Additional arguments affecting the summary produced.
-#'
+#' @inherit print.seroincidence return
 #' @examples
 #' \dontrun{
 #' # Estimate seroincidence
@@ -26,8 +26,8 @@ print.seroincidence.by <- function(x, ...) {
   cat(paste("b) Strata       :", paste(attr(x, "Strata") %>% attr("strata_vars"), collapse = ", ")), "\n")
 
   cat("\n")
-  cat("This object is a list of `seroincidence` objects, with added meta-data attributes:")
-  cat("`antigen_isos`   - Character vector of antigen isotypes used in analysis.\n")
+  cat("This object is a list of `seroincidence` objects, with added meta-data attributes:\n")
+  cat("`antigen_isos` - Character vector of antigen isotypes used in analysis.\n")
   cat("`Strata`       - Input parameter strata of function `est.incidence.by()`\n")
   cat("\n")
   cat("Call the `summary()` function to obtain output results.\n")

@@ -11,7 +11,7 @@ stratify_data(
   strata_varnames = "",
   curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
-  antigen_isos = data \%>\% attr("antigen_isos")
+  antigen_isos = data \%>\% get_biomarker_levels()
 )
 }
 \arguments{
@@ -44,9 +44,11 @@ on each row
 
 \item{strata_varnames}{\code{\link[=character]{character()}} vector of names of variables in \code{data} to stratify by}
 
-\item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
+\item{curve_strata_varnames}{A subset of \code{strata}.
+Values must be variable names in \code{curve_params}. Default = "".}
 
-\item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
+\item{noise_strata_varnames}{A subset of \code{strata}.
+Values must be variable names in \code{noise_params}. Default = "".}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 }
@@ -61,13 +63,15 @@ to prepare for stratified incidence estimation.
 \dontrun{
 library(dplyr)
 
-xs_data <- load_pop_data("https://osf.io/download//n6cp3/")
+xs_data <-
+  sees_pop_data_pk_100
 
-curve <- load_curve_params("https://osf.io/download/rtw5k/") \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
-  slice(1:100, .by = antigen_iso) # Reduce dataset for the purposes of this example
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
-noise <- load_noise_params("https://osf.io/download//hqy4v/")
+noise <-
+  example_noise_params_pk
 
 stratified_data =
   stratify_data(

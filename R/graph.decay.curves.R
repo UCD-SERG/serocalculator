@@ -31,12 +31,16 @@
 #' * If the user directly specifies the `rows_to_graph` argument,
 #' then `n_curves` has no effect.
 #' @examples
+#' \donttest{
 #' library(dplyr) # loads the `%>%` operator and `dplyr::filter()`
 #'
-#' load_curve_params("https://osf.io/download/rtw5k/") %>%
-#'   dplyr::filter(antigen_iso == "HlyE_IgG") %>%
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso == ("HlyE_IgG")) %>%
 #'   serocalculator:::plot_curve_params_one_ab()
 #'
+#'   curve
+#' }
 plot_curve_params_one_ab <- function(
     object,
     verbose = FALSE,

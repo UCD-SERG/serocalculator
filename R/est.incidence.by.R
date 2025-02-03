@@ -240,7 +240,6 @@ est.incidence.by <- function(
             stratum_data_list[[cur_stratum]],
             list(
               lambda_start = lambda_start,
-              antigen_isos = antigen_isos,
               build_graph = build_graph,
               print_graph = print_graph,
               verbose = verbose,

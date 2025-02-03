@@ -6,9 +6,13 @@ test_that(
   library(readr)
 
   est.incidence.by(
-    pop_data = sees_pop_data_100 |> dplyr::filter(Country == "Nepal"),
+    pop_data =
+      sees_pop_data_100 |>
+      dplyr::filter(Country == "Nepal",
+                    catchment == "kavre" | antigen_iso == "HlyE_IgA"),
     curve_params = typhoid_curves_nostrat_100,
-    noise_params = example_noise_params_np,
+    noise_params = example_noise_params_sees |>
+      dplyr::filter(Country == "Nepal"),
     strata = "catchment",
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL
@@ -23,17 +27,16 @@ test_that("est.incidence.by() warns about missing data", {
   library(readr)
 
   est.incidence.by(
-    pop_data = sees_pop_data_100 |>
-      dplyr::filter(
-        Country == "Nepal",
-        catchment == "kavre" | antigen_iso == "HlyE_IgA"),
+    pop_data = sees_pop_data_pk_100 |>
+      tail(-1),
     curve_params = typhoid_curves_nostrat_100,
-    noise_params = example_noise_params_np,
+    noise_params = example_noise_params_sees |>
+      dplyr::filter(Country == "Nepal"),
     strata = "catchment",
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL
   ) |>
-    expect_warning(regexp = "The number of observations in `data` varies")
+    expect_warning(class = "incomplete-obs")
 })
 
 test_that("`est.incidence.by()` warns user when strata is missing", {
@@ -87,9 +90,8 @@ test_that(
               num_cores = 1
             )
 
-            expect_snapshot(x = typhoid_results)
-
-            expect_snapshot_value(typhoid_results, style = "deparse",
+            expect_snapshot_value(typhoid_results,
+                                  style = "deparse",
                                   tolerance = 1e-4)
 
             strat_ests_summary = summary(typhoid_results)

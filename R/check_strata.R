@@ -1,13 +1,20 @@
 #' @title Check a `pop_data` object for requested strata variables
+#'
 #' @param pop_data a `pop_data` object
+#' @param biomarker_names_var name of column in `pop_data` indicating
+#' biomarker type
 #' @param strata a [character] vector
+#'
 #' @returns [NULL], invisibly
 #' @examples
 #' sees_pop_data_pk_100 |>
 #'   check_strata(strata = c("ag", "catch", "Count")) |>
 #'   try()
 #' @dev
-check_strata <- function(pop_data, strata) {
+check_strata <- function(pop_data,
+                         strata,
+                         biomarker_names_var =
+                           get_biomarker_names_var(pop_data)) {
   if (!is.character(strata)) {
     cli::cli_abort(
       class = "strata are not strings",
@@ -63,11 +70,11 @@ check_strata <- function(pop_data, strata) {
 
   antigen_iso_counts <-
     pop_data |>
-    dplyr::select(all_of(c(strata, get_biomarker_names_var(data))))  |>
+    dplyr::select(all_of(c(strata, biomarker_names_var)))  |>
     table()
 
   if (any(antigen_iso_counts == 0L)) {
-    rlang::warn(
+    cli::cli_warn(
       class = "strata missing some biomarkers",
       message =
         "Some strata are completely missing one or more biomarkers.",

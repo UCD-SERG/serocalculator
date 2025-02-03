@@ -1,7 +1,10 @@
-count_strata <- function(data, strata_varnames) {
+count_strata <- function(data,
+                         strata_varnames,
+                         biomarker_names_var = get_biomarker_names_var(data)
+                           ) {
   to_return <-
     data %>%
-    count(across(any_of(c(strata_varnames, "antigen_iso"))))
+    count(across(any_of(c(strata_varnames, biomarker_names_var))))
 
   uneven_counts <-
     to_return %>%
@@ -18,7 +21,8 @@ count_strata <- function(data, strata_varnames) {
       "Sample size for each stratum will be calculated as
       the minimum number of observations across all antigen isotypes."
     ) %>%
-    cli::cli_warn(class = "incomplete-obs")
+    cli::cli_warn(class = "incomplete-obs",
+                  body = capture.output(uneven_counts))
   }
 
   to_return <-

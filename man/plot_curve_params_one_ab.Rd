@@ -124,3 +124,4 @@ curve <-
   curve
 }
 }
+\keyword{internal}

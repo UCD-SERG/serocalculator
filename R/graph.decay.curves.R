@@ -41,6 +41,7 @@
 #'
 #'   curve
 #' }
+#' @keywords internal
 plot_curve_params_one_ab <- function(
     object,
     verbose = FALSE,

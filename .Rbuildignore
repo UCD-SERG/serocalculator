@@ -20,6 +20,8 @@ allpopsamples_hlye.csv$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
 ^CRAN-SUBMISSION$
+^vignettes/rsconnect$
+^rsconnect$
 ^README\.qmd$
 ^codecov\.yml$
 ^_quarto\.yml$

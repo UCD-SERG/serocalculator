@@ -57,7 +57,7 @@
 #'   example_noise_params_pk
 #'
 #' est2 <- est.incidence.by(
-#'   strata = c("catchment"),
+#'   strata = "catchment",
 #'   pop_data = xs_data,
 #'   curve_params = curve,
 #'   noise_params = noise,
@@ -65,7 +65,7 @@
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time
 #'   iterlim = 5 # limit iterations for the purpose of this example
 #' )
-#'
+#' print(est2)
 #' summary(est2)
 #'
 est.incidence.by <- function(
@@ -203,7 +203,6 @@ est.incidence.by <- function(
               x,
               list(
                 lambda_start = lambda_start,
-                antigen_isos = antigen_isos,
                 build_graph = build_graph,
                 print_graph = FALSE,
                 verbose = FALSE,
@@ -226,7 +225,8 @@ est.incidence.by <- function(
       fits <- list() # Initialize an empty list for fits
 
       for (cur_stratum in names(stratum_data_list)) {
-        cur_stratum_vars <- strata_table %>%
+        cur_stratum_vars <-
+          strata_table %>%
           dplyr::filter(.data$Stratum == cur_stratum)
 
         if (verbose) {
@@ -240,7 +240,6 @@ est.incidence.by <- function(
             stratum_data_list[[cur_stratum]],
             list(
               lambda_start = lambda_start,
-              antigen_isos = antigen_isos,
               build_graph = build_graph,
               print_graph = print_graph,
               verbose = verbose,

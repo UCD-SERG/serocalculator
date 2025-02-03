@@ -32,7 +32,16 @@ get_id <- function(object, ...) {
 }
 
 get_biomarker_levels <- function(object, ...) {
-  attr(object, "antigen_isos")
+  metadata <- attributes(object)
+  if("antigen_isos" %in% names(metadata)) {
+    return(metadata[["antigen_isos"]])
+  }
+  else if (is.data.frame(object) && "antigen_isos" %in% names(object)) {
+    return(unique(object[["antigen_isos"]]))
+  } else
+  {
+    cli::cli_abort("biomarkers not found in `object`")
+  }
 }
 
 get_biomarker_names_var <- function(object, ...) {

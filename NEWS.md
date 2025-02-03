@@ -2,6 +2,10 @@
 
 ## New features
 
+* Added warnings for missing biomarker data (#168):
+  - completely missing antigen-isotype in a stratum
+  - uneven antigen-isotype counts in a stratum (likely from incomplete data)
+
 * Split dev and release websites into:
    - release: https://ucd-serg.github.io/serocalculator/
    - dev: https://ucd-serg.github.io/serocalculator/dev/

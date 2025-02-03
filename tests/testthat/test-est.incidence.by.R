@@ -1,3 +1,43 @@
+test_that(
+  desc = "est.incidence.by() warns about missing data",
+  code = {
+
+    library(dplyr)
+    library(readr)
+
+    est.incidence.by(
+      pop_data =
+        sees_pop_data_pk_100 |>
+        dplyr::filter(catchment == "kgh" | antigen_iso == "HlyE_IgA"),
+      curve_params = typhoid_curves_nostrat_100,
+      noise_params = example_noise_params_sees |>
+        dplyr::filter(Country == "Nepal"),
+      strata = "catchment",
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL
+    ) |>
+      expect_warning(class = "strata missing some biomarkers")
+  })
+
+
+test_that("est.incidence.by() warns about missing data", {
+
+  library(dplyr)
+  library(readr)
+
+  est.incidence.by(
+    pop_data = sees_pop_data_pk_100 |>
+      tail(-1),
+    curve_params = typhoid_curves_nostrat_100,
+    noise_params = example_noise_params_sees |>
+      dplyr::filter(Country == "Nepal"),
+    strata = "catchment",
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL
+  ) |>
+    expect_warning(class = "incomplete-obs")
+})
+
 test_that("`est.incidence.by()` warns user when strata is missing", {
   expect_warning(
     est.incidence.by(
@@ -32,25 +72,28 @@ test_that(
 )
 
 
-test_that("`est.incidence.by()` produces consistent results for typhoid data",
-          {
-            typhoid_results <- est.incidence.by(
-              strata = "catchment",
-              pop_data = sees_pop_data_pk_100,
-              curve_param = typhoid_curves_nostrat_100,
-              curve_strata_varnames = NULL,
-              noise_strata_varnames = NULL,
-              noise_param = example_noise_params_pk,
-              antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-              # Allow for parallel processing to decrease run time
-              num_cores = 1
-            )
+test_that(
+  desc = "`est.incidence.by()` produces consistent results for typhoid data",
+  code =
+    {
+      withr::local_options(width = 80)
+      typhoid_results <- est.incidence.by(
+        strata = "catchment",
+        pop_data = sees_pop_data_pk_100,
+        curve_param = typhoid_curves_nostrat_100,
+        curve_strata_varnames = NULL,
+        noise_strata_varnames = NULL,
+        noise_param = example_noise_params_pk,
+        antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+        # Allow for parallel processing to decrease run time
+        num_cores = 1
+      )
 
-            expect_snapshot(x = typhoid_results)
+      expect_snapshot_value(typhoid_results,
+                            style = "deparse",
+                            tolerance = 1e-4)
 
-            expect_snapshot_value(typhoid_results, style = "deparse",
-                                  tolerance = 1e-4)
-          })
+    })
 
 test_that(
   "`est.incidence.by()` produces expected results
@@ -120,17 +163,19 @@ test_that(
           with single core.",
   {
 
-    ests_verbose_sc <- est.incidence.by(
-      strata = c("catchment"),
-      pop_data = sees_pop_data_pk_100,
-      curve_params = typhoid_curves_nostrat_100,
-      noise_params = example_noise_params_pk,
-      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-      curve_strata_varnames = NULL,
-      noise_strata_varnames = NULL,
-      verbose = TRUE,
-      num_cores = 1
-    )
+    capture.output(file = nullfile() ,
+                   {
+                     ests_verbose_sc <- est.incidence.by(
+                       strata = c("catchment"),
+                       pop_data = sees_pop_data_pk_100,
+                       curve_params = typhoid_curves_nostrat_100,
+                       noise_params = example_noise_params_pk,
+                       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+                       curve_strata_varnames = NULL,
+                       noise_strata_varnames = NULL,
+                       verbose = TRUE,
+                       num_cores = 1
+                     ) |> suppressMessages()})
 
     ests_non_verbose_sc <- est.incidence.by(
       verbose = FALSE,
@@ -164,7 +209,8 @@ test_that(
       noise_strata_varnames = NULL,
       verbose = TRUE,
       num_cores = 2
-    )
+    ) |>
+      suppressMessages()
 
     ests_non_verbose_mc <- est.incidence.by(
       verbose = FALSE,
@@ -185,3 +231,4 @@ test_that(
 # note: no need to check multi-core verbose vs single-core, nonverbose,
 # or the other diagonal, because of transitive equality and the three checks
 # made above
+

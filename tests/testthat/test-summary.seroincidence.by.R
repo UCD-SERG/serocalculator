@@ -12,8 +12,6 @@ test_that("`summary.seroincidence.by()` produces consistent results",
               ) |>
               summary()
 
-            expect_snapshot(x = typhoid_results)
-
             expect_snapshot_value(typhoid_results,
                                   style = "serialize",
                                   tolerance = 1e-4)

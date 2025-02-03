@@ -20,7 +20,7 @@ count_strata <- function(data,
       isotypes, for at least one stratum.",
       "Sample size for each stratum will be calculated as
       the minimum number of observations across all antigen isotypes."
-    ) %>%
+    ) |>
     cli::cli_warn(class = "incomplete-obs",
                   body = capture.output(uneven_counts))
   }

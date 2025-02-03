@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.3.0.9005
+Version: 1.3.0.9013
 Authors@R: c(
     person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
            comment = "Author of the method and original code."),
@@ -15,15 +15,15 @@ Description: Translates antibody levels measured in cross-sectional
     seroconversions (infections) occur in the sampled populations.
     Replaces the previous `seroincidence` package.
 License: GPL-3
-URL: https://github.com/UCD-SERG/serocalculator,
-    https://ucd-serg.github.io/serocalculator/
+URL: https://ucd-serg.github.io/serocalculator/,
+    https://github.com/UCD-SERG/serocalculator
 BugReports: https://github.com/UCD-SERG/serocalculator/issues
 Depends: 
     R (>= 4.1.0)
 Imports: 
     cli,
     doParallel,
-    dplyr (>= 1.1.1),
+    dplyr,
     foreach,
     ggplot2,
     ggpubr,
@@ -42,7 +42,8 @@ Imports:
     purrr,
     and,
     glue,
-    stringr
+    stringr,
+    parallel
 Suggests:
     bookdown,
     DT,
@@ -50,7 +51,6 @@ Suggests:
     ggbeeswarm,
     knitr,
     pak,
-    parallel,
     readr,
     quarto,
     rmarkdown,
@@ -72,3 +72,4 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
+Config/Needs/website: quarto

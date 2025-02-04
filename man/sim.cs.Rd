@@ -4,7 +4,7 @@
 \alias{sim.cs}
 \title{Simulate a cross-sectional serosurvey with noise}
 \usage{
-sim.cs(...)
+sim.cs(n.smpl, age.rng, n.mc, renew.params, add.noise, ...)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}

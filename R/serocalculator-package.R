@@ -35,6 +35,7 @@
 #' @importFrom foreach foreach
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 autoplot
+#' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 ggplot
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
@@ -61,6 +62,7 @@
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyselect contains
 #' @importFrom tidyselect ends_with
+#' @importFrom utils capture.output
 #' @importFrom utils download.file unzip
 #' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE

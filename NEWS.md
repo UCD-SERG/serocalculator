@@ -2,12 +2,40 @@
 
 ## New features
 
+* Improved y-limit calculation in `graph.curve.params()` (#368)
+* Added option for `graph.curve.params()` to show all curves (#368)
+* Removed `warn.missing.strata()` from API (#366)
+
+* Added more details about contributing PRs in `Contributing.md` (#280)
+
+* Added warnings for missing biomarker data (#168):
+  - completely missing antigen-isotype in a stratum
+  - uneven antigen-isotype counts in a stratum (likely from incomplete data)
+
+* Split dev and release websites into:
+   - release: https://ucd-serg.github.io/serocalculator/
+   - dev: https://ucd-serg.github.io/serocalculator/dev/
+
+* Fixed citations in `methodology.qmd` article (#360)
+
+* Added outline to pkgdown website (#353)
+* Added verbose option for `summary.seroincidence()` and 
+`summary.seroincidence.by()` (#348)
+* Extended `simulate_xsectionalData.Rmd` article to explore
+`renew_params = TRUE` vs `renew_params = FALSE` (#348)
+
 * Renamed variables for consistency (#281):
   - `sim.cs()` -> `sim_pop_data()` 
   - `sim.cs.multi()` -> `sim_pop_data_multi()`
 
 ## Internal changes
 
+* added test for `graph.curve.params()` (#368)
+* reverted Readme source file from qmd to Rmd.
+* switched pkgdown GHA from `any::pkgdown` to `r-lib/pkgdown` (i.e., dev version) (#359)
+* added test for `summary.seroincidence.by()` (#352)
+* Started checking for use of base pipe instead of magrittr pipe
+by linter (#347)
 * Removed `ldpar()` from API (#345)
 * Added test for `sim.cs()` (#344)
 * Added test for internal function `ab()` (#342)

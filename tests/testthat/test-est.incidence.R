@@ -6,9 +6,10 @@ test_that("est.incidence() produces expected results for typhoid data", {
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-  expect_snapshot(x = summary(typhoid_results))
+  expect_snapshot(x = summary(typhoid_results, coverage = .95))
 
   expect_snapshot_value(typhoid_results, style = "deparse", tolerance = 1e-4)
+
 })
 
 test_that(

@@ -1,0 +1,81 @@
+url: https://ucd-serg.github.io/serocalculator/
+template:
+  bootstrap: 5
+  light-switch: true
+
+bibliography: vignettes/references.bib
+
+development:
+  mode: auto
+
+search:
+  exclude: ['preview/']
+
+reference:
+- title: Prepare data
+  contents:
+  - as_pop_data
+  - load_pop_data
+  - as_curve_params
+  - load_curve_params
+  - as_noise_params
+  - load_noise_params
+  - check_pop_data
+  - strata
+- title: Summarize data
+  contents:
+  - summary.pop_data
+- title: Visualize data
+  contents:
+  - autoplot.pop_data
+  - autoplot.curve_params
+  - graph.curve.params
+  - graph_loglik
+  - log_likelihood
+- title: Estimate seroconversion incidence rates
+  contents:
+  - est.incidence
+  - est.incidence.by
+- title: Summarize seroconversion incidence rate estimates
+  contents:
+  - summary.seroincidence
+  - summary.seroincidence.by
+- title: Visualize seroconversion incidence rate estimates
+  contents:
+  - autoplot.seroincidence
+  - autoplot.seroincidence.by
+  - autoplot.summary.seroincidence.by
+- title: Example data sets
+  contents:
+  - sees_pop_data_100
+  - sees_pop_data_pk_100
+  - typhoid_curves_nostrat_100
+  - example_noise_params_sees
+  - example_noise_params_pk
+  - serocalculator_example
+- title: Simulate data sets
+  contents:
+  - sim_pop_data
+  - sim_pop_data_multi
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - articles/serocalculator
+
+- title: Methodology
+  navbar: Methodology
+  contents:
+  - methodology
+  - articles/simulate_xsectionalData
+
+- title: Examples
+  navbar: Examples
+  contents:
+  - articles/enteric_fever_example
+  - articles/scrubTyphus_example
+
+- title: Other
+  contents:
+  - articles/test-quarto-article

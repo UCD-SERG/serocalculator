@@ -20,6 +20,8 @@ allpopsamples_hlye.csv$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
 ^CRAN-SUBMISSION$
+^vignettes/rsconnect$
+^rsconnect$
 ^README\.qmd$
 ^codecov\.yml$
 ^_quarto\.yml$
@@ -31,4 +33,6 @@ allpopsamples_hlye.csv$
 ^revdep$
 ^NEWS_files$
 ^NEWS\.html$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$
 ^man/check_strata\.Rd$

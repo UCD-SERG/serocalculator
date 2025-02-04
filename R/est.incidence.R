@@ -39,7 +39,7 @@ est.incidence <- function(
     pop_data,
     curve_params,
     noise_params,
-    antigen_isos = pop_data$antigen_iso %>% unique(),
+    antigen_isos = get_biomarker_names(pop_data),
     lambda_start = 0.1,
     stepmin = 1e-8,
     stepmax = 3,

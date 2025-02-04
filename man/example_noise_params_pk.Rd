@@ -35,6 +35,6 @@ example_noise_params_pk
 }
 \description{
 A subset of noise parameter estimates from the SEES study,
-for examples and testing.
+for examples and testing, for Pakistan
 }
 \keyword{datasets}

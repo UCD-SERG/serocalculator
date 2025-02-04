@@ -3,6 +3,7 @@
 # Tags are deployed to /<tag>/
 # copied from https://github.com/rstudio/education-workflows/blob/main/examples/pkgdown.yaml
 # referred from https://github.com/r-lib/actions/issues/865
+# more info: https://github.com/rstudio/education-workflows/tree/main/examples#deploy-pkgdown-to-github-pages-with-pr-previews-and-tagged-versions
 on:
   pull_request:
     branches:
@@ -16,6 +17,9 @@ on:
       - 'man/**'
       - 'pkgdown/**'
       - 'vignettes/**'
+      - '_quarto.yml'
+      - '.github/workflows/pkgdown.yaml'
+      - 'Readme.md'
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'         # build on version tags
@@ -35,6 +39,9 @@ jobs:
   pkgdown-build:
     runs-on: ubuntu-latest
     if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed') }}
+     # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -63,7 +70,7 @@ jobs:
             website
           extra-packages: |
             local::.
-            any::pkgdown
+            r-lib/pkgdown
 
       # If events is a PR, set subdir to 'preview/pr<pr_number>'
       - name: "[PR] Set documentation subdirectory"
@@ -84,6 +91,10 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: |
           echo "subdir=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+
+      - name: Debug subdir
+        run: |
+          echo "Subdir is set to: ${{ env.subdir }}"
 
       - name: Deploy pkgdown site
         id: deploy

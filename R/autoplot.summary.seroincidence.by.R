@@ -72,14 +72,14 @@ autoplot.summary.seroincidence.by <- function(
     plot1 <- plot1 +
       ggplot2::geom_pointrange(
         alpha = alpha,
-        position = ggplot2::position_dodge(width = dodge_width),
+        position = ggplot2::position_dodge2(width = dodge_width),
         aes(ymin = .data$CI.lwr, ymax = .data$CI.upr)
       )
 
   } else {
     plot1 <- plot1 +
       ggplot2::geom_point(
-      position = ggplot2::position_dodge(width = dodge_width),
+      position = ggplot2::position_dodge2(width = dodge_width),
       shape = shape,
       alpha = alpha
     )

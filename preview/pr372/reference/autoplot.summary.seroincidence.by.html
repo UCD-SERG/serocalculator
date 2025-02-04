@@ -66,8 +66,8 @@
 <span>  <span class="va">xvar</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.7</span>,</span>
 <span>  shape <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  jitter_width <span class="op">=</span> <span class="fl">0.001</span>,</span>
-<span>  ci_crossbar_width <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  dodge_width <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  CIs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -95,12 +95,12 @@ method to the output of <code><a href="est.incidence.by.html">est.incidence.by()
 <dd><p>shape argument for <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point()</a></code></p></dd>
 
 
-<dt id="arg-jitter-width">jitter_width<a class="anchor" aria-label="anchor" href="#arg-jitter-width"></a></dt>
+<dt id="arg-dodge-width">dodge_width<a class="anchor" aria-label="anchor" href="#arg-dodge-width"></a></dt>
 <dd><p>width for jitter</p></dd>
 
 
-<dt id="arg-ci-crossbar-width">ci_crossbar_width<a class="anchor" aria-label="anchor" href="#arg-ci-crossbar-width"></a></dt>
-<dd><p>width for CI cross-bars</p></dd>
+<dt id="arg-cis">CIs<a class="anchor" aria-label="anchor" href="#arg-cis"></a></dt>
+<dd><p><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>, if <code>TRUE</code>, add CI error bars</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -144,7 +144,8 @@ method to the output of <code><a href="est.incidence.by.html">est.incidence.by()
 <span class="r-in"><span><span class="va">est2sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">est2sum</span>, <span class="st">"catchment"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="autoplot.summary.seroincidence.by-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in scale_x_continuous():</span> Discrete values supplied to continuous scale.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Example values: <span style="color: #0000BB;">"aku"</span> and <span style="color: #0000BB;">"kgh"</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -64,6 +64,9 @@ autoplot.summary.seroincidence.by <- function(
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_linedraw() +
+    ggplot2::theme(
+      panel.grid.minor.x = ggplot2::element_blank(),
+      panel.grid.minor.y = ggplot2::element_blank()) +
     ggplot2::expand_limits(y = 0) +
     ggplot2::labs(col = "`nlm()` convergence code") +
     ggplot2::theme(legend.position = "bottom")

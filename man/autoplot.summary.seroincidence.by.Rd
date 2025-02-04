@@ -9,8 +9,8 @@
   xvar,
   alpha = 0.7,
   shape = 1,
-  jitter_width = 0.001,
-  ci_crossbar_width = 0.2,
+  dodge_width = 0.001,
+  CIs = FALSE,
   ...
 )
 }
@@ -26,9 +26,9 @@ method to the output of \code{\link[=est.incidence.by]{est.incidence.by()}}).}
 
 \item{shape}{shape argument for \code{geom_point()}}
 
-\item{jitter_width}{width for jitter}
+\item{dodge_width}{width for jitter}
 
-\item{ci_crossbar_width}{width for CI cross-bars}
+\item{CIs}{\link{logical}, if \code{TRUE}, add CI error bars}
 
 \item{...}{unused}
 }

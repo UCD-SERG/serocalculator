@@ -8,9 +8,8 @@
 #' @param alpha transparency for the points in the graph
 #' (1 = no transparency, 0 = fully transparent)
 #' @param shape shape argument for `geom_point()`
-#' @param jitter_width width for jitter
+#' @param dodge_width width for jitter
 #' @param CIs [logical], if `TRUE`, add CI error bars
-#' @param ci_crossbar_width width for CI cross-bars
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()] object
@@ -50,9 +49,8 @@ autoplot.summary.seroincidence.by <- function(
     xvar,
     alpha = .7,
     shape = 1,
-    jitter_width = 0.001,
-    CIs = TRUE,
-    ci_crossbar_width = 0.2,
+    dodge_width = 0.001,
+    CIs = FALSE,
     ...) {
 
   plot1 <-
@@ -60,16 +58,8 @@ autoplot.summary.seroincidence.by <- function(
     ggplot2::ggplot() +
     ggplot2::aes(
       x = get(xvar),
-      y = .data$incidence.rate
-    ) +
-    ggplot2::geom_jitter(
-      width = jitter_width,
-      height = 0,
-      aes(
-        col = .data$nlm.convergence.code
-      ),
-      shape = shape,
-      alpha = alpha
+      y = .data$incidence.rate,
+      col = .data$nlm.convergence.code
     ) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
@@ -80,10 +70,18 @@ autoplot.summary.seroincidence.by <- function(
 
   if(CIs) {
     plot1 <- plot1 +
-      ggplot2::geom_errorbar(
-        aes(ymin = CI.lwr, ymax = CI.upr),
-        width = ci_crossbar_width
+      ggplot2::geom_pointrange(
+        position = ggplot2::position_dodge(width = dodge_width),
+        aes(ymin = CI.lwr, ymax = CI.upr)
       )
+
+  } else {
+    plot1 <- plot1 +
+      ggplot2::geom_point(
+      position = ggplot2::position_dodge(width = dodge_width),
+      shape = shape,
+      alpha = alpha
+    )
 
   }
 

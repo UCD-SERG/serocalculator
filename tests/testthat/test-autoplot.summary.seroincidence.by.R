@@ -26,7 +26,6 @@ test_that("results are consistent", {
 
    est2sum <- summary(est2)
 
-   set.seed(1) # needed because of geom_jitter()
    plot1 <- autoplot(est2sum, "catchment")
 
    plot1 |> vdiffr::expect_doppelganger(title = "strat-est-plot")

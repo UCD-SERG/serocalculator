@@ -506,7 +506,6 @@ ests_renew_summary <-
 
 ```
 
-
 ```{r, "graph_renew"}
 
 ests_renew_summary |>

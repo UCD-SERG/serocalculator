@@ -2,6 +2,7 @@
 
 ## New features
 
+* Added CI error bars to `autoplot.summary.seroincidence.by()` (#372)
 * Improved y-limit calculation in `graph.curve.params()` (#368)
 * Added option for `graph.curve.params()` to show all curves (#368)
 * Removed `warn.missing.strata()` from API (#366)

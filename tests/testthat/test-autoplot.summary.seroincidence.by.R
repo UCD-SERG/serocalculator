@@ -7,7 +7,7 @@ test_that("results are consistent", {
      sees_pop_data_pk_100
 
    curve <-
-     typhoid_curves_nostrat_100 %>%
+     typhoid_curves_nostrat_100 |>
      filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 
    noise <-
@@ -26,6 +26,7 @@ test_that("results are consistent", {
 
    est2sum <- summary(est2)
 
+   set.seed(1) # needed because of geom_jitter()
    plot1 <- autoplot(est2sum, "catchment")
 
    plot1 |> vdiffr::expect_doppelganger(title = "strat-est-plot")

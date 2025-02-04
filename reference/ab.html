@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,8 +28,6 @@
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -50,7 +48,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>kinetics of the antibody (ab) response (power function decay)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/R/ab.R" class="external-link"><code>R/ab.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/R/ab.R" class="external-link"><code>R/ab.R</code></a></small>
       <div class="d-none name"><code>ab.Rd</code></div>
     </div>
 
@@ -68,62 +66,22 @@
 
 
 <dl><dt id="arg-t">t<a class="anchor" aria-label="anchor" href="#arg-t"></a></dt>
-<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> of elapsed times since start of infection</p></dd>
+<dd><p>age at infection?</p></dd>
 
 
 <dt id="arg-par">par<a class="anchor" aria-label="anchor" href="#arg-par"></a></dt>
-<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a> of model parameters:</p><ul><li><p>rows are parameters</p></li>
-<li><p>columns are biomarkers</p></li>
-</ul></dd>
+<dd><p>parameters</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="baseline.html">baseline</a></code></p><dl><dt><code>yvec</code></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> of predicted biomarker values,
-for one biomarker</p></dd>
-
-    <dt><code>kab</code></dt>
-<dd><p><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> indicating which row to read from <code>blims</code></p></dd>
-
-    <dt><code>blims</code></dt>
-<dd><p>range of possible baseline antibody levels</p></dd>
-
-
-</dl></dd>
+<dd><p>arguments passed to <code>baseline()</code></p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix()</a></code> of predicted biomarker values</p>
+    <p>a <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix()</a></code></p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">par1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="fl">1.11418923843475</span>, <span class="fl">1</span>, <span class="fl">0.12415057798022207</span>, <span class="fl">0.24829344792968783</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">0.01998946878312856</span>, <span class="fl">0.0012360802436587237</span>, <span class="fl">1.297194045996013</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">1.3976510415108334</span>, <span class="fl">1</span>, <span class="fl">0.2159993563893431</span>, <span class="fl">0.4318070551383313</span>,</span></span>
-<span class="r-in"><span>      <span class="fl">0.0015146395107173347</span>, <span class="fl">0.0003580062906750277</span>, <span class="fl">1.5695811573082081</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span>,</span></span>
-<span class="r-in"><span>    nrow <span class="op">=</span> <span class="fl">7L</span>,</span></span>
-<span class="r-in"><span>    ncol <span class="op">=</span> <span class="fl">2L</span>,</span></span>
-<span class="r-in"><span>    dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y0"</span>, <span class="st">"b0"</span>, <span class="st">"mu0"</span>, <span class="st">"mu1"</span>, <span class="st">"c1"</span>, <span class="st">"alpha"</span>, <span class="st">"shape_r"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      antigen_iso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1444</span></span></span>
-<span class="r-in"><span><span class="va">blims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>   nrow <span class="op">=</span> <span class="fl">2L</span>,</span></span>
-<span class="r-in"><span>   ncol <span class="op">=</span> <span class="fl">2L</span>,</span></span>
-<span class="r-in"><span>   dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu">serocalculator</span><span class="fu">:::</span><span class="fu">ab</span><span class="op">(</span>t <span class="op">=</span> <span class="va">t</span>, par <span class="op">=</span> <span class="va">par1</span>, blims <span class="op">=</span> <span class="va">blims</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

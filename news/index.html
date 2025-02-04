@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,8 +28,6 @@
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -50,38 +48,9 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="serocalculator-development-version">serocalculator (development version)<a class="anchor" aria-label="anchor" href="#serocalculator-development-version"></a></h2>
-<div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Fixed citations in <code>methodology.qmd</code> article (<a href="https://github.com/UCD-SERG/serocalculator/issues/360" class="external-link">#360</a>)</p></li>
-<li><p>Added outline to pkgdown website (<a href="https://github.com/UCD-SERG/serocalculator/issues/353" class="external-link">#353</a>)</p></li>
-<li><p>Added verbose option for <code><a href="../reference/summary.seroincidence.html">summary.seroincidence()</a></code> and <code><a href="../reference/summary.seroincidence.by.html">summary.seroincidence.by()</a></code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/348" class="external-link">#348</a>)</p></li>
-<li><p>Extended <code>simulate_xsectionalData.Rmd</code> article to explore <code>renew_params = TRUE</code> vs <code>renew_params = FALSE</code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/348" class="external-link">#348</a>)</p></li>
-<li>
-<p>Renamed variables for consistency (<a href="https://github.com/UCD-SERG/serocalculator/issues/281" class="external-link">#281</a>):</p>
-<ul><li>
-<code><a href="../reference/sim.cs.html">sim.cs()</a></code> -&gt; <code><a href="../reference/sim_pop_data.html">sim_pop_data()</a></code>
-</li>
-<li>
-<code><a href="../reference/sim.cs.multi.html">sim.cs.multi()</a></code> -&gt; <code><a href="../reference/sim_pop_data_multi.html">sim_pop_data_multi()</a></code>
-</li>
-</ul></li>
-</ul></div>
-<div class="section level3">
-<h3 id="internal-changes-development-version">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-development-version"></a></h3>
-<ul><li><p>switched pkgdown GHA from <code>any::pkgdown</code> to <code>r-lib/pkgdown</code> (i.e., dev version) (<a href="https://github.com/UCD-SERG/serocalculator/issues/359" class="external-link">#359</a>)</p></li>
-<li><p>added test for <code><a href="../reference/summary.seroincidence.by.html">summary.seroincidence.by()</a></code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/352" class="external-link">#352</a>)</p></li>
-<li><p>Started checking for use of base pipe instead of magrittr pipe by linter (<a href="https://github.com/UCD-SERG/serocalculator/issues/347" class="external-link">#347</a>)</p></li>
-<li><p>Removed <code><a href="../reference/ldpar.html">ldpar()</a></code> from API (<a href="https://github.com/UCD-SERG/serocalculator/issues/345" class="external-link">#345</a>)</p></li>
-<li><p>Added test for <code><a href="../reference/sim.cs.html">sim.cs()</a></code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/344" class="external-link">#344</a>)</p></li>
-<li><p>Added test for internal function <code><a href="../reference/ab.html">ab()</a></code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/342" class="external-link">#342</a>)</p></li>
-<li><p>Reverted name change <code><a href="../reference/ldpar.html">ldpar()</a></code>-&gt; <code>row_longitudinal_parameter()</code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/343" class="external-link">#343</a>)</p></li>
-</ul></div>
-</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.3.0" id="serocalculator-130">serocalculator 1.3.0<a class="anchor" aria-label="anchor" href="#serocalculator-130"></a></h2><p class="text-muted">CRAN release: 2025-01-25</p>
 <div class="section level3">

@@ -91,13 +91,13 @@ sim_pop_data_multi <- function(
 
   sim_df <-
     foreach::foreach(
-      i = seq_along(lambdas),
-      .combine = bind_rows
+      .combine = bind_rows,
+      i = seq_along(lambdas)
     ) %:%
     foreach::foreach(
+      .combine = bind_rows,
       n = 1:nclus,
-      r = rng[(i - 1) * nclus + 1:nclus],
-      .combine = bind_rows
+      r = rng[(i - 1) * nclus + 1:nclus]
     ) %dopar% {
       l <- lambdas[i]
       rngtools::setRNG(r)
@@ -108,6 +108,7 @@ sim_pop_data_multi <- function(
         mutate(lambda.sim = l, cluster = n)
     }
   doParallel::stopImplicitCluster()
+  sim_df <- sim_df |> set_biomarker_var(biomarker = "antigen_iso")
   return(sim_df)
 }
 

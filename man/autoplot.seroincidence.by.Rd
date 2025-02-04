@@ -42,6 +42,8 @@ est2 <- est.incidence.by(
   strata = c("catchment"),
   pop_data = xs_data,
   curve_params = curve,
+  curve_strata_varnames= NULL,
+  noise_strata_varnames = NULL,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   #num_cores = 8, #Allow for parallel processing to decrease run time

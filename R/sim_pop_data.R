@@ -196,7 +196,19 @@ sim_pop_data <- function(
 #' consistent API.
 #'
 #' @keywords internal
-sim.cs <- function(...) { # nolint: object_name_linter
+sim.cs <- function(
+    n.smpl,
+    age.rng,
+    n.mc,
+    renew.params,
+    add.noise,
+    ...) { # nolint: object_name_linter
   lifecycle::deprecate_soft("1.3.1", "sim.cs()", "sim_pop_data()")
-  sim_pop_data(...)
+  sim_pop_data(
+    n_samples = n.smpl,
+    age_range = age.rng,
+    n_mcmc_samples = n.mc,
+    renew_params = renew.params,
+    add_noise = add.noise,
+    ...)
 }

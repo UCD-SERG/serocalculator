@@ -71,8 +71,9 @@ autoplot.summary.seroincidence.by <- function(
   if(CIs) {
     plot1 <- plot1 +
       ggplot2::geom_pointrange(
+        alpha = alpha,
         position = ggplot2::position_dodge(width = dodge_width),
-        aes(ymin = CI.lwr, ymax = CI.upr)
+        aes(ymin = .data$CI.lwr, ymax = .data$CI.upr)
       )
 
   } else {

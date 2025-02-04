@@ -8,7 +8,9 @@
 #' @param alpha transparency for the points in the graph
 #' (1 = no transparency, 0 = fully transparent)
 #' @param shape shape argument for `geom_point()`
-#' @param width width for jitter
+#' @param jitter_width width for jitter
+#' @param CIs [logical], if `TRUE`, add CI error bars
+#' @param ci_crossbar_width width for CI cross-bars
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()] object
@@ -48,17 +50,20 @@ autoplot.summary.seroincidence.by <- function(
     xvar,
     alpha = .7,
     shape = 1,
-    width = 0.001,
+    jitter_width = 0.001,
+    CIs = TRUE,
+    ci_crossbar_width = 0.2,
     ...) {
 
-  object |>
+  plot1 <-
+    object |>
     ggplot2::ggplot() +
     ggplot2::aes(
       x = get(xvar),
       y = .data$incidence.rate
     ) +
     ggplot2::geom_jitter(
-      width = width,
+      width = jitter_width,
       height = 0,
       aes(
         col = .data$nlm.convergence.code
@@ -66,14 +71,22 @@ autoplot.summary.seroincidence.by <- function(
       shape = shape,
       alpha = alpha
     ) +
-    ggplot2::geom_errorbar(
-      aes(ymin = CI.lwr, ymax = CI.upr),
-      width = 0.2
-    ) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_linedraw() +
     ggplot2::expand_limits(x = 0, y = 0) +
     ggplot2::labs(col = "`nlm()` convergence code") +
     ggplot2::theme(legend.position = "bottom")
+
+  if(CIs) {
+    plot1 <- plot1 +
+      ggplot2::geom_errorbar(
+        aes(ymin = CI.lwr, ymax = CI.upr),
+        width = ci_crossbar_width
+      )
+
+  }
+
+  return(plot1)
+
 }

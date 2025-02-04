@@ -33,16 +33,12 @@
 <polyline points='35.24,483.95 714.52,483.95 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
 <polyline points='35.24,320.17 714.52,320.17 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
 <polyline points='35.24,156.39 714.52,156.39 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
-<polyline points='296.50,505.91 296.50,22.78 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
-<polyline points='557.76,505.91 557.76,22.78 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
-<circle cx='296.50' cy='254.61' r='1.95' style='stroke-width: 0.71; stroke: #440154; stroke-opacity: 0.70;' />
-<circle cx='557.76' cy='156.99' r='1.95' style='stroke-width: 0.71; stroke: #440154; stroke-opacity: 0.70;' />
-<polyline points='270.37,173.76 322.63,173.76 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='296.50,173.76 296.50,314.39 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='270.37,314.39 322.63,314.39 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='531.64,44.74 583.89,44.74 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='557.76,44.74 557.76,240.54 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<polyline points='531.64,240.54 583.89,240.54 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<polyline points='220.50,505.91 220.50,22.78 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
+<polyline points='529.26,505.91 529.26,22.78 ' style='stroke-width: 0.11; stroke-linecap: butt;' />
+<line x1='220.50' y1='314.39' x2='220.50' y2='173.76' style='stroke-width: 1.07; stroke: #440154; stroke-opacity: 0.70; stroke-linecap: butt;' />
+<line x1='529.26' y1='240.54' x2='529.26' y2='44.74' style='stroke-width: 1.07; stroke: #440154; stroke-opacity: 0.70; stroke-linecap: butt;' />
+<circle cx='220.50' cy='254.61' r='2.84' style='stroke-width: 1.42; stroke: #440154; stroke-opacity: 0.70; fill: #440154; fill-opacity: 0.70;' />
+<circle cx='529.26' cy='156.99' r='2.84' style='stroke-width: 1.42; stroke: #440154; stroke-opacity: 0.70; fill: #440154; fill-opacity: 0.70;' />
 <rect x='35.24' y='22.78' width='679.28' height='483.13' style='stroke-width: 1.07;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -52,17 +48,18 @@
 <polyline points='32.50,483.95 35.24,483.95 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
 <polyline points='32.50,320.17 35.24,320.17 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
 <polyline points='32.50,156.39 35.24,156.39 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='296.50,508.65 296.50,505.91 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='557.76,508.65 557.76,505.91 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<text x='296.50' y='516.90' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>aku</text>
-<text x='557.76' y='516.90' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>kgh</text>
+<polyline points='220.50,508.65 220.50,505.91 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<polyline points='529.26,508.65 529.26,505.91 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<text x='220.50' y='516.90' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>aku</text>
+<text x='529.26' y='516.90' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>kgh</text>
 <text x='374.88' y='529.04' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='50.76px' lengthAdjust='spacingAndGlyphs'>catchment</text>
 <text transform='translate(13.05,264.35) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='120.47px' lengthAdjust='spacingAndGlyphs'>Estimated incidence rate</text>
 <rect x='290.16' y='542.28' width='169.45' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='295.64' y='560.19' style='font-size: 11.00px; font-family: sans;' textLength='125.35px' lengthAdjust='spacingAndGlyphs'>`nlm()` convergence code</text>
 <rect x='426.47' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='435.11' cy='556.40' r='1.95' style='stroke-width: 0.71; stroke: #440154; stroke-opacity: 0.70;' />
+<line x1='435.11' y1='563.31' x2='435.11' y2='549.49' style='stroke-width: 1.07; stroke: #440154; stroke-opacity: 0.70; stroke-linecap: butt;' />
+<circle cx='435.11' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #440154; stroke-opacity: 0.70; fill: #440154; fill-opacity: 0.70;' />
 <text x='449.23' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='73.36px' lengthAdjust='spacingAndGlyphs'>strat-est-plot</text>
+<text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='90.96px' lengthAdjust='spacingAndGlyphs'>strat-est-plot-CI</text>
 </g>
 </svg>

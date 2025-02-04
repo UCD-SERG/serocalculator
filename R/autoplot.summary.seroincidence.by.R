@@ -37,7 +37,7 @@
 #'   curve_strata_varnames= NULL,
 #'   noise_strata_varnames = NULL,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   num_cores = 8 # Allow for parallel processing to decrease run time
+#'   num_cores = 2 # Allow for parallel processing to decrease run time
 #' )
 #'
 #' est2sum <- summary(est2)

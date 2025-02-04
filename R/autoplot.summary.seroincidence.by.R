@@ -66,9 +66,10 @@ autoplot.summary.seroincidence.by <- function(
       shape = shape,
       alpha = alpha
     ) +
-    # ggplot2::geom_errorbar(
-    #   aes(ymin = CI.lowr, ymax = CI.upr)
-    # ) +
+    ggplot2::geom_errorbar(
+      aes(ymin = CI.lwr, ymax = CI.upr),
+      width = 0.2
+    ) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_linedraw() +

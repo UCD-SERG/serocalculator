@@ -2,16 +2,6 @@
 title: "Generate a simulated cross-sectional sample and estimate seroincidence"
 subtitle: "Simulation of Enteric Fever using HlyE IgG and/or HlyE IgA"
 description: "A demonstration of the accuracy of the estimation approach"
-output: 
-  bookdown::html_document2:
-    base_format: rmarkdown::html_document
-    toc: true
-    toc_float:
-      collapsed: false
-vignette: >
-  %\VignetteIndexEntry{simulate_xsectionalData}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 bibliography: ../references.bib
 ---
 

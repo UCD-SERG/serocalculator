@@ -65,6 +65,7 @@ LinkingTo:
     Rcpp
 Config/testthat/edition: 3
 Config/Needs/build: moodymudskipper/devtag
+Config/Needs/website: quarto
 Encoding: UTF-8
 Language: en-US
 LazyData: true

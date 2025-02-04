@@ -5,5 +5,26 @@ template:
 
 bibliography: vignettes/references.bib
 
+development:
+  mode: auto
+
 search:
   exclude: ['preview/']
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - articles/serocalculator
+
+- title: Methodology
+  navbar: Methodology
+  contents:
+  - methodology
+  - articles/simulate_xsectionalData
+
+- title: Examples
+  navbar: Examples
+  contents:
+  - articles/enteric_fever_example
+  - articles/scrubTyphus_example

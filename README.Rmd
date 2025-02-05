@@ -21,16 +21,6 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
 <!-- badges: end -->
 
-```{r svg}
-#| echo: false
-#| label: fig-qr-code
-library(qrcode)
-code <- qr_code("https://ucd-serg.github.io/serocalculator/")
-generate_svg(code, filename = "man/figures/qr.svg")
-```
-
-![QR code for `serocalculator` website](man/figures/qr.svg){#fig-website-QR}
-
 Antibody levels measured in a cross–sectional population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. 
 In other words, the presence of many high antibody titers indicates that many individuals likely experienced infection recently and the burden of disease is high in the population, 
 while low titers indicate a low frequency of infections in the sampled population and therefore a lower burden of disease.
@@ -89,8 +79,13 @@ To install the development version, you must install the **devtools** R package 
 # Install the devtools package and the development version of serocalculator
 install.packages("devtools")
 devtools::install_github("ucd-serg/serocalculator")
-
 ```
+
+The documentation for the 
+[`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
+development branch version of `{serocalculator}` can be
+accessed at <https://ucd-serg.github.io/serocalculator/dev/>
+
 #### A Note for Windows Users
 
 Before launching the development version of **serocalculator**, Windows users will need to install Rtools, which contains a collection of tools for building and employing R packages that are still in development. 
@@ -108,9 +103,7 @@ When prompted to install additional build tools, select "Yes" and Rtools will be
 
 [id]: man/figures/Rtools1.png
 
-:::{.callout-note}
-After installing Rtools, you may need to restart RStudio before continuing to install `serocalculator`.
-:::
+**Note: After installing Rtools, you may need to restart RStudio before continuing to install `serocalculator`.**
 
 ##### Independently:
 
@@ -143,3 +136,18 @@ anything from typo corrections to new features.
 Please see our 
 [Contributor guide](https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html#fixing-typos) 
 for more information.
+
+## QR code
+
+This QR code is a direct link to the latest-release version of the 
+package website:
+
+```{r svg}
+#| echo: false
+#| label: fig-qr-code
+library(qrcode)
+code <- qr_code("https://ucd-serg.github.io/serocalculator/")
+generate_svg(code, filename = "man/figures/qr.svg")
+```
+
+![QR code for `serocalculator` website](man/figures/qr.svg){#fig-website-QR}

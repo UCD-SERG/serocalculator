@@ -93,7 +93,7 @@ sim_pop_data <- function(
     ...) {
   if (verbose > 1) {
     message("inputs to `sim_pop_data()`:")
-    print(environment() %>% as.list())
+    print(environment() |> as.list())
   }
 
 
@@ -105,10 +105,10 @@ sim_pop_data <- function(
   # and provide `curve_params` instead.
 
   predpar <-
-    curve_params %>%
-    filter(.data$antigen_iso %in% antigen_isos) %>%
-    droplevels() %>%
-    prep_curve_params_for_array() %>%
+    curve_params |>
+    filter(.data$antigen_iso %in% antigen_isos) |>
+    droplevels() |>
+    prep_curve_params_for_array() |>
     df_to_array(dim_var_names = c("antigen_iso", "parameter"))
 
   stopifnot(length(lambda) == 1)
@@ -116,7 +116,7 @@ sim_pop_data <- function(
   day2yr <- 365.25
   lambda <- lambda / day2yr
   age_range <- age_range * day2yr
-  npar <- dimnames(predpar)$parameter %>% length()
+  npar <- dimnames(predpar)$parameter |> length()
 
 
   baseline_limits <- noise_limits
@@ -149,8 +149,8 @@ sim_pop_data <- function(
   colnames(ysim) <- c("age", antigen_isos)
 
   to_return <-
-    ysim %>%
-    as_tibble() %>%
+    ysim |>
+    as_tibble() |>
     mutate(
       id = as.character(row_number()),
       age = round(.data$age / day2yr, 2)
@@ -159,15 +159,15 @@ sim_pop_data <- function(
   if (format == "long") {
     if (verbose) message("outputting long format data")
     to_return <-
-      to_return %>%
+      to_return |>
       pivot_longer(
         cols = all_of(antigen_isos),
         values_to = c("value"),
         names_to = c("antigen_iso")
-      ) %>%
+      ) |>
       structure(
         format = "long"
-      ) %>%
+      ) |>
       as_pop_data(
         value = "value",
         age = "age",
@@ -177,7 +177,7 @@ sim_pop_data <- function(
   } else {
     if (verbose) message("outputting wide format data")
     to_return <-
-      to_return %>%
+      to_return |>
       structure(
         class = c("pop_data_wide", class(to_return)),
         format = "wide"
@@ -196,13 +196,13 @@ sim_pop_data <- function(
 #' consistent API.
 #' @keywords internal
 #' @export
-sim.cs <- function(
-    n.smpl,
-    age.rng,
-    n.mc,
-    renew.params,
-    add.noise,
-    ...) { # nolint: object_name_linter
+sim.cs <- function( # nolint: object_name_linter
+  n.smpl, # nolint: object_name_linter
+  age.rng, # nolint: object_name_linter
+  n.mc, # nolint: object_name_linter
+  renew.params, # nolint: object_name_linter
+  add.noise, # nolint: object_name_linter
+  ...) { # nolint: object_name_linter
   lifecycle::deprecate_soft("1.3.1", "sim.cs()", "sim_pop_data()")
   sim_pop_data(
     n_samples = n.smpl,
@@ -210,5 +210,6 @@ sim.cs <- function(
     n_mcmc_samples = n.mc,
     renew_params = renew.params,
     add_noise = add.noise,
-    ...)
+    ...
+  )
 }

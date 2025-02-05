@@ -57,7 +57,7 @@ sim_pop_data_multi <- function(
     ...) {
   if (verbose) {
     message("inputs to `sim_pop_data_multi()`:")
-    print(environment() %>% as.list())
+    print(environment() |> as.list())
   }
 
   if (num_cores > 1L) {
@@ -69,7 +69,7 @@ sim_pop_data_multi <- function(
       num_cores <- 2L
     } else {
       # use all cores in devtools::test()
-      num_cores <- num_cores %>% check_parallel_cores()
+      num_cores <- num_cores |> check_parallel_cores()
     }
 
 
@@ -104,7 +104,7 @@ sim_pop_data_multi <- function(
       sim_pop_data(
         lambda = l,
         ...
-      ) %>%
+      ) |>
         mutate(lambda.sim = l, cluster = n)
     }
   doParallel::stopImplicitCluster()

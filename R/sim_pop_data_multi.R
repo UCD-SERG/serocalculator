@@ -121,6 +121,7 @@ sim_pop_data_multi <- function(
 #' to create a more consistent API.
 #'
 #' @keywords internal
+#' @export
 sim.cs.multi <- function(...) { # nolint: object_name_linter
   lifecycle::deprecate_soft("1.3.1", "sim.cs.multi()", "sim_pop_data_multi()")
   sim_pop_data_multi(...)

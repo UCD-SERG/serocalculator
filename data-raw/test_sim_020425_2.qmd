@@ -5,7 +5,6 @@ format:
     number-sections: true
     number-depth: 2
     number-offset: [0, 0]
-editor: visual
 output:
   pdf_document:
     orientation: landscape
@@ -67,10 +66,10 @@ test_sim<-"https://osf.io/download/rtw5k" %>%
 
 ```
 
-
 # Approach 2 (Simulate Data Fresh for Each Sample)
 
 ## Function for approach2
+
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 # Define the simulation function
 simulate_seroincidence <- function(nrep, n_sim) {
@@ -105,7 +104,7 @@ simulate_seroincidence <- function(nrep, n_sim) {
       age.rng = lifespan,
       antigen_isos = antibodies,
       n.mc = 0,
-      renew_params = TRUE,  # Use different parameters for each simulation
+      renew.params = TRUE,  # Use different parameters for each simulation
       add.noise = TRUE,
       noise_limits = dlims,
       format = "long"
@@ -135,7 +134,6 @@ simulate_seroincidence <- function(nrep, n_sim) {
 
 ```
 
-
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 ## Run simulation
 plan(multisession)  # Use multiple sessions for parallelism (local machine)
@@ -157,7 +155,6 @@ results_200 <- simulate_seroincidence(nrep = 200, n_sim = 300)
 plan(sequential)  # Return to sequential processing
 
 ```
-
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 # Define a function to generate final tables
@@ -271,7 +268,7 @@ final_statistics_table <- final_statistics_table %>%
 
 ```
 
-Since some values in CI.upr and CI.lwr are Inf or extremely large due to outliers, we should filter them out before computing the statistics. 
+Since some values in CI.upr and CI.lwr are Inf or extremely large due to outliers, we should filter them out before computing the statistics.
 
 # Table (renew_params=TRUE)
 
@@ -326,7 +323,7 @@ simulate_seroincidence2 <- function(nrep, n_sim) {
       age.rng = lifespan,
       antigen_isos = antibodies,
       n.mc = 0,
-      renew_params = FALSE,  # Use different parameters for each simulation
+      renew.params = FALSE,  # Use different parameters for each simulation
       add.noise = TRUE,
       noise_limits = dlims,
       format = "long"
@@ -355,7 +352,6 @@ simulate_seroincidence2 <- function(nrep, n_sim) {
 }
 
 ```
-
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 ## Run simulation

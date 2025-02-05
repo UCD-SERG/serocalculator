@@ -194,7 +194,7 @@ sim_pop_data <- function(
 #'
 #' `sim.cs()` was renamed to [sim_pop_data()] to create a more
 #' consistent API.
-#'
+#' @export
 #' @keywords internal
 sim.cs <- function(
     n.smpl,

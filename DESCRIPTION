@@ -47,6 +47,7 @@ Imports:
 Suggests:
     bookdown,
     DT,
+    foodwebr (>= 0.1.1),
     fs,
     ggbeeswarm,
     knitr,

@@ -1,16 +1,13 @@
-# serocalculator
-
+serocalculator
+================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-------------------------------------------------------------------------
-
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
-[![CodeFactor](https://www.codefactor.io/repository/github/ucd-serg/serocalculator/badge.png)](https://www.codefactor.io/repository/github/ucd-serg/serocalculator)
+[![CodeFactor](https://www.codefactor.io/repository/github/ucd-serg/serocalculator/badge)](https://www.codefactor.io/repository/github/ucd-serg/serocalculator)
 <!-- badges: end -->
 
 Antibody levels measured in a cross–sectional population sample can be
@@ -44,7 +41,7 @@ following the tutorial below from *Hands On Programming in R* by Garrett
 Grolemund:
 
 **Installing R and RStudio**:
-https://rstudio-education.github.io/hopr/starting.html
+<https://rstudio-education.github.io/hopr/starting.html>
 
 ## Installing the Serocalculator Package
 
@@ -115,15 +112,20 @@ This can be done either:
 When prompted to install additional build tools, select “Yes” and Rtools
 will be installed.
 
-![Click Yes to install Rtools along with the *devtools*
-package](man/figures/Rtools1.png)
+<figure>
+<img src="man/figures/Rtools1.png"
+alt="Click Yes to install Rtools along with the devtools package" />
+<figcaption aria-hidden="true">Click Yes to install Rtools along with
+the <em>devtools</em> package</figcaption>
+</figure>
 
 **Note: After installing Rtools, you may need to restart RStudio before
 continuing to install `serocalculator`.**
 
 ##### Independently:
 
-1.  Download Rtools from https://cran.r-project.org/bin/windows/Rtools/
+1.  Download Rtools from
+    <https://cran.r-project.org/bin/windows/Rtools/>
 
 2.  Run the installer
 
@@ -147,7 +149,7 @@ reproducible example](https://reprex.tidyverse.org/) on
 
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
-GitHub: https://epirhandbook.com/en/getting-help.html
+GitHub: <https://epirhandbook.com/en/getting-help.html>
 
 ## Contributing to this project
 
@@ -161,10 +163,9 @@ for more information.
 This QR code is a direct link to the latest-release version of the
 package website:
 
-<div id="fig-website-QR">
-
-![](man/figures/qr.svg)
-
-Figure 1: QR code for `serocalculator` website
-
-</div>
+<figure id="fig-website-QR">
+<img src="man/figures/qr.svg"
+alt="QR code for serocalculator website" />
+<figcaption aria-hidden="true">QR code for <code>serocalculator</code>
+website</figcaption>
+</figure>

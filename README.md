@@ -10,6 +10,7 @@
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
+[![CodeFactor](https://www.codefactor.io/repository/github/ucd-serg/serocalculator/badge.png)](https://www.codefactor.io/repository/github/ucd-serg/serocalculator)
 <!-- badges: end -->
 
 Antibody levels measured in a cross–sectional population sample can be

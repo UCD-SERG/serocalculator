@@ -56,6 +56,17 @@ get_id <- function(object, ...) {
   return(id_data)
 }
 
+
+#' Extract biomarker levels
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns the biomarker levels in `object`
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_biomarker_levels()
 get_biomarker_levels <- function(object, ...) {
   metadata <- attributes(object)
   if("antigen_isos" %in% names(metadata)) {
@@ -69,6 +80,17 @@ get_biomarker_levels <- function(object, ...) {
   }
 }
 
+#' Get biomarker variable name
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns
+#' a [character] string identifying the biomarker names column in `object`
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_biomarker_names_var()
 get_biomarker_names_var <- function(object, ...) {
   # get value attribute
   biomarker_var <- attributes(object)[["biomarker_var"]]

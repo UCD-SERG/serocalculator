@@ -12,7 +12,7 @@ search:
   exclude: ['preview/']
 
 reference:
-- title: Prepare data
+- title: Prepare data, kinetics models, and noise parameters for analysis
   contents:
   - as_pop_data
   - load_pop_data
@@ -22,6 +22,12 @@ reference:
   - load_noise_params
   - check_pop_data
   - strata
+- title: Extract information from data, models, and noise parameters
+  contents:
+  - get_biomarker_levels
+  - get_biomarker_names_var
+  - get_values_var
+  - get_values
 - title: Summarize data
   contents:
   - summary.pop_data

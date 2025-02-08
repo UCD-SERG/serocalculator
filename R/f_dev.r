@@ -88,7 +88,7 @@ f_dev0 <- function(
       cond) {
     res <- 0
     lambda <- as.double(lambda)
-    y <- as.double(get_value(csdata))
+    y <- as.double(get_values(csdata))
     a <- as.double(get_age(csdata))
     nsubj <- as.integer(nrow(csdata))
     y1 <- as.double(lnpars$y1)

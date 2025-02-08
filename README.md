@@ -1,4 +1,4 @@
-serocalculator
+`{serocalculator}`
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -19,7 +19,7 @@ in the population, while low titers indicate a low frequency of
 infections in the sampled population and therefore a lower burden of
 disease.
 
-The **serocalculator** package was designed to use the longitudinal
+The `{serocalculator}` package was designed to use the longitudinal
 response characteristics using a set of modeled parameters
 characterizing the longitudinal response of the selected serum
 antibodies. More details on the underlying methods can be found in
@@ -28,7 +28,7 @@ Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html)
 
 ## Installing R
 
-The **serocalculator** package is designed to be used in
+The `{serocalculator}` package is designed to be used in
 [R](https://www.r-project.org/), which is a free, open-source software
 environment for statistical computing and graphics. The end user of this
 package must have access to a working installation of the R software. We
@@ -43,61 +43,33 @@ Grolemund:
 **Installing R and RStudio**:
 <https://rstudio-education.github.io/hopr/starting.html>
 
-## Installing the Serocalculator Package
+## Installing the `{serocalculator}` Package
 
-The **serocalculator** package must be installed in R before first use.
+The `{serocalculator}` package must be installed in R before first use.
 
 ``` r
 # Install package
 install.packages("serocalculator")
 ```
 
-### Post-installation
+### Installing the Development Version
 
-Successful installation can be confirmed by loading the package into the
-RStudio workspace and exploring help files and manuals distributed with
-the package:
-
-``` r
-# Load package "seroincidence".
-library(serocalculator)
-
-# Show R help for the package.
-?serocalculator
-```
-
-Additionally, most package details can be found when executing the
-following commands:
-
-``` r
-# Show description.
-packageDescription("serocalculator")
-
-# Show citation.
-citation("serocalculator")
-```
-
-### Development Version
-
-To install the development version, you must install the **devtools** R
-package and then download **serocalculator** from
-[GitHub](https://github.com/). Enter the code below into the R console
-to install both packages.
+To install the latest development version, you must install the
+[`{devtools}`](https://devtools.r-lib.org/) R package and then download
+`{serocalculator}` from [GitHub](https://github.com/). Enter the code
+below into the R console to install both packages.
 
 ``` r
 # Install the devtools package and the development version of serocalculator
 install.packages("devtools")
-devtools::install_github("ucd-serg/serocalculator")
+devtools::install_github(
+  repo = "ucd-serg/serocalculator", 
+  build_manual = TRUE)
 ```
-
-The documentation for the
-[`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
-development branch version of `{serocalculator}` can be accessed at
-<https://ucd-serg.github.io/serocalculator/dev/>
 
 #### A Note for Windows Users
 
-Before launching the development version of **serocalculator**, Windows
+Before installing the development version of `{serocalculator}`, Windows
 users will need to install Rtools, which contains a collection of tools
 for building and employing R packages that are still in development.
 This can be done either:
@@ -109,8 +81,8 @@ This can be done either:
 
 ##### During devtools installation
 
-When prompted to install additional build tools, select “Yes” and Rtools
-will be installed.
+When prompted to install additional build tools, select “Yes”, and
+Rtools will be installed.
 
 <figure>
 <img src="man/figures/Rtools1.png"
@@ -136,6 +108,38 @@ continuing to install `serocalculator`.**
       needed.
     - **Do** select the box for “Save version information to registry”.
       It should be selected by default.
+
+## Learning to use `{serocalculator}`
+
+Successful installation can be confirmed by loading the package into
+your R workspace and exploring help files and manuals distributed with
+the package:
+
+``` r
+# Load package "seroincidence".
+library(serocalculator)
+
+# Show R help for the package.
+?serocalculator
+```
+
+Additionally, most package details can be found when executing the
+following commands:
+
+``` r
+# Show description.
+packageDescription("serocalculator")
+
+# Show citation.
+citation("serocalculator")
+```
+
+The full documentation for the current CRAN release version of
+`{serocalculator}` can be accessed at
+<https://ucd-serg.github.io/serocalculator/>, and the the documentation
+for the [`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
+in-development version can be accessed at
+<https://ucd-serg.github.io/serocalculator/dev/>.
 
 ## Getting Help
 

@@ -2,6 +2,7 @@
 
 ## New features
 
+* Added `get_*()` extractor functions to API (#380)
 * Added optional CI error bars to `autoplot.summary.seroincidence.by()` (#372)
 * Improved y-limit calculation in `graph.curve.params()` (#368)
 * Added option for `graph.curve.params()` to show all curves (#368)
@@ -157,10 +158,10 @@ to avoid printing an OK message.
   - `set_value()`
   - `set_id()`
   - `get_age()`
-  - `get_value()`
+  - `get_values()`
   - `get_id()`
   - `get_age_var()`
-  - `get_value_var()`
+  - `get_values_var()`
   - `get_id_var()`
   
 * Added additional warnings to `load_pop_data()`

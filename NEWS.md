@@ -157,10 +157,10 @@ to avoid printing an OK message.
   - `set_value()`
   - `set_id()`
   - `get_age()`
-  - `get_value()`
+  - `get_values()`
   - `get_id()`
   - `get_age_var()`
-  - `get_value_var()`
+  - `get_values_var()`
   - `get_id_var()`
   
 * Added additional warnings to `load_pop_data()`

@@ -56,7 +56,7 @@ stratify_data <- function(data,
     pop_data <-
       data |> select(all_of(
         c(
-          data |> get_value_var(),
+          data |> get_values_var(),
           data |> get_age_var(),
           data |> get_biomarker_names_var()
         )
@@ -109,7 +109,7 @@ stratify_data <- function(data,
       data |>
       semi_join(cur_stratum_vals, by = strata_varnames) |>
       select(
-        data |> get_value_var(),
+        data |> get_values_var(),
         data |> get_age_var(),
         data |> get_biomarker_names_var()
       )

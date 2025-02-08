@@ -9,16 +9,41 @@ get_age <- function(object, ...) {
   return(age_data)
 }
 
-get_value_var <- function(object, ...) {
+#' Extract antibody measurement values
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns the name of the column in `object` specified as containing
+#' antibody abundance measurements
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_values_var()
+get_values_var <- function(object, ...) {
   value_var <- attributes(object)$value_var
   return(value_var)
 }
 
-get_value <- function(object, ...) {
-  value_var_name <- object %>% get_value_var()
+get_value_var <- get_values_var
+
+#' Get antibody measurement values
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns a [numeric] [vector] of antibody measurement values
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_values()
+get_values <- function(object, ...) {
+  value_var_name <- object %>% get_values_var()
   value_data <- object %>% pull(value_var_name)
   return(value_data)
 }
+
+get_value <- get_values
 
 get_id_var <- function(object, ...) {
   id_var <- attributes(object)$id_var

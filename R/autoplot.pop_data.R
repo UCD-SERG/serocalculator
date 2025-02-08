@@ -66,7 +66,7 @@ age_scatter <- function(
     object,
     strata = NULL,
     age_var = object %>% get_age_var(),
-    value_var = object %>% get_value_var()) {
+    value_var = object %>% get_values_var()) {
   # create default plotting
 
   if (is.null(strata)) {
@@ -120,7 +120,7 @@ density_plot <- function(
     object,
     strata = NULL,
     log = FALSE,
-    value_var = object %>% get_value_var()) {
+    value_var = object %>% get_values_var()) {
   plot1 <-
     object %>%
     ggplot2::ggplot() +
@@ -147,13 +147,13 @@ density_plot <- function(
 
     min_nonzero_val <-
       object %>%
-      get_value() %>%
+      get_values() %>%
       purrr::keep(~ . > 0) %>%
       min()
 
     max_val <-
       object %>%
-      get_value() %>%
+      get_values() %>%
       max()
 
     breaks1 <- c(0, 10^seq(

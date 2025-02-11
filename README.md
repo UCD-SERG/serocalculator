@@ -8,6 +8,8 @@
 [![Codecov test
 coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
 [![CodeFactor](https://www.codefactor.io/repository/github/ucd-serg/serocalculator/badge)](https://www.codefactor.io/repository/github/ucd-serg/serocalculator)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/serocalculator)](https://CRAN.R-project.org/package=serocalculator)
 <!-- badges: end -->
 
 Antibody levels measured in a cross–sectional population sample can be

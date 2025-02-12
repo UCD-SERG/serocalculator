@@ -8,8 +8,9 @@ graph.curve.params(
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
+  show_quantiles = TRUE,
   show_all_curves = FALSE,
-  alpha_samples = 0.2
+  alpha_samples = 0.3
 )
 }
 \arguments{
@@ -18,6 +19,8 @@ graph.curve.params(
 \item{antigen_isos}{antigen isotypes}
 
 \item{verbose}{verbose output}
+
+\item{show_quantiles}{whether to show point-wise (over time) quantiles}
 
 \item{show_all_curves}{whether to show individual curves under quantiles}
 

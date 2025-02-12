@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9025</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9026</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,8 +64,9 @@
 <span>  <span class="va">curve_params</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">curve_params</span><span class="op">$</span><span class="va">antigen_iso</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  show_all_curves <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  alpha_samples <span class="op">=</span> <span class="fl">0.2</span></span>
+<span>  alpha_samples <span class="op">=</span> <span class="fl">0.3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -83,6 +84,10 @@
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>verbose output</p></dd>
+
+
+<dt id="arg-show-quantiles">show_quantiles<a class="anchor" aria-label="anchor" href="#arg-show-quantiles"></a></dt>
+<dd><p>whether to show point-wise (over time) quantiles</p></dd>
 
 
 <dt id="arg-show-all-curves">show_all_curves<a class="anchor" aria-label="anchor" href="#arg-show-all-curves"></a></dt>

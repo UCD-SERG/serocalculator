@@ -34,7 +34,7 @@
 
 * Fixed issue in `graph.curve.params()` where MCMC samples 
 with the same iteration number from different MCMC chains
-would get merged by `ggplot2::aes(group = iter)`. (#)
+would get merged by `ggplot2::aes(group = iter)` (#382)
 
 ## Internal changes
 

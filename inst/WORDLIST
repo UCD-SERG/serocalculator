@@ -31,6 +31,7 @@ SeroEpidemiology
 Seroincidence
 Serological
 TW
+UC
 Unif
 Vectorized
 Vellore
@@ -48,6 +49,7 @@ dev
 devtools
 displaystyle
 dt
+estimands
 et
 expf
 forall

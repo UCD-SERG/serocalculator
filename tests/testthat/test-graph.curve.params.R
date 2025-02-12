@@ -10,5 +10,11 @@ test_that(
     plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
     plot2 |>
       vdiffr::expect_doppelganger(title = "curve-quantiles-and-samples")
+    plot3 <- graph.curve.params(curve,
+                                show_all_curves = TRUE,
+                                show_quantiles = FALSE
+                                )
+    plot3 |>
+      vdiffr::expect_doppelganger(title = "curve-samples")
   }
 )

@@ -194,7 +194,7 @@ graph.curve.params <- function( # nolint: object_name_linter
     plot1 +
     ggplot2::scale_y_log10(
       limits = unlist(range),
-      breaks = c(1, 10, 100, 1000),
+      labels = scales::label_comma(),
       minor_breaks = NULL
     )
 

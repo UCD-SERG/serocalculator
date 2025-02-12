@@ -39,7 +39,7 @@ est.incidence <- function(
     pop_data,
     curve_params,
     noise_params,
-    antigen_isos = pop_data$antigen_iso %>% unique(),
+    antigen_isos = get_biomarker_names(pop_data),
     lambda_start = 0.1,
     stepmin = 1e-8,
     stepmax = 3,
@@ -61,7 +61,7 @@ est.incidence <- function(
   pop_data <- pop_data %>%
     dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
     dplyr::select(
-      pop_data %>% get_value_var(),
+      pop_data %>% get_values_var(),
       pop_data %>% get_age_var(),
       "antigen_iso"
     ) %>%

@@ -41,6 +41,7 @@
 #'
 #'   curve
 #' }
+#' @keywords internal
 plot_curve_params_one_ab <- function(
     object,
     verbose = FALSE,
@@ -75,8 +76,8 @@ plot_curve_params_one_ab <- function(
       alpha = alpha,
       fun = ab0,
       args = list(curve_params = cur_params),
-      n = n_points
-    )
+      n = n_points,
+      ...)
   }
 
   layers <-

@@ -1,6 +1,7 @@
 Aga
 CMD
 Chiang
+CodeFactor
 Codecov
 Dhulikhel
 FIC
@@ -23,6 +24,8 @@ Orientia
 PRs
 RStudio
 Rai
+Readme
+Rmd
 Rtools
 SeroEpidemiology
 Seroincidence
@@ -39,7 +42,6 @@ bioassays
 biomarker
 biomarkers
 boldsymbol
-callout
 cdot
 csv
 dev

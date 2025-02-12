@@ -57,7 +57,7 @@ sim_pop_data_multi <- function(
     ...) {
   if (verbose) {
     message("inputs to `sim_pop_data_multi()`:")
-    print(environment() %>% as.list())
+    print(environment() |> as.list())
   }
 
   if (num_cores > 1L) {
@@ -69,7 +69,7 @@ sim_pop_data_multi <- function(
       num_cores <- 2L
     } else {
       # use all cores in devtools::test()
-      num_cores <- num_cores %>% check_parallel_cores()
+      num_cores <- num_cores |> check_parallel_cores()
     }
 
 
@@ -91,23 +91,24 @@ sim_pop_data_multi <- function(
 
   sim_df <-
     foreach::foreach(
-      i = seq_along(lambdas),
-      .combine = bind_rows
+      .combine = bind_rows,
+      i = seq_along(lambdas)
     ) %:%
     foreach::foreach(
+      .combine = bind_rows,
       n = 1:nclus,
-      r = rng[(i - 1) * nclus + 1:nclus],
-      .combine = bind_rows
+      r = rng[(i - 1) * nclus + 1:nclus]
     ) %dopar% {
       l <- lambdas[i]
       rngtools::setRNG(r)
       sim_pop_data(
         lambda = l,
         ...
-      ) %>%
+      ) |>
         mutate(lambda.sim = l, cluster = n)
     }
   doParallel::stopImplicitCluster()
+  sim_df <- sim_df |> set_biomarker_var(biomarker = "antigen_iso")
   return(sim_df)
 }
 
@@ -120,6 +121,7 @@ sim_pop_data_multi <- function(
 #' to create a more consistent API.
 #'
 #' @keywords internal
+#' @export
 sim.cs.multi <- function(...) { # nolint: object_name_linter
   lifecycle::deprecate_soft("1.3.1", "sim.cs.multi()", "sim_pop_data_multi()")
   sim_pop_data_multi(...)

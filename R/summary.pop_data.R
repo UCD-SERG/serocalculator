@@ -7,7 +7,8 @@
 #' @param strata a [character()] specifying grouping column(s)
 #' @param ...  unused
 #'
-#' @returns a `summary.pop_data` object, which is a list containing two summary tables:
+#' @returns a `summary.pop_data` object,
+#' which is a list containing two summary tables:
 #'
 #' * `age_summary` summarizing `age`
 #' * `ab_summary` summarizing `value`, stratified by `antigen_iso`
@@ -22,19 +23,19 @@
 #'
 summary.pop_data <- function(object, strata = NULL, ...) {
   # get relevant columns from object
-  age_column <- object %>% get_age_var()
-  value_column <- object %>% get_value_var()
-  id_column <- object %>% get_id_var()
+  age_column <- object |> get_age_var()
+  value_column <- object |> get_values_var()
+  id_column <- object |> get_id_var()
 
   # create a list of the columns
   cols <- c(age_column, id_column, strata)
 
   ages <-
-    object %>%
+    object |>
     distinct(across(all_of(cols)))
 
   age_summary <-
-    ages %>%
+    ages |>
     summarise(
       .by = all_of(strata),
       n = n(),
@@ -46,8 +47,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
       max = max(.data[[age_column]])
     )
 
-  ab_summary <-
-    object %>%
+  ab_summary <- object |>
     dplyr::summarize(
       .by = all_of(c("antigen_iso", strata)),
       across(
@@ -58,38 +58,40 @@ summary.pop_data <- function(object, strata = NULL, ...) {
           Median = ~ median(.x, na.rm = TRUE),
           `3rd Qu.` = ~ quantile(.x, p = .75, na.rm = TRUE),
           Max = ~ max(.x, na.rm = TRUE),
-          `# NAs` = ~ is.na(.x) %>% sum()
+          `# NAs` = ~ is.na(.x) |> sum()
         ),
         .names = "{.fn}"
-      ))
+      )
+    )
 
   to_return <- list(n = nrow(ages),
                     age_summary = age_summary,
                     ab_summary = ab_summary)
 
-  class(to_return) = "summary.pop_data"
+  class(to_return) <- "summary.pop_data"
 
   return(to_return)
 }
 
 
 #' Print method for [summary.pop_data] objects
-#' @param x an object of class `"summary.pop_data"`; usually, the result of a call to [summary.pop_data()]
+#' @param x an object of class `"summary.pop_data"`;
+#' usually, the result of a call to [summary.pop_data()]
 #' @rdname summary.pop_data
 #' @export
-print.summary.pop_data = function(x, ...)
-{
-  n_obs = x$age_summary %>% pull("n") %>% sum()
+#' @keywords internal
+print.summary.pop_data <- function(x, ...) {
+  n_obs <- x$age_summary |> pull("n") |> sum()
 
   cat("\nn =", n_obs, "\n")
 
   cat("\nDistribution of age: \n\n")
 
-  x$age_summary %>% print()
+  x$age_summary |> print()
 
   cat("\nDistributions of antigen-isotype measurements:\n\n")
 
-  x$ab_summary %>% print()
+  x$ab_summary |> print()
 
   cat("\n")
 

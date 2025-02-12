@@ -20,6 +20,7 @@ on:
       - '_pkgdown.yml'
       - '_quarto.yml'
       - '.github/workflows/pkgdown.yaml'
+      - 'Readme.md'
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'         # build on version tags
@@ -30,7 +31,7 @@ on:
     inputs:
       tag:
         description: Tag to deploy
-        required: true
+        required: false
         default: ''
 
 name: pkgdown

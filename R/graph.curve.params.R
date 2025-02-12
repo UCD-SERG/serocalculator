@@ -5,6 +5,8 @@
 #' @param verbose verbose output
 #' @param show_all_curves whether to show individual curves under quantiles
 #' @param antigen_isos antigen isotypes
+#' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
+#' (has no effect if `show_all_curves = FALSE`)
 #'
 #' @returns a [ggplot2::ggplot()] object
 #' @export
@@ -25,7 +27,8 @@ graph.curve.params <- function( # nolint: object_name_linter
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
-  show_all_curves = FALSE
+  show_all_curves = FALSE,
+  alpha_samples = 0.2
 ) {
   if (verbose) {
     message(
@@ -179,14 +182,29 @@ graph.curve.params <- function( # nolint: object_name_linter
         mutate(
           iter = interaction(across(all_of(group_vars)))
         )
-    }
+      plot1 <-
+        plot1 +
+        geom_line(
+          data = serocourse_all,
+          alpha = alpha_samples,
+          aes(
+            color = .data$chain |> factor(),
+            group = .data$iter
+          )
+        ) +
+        ggplot2::theme(legend.position = "bottom") +
+        ggplot2::labs(col = "MCMC chain") +
+        ggplot2::expand_limits(y = range)
+    } else {
 
-    plot1 <-
-      plot1 +
-      geom_line(data = serocourse_all,
-                alpha = 0.1,
-                aes(group = .data$iter)) +
-      ggplot2::expand_limits(y = range)
+      plot1 <-
+        plot1 +
+        geom_line(data = serocourse_all,
+                  alpha = alpha_samples,
+                  aes(group = .data$iter)) +
+        ggplot2::expand_limits(y = range)
+
+    }
 
   }
 

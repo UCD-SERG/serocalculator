@@ -169,6 +169,18 @@ graph.curve.params <- function( # nolint: object_name_linter
         max = max(.data$res, 2000)
       )
 
+    group_vars <-
+      c("iter", "chain") |>
+      intersect(names(serocourse_all))
+
+    if (length(group_vars) > 0) {
+      serocourse_all <-
+        serocourse_all |>
+        mutate(
+          iter = interaction(.data$iter, .data$chain)
+        )
+    }
+
     plot1 <-
       plot1 +
       geom_line(data = serocourse_all,

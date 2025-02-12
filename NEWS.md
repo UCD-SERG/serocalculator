@@ -30,6 +30,12 @@
   - `sim.cs()` -> `sim_pop_data()` 
   - `sim.cs.multi()` -> `sim_pop_data_multi()`
 
+## Bug fixes
+
+* Fixed issue in `graph.curve.params()` where MCMC samples 
+with the same iteration number from different MCMC chains
+would get merged by `ggplot2::aes(group = iter)`. (#)
+
 ## Internal changes
 
 * added test for `graph.curve.params()` (#368)

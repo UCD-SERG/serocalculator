@@ -173,11 +173,11 @@ graph.curve.params <- function( # nolint: object_name_linter
       c("iter", "chain") |>
       intersect(names(serocourse_all))
 
-    if (length(group_vars) > 0) {
+    if (length(group_vars) > 1) {
       serocourse_all <-
         serocourse_all |>
         mutate(
-          iter = interaction(.data$iter, .data$chain)
+          iter = interaction(across(all_of(group_vars)))
         )
     }
 

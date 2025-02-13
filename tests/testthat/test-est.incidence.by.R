@@ -232,3 +232,44 @@ test_that(
 # or the other diagonal, because of transitive equality and the three checks
 # made above
 
+test_that(
+  "a warning is produced when `strata = NULL",
+  code = {
+    {
+      typhoid_results_nullstrata <- est.incidence.by(
+        strata = NULL,
+        pop_data = sees_pop_data_pk_100,
+        curve_param = typhoid_curves_nostrat_100,
+        noise_param = example_noise_params_pk,
+        antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+      )
+    } |>
+      expect_snapshot()
+  }
+)
+
+test_that("results are consistent with `strata = NULL`", {
+  typhoid_results_simple <- est.incidence(
+    pop_data = sees_pop_data_pk_100,
+    curve_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  typhoid_results_nullstrata <- est.incidence.by(
+    strata = NULL,
+    pop_data = sees_pop_data_pk_100,
+    curve_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  ) |> suppressWarnings()
+
+  expect_equal(
+    typhoid_results_simple,
+    typhoid_results_nullstrata
+  )
+  # expect_snapshot(x = summary(typhoid_results, coverage = .95))
+
+  # expect_snapshot_value(typhoid_results, style = "deparse", tolerance = 1e-4)
+
+})

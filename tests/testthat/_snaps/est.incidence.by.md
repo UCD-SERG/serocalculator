@@ -14,3 +14,15 @@
     "tbl", "data.frame"), strata_vars = "catchment"), graphs_included = FALSE, class = c("seroincidence.by", 
     "list"))
 
+# a warning is produced when `strata = NULL
+
+    Code
+      typhoid_results_nullstrata <- est.incidence.by(strata = NULL, pop_data = sees_pop_data_pk_100,
+        curve_param = typhoid_curves_nostrat_100, noise_param = example_noise_params_pk,
+        antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+    Condition
+      Warning:
+      The `strata` argument to `est.incidence.by()` is missing.
+      i If you do not want to stratify your data, consider using the `est.incidence()` function to simplify your code and avoid this warning.
+      i Since the `strata` argument is empty, `est.incidence.by()` will return a <seroincidence> object, instead of a <seroincidence.by> object.
+

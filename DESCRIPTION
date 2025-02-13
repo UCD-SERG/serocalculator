@@ -72,4 +72,4 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
-Config/Needs/website: quarto
+Config/Needs/website: quarto, lewinfox/foodwebr

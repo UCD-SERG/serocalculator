@@ -27,3 +27,9 @@
     AAAAAQAEAAkAAAAJcm93Lm5hbWVzAAAADQAAAAKAAAAA////6wAABAIAAAL/AAAAEAAAAAIA
     BAAJAAAAAXQABAAJAAAAAXkAAAD+
 
+# results are consistent with multiple curves
+
+    structure(list(times = c(50, 50), y = c(40.9656893598156, 103.078512184117
+    )), class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, 
+    -2L))
+

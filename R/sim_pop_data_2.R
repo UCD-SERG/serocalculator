@@ -130,6 +130,7 @@ sim_pop_data_2 <- function(
     ) |>
     left_join(
       curve_params,
+      relationship = "many-to-one",
       by =
         c(
           "antigen_iso",
@@ -145,6 +146,11 @@ sim_pop_data_2 <- function(
         t1 = t1,
         alpha = alpha,
         shape = r
+      ),
+      Y = runif(
+        n = dplyr::n(),
+        min = noise_limits[.data$antigen_iso, "min"],
+        max = noise_limits[.data$k.ab, "max"]
       )
     )
   browser()

@@ -55,3 +55,26 @@ test_that("results are consistent with units", {
   fig2 |> vdiffr::expect_doppelganger(title = "response_curve-units")
 
 })
+
+test_that(
+  desc = "results are consistent with multiple curves",
+  code = {
+
+    params <- typhoid_curves_nostrat_100[1:2, ]
+    results1 <- tibble::tibble(
+      times = c(50, 50),
+      y = ab_5p(
+        t = times,
+        y0 = params$y0,
+        y1 = params$y1,
+        t1 = params$t1,
+        alpha = params$alpha,
+        shape = params$r)
+    )
+
+    results1 |>
+      expect_snapshot_value(style = "deparse")
+
+
+  }
+)

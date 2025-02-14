@@ -87,7 +87,7 @@ project you agree to abide by its terms.
 
 You can use the `{foodwebr}` package to visualize the internal structure of `{serocalculator}`; for example, to see the subfunctions of `sim_pop_data()`, you can call:
 
-```{r}
+```{r, "fig-foodwebr-example", eval = FALSE}
 plot(foodwebr::foodweb(serocalculator::sim_pop_data))
 ```
 

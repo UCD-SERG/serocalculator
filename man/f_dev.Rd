@@ -2,22 +2,27 @@
 % Please edit documentation in R/f_dev.r
 \name{f_dev}
 \alias{f_dev}
-\title{Calculate negative log-likelihood (deviance) for one antigen:isotype pair and several values of incidence}
+\title{Calculate negative log-likelihood (deviance)
+for one antigen:isotype pair and several values of incidence}
 \usage{
 f_dev(lambda, csdata, lnpars, cond)
 }
 \arguments{
-\item{lambda}{a \link{numeric} vector of incidence parameters, in events per person-year}
+\item{lambda}{a \link{numeric} vector of incidence parameters,
+in events per person-year}
 }
 \value{
 a \link{numeric} vector of negative log-likelihoods,
 corresponding to the elements of input \code{lambda}
 }
 \description{
-Calculates negative log-likelihood (deviance) for one antigen:isotype pair and several values of incidence (\code{lambda}).
+Calculates negative log-likelihood (deviance)
+for one antigen:isotype pair and several values of incidence
+(\code{lambda}).
 }
 \details{
-Vectorized version of \code{\link[=f_dev0]{f_dev0()}}; interface with C lib \code{serocalc.so}
+Vectorized version of \code{\link[=f_dev0]{f_dev0()}};
+interface with C lib \code{serocalc.so}
 }
 \examples{
 \donttest{

@@ -23,16 +23,11 @@
 ab_5p <- function(t, y0, y1, t1, alpha, shape) {
   beta <- bt(y0, y1, t1)
 
-  yt <- 0
-
-  if (t <= t1) {
-    yt <- y0 * exp(beta * t)
-  }
-
-  if (t > t1) {
-    yt <- (y1^(1 - shape) - (1 - shape) * alpha * (t - t1))^(1 / (1 - shape))
-  }
-
+  yt <- if_else(
+    t <= t1,
+    ab_5p_active_phase(t, y0, beta),
+    ab_5p_decay_phase(t, t1, y1, alpha, shape)
+  )
   return(yt)
 }
 
@@ -43,6 +38,7 @@ ab_5p_active_phase <- function(t, y0, beta) {
 
 ab_5p_decay_phase <- function(
     t,
+    t1,
     y1,
     alpha,
     shape) {

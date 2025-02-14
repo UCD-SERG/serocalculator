@@ -78,3 +78,24 @@ test_that(
 
   }
 )
+
+test_that(
+  desc = "infinite time since seroconversion produces y = 0",
+  code = {
+
+    params <- typhoid_curves_nostrat_100[1, ]
+    results1 <- tibble::tibble(
+      times = Inf,
+      y = ab_5p(
+        t = times,
+        y0 = params$y0,
+        y1 = params$y1,
+        t1 = params$t1,
+        alpha = params$alpha,
+        shape = params$r)
+    )
+
+      expect_equal(object = results1$y, expected = 0)
+
+  }
+)

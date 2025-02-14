@@ -33,6 +33,6 @@ ab_5p(
   y0 = params$y0,
   y1 = params$y1,
   t1 = params$t1 |> units::as_units("days"),
-  alpha = params$alpha,
+  alpha = params$alpha |> units::as_units("1/days"),
   shape = params$r)
 }

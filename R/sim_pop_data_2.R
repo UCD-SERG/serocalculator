@@ -109,21 +109,28 @@ sim_pop_data_2 <- function(
         n_samples,
         rate = lambda
       ) |>
-      units::as_units("years"),
-    mcmc_iter = sample(
-      size = n_samples,
-      x = curve_params$iter,
-      replace = TRUE
-    ),
-    mcmc_chain =
-      if (chain_in_curve_params) {
-        sample(
-          size = n_samples,
-          x = curve_params$chain,
-          replace = TRUE
-        )
-      }
+      units::as_units("years")
   ) |>
+    mutate(
+      time_since_last_seroconversion =
+        if_else(.data$time_since_last_seroconversion > .data$age,
+                units::as_units(Inf, "years"),
+                .data$time_since_last_seroconversion),
+
+      mcmc_iter = sample(
+        size = n_samples,
+        x = curve_params$iter,
+        replace = TRUE
+      ),
+      mcmc_chain = # nolint: object_usage_linter
+        if (chain_in_curve_params) {
+          sample(
+            size = n_samples,
+            x = curve_params$chain,
+            replace = TRUE
+          )
+        }
+    ) |>
     reframe(
       .by = everything(),
       antigen_iso = antigen_isos
@@ -140,105 +147,39 @@ sim_pop_data_2 <- function(
     ) |>
     mutate(
       `E[Y]` = ab_5p(
-        t = time_since_last_seroconversion,
-        y0 = y0,
-        y1 = y1,
-        t1 = t1,
-        alpha = alpha,
-        shape = r
-      ),
-      Y = runif(
-        n = dplyr::n(),
-        min = noise_limits[.data$antigen_iso, "min"],
-        max = noise_limits[.data$k.ab, "max"]
+        t = .data$time_since_last_seroconversion,
+        y0 = .data$y0,
+        y1 = .data$y1,
+        t1 = .data$t1,
+        alpha = .data$alpha,
+        shape = .data$r
       )
+    ) |>
+    structure(
+      format = "long"
+    ) |>
+    as_pop_data(
+      value = "Y",
+      age = "age",
+      id = "id"
     )
-  browser()
-
-  # predpar is an [array()] containing
-  # MCMC samples from the Bayesian distribution
-  # of longitudinal decay curve model parameters.
-  # NOTE: most users should leave `predpar` at its default value
-  # and provide `curve_params` instead.
-
-  predpar <-
-    curve_params |>
-    filter(.data$antigen_iso %in% antigen_isos) |>
-    droplevels() |>
-    prep_curve_params_for_array() |>
-    df_to_array(dim_var_names = c("antigen_iso", "parameter"))
-
-  stopifnot(length(lambda) == 1)
-
-  day2yr <- 365.25
-  lambda <- lambda / day2yr
-  age_range <- age_range * day2yr
-  npar <- dimnames(predpar)$parameter |> length()
-
-  baseline_limits <- noise_limits
-
-  ysim <- simcs.tinf(
-    lambda = lambda,
-    n_samples = n_samples,
-    age_range = age_range,
-    age_fixed = age_fixed,
-    antigen_isos = antigen_isos,
-    n_mcmc_samples = n_mcmc_samples,
-    renew_params = renew_params,
-    predpar = predpar,
-    blims = baseline_limits,
-    npar = npar,
-    ...
-  )
 
   if (add_noise) {
-    for (k.ab in 1:(ncol(ysim) - 1)) {
-      ysim[, 1 + k.ab] <-
-        ysim[, 1 + k.ab] +
-        runif(
-          n = nrow(ysim),
-          min = noise_limits[k.ab, 1],
-          max = noise_limits[k.ab, 2]
-        )
-    }
-  }
-  colnames(ysim) <- c("age", antigen_isos)
 
-  to_return <-
-    ysim |>
-    as_tibble() |>
-    mutate(
-      id = as.character(row_number()),
-      age = round(.data$age / day2yr, 2)
-    )
-
-  if (format == "long") {
-    if (verbose) message("outputting long format data")
-    to_return <-
-      to_return |>
-      pivot_longer(
-        cols = all_of(antigen_isos),
-        values_to = c("value"),
-        names_to = c("antigen_iso")
-      ) |>
-      structure(
-        format = "long"
-      ) |>
-      as_pop_data(
-        value = "value",
-        age = "age",
-        id = "id"
-      )
-
-  } else {
-    if (verbose) message("outputting wide format data")
-    to_return <-
-      to_return |>
-      structure(
-        class = c("pop_data_wide", class(to_return)),
-        format = "wide"
+    pop_data <- pop_data |>
+      mutate(
+        noise = runif(
+          n = dplyr::n(),
+          min = noise_limits[.data$antigen_iso, "min"],
+          max = noise_limits[.data$k.ab, "max"]
+        ),
+        Y = .data$`E[Y]` + noise
       )
   }
 
-  return(to_return)
+  if (format == "wide") {
+    cli::cli_abort("`format = 'wide' not yet implemented.")
+  }
+
+  return(pop_data)
 }

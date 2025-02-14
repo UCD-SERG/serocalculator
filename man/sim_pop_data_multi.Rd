@@ -10,6 +10,7 @@ sim_pop_data_multi(
   num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
   verbose = FALSE,
+  sim_function = sim_pop_data,
   ...
 )
 }
@@ -24,6 +25,8 @@ sim_pop_data_multi(
 passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 
 \item{verbose}{whether to report verbose information}
+
+\item{sim_function}{which function to use: \code{\link[=sim_pop_data]{sim_pop_data()}} or \code{\link[=sim_pop_data_2]{sim_pop_data_2()}}}
 
 \item{...}{
   Arguments passed on to \code{\link[=sim_pop_data]{sim_pop_data}}

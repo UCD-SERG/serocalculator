@@ -6,7 +6,10 @@
 #' @param lambdas #incidence rate, in events/person*year
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
+#' @param sim_function
+#' which function to use: [sim_pop_data()] or [sim_pop_data_2()]
 #' @param ... arguments passed to [sim.cs()]
+#'
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export
@@ -54,6 +57,7 @@ sim_pop_data_multi <- function(
     num_cores = max(1, parallel::detectCores() - 1),
     rng_seed = 1234,
     verbose = FALSE,
+    sim_function = sim_pop_data,
     ...) {
   if (verbose) {
     message("inputs to `sim_pop_data_multi()`:")
@@ -101,7 +105,7 @@ sim_pop_data_multi <- function(
     ) %dopar% {
       l <- lambdas[i]
       rngtools::setRNG(r)
-      sim_pop_data(
+      sim_function(
         lambda = l,
         ...
       ) |>

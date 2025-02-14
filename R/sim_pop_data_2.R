@@ -169,7 +169,6 @@ sim_pop_data_2 <- function(
   age_range <- age_range * day2yr
   npar <- dimnames(predpar)$parameter |> length()
 
-
   baseline_limits <- noise_limits
 
   ysim <- simcs.tinf(

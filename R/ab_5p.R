@@ -18,7 +18,7 @@
 #'   y0 = params$y0,
 #'   y1 = params$y1,
 #'   t1 = params$t1 |> units::as_units("days"),
-#'   alpha = params$alpha,
+#'   alpha = params$alpha |> units::as_units("1/days"),
 #'   shape = params$r)
 ab_5p <- function(t, y0, y1, t1, alpha, shape) {
   beta <- bt(y0, y1, t1)
@@ -32,7 +32,7 @@ ab_5p <- function(t, y0, y1, t1, alpha, shape) {
 }
 
 ab_5p_active_phase <- function(t, y0, beta) {
-  yt <- y0 * exp(beta * t)
+  yt <- y0 * exp(units::set_units(beta * t, NULL))
   return(yt)
 }
 
@@ -42,7 +42,12 @@ ab_5p_decay_phase <- function(
     y1,
     alpha,
     shape) {
-  base <- y1^(1 - shape) - (1 - shape) * alpha * (t - t1)
+  base_part_1 <- y1^(1 - shape)
+  base_part_2 <- units::set_units(
+    x = (1 - shape) * alpha * (t - t1),
+    value = NULL
+  )
+  base <- base_part_1 - base_part_2
   expt <- (1 / (1 - shape))
   ans <- base^expt
   return(ans)

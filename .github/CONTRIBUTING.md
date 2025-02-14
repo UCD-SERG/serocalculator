@@ -97,7 +97,3 @@ of `{serocalculator}`; for example, to see the subfunctions of
 ``` r
 plot(foodwebr::foodweb(serocalculator::sim_pop_data))
 ```
-
-    file:///C:\Users\Work\AppData\Local\Temp\RtmpyWyMnX\filebf98134c3175\widgetbf98741b10f7.html screenshot completed
-
-![](CONTRIBUTING_files/figure-commonmark/unnamed-chunk-1-1.png)

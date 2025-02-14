@@ -96,6 +96,7 @@ sim_pop_data_2 <- function(
     print(environment() |> as.list())
   }
 
+  chain_in_curve_params <- "chain" %in% names(curve_params)
   pop_data <- tibble::tibble(
     id = seq_len(n_samples) |> as.character(),
     age =
@@ -108,10 +109,45 @@ sim_pop_data_2 <- function(
         n_samples,
         rate = lambda
       ) |>
-      units::as_units("years")
-  )
-
-browser()
+      units::as_units("years"),
+    mcmc_iter = sample(
+      size = n_samples,
+      x = curve_params$iter,
+      replace = TRUE
+    ),
+    mcmc_chain =
+      if (chain_in_curve_params) {
+        sample(
+          size = n_samples,
+          x = curve_params$chain,
+          replace = TRUE
+        )
+      }
+  ) |>
+    reframe(
+      .by = everything(),
+      antigen_iso = antigen_isos
+    ) |>
+    left_join(
+      curve_params,
+      by =
+        c(
+          "antigen_iso",
+          "mcmc_iter" = "iter",
+          if (chain_in_curve_params) "mcmc_chain" = "chain"
+        )
+    ) |>
+    mutate(
+      `E[Y]` = ab_5p(
+        t = time_since_last_seroconversion,
+        y0 = y0,
+        y1 = y1,
+        t1 = t1,
+        alpha = alpha,
+        shape = r
+      )
+    )
+  browser()
 
   # predpar is an [array()] containing
   # MCMC samples from the Bayesian distribution

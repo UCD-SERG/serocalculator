@@ -44,28 +44,6 @@ graph.curve.params <- function( # nolint: object_name_linter
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
 
-  bt <- function(y0, y1, t1) {
-    log(y1 / y0) / t1
-  }
-
-  # uses r > 1 scale for shape
-  ab <- function(t, y0, y1, t1, alpha, shape) {
-    beta <- bt(y0, y1, t1)
-
-    yt <- 0
-
-    if (t <= t1) {
-      yt <- y0 * exp(beta * t)
-    }
-
-    if (t > t1) {
-      yt <- (y1^(1 - shape) - (1 - shape) * alpha * (t - t1))^(1 / (1 - shape))
-    }
-
-    return(yt)
-  }
-
-
   d <- curve_params
 
   dT <- # nolint: object_linter
@@ -92,7 +70,7 @@ graph.curve.params <- function( # nolint: object_name_linter
     ) |>
     select(-"name") |>
     rowwise() |>
-    mutate(res = ab(
+    mutate(res = ab_5p(
       .data$t,
       .data$y0,
       .data$y1,

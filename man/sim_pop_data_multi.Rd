@@ -32,9 +32,9 @@ passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
   Arguments passed on to \code{\link[=sim_pop_data]{sim_pop_data}}
   \describe{
     \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
-(in events per person-years)}
+(in events per person-\emph{year}s)}
     \item{\code{n_samples}}{number of samples to simulate}
-    \item{\code{age_range}}{age range of sampled individuals, in years}
+    \item{\code{age_range}}{age range of sampled individuals, in \emph{years}}
     \item{\code{age_fixed}}{specify the curve parameters to use by age
 (does nothing at present?)}
     \item{\code{antigen_isos}}{Character vector with one or more antibody names.

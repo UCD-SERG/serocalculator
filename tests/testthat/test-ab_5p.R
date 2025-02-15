@@ -45,6 +45,7 @@ test_that("results are consistent with units", {
   results1 |>
     expect_snapshot_value(style = "serialize")
 
+  library(units)
   fig2 <-
     results1 |>
     ggplot2::ggplot() +

@@ -76,7 +76,8 @@ library(dplyr)
 dmcmc <-
   "https://osf.io/download/rtw5k" |>
   load_curve_params() |>
-  dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
+  dplyr::filter(iter < 500) |> # reduce number of mcmc samples for speed
+  dplyr::mutate(t1 = 0)
 ```
 
 ## visualize antibody decay model

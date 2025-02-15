@@ -77,7 +77,10 @@ dmcmc <-
   "https://osf.io/download/rtw5k" |>
   load_curve_params() |>
   dplyr::filter(iter < 500) |> # reduce number of mcmc samples for speed
-  dplyr::mutate(t1 = 0)
+  mutate(
+        alpha = alpha |> units::as_units("1/days"),
+        t1 = 0 |> units::as_units("days")
+      )
 ```
 
 ## visualize antibody decay model
@@ -115,9 +118,9 @@ dmcmc |>
 set.seed(54321)
 
 # simulated incidence rate per person-year
-lambda <- 0.2
+lambda <- 0.2 |> units::as_units("1/years")
 # range covered in simulations
-lifespan <- c(0, 10)
+lifespan <- c(0, 10) |> units::as_units("years")
 # cross-sectional sample size
 nrep <- 100
 

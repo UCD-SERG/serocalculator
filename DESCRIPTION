@@ -48,6 +48,7 @@ Suggests:
     bookdown,
     DT,
     fs,
+    furrr,
     ggbeeswarm,
     knitr,
     pak,
@@ -59,6 +60,7 @@ Suggests:
     testthat (>= 3.0.0),
     tidyverse,
     qrcode,
+    svglite,
     vdiffr,
     withr
 LinkingTo: 

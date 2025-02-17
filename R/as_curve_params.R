@@ -1,20 +1,32 @@
 #' Load antibody decay curve parameter
 #'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `as_curve_params()` was renamed to [as_sr_params()] to use mroe accurate terminology.
+#'
+#' @keywords internal
+#' @export
+as_curve_params <- function(...) {
+  lifecycle::deprecate_warn("1.3.0", "as_curve_params()", "as_sr_params()")
+  as_sr_params(...)
+}
+
+#'
 #' @param data a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos a [character()] vector of antigen isotypes
 #' to be used in analyses
-#' @returns a `curve_data` object
+#' @returns a `sr_data` object
 #' (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
 #' library(magrittr)
-#' curve_data <-
-#'   serocalculator_example("example_curve_params.csv") %>%
+#' sr_data <-
+#'   serocalculator_example("example_sr_params.csv") %>%
 #'   read.csv() %>%
-#'   as_curve_params()
+#'   as_sr_params()
 #'
-#' print(curve_data)
-as_curve_params <- function(data, antigen_isos = NULL) {
+#' print(sr_data)
+as_sr_params <- function(data, antigen_isos = NULL) {
 
   if (!is.data.frame(data)) {
     cli::cli_abort(
@@ -28,14 +40,14 @@ as_curve_params <- function(data, antigen_isos = NULL) {
     )
   }
 
-  curve_data <-
+  sr_data <-
     data %>%
     tibble::as_tibble()
 
   # check if object has expected columns:
 
   # define curve columns
-  curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
+  sr_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
   # get columns from provided data
   data_cols <- data %>% names()
@@ -46,17 +58,17 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   if (length(missing_cols) > 0) {
 
     cli::cli_abort(
-      class = "not curve_params",
+      class = "not sr_params",
       message = c(
-        "Can't convert {.arg data} to {.cls curve_params}.",
+        "Can't convert {.arg data} to {.cls sr_params}.",
         "x" = "The column{?s}: {.strong {.var {missing_cols}}} are missing."
       )
     )
   }
 
-  # assign curve class
-  class(curve_data) <-
-    c("curve_params", class(curve_data))
+  # assign sr class
+  class(sr_data) <-
+    c("sr_params", class(sr_data))
 
 
   if (is.null(antigen_isos)) {
@@ -68,10 +80,10 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   }
 
   # assign antigen attribute
-  attr(curve_data, "antigen_isos") <- antigen_isos
+  attr(sr_data, "antigen_isos") <- antigen_isos
 
-  curve_data <- curve_data %>%
+  sr_data <- sr_data %>%
     set_biomarker_var(biomarker = "antigen_iso", standardize = FALSE)
 
-  return(curve_data)
+  return(sr_data)
 }

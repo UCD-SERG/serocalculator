@@ -1,15 +1,15 @@
-#' @title Graph an antibody decay curve model
+#' @title Graph an antibody seroresponse model
 #'
-#' @param object a [data.frame()] of curve parameters (one or more MCMC samples)
+#' @param object a [data.frame()] of seroresponse parameters (one or more MCMC samples)
 #' @param verbose verbose output
 #' @param xlim range of x values to graph
-#' @param n_curves how many curves to plot (see details).
+#' @param n_srs how many seroresponses to plot (see details).
 #' @param n_points Number of points to interpolate along the x axis
 #' (passed to [ggplot2::geom_function()])
-#' @param rows_to_graph which rows of `curve_params` to plot
+#' @param rows_to_graph which rows of `sr_params` to plot
 #' (overrides `n_curves`).
 #' @param alpha (passed to [ggplot2::geom_function()])
-#' how transparent the curves should be:
+#' how transparent the seroresponses should be:
 #' * 0 = fully transparent (invisible)
 #' * 1 = fully opaque
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`)
@@ -20,8 +20,8 @@
 #' @inheritDotParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
 #' @details
-#' ## `n_curves` and `rows_to_graph`
-#' In most cases, `curve_params` will contain too many rows of MCMC
+#' ## `n_srs` and `rows_to_graph`
+#' In most cases, `sr_params` will contain too many rows of MCMC
 #' samples for all of these samples to be plotted at once.
 #' * Setting the  `n_curves` argument to a value smaller than the
 #' number of rows in `curve_params` will cause this function to select
@@ -34,15 +34,15 @@
 #' \donttest{
 #' library(dplyr) # loads the `%>%` operator and `dplyr::filter()`
 #'
-#' curve <-
+#' sr <-
 #'   typhoid_curves_nostrat_100 %>%
 #'   filter(antigen_iso == ("HlyE_IgG")) %>%
-#'   serocalculator:::plot_curve_params_one_ab()
+#'   serocalculator:::plot_sr_params_one_ab()
 #'
-#'   curve
+#'   sr
 #' }
 #' @keywords internal
-plot_curve_params_one_ab <- function(
+plot_sr_params_one_ab <- function(
     object,
     verbose = FALSE,
     alpha = .4,
@@ -59,7 +59,7 @@ plot_curve_params_one_ab <- function(
     ggplot2::theme_linedraw() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(x = "Days since fever onset", y = "Antibody concentration") +
-    ggplot2::ggtitle("Antibody Response Curve") +
+    ggplot2::ggtitle("Antibody Seroresponse Curve") +
     ggplot2::theme(plot.title =
                    ggplot2::element_text(size = 20, face = "bold"))
 
@@ -70,12 +70,12 @@ plot_curve_params_one_ab <- function(
                              minor_breaks = NULL)
   }
 
-  layer_function <- function(cur_row) {
-    cur_params <- object[cur_row, ]
+  layer_function <- function(sr_row) {
+    sr_params <- object[sr_row, ]
     ggplot2::geom_function(
       alpha = alpha,
       fun = ab0,
-      args = list(curve_params = cur_params),
+      args = list(sr_params = sr_params),
       n = n_points,
       ...)
   }

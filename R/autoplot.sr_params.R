@@ -6,13 +6,13 @@
 #'
 #' @keywords internal
 #' @export
-autoplot.curve_params <- function(...) {
+autoplot.sr_params <- function(...) {
   lifecycle::deprecate_warn("1.3.0", "autoplot.curve_params()", "autoplot.sr_params()")
   autoplot.sr_params(...)
 }
 
 #' @inheritParams plot_sr_params_one_ab
-#' @inheritDotParams plot_curve_params_one_ab
+#' @inheritDotParams plot_sr_params_one_ab
 #' @param antigen_isos antigen isotypes to analyze (can subset `sr_params`)
 #' @param ncol how many columns of subfigures to use in panel plot
 #' @details
@@ -23,7 +23,7 @@ autoplot.curve_params <- function(...) {
 #' row numbers start over at 1 for each antigen isotype.
 #' There is currently no way to specify different row numbers for different antigen isotypes;
 #' if you want to do that,
-#' you will could call [plot_curve_params_one_ab()] directly for each antigen isotype
+#' you will could call [plot_sr_params_one_ab()] directly for each antigen isotype
 #' and combine the resulting panels yourself.
 #' Or you could subset `sr_params` manually,
 #' before passing it to this function,
@@ -57,7 +57,7 @@ autoplot.sr_params <- function(
 
   labels <- names(split_data)
   figs <- split_data %>%
-    lapply(FUN = plot_curve_params_one_ab, ...)
+    lapply(FUN = plot_sr_params_one_ab, ...)
 
   for (i in seq_along(figs)) {
     figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])

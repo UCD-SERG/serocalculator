@@ -21,7 +21,7 @@ fdev <- function(lambda, csdata, lnpars, cond) {
 #' @param csdata
 #' cross-sectional sample data containing variables `value` and `age`
 #' @param lnpars
-#' longitudinal antibody decay model parameters `alpha`, `y1`, and `d`
+#' longitudinal antibody seroresponse parameters `alpha`, `y1`, and `d`
 #' @param cond
 #' measurement noise parameters `nu`, `eps`, `y.low`, and `y.high`
 #' @returns a [numeric()] negative log-likelihood,
@@ -34,7 +34,7 @@ fdev <- function(lambda, csdata, lnpars, cond) {
 #' library(tibble)
 #'
 #' # load in longitudinal parameters
-#' curve_params <-
+#' sr_params <-
 #'   typhoid_curves_nostrat_100 %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
@@ -58,8 +58,8 @@ fdev <- function(lambda, csdata, lnpars, cond) {
 #'    .data$antigen_iso == cur_antibody) %>%
 #'   dplyr::slice_head(n = 100)
 #'
-#' cur_curve_params <-
-#'   curve_params %>%
+#' cur_sr_params <-
+#'   sr_params %>%
 #'   dplyr::filter(.data$antigen_iso == cur_antibody) %>%
 #'   dplyr::slice_head(n = 100)
 #'
@@ -69,8 +69,8 @@ fdev <- function(lambda, csdata, lnpars, cond) {
 #'
 #' if (!is.element('d', names(cur_curve_params)))
 #' {
-#'   cur_curve_params <-
-#'     cur_curve_params %>%
+#'   cur_sr_params <-
+#'     cur_sr_params %>%
 #'     dplyr::mutate(
 #'       alpha = .data$alpha * 365.25,
 #'       d = .data$r - 1)
@@ -80,7 +80,7 @@ fdev <- function(lambda, csdata, lnpars, cond) {
 #' f_dev0(
 #'     lambda = lambda,
 #'     csdata = cur_data,
-#'     lnpars = cur_curve_params,
+#'     lnpars = cur_sr_params,
 #'     cond = cur_noise_params
 #'   )
 #'}
@@ -166,8 +166,8 @@ f_dev0 <- function(lambda,
 #'    .data$antigen_iso == cur_antibody) %>%
 #'   dplyr::slice_head(n = 100)
 #'
-#' cur_curve_params =
-#'   curve_params %>%
+#' cur_sr_params =
+#'   sr_params %>%
 #'   dplyr::filter(.data$antigen_iso == cur_antibody) %>%
 #'   dplyr::slice_head(n = 100)
 #'
@@ -178,7 +178,7 @@ f_dev0 <- function(lambda,
 #' if(!is.element('d', names(cur_curve_params)))
 #' {
 #'   cur_curve_params =
-#'     cur_curve_params %>%
+#'     cur_sr_params %>%
 #'     dplyr::mutate(
 #'       alpha = .data$alpha * 365.25,
 #'       d = .data$r - 1)
@@ -188,7 +188,7 @@ f_dev0 <- function(lambda,
 #' f_dev(
 #'     lambda = lambdas,
 #'     csdata = cur_data,
-#'     lnpars = cur_curve_params,
+#'     lnpars = cur_sr_params,
 #'     cond = cur_noise_params
 #'   )
 #' }

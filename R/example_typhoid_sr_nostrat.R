@@ -1,9 +1,9 @@
-#' Small example of antibody response curve parameters for typhoid
+#' Small example of antibody seroresponse parameters for typhoid
 #'
 #' A subset of data from the SEES study, for examples and testing.
 #'
-#' @format ## `typhoid_curves_nostrat_100`
-#' A `curve_params` object (from [as_curve_params()]) with 500 rows and 7
+#' @format ## `typhoid_sr_nostrat_100`
+#' A `sr_params` object (from [as_sr_params()]) with 500 rows and 7
 #' columns:
 #' \describe{
 #'   \item{antigen_iso}{which antigen and isotype are being measured
@@ -16,4 +16,4 @@
 #'   \item{r}{Antibody decay rate exponent parameter}
 #' }
 #' @source <https://osf.io/rtw5k>
-"typhoid_curves_nostrat_100"
+"typhoid_sr_nostrat_100"

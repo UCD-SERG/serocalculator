@@ -32,7 +32,7 @@ as_sr_params <- function(data, antigen_isos = NULL) {
     cli::cli_abort(
       class = "not data.frame",
       message = c(
-        "Can't convert {.arg data} to {.cls curve_params}.",
+        "Can't convert {.arg data} to {.cls sr_params}.",
         "x" = "{.arg data} must be a {.cls data.frame}
         (or a subclass of {.cls data.frame}).",
         "i" = "You have supplied a {.cls {class(data)}}."
@@ -46,14 +46,14 @@ as_sr_params <- function(data, antigen_isos = NULL) {
 
   # check if object has expected columns:
 
-  # define curve columns
+  # define sr columns
   sr_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
   # get columns from provided data
   data_cols <- data %>% names()
 
   # get any missing column(s)
-  missing_cols <- setdiff(x = curve_cols, y = data_cols)
+  missing_cols <- setdiff(x = sr_cols, y = data_cols)
 
   if (length(missing_cols) > 0) {
 
@@ -72,10 +72,10 @@ as_sr_params <- function(data, antigen_isos = NULL) {
 
 
   if (is.null(antigen_isos)) {
-    antigen_isos <- unique(curve_data$antigen_iso)
+    antigen_isos <- unique(sr_data$antigen_iso)
   } else {
     stopifnot(all(
-      is.element(antigen_isos, curve_data$antigen_iso)
+      is.element(antigen_isos, sr_data$antigen_iso)
     ))
   }
 

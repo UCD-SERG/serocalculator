@@ -18,7 +18,7 @@ test_that("`get_id()` works", {
 })
 
 test_that("`set_age()` detects partial matches", {
-  serocalculator_example("example_pop_data.rds")|>
+  serocalculator_example("example_pop_data.rds") |>
     load_pop_data(age = "age$") |>
     expect_warning(class = "missing variable")
 })

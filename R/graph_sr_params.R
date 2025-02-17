@@ -1,7 +1,19 @@
 #' Graph estimated antibody decay curve
 #'
-#' @param curve_params
-#' a [data.frame()] containing MCMC samples of antibody decay curve parameters
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `graph.curve.params()` was renamed to [graph_sr_params()] to use more accurate terminology and consistent API.
+#'
+#' @keywords internal
+#' @export
+graph_curve_params <- function(...) {
+  lifecycle::deprecate_warn("1.3.0", "graph.curve.params()", "graph_sr_params()")
+  graph_sr_params(...)
+}
+
+#'
+#' @param sr_params
+#' a [data.frame()] containing MCMC samples of antibody seroresponse parameters
 #' @param verbose verbose output
 #' @param show_all_curves whether to show individual curves under quantiles
 #' @param antigen_isos antigen isotypes
@@ -13,20 +25,20 @@
 #' @export
 #'
 #' @examples
-#' curve <-
-#'   typhoid_curves_nostrat_100 |>
+#' sr_param <-
+#'   typhoid_sr_nostrat_100 |>
 #'   dplyr::filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
-#' plot1 <- graph.curve.params(curve)
+#' plot1 <- graph.sr.params(sr_param)
 #'
 #' print(plot1)
 #'
-#' plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
+#' plot2 <- graph.sr.params(sr_param, show_all_curves = TRUE)
 #' show(plot2)
 #'
-graph.curve.params <- function( # nolint: object_name_linter
-  curve_params,
-  antigen_isos = unique(curve_params$antigen_iso),
+graph.sr.params <- function( # nolint: object_name_linter
+  sr_params,
+  antigen_isos = unique(sr_params$antigen_iso),
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = FALSE,
@@ -34,12 +46,12 @@ graph.curve.params <- function( # nolint: object_name_linter
 ) {
   if (verbose) {
     message(
-      "Graphing curves for antigen isotypes: ",
+      "Graphing seroresponses for antigen isotypes: ",
       paste(antigen_isos, collapse = ", ")
     )
   }
 
-  curve_params <- curve_params |>
+  sr_params <- sr_params |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
@@ -66,7 +78,7 @@ graph.curve.params <- function( # nolint: object_name_linter
   }
 
 
-  d <- curve_params
+  d <- sr_params
 
   dT <- # nolint: object_linter
     data.frame(t = tx2) |>

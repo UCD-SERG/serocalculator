@@ -1,4 +1,4 @@
-#' Load antibody decay curve parameter
+#' Load longitudinal antibody seroresponse parameters
 #'
 #' `r lifecycle::badge("deprecated")`
 #'

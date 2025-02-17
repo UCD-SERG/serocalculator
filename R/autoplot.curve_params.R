@@ -1,8 +1,19 @@
-#' graph antibody decay curves by antigen isotype
+#' graph longitudinal seroresponse parameters by antigen isotype
 #'
-#' @inheritParams plot_curve_params_one_ab
+#'`r lifecycle::badge("deprecated")`
+#'
+#' `autoplot.curve_params()` was renamed to [autoplot.sr_params()] to use more accurate terminology.
+#'
+#' @keywords internal
+#' @export
+autoplot.curve_params <- function(...) {
+  lifecycle::deprecate_warn("1.3.0", "autoplot.curve_params()", "autoplot.sr_params()")
+  autoplot.sr_params(...)
+}
+
+#' @inheritParams plot_sr_params_one_ab
 #' @inheritDotParams plot_curve_params_one_ab
-#' @param antigen_isos antigen isotypes to analyze (can subset `curve_params`)
+#' @param antigen_isos antigen isotypes to analyze (can subset `sr_params`)
 #' @param ncol how many columns of subfigures to use in panel plot
 #' @details
 #' ## `rows_to_graph`
@@ -14,7 +25,7 @@
 #' if you want to do that,
 #' you will could call [plot_curve_params_one_ab()] directly for each antigen isotype
 #' and combine the resulting panels yourself.
-#' Or you could subset `curve_params` manually,
+#' Or you could subset `sr_params` manually,
 #' before passing it to this function,
 #' and set the `n_curves` argument to `Inf`.
 #' @return a [ggplot2::ggplot()] object
@@ -25,16 +36,16 @@
 #' library(ggplot2)
 #' library(magrittr)
 #'
-#' curve <-
-#'   serocalculator_example("example_curve_params.csv") %>%
+#' sr_params <-
+#'   serocalculator_example("example_sr_params.csv") %>%
 #'   read.csv() %>%
-#'   as_curve_params() %>%
+#'   as_sr_params() %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
 #'   autoplot()
 #'
-#' curve
+#' sr_params
 #' }
-autoplot.curve_params <- function(
+autoplot.sr_params <- function(
     object,
     antigen_isos = unique(object$antigen_iso),
     ncol = min(3, length(antigen_isos)),

@@ -78,24 +78,6 @@ get_biomarker_levels <- function(object, ...) {
   }
 }
 
-#' Get biomarker variable name
-#'
-#' @param object a `pop_data` object
-#' @param ... unused
-#'
-#' @returns
-#' a [character] string identifying the biomarker names column in `object`
-#' @export
-#'
-#' @examples
-#' sees_pop_data_100 |> get_biomarker_names_var()
-get_biomarker_names_var <- function(object, ...) {
-  # get value attribute
-  biomarker_var <- attributes(object)[["biomarker_var"]]
-
-  return(biomarker_var)
-}
-
 get_biomarker_names <- function(object, ...) {
   # get biomarker name data
   biomarker_names_var <- get_biomarker_names_var(object)

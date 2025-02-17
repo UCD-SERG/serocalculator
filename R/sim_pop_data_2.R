@@ -99,38 +99,31 @@ sim_pop_data_2 <- function(
   chain_in_curve_params <- "chain" %in% names(curve_params)
   pop_data <- tibble::tibble(
     id = seq_len(n_samples) |> as.character(),
-    age =
-      runif(n_samples,
-            min = age_range[1],
-            max = age_range[2]) |>
-      units::as_units("years"),
+    age = sim_age(
+      n_samples = n_samples,
+      age_range = age_range
+    ),
     time_since_last_seroconversion =
-      rexp(
-        n_samples,
-        rate = lambda
-      ) |>
-      units::as_units("years")
-  ) |>
-    mutate(
-      time_since_last_seroconversion =
-        if_else(.data$time_since_last_seroconversion > .data$age,
-                units::as_units(Inf, "years"),
-                .data$time_since_last_seroconversion),
-
-      mcmc_iter = sample(
-        size = n_samples,
-        x = curve_params$iter,
-        replace = TRUE
+      sim_time_since_last_sc(
+        lambda = lambda,
+        n_samples = n_samples,
+        age = age
       ),
-      mcmc_chain = # nolint: object_usage_linter
-        if (chain_in_curve_params) {
-          sample(
-            size = n_samples,
-            x = curve_params$chain,
-            replace = TRUE
-          )
-        }
-    ) |>
+
+    mcmc_iter = sample(
+      size = n_samples,
+      x = curve_params$iter,
+      replace = TRUE
+    ),
+    mcmc_chain = # nolint: object_usage_linter
+      if (chain_in_curve_params) {
+        sample(
+          size = n_samples,
+          x = curve_params$chain,
+          replace = TRUE
+        )
+      }
+  ) |>
     reframe(
       .by = everything(),
       antigen_iso = antigen_isos
@@ -154,14 +147,6 @@ sim_pop_data_2 <- function(
         alpha = .data$alpha,
         shape = .data$r
       )
-    ) |>
-    structure(
-      format = "long"
-    ) |>
-    as_pop_data(
-      value = "Y",
-      age = "age",
-      id = "id"
     )
 
   if (add_noise) {
@@ -171,11 +156,25 @@ sim_pop_data_2 <- function(
         noise = runif(
           n = dplyr::n(),
           min = noise_limits[.data$antigen_iso, "min"],
-          max = noise_limits[.data$k.ab, "max"]
+          max = noise_limits[.data$antigen_iso, "max"]
         ),
         Y = .data$`E[Y]` + noise
       )
+  } else {
+    pop_data <- pop_data |>
+      mutate(Y = .data$`E[Y]`)
   }
+
+  pop_data <- pop_data |>
+    select(all_of(c("id", "age", "antigen_iso", "Y"))) |>
+    structure(
+      format = "long"
+    ) |>
+    as_pop_data(
+      value = "Y",
+      age = "age",
+      id = "id"
+    )
 
   if (format == "wide") {
     cli::cli_abort("`format = 'wide' not yet implemented.")

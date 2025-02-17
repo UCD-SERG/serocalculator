@@ -10,6 +10,7 @@ sim_pop_data_multi(
   num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
   verbose = FALSE,
+  sim_function = sim_pop_data,
   ...
 )
 }
@@ -25,13 +26,15 @@ passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 
 \item{verbose}{whether to report verbose information}
 
+\item{sim_function}{which function to use: \code{\link[=sim_pop_data]{sim_pop_data()}} or \code{\link[=sim_pop_data_2]{sim_pop_data_2()}}}
+
 \item{...}{
   Arguments passed on to \code{\link[=sim_pop_data]{sim_pop_data}}
   \describe{
     \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
-(in events per person-years)}
+(in events per person-\emph{year}s)}
     \item{\code{n_samples}}{number of samples to simulate}
-    \item{\code{age_range}}{age range of sampled individuals, in years}
+    \item{\code{age_range}}{age range of sampled individuals, in \emph{years}}
     \item{\code{age_fixed}}{specify the curve parameters to use by age
 (does nothing at present?)}
     \item{\code{antigen_isos}}{Character vector with one or more antibody names.

@@ -76,7 +76,11 @@ library(dplyr)
 dmcmc <-
   "https://osf.io/download/rtw5k" |>
   load_curve_params() |>
-  dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
+  dplyr::filter(iter < 500) |> # reduce number of mcmc samples for speed
+  mutate(
+        alpha = alpha |> units::as_units("1/days"),
+        t1 = 0 |> units::as_units("days")
+      )
 ```
 
 ## visualize antibody decay model
@@ -114,9 +118,9 @@ dmcmc |>
 set.seed(54321)
 
 # simulated incidence rate per person-year
-lambda <- 0.2
+lambda <- 0.2 |> units::as_units("1/years")
 # range covered in simulations
-lifespan <- c(0, 10)
+lifespan <- c(0, 10) |> units::as_units("years")
 # cross-sectional sample size
 nrep <- 100
 
@@ -132,7 +136,7 @@ dlims <- rbind(
 verbose <- FALSE # whether to print verbose updates as the function runs
 
 # generate cross-sectional data
-csdata <- sim_pop_data(
+csdata <- sim_pop_data_2(
   curve_params = dmcmc,
   lambda = lambda,
   n_samples = nrep,
@@ -314,6 +318,7 @@ lambdas <- c(.05, .1, .15, .2, .5, .8)
 
 sim_df <-
   sim_pop_data_multi(
+    sim_function = sim_pop_data_2,
     n_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
@@ -475,6 +480,7 @@ there may be bias:
 ```{r}
 sim_df_renew <-
   sim_pop_data_multi(
+    sim_function = sim_pop_data_2,
     n_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,

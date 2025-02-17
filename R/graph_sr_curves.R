@@ -1,4 +1,14 @@
 #' @title Graph an antibody seroresponse model
+#'`r lifecycle::badge("deprecated")`
+#'
+#' `graph.decay.curves()` was renamed to [graph_sr_curves()] to use more accurate terminology and consistent API.
+#'
+#' @keywords internal
+#' @export
+graph_sr_curves <- function(...) {
+  lifecycle::deprecate_warn("1.3.0", "graph.decay.curves()", "graph_sr_curves()")
+  graph_sr_curves(...)
+}
 #'
 #' @param object a [data.frame()] of seroresponse parameters (one or more MCMC samples)
 #' @param verbose verbose output

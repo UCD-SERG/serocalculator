@@ -26,6 +26,7 @@ reference:
   contents:
   - get_biomarker_levels
   - get_biomarker_names_var
+  - get_biomarker_names
   - get_values_var
   - get_values
 - title: Summarize data

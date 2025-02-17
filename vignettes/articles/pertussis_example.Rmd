@@ -1,6 +1,6 @@
 ---
 title: "Pertussis Seroconversion Rate Vignette"
-author: "UC Davis Seroepidemiology Research Group (SERG)"
+author: "UC Davis Seroepidemiology Research Group (SERG) and Peter Teunis"
 output: 
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
@@ -12,156 +12,16 @@ vignette: >
 bibliography: ../references.bib
 ---
 
----
-title: "Seroincidence package tutorial"
-author: "European Centre for Disease Prevention and Control (ECDC)"
-date: '`r Sys.Date()`'
-output:
-  pdf_document:
-    toc: yes
-header-includes:
-- \DeclareUnicodeCharacter{2010}{-}
-references:
-- id: 1
-  author:
-  - family: de Graaf
-    given: W. F.
-  - family: Kretzschmar 
-    given: M. E. E.
-  - family: Teunis
-    given: P. F. M.
-  - family: Diekmann
-    given: O.
-  container-title: Epidemics
-  DOI: 10.1016/j.epidem.2014.08.002
-  issued:
-    month: 12
-    year: 2014
-  page: 1-7
-  title: 'A two-phase within-host model for immune response and its application to serological profiles of pertussis'
-  type: article-journal
-  volume: 9
-- id: 2
-  author:
-  - family: Simonsen
-    given: J.
-  - family: Mølbak
-    given: K.
-  - family: Falkenhorst
-    given: G.
-  - family: Krogfelt
-    given: K. A.
-  - family: Linneberg
-    given: A.
-  - family: Teunis
-    given: P. F.
-  container-title: Statistics in Medicine
-  DOI: 10.1002/sim.3592
-  issue: 14
-  issued:
-    month: 6
-    year: 2009
-  page: 1882-1895
-  title: 'Estimation of incidences of infectious diseases based on antibody measurements'
-  type: article-journal
-  volume: 28
-- id: 3
-  author:
-  - family: Teunis
-    given: P. F.
-  - family: van Eijkeren
-    given: J. C.
-  - family: Ang
-    given: C. W.
-  - family: van Duynhoven
-    given: Y. T.
-  - family: Simonsen
-    given: J. B.
-  - family: Strid
-    given: M. A.
-  - family: van Pelt
-    given: W.
-  container-title: Statistics in Medicine
-  DOI: 10.1002/sim.5322
-  issue: 208
-  issued:
-    month: 9
-    year: 2012
-    page: 2240-2248
-  title: 'Biomarker dynamics: estimating infection rates from serological data'
-  type: article-journal
-  volume: 31
-- id: 4
-  author:
-  - family: Teunis
-    given: P. F.
-  - family: van Eijkeren
-    given: J. C.
-  - family: de Graaf
-    given: W. F.
-  - family: Bonačić Marinović
-    given: A.
-  - family: Kretzschmar 
-    given: M. E. E.    
-  container-title: Epidemics
-  DOI: 10.1016/j.epidem.2016.04.001
-  issued:
-    month: 9
-    year: 2016
-    page: 33-39
-  title: 'Linking the seroresponse to infection to within-host heterogeneity in antibody production'
-  type: article-journal
-  volume: 16
-- id: 5
-  author:
-  - family: Strid 
-    given: M. A.
-  - family: Engberg
-    given: J.
-  - family: Larsen,
-    given: L. B.
-  - family: Begtrup
-    given: K
-  - family: Mølbak
-    given: K
-  - family: Krogfelt
-    given: K. A.
-  title: 'Antibody responses to Campylobacter infections determined by an enzyme--linked immunosorbent assay: 2-year follow-up study of 210 patients'
-  container-title: Clinical and Vaccine Immunology
-  issue: 8
-  volume: 2
-  page: 314-319
-  issued:
-    year: 2001
-    month: 3
-  DOI: 10.1128/CDLI.8.2.314-319.2001  
-fontsize: 11pt
-vignette: >
-  %\VignetteIndexEntry{Seroincidence package tutorial}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    TeX: { equationNumbers: { autoNumber: "AMS" } }
-  });
-</script>
-
 ```{r, echo = FALSE}
-pkgUrl <- gsub("\n", "", packageDescription("seroincidence")$URL)
+pkgUrl <- gsub("\n", "", packageDescription("serocalculator")$URL)
 ```
-
-\newpage
 
 # 1. Introduction
 
-Antibody levels measured in a (cross–sectional) population sample can be translated into an estimate 
-of the frequency with which seroconversions (infections) occur in the sampled population. In simple 
+Antibody levels measured in a (cross–sectional) population sample can be translated into an estimate of the frequency with which seroconversions (infections) occur in the sampled population. In simple 
 terms: the presence of many high antibody concentrations indicates that many subjects likely 
 experienced infection recently, while mostly low concentrations indicate a low frequency of 
-infections in the sampled population. More information about ELISA methods can be found on
-[ECDC web site](`r pkgUrl`).
+infections in the sampled population. 
 
 In order to thus interpret the measured cross-sectional antibody concentrations, characteristics of 
 the time course of the serum antibody response must be known. For any antibody detected in the 
@@ -179,8 +39,7 @@ used for the follow–up study. Thus, the strategy is to set up a longitudinal m
 study once, and use the thus obtained information to analyze many different cross–sectional data 
 sets.
 
-Note that it must be assumed that such variation in the time course of antibody concentrations among 
-individuals as observed in the longitudinal cohort is the same as in the population where the 
+Note that it must be assumed that such variation in the time course of antibody concentrations among individuals as observed in the longitudinal cohort is the same as in the population where the 
 cross-sectional sample was taken, where this variation cannot be observed.
 
 Analysis of longitudinal data and estimation of the required parameters is separated from the 
@@ -190,9 +49,9 @@ presumably describing a physiological phenomenon that is similiar in any infecte
 (3) setting up and running the longitudinal model requires additional skills, not necessary for use 
 of the sero–incidence calculator script
 
-# 2. The seroincidence estimator
+# 2. The seroconversion rate estimator
 
-Package **seroincidence** was designed to calculate incidence of seroconversion, by using the 
+Package **serocalculator** was designed to calculate incidence of seroconversion, by using the 
 longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a 
 cross–sectional population sample is calculated, as a function of the (longitudinal) seroresponse 
 and the frequency of seroconversion (or seroincidence). Given the seroresponse, this (marginal) 
@@ -209,9 +68,9 @@ b) time to reach peak antibody concentration,
 c) magnitude of the peak concentration, and 
 d) antibody decay parameters describing the time course (shape and rate) of antibody decay. 
 
-A model description that is used for the serocalculator is described in [@2; @3]. An alternative 
+A model description that is used for the serocalculator is described in @Simonsen_2009 and @Teunis_2012. An alternative 
 model, simplified but with improved interpretation of the underlying biological mechanisms, is given 
-in [@1] and further improved in [@4]. 
+in @deGraaf_2014 and further improved in @Teunis_2016 and @Teunis_2020.
 
 The current model assumes that upon exposure to an initial inoculum, pathogen concentrations 
 increase exponentially. Presence of pathogens (antigen presented to the immune system) signals an 
@@ -221,7 +80,7 @@ causes inactivation or die–off of pathogens, with a rate proportional to the s
 concentration. Ultimately, when all pathogens are removed, infection is over and the promotion of 
 antibody production stops. Then the decay phase starts, and serum antibody concentrations decrease. 
 Antibody decay in the serum compartment may start fast and slow down later, resulting in 
-non–exponential decay. In [@4] this is modelled using a shape parameter, allowing gradual adjustment 
+non–exponential decay. In @Teunis_2016 this is modeled using a shape parameter, allowing gradual adjustment 
 between exponential (log–linear) and strongly non–exponential decay.
 
 ## 2.2 Heterogenity
@@ -231,8 +90,7 @@ parameters used in the package, see [section 3.2.2](#longParams) for details): b
 concentration (`y0` and `yb`), time to peak (`t1`), peak antibody concentration (`y1`), decay rate 
 (`alpha`) and shape factor of the decay curve (`r`) are not fixed numbers. In a population of 
 subjects, individuals each have their own seroresponse, different from those of other subjects. 
-Therefore, these parameters are provided as a (joint) distribution, describing their variation among 
-individuals in the sampled population. Of course, such a distribution depends on the pathogen, the 
+Therefore, these parameters are provided as a (joint) distribution, describing their variation among individuals in the sampled population. Of course, such a distribution depends on the pathogen, the 
 detected antibody, and even the detection assay.
 
 Estimates for these seroresponse parameters may be obtained by fitting the model to longitudinal 
@@ -242,26 +100,25 @@ post infection, up to a period long enough to reliably estimate the shape of the
 decay curve.
 
 A Bayesian hierarchical framework allows for individual variation in seroresponses, so that one 
-obtains the (posterior) joint distribution of the parameters as a (Markov chain) Monte Carlo sample, 
-of all relevant parameters [@4].
+obtains the (posterior) joint distribution of the parameters as a (Markov chain) Monte Carlo sample, of all relevant parameters @Teunis_2016.
 
 Note that, due to the limited number of iterations in the Monte Carlo sample, the generated 
 incidence estimates will show minor variations: if the same calculation is run twice, the outcomes 
 may differ slightly. If this variation should be smaller, the size of the Monte Carlo sample may be 
 increased. This however will slow down the calculations.
 
-## 2.3 Incidence estimation
+## 2.3 Seroconversion rate estimation
 
 The longitudinal seroresponses are considered generic: they represent the time course of (specific) 
 human serum antibodies against a (specific) pathogen. Therefore, with any cross–sectional sample of 
 the same antibodies in a human population, an incidence estimate can be calculated. 
 
-Given the longitudinal response characteristics, **seroincidence** R package provide a rapid and 
-computationally simple method for calculating seroconversion rates, as published in [@3].
+Given the longitudinal response characteristics, **serocalculator** R package provides a rapid and 
+computationally simple method for calculating seroconversion rates, as published in @Teunis_2012.
 
-The methods on which the seroincidence calculator is based were developed with publicly funded 
+The methods on which this package is based were developed with publicly funded 
 research. All procedures have been published and are open to the general public, including the core 
-script on which the seroincidence calculator is based. To make the functionalities provided as 
+script on which the **sercalculator** is based. To make the functionalities provided as 
 broadly available as possible, R was chosen as the computing platform, because it is free and open 
 source, and runs on any modern computer operating system.
 
@@ -270,7 +127,7 @@ source, and runs on any modern computer operating system.
 The package contains longitudinal models for seroincidence calculations. Four model variants are 
 possible, depending on whether seroconversion is instantaneous ($t_{1} = 0$) or not ($t_{1} > 0$), 
 and whether decay is exponential ($r = 1$) or proceeds as a power function ($r > 1$). Power function 
-decay allows for rapid inital decay followed by a sustained period of very slow decay [@4]. 
+decay allows for rapid inital decay followed by a sustained period of very slow decay (@Teunis_2016). 
 Available model variants are described in Table 1.
 
 \begin{table}[!h]
@@ -303,34 +160,32 @@ Pathogen & Antibody & Units & 1 & 2 & 3 & 4\\ \hline
 \end{footnotesize}
 \end{table}
 
-# 3. How to use *seroincidence* package
+# 3. How to use *serocalculator* package
 
-This section provides step-by-step directions on the usage of the *seroincidence* package.
+This section provides step-by-step directions on the usage of the *serocalculator* package.
 
 ## 3.1. Loading the package
 
-Functionality of the *seroincidence* package is made available to the end user only once the library 
-is loaded into the current workspace. Assuming the package is installed already (covered in 
+Functionality of the *serocalculator* package is made available to the end user only once the library is loaded into the current workspace. Assuming the package is installed already (covered in 
 [installation.pdf](installation.pdf)) loading is achieved by running the following command in the R 
 console (bear in mind that the text after character `#` is only a comment):
 
 ```{r}
-# Load package "seroincidence"
-library(seroincidence)
+# Load package "serocalculator"
+library(serocalculator)
 ```
 
-At this moment all functions required to run the seroincidence calculation are made available. It 
-can be checked by running:
+At this moment all functions required to run the seroconversion rate calculation are made available. It can be checked by running:
 
 ```{r, eval=FALSE}
-# List all objects (functions and data) exposed by package "seroincidence".
-ls("package:seroincidence")
+# List all objects (functions and data) exposed by package "serocalculator".
+ls("package:serocalculator")
 ```
 
 Here is the resulting output:
 
 ```{r, echo=FALSE}
-ls("package:seroincidence")
+ls("package:serocalculator")
 ```
 
 We briefly describe the most important objects and functions:
@@ -503,9 +358,9 @@ responseParams <- getAdditionalData("coxiellaIFAParams4.zip")
 
 Internet connection is needed for this function to work.
 
-## 3.3. Estimating seroincidence
+## 3.3. Estimating seroconversion rate
 
-Main calculation function provided by package *seroincidence* is called `estimateSeroincidence`.
+Main calculation function provided by package *serocalculator* is called `est.incidence`.
 It takes several arguments:
 
 - `data`: A data frame with the cross-sectional data (see variable `serologyData` above). This may 
@@ -594,8 +449,7 @@ The most important output is subobject `Fits` containing raw results on the outp
 Translation of these raw results is provided by a custom function `summary` explained in the 
 following section.
 
-The cutoff argument is based on censoring of the observed serum antibody measurements [@5]. Cut-off 
-levels must always be specified when calling function `estimateSeroincidence` (argument 
+The cutoff argument is based on censoring of the observed serum antibody measurements @Strid_2001. Cut-off levels must always be specified when calling function `estimateSeroincidence` (argument 
 `censorLimits`). Value `0` should be set for antibody measurements where no censoring is needed, for 
 instance 
 
@@ -608,7 +462,7 @@ estimates of lambda to decrease. Results should be published together with the c
 values. The cut-off level of `0.1` set in the example above is a typical value, but users should set 
 it to value reflecting the censoring level in the data.
 
-## 3.4. Getting a summary of seroincidence
+## 3.4. Getting a summary of seroconversion rate
 
 Output of the calculator should be passed in to function `summary` calculating output results:
 
@@ -655,7 +509,7 @@ convergence).
 It may be beneficial to assign output of this function to a variable for further analysis:
 
 ```{r, eval=FALSE}
-# Compute seroincidence summary and assign to object "seroincidenceSummary".
+# Compute seroconversion rate summary and assign to object "seroincidenceSummary".
 seroincidenceSummary <- summary(seroincidenceData)
 
 # Show the results.
@@ -684,7 +538,7 @@ calculations.
 
 # 4. Other examples
 
-The following examples show the standard procedure for estimating seroincidence.
+The following examples show the standard procedure for estimating seroconversion rate.
 
 ```{r, eval=FALSE}
 # 1. Define cross-sectional data.

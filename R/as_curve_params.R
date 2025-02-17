@@ -2,7 +2,7 @@
 #'
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `as_curve_params()` was renamed to [as_sr_params()] to use mroe accurate terminology.
+#' `as_curve_params()` was renamed to [as_sr_params()] to use more accurate terminology.
 #'
 #' @keywords internal
 #' @export

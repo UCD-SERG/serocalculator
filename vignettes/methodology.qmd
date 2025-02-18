@@ -69,7 +69,7 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![Trombicula mite](../man/figures/Trombicula-mite-larva-with_stylostome-2.jpg){height=50%}
+![Trombicula mite](../man/figures/Trombicula-larva-stylostome.jpg)
 ![](../man/figures/340149_1_En_16_Fig6_HTML.webp)
 ::::
 

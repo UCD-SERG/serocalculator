@@ -16,4 +16,3 @@ get_biomarker_names <- function(object, ...) {
 
   return(biomarker_data)
 }
-

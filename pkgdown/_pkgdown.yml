@@ -29,6 +29,8 @@ reference:
   - get_biomarker_names
   - get_values_var
   - get_values
+  - ids_varname
+  - ids
 - title: Summarize data
   contents:
   - summary.pop_data

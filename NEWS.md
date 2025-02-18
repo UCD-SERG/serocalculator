@@ -170,7 +170,7 @@ to avoid printing an OK message.
   - `ids()`
   - `get_age_var()`
   - `get_values_var()`
-  - `get_id_varname()`
+  - `ids_varname()`
   
 * Added additional warnings to `load_pop_data()`
 

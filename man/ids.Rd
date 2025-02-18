@@ -18,5 +18,5 @@ a \link{character} \link{vector}
 Get person IDs
 }
 \examples{
-sees_pop_data_pk_100 |> ids()
+ids(sees_pop_data_pk_100)
 }

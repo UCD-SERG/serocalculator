@@ -44,6 +44,10 @@ graph.curve.params <- function( # nolint: object_name_linter
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
 
+  if (inherits(curve_params$alpha, "units")) {
+    tx2 <- tx2 |> units::as_units("days")
+  }
+
   d <- curve_params
 
   dT <- # nolint: object_linter
@@ -70,14 +74,16 @@ graph.curve.params <- function( # nolint: object_name_linter
     ) |>
     select(-"name") |>
     rowwise() |>
-    mutate(res = ab_5p(
-      .data$t,
-      .data$y0,
-      .data$y1,
-      .data$t1,
-      .data$alpha,
-      .data$r
-    )) |>
+    mutate(
+      res = ab_5p(
+        .data$t,
+        .data$y0,
+        .data$y1,
+        .data$t1,
+        .data$alpha,
+        .data$r
+      )
+    ) |>
     ungroup()
 
   if (verbose) message("starting to compute quantiles")

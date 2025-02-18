@@ -62,7 +62,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
   * ~1,000,000 infections/year
   * ~10,000 deaths/year
-  * fever, headache, muscle pain, cough, gastrointestinal symptoms,  hemorrhaging
+  * fever, headache, muscle pain, cough, gastrointestinal symptoms, 
+  hemorrhaging
 
 
 ::::

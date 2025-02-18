@@ -164,13 +164,13 @@ to avoid printing an OK message.
 
   - `set_age()`
   - `set_value()`
-  - `set_id()`
+  - `set_id_var()`
   - `get_age()`
   - `get_values()`
-  - `get_id()`
+  - `ids()`
   - `get_age_var()`
   - `get_values_var()`
-  - `get_id_var()`
+  - `ids_varname()`
   
 * Added additional warnings to `load_pop_data()`
 

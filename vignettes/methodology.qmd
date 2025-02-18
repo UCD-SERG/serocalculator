@@ -135,7 +135,7 @@ modeling the effects of re-exposure during an active infection is
 [on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
 :::
 
-## Time since infection and incidence
+## Time since infection and incidence {.smaller}
 
 Under those assumptions:
 
@@ -143,7 +143,11 @@ Under those assumptions:
 
 * $T$ has an **exponential distribution**:
 
+. . . 
+
 $$\pdf(T=t) = \lambda \expf{-\lambda t}$$
+
+. . .
 
   * More precisely, the distribution is exponential 
   **truncated by age** at observation ($a$):

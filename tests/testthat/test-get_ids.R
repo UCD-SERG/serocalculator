@@ -1,10 +1,17 @@
 
 test_that("`ids()` works", {
-  xs_data <- load_pop_data(serocalculator_example("example_pop_data.rds"))
-
-  xs_data |>
+  sees_pop_data_pk_100 |>
     ids() |>
-    sort() |>
     expect_snapshot_value(style = "deparse")
+
+})
+
+
+test_that("`id_var()` warns when guessing attributes", {
+  xs_data <- serocalculator_example("example_pop_data.rds") |>
+    readr::read_rds()
+  xs_data |>
+    ids_varname() |>
+    expect_snapshot()
 
 })

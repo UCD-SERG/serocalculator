@@ -11,6 +11,16 @@
 #' ids_varname(sees_pop_data_pk_100)
 ids_varname <- function(object, ...) {
   id_var <- attributes(object)$id_var
+  if (is.null(id_var)) {
+    cli::cli_warn(
+      message = c(
+        "No `id_var` attribute found in {.arg object}.",
+        "i" = "Defaulting to 'index_id'."
+      )
+    )
+    id_var <- "index_id"
+  }
+
   return(id_var)
 }
 

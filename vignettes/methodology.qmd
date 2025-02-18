@@ -189,14 +189,15 @@ Here's what that would look like:
 ```{r}
 #| fig-cap: "Example log-likelihood curves"
 #| label: fig-ex-lik-curves
-
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
 library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" %>%
   load_curve_params() %>%
-  filter(iter < 50)
+  filter(iter < 50) |> 
+  filter(antigen_iso %in% antibodies)
 
 # Import cross-sectional data from OSF and rename required variables:
 xs_data <-
@@ -240,9 +241,13 @@ print(lik_both)
 
 ## standard error
 
-The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:
+The standard error of the estimate is approximately equal to 
+the inverse of the rate of curvature (2nd derivative, aka Hessian) 
+in the log-likelihood function, at the maximum:
 
-more curvature -> likelihood peak is clearer -> smaller standard errors
+more curvature -> 
+likelihood peak is clearer -> 
+smaller standard errors
 
 ## Likelihood of observed data
 
@@ -289,11 +294,61 @@ That is:
 
 ## Antibody response curves
 
-::: {#fig-decay}
+::: {#fig-sim-case-data}
+```{r}
+set.seed(1)
+library(serodynamics)
+sim_case_data <-
+  serocalculator::typhoid_curves_nostrat_100 |>
+  sim_case_data(n = 5, 
+                antigen_isos = antibodies,
+                max_n_obs = 20, followup_interval = 14)
 
-![](fig/fig1a-1.svg)
+sim_case_data |>
+  autoplot(alpha = .5)
+
+```
 
 Antibody response curves, $p(Y=y|T=t)$, for typhoid
+
+:::
+
+---
+
+::: {#fig-decay}
+
+```{r}
+library(serodynamics)
+case_data <-
+    serodynamics_example(
+      "SEES_Case_Nepal_ForSeroKinetics_02-13-2025.csv"
+    ) |>
+    readr::read_csv() |>
+    dplyr::mutate(
+      .by = person_id,
+      visit_num = dplyr::row_number()
+    ) |>
+    as_case_data(
+      id_var = "person_id",
+      biomarker_var = "antigen_iso",
+      value_var = "result",
+      time_in_days = "dayssincefeveronset"
+    )
+
+most_obs = 
+  case_data |> 
+  count(id) |> 
+  arrange(desc(n)) |> 
+  head(10)
+  
+case_data |> 
+  semi_join(most_obs, by = "id") |> 
+    autoplot(alpha = .5, log_x = FALSE)
+```
+
+<!-- ![](fig/fig1a-1.svg) -->
+
+Antibody response data, $p(Y=y|T=t)$, for typhoid
 
 :::
 
@@ -346,7 +401,8 @@ $$
 
 The derivative of this expression doesn't come out cleanly, 
 so we will use a *numerical method* 
-(specifically, a Newton-type algorithm, implemented by `stats::nlm()`) 
+(specifically, a Newton-type algorithm, 
+implemented by `stats::nlm()`) 
 to find the MLE and corresponding standard error.
 
 :::

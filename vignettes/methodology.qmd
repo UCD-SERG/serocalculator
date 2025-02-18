@@ -554,6 +554,19 @@ lik_both <- graph_loglik(
 print(lik_both)
 ```
 
+## In-progress work
+
+* Implementing these methods in user-friendly software + GUIs (R, Shiny)
+
+* Multivariate modeling of biomarkers
+
+* Modeling time-varying incidence rates
+
+* Accounting for re-exposure
+
+* Accounting for latent immunocompromised subpopulations
+
+* Calibrating to population demographics
 
 ## References {.smaller .unnumbered}
 

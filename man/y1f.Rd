@@ -33,3 +33,4 @@ Calculate peak antibody concentration
 \examples{
 y1f(y0 = 1, mu_y = 1, t1 = 10)
 }
+\keyword{internal}

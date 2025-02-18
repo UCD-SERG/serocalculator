@@ -25,7 +25,17 @@
     "P180", "P182", "P184", "P186", "P188", "P190", "P192", "P194", 
     "P196", "P198", "P200")
 
-# `id_var()` warns when guessing attributes
+# `id_varname()` aborts with `.data` pronoun
+
+    Code
+      dplyr::filter(sees_pop_data_pk_100, ids(.data) == "P1")
+    Condition
+      Error in `dplyr::filter()`:
+      i In argument: `ids(.data) == "P1"`.
+      Caused by error in `ids_varname()`:
+      ! can't extract attributes from pronouns
+
+# `ids_varname()` warns when guessing colname
 
     Code
       ids_varname(xs_data)
@@ -35,4 +45,12 @@
       i Defaulting to 'index_id'.
     Output
       [1] "index_id"
+
+# `ids_varname()` warns when unable to guess colname
+
+    Code
+      ids_varname(dplyr::select(xs_data, -index_id))
+    Condition
+      Error in `ids_varname()`:
+      ! No `id_var` attribute found in `object`.
 

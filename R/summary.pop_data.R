@@ -25,7 +25,7 @@ summary.pop_data <- function(object, strata = NULL, ...) {
   # get relevant columns from object
   age_column <- object |> get_age_var()
   value_column <- object |> get_values_var()
-  id_column <- object |> get_person_id_varname()
+  id_column <- object |> get_id_varname()
 
   # create a list of the columns
   cols <- c(age_column, id_column, strata)

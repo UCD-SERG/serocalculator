@@ -167,7 +167,7 @@ to avoid printing an OK message.
   - `set_id()`
   - `get_age()`
   - `get_values()`
-  - `get_ids()`
+  - `ids()`
   - `get_age_var()`
   - `get_values_var()`
   - `get_id_varname()`

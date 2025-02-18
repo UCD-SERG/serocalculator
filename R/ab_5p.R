@@ -10,7 +10,7 @@
 #'
 #' @returns a [numeric] [vector]
 #' @export
-#'
+#' @keywords internal
 #' @examples
 #' params <- typhoid_curves_nostrat_100[1, ]
 #' ab_5p(

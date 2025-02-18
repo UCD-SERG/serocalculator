@@ -37,6 +37,7 @@
 #' * one column for each element in the `antigen_iso` input argument
 #'
 #' @export
+#' @keywords internal
 #' @examples
 #' # Load curve parameters
 #' dmcmc <- typhoid_curves_nostrat_100

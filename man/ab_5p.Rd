@@ -36,3 +36,4 @@ ab_5p(
   alpha = params$alpha |> units::as_units("1/days"),
   shape = params$r)
 }
+\keyword{internal}

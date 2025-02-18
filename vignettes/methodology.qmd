@@ -64,7 +64,47 @@ is the instantaneous **probability** (density) of
 
 * Notation: let's use **$\lambda_{t}$** to denote the incidence rate at time $t$.
 
-# Estimating incidence from cross-sectional antibody surveys
+## Study designs for estimating incidence rates
+
+### Longitudinal cohort studies
+
+::: notes
+Incidence rates can be estimated from longitudinal cohort studies,
+but cohort studies are: 
+:::
+
+- costly to conduct
+- slow to produce results, 
+- vulnerable to selection and censoring (drop-out) biases
+
+### Clinical case data
+
+::: notes
+Incidence rates can also be estimated from clinical case rates,
+but clinical case rates undercount:
+:::
+
+- asymptomatic cases
+- symptomatic cases who don't receive clinical care.
+
+### Cross-sectional serosurveys
+
+::: notes
+
+Alternatively, incidence rates can be estimated from biomarker data
+collected through a single cross-sectional survey, 
+combined with a longitudinal model of 
+how those biomarkers respond to infection over time.
+Compared with cohort studies and clinical case rates,
+cross-sectional incidence estimation can 
+produce estimates that are:
+:::
+
+- accurate
+- timely
+- cost-efficient
+
+# Estimating incidence from cross-sectional serosurveys
 
 ## Cross-sectional antibody surveys {.incremental}
 

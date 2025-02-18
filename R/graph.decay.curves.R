@@ -63,6 +63,10 @@ plot_curve_params_one_ab <- function(
     ggplot2::theme(plot.title =
                    ggplot2::element_text(size = 20, face = "bold"))
 
+  if (inherits(object$alpha, "units")) {
+    xlim <- xlim |> units::as_units("days")
+  }
+
   if (log_y) {
     plot1 <-
       plot1 +

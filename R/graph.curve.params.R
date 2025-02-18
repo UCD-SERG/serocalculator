@@ -8,6 +8,7 @@
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
 #' (has no effect if `show_all_curves = FALSE`)
 #' @param show_quantiles whether to show point-wise (over time) quantiles
+#' @param log_x whether to log-transform the x-axis
 #'
 #' @returns a [ggplot2::ggplot()] object
 #' @export
@@ -30,7 +31,8 @@ graph.curve.params <- function( # nolint: object_name_linter
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = FALSE,
-  alpha_samples = 0.3
+  alpha_samples = 0.3,
+  log_x = FALSE
 ) {
   if (verbose) {
     message(
@@ -189,6 +191,15 @@ graph.curve.params <- function( # nolint: object_name_linter
       labels = scales::label_comma(),
       minor_breaks = NULL
     )
+
+  if (log_x) {
+    plot1 <-
+      plot1 +
+      ggplot2::scale_x_log10(
+        # labels = scales::label_comma(),
+        # minor_breaks = NULL
+      )
+  }
 
   if (show_quantiles) {
     plot1 <-

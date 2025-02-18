@@ -73,14 +73,22 @@ library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
 library(dplyr)
+library(units)
+# Specify the antibody-isotype responses to include in analyses
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
 dmcmc <-
   "https://osf.io/download/rtw5k" |>
   load_curve_params() |>
-  dplyr::filter(iter < 500) |> # reduce number of mcmc samples for speed
-  mutate(
-        alpha = alpha |> units::as_units("1/days"),
-        t1 = 0 |> units::as_units("days")
-      )
+  dplyr::filter(
+    iter <= 50, # reduce number of mcmc samples for speed
+    antigen_iso %in% antibodies
+  ) 
+# |> 
+  # mutate(
+  #   alpha = alpha |> units::as_units("1/days"),
+  #   t1 = 0 |> units::as_units("days")
+  # )
 ```
 
 ## visualize antibody decay model
@@ -90,7 +98,10 @@ of model parameters using a `autoplot.curve_params()` method for the
 `autoplot()` function:
 
 ```{r}
-dmcmc |> autoplot(n_curves = 50)
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgG") |> 
+  graph.curve.params(show_all_curves = TRUE,
+                     log_x = FALSE)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
@@ -102,11 +113,9 @@ dmcmc |> autoplot(log_x = TRUE, n_curves = 50)
 We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
 
 ```{r, "graph-curve-params"}
-# Specify the antibody-isotype responses to include in analyses
-antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
 dmcmc |>
-  graph.curve.params(antigen_isos = antibodies) |>
+graph.curve.params(antigen_isos = antibodies) |>
   print()
 ```
 
@@ -118,9 +127,9 @@ dmcmc |>
 set.seed(54321)
 
 # simulated incidence rate per person-year
-lambda <- 0.2 |> units::as_units("1/years")
+lambda <- 0.2  # |> units::as_units("1/years")
 # range covered in simulations
-lifespan <- c(0, 10) |> units::as_units("years")
+lifespan <- c(0, 10) # |> units::as_units("years")
 # cross-sectional sample size
 nrep <- 100
 

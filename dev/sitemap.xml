@@ -34,11 +34,14 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/f_dev0.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/fdev.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/get_biomarker_levels.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/get_biomarker_names.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/get_biomarker_names_var.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/get_values.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/get_values_var.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/graph.curve.params.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/graph_loglik.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/ids.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/ids_varname.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/index.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/ldpar.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/llik.html</loc></url>
@@ -57,6 +60,7 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/sees_pop_data_pk_100_old_names.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/serocalculator-package.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/serocalculator_example.html</loc></url>
+<url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/set_id_var.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/sim.cs.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/sim.cs.multi.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/dev/reference/sim_pop_data.html</loc></url>

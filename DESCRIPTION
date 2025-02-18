@@ -44,7 +44,8 @@ Imports:
     glue,
     stringr,
     parallel,
-    units
+    units,
+    quantities
 Suggests:
     bookdown,
     DT,
@@ -68,7 +69,7 @@ Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
 Config/Needs/website: quarto, lewinfox/foodwebr
-Config/Needs/check: readr
+Config/Needs/check: readr, r-quantities/quantities, r-quantities/units
 Encoding: UTF-8
 Language: en-US
 LazyData: true

@@ -44,7 +44,7 @@ as_pop_data <- function(data,
   pop_data <- pop_data |>
     set_age(age = age, standardize = standardize) |>
     set_value(value = value, standardize = standardize) |>
-    set_id(id = id, standardize = standardize)  |>
+    set_id_var(id = id, standardize = standardize)  |>
     set_biomarker_var(biomarker = "antigen_iso", standardize = standardize)
 
   return(pop_data)

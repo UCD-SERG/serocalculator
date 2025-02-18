@@ -15,12 +15,12 @@
 #' @examples
 #' serocalculator_example("example_pop_data.rds") |>
 #'   readr::read_rds() |>
-#'     set_id(id = "index_id") |>
+#'     set_id_var(id = "index_id") |>
 #'     attr("id_var")
-set_id <- function(object,
-                   id = "index_id",
-                   standardize = TRUE,
-                   ...) {
+set_id_var <- function(object,
+                       id = "index_id",
+                       standardize = TRUE,
+                       ...) {
   # check if id column exists
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id
@@ -76,3 +76,6 @@ set_id <- function(object,
 
   return(object)
 }
+
+# keep unexported old name for now, for reverse dependencies
+set_id <- set_id_var

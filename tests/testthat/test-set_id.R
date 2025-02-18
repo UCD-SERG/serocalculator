@@ -4,7 +4,7 @@ test_that("warns when specified id not found", {
     x = {
       xs_data <- serocalculator_example("example_pop_data.rds") |>
         readr::read_rds() |>
-        set_id(id = "id")
+        set_id_var(id = "id")
     }
   )
 })
@@ -20,7 +20,7 @@ test_that(
         xs_data <- serocalculator_example("example_pop_data.rds") |>
           readr::read_rds() |>
           dplyr::select(-index_id) |> # remove index_id
-          set_id(id = "id")
+          set_id_var(id = "id")
       }
     )
   }

@@ -81,9 +81,10 @@ dmcmc <-
   "https://osf.io/download/rtw5k" |>
   load_curve_params() |>
   dplyr::filter(
-    iter <= 50, # reduce number of mcmc samples for speed
+    iter <= 100, # reduce number of mcmc samples for speed
     antigen_iso %in% antibodies
-  ) 
+  ) |> 
+  mutate(t1 = 0)
 # |> 
   # mutate(
   #   alpha = alpha |> units::as_units("1/days"),
@@ -101,22 +102,29 @@ of model parameters using a `autoplot.curve_params()` method for the
 dmcmc |> 
   filter(antigen_iso == "HlyE_IgG") |> 
   graph.curve.params(show_all_curves = TRUE,
+                     show_quantiles = FALSE,
                      log_x = FALSE)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-dmcmc |> autoplot(log_x = TRUE, n_curves = 50)
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgG") |> 
+  graph.curve.params(show_all_curves = TRUE,
+                     show_quantiles = FALSE,
+                     log_x = TRUE)
 ```
 
-We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
+We can graph the median, 10%, and 90% quantiles of the model:
 
 ```{r, "graph-curve-params"}
 
-dmcmc |>
-graph.curve.params(antigen_isos = antibodies) |>
-  print()
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgG") |> 
+  graph.curve.params(show_all_curves = TRUE,
+                     show_quantiles = TRUE,
+                     log_x = FALSE)
 ```
 
 

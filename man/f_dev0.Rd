@@ -29,7 +29,7 @@ for one antigen:isotype pair and one incidence rate
 interface with C lib \code{serocalc.so}
 }
 \examples{
-\donttest{
+# \donttest{
 library(dplyr)
 library(tibble)
 
@@ -83,6 +83,6 @@ f_dev0(
     lnpars = cur_curve_params,
     cond = cur_noise_params
   )
-}
+# }
 }
 \keyword{internal}

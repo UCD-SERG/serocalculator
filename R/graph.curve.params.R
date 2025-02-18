@@ -196,8 +196,8 @@ graph.curve.params <- function( # nolint: object_name_linter
     plot1 <-
       plot1 +
       ggplot2::scale_x_log10(
-        # labels = scales::label_comma(),
-        # minor_breaks = NULL
+        labels = scales::label_comma(),
+        minor_breaks = NULL
       )
   }
 

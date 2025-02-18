@@ -40,6 +40,9 @@ ids_varname <- function(object, ...) {
   return(id_var)
 }
 
+# old name: unexported
+get_id_var <- ids_varname
+
 #' Get person IDs
 #'
 #' @param object a [data.frame()]
@@ -55,3 +58,6 @@ ids <- function(object, ...) {
   id_data <- object[[id_var_name]]
   return(id_data)
 }
+
+# old name: unexported
+get_id <- ids

@@ -43,6 +43,7 @@ get_values <- function(object, ...) {
   return(value_data)
 }
 
+# old name: unexported
 get_value <- get_values
 
 #' Extract biomarker levels

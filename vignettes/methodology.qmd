@@ -1,10 +1,11 @@
 ---
-title: "Methodology"
+title: "Estimating Incidence Rates from Cross-Sectional Serosurveys"
 vignette: >
-  %\VignetteIndexEntry{Methodology}
+  %\VignetteIndexEntry{Estimating Incidence Rates from Cross-Sectional Serosurveys}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
+author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Public Health Sciences, UC Davis
 ---
 
 {{< include articles/_macros.qmd >}}
@@ -173,6 +174,8 @@ produce estimates that are:
 - accurate
 - timely
 - cost-efficient
+
+See @HAY2024100806 for overview
 
 # Estimating incidence from cross-sectional serosurveys
 

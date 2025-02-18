@@ -58,9 +58,9 @@ compared to the other terms in the model.
 
 ## Model for post-infection antibody decay
 
-* $$b(t) = 0$$
+$$b(t) = 0$$
 
-* $$y^{\prime}(t) = -\alpha y(t)^r$$
+$$y^{\prime}(t) = -\alpha y(t)^r$$
 
 ::: notes
 Antibody decay is different from exponential (log--linear) decay. 
@@ -187,6 +187,8 @@ generate_svg(code, filename = "man/figures/qr_akm2.svg")
 ```
 
 ![QR code for shiny app](../man/figures/qr_akm2.svg)
+
+https://ucdserg.shinyapps.io/antibody-kinetics-model-2/
 
 ## Biological noise
 

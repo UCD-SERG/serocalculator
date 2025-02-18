@@ -2,7 +2,6 @@
 #' @inheritParams antibody_decay_curve
 #' @inheritDotParams t1f
 #' @returns a [numeric()] vector
-#' @export
 #'
 #' @examples
 #' y1f(y0 = 1, mu_y = 1, t1 = 10)

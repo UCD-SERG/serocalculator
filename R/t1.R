@@ -2,7 +2,6 @@
 #'
 #' @inheritParams antibody_decay_curve
 #' @returns a [numeric()] vector
-#' @export
 #'
 #' @examples
 #' t1f(

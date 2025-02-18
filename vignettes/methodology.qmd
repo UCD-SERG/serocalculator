@@ -9,20 +9,59 @@ bibliography: references.bib
 
 {{< include articles/_macros.qmd >}}
 
-# Overview
+# Infectious disease epidemiology
+
+## Shigella ("dysentery")
+  * ~100 million infections annually
+  * ~100,000 deaths annually. 
+  * Most cases and deaths:
+     - children under the age of five 
+     - low- and middle-income countries (LMICs)
+     - health systems are resource-constrained.
+
+## Orientia tsutsugamushi ("scrub typhus")
+
+::: {.columns}
+
+:::: {.column width="60%"}
+
+  * More than 1,000,000 infections/year
+  * ~10,000 deaths/year
+
+
+::::
+
+:::: {.column width="40%"}
+
+![Trombicula mite](../man/figures/Trombicula-mite-larva-with_stylostome-2.jpg)
+
+::::
+
+:::
 
 ## Defining incidence
+
+::: {#def-incidence}
+
+#### Population incidence rate
 
 The **incidence rate** of a disease over a **specific time period** is 
 the rate at which individuals in a population are *acquiring* the disease 
 during that time period [@Noordzij2010diseasemeasures].
+:::
 
-**Example:**
-if there are **10 new cases** of typhoid 
+---
+
+::: {#exm-incidence-rate}
+
+#### Population incidence rate
+
+If there are **10 new cases** of typhoid 
 in a population of **1000 persons** 
 during a **one month** time period, 
-then the incidence rate for that time period is
+then the **incidence rate** for that time period is
 **10 new cases per 1000 persons per month**.
+:::
 
 ## Mathematical definition of incidence {visibility="hidden"}
 
@@ -64,30 +103,26 @@ is the instantaneous **probability** (density) of
 
 * Notation: let's use **$\lambda_{t}$** to denote the incidence rate at time $t$.
 
-## Study designs for estimating incidence rates
+# Study designs for estimating incidence rates
 
-### Longitudinal cohort studies
+## Longitudinal cohort studies
 
-::: notes
 Incidence rates can be estimated from longitudinal cohort studies,
-but cohort studies are: 
-:::
+but cohort studies are:
 
 - costly to conduct
 - slow to produce results, 
 - vulnerable to selection and censoring (drop-out) biases
 
-### Clinical case data
+## Clinical case data
 
-::: notes
 Incidence rates can also be estimated from clinical case rates,
 but clinical case rates undercount:
-:::
 
 - asymptomatic cases
 - symptomatic cases who don't receive clinical care.
 
-### Cross-sectional serosurveys
+## Cross-sectional serosurveys
 
 ::: notes
 
@@ -179,24 +214,29 @@ modeling the effects of re-exposure during an active infection is
 
 Under those assumptions:
 
-::: incremental
+. . .
 
 * $T$ has an **exponential distribution**:
 
 . . . 
 
-$$\pdf(T=t) = \lambda \expf{-\lambda t}$$
+$$\pdf(T=t) =  \red{\lambda\expf{-\lambda t}}$$
 
 . . .
 
   * More precisely, the distribution is exponential 
   **truncated by age** at observation ($a$):
 
-$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
+. . .
+
+$$
+\pdf(T=t|A=a) = 1_{t \in[0,a]} \red{\lambda \expf{-\lambda t}} + 
+1_{t = \NA} \expf{-\lambda a}
+$$
+
+. . .
 
 * the rate parameter $\lambda$ is the incidence rate
-
-:::
 
 ::: notes
 This is a time-to-event model, 

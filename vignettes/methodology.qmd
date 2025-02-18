@@ -11,30 +11,65 @@ bibliography: references.bib
 
 # Infectious disease epidemiology
 
-## Shigella ("dysentery")
-  * ~100 million infections annually
-  * ~100,000 deaths annually. 
-  * Most cases and deaths:
-     - children under the age of five 
-     - low- and middle-income countries (LMICs)
-     - health systems are resource-constrained.
-
-## Orientia tsutsugamushi ("scrub typhus")
+## *Salmonella* enterica ("typhoid fever")
 
 ::: {.columns}
 
-:::: {.column width="60%"}
+::: {.column width="60%"}
 
-  * More than 1,000,000 infections/year
+* ~21.7 million symptomatic cases/year
+* ~217,000 deaths/year
+* mostly 5-19 years old
+
+:::
+
+::: {.column width="40%"}
+![](../man/figures/SalmonellaTyphiFlagellarStain.jpg)
+![](../man/figures/Fievre_typhoide.png)
+
+:::
+
+:::
+
+## *Shigella* ("dysentery")
+
+::: {.columns}
+
+:::: {.column width="50%"}
+
+  * ~100 million infections annually
+  * ~100,000 deaths annually. 
+  * Most cases and deaths: children under the age of five 
+  in low- and middle-income countries (LMICs), 
+  where health systems are resource-constrained.
+     
+::::
+
+:::: {.column width="50%"}
+
+![](../man/figures/Shigella_stool.jpg)
+![](../man/figures/41579_2024_1126_Fig1_HTML copy.png)
+::::
+
+:::
+
+## *Orientia tsutsugamushi* ("scrub typhus")
+
+::: {.columns}
+
+:::: {.column width="50%"}
+
+  * ~1,000,000 infections/year
   * ~10,000 deaths/year
+  * fever, headache, muscle pain, cough, gastrointestinal symptoms,  hemorrhaging
 
 
 ::::
 
-:::: {.column width="40%"}
+:::: {.column width="50%"}
 
-![Trombicula mite](../man/figures/Trombicula-mite-larva-with_stylostome-2.jpg)
-
+![Trombicula mite](../man/figures/Trombicula-mite-larva-with_stylostome-2.jpg){height=50%}
+![](../man/figures/340149_1_En_16_Fig6_HTML.webp)
 ::::
 
 :::
@@ -267,11 +302,41 @@ Here's what that would look like:
 :::
 
 ```{r}
-#| fig-cap: "Example log-likelihood curves"
+#| fig-cap: "log-likelihood curve for latent data"
 #| label: fig-ex-lik-curves
-antibodies <- c("HlyE_IgA", "HlyE_IgG")
+library(serodynamics)
 library(serocalculator)
 library(dplyr)
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+set.seed(1)
+
+sim_case_data <-
+  serocalculator::typhoid_curves_nostrat_100 |>
+  sim_case_data(n = 5, 
+                antigen_isos = antibodies,
+                max_n_obs = 20, followup_interval = 14)
+
+t1 = sim_case_data$timeindays
+loglik0 = function(lambda) {
+  sum(
+    dexp(t1, rate = lambda, log = TRUE)
+  )
+}
+loglik1 = Vectorize(loglik0, vectorize.args = "lambda")
+
+library(ggplot2)
+
+ggplot() + 
+  geom_function(fun = loglik1) +
+  xlim(0, .1) +
+  theme_bw() +
+  xlab("lambda") +
+  ylab("log-likelihood")
+
+```
+
+```{r}
+#| include: false
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" %>%
@@ -285,38 +350,6 @@ xs_data <-
   load_pop_data()
 
 noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
-```
-
-```{r}
-#| fig-cap: "Example log(likelihood) curves"
-#| label: fig-loglik
-lik_HlyE_IgA <- graph_loglik(
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgA",
-  log_x = TRUE
-)
-
-lik_HlyE_IgG <- graph_loglik(
-  previous_plot = lik_HlyE_IgA,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgG",
-  log_x = TRUE
-)
-
-lik_both <- graph_loglik(
-  previous_plot = lik_HlyE_IgG,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  log_x = TRUE
-)
-
-print(lik_both)
 ```
 
 ## standard error
@@ -376,13 +409,6 @@ That is:
 
 ::: {#fig-sim-case-data}
 ```{r}
-set.seed(1)
-library(serodynamics)
-sim_case_data <-
-  serocalculator::typhoid_curves_nostrat_100 |>
-  sim_case_data(n = 5, 
-                antigen_isos = antibodies,
-                max_n_obs = 20, followup_interval = 14)
 
 sim_case_data |>
   autoplot(alpha = .5)
@@ -490,6 +516,41 @@ to find the MLE and corresponding standard error.
 {{< include articles/_antibody-response-model.qmd >}}
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->
+
+## Multiple biomarkers
+
+```{r}
+#| fig-cap: "Example log(likelihood) curves"
+#| label: fig-loglik
+lik_HlyE_IgA <- graph_loglik(
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgA",
+  log_x = TRUE
+)
+
+lik_HlyE_IgG <- graph_loglik(
+  previous_plot = lik_HlyE_IgA,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgG",
+  log_x = TRUE
+)
+
+lik_both <- graph_loglik(
+  previous_plot = lik_HlyE_IgG,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  log_x = TRUE
+)
+
+print(lik_both)
+```
+
 
 ## References {.smaller .unnumbered}
 

@@ -6,7 +6,9 @@ set_id <- function(object,
   if (id %in% colnames(object)) {
     attr(object, "id_var") <- id
   } else {
-    cli::cli_warn("The specified {.var id} column {.val {id}} does not exist.")
+    cli::cli_warn(
+      "The specified {.var id} column {.val {id}} does not exist."
+    )
 
     # search id variable from object
     id_var <-

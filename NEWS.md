@@ -167,10 +167,10 @@ to avoid printing an OK message.
   - `set_id()`
   - `get_age()`
   - `get_values()`
-  - `get_id()`
+  - `get_person_ids()`
   - `get_age_var()`
   - `get_values_var()`
-  - `get_id_var()`
+  - `get_person_id_varname()`
   
 * Added additional warnings to `load_pop_data()`
 

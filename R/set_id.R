@@ -1,3 +1,22 @@
+#' Specify person ID column
+#' @description
+#' Sets the `id_var` metadata attribute of `object`
+#' @param object a [data.frame]
+#' @param id [character] string at least partially matching a column
+#' in `object`
+#' @param standardize whether to rename the column specified by `id`
+#' to "id"
+#' @param ... unused
+#'
+#' @returns a modified version of `object`
+#' @export
+#' @keywords internal
+#'
+#' @examples
+#' serocalculator_example("example_pop_data.rds") |>
+#'   readr::read_rds() |>
+#'     set_id(id = "index_id") |>
+#'     attr("id_var")
 set_id <- function(object,
                    id = "index_id",
                    standardize = TRUE,

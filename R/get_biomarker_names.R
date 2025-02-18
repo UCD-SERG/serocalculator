@@ -6,7 +6,7 @@
 #'
 #' @returns a [character] or [factor] [vector] of biomarker names
 #' @export
-#'
+#' @keywords internal
 #' @examples
 #' sees_pop_data_100 |> get_biomarker_names() |> head()
 get_biomarker_names <- function(object, ...) {

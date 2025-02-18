@@ -20,3 +20,4 @@ Get person IDs
 \examples{
 ids(sees_pop_data_pk_100)
 }
+\keyword{internal}

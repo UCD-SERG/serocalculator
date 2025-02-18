@@ -20,3 +20,4 @@ Extract biomarker names column
 \examples{
 sees_pop_data_100 |> get_biomarker_names() |> head()
 }
+\keyword{internal}

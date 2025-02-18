@@ -6,7 +6,7 @@
 #' @returns a [character] string containing the person ID column,
 #' as recorded in the metadata of `object`
 #' @export
-#'
+#' @keywords internal
 #' @examples
 #' ids_varname(sees_pop_data_pk_100)
 ids_varname <- function(object, ...) {
@@ -47,7 +47,7 @@ ids_varname <- function(object, ...) {
 #'
 #' @returns a [character] [vector]
 #' @export
-#'
+#' @keywords internal
 #' @examples
 #' ids(sees_pop_data_pk_100)
 ids <- function(object, ...) {

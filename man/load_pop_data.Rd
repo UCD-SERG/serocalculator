@@ -4,22 +4,32 @@
 \alias{load_pop_data}
 \title{Load a cross-sectional antibody survey data set}
 \usage{
-load_pop_data(file_path, antigen_isos = NULL)
+load_pop_data(file_path, ...)
 }
 \arguments{
-\item{file_path}{path to an RDS file containing a cross-sectional antibody survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
+\item{file_path}{path to an RDS file containing a cross-sectional antibody
+survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
-\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
+\item{...}{
+  Arguments passed on to \code{\link[=as_pop_data]{as_pop_data}}
+  \describe{
+    \item{\code{data}}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
+    \item{\code{antigen_isos}}{\code{\link[=character]{character()}}
+vector of antigen isotypes to be used in analyses}
+    \item{\code{age}}{a \code{\link[=character]{character()}} identifying the age column}
+    \item{\code{id}}{a \code{\link[=character]{character()}} identifying the id column}
+    \item{\code{value}}{a \code{\link[=character]{character()}} identifying the value column}
+    \item{\code{standardize}}{a \code{\link[=logical]{logical()}} to determine standardization of columns}
+  }}
 }
 \value{
-a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})
+a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attributes)
 }
 \description{
 Load a cross-sectional antibody survey data set
 }
 \examples{
-xs_data = load_pop_data("https://osf.io/download//n6cp3/")
+xs_data <- load_pop_data(serocalculator_example("example_pop_data.rds"))
+
 print(xs_data)
-
-
 }

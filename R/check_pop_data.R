@@ -1,35 +1,55 @@
 #' Check the formatting of a cross-sectional antibody survey dataset.
 #'
 #' @param pop_data dataset to check
-#'
+#' @param verbose whether to print an "OK" message when all checks pass
 #' @returns NULL (invisibly)
 #' @export
 #' @examples
-#' library(dplyr)
+#' library(magrittr)
 #'
-#' #Import cross-sectional data from OSF and rename required variables
 #' xs_data <-
-#'  "https://osf.io/download//n6cp3/" %>%
-#'   load_pop_data() %>%
-#'   clean_pop_data()
+#'   serocalculator_example("example_pop_data.csv") %>%
+#'   read.csv() %>%
+#'   as_pop_data()
 #'
-#'   xs_data %>% check_pop_data()
+#' check_pop_data(xs_data, verbose = TRUE)
 #'
-check_pop_data <- function(pop_data)
-{
+check_pop_data <- function(pop_data, verbose = FALSE) {
   if (!is.data.frame(pop_data)) {
-    stop(.pasteN("Argument `pop_data` is not a `data.frame()`.",
-                 "Provide a `data.frame()` with cross-sectional serology data per antigen isotype."))
+    cli::cli_abort(
+      class = "not a data.frame",
+      message = c(
+        "Argument `pop_data` is not a `data.frame()`.",
+        "Provide a `data.frame()` with cross-sectional serology
+        data per antigen isotype."
+      )
+    )
   }
 
-  if (!is.element("age", names(pop_data))) {
-    stop("Argument `pop_data` is missing column `age` (age, in years).")
+  missing_age <- is.element(
+    pop_data %>% get_age_var(),
+    pop_data %>% names()
+  )
+
+  if (!missing_age) {
+    "Argument {.arg pop_data} is missing column
+    {.var {pop_data %>% get_age_var()}}(age, in years)" %>%
+      cli::cli_abort(class = "missing-var")
   }
 
-  if (!is.element("value", names(pop_data))) {
-    stop("Argument `pop_data` is missing column `value` (antibody measurement).")
+  missing_value <- is.element(
+    pop_data %>% get_values_var(),
+    pop_data %>% names()
+  )
+
+  if (!missing_value) {
+    "Argument {.arg pop_data} is missing column
+    {.var {pop_data %>% get_values_var()}} (antibody measurement)" %>%
+      cli::cli_abort(class = "missing-var")
   }
 
-  message("data format is as expected.")
+  if (verbose) {
+    cli::cli_inform("data format is as expected.")
+  }
   invisible(NULL)
 }

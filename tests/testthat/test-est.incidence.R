@@ -1,60 +1,35 @@
+test_that("est.incidence() produces expected results for typhoid data", {
+  typhoid_results <- est.incidence(
+    pop_data = sees_pop_data_pk_100,
+    curve_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  expect_snapshot(x = summary(typhoid_results, coverage = .95))
+
+  expect_snapshot_value(typhoid_results, style = "deparse", tolerance = 1e-4)
+
+})
+
 test_that(
-  "est.incidence() produces expected results for typhoid data",
+  "`est.incidence()` produces consistent results
+          regardless of whether data colnames are standardized.",
   {
+    est_true <- est.incidence(
+      pop_data = sees_pop_data_pk_100,
+      curve_param = typhoid_curves_nostrat_100,
+      noise_param = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    )
 
-    skip(message = "Skipping test of `est.incidence()` for now, because github was producing miniscule differences in SE (and thus CIs) for some reason that I don't have time to hunt down.")
+    est_false <- est.incidence(
+      pop_data = sees_pop_data_pk_100_old_names,
+      curve_param = typhoid_curves_nostrat_100,
+      noise_param = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+    )
 
-    library(readr)
-    library(dplyr)
-    c.hlye.IgG <-
-      fs::path_package(
-        "extdata",
-        "dmcmc_hlyeigg_09.30.rds",
-        package = "serocalculator") %>% #Load longitudinal parameters dataset
-      readRDS()%>%
-      select(y1, alpha, r, antigen_iso)
-
-    p.hlye.IgG  <-
-      fs::path_package(
-        package = "serocalculator",
-        "extdata/simpophlyeigg.2.csv") %>% #Load simulated cross-sectional dataset
-      read_csv(
-        col_types = cols(
-          a.smpl = col_double(),
-          y.smpl = col_double(),
-          i = col_double(),
-          t = col_double()
-        )
-      ) %>%
-      rename( #rename variables
-        y = y.smpl,
-        a = a.smpl) %>%
-      select(y, a) %>%
-      mutate(antigen_iso = "HlyE_IgG")
-
-    cond.hlye.IgG <- data.frame(
-      nu = 1.027239,             # B noise
-      eps = 0.2,            # M noise
-      y.low = 0.0,          # low cutoff
-      y.high = 5e4,
-      antigen_iso = "HlyE_IgG");
-
-    start <- .05
-
-    fit = est.incidence(
-      dpop = p.hlye.IgG,
-      dmcmc = c.hlye.IgG,
-      c.age = NULL,
-      antigen_isos = "HlyE_IgG",
-      noise_params = cond.hlye.IgG,
-      start = start,
-      print.level = 2,
-      iterlim = 100,
-      stepmax = 1)
-
-    # compare with `typhoid_results` from data-raw/typhoid_results.qmd
-
-    expect_equal(
-      object = fit,
-      expected = typhoid_results)
-  })
+    expect_equal(est_true, est_false)
+  }
+)

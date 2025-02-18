@@ -21,33 +21,45 @@ est.incidence.by(
 )
 }
 \arguments{
-\item{pop_data}{\code{\link[=data.frame]{data.frame()}} with cross-sectional serology data per antibody and age, and additional columns to identify possible \code{strata}.}
+\item{pop_data}{a \link{data.frame} with cross-sectional serology data per
+antibody and age, and additional columns corresponding to
+each element of the \code{strata} input}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:
 \itemize{
-\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype combinations
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype
+combinations
 \item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
 \item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
 \item \code{y1}: antibody peak level (ELISA units)
 \item \code{t1}: duration of infection
-\item \code{alpha}: antibody decay rate (1/days for the current longitudinal parameter sets)
+\item \code{alpha}: antibody decay rate
+(1/days for the current longitudinal parameter sets)
 \item \code{r}: shape factor of antibody decay
 }}
 
-\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}}) containing the following variables, specifying noise parameters for each antigen isotype:
+\item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}})
+containing the following variables,
+specifying noise parameters for each antigen isotype:
 \itemize{
-\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified on each row
+\item \code{antigen_iso}: antigen isotype whose noise parameters are being specified
+on each row
 \item \code{nu}: biological noise
 \item \code{eps}: measurement noise
 \item \code{y.low}: lower limit of detection for the current antigen isotype
 \item \code{y.high}: upper limit of detection for the current antigen isotype
 }}
 
-\item{strata}{Character vector of stratum-defining variables. Values must be variable names in \code{pop_data}.}
+\item{strata}{a \link{character} vector of stratum-defining variables.
+Values must be variable names in \code{pop_data}.}
 
-\item{curve_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{curve_params}. Default = "".}
+\item{curve_strata_varnames}{A subset of \code{strata}.
+Values must be variable names in \code{curve_params}. Default = "".}
 
-\item{noise_strata_varnames}{A subset of \code{strata}. Values must be variable names in \code{noise_params}. Default = "".}
+\item{noise_strata_varnames}{A subset of \code{strata}.
+Values must be variable names in \code{noise_params}. Default = "".}
 
 \item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
 
@@ -55,7 +67,10 @@ est.incidence.by(
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
-\item{num_cores}{Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package \pkg{parallel} is available, then the computations are executed in parallel. Default = 1L.}
+\item{num_cores}{Number of processor cores to use for
+calculations when computing by strata. If set to
+more than 1 and package \pkg{parallel} is available,
+then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
@@ -93,34 +108,51 @@ est.incidence.by(
 \value{
 \itemize{
 \item if \code{strata} has meaningful inputs:
-An object of class \code{"seroincidence.by"}; i.e., a list of \code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum, with some meta-data attributes.
+An object of class \code{"seroincidence.by"}; i.e., a list of
+\code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
+with some meta-data attributes.
 \item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
 An object of class \code{"seroincidence"}.
 }
 }
 \description{
-Function to estimate seroincidences based on cross-section serology data and longitudinal
+Function to estimate seroincidences based on cross-sectional
+serology data and longitudinal
 response model.
 }
 \details{
-If \code{strata} is left empty, a warning will be produced, recommending that you use \code{est.incidence()} for unstratified analyses, and then the data will be passed to \code{est.incidence()}. If for some reason you want to use \code{est.incidence.by()} with no strata instead of calling \code{est.incidence()}, you may use \code{NA}, \code{NULL}, or "" as the \code{strata} argument to avoid that warning.
+If \code{strata} is left empty, a warning will be produced,
+recommending that you use \code{\link[=est.incidence]{est.incidence()}} for unstratified analyses,
+and then the data will be passed to \code{\link[=est.incidence]{est.incidence()}}.
+If for some reason you want to use \code{\link[=est.incidence.by]{est.incidence.by()}}
+with no strata instead of calling \code{\link[=est.incidence]{est.incidence()}},
+you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata}
+argument to avoid that warning.
 }
 \examples{
+
 library(dplyr)
 
-xs_data = load_pop_data("https://osf.io/download//n6cp3/") \%>\%
-  clean_pop_data()
-curve = load_curve_params("https://osf.io/download/rtw5k/")
-noise = load_noise_params("https://osf.io/download//hqy4v/")
+xs_data <-
+  sees_pop_data_pk_100
 
-est2 = est.incidence.by(
-strata = c("catchment"),
-pop_data = xs_data \%>\% filter(Country == "Pakistan"),
-curve_params = curve,
-noise_params = noise \%>\% filter(Country == "Pakistan"),
-antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#num_cores = 8 #Allow for parallel processing to decrease run time
+curve <-
+  typhoid_curves_nostrat_100 \%>\%
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+est2 <- est.incidence.by(
+  strata = "catchment",
+  pop_data = xs_data,
+  curve_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  # num_cores = 8 # Allow for parallel processing to decrease run time
+  iterlim = 5 # limit iterations for the purpose of this example
 )
-
+print(est2)
 summary(est2)
+
 }

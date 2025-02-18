@@ -18,7 +18,7 @@ antibody_decay_curve(
 \arguments{
 \item{t}{time since infection}
 
-\item{y0}{initial antibody concnetration}
+\item{y0}{initial antibody concentration}
 
 \item{b0}{initial bacteria concentration}
 

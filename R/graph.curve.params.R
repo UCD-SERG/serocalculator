@@ -1,37 +1,52 @@
 #' Graph estimated antibody decay curve
 #'
-#' @param curve_params a [data.frame()] containing MCMC samples of antibody decay curve parameters
+#' @param curve_params
+#' a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #' @param verbose verbose output
+#' @param show_all_curves whether to show individual curves under quantiles
 #' @param antigen_isos antigen isotypes
+#' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
+#' (has no effect if `show_all_curves = FALSE`)
+#' @param show_quantiles whether to show point-wise (over time) quantiles
+#'
 #' @returns a [ggplot2::ggplot()] object
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
-#' plot1 = graph.curve.params(curve_params)
+#' curve <-
+#'   typhoid_curves_nostrat_100 |>
+#'   dplyr::filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+#'
+#' plot1 <- graph.curve.params(curve)
+#'
 #' print(plot1)
-#' }
-graph.curve.params = function(
-    curve_params,
-    antigen_isos = unique(curve_params$antigen_iso),
-    verbose = FALSE)
-{
-
-  if (verbose)
+#'
+#' plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
+#' show(plot2)
+#'
+graph.curve.params <- function( # nolint: object_name_linter
+  curve_params,
+  antigen_isos = unique(curve_params$antigen_iso),
+  verbose = FALSE,
+  show_quantiles = TRUE,
+  show_all_curves = FALSE,
+  alpha_samples = 0.3
+) {
+  if (verbose) {
     message(
       "Graphing curves for antigen isotypes: ",
-      paste(antigen_isos, collapse = ", "))
+      paste(antigen_isos, collapse = ", ")
+    )
+  }
 
-  curve_params = curve_params %>%
+  curve_params <- curve_params |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
-  day2yr <- 365.25
+  tx2 <- 10^seq(-1, 3.1, 0.025)
 
-  tx2 <- 10 ^ seq(-1, 3.1, 0.025)
-
-  bt <- function(y0, y1, t1)
+  bt <- function(y0, y1, t1) {
     log(y1 / y0) / t1
+  }
 
   # uses r > 1 scale for shape
   ab <- function(t, y0, y1, t1, alpha, shape) {
@@ -39,64 +54,66 @@ graph.curve.params = function(
 
     yt <- 0
 
-    if (t <= t1)
+    if (t <= t1) {
       yt <- y0 * exp(beta * t)
+    }
 
-    if (t > t1)
-      yt <- (y1 ^ (1 - shape) - (1 - shape) * alpha * (t - t1)) ^ (1 / (1 - shape))
+    if (t > t1) {
+      yt <- (y1^(1 - shape) - (1 - shape) * alpha * (t - t1))^(1 / (1 - shape))
+    }
 
     return(yt)
-
   }
 
 
   d <- curve_params
-  # %>%
-  #   mutate(alpha = .data$alpha / day2yr)
 
-
-
-  dT <-
-    data.frame(t = tx2) %>%
-    mutate(ID = 1:n()) %>%
+  dT <- # nolint: object_linter
+    data.frame(t = tx2) |>
+    mutate(ID = dplyr::row_number()) |>
     pivot_wider(
-      names_from = .data$ID,
-      values_from = .data$t,
+      names_from = "ID",
+      values_from = "t",
       names_prefix = "time"
-    ) %>%
+    ) |>
     dplyr::slice(
-      rep(1:dplyr::n(),
-          each = nrow(d)))
+      rep(
+        seq_len(dplyr::n()),
+        each = nrow(d)
+      )
+    )
 
 
-  serocourse.all <-
-    cbind(d, dT)  %>%
+  serocourse_all <-
+    cbind(d, dT) |>
     tidyr::pivot_longer(
       cols = dplyr::starts_with("time"),
-      values_to = "t") %>%
-    select(-"name")  %>%
-    rowwise() %>%
+      values_to = "t"
+    ) |>
+    select(-"name") |>
+    rowwise() |>
     mutate(res = ab(
       .data$t,
       .data$y0,
       .data$y1,
       .data$t1,
       .data$alpha,
-      .data$r)) %>%
+      .data$r
+    )) |>
     ungroup()
 
-  if (verbose) message('starting to compute quantiles')
-  serocourse.sum <- serocourse.all %>%
+  if (verbose) message("starting to compute quantiles")
+  serocourse_sum <- serocourse_all |>
     summarise(
       .by = c("antigen_iso", "t"),
-      res.med  = quantile(.data$res, 0.5),
-      res.low  = quantile(.data$res, 0.025),
+      res.med = quantile(.data$res, 0.5),
+      res.low = quantile(.data$res, 0.025),
       res.high = quantile(.data$res, 0.975),
-      res.p75  = quantile(.data$res, 0.75),
-      res.p25  = quantile(.data$res, 0.25),
-      res.p10  = quantile(.data$res, 0.10),
-      res.p90  = quantile(.data$res, 0.90)
-    ) %>%
+      res.p75 = quantile(.data$res, 0.75),
+      res.p25 = quantile(.data$res, 0.25),
+      res.p10 = quantile(.data$res, 0.10),
+      res.p90 = quantile(.data$res, 0.90)
+    ) |>
     pivot_longer(
       names_to = "quantile",
       cols = c(
@@ -113,49 +130,102 @@ graph.curve.params = function(
     )
 
 
+  range <-
+    serocourse_sum |>
+    dplyr::filter(.data$quantile %in% c("med", "p10", "p90")) |>
+    dplyr::summarize(
+      min = min(.data$res, 0.9),
+      max = max(.data$res, 2000)
+    )
 
-  ggplot2::ggplot() +
-    ggplot2::geom_line(
-      data = serocourse.sum %>%
-        filter(.data$quantile == "med") ,
-      ggplot2::aes(
-        x = .data$t,
-        y = .data$res),
-      linewidth = 1
-    ) +
-    ggplot2::geom_line(
-      data = serocourse.sum %>% filter(quantile == "p10") ,
-      ggplot2::aes(
-        x = .data$t,
-        y = .data$res),
-      linewidth = .5
-    ) +
-    ggplot2::geom_line(
-      data = serocourse.sum %>%
-        filter(quantile == "p90") ,
-      ggplot2::aes(
-        x = .data$t,
-        y = .data$res),
-      linewidth = .5
-    ) +
+
+  plot1 <-
+    serocourse_sum |>
+    ggplot2::ggplot() +
+    ggplot2::aes(x = .data$t,
+                 y = .data$res) +
     ggplot2::facet_wrap(
       ~ .data$antigen_iso,
-      ncol = 2) +
-    ggplot2::scale_y_log10(
-      limits = c(0.9, 2000),
-      breaks = c(1, 10, 100, 1000),
-      minor_breaks = NULL
+      ncol = 2
     ) +
-    ggplot2::theme_minimal()  +
+    ggplot2::theme_minimal() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
-    ggplot2::labs(x = "Days since fever onset", y = "ELISA units")
+    ggplot2::labs(x = "Days since fever onset",
+                  y = "ELISA units",
+                  col = if_else(show_all_curves, "MCMC chain", "")) +
+    ggplot2::theme(legend.position = "bottom")
+
+  if (show_all_curves) {
+
+    range <-
+      serocourse_all |>
+      dplyr::summarize(
+        min = min(.data$res, 0.9),
+        max = max(.data$res, 2000)
+      )
+
+    group_vars <-
+      c("iter", "chain") |>
+      intersect(names(serocourse_all))
+
+    if (length(group_vars) > 1) {
+      serocourse_all <-
+        serocourse_all |>
+        mutate(
+          iter = interaction(across(all_of(group_vars)))
+        )
+      plot1 <-
+        plot1 +
+        geom_line(
+          data = serocourse_all,
+          alpha = alpha_samples,
+          aes(
+            color = .data$chain |> factor(),
+            group = .data$iter
+          )
+        ) +
+        ggplot2::expand_limits(y = range)
+    } else {
+
+      plot1 <-
+        plot1 +
+        geom_line(data = serocourse_all,
+                  alpha = alpha_samples,
+                  aes(group = .data$iter)) +
+        ggplot2::expand_limits(y = range)
+
+    }
+
+  }
+
+  plot1 <-
+    plot1 +
+    ggplot2::scale_y_log10(
+      limits = unlist(range),
+      labels = scales::label_comma(),
+      minor_breaks = NULL
+    )
+
+  if (show_quantiles) {
+    plot1 <-
+      plot1 +
+      ggplot2::geom_line(
+        ggplot2::aes(col = "median"),
+        data = serocourse_sum |> filter(.data$quantile == "med"),
+        linewidth = 1
+      ) +
+      ggplot2::geom_line(
+        ggplot2::aes(col = "10% quantile"),
+        data = serocourse_sum |> filter(quantile == "p10"),
+        linewidth = .5
+      ) +
+      ggplot2::geom_line(
+        ggplot2::aes(col = "90% quantile"),
+        data = serocourse_sum |> filter(quantile == "p90"),
+        linewidth = .5
+      )
+  }
+
+  return(plot1)
 
 }
-
-# ggplot() +
-#   geom_line(data = serocourse.all, aes(x= t, y = res, group = iter)) +
-#   facet_wrap(~antigen_iso, ncol=2) +
-#   scale_y_log10(limits = c(0.9, 2000), breaks = c(1, 10, 100, 1000), minor_breaks = NULL) +
-#   theme_minimal()  +
-#   theme(axis.line=element_line()) +
-#   labs(x="Days since fever onset", y="ELISA units")

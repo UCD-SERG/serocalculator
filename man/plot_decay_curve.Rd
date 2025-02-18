@@ -4,7 +4,13 @@
 \alias{plot_decay_curve}
 \title{Plot a decay function}
 \usage{
-plot_decay_curve(decay_function, ..., xmax = 100, ymax = NA, title = "")
+plot_decay_curve(
+  decay_function = antibody_decay_curve,
+  ...,
+  xmax = 100,
+  ymax = NA,
+  title = ""
+)
 }
 \arguments{
 \item{decay_function}{a function with first argument \code{t}}

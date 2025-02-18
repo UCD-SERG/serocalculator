@@ -1,57 +1,99 @@
 #'
-#' @title Summarize a cross-sectional antibody survey data set
+#' @title Summarize cross-sectional antibody survey data
 #' @description
-#' This function is a `summary()` method for `pop_data` objects
+#' [summary()] method for `pop_data` objects
 #'
-#' @param object a `pop_data` object
+#' @param object a `pop_data` object (from [as_pop_data()])
+#' @param strata a [character()] specifying grouping column(s)
 #' @param ...  unused
 #'
-#' @returns a list containing two summary tables: one of `age` and one of `value`, stratified by `antigen_iso`
+#' @returns a `summary.pop_data` object,
+#' which is a list containing two summary tables:
+#'
+#' * `age_summary` summarizing `age`
+#' * `ab_summary` summarizing `value`, stratified by `antigen_iso`
+#'
 #' @export
 #' @examples
 #' library(dplyr)
 #'
-#' xs_data <- "https://osf.io/download//n6cp3/" %>%
-#' load_pop_data() %>%
-#' clean_pop_data()
+#' xs_data <-
+#'   sees_pop_data_pk_100
+#' summary(xs_data, strata = "catchment")
 #'
-#' xs_data %>% summary()
-#'
-summary.pop_data = function(object, ...)
-{
+summary.pop_data <- function(object, strata = NULL, ...) {
+  # get relevant columns from object
+  age_column <- object |> get_age_var()
+  value_column <- object |> get_values_var()
+  id_column <- object |> ids_varname()
 
-  ages =
-    object %>%
-    distinct(.data$id, .data$age)
+  # create a list of the columns
+  cols <- c(age_column, id_column, strata)
 
-  cat("\nn =", nrow(ages),"\n")
+  ages <-
+    object |>
+    distinct(across(all_of(cols)))
+
+  age_summary <-
+    ages |>
+    summarise(
+      .by = all_of(strata),
+      n = n(),
+      min = min(.data[[age_column]]),
+      first_quartile = quantile(.data[[age_column]], 0.25),
+      median = median(.data[[age_column]]),
+      mean = mean(.data[[age_column]]),
+      third_quartile = quantile(.data[[age_column]], 0.75),
+      max = max(.data[[age_column]])
+    )
+
+  ab_summary <- object |>
+    dplyr::summarize(
+      .by = all_of(c("antigen_iso", strata)),
+      across(
+        .cols = all_of(value_column),
+        .fns = list(
+          Min = ~ min(.x, na.rm = TRUE),
+          `1st Qu.` = ~ quantile(.x, p = .25, na.rm = TRUE),
+          Median = ~ median(.x, na.rm = TRUE),
+          `3rd Qu.` = ~ quantile(.x, p = .75, na.rm = TRUE),
+          Max = ~ max(.x, na.rm = TRUE),
+          `# NAs` = ~ is.na(.x) |> sum()
+        ),
+        .names = "{.fn}"
+      )
+    )
+
+  to_return <- list(n = nrow(ages),
+                    age_summary = age_summary,
+                    ab_summary = ab_summary)
+
+  class(to_return) <- "summary.pop_data"
+
+  return(to_return)
+}
+
+
+#' Print method for [summary.pop_data] objects
+#' @param x an object of class `"summary.pop_data"`;
+#' usually, the result of a call to [summary.pop_data()]
+#' @rdname summary.pop_data
+#' @export
+#' @keywords internal
+print.summary.pop_data <- function(x, ...) {
+  n_obs <- x$age_summary |> pull("n") |> sum()
+
+  cat("\nn =", n_obs, "\n")
 
   cat("\nDistribution of age: \n\n")
-  age_summary =
-    ages$age %>%
-    summary() %>%
-    print()
 
-  cat('\nDistributions of antigen-isotype measurements:\n\n')
+  x$age_summary |> print()
 
-  ab_summary =
-    object %>%
-    dplyr::summarize(
-      .by = .data$antigen_iso,
-      Min = .data$value %>% min(na.rm = TRUE),
-      `1st Qu.` = .data$value %>% quantile(.25, na.rm = TRUE),
-      Median = .data$value %>% median(),
-      `3rd Qu.` = .data$value %>% quantile(.75, na.rm = TRUE),
-      Max = .data$value %>% max(na.rm = TRUE),
-      `# NAs` = .data$value %>% is.na() %>% sum()
-    ) %>%
-    as.data.frame() %>%
-    print()
+  cat("\nDistributions of antigen-isotype measurements:\n\n")
 
-  to_return = list(
-    n = nrow(ages),
-    age_summary = age_summary,
-    ab_summary = ab_summary)
+  x$ab_summary |> print()
 
-  return(invisible(to_return))
+  cat("\n")
+
+  invisible(x)
 }

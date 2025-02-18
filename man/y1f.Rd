@@ -12,7 +12,7 @@ y1f(
 )
 }
 \arguments{
-\item{y0}{initial antibody concnetration}
+\item{y0}{initial antibody concentration}
 
 \item{mu_y}{antibody reproduction rate}
 

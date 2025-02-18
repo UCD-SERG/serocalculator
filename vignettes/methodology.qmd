@@ -1,0 +1,357 @@
+---
+title: "Methodology"
+vignette: >
+  %\VignetteIndexEntry{Methodology}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+---
+
+{{< include articles/_macros.qmd >}}
+
+# Overview
+
+## Defining incidence
+
+The **incidence rate** of a disease over a **specific time period** is 
+the rate at which individuals in a population are *acquiring* the disease 
+during that time period [@Noordzij2010diseasemeasures].
+
+**Example:**
+if there are **10 new cases** of typhoid 
+in a population of **1000 persons** 
+during a **one month** time period, 
+then the incidence rate for that time period is
+**10 new cases per 1000 persons per month**.
+
+## Mathematical definition of incidence {visibility="hidden"}
+
+More mathematically, 
+the incidence rate *at a given time point* is 
+the *derivative* (i.e., the current rate of change over time) 
+of the expected cumulative count of infections per person at risk, 
+at that time:
+
+$$\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]$$
+
+where $C(t)$ is the cumulative total number of infections in 
+the population of interest,
+and $N(t)$ is the number of individuals at risk at time $t$.
+
+## Scale of incidence rates {visibility="hidden"}
+
+In both definitions, 
+the units for an incidence rate are 
+"# new infections per # persons at risk per time duration"; 
+for example, "new infections per 1000 persons per year". 
+
+For convenience, 
+we can rescale the incidence rate to make it easier to understand; 
+for example, we might express incidence as 
+"# new infections per 1000 persons per year" 
+or "# new infections per 100,000 persons per day", etc.
+
+## Incidence from an individual's perspective
+
+From the perspective of an individual in the population:
+
+* the **incidence rate** (at a given time point ($t$)
+is the instantaneous **probability** (density) of 
+**becoming infected** at that time point,
+**given** that they are **at risk** at that time point.
+
+* That is, the incidence rate is a **hazard** rate.
+
+* Notation: let's use **$\lambda_{t}$** to denote the incidence rate at time $t$.
+
+# Estimating incidence from cross-sectional antibody surveys
+
+## Cross-sectional antibody surveys {.incremental}
+
+::: notes
+Typically, it is difficult to estimate changes from a single time point. 
+However, we can sometimes make assumptions that allow us to do so. 
+In particular, if we assume that the incidence rate is constant over time, 
+then we can estimate incidence from a single cross-sectional survey.
+
+We will need two pieces of notation to formalize this process.
+
+:::
+
+::: incremental
+
+* We recruit participants from the population of interest.
+
+* For each survey participant, we measure antibody levels $(Y)$ 
+for the disease of interest
+
+* Each participant was **most recently infected** at some time $(T)$
+**prior** to when we measured their antibodies.
+
+::: notes
+* If a participant has never been infected since birth, then $T$ is undefined.
+
+
+:::
+
+* $T$ is a **latent, unobserved variable**.
+
+::: notes
+* We **don't directly observe $T$**; we **only observe $Y$**, 
+which we hope tells us something about $T$ and $\lambda$.
+
+:::
+
+:::
+
+## Modeling assumptions
+
+We **assume** that:
+
+::: incremental
+
+* The incidence rate is approximately **constant** 
+**over time** and **across the population** ("**constant and homogenous incidence**")
+
+::: notes
+
+* that is:
+$$\lambda_{i,t} = \lambda, \forall i,t$$
+
+(We can analyze subpopulations separately to make homogeneity more plausible.)
+:::
+
+* Participants are always at risk of a new infection, 
+regardless of how recently they have been infected
+("**no lasting immunity**").
+
+:::
+
+::: notes
+(For diseases like typhoid, 
+the no-immunity assumption may not hold exactly,
+but hopefully approximately; 
+modeling the effects of re-exposure during an active infection is 
+[on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
+:::
+
+## Time since infection and incidence
+
+Under those assumptions:
+
+::: incremental
+
+* $T$ has an **exponential distribution**:
+
+$$\pdf(T=t) = \lambda \expf{-\lambda t}$$
+
+  * More precisely, the distribution is exponential 
+  **truncated by age** at observation ($a$):
+
+$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
+
+* the rate parameter $\lambda$ is the incidence rate
+
+:::
+
+::: notes
+This is a time-to-event model, 
+looking **backwards in time** from the survey date 
+(when the blood sample was collected).
+
+The probability that 
+an individual was **last** infected $t$ days ago, $p(T=t)$, 
+is equal to the probability of being infected at time $t$ 
+(i.e., the incidence rate at time $t$, $\lambda$) 
+times the probability of not being infected after time $t$, 
+which turns out to be $\exp(-\lambda t)$.
+
+The distribution of $T$ is truncated by the patient's birth date;
+the probability that they have never been infected is
+$\expf{-\lambda a}$, 
+where $a$ is the patient's age at the time of the survey.
+:::
+
+## Likelihood of latent infection times {.smaller}
+
+{{< include articles/_sec-latent-likelihood.qmd >}}
+
+## Example log-likelihood curves
+
+::: notes
+Here's what that would look like:
+:::
+
+```{r}
+#| fig-cap: "Example log-likelihood curves"
+#| label: fig-ex-lik-curves
+
+library(serocalculator)
+library(dplyr)
+# Import longitudinal antibody parameters from OSF
+curves <-
+  "https://osf.io/download/rtw5k/" %>%
+  load_curve_params() %>%
+  filter(iter < 50)
+
+# Import cross-sectional data from OSF and rename required variables:
+xs_data <-
+  "https://osf.io/download//n6cp3/" %>%
+  load_pop_data()
+
+noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
+```
+
+```{r}
+#| fig-cap: "Example log(likelihood) curves"
+#| label: fig-loglik
+lik_HlyE_IgA <- graph_loglik(
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgA",
+  log_x = TRUE
+)
+
+lik_HlyE_IgG <- graph_loglik(
+  previous_plot = lik_HlyE_IgA,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgG",
+  log_x = TRUE
+)
+
+lik_both <- graph_loglik(
+  previous_plot = lik_HlyE_IgG,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  log_x = TRUE
+)
+
+print(lik_both)
+```
+
+## standard error
+
+The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:
+
+more curvature -> likelihood peak is clearer -> smaller standard errors
+
+## Likelihood of observed data
+
+::: notes
+Unfortunately, we don't observe infection times $T$; 
+we only observe antibody levels ${Y}$. 
+So things get a little more complicated.
+
+In short, we are hoping that we can estimate 
+$T$ (time since last infection) 
+from $Y$ (current antibody levels). 
+If we could do that, 
+then we could plug in our estimates $\hat t_i$ 
+into that likelihood above, 
+and estimate $\lambda$ as previously.
+
+We're actually going to do something a little more nuanced; 
+instead of just using one value for $\hat t$, 
+we are going to consider all possible values of $t$ for each individual.
+
+We need to link the data we actually observed to the incidence rate.
+
+The likelihood of an individual's observed data, 
+$\pdf(Y=y)$, 
+can be expressed as an integral over 
+the joint likelihood of $Y$ and $T$ 
+(using the Law of Total Probability):
+:::
+
+::: incremental
+
+* $$\pdf(Y=y) = \int_t \pdf(Y=y,T=t)dt$$
+
+:::: notes
+Further, we can express the joint probability $p(Y=y,T=t)$ as the product of 
+$p(T=t)$ and 
+$p(Y=y|T=t)$ the "antibody response curve after infection". 
+That is:
+::::
+
+* $$\pdf(Y=y,T=t) = \pdf(Y=y|T=t) \pdf(T=t)$$
+
+:::
+
+## Antibody response curves
+
+::: {#fig-decay}
+
+![](fig/fig1a-1.svg)
+
+Antibody response curves, $p(Y=y|T=t)$, for typhoid
+
+:::
+
+## Putting it all together
+
+Substituting $p(Y=y,T=t) = p(Y=y|T=t)P(T=t)$ 
+into the previous expression for $p(Y=y)$:
+
+$$
+\begin{aligned}
+p(Y=y)
+&= \int_t p(Y=y|T=t)P(T=t) dt
+\end{aligned}
+$$
+
+## Composing the likelihood {.smaller}
+
+::: notes
+Now, the likelihood of the observed data 
+$\vec{y} = (y_1, y_2, ..., y_n)$ is:
+:::
+
+$$
+\begin{aligned}
+\mathcal{L}(\lambda) 
+&= \prod_{i=1}^n p(Y=y_i)
+\\&= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+\end{aligned}
+$$
+
+::: notes
+If we know $p(Y=y|T=t)$, then we can maximize $\mathcal{L}(\lambda)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
+:::
+
+## Finding the MLE numerically
+
+::: notes
+The likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
+:::
+
+$$
+\begin{aligned}
+\log \mathcal{L} (\lambda) 
+&= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+&= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
+\end{aligned}
+$$
+
+::: notes
+
+The derivative of this expression doesn't come out cleanly, 
+so we will use a *numerical method* 
+(specifically, a Newton-type algorithm, implemented by `stats::nlm()`) 
+to find the MLE and corresponding standard error.
+
+:::
+
+{{< include articles/_antibody-response-model.qmd >}}
+
+<!-- {{< include articles/_methods-continued.qmd >}} -->
+
+## References {.smaller .unnumbered}
+
+::: {#refs}
+:::

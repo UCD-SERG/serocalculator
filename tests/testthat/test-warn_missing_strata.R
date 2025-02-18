@@ -1,10 +1,28 @@
-test_that("`test_missing_strata()` works", {
-  expected_strata = data.frame(Species = "banana", type = "orchid")
+test_that("`test_missing_strata()` errors on absent strata", {
+  expected_strata <- data.frame(Country = "US")
 
-  warn.missing.strata(iris, expected_strata, dataname = "iris") %>%
-    capture.output() %>% # not sure this works as intended
-    suppressMessages() %>%
-    expect_error() %>%
-    expect_warning()
+  withr::local_options(width = 80)
+  sees_pop_data_pk_100 |>
+    warn_missing_strata(
+      strata = expected_strata,
+      dataname = "sees_pop_data_pk_100"
+    ) |>
+    expect_snapshot(error = TRUE,
+                    cnd_class = TRUE)
+})
+
+test_that("`test_missing_strata()` warns on missing strata vars", {
+  expected_strata <- data.frame(
+    Country = "Pakistan",
+    place = "davis"
+  )
+
+  withr::local_options(width = 80)
+  sees_pop_data_pk_100 |>
+    warn_missing_strata(
+      strata = expected_strata,
+      dataname = "sees_pop_data_pk_100"
+    ) |>
+    expect_snapshot(cnd_class = TRUE)
 
 })

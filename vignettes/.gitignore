@@ -3,3 +3,10 @@
 methodology.log
 methodology_files
 rsconnect
+~$*.pptx
+~$*.docx
+*_files/
+*.pptx
+*.docx
+/.quarto/
+*.rmarkdown

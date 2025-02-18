@@ -18,8 +18,8 @@ a \code{curve_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with 
 Load antibody decay curve parameter samples
 }
 \examples{
-curve = load_curve_params("https://osf.io/download/rtw5k/" )
-print(curve)
+curve <- load_curve_params(serocalculator_example("example_curve_params.rds"))
 
+print(curve)
 
 }

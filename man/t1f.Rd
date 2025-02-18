@@ -13,7 +13,7 @@ t1f(
 )
 }
 \arguments{
-\item{y0}{initial antibody concnetration}
+\item{y0}{initial antibody concentration}
 
 \item{b0}{initial bacteria concentration}
 

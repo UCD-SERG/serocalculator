@@ -13,6 +13,7 @@ HlyE
 IgA
 IgG
 IgM
+LMICs
 LV
 Lik
 Lotka
@@ -30,7 +31,10 @@ Rtools
 SeroEpidemiology
 Seroincidence
 Serological
+Serosurveys
+Shigella
 TW
+Trombicula
 UC
 Unif
 Vectorized
@@ -49,6 +53,7 @@ dev
 devtools
 displaystyle
 dt
+enterica
 estimands
 et
 expf
@@ -57,6 +62,7 @@ frac
 geoms
 ggproto
 hemolysin
+immunocompromised
 infty
 invf
 isos

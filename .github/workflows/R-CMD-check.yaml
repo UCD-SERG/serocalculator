@@ -32,6 +32,22 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Install macOS dependencies
+        if: ${{ runner.os == 'macOS' }}
+        run: |
+          brew install automake udunits
+          echo "UDUNITS2_INCLUDE=/opt/homebrew/Cellar/udunits/2.2.28/include" >> $GITHUB_ENV
+          echo "UDUNITS2_LIBS=/opt/homebrew/Cellar/udunits/2.2.28/lib" >> $GITHUB_ENV
+
+      - name: Install Windows dependencies
+        if: ${{ runner.os == 'Windows' }}
+        run: pacman -Syu --noconfirm mingw-w64-ucrt-x86_64-udunits
+
+      - name: Add units and errors as Remotes
+        if: ${{ github.repository == 'r-quantities/quantities' }}
+        run: |
+          echo "Remotes: r-quantities/units, r-quantities/errors" >> DESCRIPTION
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}

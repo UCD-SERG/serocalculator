@@ -77,4 +77,5 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
 Remotes:  
-    r-quantities/units
+    r-quantities/units, 
+    r-quantities/quantities

@@ -2,6 +2,8 @@
 
 ## New features
 
+* Revised `methodology` vignette (#393)
+* Added support for units in `sim_pop_data()` (#393)
 * Improved warning messages for `get_biomarker_names_var()`
 * Added `get_*()` extractor functions to API (#380)
 * Added optional CI error bars to `autoplot.summary.seroincidence.by()` (#372)

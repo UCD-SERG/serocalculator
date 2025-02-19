@@ -54,6 +54,7 @@
 #' @importFrom stats nlm
 #' @importFrom stats qnorm
 #' @importFrom stats quantile
+#' @importFrom stats rexp
 #' @importFrom stats runif
 #' @importFrom stats xtabs
 #' @importFrom tibble as_tibble

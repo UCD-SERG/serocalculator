@@ -43,9 +43,7 @@ Imports:
     and,
     glue,
     stringr,
-    parallel,
-    units,
-    quantities
+    parallel
 Suggests:
     bookdown,
     DT,
@@ -60,7 +58,9 @@ Suggests:
     ssdtools (>= 1.0.6.9016),
     testthat (>= 3.0.0),
     tidyverse,
+    units,
     qrcode,
+    quantities,
     vdiffr,
     withr
 LinkingTo: 

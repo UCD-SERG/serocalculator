@@ -98,8 +98,8 @@ sim_pop_data_2 <- function(
   }
 
   chain_in_curve_params <- "chain" %in% names(curve_params)
-  pop_data <- tibble::tibble(
-    id = seq_len(n_samples) |> as.character(),
+  pop_data <- tibble::tibble( #nolint: object_usage_linter
+    id = n_samples |> seq_len() |> as.character(),
     age = sim_age(
       n_samples = n_samples,
       age_range = age_range
@@ -108,7 +108,7 @@ sim_pop_data_2 <- function(
       sim_time_since_last_sc(
         lambda = lambda,
         n_samples = n_samples,
-        age = age
+        age = .data$age
       ),
 
     mcmc_iter = sample(
@@ -116,7 +116,7 @@ sim_pop_data_2 <- function(
       x = curve_params$iter,
       replace = TRUE
     ),
-    mcmc_chain = # nolint: object_usage_linter
+    mcmc_chain =
       if (chain_in_curve_params) {
         sample(
           size = n_samples,
@@ -136,7 +136,7 @@ sim_pop_data_2 <- function(
         c(
           "antigen_iso",
           "mcmc_iter" = "iter",
-          if (chain_in_curve_params) "mcmc_chain" = "chain"
+          if (chain_in_curve_params) "mcmc_chain" = "chain" # nolint: assignment_linter
         )
     ) |>
     mutate(
@@ -159,7 +159,7 @@ sim_pop_data_2 <- function(
           min = noise_limits[.data$antigen_iso, "min"],
           max = noise_limits[.data$antigen_iso, "max"]
         ),
-        Y = .data$`E[Y]` + noise
+        Y = .data$`E[Y]` + .data$noise
       )
   } else {
     pop_data <- pop_data |>

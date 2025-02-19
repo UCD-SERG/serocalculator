@@ -49,7 +49,7 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 :::: {.column width="50%"}
 
 ![](../man/figures/Shigella_stool.jpg)
-![](../man/figures/41579_2024_1126_Fig1_HTML copy.png)
+![](../man/figures/41579_2024_1126_Fig1_HTML.png)
 ::::
 
 :::

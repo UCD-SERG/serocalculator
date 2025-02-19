@@ -41,13 +41,13 @@ jobs:
 
       - name: Install Windows dependencies
         steps:
-          - if: runner.os == 'Windows'
+          - if: ${{ runner.os == 'Windows' }}
             run: |
               choco install msys2 --params "/NoUpdate"
               echo "::add-path::C:\\tools\\msys64\\usr\\bin"
               echo "::add-path::C:\\tools\\msys64\\mingw64\\bin"
               echo "::set-env name=PKG_CONFIG_PATH::/mingw64/lib/pkgconfig"
-          - if: runner.os == 'Windows'
+          - if: ${{ runner.os == 'Windows' }}
             run: |
               pacman -Sy --noconfirm pacman
               pacman -S --noconfirm pacman-mirrors pkg-config

@@ -39,20 +39,6 @@ jobs:
           echo "UDUNITS2_INCLUDE=/opt/homebrew/Cellar/udunits/2.2.28/include" >> $GITHUB_ENV
           echo "UDUNITS2_LIBS=/opt/homebrew/Cellar/udunits/2.2.28/lib" >> $GITHUB_ENV
 
-      - name: Install Windows dependencies
-        steps:
-          - if: ${{ runner.os == 'Windows' }}
-            run: |
-              choco install msys2 --params "/NoUpdate"
-              echo "::add-path::C:\\tools\\msys64\\usr\\bin"
-              echo "::add-path::C:\\tools\\msys64\\mingw64\\bin"
-              echo "::set-env name=PKG_CONFIG_PATH::/mingw64/lib/pkgconfig"
-          - if: ${{ runner.os == 'Windows' }}
-            run: |
-              pacman -Sy --noconfirm pacman
-              pacman -S --noconfirm pacman-mirrors pkg-config
-              run: pacman -Syu --noconfirm mingw-w64-ucrt-x86_64-udunits
-
       - name: Add units and errors as Remotes
         if: ${{ github.repository == 'r-quantities/quantities' }}
         run: |

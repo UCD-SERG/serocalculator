@@ -32,6 +32,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      # from https://github.com/r-quantities/workflows/blob/main/.github/workflows/build.yml
       - name: Install macOS dependencies
         if: ${{ runner.os == 'macOS' }}
         run: |
@@ -39,16 +40,10 @@ jobs:
           echo "UDUNITS2_INCLUDE=/opt/homebrew/Cellar/udunits/2.2.28/include" >> $GITHUB_ENV
           echo "UDUNITS2_LIBS=/opt/homebrew/Cellar/udunits/2.2.28/lib" >> $GITHUB_ENV
 
+      # c.f. https://github.com/orgs/community/discussions/26947
       - name: Install Windows dependencies
         if: ${{ runner.os == 'Windows' }}
-        run: |
-          choco install msys2 --params "/NoUpdate"
-          echo "::add-path::C:\\tools\\msys64\\usr\\bin"
-          echo "::add-path::C:\\tools\\msys64\\mingw64\\bin"
-          echo "::set-env name=PKG_CONFIG_PATH::/mingw64/lib/pkgconfig"
-          pacman -Sy --noconfirm pacman
-          pacman -S --noconfirm pacman-mirrors pkg-config
-          run: pacman -Syu --noconfirm mingw-w64-ucrt-x86_64-udunits
+        run: pacman -Syu --noconfirm mingw-w64-ucrt-x86_64-udunits
 
       - uses: r-lib/actions/setup-r@v2
         with:

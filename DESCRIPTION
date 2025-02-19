@@ -58,7 +58,7 @@ Suggests:
     ssdtools (>= 1.0.6.9016),
     testthat (>= 3.0.0),
     tidyverse,
-    units,
+    units (>= 0.8.6),
     qrcode,
     quantities,
     vdiffr,
@@ -76,3 +76,5 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
+Remotes:  
+    r-quantities/units

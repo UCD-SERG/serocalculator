@@ -2,6 +2,7 @@
 
 ## New features
 
+* Rename `est.incidence()` to `estimate_scr()` (#389)
 * Added `get_*()` extractor functions to API (#380)
 * Added optional CI error bars to `autoplot.summary.seroincidence.by()` (#372)
 * Improved y-limit calculation in `graph.curve.params()` (#368)

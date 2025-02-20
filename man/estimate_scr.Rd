@@ -51,7 +51,7 @@ on each row
 
 \item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
 
-\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
+\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{estimate_scr()}}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

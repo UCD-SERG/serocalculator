@@ -7,7 +7,7 @@
 \method{autoplot}{seroincidence}(object, log_x = FALSE, ...)
 }
 \arguments{
-\item{object}{a \code{seroincidence} object (from \code{\link[=est.incidence]{est.incidence()}})}
+\item{object}{a \code{seroincidence} object (from \code{\link[=estimate_scr]{estimate_scr()}})}
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
 
@@ -34,7 +34,7 @@ curve <-
 noise <-
   example_noise_params_pk
 
-est1 <- est.incidence(
+est1 <- estimate_scr(
   pop_data = xs_data,
   curve_param = curve,
   noise_param = noise,

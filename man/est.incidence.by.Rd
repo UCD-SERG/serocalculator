@@ -59,7 +59,7 @@ then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
+\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{estimate_scr()}}
 
 \item{...}{
   Arguments passed on to \code{\link[=estimate_scr]{estimate_scr}}, \code{\link[stats:nlm]{stats::nlm}}
@@ -107,10 +107,10 @@ response model.
 }
 \details{
 If \code{strata} is left empty, a warning will be produced,
-recommending that you use \code{\link[=est.incidence]{est.incidence()}} for unstratified analyses,
-and then the data will be passed to \code{\link[=est.incidence]{est.incidence()}}.
+recommending that you use \code{\link[=estimate_scr]{estimate_scr()}} for unstratified analyses,
+and then the data will be passed to \code{\link[=estimate_scr]{estimate_scr()}}.
 If for some reason you want to use \code{\link[=est.incidence.by]{est.incidence.by()}}
-with no strata instead of calling \code{\link[=est.incidence]{est.incidence()}},
+with no strata instead of calling \code{\link[=estimate_scr]{estimate_scr()}},
 you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata}
 argument to avoid that warning.
 }

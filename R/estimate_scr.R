@@ -27,7 +27,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- est.incidence(
+#' est1 <- estimate_scr(
 #'   pop_data = xs_data,
 #'   curve_params = curve,
 #'   noise_params = noise,
@@ -35,7 +35,7 @@
 #' )
 #'
 #' summary(est1)
-est.incidence <- function(
+estimate_scr <- function(
     pop_data,
     curve_params,
     noise_params,

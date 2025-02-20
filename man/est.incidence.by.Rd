@@ -25,21 +25,6 @@ est.incidence.by(
 antibody and age, and additional columns corresponding to
 each element of the \code{strata} input}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
-from the Bayesian posterior distribution of a longitudinal decay curve model.
-The parameter columns must be named:
-\itemize{
-\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype
-combinations
-\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
-\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
-\item \code{y1}: antibody peak level (ELISA units)
-\item \code{t1}: duration of infection
-\item \code{alpha}: antibody decay rate
-(1/days for the current longitudinal parameter sets)
-\item \code{r}: shape factor of antibody decay
-}}
-
 \item{noise_params}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}})
 containing the following variables,
 specifying noise parameters for each antigen isotype:
@@ -77,7 +62,7 @@ then the computations are executed in parallel. Default = 1L.}
 \item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{est.incidence()}}
 
 \item{...}{
-  Arguments passed on to \code{\link[=est.incidence]{est.incidence}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link[=estimate_scr]{estimate_scr}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
     \item{\code{stepmin}}{A positive scalar providing the minimum allowable relative step length.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
@@ -109,7 +94,7 @@ then the computations are executed in parallel. Default = 1L.}
 \itemize{
 \item if \code{strata} has meaningful inputs:
 An object of class \code{"seroincidence.by"}; i.e., a list of
-\code{"seroincidence"} objects from \code{\link[=est.incidence]{est.incidence()}}, one for each stratum,
+\code{"seroincidence"} objects from \code{\link[=estimate_scr]{estimate_scr()}}, one for each stratum,
 with some meta-data attributes.
 \item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
 An object of class \code{"seroincidence"}.

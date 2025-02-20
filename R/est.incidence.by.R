@@ -29,14 +29,14 @@
 #' argument to avoid that warning.
 #'
 #'
-#' @inheritParams est.incidence
-#' @inheritDotParams est.incidence
+#' @inheritParams estimate_scr
+#' @inheritDotParams estimate_scr
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return
 #' * if `strata` has meaningful inputs:
 #' An object of class `"seroincidence.by"`; i.e., a list of
-#' `"seroincidence"` objects from [est.incidence()], one for each stratum,
+#' `"seroincidence"` objects from [estimate_scr()], one for each stratum,
 #' with some meta-data attributes.
 #' * if `strata` is missing, `NULL`, `NA`, or `""`:
 #' An object of class `"seroincidence"`.
@@ -267,23 +267,4 @@ est.incidence.by <- function(
   )
 
   return(incidence_data)
-}
-
-#' @title Estimate Seroincidence
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `est.incidence()` was renamed to [estimate_scr()] to create a more
-#' consistent API.
-#' @keywords internal
-#' @export
-est.incidence <- function(
-    curve,
-    ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "estimate_scr()")
-  estimate_scr(
-    sr_params = curve,
-    ...
-  )
 }

@@ -2,7 +2,7 @@
 #' @description
 #' This function is a `summary()` method for `seroincidence` objects.
 #'
-#' @param object a [list()], outputted by [stats::nlm()] or [est.incidence()]
+#' @param object a [list()], outputted by [stats::nlm()] or [estimate_scr()]
 #' @param coverage desired confidence interval coverage probability
 #' @param verbose whether to produce verbose messaging
 #' @param ... unused
@@ -15,7 +15,7 @@
 #' * `CI.upr`: upper limit of confidence interval for incidence rate
 #' * `coverage`: coverage probability
 #' * `log.lik`:
-#'    log-likelihood of the data used in the call to `est.incidence()`,
+#'    log-likelihood of the data used in the call to `estimate_scr()`,
 #'    evaluated at the maximum-likelihood estimate of lambda
 #'    (i.e., at `incidence.rate`)
 #' * `iterations`: the number of iterations used
@@ -32,7 +32,7 @@
 #'    * 3: Last global step failed to locate a point lower than x.
 #'         Either x is an approximate local minimum of the function,
 #'         the function is too non-linear for this algorithm,
-#'         or `stepmin` in [est.incidence()]
+#'         or `stepmin` in [estimate_scr()]
 #'         (a.k.a., `steptol` in [stats::nlm()]) is too large.
 #'    * 4: iteration limit exceeded; increase `iterlim`.
 #'    * 5: maximum step size `stepmax` exceeded five consecutive times.
@@ -54,7 +54,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- est.incidence(
+#' est1 <- estimate_scr(
 #'   pop_data = xs_data,
 #'   curve_params = curve,
 #'   noise_params = noise,

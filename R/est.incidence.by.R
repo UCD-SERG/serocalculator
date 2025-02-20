@@ -21,10 +21,10 @@
 #' @details
 #'
 #' If `strata` is left empty, a warning will be produced,
-#' recommending that you use [est.incidence()] for unstratified analyses,
-#' and then the data will be passed to [est.incidence()].
+#' recommending that you use [estimate_scr()] for unstratified analyses,
+#' and then the data will be passed to [estimate_scr()].
 #' If for some reason you want to use [est.incidence.by()]
-#' with no strata instead of calling [est.incidence()],
+#' with no strata instead of calling [estimate_scr()],
 #' you may use `NA`, `NULL`, or `""` as the `strata`
 #' argument to avoid that warning.
 #'
@@ -106,7 +106,7 @@ est.incidence.by <- function(
     )
 
     to_return <-
-      est.incidence(
+      estimate_scr(
         pop_data = pop_data,
         curve_params = curve_params,
         noise_params = noise_params,

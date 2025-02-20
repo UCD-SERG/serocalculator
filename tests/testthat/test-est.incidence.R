@@ -1,5 +1,5 @@
 test_that("est.incidence() produces expected results for typhoid data", {
-  typhoid_results <- est.incidence(
+  typhoid_results <- estimate_scr(
     pop_data = sees_pop_data_pk_100,
     curve_param = typhoid_curves_nostrat_100,
     noise_param = example_noise_params_pk,
@@ -13,17 +13,17 @@ test_that("est.incidence() produces expected results for typhoid data", {
 })
 
 test_that(
-  "`est.incidence()` produces consistent results
+  "`estimate_scr()` produces consistent results
           regardless of whether data colnames are standardized.",
   {
-    est_true <- est.incidence(
+    est_true <- estimate_scr(
       pop_data = sees_pop_data_pk_100,
       curve_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     )
 
-    est_false <- est.incidence(
+    est_false <- estimate_scr(
       pop_data = sees_pop_data_pk_100_old_names,
       curve_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,

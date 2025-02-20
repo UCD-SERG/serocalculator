@@ -67,10 +67,10 @@ Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
 Config/Needs/website: quarto, lewinfox/foodwebr
+Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.2
-

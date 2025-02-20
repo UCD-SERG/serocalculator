@@ -22,7 +22,7 @@ reference:
   - load_noise_params
   - check_pop_data
   - strata
-- title: Extract information from data, models, and noise parameters
+- title: Extract information from data, seroresponse models, and noise parameters
   contents:
   - get_biomarker_levels
   - get_biomarker_names_var

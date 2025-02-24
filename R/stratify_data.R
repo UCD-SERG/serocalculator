@@ -35,14 +35,14 @@
 #' }
 
 stratify_data <- function(data,
-                          curve_params,
+                          sr_params,
                           noise_params,
                           strata_varnames = "",
                           curve_strata_varnames = NULL,
                           noise_strata_varnames = NULL,
                           antigen_isos = get_biomarker_levels(data)) {
-  curve_params <-
-    curve_params |>
+  sr_params <-
+    sr_params |>
     filter(.data[["antigen_iso"]] %in% antigen_isos)
 
   noise_params <-
@@ -65,7 +65,7 @@ stratify_data <- function(data,
     all_data <-
       list(
         pop_data = pop_data,
-        curve_params = curve_params |> select(all_of(curve_param_names)),
+        sr_params = sr_params |> select(all_of(curve_param_names)),
         noise_params = noise_params |> select(all_of(noise_param_names)),
         antigen_isos = antigen_isos |> intersect(data |> get_biomarker_names())
       ) |>
@@ -87,7 +87,7 @@ stratify_data <- function(data,
 
   strata_vars_curve_params <-
     warn_missing_strata(
-      data = curve_params,
+      data = sr_params,
       strata = strata |> select(all_of(curve_strata_varnames)),
       dataname = "curve_params"
     )
@@ -123,11 +123,11 @@ stratify_data <- function(data,
            antigen_isos = antigen_isos_cur_stratum)
 
     if (length(strata_vars_curve_params) == 0) {
-      data_and_params_cur_stratum$curve_params <-
-        curve_params |> select(all_of(curve_param_names))
+      data_and_params_cur_stratum$sr_params <-
+        sr_params |> select(all_of(curve_param_names))
     } else {
-      data_and_params_cur_stratum$curve_params <-
-        curve_params |>
+      data_and_params_cur_stratum$sr_params <-
+        sr_params |>
         semi_join(cur_stratum_vals, by = strata_vars_curve_params) |>
         select(all_of(curve_param_names))
     }

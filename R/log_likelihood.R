@@ -62,7 +62,7 @@ llik <- function(...) {
 #'   sees_pop_data_pk_100
 #'
 #' # Load curve parameters and subset for the purposes of this example
-#' curve <-
+#' sr_curve <-
 #'   typhoid_curves_nostrat_100 %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
@@ -78,7 +78,7 @@ llik <- function(...) {
 #' # Calculate log-likelihood
 #' ll_AG <- log_likelihood(
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = sr_curve,
 #'   noise_params = cond,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   lambda = 0.1
@@ -87,7 +87,7 @@ llik <- function(...) {
 log_likelihood <- function(
     lambda,
     pop_data,
-    curve_params,
+    sr_params,
     noise_params,
     antigen_isos = get_biomarker_levels(pop_data),
     verbose = FALSE,
@@ -102,24 +102,24 @@ log_likelihood <- function(
     # is called
     if (!is.data.frame(pop_data)) {
       cur_data <- pop_data[[cur_antibody]]
-      cur_curve_params <- curve_params[[cur_antibody]]
+      cur_sr_params <- sr_params[[cur_antibody]]
       cur_noise_params <- noise_params[[cur_antibody]]
     } else {
       cur_data <-
         pop_data %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      cur_curve_params <-
-        curve_params %>%
+      cur_sr_params <-
+        sr_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_noise_params <-
         noise_params %>%
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
-      if (!is.element("d", names(cur_curve_params))) {
-        cur_curve_params <-
-          cur_curve_params %>%
+      if (!is.element("d", names(cur_sr_params))) {
+        cur_sr_params <-
+          cur_sr_params %>%
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
             d = .data$r - 1
@@ -131,7 +131,7 @@ log_likelihood <- function(
       f_dev(
         lambda = lambda,
         csdata = cur_data,
-        lnpars = cur_curve_params,
+        lnpars = cur_sr_params,
         cond = cur_noise_params
       )
 

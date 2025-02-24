@@ -55,7 +55,7 @@ estimate_scr <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    sr_params = sr_params
+    curve_params = sr_params
   )
 
   pop_data <- pop_data %>%

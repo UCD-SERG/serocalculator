@@ -16,7 +16,7 @@ test_that("results are consistent", {
    est2 <- est.incidence.by(
      strata = c("catchment"),
      pop_data = xs_data,
-     curve_params = curve,
+     sr_params = curve,
      noise_params = noise,
      curve_strata_varnames = NULL,
      noise_strata_varnames = NULL,

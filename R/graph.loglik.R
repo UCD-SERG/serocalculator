@@ -38,7 +38,7 @@
 #' lik_HlyE_IgA <- # nolint: object_name_linter
 #'   graph_loglik(
 #'     pop_data = xs_data,
-#'     curve_params = curve,
+#'     sr_params = curve,
 #'     noise_params = cond,
 #'     antigen_isos = "HlyE_IgA",
 #'     log_x = TRUE
@@ -76,7 +76,7 @@ graph_loglik <- function(
       x = x %>% sort(),
       y = log_likelihood(
         pop_data = pop_data,
-        curve_params = curve_params,
+        sr_params = curve_params,
         noise_params = noise_params,
         antigen_isos = antigen_isos,
         lambda = x,
@@ -102,7 +102,7 @@ graph_loglik <- function(
             x = highlight_points,
             y = log_likelihood(
               pop_data = pop_data,
-              curve_params = curve_params,
+              sr_params = curve_params,
               noise_params = noise_params,
               antigen_isos = antigen_isos,
               lambda = highlight_points,

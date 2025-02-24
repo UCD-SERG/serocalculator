@@ -22,10 +22,10 @@
   return(abNames)
 }
 
-.errorCheck <- function(data, antigen_isos, sr_params) {
+.errorCheck <- function(data, antigen_isos, curve_params) {
   .checkAntibodies(pop_data = data, antigen_isos = antigen_isos)
   check_pop_data(pop_data = data)
-  .checkParams(antigen_isos = antigen_isos, params = sr_params)
+  .checkParams(antigen_isos = antigen_isos, params = curve_params)
 
   invisible(NULL)
 }

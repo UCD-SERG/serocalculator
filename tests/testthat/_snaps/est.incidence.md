@@ -1,4 +1,4 @@
-# est.incidence() produces expected results for typhoid data
+# estimate_scr() produces expected results for typhoid data
 
     Code
       summary(typhoid_results, coverage = 0.95)

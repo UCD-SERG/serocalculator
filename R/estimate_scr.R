@@ -7,7 +7,7 @@
 #' @param lambda_start starting guess for incidence rate, in years/event.
 #' @param antigen_isos Character vector with one or more antibody names. Values must match `pop_data`
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
-#' @param print_graph whether to display the log-likelihood curve graph in the course of running `est.incidence()`
+#' @param print_graph whether to display the log-likelihood curve graph in the course of running `estimate_scr()`
 #' @param stepmin A positive scalar providing the minimum allowable relative step length.
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
@@ -27,7 +27,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- est.incidence(
+#' est1 <- estimate_scr(
 #'   pop_data = xs_data,
 #'   curve_params = curve,
 #'   noise_params = noise,
@@ -48,7 +48,7 @@ estimate_scr <- function(
     print_graph = build_graph & verbose,
     ...) {
   if (verbose > 1) {
-    message("inputs to `est.incidence()`:")
+    message("inputs to `estimate_scr()`:")
     print(environment() %>% as.list())
   }
 
@@ -218,13 +218,13 @@ estimate_scr <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence()` was renamed to [estimate_scr()] to create a more
+#' `estimate_scr()` was renamed to [estimate_scr()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence <- function(
     ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "estimate_scr()")
+  lifecycle::deprecate_soft("1.3.1", "estimate_scr()", "estimate_scr()")
   estimate_scr(
     ...
   )

@@ -68,7 +68,7 @@
 #' print(est2)
 #' summary(est2)
 #'
-est.incidence.by <- function(
+estimate_scr_by<- function(
     pop_data,
     curve_params,
     noise_params,
@@ -267,4 +267,21 @@ est.incidence.by <- function(
   )
 
   return(incidence_data)
+}
+
+#' @title Estimate Seroincidence
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `est.incidence.by()` was renamed to [estimate_scr_by()] to create a more
+#' consistent API.
+#' @keywords internal
+#' @export
+est.incidence.by <- function( # nolint: object_name_linter
+  ...) {
+  lifecycle::deprecate_soft("1.3.1", "est.incidence.by()", "estimate_scr_by()")
+  estimate_scr_by(
+    ...
+  )
 }

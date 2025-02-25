@@ -3,7 +3,7 @@ test_that(
   code = {
 
     withr::local_options(width = 80)
-    typhoid_results <- est.incidence.by(
+    typhoid_results <- estimate_scr_by(
       strata = "catchment",
       pop_data = sees_pop_data_pk_100,
       curve_param = typhoid_curves_nostrat_100,

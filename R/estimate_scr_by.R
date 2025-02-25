@@ -23,7 +23,7 @@
 #' If `strata` is left empty, a warning will be produced,
 #' recommending that you use [estimate_scr()] for unstratified analyses,
 #' and then the data will be passed to [estimate_scr()].
-#' If for some reason you want to use [est.incidence.by()]
+#' If for some reason you want to use [estimate_scr_by()]
 #' with no strata instead of calling [estimate_scr()],
 #' you may use `NA`, `NULL`, or `""` as the `strata`
 #' argument to avoid that warning.
@@ -56,7 +56,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est2 <- est.incidence.by(
+#' est2 <- estimate_scr_by(
 #'   strata = "catchment",
 #'   pop_data = xs_data,
 #'   curve_params = curve,

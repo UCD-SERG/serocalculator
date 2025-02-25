@@ -28,6 +28,7 @@
 #' @importFrom dplyr rowwise
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
+#' @importFrom dplyr slice_head
 #' @importFrom dplyr summarise
 #' @importFrom dplyr ungroup
 #' @importFrom foreach %:%

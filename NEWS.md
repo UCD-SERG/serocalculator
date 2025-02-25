@@ -2,6 +2,7 @@
 
 ## New features
 
+* Rename `est.incidence.by()` to `estimate_scr_by()` (#389)
 * Rename `est.incidence()` to `estimate_scr()` (#389)
 * Improved warning messages for `get_biomarker_names_var()`
 * Added `get_*()` extractor functions to API (#380)

@@ -71,7 +71,7 @@ stratify_data <- function(data,
       ) |>
       structure(class = union("biomarker_data_and_params", "list"))
 
-    # est.incidence.by() expects a list:
+    # estimate_scr_by() expects a list:
     stratum_data_list <-
       list(`all data` = all_data) |>
       structure(antigen_isos = antigen_isos, # might be able to remove

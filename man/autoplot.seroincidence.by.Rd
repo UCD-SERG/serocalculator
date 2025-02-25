@@ -7,7 +7,7 @@
 \method{autoplot}{seroincidence.by}(object, ncol = min(3, length(object)), ...)
 }
 \arguments{
-\item{object}{a '"seroincidence.by"' object (from \code{\link[=est.incidence.by]{est.incidence.by()}})}
+\item{object}{a '"seroincidence.by"' object (from \code{\link[=estimate_scr_by]{estimate_scr_by()}})}
 
 \item{ncol}{number of columns to use for panel of plots}
 
@@ -38,7 +38,7 @@ curve <-
 noise <-
   example_noise_params_pk
 
-est2 <- est.incidence.by(
+est2 <- estimate_scr_by(
   strata = c("catchment"),
   pop_data = xs_data,
   curve_params = curve,

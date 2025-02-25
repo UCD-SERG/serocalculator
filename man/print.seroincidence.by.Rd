@@ -7,7 +7,7 @@
 \method{print}{seroincidence.by}(x, ...)
 }
 \arguments{
-\item{x}{A list containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
+\item{x}{A list containing output of function \code{\link[=estimate_scr_by]{estimate_scr_by()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
@@ -16,7 +16,7 @@ an \link{invisible} copy of input parameter \code{x}
 }
 \description{
 Custom \code{\link[=print]{print()}} function for \code{seroincidence.by} objects
-(from \code{\link[=est.incidence.by]{est.incidence.by()}})
+(from \code{\link[=estimate_scr_by]{estimate_scr_by()}})
 }
 \examples{
 library(dplyr)
@@ -32,7 +32,7 @@ noise <-
   example_noise_params_pk
 
 # estimate seroincidence
-est2 <- est.incidence.by(
+est2 <- estimate_scr_by(
   strata = c("catchment"),
   pop_data = xs_data,
   curve_params = curve,

@@ -350,7 +350,7 @@ sim_df |>
 
 ```{r, "est-by-stratum"}
 ests <-
-  est.incidence.by(
+  estimate_scr_by(
     pop_data = sim_df,
     curve_params = dmcmc,
     noise_params = cond,
@@ -420,9 +420,9 @@ ests_summary |>
 
 Solutions to `nlm()` exit codes 3-5:
 
-* 3: decrease the `stepmin` argument to `estimate_scr()`/`est.incidence.by()`
-* 4: increase the `iterlim` argument to `estimate_scr()`/`est.incidence.by()`
-* 5: increase the `stepmax` argument to `estimate_scr()`/`est.incidence.by()`
+* 3: decrease the `stepmin` argument to `estimate_scr()`/`estimate_scr_by()`
+* 4: increase the `iterlim` argument to `estimate_scr()`/`estimate_scr_by()`
+* 5: increase the `stepmax` argument to `estimate_scr()`/`estimate_scr_by()`
 
 We can extract the indices of problematic strata, if there are any:
 
@@ -489,7 +489,7 @@ sim_df_renew <-
   )
 
 ests_renew <-
-  est.incidence.by(
+  estimate_scr_by(
     pop_data = sim_df_renew,
     curve_params = dmcmc,
     noise_params = cond,

@@ -73,10 +73,23 @@ library(serocalculator)
 library(tidyverse)
 library(ggbeeswarm) # for plotting
 library(dplyr)
+library(units)
+# Specify the antibody-isotype responses to include in analyses
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
 dmcmc <-
   "https://osf.io/download/rtw5k" |>
   load_curve_params() |>
-  dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
+  dplyr::filter(
+    iter <= 100, # reduce number of mcmc samples for speed
+    antigen_iso %in% antibodies
+  ) |> 
+  mutate(t1 = 0)
+# |> 
+  # mutate(
+  #   alpha = alpha |> units::as_units("1/days"),
+  #   t1 = 0 |> units::as_units("days")
+  # )
 ```
 
 ## visualize antibody decay model
@@ -86,24 +99,32 @@ of model parameters using a `autoplot.curve_params()` method for the
 `autoplot()` function:
 
 ```{r}
-dmcmc |> autoplot(n_curves = 50)
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgG") |> 
+  graph.curve.params(show_all_curves = TRUE,
+                     show_quantiles = FALSE,
+                     log_x = FALSE)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-dmcmc |> autoplot(log_x = TRUE, n_curves = 50)
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgG") |> 
+  graph.curve.params(show_all_curves = TRUE,
+                     show_quantiles = FALSE,
+                     log_x = TRUE)
 ```
 
-We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
+We can graph the median, 10%, and 90% quantiles of the model:
 
 ```{r, "graph-curve-params"}
-# Specify the antibody-isotype responses to include in analyses
-antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
-dmcmc |>
-  graph.curve.params(antigen_isos = antibodies) |>
-  print()
+dmcmc |> 
+  filter(antigen_iso == "HlyE_IgG") |> 
+  graph.curve.params(show_all_curves = TRUE,
+                     show_quantiles = TRUE,
+                     log_x = FALSE)
 ```
 
 
@@ -114,9 +135,9 @@ dmcmc |>
 set.seed(54321)
 
 # simulated incidence rate per person-year
-lambda <- 0.2
+lambda <- 0.2  # |> units::as_units("1/years")
 # range covered in simulations
-lifespan <- c(0, 10)
+lifespan <- c(0, 10) # |> units::as_units("years")
 # cross-sectional sample size
 nrep <- 100
 
@@ -132,7 +153,7 @@ dlims <- rbind(
 verbose <- FALSE # whether to print verbose updates as the function runs
 
 # generate cross-sectional data
-csdata <- sim_pop_data(
+csdata <- sim_pop_data_2(
   curve_params = dmcmc,
   lambda = lambda,
   n_samples = nrep,
@@ -314,6 +335,7 @@ lambdas <- c(.05, .1, .15, .2, .5, .8)
 
 sim_df <-
   sim_pop_data_multi(
+    sim_function = sim_pop_data_2,
     n_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
@@ -475,6 +497,7 @@ there may be bias:
 ```{r}
 sim_df_renew <-
   sim_pop_data_multi(
+    sim_function = sim_pop_data_2,
     n_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,

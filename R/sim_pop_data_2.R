@@ -5,9 +5,9 @@
 #'  and adds noise, if desired.
 
 #' @param lambda a [numeric()] scalar indicating the incidence rate
-#' (in events per person-*year*s)
+#' (in events per person-years)
 #' @param n_samples number of samples to simulate
-#' @param age_range age range of sampled individuals, in *years*
+#' @param age_range age range of sampled individuals, in years
 #' @param age_fixed specify the curve parameters to use by age
 #' (does nothing at present?)
 #' @param antigen_isos Character vector with one or more antibody names.
@@ -37,6 +37,7 @@
 #' * one column for each element in the `antigen_iso` input argument
 #'
 #' @export
+#' @keywords internal
 #' @examples
 #' # Load curve parameters
 #' dmcmc <- typhoid_curves_nostrat_100
@@ -61,7 +62,7 @@
 #' )
 #'
 #' # Generate cross-sectional data
-#' csdata <- sim_pop_data(
+#' csdata <- sim_pop_data_2(
 #'   curve_params = dmcmc,
 #'   lambda = lambda,
 #'   n_samples = nrep,
@@ -74,7 +75,7 @@
 #'   format = "long"
 #' )
 #'
-sim_pop_data <- function(
+sim_pop_data_2 <- function(
     lambda = 0.1,
     n_samples = 100,
     age_range = c(0, 20),
@@ -96,120 +97,89 @@ sim_pop_data <- function(
     print(environment() |> as.list())
   }
 
+  chain_in_curve_params <- "chain" %in% names(curve_params)
+  pop_data <- tibble::tibble( #nolint: object_usage_linter
+    id = n_samples |> seq_len() |> as.character(),
+    age = sim_age(
+      n_samples = n_samples,
+      age_range = age_range
+    ),
+    time_since_last_seroconversion =
+      sim_time_since_last_sc(
+        lambda = lambda,
+        n_samples = n_samples,
+        age = .data$age
+      ),
 
-
-  # predpar is an [array()] containing
-  # MCMC samples from the Bayesian distribution
-  # of longitudinal decay curve model parameters.
-  # NOTE: most users should leave `predpar` at its default value
-  # and provide `curve_params` instead.
-
-  predpar <-
-    curve_params |>
-    filter(.data$antigen_iso %in% antigen_isos) |>
-    droplevels() |>
-    prep_curve_params_for_array() |>
-    df_to_array(dim_var_names = c("antigen_iso", "parameter"))
-
-  stopifnot(length(lambda) == 1)
-
-  day2yr <- 365.25
-  lambda <- lambda / day2yr
-  age_range <- age_range * day2yr
-  npar <- dimnames(predpar)$parameter |> length()
-
-
-  baseline_limits <- noise_limits
-
-  ysim <- simcs.tinf(
-    lambda = lambda,
-    n_samples = n_samples,
-    age_range = age_range,
-    age_fixed = age_fixed,
-    antigen_isos = antigen_isos,
-    n_mcmc_samples = n_mcmc_samples,
-    renew_params = renew_params,
-    predpar = predpar,
-    blims = baseline_limits,
-    npar = npar,
-    ...
-  )
-
-  if (add_noise) {
-    for (k.ab in 1:(ncol(ysim) - 1)) {
-      ysim[, 1 + k.ab] <-
-        ysim[, 1 + k.ab] +
-        runif(
-          n = nrow(ysim),
-          min = noise_limits[k.ab, 1],
-          max = noise_limits[k.ab, 2]
+    mcmc_iter = sample(
+      size = n_samples,
+      x = curve_params$iter,
+      replace = TRUE
+    ),
+    mcmc_chain =
+      if (chain_in_curve_params) {
+        sample(
+          size = n_samples,
+          x = curve_params$chain,
+          replace = TRUE
         )
-    }
-  }
-  colnames(ysim) <- c("age", antigen_isos)
-
-  to_return <-
-    ysim |>
-    as_tibble() |>
+      }
+  ) |>
+    reframe(
+      .by = everything(),
+      antigen_iso = antigen_isos
+    ) |>
+    left_join(
+      curve_params,
+      relationship = "many-to-one",
+      by =
+        c(
+          "antigen_iso",
+          "mcmc_iter" = "iter",
+          if (chain_in_curve_params) "mcmc_chain" = "chain" # nolint: assignment_linter
+        )
+    ) |>
     mutate(
-      id = as.character(row_number()),
-      age = round(.data$age / day2yr, 2)
+      `E[Y]` = ab_5p(
+        t = .data$time_since_last_seroconversion,
+        y0 = .data$y0,
+        y1 = .data$y1,
+        t1 = .data$t1,
+        alpha = .data$alpha,
+        shape = .data$r
+      )
     )
 
-  if (format == "long") {
-    if (verbose) message("outputting long format data")
-    to_return <-
-      to_return |>
-      pivot_longer(
-        cols = all_of(antigen_isos),
-        values_to = c("value"),
-        names_to = c("antigen_iso")
-      ) |>
-      structure(
-        format = "long"
-      ) |>
-      as_pop_data(
-        value = "value",
-        age = "age",
-        id = "id"
-      )
+  if (add_noise) {
 
-  } else {
-    if (verbose) message("outputting wide format data")
-    to_return <-
-      to_return |>
-      structure(
-        class = c("pop_data_wide", class(to_return)),
-        format = "wide"
+    pop_data <- pop_data |>
+      mutate(
+        noise = runif(
+          n = dplyr::n(),
+          min = noise_limits[.data$antigen_iso, "min"],
+          max = noise_limits[.data$antigen_iso, "max"]
+        ),
+        Y = .data$`E[Y]` + .data$noise
       )
+  } else {
+    pop_data <- pop_data |>
+      mutate(Y = .data$`E[Y]`)
   }
 
-  return(to_return)
-}
+  pop_data <- pop_data |>
+    select(all_of(c("id", "age", "antigen_iso", "Y"))) |>
+    structure(
+      format = "long"
+    ) |>
+    as_pop_data(
+      value = "Y",
+      age = "age",
+      id = "id"
+    )
 
-#' @title Simulate a cross-sectional serosurvey with noise
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `sim.cs()` was renamed to [sim_pop_data()] to create a more
-#' consistent API.
-#' @keywords internal
-#' @export
-sim.cs <- function( # nolint: object_name_linter
-  n.smpl, # nolint: object_name_linter
-  age.rng, # nolint: object_name_linter
-  n.mc, # nolint: object_name_linter
-  renew.params, # nolint: object_name_linter
-  add.noise, # nolint: object_name_linter
-  ...) { # nolint: object_name_linter
-  lifecycle::deprecate_soft("1.3.1", "sim.cs()", "sim_pop_data()")
-  sim_pop_data(
-    n_samples = n.smpl,
-    age_range = age.rng,
-    n_mcmc_samples = n.mc,
-    renew_params = renew.params,
-    add_noise = add.noise,
-    ...
-  )
+  if (format == "wide") {
+    cli::cli_abort("`format = 'wide' not yet implemented.")
+  }
+
+  return(pop_data)
 }

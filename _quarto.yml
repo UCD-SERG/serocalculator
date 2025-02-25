@@ -1,7 +1,6 @@
 project:
   render: ['*.qmd']
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
-date: '`r Sys.Date()`'
 format:
   html:
     number-sections: true

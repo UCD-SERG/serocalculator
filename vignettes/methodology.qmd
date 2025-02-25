@@ -1,28 +1,104 @@
 ---
-title: "Methodology"
+title: "Estimating Incidence Rates from Cross-Sectional Serosurveys"
 vignette: >
-  %\VignetteIndexEntry{Methodology}
+  %\VignetteIndexEntry{Estimating Incidence Rates from Cross-Sectional Serosurveys}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
+author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Public Health Sciences, UC Davis
 ---
 
 {{< include articles/_macros.qmd >}}
 
-# Overview
+# Infectious disease epidemiology
+
+## *Salmonella* enterica ("typhoid fever")
+
+::: {.columns}
+
+::: {.column width="60%"}
+
+* ~21.7 million symptomatic cases/year
+* ~217,000 deaths/year
+* mostly 5-19 years old
+
+:::
+
+::: {.column width="40%"}
+![](../man/figures/SalmonellaTyphiFlagellarStain.jpg)
+![](../man/figures/Fievre_typhoide.png)
+
+:::
+
+:::
+
+## *Shigella* ("dysentery")
+
+::: {.columns}
+
+:::: {.column width="50%"}
+
+  * ~100 million infections annually
+  * ~100,000 deaths annually. 
+  * Most cases and deaths: children under the age of five 
+  in low- and middle-income countries (LMICs), 
+  where health systems are resource-constrained.
+     
+::::
+
+:::: {.column width="50%"}
+
+![](../man/figures/Shigella_stool.jpg)
+![](../man/figures/41579_2024_1126_Fig1_HTML.png)
+::::
+
+:::
+
+## *Orientia tsutsugamushi* ("scrub typhus")
+
+::: {.columns}
+
+:::: {.column width="50%"}
+
+  * ~1,000,000 infections/year
+  * ~10,000 deaths/year
+  * fever, headache, muscle pain, cough, gastrointestinal symptoms, 
+  hemorrhaging
+
+
+::::
+
+:::: {.column width="50%"}
+
+![Trombicula mite](../man/figures/Trombicula-larva-stylostome.jpg)
+![](../man/figures/340149_1_En_16_Fig6_HTML.webp)
+::::
+
+:::
 
 ## Defining incidence
+
+::: {#def-incidence}
+
+#### Population incidence rate
 
 The **incidence rate** of a disease over a **specific time period** is 
 the rate at which individuals in a population are *acquiring* the disease 
 during that time period [@Noordzij2010diseasemeasures].
+:::
 
-**Example:**
-if there are **10 new cases** of typhoid 
+---
+
+::: {#exm-incidence-rate}
+
+#### Population incidence rate
+
+If there are **10 new cases** of typhoid 
 in a population of **1000 persons** 
 during a **one month** time period, 
-then the incidence rate for that time period is
+then the **incidence rate** for that time period is
 **10 new cases per 1000 persons per month**.
+:::
 
 ## Mathematical definition of incidence {visibility="hidden"}
 
@@ -64,7 +140,45 @@ is the instantaneous **probability** (density) of
 
 * Notation: let's use **$\lambda_{t}$** to denote the incidence rate at time $t$.
 
-# Estimating incidence from cross-sectional antibody surveys
+# Study designs for estimating incidence rates
+
+## Longitudinal cohort studies
+
+Incidence rates can be estimated from longitudinal cohort studies,
+but cohort studies are:
+
+- costly to conduct
+- slow to produce results, 
+- vulnerable to selection and censoring (drop-out) biases
+
+## Clinical case data
+
+Incidence rates can also be estimated from clinical case rates,
+but clinical case rates undercount:
+
+- asymptomatic cases
+- symptomatic cases who don't receive clinical care.
+
+## Cross-sectional serosurveys
+
+::: notes
+
+Alternatively, incidence rates can be estimated from biomarker data
+collected through a single cross-sectional survey, 
+combined with a longitudinal model of 
+how those biomarkers respond to infection over time.
+Compared with cohort studies and clinical case rates,
+cross-sectional incidence estimation can 
+produce estimates that are:
+:::
+
+- accurate
+- timely
+- cost-efficient
+
+See @HAY2024100806 for overview
+
+# Estimating incidence from cross-sectional serosurveys
 
 ## Cross-sectional antibody surveys {.incremental}
 
@@ -135,24 +249,33 @@ modeling the effects of re-exposure during an active infection is
 [on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
 :::
 
-## Time since infection and incidence
+## Time since infection and incidence {.smaller}
 
 Under those assumptions:
 
-::: incremental
+. . .
 
 * $T$ has an **exponential distribution**:
 
-$$\pdf(T=t) = \lambda \expf{-\lambda t}$$
+. . . 
+
+$$\pdf(T=t) =  \red{\lambda\expf{-\lambda t}}$$
+
+. . .
 
   * More precisely, the distribution is exponential 
   **truncated by age** at observation ($a$):
 
-$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
+. . .
+
+$$
+\pdf(T=t|A=a) = 1_{t \in[0,a]} \red{\lambda \expf{-\lambda t}} + 
+1_{t = \NA} \expf{-\lambda a}
+$$
+
+. . .
 
 * the rate parameter $\lambda$ is the incidence rate
-
-:::
 
 ::: notes
 This is a time-to-event model, 
@@ -183,16 +306,47 @@ Here's what that would look like:
 :::
 
 ```{r}
-#| fig-cap: "Example log-likelihood curves"
+#| fig-cap: "log-likelihood curve for latent data"
 #| label: fig-ex-lik-curves
-
+library(serodynamics)
 library(serocalculator)
 library(dplyr)
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+set.seed(1)
+
+sim_case_data <-
+  serocalculator::typhoid_curves_nostrat_100 |>
+  sim_case_data(n = 5, 
+                antigen_isos = antibodies,
+                max_n_obs = 20, followup_interval = 14)
+
+t1 = sim_case_data$timeindays
+loglik0 = function(lambda) {
+  sum(
+    dexp(t1, rate = lambda, log = TRUE)
+  )
+}
+loglik1 = Vectorize(loglik0, vectorize.args = "lambda")
+
+library(ggplot2)
+
+ggplot() + 
+  geom_function(fun = loglik1) +
+  xlim(0, .1) +
+  theme_bw() +
+  xlab("lambda") +
+  ylab("log-likelihood")
+
+```
+
+```{r}
+#| include: false
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" %>%
   load_curve_params() %>%
-  filter(iter < 50)
+  filter(iter < 50) |> 
+  filter(antigen_iso %in% antibodies)
 
 # Import cross-sectional data from OSF and rename required variables:
 xs_data <-
@@ -202,43 +356,15 @@ xs_data <-
 noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
 ```
 
-```{r}
-#| fig-cap: "Example log(likelihood) curves"
-#| label: fig-loglik
-lik_HlyE_IgA <- graph_loglik(
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgA",
-  log_x = TRUE
-)
-
-lik_HlyE_IgG <- graph_loglik(
-  previous_plot = lik_HlyE_IgA,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgG",
-  log_x = TRUE
-)
-
-lik_both <- graph_loglik(
-  previous_plot = lik_HlyE_IgG,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  log_x = TRUE
-)
-
-print(lik_both)
-```
-
 ## standard error
 
-The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:
+The standard error of the estimate is approximately equal to 
+the inverse of the rate of curvature (2nd derivative, aka Hessian) 
+in the log-likelihood function, at the maximum:
 
-more curvature -> likelihood peak is clearer -> smaller standard errors
+more curvature -> 
+likelihood peak is clearer -> 
+smaller standard errors
 
 ## Likelihood of observed data
 
@@ -285,11 +411,54 @@ That is:
 
 ## Antibody response curves
 
-::: {#fig-decay}
+::: {#fig-sim-case-data}
+```{r}
 
-![](fig/fig1a-1.svg)
+sim_case_data |>
+  autoplot(alpha = .5)
+
+```
 
 Antibody response curves, $p(Y=y|T=t)$, for typhoid
+
+:::
+
+---
+
+::: {#fig-decay}
+
+```{r}
+library(serodynamics)
+case_data <-
+    serodynamics_example(
+      "SEES_Case_Nepal_ForSeroKinetics_02-13-2025.csv"
+    ) |>
+    readr::read_csv() |>
+    dplyr::mutate(
+      .by = person_id,
+      visit_num = dplyr::row_number()
+    ) |>
+    as_case_data(
+      id_var = "person_id",
+      biomarker_var = "antigen_iso",
+      value_var = "result",
+      time_in_days = "dayssincefeveronset"
+    )
+
+most_obs = 
+  case_data |> 
+  count(id) |> 
+  arrange(desc(n)) |> 
+  head(10)
+  
+case_data |> 
+  semi_join(most_obs, by = "id") |> 
+    autoplot(alpha = .5, log_x = FALSE)
+```
+
+<!-- ![](fig/fig1a-1.svg) -->
+
+Antibody response data, $p(Y=y|T=t)$, for typhoid
 
 :::
 
@@ -342,7 +511,8 @@ $$
 
 The derivative of this expression doesn't come out cleanly, 
 so we will use a *numerical method* 
-(specifically, a Newton-type algorithm, implemented by `stats::nlm()`) 
+(specifically, a Newton-type algorithm, 
+implemented by `stats::nlm()`) 
 to find the MLE and corresponding standard error.
 
 :::
@@ -350,6 +520,54 @@ to find the MLE and corresponding standard error.
 {{< include articles/_antibody-response-model.qmd >}}
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->
+
+## Multiple biomarkers
+
+```{r}
+#| fig-cap: "Example log(likelihood) curves"
+#| label: fig-loglik
+lik_HlyE_IgA <- graph_loglik(
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgA",
+  log_x = TRUE
+)
+
+lik_HlyE_IgG <- graph_loglik(
+  previous_plot = lik_HlyE_IgA,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgG",
+  log_x = TRUE
+)
+
+lik_both <- graph_loglik(
+  previous_plot = lik_HlyE_IgG,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  log_x = TRUE
+)
+
+print(lik_both)
+```
+
+## In-progress work
+
+* Implementing these methods in user-friendly software + GUIs (R, Shiny)
+
+* Multivariate modeling of biomarkers
+
+* Modeling time-varying incidence rates
+
+* Accounting for re-exposure
+
+* Accounting for latent immunocompromised subpopulations
+
+* Calibrating to population demographics
 
 ## References {.smaller .unnumbered}
 

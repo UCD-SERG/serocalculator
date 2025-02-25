@@ -10,7 +10,8 @@ graph.curve.params(
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = FALSE,
-  alpha_samples = 0.3
+  alpha_samples = 0.3,
+  log_x = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ graph.curve.params(
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{show_all_curves = FALSE})}
+
+\item{log_x}{whether to log-transform the x-axis}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

@@ -8,7 +8,7 @@ test_that("results are consistent", {
     filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
   noise <-
     example_noise_params_pk
-  est1 <- est.incidence(
+  est1 <- estimate_scr(
     pop_data = xs_data,
     curve_params = curve,
     noise_params = noise,

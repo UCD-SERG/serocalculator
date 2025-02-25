@@ -21,22 +21,22 @@
 #' @details
 #'
 #' If `strata` is left empty, a warning will be produced,
-#' recommending that you use [est.incidence()] for unstratified analyses,
-#' and then the data will be passed to [est.incidence()].
+#' recommending that you use [estimate_scr()] for unstratified analyses,
+#' and then the data will be passed to [estimate_scr()].
 #' If for some reason you want to use [est.incidence.by()]
-#' with no strata instead of calling [est.incidence()],
+#' with no strata instead of calling [estimate_scr()],
 #' you may use `NA`, `NULL`, or `""` as the `strata`
 #' argument to avoid that warning.
 #'
 #'
-#' @inheritParams est.incidence
-#' @inheritDotParams est.incidence
+#' @inheritParams estimate_scr
+#' @inheritDotParams estimate_scr
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return
 #' * if `strata` has meaningful inputs:
 #' An object of class `"seroincidence.by"`; i.e., a list of
-#' `"seroincidence"` objects from [est.incidence()], one for each stratum,
+#' `"seroincidence"` objects from [estimate_scr()], one for each stratum,
 #' with some meta-data attributes.
 #' * if `strata` is missing, `NULL`, `NA`, or `""`:
 #' An object of class `"seroincidence"`.
@@ -97,7 +97,7 @@ est.incidence.by <- function(
       c(
         "The {.arg strata} argument to {.fn est.incidence.by} is missing.",
         "i" = "If you do not want to stratify your data,
-               consider using the {.fn est.incidence} function to
+               consider using the {.fn estimate_scr} function to
                simplify your code and avoid this warning.",
         "i" = "Since the {.arg strata} argument is empty,
                {.fn est.incidence.by} will return a {.cls seroincidence} object,
@@ -106,7 +106,7 @@ est.incidence.by <- function(
     )
 
     to_return <-
-      est.incidence(
+      estimate_scr(
         pop_data = pop_data,
         curve_params = curve_params,
         noise_params = noise_params,
@@ -198,7 +198,7 @@ est.incidence.by <- function(
         X = stratum_data_list,
         fun = function(x) {
           do.call(
-            what = est.incidence,
+            what = estimate_scr,
             args = c(
               x,
               list(
@@ -235,7 +235,7 @@ est.incidence.by <- function(
         }
 
         fits[[cur_stratum]] <- do.call(
-          what = est.incidence,
+          what = estimate_scr,
           args = c(
             stratum_data_list[[cur_stratum]],
             list(

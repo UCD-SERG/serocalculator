@@ -1,6 +1,6 @@
 #' Plot the log-likelihood curve for the incidence rate estimate
 #'
-#' @param object a `seroincidence` object (from [est.incidence()])
+#' @param object a `seroincidence` object (from [estimate_scr()])
 #' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
 #' @param ... unused
 #'
@@ -21,7 +21,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- est.incidence(
+#' est1 <- estimate_scr(
 #'   pop_data = xs_data,
 #'   curve_param = curve,
 #'   noise_param = noise,
@@ -40,7 +40,7 @@ autoplot.seroincidence =
     if (is.null(to_return)) {
       stop(
         "Graphs cannot be extracted; ",
-        "`build_graph` was not `TRUE` in the call to `est.incidence()`"
+        "`build_graph` was not `TRUE` in the call to `estimate_scr()`"
       )
       figure <- NULL
     }

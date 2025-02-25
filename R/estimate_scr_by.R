@@ -68,7 +68,7 @@
 #' print(est2)
 #' summary(est2)
 #'
-estimate_scr_by<- function(
+estimate_scr_by <- function(
     pop_data,
     curve_params,
     noise_params,

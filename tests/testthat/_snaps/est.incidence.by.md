@@ -23,7 +23,7 @@
     Condition
       Warning:
       The `strata` argument to `est.incidence.by()` is missing.
-      i If you do not want to stratify your data, consider using the `est.incidence()` function to simplify your code and avoid this warning.
+      i If you do not want to stratify your data, consider using the `estimate_scr()` function to simplify your code and avoid this warning.
       i Since the `strata` argument is empty, `est.incidence.by()` will return a <seroincidence> object, instead of a <seroincidence.by> object.
     Output
       `seroincidence` object estimated given the following setup:

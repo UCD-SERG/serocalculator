@@ -227,7 +227,7 @@ est.incidence <- function(
     ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "estimate_scr()")
   estimate_scr(
-    sr_params = curve_params,
+    curve_params = sr_params,
     ...
   )
 }

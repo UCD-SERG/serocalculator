@@ -76,7 +76,7 @@ graph_loglik <- function(
       x = x %>% sort(),
       y = log_likelihood(
         pop_data = pop_data,
-        sr_params = curve_params,
+        curve_params = sr_params,
         noise_params = noise_params,
         antigen_isos = antigen_isos,
         lambda = x,
@@ -102,7 +102,7 @@ graph_loglik <- function(
             x = highlight_points,
             y = log_likelihood(
               pop_data = pop_data,
-              sr_params = curve_params,
+              curve_params = sr_params,
               noise_params = noise_params,
               antigen_isos = antigen_isos,
               lambda = highlight_points,

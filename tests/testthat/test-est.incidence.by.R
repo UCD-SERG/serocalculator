@@ -9,7 +9,7 @@ test_that(
       pop_data =
         sees_pop_data_pk_100 |>
         dplyr::filter(catchment == "kgh" | antigen_iso == "HlyE_IgA"),
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params =
         example_noise_params_sees |>
         dplyr::filter(Country == "Nepal"),
@@ -30,7 +30,7 @@ test_that("est.incidence.by() warns about missing data", {
   est.incidence.by(
     pop_data = sees_pop_data_pk_100 |>
       tail(-1),
-    curve_params = typhoid_curves_nostrat_100,
+    sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_sees |>
       dplyr::filter(Country == "Nepal"),
     strata = "catchment",

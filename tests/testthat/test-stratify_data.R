@@ -6,7 +6,7 @@ test_that(
     stratified_data =
       stratify_data(
         data = sees_pop_data_pk_100,
-        curve_params = typhoid_curves_nostrat_100,
+        sr_params = typhoid_curves_nostrat_100,
         noise_params = example_noise_params_pk,
         strata_varnames = "catchment",
         curve_strata_varnames = NULL,
@@ -36,7 +36,7 @@ test_that(
     stratified_data =
       stratify_data(
         data = xs_data,
-        curve_params = curve,
+        sr_params = curve,
         noise_params = noise,
         strata_varnames = NULL,
         curve_strata_varnames = NULL,
@@ -66,7 +66,7 @@ test_that(
 
     stratify_data(
       data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       strata_varnames = "catchment",
       curve_strata_varnames = NULL,

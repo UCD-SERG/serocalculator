@@ -124,7 +124,7 @@ est.incidence.by <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    sr_params = curve_params
+    curve_params = sr_params
   )
 
   # Split data per stratum

@@ -35,7 +35,7 @@
 #' )
 #'
 #' summary(est1)
-est.incidence <- function(
+estimate_scr <- function(
     pop_data,
     curve_params,
     noise_params,

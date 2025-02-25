@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9029</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Summarizing fitted seroincidence models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/check-error-on-note/R/summary.seroincidence.R" class="external-link"><code>R/summary.seroincidence.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/R/summary.seroincidence.R" class="external-link"><code>R/summary.seroincidence.R</code></a></small>
       <div class="d-none name"><code>summary.seroincidence.Rd</code></div>
     </div>
 
@@ -69,7 +69,7 @@
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>, outputted by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code> or <code><a href="est.incidence.html">est.incidence()</a></code></p></dd>
+<dd><p>a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>, outputted by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code> or <code><a href="estimate_scr.html">estimate_scr()</a></code></p></dd>
 
 
 <dt id="arg-coverage">coverage<a class="anchor" aria-label="anchor" href="#arg-coverage"></a></dt>
@@ -93,7 +93,7 @@
 <li><p><code>CI.upr</code>: upper limit of confidence interval for incidence rate</p></li>
 <li><p><code>coverage</code>: coverage probability</p></li>
 <li><p><code>log.lik</code>:
-log-likelihood of the data used in the call to <code><a href="est.incidence.html">est.incidence()</a></code>,
+log-likelihood of the data used in the call to <code><a href="estimate_scr.html">estimate_scr()</a></code>,
 evaluated at the maximum-likelihood estimate of lambda
 (i.e., at <code>incidence.rate</code>)</p></li>
 <li><p><code>iterations</code>: the number of iterations used</p></li>
@@ -109,7 +109,7 @@ current iterate is probably solution.</p></li>
 <li><p>3: Last global step failed to locate a point lower than x.
 Either x is an approximate local minimum of the function,
 the function is too non-linear for this algorithm,
-or <code>stepmin</code> in <code><a href="est.incidence.html">est.incidence()</a></code>
+or <code>stepmin</code> in <code><a href="estimate_scr.html">estimate_scr()</a></code>
 (a.k.a., <code>steptol</code> in <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>) is too large.</p></li>
 <li><p>4: iteration limit exceeded; increase <code>iterlim</code>.</p></li>
 <li><p>5: maximum step size <code>stepmax</code> exceeded five consecutive times.
@@ -134,7 +134,7 @@ or <code>stepmax</code> is too small.</p></li>
 <span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="va">example_noise_params_pk</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="est.incidence.html">est.incidence</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="estimate_scr.html">estimate_scr</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span></span>
 <span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">curve</span>,</span></span>
 <span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span></span>

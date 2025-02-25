@@ -222,7 +222,7 @@ estimate_scr <- function(
 #' consistent API.
 #' @keywords internal
 #' @export
-est.incidence <- function(
+est.incidence <- function( # nolint: object_name_linter
     ...) {
   lifecycle::deprecate_soft("1.3.1", "estimate_scr()", "estimate_scr()")
   estimate_scr(

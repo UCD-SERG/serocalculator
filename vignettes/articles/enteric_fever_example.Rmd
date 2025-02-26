@@ -167,17 +167,9 @@ Let's also take a look at how antibody responses change by age.
 ```{r plot-age, message=FALSE, warning = FALSE}
 
 #Plot antibody responses by age
-ggplot(data = xs_data %>%
-  mutate(Country = fct_relevel(
-    Country, "Bangladesh", "Pakistan", "Nepal"
-  )),
-aes(x = age, y = value, color = Country)) +
-  geom_point(size = 0.6, alpha = 0.7) +
-  geom_smooth(method = "lm", se = FALSE) +
-  scale_y_log10() +
-  theme_linedraw() +
-  labs(title = "Quantitative Antibody Results by Age", x = "Age", y = "Value") +
-  scale_color_manual(values = country_pal)
+xs_data |> autoplot(strata = "Country",
+                    type = "age-scatter") +
+   scale_color_manual(values = country_pal)
 
 ```
 

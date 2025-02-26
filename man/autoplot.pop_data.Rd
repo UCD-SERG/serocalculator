@@ -32,11 +32,11 @@ library(ggplot2)
 library(magrittr)
 
 xs_data <-
-  serocalculator_example("example_pop_data.csv") \%>\%
-  read.csv() \%>\%
+  serocalculator_example("example_pop_data.csv") |>
+  read.csv() |>
   as_pop_data()
 
-xs_data \%>\% autoplot(strata = "catchment", type = "density")
-xs_data \%>\% autoplot(strata = "catchment", type = "age-scatter")
+xs_data |> autoplot(strata = "catchment", type = "density")
+xs_data |> autoplot(strata = "catchment", type = "age-scatter")
 }
 }

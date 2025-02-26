@@ -2,6 +2,8 @@
 
 ## New features
 
+* `autoplot.pop_data(type = "age-scatter")` now shows legend at bottom (#407)
+* `autoplot.pop_data(type = "age-scatter")` now facets by antigen isotype (#406)
 * Rename `est.incidence.by()` to `estimate_scr_by()` (#389)
 * Rename `est.incidence()` to `estimate_scr()` (#389)
 * Improved warning messages for `get_biomarker_names_var()`

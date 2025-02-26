@@ -49,7 +49,8 @@ age_scatter <- function(
       title = "Quantitative Antibody Responses by Age",
       x = "Age",
       y = "Antibody Response Value"
-    )
+    ) +
+    ggplot2::theme(legend.position = "bottom")
 
   return(plot1)
 }

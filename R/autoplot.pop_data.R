@@ -60,4 +60,3 @@ autoplot.pop_data <- function(
     )
   }
 }
-

@@ -13,7 +13,7 @@ test_that("results are consistent", {
    noise <-
      example_noise_params_pk
 
-   est2 <- est.incidence.by(
+   est2 <- estimate_scr_by(
      strata = c("catchment"),
      pop_data = xs_data,
      curve_params = curve,

@@ -238,7 +238,7 @@ Let's compare estimates across all countries and by age group.
 ```{r estbycountry}
 #Using est.incidence.by (strata)
 
-est_country_age <- est.incidence.by(
+est_country_age <- estimate_scr_by(
   strata = c("Country", "ageCat"),
   pop_data = xs_data,
   curve_params = curves,

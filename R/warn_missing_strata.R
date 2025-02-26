@@ -43,7 +43,7 @@ warn_missing_strata <- function(
       "To avoid this warning,",
       "specify the desired set of stratifying variables",
       "in the `curve_strata_varnames` and",
-      "`noise_strata_varnames` arguments to `est.incidence.by()`."
+      "`noise_strata_varnames` arguments to `estimate_scr_by()`."
     )
 
 

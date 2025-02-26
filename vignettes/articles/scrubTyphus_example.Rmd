@@ -194,7 +194,7 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 ```{r estby}
 # Using est.incidence.by (strata)
 
-est <- est.incidence.by(
+est <- estimate_scr_by(
   strata = c("country"),
   pop_data = xs_data,
   curve_params = curves,
@@ -214,7 +214,7 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 ```{r estby2}
 # Using est.incidence.by (strata)
 
-est2 <- est.incidence.by(
+est2 <- estimate_scr_by(
   strata = c("country", "ageQ"),
   pop_data = xs_data,
   curve_params = curves,

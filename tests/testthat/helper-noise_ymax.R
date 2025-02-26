@@ -4,7 +4,7 @@ noise_params_test0 <- function(ymax = 0.5, yval = 0.6) {
 
   # load in longitudinal parameters
   curve_params <-
-    typhoid_curves_nostrat_100 |>
+    serocalculator::typhoid_curves_nostrat_100 |>
     dplyr::filter(.data$antigen_iso == cur_antibody) |>
     dplyr::slice_head(n = 100)
 
@@ -17,7 +17,7 @@ noise_params_test0 <- function(ymax = 0.5, yval = 0.6) {
       )
   }
 
-  xs_data <- sees_pop_data_pk_100 |>
+  xs_data <- serocalculator::sees_pop_data_pk_100 |>
     dplyr::filter(
       .data$antigen_iso == cur_antibody
     ) |>

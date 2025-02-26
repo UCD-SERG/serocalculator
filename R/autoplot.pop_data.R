@@ -19,12 +19,12 @@
 #' library(magrittr)
 #'
 #' xs_data <-
-#'   serocalculator_example("example_pop_data.csv") %>%
-#'   read.csv() %>%
+#'   serocalculator_example("example_pop_data.csv") |>
+#'   read.csv() |>
 #'   as_pop_data()
 #'
-#' xs_data %>% autoplot(strata = "catchment", type = "density")
-#' xs_data %>% autoplot(strata = "catchment", type = "age-scatter")
+#' xs_data |> autoplot(strata = "catchment", type = "density")
+#' xs_data |> autoplot(strata = "catchment", type = "age-scatter")
 #' }
 #' @export
 autoplot.pop_data <- function(
@@ -33,7 +33,6 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
-
   if (!is.null(strata) && !is.element(strata, names(object))) {
     cli::cli_abort(
       class = "unavailable_strata",
@@ -65,13 +64,15 @@ autoplot.pop_data <- function(
 age_scatter <- function(
     object,
     strata = NULL,
-    age_var = object %>% get_age_var(),
-    value_var = object %>% get_values_var()) {
+    age_var = object |> get_age_var(),
+    value_var = object |> get_values_var()) {
   # create default plotting
+
+  biomarker_var <- object |> get_biomarker_names_var()
 
   if (is.null(strata)) {
     plot1 <-
-      object %>%
+      object |>
       ggplot2::ggplot() +
       ggplot2::aes(
         x = .data[[age_var]],
@@ -79,7 +80,7 @@ age_scatter <- function(
       )
   } else {
     plot1 <-
-      object %>%
+      object |>
       ggplot2::ggplot() +
       ggplot2::aes(
         col = .data[[strata]],
@@ -106,6 +107,7 @@ age_scatter <- function(
       formula = y ~ x,
       na.rm = TRUE
     ) +
+    ggplot2::facet_wrap(biomarker_var) +
     ggplot2::labs(
       title = "Quantitative Antibody Responses by Age",
       x = "Age",
@@ -120,9 +122,9 @@ density_plot <- function(
     object,
     strata = NULL,
     log = FALSE,
-    value_var = object %>% get_values_var()) {
+    value_var = object |> get_values_var()) {
   plot1 <-
-    object %>%
+    object |>
     ggplot2::ggplot() +
     ggplot2::aes(x = .data[[value_var]]) +
     ggplot2::theme_linedraw() +
@@ -144,21 +146,20 @@ density_plot <- function(
       ggplot2::labs(fill = strata)
   }
   if (log) {
-
     min_nonzero_val <-
-      object %>%
-      get_values() %>%
-      purrr::keep(~ . > 0) %>%
+      object |>
+      get_values() |>
+      purrr::keep(~ . > 0) |>
       min()
 
     max_val <-
-      object %>%
-      get_values() %>%
+      object |>
+      get_values() |>
       max()
 
     breaks1 <- c(0, 10^seq(
-      min_nonzero_val %>% log10() %>% floor(),
-      max_val %>% log10() %>% ceiling()
+      min_nonzero_val |> log10() |> floor(),
+      max_val |> log10() |> ceiling()
     ))
 
     plot1 <- plot1 +

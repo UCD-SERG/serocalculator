@@ -37,6 +37,7 @@
 #' @importFrom ggplot2 autoplot
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 vars
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom mixtools normalmixEM

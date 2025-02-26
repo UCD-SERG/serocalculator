@@ -72,18 +72,18 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 
 Column Name    |  Description
 -------------- |  -----------
-    y0         |  Baseline antibody concentration
-    y1         |  Peak antibody concentration
-    t1         |  Time to peak antibody concentration
-    alpha      |  Antibody decay rate
-    r          |  Antibody decay shape
+y0         |  Baseline antibody concentration
+y1         |  Peak antibody concentration
+t1         |  Time to peak antibody concentration
+alpha      |  Antibody decay rate
+r          |  Antibody decay shape
 *Note that variable names are case-sensitive*
 
 
 ```{r curve, message=FALSE}
 # Import longitudinal antibody parameters from OSF
 curves <-
-  "https://osf.io/download/rtw5k/" %>%
+  "https://osf.io/download/rtw5k/" |>
   load_curve_params()
 ```
 
@@ -93,8 +93,10 @@ We can graph the decay curves with an `autoplot()` method:
 
 ```{r, fig.width=7, fig.height=4}
 # Visualize curve parameters
-curves %>% filter(antigen_iso == "HlyE_IgA" |
-                    antigen_iso == "HlyE_IgG") %>%
+curves |>
+  filter(
+    antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")
+  ) |>
   autoplot()
 
 ```
@@ -110,14 +112,14 @@ We have selected hemolysin E (*HlyE*) as our target antigen and *IgG* and *IgA* 
 
 Column Name | Description
 ----------- | -----------
-  value     | Quantitative antibody response
-  age       | Numeric age
+value     | Quantitative antibody response
+age       | Numeric age
 *Note that variable names are case sensitive*
 
 
 ```{r data, message = FALSE}
 #Import cross-sectional data from OSF and rename required variables
-xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
+xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
   as_pop_data()
 
 ```
@@ -127,7 +129,7 @@ xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") %>%
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary()
+xs_data |> summary()
 
 
 ```
@@ -142,7 +144,7 @@ We examine our cross-sectional antibody data by visualizing the distribution of 
 #color palette
 country_pal <- c("#EA6552", "#8F4B86", "#0099B4FF")
 
-xs_data %>% autoplot(strata = "Country", type = "density") +
+xs_data |> autoplot(strata = "Country", type = "density") +
   scale_fill_manual(values = country_pal)
 
 ```
@@ -152,8 +154,8 @@ We see that across countries, our data is highly skewed with the majority of res
 ```{r logplot, message = FALSE}
 # Create log transformed plots
 
-xs_data %>%
-  mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) %>%
+xs_data |>
+  mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) |>
   autoplot(strata = "Country", type = "density") +
   scale_fill_manual(values = country_pal) +
   scale_x_log10(labels = scales::label_comma())
@@ -167,9 +169,12 @@ Let's also take a look at how antibody responses change by age.
 ```{r plot-age, message=FALSE, warning = FALSE}
 
 #Plot antibody responses by age
-xs_data |> autoplot(strata = "Country",
-                    type = "age-scatter") +
-   scale_color_manual(values = country_pal)
+xs_data |>
+  autoplot(
+    strata = "Country",
+    type = "age-scatter"
+  ) +
+  scale_color_manual(values = country_pal)
 
 ```
 
@@ -190,16 +195,16 @@ Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from 
 
 Column Name | Description
 ----------- | -----------
-    y.low   | Lower limit of detection of the assay
-    nu      | Biologic noise
-    y.high  | Upper limit of detection of the assay
-    eps     | Measurement noise
+y.low   | Lower limit of detection of the assay
+nu      | Biologic noise
+y.high  | Upper limit of detection of the assay
+eps     | Measurement noise
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}
 # Import noise parameters from OSF
 
-noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
+noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
 ```
 
 ## Estimate Seroincidence 
@@ -212,9 +217,9 @@ Using the function `est.incidence`, we filter to sites in Pakistan and define th
 # Using est.incidence (no strata)
 
 est1 <- estimate_scr(
-  pop_data = xs_data %>% filter(Country == "Pakistan"),
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   curve_param = curves,
-  noise_param = noise %>% filter(Country == "Pakistan"),
+  noise_param = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 
@@ -259,7 +264,7 @@ Finally, let's visualize our seroincidence estimates by country and age category
 # Plot seroincidence estimates
 
 ## Save summary(est_country_age) as a dataframe and sort by incidence rate
-est_country_agedf <- summary(est_country_age) %>%
+est_country_agedf <- summary(est_country_age) |>
   mutate(
     Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal"),
     ageCat = factor(ageCat)

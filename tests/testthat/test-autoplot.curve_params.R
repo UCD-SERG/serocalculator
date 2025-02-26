@@ -11,7 +11,8 @@ test_that(
 
     curve |>
       vdiffr::expect_doppelganger(
-        title = "autoplot.curve_params")
+        title = "autoplot.curve_params"
+      )
   }
 
 )

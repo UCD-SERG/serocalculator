@@ -9,3 +9,4 @@ methodology_files
 *.docx
 /.quarto/
 *.rmarkdown
+*_files

@@ -1,22 +1,9 @@
 #' graph antibody decay curves by antigen isotype
 #'
-#' @inheritParams plot_curve_params_one_ab
-#' @inheritDotParams plot_curve_params_one_ab
-#' @param antigen_isos antigen isotypes to analyze (can subset `curve_params`)
-#' @param ncol how many columns of subfigures to use in panel plot
-#' @details
-#' ## `rows_to_graph`
-#' If you directly specify `rows_to_graph` when calling this function,
-#' the row numbers are enumerated separately for each antigen isotype;
-#' in other words, for the purposes of this argument,
-#' row numbers start over at 1 for each antigen isotype.
-#' There is currently no way to specify different row numbers for different antigen isotypes;
-#' if you want to do that,
-#' you will could call [plot_curve_params_one_ab()] directly for each antigen isotype
-#' and combine the resulting panels yourself.
-#' Or you could subset `curve_params` manually,
-#' before passing it to this function,
-#' and set the `n_curves` argument to `Inf`.
+#' @inheritParams graph_seroresponse_model_1
+#' @inheritDotParams graph_seroresponse_model_1
+#' @param antigen_isos antigen isotypes to analyze
+#' (can subset `curve_params`)
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @examples
@@ -26,10 +13,10 @@
 #' library(magrittr)
 #'
 #' curve <-
-#'   serocalculator_example("example_curve_params.csv") %>%
-#'   read.csv() %>%
-#'   as_curve_params() %>%
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) %>%
+#'   serocalculator_example("example_curve_params.csv") |>
+#'   read.csv() |>
+#'   as_curve_params() |>
+#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
 #'   autoplot()
 #'
 #' curve
@@ -37,13 +24,11 @@
 autoplot.curve_params <- function(
     object,
     antigen_isos = unique(object$antigen_iso),
-    ncol = min(3, length(antigen_isos)),
     ...) {
 
   object |>
     graph_seroresponse_model_1(
       antigen_isos = antigen_isos,
-      ncol = ncol,
       ...
-  )
+    )
 }

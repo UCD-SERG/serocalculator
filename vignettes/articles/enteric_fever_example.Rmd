@@ -195,10 +195,10 @@ Measurement noise, $\varepsilon$ ("epsilon"), represents measurement error from 
 
 Column Name | Description
 ----------- | -----------
-y.low   | Lower limit of detection of the assay
-nu      | Biologic noise
-y.high  | Upper limit of detection of the assay
-eps     | Measurement noise
+y.low       | Lower limit of detection of the assay
+nu          | Biologic noise
+y.high      | Upper limit of detection of the assay
+eps         | Measurement noise
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}

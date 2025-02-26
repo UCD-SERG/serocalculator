@@ -26,6 +26,8 @@ autoplot.curve_params <- function(
     antigen_isos = unique(object$antigen_iso),
     ...) {
 
+  # spaghettified in order to swap out implementations with minimal
+  # disruption to API
   object |>
     graph_seroresponse_model_1(
       antigen_isos = antigen_isos,

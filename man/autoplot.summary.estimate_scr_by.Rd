@@ -30,7 +30,17 @@ method to the output of \code{\link[=estimate_scr_by]{estimate_scr_by()}}).}
 
 \item{CIs}{\link{logical}, if \code{TRUE}, add horizontal CI error bars}
 
+\item{title}{a title for the final plot}
+
+\item{xlab}{a label for the x axis of the final plot}
+
+\item{ylab}{a label for the y axis of the final plot}
+
+\item{fill_palette}{define the color palatte for bar fill}
+
 \item{...}{unused}
+
+\item{yvar}{the name of a second stratifying variable in \code{object} (e.g., "catchment")}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

@@ -43,8 +43,7 @@ Imports:
     and,
     glue,
     stringr,
-    parallel,
-    forcats
+    parallel
 Suggests:
     bookdown,
     DT,
@@ -61,7 +60,8 @@ Suggests:
     tidyverse,
     qrcode,
     vdiffr,
-    withr
+    withr,
+    forcats
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3

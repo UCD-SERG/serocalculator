@@ -53,10 +53,6 @@ autoplot.summary.estimate_scr_by <- function(
   fill_var,
     alpha = 0.7,
     CIs = FALSE,
-    title = "Seroconversion Rate by Group",
-    xlab = "Seroconversion rate per 1000 person-years",
-    ylab = "Stratification Variable",
-    fill_palette = NULL,
     ...
   ) {
     if (!is.element(xvar, names(object))) {

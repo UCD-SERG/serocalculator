@@ -4,7 +4,18 @@
 \alias{autoplot.summary.estimate_scr_by}
 \title{Plot method for \code{summary.estimate_scr_by} objects}
 \usage{
-\method{autoplot}{summary.estimate_scr_by}(object, xvar, fill_var, alpha = 0.7, CIs = FALSE, ...)
+\method{autoplot}{summary.estimate_scr_by}(
+  object,
+  xvar,
+  fill_var,
+  alpha = 0.7,
+  CIs = FALSE,
+  title = "Seroconversion Rate by Group",
+  xlab = "Seroconversion rate per 1000 person-years",
+  ylab = "Stratification Variable",
+  fill_palette = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{a \code{summary.seroincidence.by} object

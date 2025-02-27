@@ -9,7 +9,7 @@
 #' @param title a title for the final plot
 #' @param xlab a label for the x axis of the final plot
 #' @param fill_lab fill label
-#' @param fill_palette define the color palatte for bar fill
+#' @param fill_palette define the color palette for bar fill
 #' @param fill_var the name of the variable used for fill color (e.g., "Country")
 #' @param alpha transparency for the bars (1 = no transparency, 0 = fully transparent)
 #' @param CIs [logical], if `TRUE`, add horizontal CI error bars

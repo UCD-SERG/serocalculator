@@ -34,7 +34,7 @@ method to the output of \code{\link[=estimate_scr_by]{estimate_scr_by()}}).}
 
 \item{xlab}{a label for the x axis of the final plot}
 
-\item{fill_palette}{define the color palatte for bar fill}
+\item{fill_palette}{define the color palette for bar fill}
 
 \item{...}{unused}
 

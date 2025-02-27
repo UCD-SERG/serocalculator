@@ -40,7 +40,7 @@
 #' noise_params = noise,
 #' noise_strata_varnames = "catchment",
 #' antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#' num_cores = 8 # Allow for parallel processing to decrease run time
+#' num_cores = 2 # Allow for parallel processing to decrease run time
 #' )
 #'
 #' est_catchment_age_sum <- summary(est_catchment_age)

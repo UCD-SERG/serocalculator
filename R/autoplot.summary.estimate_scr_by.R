@@ -42,7 +42,8 @@
 #'
 #' autoplot.summary.estimate_scr_by(
 #'   est_catchment_age_sum,
-#'   "ageCat"
+#'   "ageCat",
+#'   fill_var = "catchment"
 #' )
 #'
 #'

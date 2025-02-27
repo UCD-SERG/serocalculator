@@ -13,7 +13,6 @@
   title = "Seroconversion Rate by Group",
   xlab = "Seroconversion rate per 1000 person-years",
   ylab = "Stratification Variable",
-  fill_lab = "Group",
   fill_palette = NULL,
   ...
 )
@@ -70,11 +69,7 @@ est_catchment_age_sum <- summary(est_catchment_age)
 autoplot.summary.estimate_scr_by(
   est_catchment_age_sum,
   "ageCat",
-  fill_var = "catchment",
-  CIs = TRUE,
-  title = "Estimated Seroconversion Rate by Age and Catchment",
-  ylab = "Age Category",
-  xlab = "Estimated Seroconversion Rate"
+  fill_var = "catchment"
 )
 
 

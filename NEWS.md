@@ -2,6 +2,7 @@
 
 ## New features
 
+* Added `autoplot.summary.estimate_scr_by()` to create horizontal bar charts of stratified results (#397)
 * `autoplot.pop_data(type = "age-scatter")` now shows legend at bottom (#407)
 * `autoplot.pop_data(type = "age-scatter")` now facets by antigen isotype (#406)
 * Rename `est.incidence.by()` to `estimate_scr_by()` (#389)

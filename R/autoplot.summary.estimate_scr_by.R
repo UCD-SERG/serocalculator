@@ -40,13 +40,13 @@
 #'
 #' est_catchment_age_sum <- summary(est_catchment_age)
 #'
-#' autoplot.summary.estimate_scr_by(est_catchment_age_sum, "ageCat", fill_var = "catchment", CIs = TRUE , title = "Estimated Seroconversion Rate by Age and Catchment", ylab = "Age Category", xlab = "Estimated Seroconversion Rate")
+#' autoplot.summary.estimate_scr_by(est_catchment_age_sum, "ageCat", fill_var = "catchment", CIs = TRUE, ylab = "Age Category", xlab = "Estimated Rate")
 #'
 #'
-  autoplot.summary.estimate_scr_by <- function(
-    object,
-    xvar,
-    fill_var,
+autoplot.summary.estimate_scr_by <- function(
+  object,
+  xvar,
+  fill_var,
     alpha = 0.7,
     CIs = FALSE,
     title = "Seroconversion Rate by Group",
@@ -66,7 +66,7 @@
       )
     }
 
-    if (!is.element(fill_var, names(object))) {
+  if (!is.element(fill_var, names(object))) {
       cli::cli_abort(
         class = "unavailable_fill_var",
         message = c(
@@ -76,14 +76,14 @@
       )
     }
 
-    plot1 <-
+  plot1 <-
       ggplot2::ggplot(object, ggplot2::aes(
         y = forcats::fct_rev(.data[[xvar]]),
         x = .data$incidence.rate * 1000,
         fill = .data[[fill_var]]
       )) +
-      ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge(), show.legend = TRUE, alpha = alpha) +
-      {
+      ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge(), show.legend = TRUE, alpha = alpha) + {
+
         if (CIs) ggplot2::geom_errorbar(
           aes(xmin = .data$CI.lwr * 1000, xmax = .data$CI.upr * 1000),
           position = ggplot2::position_dodge(width = 0.9),
@@ -103,9 +103,9 @@
       ) +
       ggplot2::scale_x_continuous(expand = c(0, 10))
 
-    if (!is.null(fill_palette)) {
+  if (!is.null(fill_palette)) {
       plot1 <- plot1 + ggplot2::scale_fill_manual(values = fill_palette)
     }
 
-    return(plot1)
+  return(plot1)
   }

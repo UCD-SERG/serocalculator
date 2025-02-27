@@ -8,7 +8,7 @@
 #' @param yvar the name of a second stratifying variable in `object` (e.g., "catchment")
 #' @param title a title for the final plot
 #' @param xlab a label for the x axis of the final plot
-#' @param ylab a label for the y axis of the final plot
+#' @param fill_lab fill label
 #' @param fill_palette define the color palatte for bar fill
 #' @param fill_var the name of the variable used for fill color (e.g., "Country")
 #' @param alpha transparency for the bars (1 = no transparency, 0 = fully transparent)

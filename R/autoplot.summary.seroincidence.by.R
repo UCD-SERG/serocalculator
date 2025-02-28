@@ -10,6 +10,10 @@
 #' @param shape shape argument for `geom_point()`
 #' @param dodge_width width for jitter
 #' @param CIs [logical], if `TRUE`, add CI error bars
+#' @param color_var [character] which variable in `object` to use
+#' to determine point color
+#' @param group_var [character] which variable in `object` to use
+#' to connect points with lines (`NULL` for no lines)
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()] object
@@ -51,6 +55,8 @@ autoplot.summary.seroincidence.by <- function(
     shape = 1,
     dodge_width = 0.001,
     CIs = FALSE,
+    color_var = "nlm.convergence.code",
+    group_var = NULL,
     ...) {
 
   plot1 <-
@@ -59,7 +65,8 @@ autoplot.summary.seroincidence.by <- function(
     ggplot2::aes(
       x = get(xvar),
       y = .data$incidence.rate,
-      col = .data$nlm.convergence.code
+      group = if (!is.null(group_var)) .data[[group_var]],
+      col = .data[[color_var]]
     ) +
     ggplot2::xlab(xvar) +
     ggplot2::ylab("Estimated incidence rate") +
@@ -82,10 +89,18 @@ autoplot.summary.seroincidence.by <- function(
   } else {
     plot1 <- plot1 +
       ggplot2::geom_point(
-      position = ggplot2::position_dodge2(width = dodge_width),
-      shape = shape,
-      alpha = alpha
-    )
+        position = ggplot2::position_dodge2(width = dodge_width),
+        shape = shape,
+        alpha = alpha
+      )
+
+    if (!is.null(group_var)) {
+      plot1 <- plot1 +
+        ggplot2::geom_line(
+          position = ggplot2::position_dodge2(width = dodge_width),
+          alpha = alpha
+        )
+    }
 
   }
 

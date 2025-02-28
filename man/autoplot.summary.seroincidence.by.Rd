@@ -11,6 +11,8 @@
   shape = 1,
   dodge_width = 0.001,
   CIs = FALSE,
+  color_var = "nlm.convergence.code",
+  group_var = NULL,
   ...
 )
 }
@@ -29,6 +31,12 @@ method to the output of \code{\link[=estimate_scr_by]{estimate_scr_by()}}).}
 \item{dodge_width}{width for jitter}
 
 \item{CIs}{\link{logical}, if \code{TRUE}, add CI error bars}
+
+\item{color_var}{\link{character} which variable in \code{object} to use
+to determine point color}
+
+\item{group_var}{\link{character} which variable in \code{object} to use
+to connect points with lines (\code{NULL} for no lines)}
 
 \item{...}{unused}
 }

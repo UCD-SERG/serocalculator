@@ -31,13 +31,16 @@ test_that(
 
     plot1 <- autoplot(est2sum,
                       xvar = "ageCat",
+                      type = "scatter",
                       dodge_width = 0.1,
                       color_var = "catchment",
                       CI = TRUE)
 
     plot1 |> vdiffr::expect_doppelganger(title = "strat-est-plot-CI")
 
-    plot2 <- autoplot(est2sum, "ageCat",
+    plot2 <- autoplot(est2sum,
+                      xvar = "ageCat",
+                      type = "scatter",
                       CI = TRUE,
                       dodge_width = 0.1,
                       group_var = "catchment",

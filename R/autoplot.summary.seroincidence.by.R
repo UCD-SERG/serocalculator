@@ -51,7 +51,12 @@ autoplot.summary.seroincidence.by <- function(
   } else if (type == "bar") {
     # Kristina will add: plot1 <- strat_est_barplot(object, ...)
   } else {
-    cli::cli_abort("Invalid plot `type` specified. Choose either 'scatter' or 'bar'.")
+    cli::cli_abort(
+      c(
+        "Invalid plot `type` specified: {.str {type}}.",
+        "i" = "Please choose either 'scatter' or 'bar'."
+      )
+    )
   }
 
 

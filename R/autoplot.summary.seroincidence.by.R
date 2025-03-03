@@ -54,7 +54,7 @@ autoplot.summary.seroincidence.by <- function(
     alpha = .7,
     shape = 1,
     dodge_width = 0.001,
-    CIs = FALSE,
+    CIs = FALSE, # nolint: object_name_linter
     color_var = "nlm.convergence.code",
     group_var = NULL,
     ...) {
@@ -73,12 +73,13 @@ autoplot.summary.seroincidence.by <- function(
     ggplot2::theme_linedraw() +
     ggplot2::theme(
       panel.grid.minor.x = ggplot2::element_blank(),
-      panel.grid.minor.y = ggplot2::element_blank()) +
+      panel.grid.minor.y = ggplot2::element_blank()
+    ) +
     ggplot2::expand_limits(y = 0) +
     ggplot2::labs(col = "`nlm()` convergence code") +
     ggplot2::theme(legend.position = "bottom")
 
-  if(CIs) {
+  if (CIs) {
     plot1 <- plot1 +
       ggplot2::geom_pointrange(
         alpha = alpha,
@@ -94,15 +95,16 @@ autoplot.summary.seroincidence.by <- function(
         alpha = alpha
       )
 
-    if (!is.null(group_var)) {
-      plot1 <- plot1 +
-        ggplot2::geom_line(
-          position = ggplot2::position_dodge2(width = dodge_width),
-          alpha = alpha
-        )
-    }
-
   }
+
+  if (!is.null(group_var)) {
+    plot1 <- plot1 +
+      ggplot2::geom_line(
+        position = ggplot2::position_dodge2(width = dodge_width),
+        alpha = alpha
+      )
+  }
+
 
   return(plot1)
 

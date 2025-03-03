@@ -49,7 +49,7 @@ autoplot.summary.seroincidence.by <- function(
   if (type == "scatter") {
     plot1 <- strat_est_scatterplot(object, ...)
   } else if (type == "bar") {
-    plot1 <- strat_est_barplot(object, ...)
+    # Kristina will add: plot1 <- strat_est_barplot(object, ...)
   } else {
     cli::cli_abort("Invalid plot `type` specified. Choose either 'scatter' or 'bar'.")
   }

@@ -38,7 +38,7 @@
 #'   example_noise_params_pk
 #'
 #' est2 <- estimate_scr_by(
-#'   strata = c("catchment"),
+#'   strata = c("catchment", "ageCat"),
 #'   pop_data = xs_data,
 #'   curve_params = curve,
 #'   noise_params = noise,
@@ -50,72 +50,27 @@
 #'
 #' est2sum <- summary(est2)
 #'
-#' autoplot(est2sum, "catchment")
+#' autoplot(est2sum, "ageCat", type = "scatter", fill_var = "catchment")
+#' autoplot(est2sum, "ageCat", type = "bar", fill_var = "catchment")
 #'
 autoplot.summary.seroincidence.by <- function(
     object,
     type = "scatter",
     xvar,
+    fill_var,
     alpha = .7,
     shape = 1,
     dodge_width = 0.001,
     CIs = FALSE,
-    ...) {
-
-  plot1 <-
-    object |>
-    ggplot2::ggplot() +
-    ggplot2::aes(
-      x = get(xvar),
-      y = .data$incidence.rate,
-      col = .data$nlm.convergence.code
-    ) +
-    ggplot2::xlab(xvar) +
-    ggplot2::ylab("Estimated incidence rate") +
-    ggplot2::theme_linedraw() +
-    ggplot2::theme(
-      panel.grid.minor.x = ggplot2::element_blank(),
-      panel.grid.minor.y = ggplot2::element_blank()) +
-    ggplot2::expand_limits(y = 0) +
-    ggplot2::labs(col = "`nlm()` convergence code") +
-    ggplot2::theme(legend.position = "bottom")
-
-  if(CIs) {
-    plot1 <- plot1 +
-      ggplot2::geom_pointrange(
-        alpha = alpha,
-        position = ggplot2::position_dodge2(width = dodge_width),
-        aes(ymin = .data$CI.lwr, ymax = .data$CI.upr)
-      )
-
-  } else {
-    plot1 <- plot1 +
-      ggplot2::geom_point(
-      position = ggplot2::position_dodge2(width = dodge_width),
-      shape = shape,
-      alpha = alpha
-    )
-
-  }
-
-  return(plot1)
-
-}
-
-autoplot.summary.estimate_scr_by <- function(
-    object,
-    type = "bar",
-    xvar,
-    fill_var,
-    alpha = 0.7,
-    CIs = FALSE,
     title = "Seroconversion Rate by Group",
     xlab = "Seroconversion rate per 1000 person-years",
     ylab = "Stratification Variable",
-    fill_lab,
+    fill_lab = fill_var,
     fill_palette = NULL,
     ...
-) {
+  ) {
+
+  # Check if xvar exists in the dataset
   if (!is.element(xvar, names(object))) {
     cli::cli_abort(
       class = "unavailable_xvar",
@@ -126,7 +81,8 @@ autoplot.summary.estimate_scr_by <- function(
     )
   }
 
-  if (!is.element(fill_var, names(object))) {
+  # Check if fill_var exists when type = "bar"
+  if (type == "bar" && !is.null(fill_var) && !is.element(fill_var, names(object))) {
     cli::cli_abort(
       class = "unavailable_fill_var",
       message = c(
@@ -136,37 +92,74 @@ autoplot.summary.estimate_scr_by <- function(
     )
   }
 
-  plot1 <-
-    ggplot2::ggplot(object, ggplot2::aes(
+  if (type == "scatter") {
+    plot1 <- ggplot2::ggplot(object) +
+      ggplot2::aes(
+        x = get(xvar),
+        y = .data$incidence.rate,
+        col = if (!is.null(fill_var)) .data[[fill_var]] else .data$nlm.convergence.code,
+        fill = if (!is.null(fill_var)) .data[[fill_var]] else .data$nlm.convergence.code
+      ) +
+      ggplot2::geom_point(
+        position = ggplot2::position_dodge2(width = dodge_width),
+        shape = shape,
+        alpha = alpha
+      ) +
+      ggplot2::xlab(xvar) +
+      ggplot2::ylab("Estimated incidence rate") +
+      ggplot2::theme_linedraw() +
+      ggplot2::theme(
+        panel.grid.minor.x = ggplot2::element_blank(),
+        panel.grid.minor.y = ggplot2::element_blank()
+      ) +
+      ggplot2::expand_limits(y = 0) +
+      ggplot2::labs(col = if (!is.null(fill_var)) fill_lab else "`nlm()` convergence code") +
+      ggplot2::theme(legend.position = "bottom")
+
+    if (CIs) {
+      plot1 <- plot1 +
+        ggplot2::geom_pointrange(
+          aes(ymin = .data$CI.lwr, ymax = .data$CI.upr),
+          alpha = alpha,
+          position = ggplot2::position_dodge2(width = dodge_width)
+        )
+    }
+
+  } else if (type == "bar") {
+    plot1 <- ggplot2::ggplot(object, ggplot2::aes(
       y = forcats::fct_rev(.data[[xvar]]),
       x = .data$incidence.rate * 1000,
-      fill = .data[[fill_var]]
+      fill = if (!is.null(fill_var)) .data[[fill_var]] else NULL
     )) +
-    ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge(), show.legend = TRUE, alpha = alpha) + {
+      ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge(), show.legend = !is.null(fill_var), alpha = alpha) +
+      ggplot2::labs(
+        title = title,
+        x = xlab,
+        y = ylab,
+        fill = fill_lab
+      ) +
+      ggplot2::theme_linedraw() +
+      ggplot2::theme(
+        axis.text.y = ggplot2::element_text(size = 11),
+        axis.text.x = ggplot2::element_text(size = 11)
+      ) +
+      ggplot2::scale_x_continuous(expand = c(0, 10))
 
-      if (CIs) ggplot2::geom_errorbar(
-        aes(xmin = .data$CI.lwr * 1000, xmax = .data$CI.upr * 1000),
-        position = ggplot2::position_dodge(width = 0.9),
-        width = 0.2
-      )
-    } +
-    ggplot2::labs(
-      title = title,
-      x = xlab,
-      y = ylab,
-      fill = fill_lab
-    ) +
-    ggplot2::theme_linedraw() +
-    ggplot2::theme(
-      axis.text.y = ggplot2::element_text(size = 11),
-      axis.text.x = ggplot2::element_text(size = 11)
-    ) +
-    ggplot2::scale_x_continuous(expand = c(0, 10))
+    if (CIs) {
+      plot1 <- plot1 +
+        ggplot2::geom_errorbar(
+          aes(xmin = .data$CI.lwr * 1000, xmax = .data$CI.upr * 1000),
+          position = ggplot2::position_dodge(width = 0.9),
+          width = 0.2
+        )
+    }
 
-  if (!is.null(fill_palette)) {
-    plot1 <- plot1 + ggplot2::scale_fill_manual(values = fill_palette)
+    if (!is.null(fill_palette)) {
+      plot1 <- plot1 + ggplot2::scale_fill_manual(values = fill_palette)
+    }
+  } else {
+    cli::cli_abort("Invalid plot type specified. Choose either 'scatter' or 'bar'.")
   }
 
   return(plot1)
 }
-

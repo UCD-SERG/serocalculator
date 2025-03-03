@@ -15,7 +15,7 @@ method to the output of \code{\link[=estimate_scr_by]{estimate_scr_by()}}).}
 The implemented options are \code{"scatter"} and \code{"bar"}.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=strat_est_scatterplot]{strat_est_scatterplot}}
+  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}
   \describe{
     \item{\code{xvar}}{the name of a stratifying variable in \code{object}}
     \item{\code{alpha}}{transparency for the points in the graph

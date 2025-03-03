@@ -7,7 +7,7 @@
 #' @param type
 #' [character] string indicating which type of plot to generate.
 #' The implemented options are `"scatter"` and `"bar"`.
-#' @inheritDotParams strat_est_scatterplot
+#' @inheritDotParams strat_ests_scatterplot
 #'
 #' @return a [ggplot2::ggplot()] object
 #' @export
@@ -47,7 +47,7 @@ autoplot.summary.seroincidence.by <- function(
     ...) {
 
   if (type == "scatter") {
-    plot1 <- strat_est_scatterplot(object, ...)
+    plot1 <- strat_ests_scatterplot(object, ...)
   } else if (type == "bar") {
     # Kristina will add: plot1 <- strat_est_barplot(object, ...)
   } else {

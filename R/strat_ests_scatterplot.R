@@ -19,37 +19,9 @@
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @keywords internal
-#' @examples
+#' @example inst/examples/exm-strat_ests_scatterplot.R
 #'
-#' library(dplyr)
-#' library(ggplot2)
-#'
-#' xs_data <-
-#'   sees_pop_data_pk_100
-#'
-#' curve <-
-#'   typhoid_curves_nostrat_100 %>%
-#'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
-#'
-#' noise <-
-#'   example_noise_params_pk
-#'
-#' est2 <- estimate_scr_by(
-#'   strata = c("catchment"),
-#'   pop_data = xs_data,
-#'   curve_params = curve,
-#'   noise_params = noise,
-#'   curve_strata_varnames= NULL,
-#'   noise_strata_varnames = NULL,
-#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-#'   num_cores = 2 # Allow for parallel processing to decrease run time
-#' )
-#'
-#' est2sum <- summary(est2)
-#'
-#' autoplot(est2sum, "catchment")
-#'
-strat_est_scatterplot <- function(
+strat_ests_scatterplot <- function(
     object,
     xvar,
     alpha = .7,
@@ -77,7 +49,6 @@ strat_est_scatterplot <- function(
       panel.grid.minor.y = ggplot2::element_blank()
     ) +
     ggplot2::expand_limits(y = 0) +
-    ggplot2::labs(col = "`nlm()` convergence code") +
     ggplot2::theme(legend.position = "bottom")
 
   if (CIs) {

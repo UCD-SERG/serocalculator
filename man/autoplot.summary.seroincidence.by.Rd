@@ -12,7 +12,11 @@
 method to the output of \code{\link[=estimate_scr_by]{estimate_scr_by()}}).}
 
 \item{type}{\link{character} string indicating which type of plot to generate.
-The implemented options are \code{"scatter"} and \code{"bar"}.}
+The implemented options are:
+\itemize{
+\item \code{"scatter"}: calls \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot()}} to generate a scatterplot
+\item \code{"bar"}: calls \code{strat_ests_barplot()} to generate a barplot
+}}
 
 \item{...}{
   Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}

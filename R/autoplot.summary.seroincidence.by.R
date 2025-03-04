@@ -6,7 +6,9 @@
 #' method to the output of [estimate_scr_by()]).
 #' @param type
 #' [character] string indicating which type of plot to generate.
-#' The implemented options are `"scatter"` and `"bar"`.
+#' The implemented options are:
+#' - `"scatter"`: calls [strat_ests_scatterplot()] to generate a scatterplot
+#' -  `"bar"`: calls `strat_ests_barplot()` to generate a barplot
 #' @inheritDotParams strat_ests_scatterplot
 #'
 #' @return a [ggplot2::ggplot()] object

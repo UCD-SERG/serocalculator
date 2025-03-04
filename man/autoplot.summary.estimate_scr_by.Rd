@@ -13,6 +13,7 @@
   title = "Seroconversion Rate by Group",
   xlab = "Seroconversion rate per 1000 person-years",
   ylab = "Stratification Variable",
+  fill_lab,
   fill_palette = NULL,
   ...
 )
@@ -34,13 +35,13 @@ method to the output of \code{\link[=estimate_scr_by]{estimate_scr_by()}}).}
 
 \item{xlab}{a label for the x axis of the final plot}
 
+\item{ylab}{the name of a second stratifying variable in \code{object} (e.g., "catchment")}
+
+\item{fill_lab}{fill label}
+
 \item{fill_palette}{define the color palette for bar fill}
 
 \item{...}{unused}
-
-\item{yvar}{the name of a second stratifying variable in \code{object} (e.g., "catchment")}
-
-\item{fill_lab}{fill label}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
@@ -71,7 +72,7 @@ curve_strata_varnames = NULL,
 noise_params = noise,
 noise_strata_varnames = "catchment",
 antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-num_cores = 8 # Allow for parallel processing to decrease run time
+num_cores = 2 # Allow for parallel processing to decrease run time
 )
 
 est_catchment_age_sum <- summary(est_catchment_age)

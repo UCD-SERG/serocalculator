@@ -4,7 +4,7 @@
 \alias{autoplot.summary.seroincidence.by}
 \title{Plot method for \code{summary.seroincidence.by} objects}
 \usage{
-\method{autoplot}{summary.seroincidence.by}(object, type, ...)
+\method{autoplot}{summary.seroincidence.by}(object, type = "scatter", ...)
 }
 \arguments{
 \item{object}{a \code{summary.seroincidence.by} object

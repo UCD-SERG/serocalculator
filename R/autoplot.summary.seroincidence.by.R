@@ -50,7 +50,7 @@
 #'
 autoplot.summary.seroincidence.by <- function(
     object,
-    type,
+    type = "scatter",
     ...) {
 
   if (type == "scatter") {

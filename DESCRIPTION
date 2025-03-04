@@ -43,7 +43,8 @@ Imports:
     and,
     glue,
     stringr,
-    parallel
+    parallel,
+    labelled
 Suggests:
     bookdown,
     DT,

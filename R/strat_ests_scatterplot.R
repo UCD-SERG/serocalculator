@@ -32,6 +32,9 @@ strat_ests_scatterplot <- function(
     group_var = NULL,
     ...) {
 
+  color_label <- dataset[[color_var]] |> labelled::get_label_attribute()
+  if (is.null(color_label)) color_label <- color_var
+
   plot1 <-
     object |>
     ggplot2::ggplot() +
@@ -49,6 +52,7 @@ strat_ests_scatterplot <- function(
       panel.grid.minor.y = ggplot2::element_blank()
     ) +
     ggplot2::expand_limits(y = 0) +
+    ggplot2::labs(col = color_var) +
     ggplot2::theme(legend.position = "bottom")
 
   if (CIs) {

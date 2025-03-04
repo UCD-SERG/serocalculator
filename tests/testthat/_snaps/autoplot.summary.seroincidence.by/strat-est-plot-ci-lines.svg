@@ -46,6 +46,8 @@
 <circle cx='380.19' cy='355.36' r='2.84' style='stroke-width: 1.42; stroke: #00BFC4; stroke-opacity: 0.70; fill: #00BFC4; fill-opacity: 0.70;' />
 <circle cx='581.85' cy='305.52' r='2.84' style='stroke-width: 1.42; stroke: #F8766D; stroke-opacity: 0.70; fill: #F8766D; fill-opacity: 0.70;' />
 <circle cx='592.46' cy='232.36' r='2.84' style='stroke-width: 1.42; stroke: #00BFC4; stroke-opacity: 0.70; fill: #00BFC4; fill-opacity: 0.70;' />
+<polyline points='157.30,461.94 369.57,370.74 581.85,305.52 ' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.70; stroke-linecap: butt;' />
+<polyline points='167.91,371.72 380.19,355.36 592.46,232.36 ' style='stroke-width: 1.07; stroke: #00BFC4; stroke-opacity: 0.70; stroke-linecap: butt;' />
 <rect x='35.24' y='22.78' width='679.28' height='483.13' style='stroke-width: 1.07;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -70,11 +72,13 @@
 <rect x='363.31' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='371.95' y1='563.31' x2='371.95' y2='549.49' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.70; stroke-linecap: butt;' />
 <circle cx='371.95' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #F8766D; stroke-opacity: 0.70; fill: #F8766D; fill-opacity: 0.70;' />
+<line x1='365.04' y1='556.40' x2='378.86' y2='556.40' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.70; stroke-linecap: butt;' />
 <rect x='405.74' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='414.38' y1='563.31' x2='414.38' y2='549.49' style='stroke-width: 1.07; stroke: #00BFC4; stroke-opacity: 0.70; stroke-linecap: butt;' />
 <circle cx='414.38' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #00BFC4; stroke-opacity: 0.70; fill: #00BFC4; fill-opacity: 0.70;' />
+<line x1='407.47' y1='556.40' x2='421.29' y2='556.40' style='stroke-width: 1.07; stroke: #00BFC4; stroke-opacity: 0.70; stroke-linecap: butt;' />
 <text x='386.07' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>aku</text>
 <text x='428.50' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>kgh</text>
-<text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='90.96px' lengthAdjust='spacingAndGlyphs'>strat-est-plot-CI</text>
+<text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='122.51px' lengthAdjust='spacingAndGlyphs'>strat-est-plot-CI-lines</text>
 </g>
 </svg>

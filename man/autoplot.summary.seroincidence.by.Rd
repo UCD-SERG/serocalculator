@@ -51,7 +51,7 @@ noise <-
   example_noise_params_pk
 
 est2 <- estimate_scr_by(
-  strata = c("catchment"),
+  strata = c("catchment", "ageCat"),
   pop_data = xs_data,
   curve_params = curve,
   noise_params = noise,
@@ -63,6 +63,11 @@ est2 <- estimate_scr_by(
 
 est2sum <- summary(est2)
 
-autoplot(est2sum, "ageCat", type = "scatter", fill_var = "catchment")
+est2sum |> strat_ests_scatterplot(
+    type ="scatter",
+    xvar = "ageCat",
+    color_var = "catchment",
+    CIs = TRUE,
+    group_var = "catchment")
 
 }

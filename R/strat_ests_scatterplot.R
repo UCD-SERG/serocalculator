@@ -32,7 +32,7 @@ strat_ests_scatterplot <- function(
     group_var = NULL,
     ...) {
 
-  color_label <- dataset[[color_var]] |> labelled::get_label_attribute()
+  color_label <- object[[color_var]] |> labelled::get_label_attribute()
   if (is.null(color_label)) color_label <- color_var
 
   plot1 <-

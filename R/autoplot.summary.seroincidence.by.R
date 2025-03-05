@@ -40,7 +40,7 @@
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
 #' noise <-
-#'   example_noise_params_pk.rda
+#'   example_noise_params_pk
 #'
 #' est2 <- estimate_scr_by(
 #'   strata = c("catchment", "ageCat"),

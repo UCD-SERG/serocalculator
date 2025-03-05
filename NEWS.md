@@ -45,6 +45,7 @@ would get merged by `ggplot2::aes(group = iter)` (#382)
 
 ## Internal changes
 
+* added codecov/test-results-action to test-coverage.yaml workflow
 * added test for censored data in f_dev() (#399)
 * added test for `autoplot.curve_params()`
 * added test for `graph.curve.params()` (#368)

@@ -40,7 +40,7 @@
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
 #' noise <-
-#'   example_noise_params_pk
+#'   example_noise_params_pk.rda
 #'
 #' est2 <- estimate_scr_by(
 #'   strata = c("catchment", "ageCat"),
@@ -55,12 +55,14 @@
 #'
 #' est2sum <- summary(est2)
 #'
-#' est2sum |> strat_ests_scatterplot(
+#' autoplot(est2sum,
 #'     type ="scatter",
 #'     xvar = "ageCat",
 #'     color_var = "catchment",
 #'     CIs = TRUE,
 #'     group_var = "catchment")
+#'
+#' autoplot(est2sum, "ageCat", type = "scatter", color_var = "catchment", CIs = TRUE, group_var = "catchment")
 #'
 #' autoplot(est2sum, "ageCat", type = "bar", fill_var = "catchment")
 #'
@@ -79,7 +81,7 @@ autoplot.summary.seroincidence.by <- function(
     fill_lab = fill_var,
     fill_palette = NULL,
     ...
-  ) {
+) {
 
   # Check if xvar exists in the dataset
   if (!is.element(xvar, names(object))) {
@@ -102,10 +104,10 @@ autoplot.summary.seroincidence.by <- function(
       )
     )
   }
-    ...) {
 
   if (type == "scatter") {
     plot1 <- strat_ests_scatterplot(object, ...)
+
   } else if (type == "bar") {
     plot1 <- ggplot2::ggplot(object, ggplot2::aes(
       y = forcats::fct_rev(.data[[xvar]]),
@@ -133,7 +135,6 @@ autoplot.summary.seroincidence.by <- function(
       )
     )
   }
-
 
   return(plot1)
 }

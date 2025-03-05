@@ -39,6 +39,7 @@
 
 ## Bug fixes
 
+* updated documentation for `autoplot.summary.seroincidence.by()` to correctly call `autoplot()` instead of `strat_ests_scatterplot()`
 * Fixed issue in `graph.curve.params()` where MCMC samples 
 with the same iteration number from different MCMC chains
 would get merged by `ggplot2::aes(group = iter)` (#382)

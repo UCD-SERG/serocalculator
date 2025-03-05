@@ -67,7 +67,7 @@ est2 <- estimate_scr_by(
 
 est2sum <- summary(est2)
 
-est2sum |> strat_ests_scatterplot(
+est2sum |> autoplot(
     type ="scatter",
     xvar = "ageCat",
     color_var = "catchment",

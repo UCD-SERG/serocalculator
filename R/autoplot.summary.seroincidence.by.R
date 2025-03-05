@@ -17,8 +17,13 @@
 #' @param dodge_width width for jitter
 #' @param CIs [logical], if `TRUE`, add CI error bars
 #' @param ... unused
-#' @param type an option to choose type of chart:
-#' the current options are `"scatter"` or `"bar"`
+#' @param type
+#' [character] string indicating which type of plot to generate.
+#' The implemented options are:
+#' - `"scatter"`: calls [strat_ests_scatterplot()] to generate a scatterplot
+#' -  `"bar"`: calls `strat_ests_barplot()` to generate a barplot
+#' @inheritDotParams strat_ests_scatterplot
+
 #'
 #' @return a [ggplot2::ggplot()] object
 #' @export
@@ -50,7 +55,13 @@
 #'
 #' est2sum <- summary(est2)
 #'
-#' autoplot(est2sum, "ageCat", type = "scatter", fill_var = "catchment")
+#' est2sum |> strat_ests_scatterplot(
+#'     type ="scatter",
+#'     xvar = "ageCat",
+#'     color_var = "catchment",
+#'     CIs = TRUE,
+#'     group_var = "catchment")
+#'
 #' autoplot(est2sum, "ageCat", type = "bar", fill_var = "catchment")
 #'
 autoplot.summary.seroincidence.by <- function(
@@ -91,40 +102,10 @@ autoplot.summary.seroincidence.by <- function(
       )
     )
   }
+    ...) {
 
   if (type == "scatter") {
-    plot1 <- ggplot2::ggplot(object) +
-      ggplot2::aes(
-        x = get(xvar),
-        y = .data$incidence.rate,
-        col = if (!is.null(fill_var)) .data[[fill_var]] else .data$nlm.convergence.code,
-        fill = if (!is.null(fill_var)) .data[[fill_var]] else .data$nlm.convergence.code
-      ) +
-      ggplot2::geom_point(
-        position = ggplot2::position_dodge2(width = dodge_width),
-        shape = shape,
-        alpha = alpha
-      ) +
-      ggplot2::xlab(xvar) +
-      ggplot2::ylab("Estimated incidence rate") +
-      ggplot2::theme_linedraw() +
-      ggplot2::theme(
-        panel.grid.minor.x = ggplot2::element_blank(),
-        panel.grid.minor.y = ggplot2::element_blank()
-      ) +
-      ggplot2::expand_limits(y = 0) +
-      ggplot2::labs(col = if (!is.null(fill_var)) fill_lab else "`nlm()` convergence code") +
-      ggplot2::theme(legend.position = "bottom")
-
-    if (CIs) {
-      plot1 <- plot1 +
-        ggplot2::geom_pointrange(
-          aes(ymin = .data$CI.lwr, ymax = .data$CI.upr),
-          alpha = alpha,
-          position = ggplot2::position_dodge2(width = dodge_width)
-        )
-    }
-
+    plot1 <- strat_ests_scatterplot(object, ...)
   } else if (type == "bar") {
     plot1 <- ggplot2::ggplot(object, ggplot2::aes(
       y = forcats::fct_rev(.data[[xvar]]),
@@ -144,22 +125,15 @@ autoplot.summary.seroincidence.by <- function(
         axis.text.x = ggplot2::element_text(size = 11)
       ) +
       ggplot2::scale_x_continuous(expand = c(0, 10))
-
-    if (CIs) {
-      plot1 <- plot1 +
-        ggplot2::geom_errorbar(
-          aes(xmin = .data$CI.lwr * 1000, xmax = .data$CI.upr * 1000),
-          position = ggplot2::position_dodge(width = 0.9),
-          width = 0.2
-        )
-    }
-
-    if (!is.null(fill_palette)) {
-      plot1 <- plot1 + ggplot2::scale_fill_manual(values = fill_palette)
-    }
   } else {
-    cli::cli_abort("Invalid plot type specified. Choose either 'scatter' or 'bar'.")
+    cli::cli_abort(
+      c(
+        "Invalid plot `type` specified: {.str {type}}.",
+        "i" = "Please choose either 'scatter' or 'bar'."
+      )
+    )
   }
+
 
   return(plot1)
 }

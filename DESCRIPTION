@@ -29,7 +29,6 @@ Imports:
     ggpubr,
     lifecycle,
     magrittr,
-    mixtools,
     Rcpp,
     rlang,
     rngtools,
@@ -43,13 +42,15 @@ Imports:
     and,
     glue,
     stringr,
-    parallel
+    parallel,
+    labelled
 Suggests:
     bookdown,
     DT,
     fs,
     ggbeeswarm,
     knitr,
+    mixtools,
     pak,
     readr,
     quarto,

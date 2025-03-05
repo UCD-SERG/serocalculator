@@ -68,18 +68,7 @@
 #'
 autoplot.summary.seroincidence.by <- function(
     object,
-    type = "scatter",
-    xvar,
-    fill_var,
-    alpha = .7,
-    shape = 1,
-    dodge_width = 0.001,
-    CIs = FALSE,
-    title = "Seroconversion Rate by Group",
-    xlab = "Seroconversion rate per 1000 person-years",
-    ylab = "Stratification Variable",
-    fill_lab = fill_var,
-    fill_palette = NULL,
+    type,
     ...
 ) {
 
@@ -109,24 +98,8 @@ autoplot.summary.seroincidence.by <- function(
     plot1 <- strat_ests_scatterplot(object, ...)
 
   } else if (type == "bar") {
-    plot1 <- ggplot2::ggplot(object, ggplot2::aes(
-      y = forcats::fct_rev(.data[[xvar]]),
-      x = .data$incidence.rate * 1000,
-      fill = if (!is.null(fill_var)) .data[[fill_var]] else NULL
-    )) +
-      ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge(), show.legend = !is.null(fill_var), alpha = alpha) +
-      ggplot2::labs(
-        title = title,
-        x = xlab,
-        y = ylab,
-        fill = fill_lab
-      ) +
-      ggplot2::theme_linedraw() +
-      ggplot2::theme(
-        axis.text.y = ggplot2::element_text(size = 11),
-        axis.text.x = ggplot2::element_text(size = 11)
-      ) +
-      ggplot2::scale_x_continuous(expand = c(0, 10))
+    plot1 <- strat_ests_barplot(object, ...)
+
   } else {
     cli::cli_abort(
       c(

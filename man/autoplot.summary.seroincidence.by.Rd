@@ -4,22 +4,7 @@
 \alias{autoplot.summary.seroincidence.by}
 \title{Plot method for \code{summary.seroincidence.by} objects}
 \usage{
-\method{autoplot}{summary.seroincidence.by}(
-  object,
-  type = "scatter",
-  xvar,
-  fill_var,
-  alpha = 0.7,
-  shape = 1,
-  dodge_width = 0.001,
-  CIs = FALSE,
-  title = "Seroconversion Rate by Group",
-  xlab = "Seroconversion rate per 1000 person-years",
-  ylab = "Stratification Variable",
-  fill_lab = fill_var,
-  fill_palette = NULL,
-  ...
-)
+\method{autoplot}{summary.seroincidence.by}(object, type, ...)
 }
 \arguments{
 \item{object}{a \code{summary.seroincidence.by} object
@@ -33,7 +18,26 @@ The implemented options are:
 \item \code{"bar"}: calls \code{strat_ests_barplot()} to generate a barplot
 }}
 
+\item{...}{
+  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}
+  \describe{
+    \item{\code{color_var}}{\link{character} which variable in \code{object} to use
+to determine point color}
+    \item{\code{group_var}}{\link{character} which variable in \code{object} to use
+to connect points with lines (\code{NULL} for no lines)}
+  }}
+
 \item{xvar}{the name of a stratifying variable in \code{object}}
+
+\item{ylab}{the name of a second stratifying variable in \code{object} (e.g., "catchment")}
+
+\item{title}{a title for the final plot}
+
+\item{xlab}{a label for the x axis of the final plot}
+
+\item{fill_lab}{fill label}
+
+\item{fill_palette}{define the color palette for bar fill}
 
 \item{fill_var}{the name of the variable used for fill color (e.g., "Country")}
 
@@ -45,25 +49,6 @@ The implemented options are:
 \item{dodge_width}{width for jitter}
 
 \item{CIs}{\link{logical}, if \code{TRUE}, add CI error bars}
-
-\item{title}{a title for the final plot}
-
-\item{xlab}{a label for the x axis of the final plot}
-
-\item{ylab}{the name of a second stratifying variable in \code{object} (e.g., "catchment")}
-
-\item{fill_lab}{fill label}
-
-\item{fill_palette}{define the color palette for bar fill}
-
-\item{...}{
-  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}
-  \describe{
-    \item{\code{color_var}}{\link{character} which variable in \code{object} to use
-to determine point color}
-    \item{\code{group_var}}{\link{character} which variable in \code{object} to use
-to connect points with lines (\code{NULL} for no lines)}
-  }}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
@@ -99,12 +84,14 @@ est2 <- estimate_scr_by(
 
 est2sum <- summary(est2)
 
-est2sum |> strat_ests_scatterplot(
+autoplot(est2sum,
     type ="scatter",
     xvar = "ageCat",
     color_var = "catchment",
     CIs = TRUE,
     group_var = "catchment")
+
+autoplot(est2sum, "ageCat", type = "scatter", color_var = "catchment", CIs = TRUE, group_var = "catchment")
 
 autoplot(est2sum, "ageCat", type = "bar", fill_var = "catchment")
 

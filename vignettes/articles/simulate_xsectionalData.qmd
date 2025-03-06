@@ -173,8 +173,8 @@ csdata |>
   aes(x = as.factor(antigen_iso),
       y = value) +
   geom_beeswarm(
-    size = .2,
-    alpha = .3,
+    size = .5,
+    alpha = .5,
     aes(color = antigen_iso),
     show.legend = FALSE
   ) +

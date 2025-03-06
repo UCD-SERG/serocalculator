@@ -49,9 +49,11 @@
 #'     CIs = TRUE,
 #'     group_var = "catchment")
 #'
-#' autoplot(est2sum, "ageCat", type = "scatter", color_var = "catchment", CIs = TRUE, group_var = "catchment")
-#'
-#' autoplot(est2sum, "ageCat", type = "bar", fill_var = "catchment")
+#' est2sum |> autoplot(
+#'     type ="bar",
+#'     yvar = "ageCat",
+#'     color_var = "catchment",
+#'     CIs = TRUE)
 #'
 autoplot.summary.seroincidence.by <- function(
     object,

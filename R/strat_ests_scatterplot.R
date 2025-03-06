@@ -32,6 +32,17 @@ strat_ests_scatterplot <- function(
     group_var = NULL,
     ...) {
 
+  # Check if xvar exists in the dataset
+  if (!is.element(xvar, names(object))) {
+    cli::cli_abort(
+      class = "unavailable_xvar",
+      message = c(
+        "The variable `{xvar}` specified by argument `xvar` does not exist in `object`.",
+        "Please choose a column that exists in `object`."
+      )
+    )
+  }
+
   color_label <- object[[color_var]] |> labelled::get_label_attribute()
   if (is.null(color_label)) color_label <- color_var
 

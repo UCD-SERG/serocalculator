@@ -19,36 +19,25 @@ The implemented options are:
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}
+  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}, \code{\link[=strat_ests_barplot]{strat_ests_barplot}}
   \describe{
+    \item{\code{xvar}}{the name of a stratifying variable in \code{object}}
+    \item{\code{alpha}}{transparency for the points in the graph
+(1 = no transparency, 0 = fully transparent)}
+    \item{\code{shape}}{shape argument for \code{geom_point()}}
+    \item{\code{dodge_width}}{width for jitter}
+    \item{\code{CIs}}{\link{logical}, if \code{TRUE}, add CI error bars}
     \item{\code{color_var}}{\link{character} which variable in \code{object} to use
 to determine point color}
     \item{\code{group_var}}{\link{character} which variable in \code{object} to use
 to connect points with lines (\code{NULL} for no lines)}
+    \item{\code{yvar}}{the name of a stratifying variable in \code{object}.}
+    \item{\code{title}}{a title for the final plot.}
+    \item{\code{xlab}}{a label for the x-axis of the final plot.}
+    \item{\code{ylab}}{a label for the y-axis of the final plot.}
+    \item{\code{fill_lab}}{fill label.}
+    \item{\code{fill_palette}}{optional color palette for bar fill.}
   }}
-
-\item{xvar}{the name of a stratifying variable in \code{object}}
-
-\item{ylab}{the name of a second stratifying variable in \code{object} (e.g., "catchment")}
-
-\item{title}{a title for the final plot}
-
-\item{xlab}{a label for the x axis of the final plot}
-
-\item{fill_lab}{fill label}
-
-\item{fill_palette}{define the color palette for bar fill}
-
-\item{fill_var}{the name of the variable used for fill color (e.g., "Country")}
-
-\item{alpha}{transparency for the points in the graph
-(1 = no transparency, 0 = fully transparent)}
-
-\item{shape}{shape argument for \code{geom_point()}}
-
-\item{dodge_width}{width for jitter}
-
-\item{CIs}{\link{logical}, if \code{TRUE}, add CI error bars}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
@@ -84,7 +73,7 @@ est2 <- estimate_scr_by(
 
 est2sum <- summary(est2)
 
-autoplot(est2sum,
+est2sum |> autoplot(
     type ="scatter",
     xvar = "ageCat",
     color_var = "catchment",

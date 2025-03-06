@@ -343,7 +343,8 @@ sim_df |>
   geom_boxplot(outlier.colour = NA, fill = NA) +
   scale_y_log10() +
   facet_wrap(~ antigen_iso + lambda.sim, nrow = 2) +
-  theme_linedraw()
+  theme_linedraw()  +
+  theme(legend.position = "bottom")
 ```
 
 ## Estimate incidence in each cluster

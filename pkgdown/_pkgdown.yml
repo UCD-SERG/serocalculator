@@ -51,7 +51,6 @@ reference:
   - autoplot.seroincidence
   - autoplot.seroincidence.by
   - autoplot.summary.seroincidence.by
-  - autoplot.summary.estimate_scr_by
 - title: Example data sets
   contents:
   - sees_pop_data_100

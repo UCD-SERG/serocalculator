@@ -20,7 +20,6 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/autoplot.pop_data.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/autoplot.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/autoplot.seroincidence.html</loc></url>
-<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/autoplot.summary.estimate_scr_by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/autoplot.summary.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/baseline.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/check_pop_data.html</loc></url>
@@ -72,6 +71,8 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/sim_pop_data_multi.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/simcs.tinf.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/simresp.tinf.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/strat_ests_barplot.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/strat_ests_scatterplot.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/strata.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/strata.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr409/reference/stratify_data.html</loc></url>

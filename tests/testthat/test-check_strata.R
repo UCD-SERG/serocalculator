@@ -29,3 +29,15 @@ test_that(
       expect_warning(class = "strata missing some biomarkers")
   }
 )
+
+test_that(
+  desc =
+    "`check_strata()` can handle when there are no partial matches",
+  code = {
+    sees_pop_data_100 |>
+      check_strata(
+        strata = "Country2"
+      ) |>
+      expect_error(class = "missing_var")
+  }
+)

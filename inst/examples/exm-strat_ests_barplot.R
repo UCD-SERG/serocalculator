@@ -29,7 +29,3 @@ est2sum |> autoplot(
     yvar = "ageCat",
     color_var = "catchment",
     CIs = TRUE)
-
-autoplot(est2sum, "ageCat", type = "scatter", color_var = "catchment", CIs = TRUE, group_var = "catchment")
-#'
-autoplot(est2sum, "ageCat", type = "bar", color_var = "catchment")

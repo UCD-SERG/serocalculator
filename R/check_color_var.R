@@ -1,6 +1,6 @@
 check_color_var <- function(
     color_var,
-    objects
+    object
 ) {
 
   # Check if color_var exists

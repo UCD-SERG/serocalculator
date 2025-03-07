@@ -41,11 +41,6 @@ strat_ests_barplot <- function(
     )
   }
 
-  # Check if color_var exists in the dataset
-  if (!is.null(color_var)) {
-    check_color_var(color_var, names(object))
-  }
-
   color_label <- if (!is.null(color_var)) labelled::get_label_attribute(object[[color_var]]) else NULL
   if (is.null(color_label) && !is.null(color_var)) color_label <- color_var
 

@@ -23,7 +23,7 @@
 #'
 strat_ests_scatterplot <- function(
     object,
-    xvar,
+    xvar = strata(object)[1],
     alpha = .7,
     shape = 1,
     dodge_width = 0.001,

@@ -452,7 +452,8 @@ Finally, we can look at our simulation results:
 
 library(ggplot2)
 ests_summary |>
-  autoplot(xvar = "lambda.sim", 
+  autoplot(type = "scatter",
+           xvar = "lambda.sim", 
            CI = TRUE, 
            dodge_width = .05) +
   ggplot2::geom_function(
@@ -511,7 +512,8 @@ ests_renew_summary <-
 ```{r, "graph_renew"}
 
 ests_renew_summary |>
-  autoplot(xvar = "lambda.sim",
+  autoplot(type = "scatter",
+           xvar = "lambda.sim",
            CI = TRUE, 
            dodge_width = .05) +
   ggplot2::geom_function(

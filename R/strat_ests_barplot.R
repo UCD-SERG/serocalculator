@@ -22,7 +22,7 @@ strat_ests_barplot <- function(
     yvar,
     color_var = NULL,
     alpha = 0.7,
-    CIs = FALSE,
+    CIs = FALSE, # nolint: object_name_linter
     title = NULL,
     xlab = "Seroconversion rate per 1000 person-years",
     ylab = yvar,

@@ -58,8 +58,7 @@
 autoplot.summary.seroincidence.by <- function(
     object,
     type,
-    ...
-) {
+    ...) {
 
   if (type == "scatter") {
     plot1 <- strat_ests_scatterplot(object, ...)

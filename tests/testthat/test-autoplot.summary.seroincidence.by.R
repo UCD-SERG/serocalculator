@@ -144,7 +144,7 @@ test_that("Invalid plot `type` specified. Please choose either 'scatter' or 'bar
                       CI = TRUE)
           }
     )
-  })
+  }
 )
 
 test_that("The variable `{yvar}` specified by argument `yvar` does not exist in `object`. Please choose a column that exists in `object`.",

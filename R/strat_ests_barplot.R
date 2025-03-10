@@ -28,8 +28,7 @@ strat_ests_barplot <- function(
     ylab = yvar,
     fill_lab = NULL,
     fill_palette = NULL,
-    ...
-) {
+    ...) {
 
   # Check if yvar exists in the dataset
   if (!is.element(yvar, names(object))) {

@@ -133,12 +133,17 @@ test_that("Invalid plot `type` specified. Please choose either 'scatter' or 'bar
 
     est2sum <- summary(est2)
 
-    plot1 <- autoplot(est2sum,
+ expect_snapshot(
+        error = TRUE, 
+        x = {
+             plot1 <- autoplot(est2sum,
                       xvar = "ageCat",
                       type = "whisker",
                       dodge_width = 0.1,
                       color_var = "catchment",
                       CI = TRUE)
+          }
+    )
   })
 )
 

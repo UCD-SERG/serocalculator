@@ -25,7 +25,8 @@ est2 <- estimate_scr_by(
 est2sum <- summary(est2)
 
 est2sum |> autoplot(
-    type = "bar",
-    yvar = "ageCat",
-    color_var = "catchment",
-    CIs = TRUE)
+  type = "bar",
+  yvar = "ageCat",
+  color_var = "catchment",
+  CIs = TRUE
+)

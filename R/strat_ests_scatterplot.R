@@ -37,7 +37,8 @@ strat_ests_scatterplot <- function(
     cli::cli_abort(
       class = "unavailable_xvar",
       message = c(
-        "The variable `{xvar}` specified by argument `xvar` does not exist in `object`.",
+        "The variable `{xvar}` specified by argument `xvar`
+        does not exist in `object`.",
         "Please choose a column that exists in `object`."
       )
     )

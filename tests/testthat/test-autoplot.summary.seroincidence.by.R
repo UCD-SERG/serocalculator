@@ -97,7 +97,8 @@ test_that(
 )
 
 test_that(
-  desc = "Invalid plot `type` specified. Please choose either 'scatter' or 'bar'.",
+  desc = "Invalid plot `type` specified.
+  Please choose either 'scatter' or 'bar'.",
   code = {
 
     library(dplyr)
@@ -137,10 +138,12 @@ test_that(
                           CI = TRUE)
       }
     )
-  })
+  }
+)
 
 test_that(
-  desc = "The variable `{yvar}` specified by argument `yvar` does not exist in `object`. Please choose a column that exists in `object`.",
+  desc = "The variable `{yvar}` specified by argument `yvar` does not
+  exist in `object`. Please choose a column that exists in `object`.",
   code = {
     library(dplyr)
     library(ggplot2)
@@ -179,6 +182,6 @@ test_that(
                           CI = TRUE)
 
       }
-    )}
+    )
+  }
 )
-

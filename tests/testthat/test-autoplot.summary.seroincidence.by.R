@@ -146,6 +146,7 @@ test_that(
                           CI = TRUE)
       }
     )
+<<<<<<< HEAD
   })
 
 test_that(

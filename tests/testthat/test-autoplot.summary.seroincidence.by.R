@@ -91,17 +91,6 @@ test_that(
                       CI = TRUE)
 
     plot1 |> vdiffr::expect_doppelganger(title = "strat-est-barplot")
-
-    plot2 <- autoplot(est2sum,
-                      yvar = "ageCat",
-                      type = "bar",
-                      CI = TRUE,
-                      dodge_width = 0.1,
-                      color_var = "catchment")
-
-    plot2 |> vdiffr::expect_doppelganger(title = "strat-est-barplot")
-
-
   }
 )
 

@@ -16,7 +16,7 @@ est2 <- estimate_scr_by(
   pop_data = xs_data,
   curve_params = curve,
   noise_params = noise,
-  curve_strata_varnames= NULL,
+  curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   num_cores = 2 # Allow for parallel processing to decrease run time
@@ -25,7 +25,7 @@ est2 <- estimate_scr_by(
 est2sum <- summary(est2)
 
 est2sum |> autoplot(
-    type ="bar",
+    type = "bar",
     yvar = "ageCat",
     color_var = "catchment",
     CIs = TRUE)

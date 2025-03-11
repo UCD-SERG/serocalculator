@@ -24,7 +24,7 @@ strat_ests_barplot(
 
 \item{yvar}{the name of a stratifying variable in \code{object}.}
 
-\item{color_var}{\link{character} the name of the variable used for fill color (e.g., "Country").}
+\item{color_var}{\link{character} the name of the fill color variable (e.g., "Country").}
 
 \item{alpha}{transparency for the bars (1 = no transparency, 0 = fully transparent).}
 

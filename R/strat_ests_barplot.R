@@ -41,13 +41,6 @@ strat_ests_barplot <- function(
     )
   }
 
-   # color_label <- if (!is.null(color_var)) labelled::get_label_attribute(object[[color_var]]) else NULL
-   # if (is.null(color_label) && !is.null(color_var)) color_label <- color_var
-
-  color_label <- object[[color_var]] |> labelled::get_label_attribute()
-  if (is.null(color_label)) color_label <- color_var
-
-
   plot1 <- ggplot2::ggplot(object, ggplot2::aes(
     y = forcats::fct_rev(.data[[yvar]]),
     x = .data$incidence.rate * 1000,

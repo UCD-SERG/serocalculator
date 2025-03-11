@@ -1,4 +1,5 @@
-# Invalid plot `type` specified. Please choose either 'scatter' or 'bar'.
+# Invalid plot `type` specified.
+  Please choose either 'scatter' or 'bar'.
 
     Code
       plot1 <- autoplot(est2sum, xvar = "ageCat", type = "whisker", dodge_width = 0.1,
@@ -8,7 +9,8 @@
       ! Invalid plot `type` specified: "whisker".
       i Please choose either 'scatter' or 'bar'.
 
-# The variable `{yvar}` specified by argument `yvar` does not exist in `object`. Please choose a column that exists in `object`.
+# The variable `{yvar}` specified by argument `yvar` does not
+  exist in `object`. Please choose a column that exists in `object`.
 
     Code
       plot1 <- autoplot(est2sum, yvar = "fake", type = "bar", dodge_width = 0.1,

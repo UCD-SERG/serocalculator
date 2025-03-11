@@ -97,8 +97,7 @@ test_that(
 )
 
 test_that(
-  desc = "Invalid plot `type` specified.
-  Please choose either 'scatter' or 'bar'.",
+  desc = "error on plot type",
   code = {
 
     library(dplyr)
@@ -142,8 +141,7 @@ test_that(
 )
 
 test_that(
-  desc = "The variable `{yvar}` specified by argument `yvar` does not
-  exist in `object`. Please choose a column that exists in `object`.",
+  desc = "error on incorrect yvar",
   code = {
     library(dplyr)
     library(ggplot2)

@@ -27,7 +27,9 @@ test_that(
       num_cores = 2 # Allow for parallel processing to decrease run time
     )
 
-    est2sum <- summary(est2)
+    est2sum <- summary(est2) |>
+      mutate(catchment = catchment |>
+               labelled::set_label_attribute("Catchment Area"))
 
     plot1 <- autoplot(est2sum,
                       xvar = "ageCat",
@@ -179,3 +181,4 @@ test_that(
       }
     )}
 )
+

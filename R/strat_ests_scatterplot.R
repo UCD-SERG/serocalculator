@@ -63,7 +63,7 @@ strat_ests_scatterplot <- function(
       panel.grid.minor.y = ggplot2::element_blank()
     ) +
     ggplot2::expand_limits(y = 0) +
-    ggplot2::labs(col = color_var) +
+    ggplot2::labs(col = color_label) +
     ggplot2::theme(legend.position = "bottom")
 
   if (CIs) {

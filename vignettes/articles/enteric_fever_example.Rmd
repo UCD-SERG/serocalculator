@@ -271,13 +271,12 @@ est_country_agedf <- summary(est_country_age) |>
   )
 
 autoplot(
-  est_country_agedf, 
-  type = "bar", 
-  yvar = "ageCat", 
-  color_var = "Country", 
+  est_country_agedf,
+  type = "bar",
+  yvar = "ageCat",
+  color_var = "Country",
   CIs = TRUE
-  )
-
+)
 
 ## Create plot by country and age category
 ggplot(est_country_agedf,

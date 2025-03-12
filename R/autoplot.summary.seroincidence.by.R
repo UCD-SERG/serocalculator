@@ -50,7 +50,7 @@
 #'     group_var = "catchment")
 #'
 #' est2sum |> autoplot(
-#'     type ="bar",
+#'     type = "bar",
 #'     yvar = "ageCat",
 #'     color_var = "catchment",
 #'     CIs = TRUE)

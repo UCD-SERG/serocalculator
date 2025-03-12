@@ -44,11 +44,12 @@ strat_ests_barplot <- function(
     )
   }
 
-  plot1 <- ggplot2::ggplot(object, ggplot2::aes(
+  plot1 <- ggplot2::ggplot(object) + 
+  ggplot2::aes(
     y = forcats::fct_rev(.data[[yvar]]),
     x = .data$incidence.rate * 1000,
     fill = if (!is.null(color_var)) .data[[color_var]] else NULL
-  )) +
+  ) +
     ggplot2::geom_bar(
       stat = "identity",
       position = ggplot2::position_dodge(),

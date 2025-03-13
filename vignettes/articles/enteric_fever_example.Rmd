@@ -258,7 +258,7 @@ Without this, a warning appears: "*curve_params is missing all strata variables,
 To stratify based on variables that exist in a longitudinal curve parameters dataset, specify variables using `curve_strata_varnames`, similar to how `noise_strata_varnames` is used for "noise" above.
 
 
-Finally, let's visualize our seroincidence estimates by country and age category.
+Finally, let's visualize our seroincidence estimates by country and age category using `autoplot()`:
 
 ```{r}
 # Plot seroincidence estimates

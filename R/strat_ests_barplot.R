@@ -12,7 +12,7 @@
 #' @param xlab a label for the x-axis of the final plot.
 #' @param ylab a label for the y-axis of the final plot.
 #' @param fill_lab fill label.
-#' @param fill_palette optional color palette for bar fill.
+#' @param color_palette optional color palette for bar color.
 #' @param ... unused.
 #'
 #' @return a [ggplot2::ggplot()] object.
@@ -29,7 +29,7 @@ strat_ests_barplot <- function(
     xlab = "Seroconversion rate per 1000 person-years",
     ylab = yvar,
     fill_lab = NULL,
-    fill_palette = NULL,
+    color_palette = NULL,
     ...) {
 
   # Check if yvar exists in the dataset
@@ -44,7 +44,7 @@ strat_ests_barplot <- function(
     )
   }
 
-  plot1 <- ggplot2::ggplot(object) + 
+  plot1 <- ggplot2::ggplot(object) +
   ggplot2::aes(
     y = forcats::fct_rev(.data[[yvar]]),
     x = .data$incidence.rate * 1000,
@@ -78,9 +78,9 @@ strat_ests_barplot <- function(
       ), width = 0.2, position = ggplot2::position_dodge(width = 0.9))
   }
 
-  # Apply custom fill palette if provided
-  if (!is.null(fill_palette) && !is.null(color_var)) {
-    plot1 <- plot1 + ggplot2::scale_fill_manual(values = fill_palette)
+  # Apply custom color palette if provided
+  if (!is.null(color_palette) && !is.null(color_var)) {
+    plot1 <- plot1 + ggplot2::scale_fill_manual(values = color_palette)
   }
 
   return(plot1)

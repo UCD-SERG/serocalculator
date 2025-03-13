@@ -36,7 +36,7 @@ to connect points with lines (\code{NULL} for no lines)}
     \item{\code{xlab}}{a label for the x-axis of the final plot.}
     \item{\code{ylab}}{a label for the y-axis of the final plot.}
     \item{\code{fill_lab}}{fill label.}
-    \item{\code{fill_palette}}{optional color palette for bar fill.}
+    \item{\code{color_palette}}{optional color palette for bar color.}
   }}
 }
 \value{

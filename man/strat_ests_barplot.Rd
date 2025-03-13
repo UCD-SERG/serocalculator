@@ -14,7 +14,7 @@ strat_ests_barplot(
   xlab = "Seroconversion rate per 1000 person-years",
   ylab = yvar,
   fill_lab = NULL,
-  fill_palette = NULL,
+  color_palette = NULL,
   ...
 )
 }
@@ -38,7 +38,7 @@ strat_ests_barplot(
 
 \item{fill_lab}{fill label.}
 
-\item{fill_palette}{optional color palette for bar fill.}
+\item{color_palette}{optional color palette for bar color.}
 
 \item{...}{unused.}
 }

@@ -263,10 +263,9 @@ Finally, let's visualize our seroincidence estimates by country and age category
 ```{r}
 # Plot seroincidence estimates
 
-## Save summary(est_country_age) as a dataframe and sort by incidence rate
+## Save summary(est_country_age) as a dataframe
 est_country_agedf <- summary(est_country_age) |>
   mutate(
-    Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal"),
     ageCat = factor(ageCat)
   )
 
@@ -275,7 +274,7 @@ autoplot(
   type = "bar",
   yvar = "ageCat",
   color_var = "Country",
-  fill_palette = country_pal,
+  color_palette = country_pal,
   CIs = TRUE
 )
 ```

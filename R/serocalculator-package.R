@@ -39,6 +39,7 @@
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 vars
+#' @importFrom ggplot2 labs
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp

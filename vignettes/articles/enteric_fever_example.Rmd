@@ -261,14 +261,10 @@ To stratify based on variables that exist in a longitudinal curve parameters dat
 Finally, let's visualize our seroincidence estimates by country and age category using `autoplot()`:
 
 ```{r}
+# Save summary(est_country_age)
+est_country_agedf <- summary(est_country_age)
+
 # Plot seroincidence estimates
-
-## Save summary(est_country_age) as a dataframe
-est_country_agedf <- summary(est_country_age) |>
-  mutate(
-    ageCat = factor(ageCat)
-  )
-
 autoplot(
   est_country_agedf,
   type = "bar",

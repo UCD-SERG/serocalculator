@@ -480,14 +480,10 @@ parameters dataset, specify variables using
 <p>Finally, let’s visualize our seroincidence estimates by country and
 age category using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
+<code class="sourceCode R"><span><span class="co"># Save summary(est_country_age)</span></span>
+<span><span class="va">est_country_agedf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est_country_age</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## Save summary(est_country_age) as a dataframe</span></span>
-<span><span class="va">est_country_agedf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est_country_age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    ageCat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ageCat</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
+<span><span class="co"># Plot seroincidence estimates</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span></span>
 <span>  <span class="va">est_country_agedf</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"bar"</span>,</span>

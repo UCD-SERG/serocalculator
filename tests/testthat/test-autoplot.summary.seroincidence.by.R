@@ -215,14 +215,14 @@ test_that(
 
     new_color_palette <- c("#EA6552", "#8F4B86", "#0099B4FF")
 
-        plot1 <- autoplot(est2sum,
-                          yvar = "ageCat",
-                          type = "bar",
-                          dodge_width = 0.1,
-                          color_var = "catchment",
-                          color_palette = new_color_palette, #manual color palette
-                          CI = TRUE)
+    plot1 <- autoplot(est2sum,
+                      yvar = "ageCat",
+                      type = "bar",
+                      dodge_width = 0.1,
+                      color_var = "catchment",
+                      color_palette = new_color_palette, #manual color palette
+                      CI = TRUE)
 
-        plot1 |> vdiffr::expect_doppelganger(title = "strat-est-barplot-palette")
+    plot1 |> vdiffr::expect_doppelganger(title = "strat-est-barplot-palette")
   }
 )

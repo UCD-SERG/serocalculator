@@ -61,7 +61,8 @@ Suggests:
     tidyverse,
     qrcode,
     vdiffr,
-    withr
+    withr,
+    forcats
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
@@ -74,4 +75,4 @@ Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-RoxygenNote: 7.3.2.9000
+RoxygenNote: 7.3.2

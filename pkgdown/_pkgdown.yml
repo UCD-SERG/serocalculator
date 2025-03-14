@@ -58,6 +58,7 @@ reference:
   - typhoid_curves_nostrat_100
   - example_noise_params_sees
   - example_noise_params_pk
+  - sees_typhoid_ests_strat
   - serocalculator_example
 - title: Simulate data sets
   contents:

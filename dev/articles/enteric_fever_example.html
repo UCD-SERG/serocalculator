@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9040</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9041</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -313,9 +313,10 @@ serologic data.</p>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country_pal</span><span class="op">)</span></span></code></pre></div>
 <p><img src="enteric_fever_example_files/figure-html/plot-age-1.png" width="672"></p>
-<p>In this plot, a steeper slope indicates a higher incidence. We can
-see that the highest burden is in Bangladesh. Nepal has a slightly
-higher incidence in the older group (higher slope).</p>
+<p>In this plot, we can see that the highest burden is in Bangladesh,
+but Nepal has the steepest slope and experiences the greatest change in
+seroconversion rates by age, with lower exposures at younger ages and
+higher exposures at older ages.</p>
 </div>
 <div class="section level3">
 <h3 id="load-noise-parameters">Load noise parameters<a class="anchor" aria-label="anchor" href="#load-noise-parameters"></a>
@@ -494,14 +495,16 @@ age category using <code><a href="https://ggplot2.tidyverse.org/reference/autopl
 <div class="section level2">
 <h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
 </h2>
-<p>We find that Bangladesh has the highest overall seroincidence of
-enteric fever with a rate of 449 per 1000 person-years, as well as the
-highest seroincidence by age category. In comparison, Nepal has a
-seroincidence rate over 1 times lower than that of Bangladesh (400 per
-1000 person-years) and the lowest age-specific seroincidence rates of
-the three countries in the study. <strong>serocalculator</strong>
-provides an efficient tool to conduct this analysis and produce
-actionable results.</p>
+<p>We estimate that Bangladesh has the highest enteric fever
+seroconversion rates across all age groups, with the highest rates
+observed among 5- to 15-year-olds (477 per 1000 person-years). In this
+age group, the seroconversion rate in Bangladesh is 14 times higher than
+in Nepal, where the rate is 35 per 1000 person-years. These findings
+highlight substantial geographic variation in enteric fever
+transmission, emphasizing the need for targeted prevention strategies.
+<strong>serocalculator</strong> offers an efficient and reproducible
+approach to estimating seroconversion rates, enabling data-driven
+insights for disease surveillance and public health decision-making.</p>
 </div>
 <div class="section level2">
 <h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>

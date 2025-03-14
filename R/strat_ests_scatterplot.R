@@ -23,7 +23,7 @@
 #'
 strat_ests_scatterplot <- function(
     object,
-    xvar,
+    xvar = strata(object)[1],
     alpha = .7,
     shape = 1,
     dodge_width = 0.001,
@@ -31,6 +31,18 @@ strat_ests_scatterplot <- function(
     color_var = "nlm.convergence.code",
     group_var = NULL,
     ...) {
+
+  # Check if xvar exists in the dataset
+  if (!is.element(xvar, names(object))) {
+    cli::cli_abort(
+      class = "unavailable_xvar",
+      message = c(
+        "The variable `{xvar}` specified by argument `xvar`
+        does not exist in `object`.",
+        "Please choose a column that exists in `object`."
+      )
+    )
+  }
 
   color_label <- object[[color_var]] |> labelled::get_label_attribute()
   if (is.null(color_label)) color_label <- color_var
@@ -52,7 +64,7 @@ strat_ests_scatterplot <- function(
       panel.grid.minor.y = ggplot2::element_blank()
     ) +
     ggplot2::expand_limits(y = 0) +
-    ggplot2::labs(col = color_var) +
+    ggplot2::labs(col = color_label) +
     ggplot2::theme(legend.position = "bottom")
 
   if (CIs) {

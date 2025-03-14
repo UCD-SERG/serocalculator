@@ -45,6 +45,7 @@ biomarker
 biomarkers
 boldsymbol
 cdot
+codecov
 csv
 dev
 devtools
@@ -121,3 +122,4 @@ unstratified
 varepsilon
 vec
 vee
+yaml

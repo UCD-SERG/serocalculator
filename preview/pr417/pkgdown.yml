@@ -1,6 +1,6 @@
 pandoc: 3.1.11
 pkgdown: 2.1.1.9000
-pkgdown_sha: 3245437e22fb284f9e9fbbb62df5ef0ccba47715
+pkgdown_sha: d5a48705424d7745e1e62354505ca70091931e61
 articles:
   articles/enteric_fever_example: enteric_fever_example.html
   methodology: methodology.html
@@ -8,7 +8,7 @@ articles:
   articles/serocalculator: serocalculator.html
   articles/simulate_xsectionalData: simulate_xsectionalData.html
   articles/test-quarto-article: test-quarto-article.html
-last_built: 2025-03-14T00:13Z
+last_built: 2025-03-14T01:07Z
 urls:
   reference: https:/ucd-serg.github.io/serocalculator/preview/pr417/reference
   article: https:/ucd-serg.github.io/serocalculator/preview/pr417/articles

@@ -173,8 +173,8 @@ csdata |>
   aes(x = as.factor(antigen_iso),
       y = value) +
   geom_beeswarm(
-    size = .2,
-    alpha = .3,
+    size = .5,
+    alpha = .5,
     aes(color = antigen_iso),
     show.legend = FALSE
   ) +
@@ -343,7 +343,8 @@ sim_df |>
   geom_boxplot(outlier.colour = NA, fill = NA) +
   scale_y_log10() +
   facet_wrap(~ antigen_iso + lambda.sim, nrow = 2) +
-  theme_linedraw()
+  theme_linedraw()  +
+  theme(legend.position = "bottom")
 ```
 
 ## Estimate incidence in each cluster

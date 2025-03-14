@@ -4,7 +4,7 @@
 \alias{autoplot.summary.seroincidence.by}
 \title{Plot method for \code{summary.seroincidence.by} objects}
 \usage{
-\method{autoplot}{summary.seroincidence.by}(object, type = "scatter", ...)
+\method{autoplot}{summary.seroincidence.by}(object, type, ...)
 }
 \arguments{
 \item{object}{a \code{summary.seroincidence.by} object
@@ -19,7 +19,7 @@ The implemented options are:
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}
+  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}, \code{\link[=strat_ests_barplot]{strat_ests_barplot}}
   \describe{
     \item{\code{xvar}}{the name of a stratifying variable in \code{object}}
     \item{\code{alpha}}{transparency for the points in the graph
@@ -31,6 +31,12 @@ The implemented options are:
 to determine point color}
     \item{\code{group_var}}{\link{character} which variable in \code{object} to use
 to connect points with lines (\code{NULL} for no lines)}
+    \item{\code{yvar}}{the name of a stratifying variable in \code{object}.}
+    \item{\code{title}}{a title for the final plot.}
+    \item{\code{xlab}}{a label for the x-axis of the final plot.}
+    \item{\code{ylab}}{a label for the y-axis of the final plot.}
+    \item{\code{fill_lab}}{fill label.}
+    \item{\code{color_palette}}{optional color palette for bar color.}
   }}
 }
 \value{
@@ -73,5 +79,11 @@ est2sum |> autoplot(
     color_var = "catchment",
     CIs = TRUE,
     group_var = "catchment")
+
+est2sum |> autoplot(
+    type = "bar",
+    yvar = "ageCat",
+    color_var = "catchment",
+    CIs = TRUE)
 
 }

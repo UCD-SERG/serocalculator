@@ -1,10 +1,10 @@
-#' Extract strata from an object
+#' Extract `Strata` metadata from an object
 #'
-#' Generic method for extracting strata from objects.
-#' See [strata.seroincidence.by()]
+#' Generic method for extracting strata metadata from objects.
+#' See [strata.default()]
 #' @param x an object
 #' @export
-#' @return the strata of `x`
+#' @return the strata metadata of `x`
 #'
 strata <- function(x) {
   UseMethod("strata")
@@ -19,6 +19,6 @@ strata <- function(x) {
 #' * `NULL` if `x` does not have a `"strata"` attribute
 #' @export
 #' @keywords internal
-strata.seroincidence.by <- function(x) {
+strata.default <- function(x) {
   attr(x, "Strata")
 }

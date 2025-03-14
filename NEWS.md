@@ -2,7 +2,9 @@
 
 ## New features
 
-* added option to add lines using `group_var` input to `autoplot.summary.seroincidence.by()`
+* added default for `xvar` in `"scatter"` option for `autoplot.seroincidence.by()` (#417)
+* Extended `autoplot.summary.seroincidence.by()` to include types for either scatter or bar plots of stratified results (#397)
+* added option to add lines using `group_var` input to `autoplot.summary.seroincidence.by()` (#410)
 * `autoplot.pop_data(type = "age-scatter")` now shows legend at bottom (#407)
 * `autoplot.pop_data(type = "age-scatter")` now facets by antigen isotype (#406)
 * Rename `est.incidence.by()` to `estimate_scr_by()` (#389)

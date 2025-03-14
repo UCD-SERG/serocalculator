@@ -10,6 +10,7 @@
 #' - `"scatter"`: calls [strat_ests_scatterplot()] to generate a scatterplot
 #' -  `"bar"`: calls `strat_ests_barplot()` to generate a barplot
 #' @inheritDotParams strat_ests_scatterplot
+#' @inheritDotParams strat_ests_barplot
 #'
 #' @return a [ggplot2::ggplot()] object
 #' @export
@@ -48,15 +49,23 @@
 #'     CIs = TRUE,
 #'     group_var = "catchment")
 #'
+#' est2sum |> autoplot(
+#'     type = "bar",
+#'     yvar = "ageCat",
+#'     color_var = "catchment",
+#'     CIs = TRUE)
+#'
 autoplot.summary.seroincidence.by <- function(
     object,
-    type = "scatter",
+    type,
     ...) {
 
   if (type == "scatter") {
     plot1 <- strat_ests_scatterplot(object, ...)
+
   } else if (type == "bar") {
-    # Kristina will add: plot1 <- strat_est_barplot(object, ...)
+    plot1 <- strat_ests_barplot(object,  ...)
+
   } else {
     cli::cli_abort(
       c(
@@ -66,7 +75,5 @@ autoplot.summary.seroincidence.by <- function(
     )
   }
 
-
   return(plot1)
-
 }

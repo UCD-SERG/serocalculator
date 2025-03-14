@@ -65,16 +65,16 @@
 <text x='587.16' y='516.90' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='14.93px' lengthAdjust='spacingAndGlyphs'>16+</text>
 <text x='374.88' y='529.04' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='35.47px' lengthAdjust='spacingAndGlyphs'>ageCat</text>
 <text transform='translate(13.05,264.35) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='120.47px' lengthAdjust='spacingAndGlyphs'>Estimated incidence rate</text>
-<rect x='301.59' y='542.28' width='146.58' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<text x='307.07' y='560.19' style='font-size: 11.00px; font-family: sans;' textLength='50.76px' lengthAdjust='spacingAndGlyphs'>catchment</text>
-<rect x='363.31' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='371.95' y1='563.31' x2='371.95' y2='549.49' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.70; stroke-linecap: butt;' />
-<circle cx='371.95' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #F8766D; stroke-opacity: 0.70; fill: #F8766D; fill-opacity: 0.70;' />
-<rect x='405.74' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<line x1='414.38' y1='563.31' x2='414.38' y2='549.49' style='stroke-width: 1.07; stroke: #00BFC4; stroke-opacity: 0.70; stroke-linecap: butt;' />
-<circle cx='414.38' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #00BFC4; stroke-opacity: 0.70; fill: #00BFC4; fill-opacity: 0.70;' />
-<text x='386.07' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>aku</text>
-<text x='428.50' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>kgh</text>
+<rect x='287.22' y='542.28' width='175.32' height='28.24' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<text x='292.70' y='560.19' style='font-size: 11.00px; font-family: sans;' textLength='79.50px' lengthAdjust='spacingAndGlyphs'>Catchment Area</text>
+<rect x='377.68' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='386.32' y1='563.31' x2='386.32' y2='549.49' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.70; stroke-linecap: butt;' />
+<circle cx='386.32' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #F8766D; stroke-opacity: 0.70; fill: #F8766D; fill-opacity: 0.70;' />
+<rect x='420.11' y='547.76' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<line x1='428.75' y1='563.31' x2='428.75' y2='549.49' style='stroke-width: 1.07; stroke: #00BFC4; stroke-opacity: 0.70; stroke-linecap: butt;' />
+<circle cx='428.75' cy='556.40' r='2.84' style='stroke-width: 1.42; stroke: #00BFC4; stroke-opacity: 0.70; fill: #00BFC4; fill-opacity: 0.70;' />
+<text x='400.44' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>aku</text>
+<text x='442.87' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='14.19px' lengthAdjust='spacingAndGlyphs'>kgh</text>
 <text x='35.24' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='90.96px' lengthAdjust='spacingAndGlyphs'>strat-est-plot-CI</text>
 </g>
 </svg>

@@ -54,12 +54,10 @@ warn_missing_strata <- function(
   }
 
   if (length(present_strata_vars) > 0) {
-    strata2 <- data |> count_strata(present_strata_vars)
-
     missing_strata <-
       anti_join(
         strata,
-        strata2,
+        data,
         by = present_strata_vars
       ) |>
       distinct(across(all_of(present_strata_vars)))

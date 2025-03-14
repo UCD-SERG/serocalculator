@@ -178,7 +178,7 @@ xs_data |>
 
 ```
 
-In this plot, a steeper slope indicates a higher seroconversion rate and greater frequency of exposure. We can see that the highest burden is in Bangladesh, but Nepal has the steepest slope and experiences the greatest change in seroconversion rates by age, with lower exposures at younger ages and higher exposures at older ages.
+In this plot, we can see that the highest burden is in Bangladesh, but Nepal has the steepest slope and experiences the greatest change in seroconversion rates by age, with lower exposures at younger ages and higher exposures at older ages.
 
 ### Load noise parameters
 

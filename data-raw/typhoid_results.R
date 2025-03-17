@@ -13,7 +13,7 @@ noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
   filter(Country == "Pakistan")
 
 # get curve data
-curve <- load_curve_params("https://osf.io/download/rtw5k/")
+curve <- load_sr_params("https://osf.io/download/rtw5k/")
 
 # Initial estimates for lambda
 start <- .05

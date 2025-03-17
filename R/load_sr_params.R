@@ -6,7 +6,7 @@
 #' @returns a `curve_params` object (a [tibble::tbl_df] with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' curve <- load_curve_params(serocalculator_example("example_curve_params.rds"))
+#' curve <- load_sr_params(serocalculator_example("example_curve_params.rds"))
 #'
 #' print(curve)
 #'

@@ -84,7 +84,7 @@ r          |  Antibody decay shape
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" |>
-  load_curve_params()
+  load_sr_params()
 ```
 
 ### Visualize curve parameters

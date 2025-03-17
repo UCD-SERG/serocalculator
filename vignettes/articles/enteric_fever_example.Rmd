@@ -84,7 +84,8 @@ r          |  Antibody decay shape
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" |>
-  load_curve_params()
+  load_curve_params() |>filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) 	
+
 ```
 
 ### Visualize curve parameters
@@ -94,9 +95,7 @@ We can graph the decay curves with an `autoplot()` method:
 ```{r, fig.width=7, fig.height=4}
 # Visualize curve parameters
 curves |>
-  filter(
-    antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")
-  ) |>
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
   autoplot()
 
 ```
@@ -156,9 +155,8 @@ We see that across countries, our data is highly skewed with the majority of res
 
 xs_data |>
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) |>
-  autoplot(strata = "Country", type = "density") +
-  scale_fill_manual(values = country_pal) +
-  scale_x_log10(labels = scales::label_comma())
+  autoplot(strata = "Country", type = "density", log = TRUE) +
+  scale_fill_manual(values = country_pal)
 
 ```
 
@@ -263,7 +261,7 @@ Finally, let's visualize our seroincidence estimates by country and age category
 # Save summary(est_country_age)
 est_country_agedf <- summary(est_country_age)
 
-# Plot seroincidence estimates
+# Plot seroconversion rate estimates
 autoplot(
   est_country_agedf,
   type = "bar",

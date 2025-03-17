@@ -85,6 +85,7 @@ r          |  Antibody decay shape
 curves <-
   "https://osf.io/download/rtw5k/" |>
   load_curve_params()
+
 ```
 
 ### Visualize curve parameters
@@ -94,9 +95,7 @@ We can graph the decay curves with an `autoplot()` method:
 ```{r, fig.width=7, fig.height=4}
 # Visualize curve parameters
 curves |>
-  filter(
-    antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")
-  ) |>
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
   autoplot()
 
 ```
@@ -131,7 +130,6 @@ We can compute numerical summaries of our cross-sectional antibody data with a `
 ```{r}
 xs_data |> summary()
 
-
 ```
 
 
@@ -156,9 +154,8 @@ We see that across countries, our data is highly skewed with the majority of res
 
 xs_data |>
   mutate(Country = fct_relevel(Country, "Bangladesh", "Pakistan", "Nepal")) |>
-  autoplot(strata = "Country", type = "density") +
-  scale_fill_manual(values = country_pal) +
-  scale_x_log10(labels = scales::label_comma())
+  autoplot(strata = "Country", type = "density", log = TRUE) +
+  scale_fill_manual(values = country_pal)
 
 ```
 
@@ -206,14 +203,14 @@ eps         | Measurement noise
 noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
 ```
 
-## Estimate Seroincidence 
-Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.
+## Estimate Seroconversion Rate 
+Now we are ready to begin estimating the seroconversion rate. We will conduct two separate analyses using two distinct functions, `estimate_scr()` and `estimate_scr_by()`, to calculate the overall seroconversion rate and the stratified seroconversion rate, respectively.
 
-### Overall Seroincidence
-Using the function `est.incidence`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
+### Overall Seroconversion Rate
+Using the function `estimate_scr()`, we filter to sites in Pakistan and define the datasets for our cross-sectional data (xs_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available. 
 
 ```{r est}
-# Using est.incidence (no strata)
+# Estimate seroconverison rate
 
 est1 <- estimate_scr(
   pop_data = xs_data |> filter(Country == "Pakistan"),
@@ -226,13 +223,13 @@ summary(est1)
 ```
 
 
-### Stratified Seroincidence
+### Stratified Seroconversion Rates
 
-We can also produce stratified seroincidence estimates. Users can select one or more stratification variables in their cross-sectional population dataset. 
+We can also produce stratified seroconversion rate estimates. Users can select one or more stratification variables in their cross-sectional population dataset. 
 Let's compare estimates across all countries and by age group. 
 
 ```{r estbycountry}
-#Using est.incidence.by (strata)
+#Estimate stratified seroconversion rates
 
 est_country_age <- estimate_scr_by(
   strata = c("Country", "ageCat"),
@@ -263,7 +260,7 @@ Finally, let's visualize our seroincidence estimates by country and age category
 # Save summary(est_country_age)
 est_country_agedf <- summary(est_country_age)
 
-# Plot seroincidence estimates
+# Plot seroconversion rate estimates
 autoplot(
   est_country_agedf,
   type = "bar",

@@ -59,7 +59,7 @@
 #' est2 <- estimate_scr_by(
 #'   strata = "catchment",
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time
@@ -70,7 +70,7 @@
 #'
 estimate_scr_by <- function(
     pop_data,
-    curve_params,
+    sr_params,
     noise_params,
     strata,
     curve_strata_varnames = strata,
@@ -108,7 +108,7 @@ estimate_scr_by <- function(
     to_return <-
       estimate_scr(
         pop_data = pop_data,
-        curve_params = curve_params,
+        curve_params = sr_params,
         noise_params = noise_params,
         lambda_start = lambda_start,
         antigen_isos = antigen_isos,
@@ -124,14 +124,14 @@ estimate_scr_by <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params
+    curve_params = sr_params
   )
 
   # Split data per stratum
   stratum_data_list <- stratify_data(
     antigen_isos = antigen_isos,
     data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
-    curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = sr_params %>% filter(.data$antigen_iso %in% antigen_isos),
     noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,

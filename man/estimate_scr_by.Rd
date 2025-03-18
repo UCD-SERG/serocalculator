@@ -6,7 +6,7 @@
 \usage{
 estimate_scr_by(
   pop_data,
-  curve_params,
+  sr_params,
   noise_params,
   strata,
   curve_strata_varnames = strata,
@@ -131,7 +131,7 @@ noise <-
 est2 <- estimate_scr_by(
   strata = "catchment",
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = curve,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   # num_cores = 8 # Allow for parallel processing to decrease run time

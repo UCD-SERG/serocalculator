@@ -16,7 +16,7 @@ reference:
   contents:
   - as_pop_data
   - load_pop_data
-  - as_curve_params
+  - as_sr_params
   - load_curve_params
   - as_noise_params
   - load_noise_params

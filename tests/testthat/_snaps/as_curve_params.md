@@ -1,4 +1,4 @@
-# `as_curve_params()` produces expected results
+# `as_sr_params()` produces expected results
 
     Code
       test_data

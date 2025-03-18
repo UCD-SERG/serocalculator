@@ -2,13 +2,13 @@
 % Please edit documentation in R/load_sr_params.R
 \name{load_sr_params}
 \alias{load_sr_params}
-\title{Load antibody decay curve parameter samples}
+\title{Load longitudinal seroresponse parameter samples}
 \usage{
 load_sr_params(file_path, antigen_isos = NULL)
 }
 \arguments{
 \item{file_path}{path to an RDS file containing MCMC samples of antibody
-decay curve parameters \code{y0}, \code{y1}, \code{t1}, \code{alpha}, and \code{r},
+seroresponse parameters \code{y0}, \code{y1}, \code{t1}, \code{alpha}, and \code{r},
 stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
 \item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes used in analyses}
@@ -18,7 +18,7 @@ a \code{curve_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df}
 with extra attribute \code{antigen_isos})
 }
 \description{
-Load antibody decay curve parameter samples
+Load longitudinal seroresponse parameter samples
 }
 \examples{
 curve <- load_sr_params(serocalculator_example("example_curve_params.rds"))

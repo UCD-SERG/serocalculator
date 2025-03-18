@@ -21,3 +21,14 @@ test_that(
     )
   }
 )
+
+test_that(
+  desc = "non filepath produces error",
+  code = {
+    expect_error(
+      expect_warning(
+        load_sr_params("non file path.csv")
+      )
+    )
+  }
+)

@@ -8,7 +8,7 @@ test_that("`plot_curve_params_one_ab()` produces consistent results", {
       r = 1,
       antigen_iso = "test"
     ) |>
-    as_curve_params()
+    as_sr_params()
 
 
   fig1 <-

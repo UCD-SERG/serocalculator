@@ -27,7 +27,7 @@ test_that(
   code = {
     expect_error(
       expect_warning(
-        load_sr_params("non file path.csv")
+        load_sr_params("non file path")
       )
     )
   }

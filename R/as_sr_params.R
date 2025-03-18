@@ -1,4 +1,4 @@
-#' Load antibody decay curve parameter
+#' Load longitudinal seroresponse parameters
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos a [character()] vector of antigen isotypes
@@ -14,7 +14,7 @@
 #'   as_curve_params()
 #'
 #' print(curve_data)
-as_curve_params <- function(data, antigen_isos = NULL) {
+as_sr_params <- function(data, antigen_isos = NULL) {
 
   if (!is.data.frame(data)) {
     cli::cli_abort(
@@ -29,7 +29,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   }
 
   curve_data <-
-    data %>%
+    data |>
     tibble::as_tibble()
 
   # check if object has expected columns:
@@ -38,7 +38,7 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   curve_cols <- c("antigen_iso", "y0", "y1", "t1", "alpha", "r")
 
   # get columns from provided data
-  data_cols <- data %>% names()
+  data_cols <- data |>  names()
 
   # get any missing column(s)
   missing_cols <- setdiff(x = curve_cols, y = data_cols)
@@ -70,8 +70,25 @@ as_curve_params <- function(data, antigen_isos = NULL) {
   # assign antigen attribute
   attr(curve_data, "antigen_isos") <- antigen_isos
 
-  curve_data <- curve_data %>%
+  curve_data <- curve_data |>
     set_biomarker_var(biomarker = "antigen_iso", standardize = FALSE)
 
   return(curve_data)
+}
+
+#' @title Load antibody decay curve parameter
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `as_curve_params()` was renamed to [as_sr_params()] to create a more
+#' consistent API.
+#' @keywords internal
+#' @export
+as_curve_params <- function( # nolint: object_name_linter
+    ...) {
+  lifecycle::deprecate_soft("1.3.1", "as_curve_params()", "as_sr_params()")
+  as_sr_params(
+    ...
+  )
 }

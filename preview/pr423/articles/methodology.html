@@ -227,7 +227,7 @@ Attaching package: 'dplyr'</code></pre>
 <code class="sourceCode R"><span><span class="co"># Import longitudinal antibody parameters from OSF</span></span>
 <span><span class="va">curves</span> <span class="op">&lt;-</span></span>
 <span>  <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">iter</span> <span class="op">&lt;</span> <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Import cross-sectional data from OSF and rename required variables:</span></span>
@@ -422,7 +422,7 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 <span><span class="co"># Import longitudinal antibody parameters from OSF</span></span>
 <span><span class="va">curves</span> <span class="op">&lt;-</span></span>
 <span>  <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">iter</span> <span class="op">&lt;</span> <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">curve1</span> <span class="op">&lt;-</span></span>

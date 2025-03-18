@@ -156,7 +156,7 @@ for more information.
 This QR code is a direct link to the latest-release version of the 
 package website:
 
-```{r svg}
+```{r}
 #| echo: false
 #| label: fig-qr-code
 library(qrcode)

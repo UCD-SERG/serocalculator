@@ -68,16 +68,19 @@
 
 
 <dl><dt id="arg-file-path">file_path<a class="anchor" aria-label="anchor" href="#arg-file-path"></a></dt>
-<dd><p>path to an RDS file containing MCMC samples of antibody decay curve parameters <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, and <code>r</code>, stored as a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> or <a href="https://tibble.tidyverse.org/reference/tbl_df-class.html" class="external-link">tibble::tbl_df</a></p></dd>
+<dd><p>path to an RDS file containing MCMC samples of antibody
+decay curve parameters <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, and <code>r</code>,
+stored as a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> or <a href="https://tibble.tidyverse.org/reference/tbl_df-class.html" class="external-link">tibble::tbl_df</a></p></dd>
 
 
 <dt id="arg-antigen-isos">antigen_isos<a class="anchor" aria-label="anchor" href="#arg-antigen-isos"></a></dt>
-<dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector of antigen isotypes to be used in analyses</p></dd>
+<dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector of antigen isotypes used in analyses</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a <code>curve_params</code> object (a <a href="https://tibble.tidyverse.org/reference/tbl_df-class.html" class="external-link">tibble::tbl_df</a> with extra attribute <code>antigen_isos</code>)</p>
+    <p>a <code>curve_params</code> object (a <a href="https://tibble.tidyverse.org/reference/tbl_df-class.html" class="external-link">tibble::tbl_df</a>
+with extra attribute <code>antigen_isos</code>)</p>
     </div>
 
     <div class="section level2">

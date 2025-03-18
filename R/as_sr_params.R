@@ -14,7 +14,7 @@
 #'   as_curve_params()
 #'
 #' print(curve_data)
-as_curve_params <- function(data, antigen_isos = NULL) {
+as_sr_params <- function(data, antigen_isos = NULL) {
 
   if (!is.data.frame(data)) {
     cli::cli_abort(

@@ -1,4 +1,4 @@
-#' Load antibody decay curve parameter
+#' Load longitudinal seroresponse parameters
 #'
 #' @param data a [data.frame()] or [tibble::tbl_df]
 #' @param antigen_isos a [character()] vector of antigen isotypes
@@ -74,4 +74,21 @@ as_sr_params <- function(data, antigen_isos = NULL) {
     set_biomarker_var(biomarker = "antigen_iso", standardize = FALSE)
 
   return(curve_data)
+}
+
+#' @title Load antibody decay curve parameter
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `as_curve_params()` was renamed to [as_sr_params()] to create a more
+#' consistent API.
+#' @keywords internal
+#' @export
+as_curve_params <- function( # nolint: object_name_linter
+  ...) {
+  lifecycle::deprecate_soft("1.3.1", "as_curve_params()", "as_sr_params()")
+  as_sr_params(
+    ...
+  )
 }

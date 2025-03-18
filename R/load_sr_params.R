@@ -21,7 +21,7 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
   curve_params <-
     file_path |>
     readRDS() |>
-    as_curve_params()
+    as_sr_params()
 
   return(curve_params)
 }

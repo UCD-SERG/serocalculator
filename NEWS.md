@@ -2,6 +2,7 @@
 
 ## New features
 
+* Rename `load_curve_params()` to `load_sr_params()` (#421)
 * added default for `xvar` in `"scatter"` option for `autoplot.seroincidence.by()` (#417)
 * Extended `autoplot.summary.seroincidence.by()` to include types for either scatter or bar plots of stratified results (#397)
 * added option to add lines using `group_var` input to `autoplot.summary.seroincidence.by()` (#410)

@@ -75,7 +75,7 @@ library(ggbeeswarm) # for plotting
 library(dplyr)
 dmcmc <-
   "https://osf.io/download/rtw5k" |>
-  load_curve_params() |>
+  load_sr_params() |>
   dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 

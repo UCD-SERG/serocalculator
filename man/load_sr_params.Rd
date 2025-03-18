@@ -7,12 +7,15 @@
 load_sr_params(file_path, antigen_isos = NULL)
 }
 \arguments{
-\item{file_path}{path to an RDS file containing MCMC samples of antibody decay curve parameters \code{y0}, \code{y1}, \code{t1}, \code{alpha}, and \code{r}, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
+\item{file_path}{path to an RDS file containing MCMC samples of antibody
+decay curve parameters \code{y0}, \code{y1}, \code{t1}, \code{alpha}, and \code{r},
+stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
-\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes to be used in analyses}
+\item{antigen_isos}{\code{\link[=character]{character()}} vector of antigen isotypes used in analyses}
 }
 \value{
-a \code{curve_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})
+a \code{curve_params} object (a \link[tibble:tbl_df-class]{tibble::tbl_df}
+with extra attribute \code{antigen_isos})
 }
 \description{
 Load antibody decay curve parameter samples

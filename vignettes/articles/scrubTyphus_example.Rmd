@@ -76,7 +76,7 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 
 curves <-
   "https://osf.io/download/u5gxh/" %>%
-  load_curve_params()
+  load_sr_params()
 ```
 
 #### Visualize curve parameters

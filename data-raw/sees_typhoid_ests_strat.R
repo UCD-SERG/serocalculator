@@ -5,7 +5,7 @@ xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
 
 curves <-
   "https://osf.io/download/rtw5k/" |>
-  load_curve_params()
+  load_sr_params()
 
 noise <- "https://osf.io/download//hqy4v/" |> readr::read_rds()
 

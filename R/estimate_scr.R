@@ -20,7 +20,7 @@
 #' xs_data <-
 #'   sees_pop_data_pk_100
 #'
-#' curve <-
+#' sr_curve <-
 #'   typhoid_curves_nostrat_100 %>%
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
@@ -29,7 +29,7 @@
 #'
 #' est1 <- estimate_scr(
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = sr_curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #' )
@@ -37,7 +37,7 @@
 #' summary(est1)
 estimate_scr <- function(
     pop_data,
-    curve_params,
+    sr_params,
     noise_params,
     antigen_isos = get_biomarker_names(pop_data),
     lambda_start = 0.1,
@@ -55,7 +55,7 @@ estimate_scr <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params
+    curve_params = sr_params
   )
 
   pop_data <- pop_data %>%
@@ -67,7 +67,7 @@ estimate_scr <- function(
     ) %>%
     filter(if_all(everything(), ~!is.na(.x)))
 
-  curve_params <- curve_params %>%
+  sr_params <- sr_params %>%
     ungroup() %>%
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
@@ -95,7 +95,7 @@ estimate_scr <- function(
   }
 
   pop_data <- pop_data %>% split(~antigen_iso)
-  curve_params <- curve_params %>% split(~antigen_iso)
+  sr_params <- sr_params %>% split(~antigen_iso)
   noise_params <- noise_params %>% split(~antigen_iso)
 
   # First, check if we find numeric results...
@@ -103,7 +103,7 @@ estimate_scr <- function(
     pop_data = pop_data,
     log.lambda = log(lambda_start),
     antigen_isos = antigen_isos,
-    curve_params = curve_params,
+    curve_params = sr_params,
     noise_params = noise_params,
     verbose = verbose,
     ...
@@ -125,7 +125,7 @@ estimate_scr <- function(
       highlight_point_names = "lambda_start",
       pop_data = pop_data,
       antigen_isos = antigen_isos,
-      curve_params = curve_params,
+      curve_params = sr_params,
       noise_params = noise_params
     )
     if (print_graph) {
@@ -154,7 +154,7 @@ estimate_scr <- function(
         p = log(lambda_start),
         pop_data = pop_data,
         antigen_isos = antigen_isos,
-        curve_params = curve_params,
+        curve_params = sr_params,
         noise_params = noise_params,
         hessian = TRUE,
         stepmax = stepmax,

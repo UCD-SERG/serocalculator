@@ -2,8 +2,8 @@ test_that(
   desc = "estimate_scr_by() warns about missing data",
   code = {
 
-    library(dplyr)
-    library(readr)
+    withr::local_package("dplyr")
+    withr::local_package("readr")
 
     estimate_scr_by(
       pop_data =
@@ -24,8 +24,9 @@ test_that(
 
 test_that("estimate_scr_by() warns about missing data", {
 
-  library(dplyr)
-  library(readr)
+  withr::local_package("dplyr")
+  withr::local_package("readr")
+
 
   estimate_scr_by(
     pop_data = sees_pop_data_pk_100 |>

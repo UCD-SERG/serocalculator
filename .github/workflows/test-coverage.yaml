@@ -45,6 +45,12 @@ jobs:
           testthat::test_local(reporter = testthat::JunitReporter$new(test_out))
         shell: Rscript {0}
 
+      - name: Show test results
+        if: always()
+        run: |
+          testthat::test_local()
+        shell: Rscript {0}
+
       # following https://app.codecov.io/gh/UCD-SERG/serodynamics/tests/new
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}

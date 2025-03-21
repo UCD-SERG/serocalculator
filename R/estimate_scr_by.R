@@ -132,7 +132,7 @@ estimate_scr_by <- function(
   stratum_data_list <- stratify_data(
     antigen_isos = antigen_isos,
     data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
-    sr_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
     noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,

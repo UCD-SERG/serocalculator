@@ -9,6 +9,18 @@
 #' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph in the course of running `estimate_scr()`
 #' @param stepmin A positive scalar providing the minimum allowable relative step length.
+#' @param sr_params a [data.frame()] containing MCMC samples of parameters
+#' from the Bayesian posterior distribution of a longitudinal decay curve model.
+#' The parameter columns must be named:
+#' - `antigen_iso`: a [character()] vector indicating antigen-isotype
+#' combinations
+#' - `iter`: an [integer()] vector indicating MCMC sampling iterations
+#' - `y0`: baseline antibody level at $t=0$ ($y(t=0)$)
+#' - `y1`: antibody peak level (ELISA units)
+#' - `t1`: duration of infection
+#' - `alpha`: antibody decay rate
+#' (1/days for the current longitudinal parameter sets)
+#' - `r`: shape factor of antibody decay
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda_start`, `antigen_isos`, and `ll_graph`

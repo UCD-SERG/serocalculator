@@ -10,7 +10,7 @@ test_that("results are consistent", {
     example_noise_params_pk
   est1 <- estimate_scr(
     pop_data = xs_data,
-    curve_params = curve,
+    sr_params = curve,
     noise_params = noise,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   )

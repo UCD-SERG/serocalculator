@@ -30,7 +30,8 @@
 #'
 #'
 #' @inheritParams estimate_scr
-#' @inheritDotParams estimate_scr
+#' @inheritParams log_likelihood
+#' @inheritDotParams estimate_scr -sr_params
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return
@@ -108,7 +109,7 @@ estimate_scr_by <- function(
     to_return <-
       estimate_scr(
         pop_data = pop_data,
-        curve_params = curve_params,
+        sr_params = curve_params,
         noise_params = noise_params,
         lambda_start = lambda_start,
         antigen_isos = antigen_isos,

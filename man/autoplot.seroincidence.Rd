@@ -36,7 +36,7 @@ noise <-
 
 est1 <- estimate_scr(
   pop_data = xs_data,
-  curve_param = curve,
+  sr_param = curve,
   noise_param = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   build_graph = TRUE

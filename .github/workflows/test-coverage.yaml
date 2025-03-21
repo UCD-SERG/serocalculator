@@ -24,7 +24,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr, any::xml2
+          extra-packages: any::covr, any::xml2, local::.
           needs: coverage
 
       - name: Test coverage
@@ -43,6 +43,12 @@ jobs:
         run: |
           test_out <- path.expand(file.path(getwd(), "junit.xml"))
           testthat::test_local(reporter = testthat::JunitReporter$new(test_out))
+        shell: Rscript {0}
+
+      - name: Show test results
+        if: always()
+        run: |
+          testthat::test_local()
         shell: Rscript {0}
 
       # following https://app.codecov.io/gh/UCD-SERG/serodynamics/tests/new

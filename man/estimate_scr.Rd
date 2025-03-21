@@ -6,7 +6,7 @@
 \usage{
 estimate_scr(
   pop_data,
-  curve_params,
+  sr_params,
   noise_params,
   antigen_isos = get_biomarker_names(pop_data),
   lambda_start = 0.1,
@@ -21,7 +21,7 @@ estimate_scr(
 \arguments{
 \item{pop_data}{a \link{data.frame} with cross-sectional serology data per antibody and age, and additional columns}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+\item{sr_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
 from the Bayesian posterior distribution of a longitudinal decay curve model.
 The parameter columns must be named:
 \itemize{
@@ -102,7 +102,7 @@ library(dplyr)
 xs_data <-
   sees_pop_data_pk_100
 
-curve <-
+sr_curve <-
   typhoid_curves_nostrat_100 \%>\%
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
@@ -111,7 +111,7 @@ noise <-
 
 est1 <- estimate_scr(
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = sr_curve,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 )

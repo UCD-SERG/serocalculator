@@ -21,3 +21,4 @@ NEWS.html
 NEWS_files
 **/.quarto/
 *.pdf
+junit.xml

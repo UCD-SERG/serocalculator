@@ -1,6 +1,6 @@
 test_that("df_to_array() produces consistent results", {
-  library(dplyr)
-  library(tidyr)
+  withr::local_package("dplyr")
+  withr::local_package("tidyr")
   df <- iris %>%
     tidyr::pivot_longer(
       names_to = "parameter",

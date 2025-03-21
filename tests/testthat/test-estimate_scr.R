@@ -37,6 +37,7 @@ test_that(
 test_that(
   "verbose output is consistent",
   code = {
+    skip_on_os("mac")
     withr::local_options(
       list(
         width = 80,

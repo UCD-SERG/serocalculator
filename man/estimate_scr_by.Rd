@@ -11,7 +11,7 @@ estimate_scr_by(
   strata,
   curve_strata_varnames = strata,
   noise_strata_varnames = strata,
-  antigen_isos = pop_data \%>\% pull("antigen_iso") \%>\% unique(),
+  antigen_isos = unique(pull(pop_data, "antigen_iso")),
   lambda_start = 0.1,
   build_graph = FALSE,
   num_cores = 1L,
@@ -61,11 +61,13 @@ Values must be variable names in \code{curve_params}. Default = "".}
 \item{noise_strata_varnames}{A subset of \code{strata}.
 Values must be variable names in \code{noise_params}. Default = "".}
 
-\item{antigen_isos}{Character vector with one or more antibody names. Values must match \code{pop_data}}
+\item{antigen_isos}{Character vector with one or more antibody names.
+Must match \code{pop_data}}
 
 \item{lambda_start}{starting guess for incidence rate, in years/event.}
 
-\item{build_graph}{whether to graph the log-likelihood function across a range of incidence rates (lambda values)}
+\item{build_graph}{whether to graph the log-likelihood function across
+a range of incidence rates (lambda values)}
 
 \item{num_cores}{Number of processor cores to use for
 calculations when computing by strata. If set to
@@ -74,12 +76,14 @@ then the computations are executed in parallel. Default = 1L.}
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{print_graph}{whether to display the log-likelihood curve graph in the course of running \code{estimate_scr()}}
+\item{print_graph}{whether to display the log-likelihood curve graph
+in the course of running \code{estimate_scr()}}
 
 \item{...}{
   Arguments passed on to \code{\link[=estimate_scr]{estimate_scr}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
-    \item{\code{stepmin}}{A positive scalar providing the minimum allowable relative step length.}
+    \item{\code{stepmin}}{A positive scalar providing the minimum allowable
+relative step length.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the
@@ -137,7 +141,7 @@ xs_data <-
   sees_pop_data_pk_100
 
 curve <-
-  typhoid_curves_nostrat_100 \%>\%
+  typhoid_curves_nostrat_100 |>
   filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
 noise <-

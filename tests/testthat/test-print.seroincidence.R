@@ -4,7 +4,7 @@ test_that("results are consistent", {
   xs_data <-
     sees_pop_data_pk_100
   curve <-
-    typhoid_curves_nostrat_100 %>%
+    typhoid_curves_nostrat_100 |>
     filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
   noise <-
     example_noise_params_pk

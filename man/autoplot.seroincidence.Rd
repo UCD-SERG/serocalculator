@@ -9,7 +9,8 @@
 \arguments{
 \item{object}{a \code{seroincidence} object (from \code{\link[=estimate_scr]{estimate_scr()}})}
 
-\item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+\item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE})
+or linear scale (\code{FALSE}, default)?}
 
 \item{...}{unused}
 }

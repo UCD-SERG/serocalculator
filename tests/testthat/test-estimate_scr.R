@@ -39,9 +39,10 @@ test_that(
   code = {
     skip_on_os("mac")
     withr::local_options(
-      list(
-        width = 80,
-        digits = 8))
+                         list(
+                              width = 80,
+                              digits = 8))
+
     estimate_scr(
       pop_data = sees_pop_data_pk_100,
       sr_param = typhoid_curves_nostrat_100,

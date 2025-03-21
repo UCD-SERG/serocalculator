@@ -161,29 +161,31 @@ estimate_scr <- function(
   }
 
 
-  # [stats::nlm()] expects an objective function `f` "returning a single numeric value",
+  # [stats::nlm()] expects an objective function `f`
+  # "returning a single numeric value",
   # but [.nll()] is vectorized via its subfunction [f_dev()].
   # The vectorization doesn't appear to cause a problem for [nlm()].
 
   if (verbose) message("about to call `nlm()`")
   # Estimate lambda
-  time <- {
-    fit <- nlm(
-      f = .nll,
-      p = log(lambda_start),
-      pop_data = pop_data,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params,
-      noise_params = noise_params,
-      hessian = TRUE,
-      stepmax = stepmax,
-      steptol = stepmin,
-      verbose = verbose,
-      print.level = ifelse(verbose, 2, 0),
-      ...
-    )
-  } |>
-    system.time()
+  time <- system.time(
+    {
+      fit <- nlm(
+        f = .nll,
+        p = log(lambda_start),
+        pop_data = pop_data,
+        antigen_isos = antigen_isos,
+        curve_params = sr_params,
+        noise_params = noise_params,
+        hessian = TRUE,
+        stepmax = stepmax,
+        steptol = stepmin,
+        verbose = verbose,
+        print.level = ifelse(verbose, 2, 0),
+        ...
+      )
+    }
+  )
 
   code_text <- nlm_exit_codes[fit$code]
   message1 <- "\n`nlm()` completed with the following convergence code:\n"

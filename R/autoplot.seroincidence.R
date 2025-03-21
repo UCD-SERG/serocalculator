@@ -42,7 +42,6 @@ autoplot.seroincidence <-
         "Graphs cannot be extracted; ",
         "`build_graph` was not `TRUE` in the call to `estimate_scr()`"
       )
-      figure <- NULL
     }
 
     if (log_x) {

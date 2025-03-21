@@ -33,3 +33,21 @@ test_that(
     expect_equal(est_true, est_false)
   }
 )
+
+test_that(
+  "verbose output is consistent",
+  code = {
+    withr::local_options(
+      list(
+        width = 80,
+        digits = 8))
+    estimate_scr(
+      pop_data = sees_pop_data_pk_100,
+      sr_param = typhoid_curves_nostrat_100,
+      noise_param = example_noise_params_pk,
+      antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+      verbose = TRUE
+    ) |>
+      expect_snapshot()
+  }
+)

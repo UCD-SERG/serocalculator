@@ -254,7 +254,7 @@ test_that(
 test_that("results are consistent with `strata = NULL`", {
   typhoid_results_simple <- estimate_scr(
     pop_data = sees_pop_data_pk_100,
-    curve_param = typhoid_curves_nostrat_100,
+    sr_params = typhoid_curves_nostrat_100,
     noise_param = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )

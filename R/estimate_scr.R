@@ -99,7 +99,7 @@ estimate_scr <- function(
   }
 
   if (verbose) {
-    message("nrow(curve_params) = ", nrow(curve_params))
+    message("nrow(curve_params) = ", nrow(sr_params))
   }
 
   if (nrow(noise_params) != length(antigen_isos)) {
@@ -188,7 +188,7 @@ estimate_scr <- function(
     )
   }
 
-  if (verbose) {
+  if (verbose >= 2) {
     message("\nElapsed time: ")
     print(time)
   }
@@ -200,7 +200,7 @@ estimate_scr <- function(
         fit = fit,
         pop_data = pop_data,
         antigen_isos = antigen_isos,
-        curve_params = curve_params,
+        curve_params = sr_params,
         noise_params = noise_params
       )
 

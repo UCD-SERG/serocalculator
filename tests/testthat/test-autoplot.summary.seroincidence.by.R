@@ -2,9 +2,8 @@ test_that(
   desc = "scatterplot results are consistent",
   code = {
 
-
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -58,9 +57,8 @@ test_that(
   desc = "barplot results are consistent",
   code = {
 
-
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -100,8 +98,8 @@ test_that(
   desc = "error on plot type",
   code = {
 
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -143,8 +141,8 @@ test_that(
 test_that(
   desc = "error on incorrect yvar",
   code = {
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -187,8 +185,8 @@ test_that(
 test_that(
   desc = "color palette works as expected",
   code = {
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100

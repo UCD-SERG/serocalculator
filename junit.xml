@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="ab" timestamp="2025-03-21T20:56:52Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.91">
+    <testcase time="0.91" classname="ab" name="_ab_works_consistently"/>
+  </testsuite>
+  <testsuite name="ab0" timestamp="2025-03-21T20:56:53Z" hostname="XPS8950" tests="4" skipped="0" failures="0" errors="0" time="0.19">
+    <testcase time="0.0899999999999999" classname="ab0" name="_ab0_produces_consistent_results"/>
+    <testcase time="0.04" classname="ab0" name="_ab0_produces_consistent_results"/>
+    <testcase time="0.0299999999999994" classname="ab0" name="_ab0_produces_consistent_results"/>
+    <testcase time="0.0300000000000002" classname="ab0" name="_ab0_produces_consistent_results"/>
+  </testsuite>
+  <testsuite name="as_noise_params" timestamp="2025-03-21T20:56:54Z" hostname="XPS8950" tests="5" skipped="0" failures="0" errors="0" time="0.26">
+    <testcase time="0.04" classname="as_noise_params" name="_as_noise_params_produces_an_error_when_non_noise_data_is_provided"/>
+    <testcase time="0.13" classname="as_noise_params" name="_as_noise_params_produces_expected_results"/>
+    <testcase time="0.0200000000000005" classname="as_noise_params" name="_as_noise_params_produces_expected_results"/>
+    <testcase time="0.04" classname="as_noise_params" name="_as_noise_params_produces_error_when_wrong_antigen_iso_is_provided"/>
+    <testcase time="0.0299999999999994" classname="as_noise_params" name="_as_noise_params_produces_error_when_non_data_frame_is_provided"/>
+  </testsuite>
+  <testsuite name="as_pop_data" timestamp="2025-03-21T20:56:54Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.08">
+    <testcase time="0.0800000000000001" classname="as_pop_data" name="results_are_consistent"/>
+  </testsuite>
+  <testsuite name="as_sr_params" timestamp="2025-03-21T20:56:54Z" hostname="XPS8950" tests="5" skipped="0" failures="0" errors="0" time="0.42">
+    <testcase time="0.0499999999999998" classname="as_sr_params" name="_as_sr_params_produces_an_error_when_non_curve_data_is_provided"/>
+    <testcase time="0.0100000000000007" classname="as_sr_params" name="_as_sr_params_produces_an_error_when_data_is_not_a_data.frame"/>
+    <testcase time="0.319999999999999" classname="as_sr_params" name="_as_sr_params_produces_expected_results"/>
+    <testcase time="0.0100000000000007" classname="as_sr_params" name="_as_sr_params_produces_expected_results"/>
+    <testcase time="0.0299999999999994" classname="as_sr_params" name="_as_sr_params_produces_expected_results"/>
+  </testsuite>
+  <testsuite name="autoplot.curve_params" timestamp="2025-03-21T20:56:54Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="3.27">
+    <testcase time="3.27" classname="autoplot.curve_params" name="results_are_consistent"/>
+  </testsuite>
+  <testsuite name="autoplot.pop_data" timestamp="2025-03-21T20:56:58Z" hostname="XPS8950" tests="6" skipped="0" failures="0" errors="0" time="0.84">
+    <testcase time="0.0300000000000011" classname="autoplot.pop_data" name="_autoplot.pop_data_raise_an_error_when_unavailable_type_is_provided"/>
+    <testcase time="0.0199999999999996" classname="autoplot.pop_data" name="_autoplot.pop_data_raise_an_error_when_unavailable_strata_is_provided"/>
+    <testcase time="0.18" classname="autoplot.pop_data" name="_autoplot.pop_data_produces_stable_results_for_type_density_"/>
+    <testcase time="0.27" classname="autoplot.pop_data" name="_autoplot.pop_data_produces_stable_results_for_type_density_"/>
+    <testcase time="0.220000000000001" classname="autoplot.pop_data" name="_autoplot.pop_data_produces_stable_results_for_type_age_scatter_"/>
+    <testcase time="0.119999999999999" classname="autoplot.pop_data" name="_autoplot.pop_data_produces_stable_results_for_type_age_scatter_strata_NULL_"/>
+  </testsuite>
+  <testsuite name="autoplot.summary.seroincidence.by" timestamp="2025-03-21T20:56:58Z" hostname="XPS8950" tests="6" skipped="0" failures="0" errors="0" time="7.41">
+    <testcase time="1.47" classname="autoplot.summary.seroincidence.by" name="scatterplot_results_are_consistent"/>
+    <testcase time="0.140000000000001" classname="autoplot.summary.seroincidence.by" name="scatterplot_results_are_consistent"/>
+    <testcase time="1.56" classname="autoplot.summary.seroincidence.by" name="barplot_results_are_consistent"/>
+    <testcase time="1.41" classname="autoplot.summary.seroincidence.by" name="error_on_plot_type"/>
+    <testcase time="1.42" classname="autoplot.summary.seroincidence.by" name="error_on_incorrect_yvar"/>
+    <testcase time="1.41" classname="autoplot.summary.seroincidence.by" name="color_palette_works_as_expected"/>
+  </testsuite>
+  <testsuite name="check_parallel_cores" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.03">
+    <testcase time="0.0300000000000011" classname="check_parallel_cores" name="message_is_produced_when_cores_are_reduced"/>
+  </testsuite>
+  <testsuite name="check_pop_data" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="5" skipped="0" failures="0" errors="0" time="0.05">
+    <testcase time="0" classname="check_pop_data" name="_check_pop_data_works"/>
+    <testcase time="0.0199999999999996" classname="check_pop_data" name="_check_pop_data_works"/>
+    <testcase time="0.0100000000000016" classname="check_pop_data" name="_check_pop_data_works"/>
+    <testcase time="0" classname="check_pop_data" name="_check_pop_data_works"/>
+    <testcase time="0.0199999999999996" classname="check_pop_data" name="_check_pop_data_works"/>
+  </testsuite>
+  <testsuite name="check_strata" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="4" skipped="0" failures="0" errors="0" time="0.08">
+    <testcase time="0.0299999999999976" classname="check_strata" name="_check_strata_throws_an_error_when_elements_that_don_t_exactly_match_the_columns_of_pop_data_are_provided"/>
+    <testcase time="0.0100000000000016" classname="check_strata" name="_check_strata_throws_an_error_when_strata_is_not_a_character_"/>
+    <testcase time="0.0199999999999996" classname="check_strata" name="_check_strata_warns_when_some_strata_of_pop_data_entirely_lack_some_biomarkers"/>
+    <testcase time="0.0199999999999996" classname="check_strata" name="_check_strata_can_handle_when_there_are_no_partial_matches"/>
+  </testsuite>
+  <testsuite name="class_attributes" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="2" skipped="0" failures="0" errors="0" time="0.04">
+    <testcase time="0.0100000000000016" classname="class_attributes" name="_get_biomarker_levels_works"/>
+    <testcase time="0.0299999999999976" classname="class_attributes" name="_set_age_detects_partial_matches"/>
+  </testsuite>
+  <testsuite name="count_strata" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.08">
+    <testcase time="0.0800000000000018" classname="count_strata" name="check_for_uneven_counts_works"/>
+  </testsuite>
+  <testsuite name="df_to_array" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.03">
+    <testcase time="0.0300000000000011" classname="df_to_array" name="df_to_array_produces_consistent_results"/>
+  </testsuite>
+  <testsuite name="estimate_scr" timestamp="2025-03-21T20:57:06Z" hostname="XPS8950" tests="4" skipped="0" failures="0" errors="0" time="2.17">
+    <testcase time="0.599999999999998" classname="estimate_scr" name="estimate_scr_produces_expected_results_for_typhoid_data"/>
+    <testcase time="0.0300000000000011" classname="estimate_scr" name="estimate_scr_produces_expected_results_for_typhoid_data"/>
+    <testcase time="1" classname="estimate_scr" name="_estimate_scr_produces_consistent_results_regardless_of_whether_data_colnames_are_standardized."/>
+    <testcase time="0.539999999999999" classname="estimate_scr" name="verbose_output_is_consistent"/>
+  </testsuite>
+  <testsuite name="estimate_scr_by" timestamp="2025-03-21T20:57:08Z" hostname="XPS8950" tests="11" skipped="0" failures="0" errors="2" time="10.85">
+    <testcase time="0.0500000000000007" classname="estimate_scr_by" name="estimate_scr_by_warns_about_missing_data">
+      <error type="error" message="Error in `(function (value)  ('test-estimate_scr_by.R:5:5')">Error in `(function (value) 
+{
+    if (from_save(sys.calls())) 
+        return(NULL)
+    bt_name &lt;- backtick(name)
+    namespace &lt;- map_chr(pkgs, function(pkg) {
+        style_object(pkg, name)
+    })
+    names(namespace) &lt;- rep("*", length(namespace))
+    prefer &lt;- prefer_bullets(pkgs, name)
+    cli::cli_abort(c("{label_conflicted()} {.strong {name}} found in {length(pkgs)} packages.", 
+        "Either pick the one you want with {.code ::}:", namespace, 
+        "Or declare a preference with {.fn {add_ns('conflicts_prefer')}}:", 
+        prefer))
+})()`: [conflicted] matches found in 2 packages.
+Either pick the one you want with `::`:
+* testthat::matches
+* dplyr::matches
+Or declare a preference with `conflicts_prefer()`:
+* `conflicts_prefer(testthat::matches)`
+* `conflicts_prefer(dplyr::matches)`
+Backtrace:
+    x
+ 1. +-base::library(dplyr) at test-estimate_scr_by.R:5:5
+ 2. | \-base (local) checkConflicts(package, pkgname, pkgpath, nogenerics, ns)
+ 3. |   \-base (local) same.isFn(i)
+ 4. |     \-base::vapply(...)
+ 5. |       \-base (local) FUN(X[[i]], ...)
+ 6. \-conflicted (local) `&lt;fn&gt;`()
+ 7.   \-cli::cli_abort(...)
+ 8.     \-rlang::abort(...)</error>
+    </testcase>
+    <testcase time="0.0799999999999983" classname="estimate_scr_by" name="estimate_scr_by_warns_about_missing_data">
+      <error type="error" message="Error in `(function (value)  ('test-estimate_scr_by.R:27:3')">Error in `(function (value) 
+{
+    if (from_save(sys.calls())) 
+        return(NULL)
+    bt_name &lt;- backtick(name)
+    namespace &lt;- map_chr(pkgs, function(pkg) {
+        style_object(pkg, name)
+    })
+    names(namespace) &lt;- rep("*", length(namespace))
+    prefer &lt;- prefer_bullets(pkgs, name)
+    cli::cli_abort(c("{label_conflicted()} {.strong {name}} found in {length(pkgs)} packages.", 
+        "Either pick the one you want with {.code ::}:", namespace, 
+        "Or declare a preference with {.fn {add_ns('conflicts_prefer')}}:", 
+        prefer))
+})()`: [conflicted] matches found in 2 packages.
+Either pick the one you want with `::`:
+* testthat::matches
+* dplyr::matches
+Or declare a preference with `conflicts_prefer()`:
+* `conflicts_prefer(testthat::matches)`
+* `conflicts_prefer(dplyr::matches)`
+Backtrace:
+    x
+ 1. +-base::library(dplyr) at test-estimate_scr_by.R:27:3
+ 2. | \-base (local) checkConflicts(package, pkgname, pkgpath, nogenerics, ns)
+ 3. |   \-base (local) same.isFn(i)
+ 4. |     \-base::vapply(...)
+ 5. |       \-base (local) FUN(X[[i]], ...)
+ 6. \-conflicted (local) `&lt;fn&gt;`()
+ 7.   \-cli::cli_abort(...)
+ 8.     \-rlang::abort(...)</error>
+    </testcase>
+    <testcase time="0.580000000000002" classname="estimate_scr_by" name="_estimate_scr_by_warns_user_when_strata_is_missing"/>
+    <testcase time="0.0300000000000011" classname="estimate_scr_by" name="_estimate_scr_by_aborts_when_elements_that_don_t_exactly_match_the_columns_of_pop_data_are_provided"/>
+    <testcase time="0.829999999999998" classname="estimate_scr_by" name="_estimate_scr_by_produces_consistent_results_for_typhoid_data"/>
+    <testcase time="1.61" classname="estimate_scr_by" name="_estimate_scr_by_produces_expected_results_regardless_of_whether_varnames_have_been_standardized."/>
+    <testcase time="1.9" classname="estimate_scr_by" name="_estimate_scr_by_produces_expected_results_regardless_of_whether_using_parallel_processing_or_not."/>
+    <testcase time="1.6" classname="estimate_scr_by" name="_estimate_scr_by_produces_expected_results_regardless_of_whether_using_verbose_messaging_or_not._with_single_core."/>
+    <testcase time="2.28" classname="estimate_scr_by" name="_estimate_scr_by_produces_expected_results_regardless_of_whether_using_verbose_messaging_or_not_with_multi_core_processing."/>
+    <testcase time="0.539999999999999" classname="estimate_scr_by" name="a_warning_is_produced_when_strata_NULL"/>
+    <testcase time="1.35" classname="estimate_scr_by" name="results_are_consistent_with_strata_NULL_"/>
+  </testsuite>
+  <testsuite name="f_dev" timestamp="2025-03-21T20:57:19Z" hostname="XPS8950" tests="5" skipped="0" failures="0" errors="0" time="0.33">
+    <testcase time="0.0399999999999991" classname="f_dev" name="_f_dev0_and_f_dev_produce_stable_results"/>
+    <testcase time="0.0799999999999983" classname="f_dev" name="_f_dev0_and_f_dev_produce_stable_results"/>
+    <testcase time="0.0500000000000043" classname="f_dev" name="_f_dev_handles_censored_data"/>
+    <testcase time="0.0599999999999952" classname="f_dev" name="_f_dev_handles_censored_data"/>
+    <testcase time="0.100000000000001" classname="f_dev" name="_f_dev_handles_censored_data"/>
+  </testsuite>
+  <testsuite name="get_biomarker_names" timestamp="2025-03-21T20:57:19Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.03">
+    <testcase time="0.0300000000000011" classname="get_biomarker_names" name="function_works_as_expected"/>
+  </testsuite>
+  <testsuite name="get_biomarker_names_var" timestamp="2025-03-21T20:57:19Z" hostname="XPS8950" tests="3" skipped="0" failures="0" errors="0" time="0.06">
+    <testcase time="0.00999999999999801" classname="get_biomarker_names_var" name="_get_biomarker_names_var_works"/>
+    <testcase time="0.0300000000000011" classname="get_biomarker_names_var" name="_get_biomarker_names_var_warns_when_attribute_not_set"/>
+    <testcase time="0.0200000000000031" classname="get_biomarker_names_var" name="_get_biomarker_names_var_aborts_when_attribute_not_set_or_findable"/>
+  </testsuite>
+  <testsuite name="get_ids" timestamp="2025-03-21T20:57:20Z" hostname="XPS8950" tests="4" skipped="0" failures="0" errors="0" time="0.22">
+    <testcase time="0.029999999999994" classname="get_ids" name="_ids_works"/>
+    <testcase time="0.0600000000000023" classname="get_ids" name="_id_varname_aborts_with_.data_pronoun"/>
+    <testcase time="0.0799999999999983" classname="get_ids" name="_ids_varname_warns_when_guessing_colname"/>
+    <testcase time="0.0500000000000043" classname="get_ids" name="_ids_varname_warns_when_unable_to_guess_colname"/>
+  </testsuite>
+  <testsuite name="graph.curve.params" timestamp="2025-03-21T20:57:20Z" hostname="XPS8950" tests="3" skipped="0" failures="0" errors="0" time="5.81">
+    <testcase time="1.78" classname="graph.curve.params" name="results_are_consistent"/>
+    <testcase time="2.01" classname="graph.curve.params" name="results_are_consistent"/>
+    <testcase time="2.02" classname="graph.curve.params" name="results_are_consistent"/>
+  </testsuite>
+  <testsuite name="load_pop_data" timestamp="2025-03-21T20:57:26Z" hostname="XPS8950" tests="2" skipped="0" failures="0" errors="0" time="0.03">
+    <testcase time="0.0200000000000031" classname="load_pop_data" name="_load_pop_data_produces_expected_results"/>
+    <testcase time="0.00999999999999801" classname="load_pop_data" name="_load_pop_data_produces_expected_results"/>
+  </testsuite>
+  <testsuite name="load_sr_params" timestamp="2025-03-21T20:57:26Z" hostname="XPS8950" tests="3" skipped="0" failures="0" errors="0" time="0.05">
+    <testcase time="0" classname="load_sr_params" name="_load_sr_params_produces_expected_results"/>
+    <testcase time="0.0300000000000011" classname="load_sr_params" name="_load_sr_params_produces_error_with_non_curve_data"/>
+    <testcase time="0.0200000000000031" classname="load_sr_params" name="non_filepath_produces_error"/>
+  </testsuite>
+  <testsuite name="log_likelihood" timestamp="2025-03-21T20:57:26Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.05">
+    <testcase time="0.0499999999999972" classname="log_likelihood" name="_log_likelihood_gives_consistent_results"/>
+  </testsuite>
+  <testsuite name="plot_curve_params_one_ab" timestamp="2025-03-21T20:57:26Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.5">
+    <testcase time="0.5" classname="plot_curve_params_one_ab" name="_plot_curve_params_one_ab_produces_consistent_results"/>
+  </testsuite>
+  <testsuite name="print.seroincidence.by" timestamp="2025-03-21T20:57:26Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.81">
+    <testcase time="0.810000000000002" classname="print.seroincidence.by" name="print_method_works_consistently"/>
+  </testsuite>
+  <testsuite name="print.seroincidence" timestamp="2025-03-21T20:57:27Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.54">
+    <testcase time="0.539999999999999" classname="print.seroincidence" name="results_are_consistent"/>
+  </testsuite>
+  <testsuite name="print.summary.seroincidence.by" timestamp="2025-03-21T20:57:28Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.86">
+    <testcase time="0.859999999999999" classname="print.summary.seroincidence.by" name="print_method_works_consistently"/>
+  </testsuite>
+  <testsuite name="serocalculator_example" timestamp="2025-03-21T20:57:28Z" hostname="XPS8950" tests="2" skipped="0" failures="0" errors="0" time="0.04">
+    <testcase time="0.0200000000000031" classname="serocalculator_example" name="_serocalculator_example_works"/>
+    <testcase time="0.019999999999996" classname="serocalculator_example" name="_serocalculator_example_works"/>
+  </testsuite>
+  <testsuite name="set_biomarker_var" timestamp="2025-03-21T20:57:28Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.01">
+    <testcase time="0.00999999999999801" classname="set_biomarker_var" name="_set_biomarker_var_halts_on_misspecified_column"/>
+  </testsuite>
+  <testsuite name="set_id" timestamp="2025-03-21T20:57:28Z" hostname="XPS8950" tests="2" skipped="0" failures="0" errors="0" time="0.09">
+    <testcase time="0.0300000000000011" classname="set_id" name="warns_when_specified_id_not_found"/>
+    <testcase time="0.0600000000000023" classname="set_id" name="aborts_when_specified_id_not_found_and_no_partial_match_found"/>
+  </testsuite>
+  <testsuite name="sim_pop_data" timestamp="2025-03-21T20:57:29Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="1.74">
+    <testcase time="1.74" classname="sim_pop_data" name="_sim_pop_data_produces_consistent_results"/>
+  </testsuite>
+  <testsuite name="sim_pop_data_multi" timestamp="2025-03-21T20:57:30Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="5.56">
+    <testcase time="5.56" classname="sim_pop_data_multi" name="_sim_pop_data_multi_works_consistently"/>
+  </testsuite>
+  <testsuite name="strata" timestamp="2025-03-21T20:57:36Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.03">
+    <testcase time="0.0300000000000011" classname="strata" name="results_are_consistent"/>
+  </testsuite>
+  <testsuite name="stratify_data" timestamp="2025-03-21T20:57:36Z" hostname="XPS8950" tests="4" skipped="0" failures="0" errors="0" time="0.21">
+    <testcase time="0.109999999999999" classname="stratify_data" name="stratify_data_produces_consistent_results"/>
+    <testcase time="0.0200000000000031" classname="stratify_data" name="stratify_data_produces_consistent_results"/>
+    <testcase time="0.0399999999999991" classname="stratify_data" name="stratify_data_produces_consistent_results_with_no_strata"/>
+    <testcase time="0.0399999999999991" classname="stratify_data" name="stratify_data_warns_about_missing_data"/>
+  </testsuite>
+  <testsuite name="summary.pop_data" timestamp="2025-03-21T20:57:36Z" hostname="XPS8950" tests="3" skipped="0" failures="0" errors="0" time="0.23">
+    <testcase time="0.0600000000000023" classname="summary.pop_data" name="_summary.pop_data_produces_an_error_when_wrong_stratification_is_provided"/>
+    <testcase time="0.0799999999999983" classname="summary.pop_data" name="_summary.pop_data_produces_stable_results_when_strata_NULL_"/>
+    <testcase time="0.0899999999999963" classname="summary.pop_data" name="_summary.pop_data_produces_stable_results_with_stratification"/>
+  </testsuite>
+  <testsuite name="summary.seroincidence.by" timestamp="2025-03-21T20:57:36Z" hostname="XPS8950" tests="1" skipped="0" failures="0" errors="0" time="0.94">
+    <testcase time="0.940000000000005" classname="summary.seroincidence.by" name="_summary.seroincidence.by_produces_consistent_results"/>
+  </testsuite>
+  <testsuite name="warn_missing_strata" timestamp="2025-03-21T20:57:37Z" hostname="XPS8950" tests="2" skipped="0" failures="0" errors="0" time="0.14">
+    <testcase time="0.0599999999999952" classname="warn_missing_strata" name="_test_missing_strata_errors_on_absent_strata"/>
+    <testcase time="0.0800000000000054" classname="warn_missing_strata" name="_test_missing_strata_warns_on_missing_strata_vars"/>
+  </testsuite>
+</testsuites>

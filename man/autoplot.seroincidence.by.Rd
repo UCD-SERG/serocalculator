@@ -14,7 +14,8 @@
 \item{...}{
   Arguments passed on to \code{\link[=autoplot.seroincidence]{autoplot.seroincidence}}
   \describe{
-    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE})
+or linear scale (\code{FALSE}, default)?}
   }}
 }
 \value{

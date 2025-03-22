@@ -21,7 +21,7 @@ start <- .05
 # Estimate incidence
 fit <- estimate_scr(
   pop_data = xs_data,
-  curve_param = curve,
+  sr_params = curve,
   noise_param = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )

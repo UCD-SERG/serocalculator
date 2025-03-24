@@ -12,9 +12,9 @@
 #' @examples
 #' sees_pop_data_pk_100 |> count_strata(strata_varnames = "catchment")
 count_strata <- function(
-    data,
-    strata_varnames,
-    biomarker_names_var = get_biomarker_names_var(data)
+  data,
+  strata_varnames,
+  biomarker_names_var = get_biomarker_names_var(data)
 ) {
   to_return <-
     data  |>

@@ -2,6 +2,7 @@
 
 ## New features
 
+* added documentation for `count_strata()` (#431)
 * Rename  `as_curve_params()` to `as_sr_params()` (#421)
 * Rename `load_curve_params()` to `load_sr_params()` (#421)
 * added default for `xvar` in `"scatter"` option for `autoplot.seroincidence.by()` (#417)

@@ -20,7 +20,7 @@ colnames to stratify on from \code{data}}
 of \code{data} indicating which biomarker is being measured}
 }
 \value{
-a \link[tibble:tbl]{tibble::tbl} counting observations by stratum
+a \link[tibble:tbl_df-class]{tibble::tbl_df} counting observations by stratum
 }
 \description{
 Count observations by stratum

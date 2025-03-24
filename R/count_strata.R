@@ -6,7 +6,7 @@
 #' @param biomarker_names_var a [character] string indicating the column
 #' of `data` indicating which biomarker is being measured
 #'
-#' @returns a [tibble::tbl] counting observations by stratum
+#' @returns a [tibble::tbl_df] counting observations by stratum
 #' @export
 #' @keywords internal
 #' @examples

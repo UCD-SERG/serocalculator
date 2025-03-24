@@ -264,7 +264,7 @@ We can estimate incidence with `estimate_scr()`:
 ```{r "est.incidence"}
 est1 <- estimate_scr(
   pop_data = csdata,
-  curve_params = dmcmc,
+  sr_params = dmcmc,
   noise_params = cond,
   lambda_start = .1,
   build_graph = TRUE,

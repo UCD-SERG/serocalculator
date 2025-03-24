@@ -30,7 +30,8 @@
 #'
 #'
 #' @inheritParams estimate_scr
-#' @inheritDotParams estimate_scr
+#' @inheritParams log_likelihood
+#' @inheritDotParams estimate_scr -sr_params
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return
@@ -50,7 +51,7 @@
 #'   sees_pop_data_pk_100
 #'
 #' curve <-
-#'   typhoid_curves_nostrat_100 %>%
+#'   typhoid_curves_nostrat_100 |>
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
 #' noise <-
@@ -75,8 +76,8 @@ estimate_scr_by <- function(
     strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    antigen_isos = pop_data %>%
-      pull("antigen_iso") %>%
+    antigen_isos = pop_data |>
+      pull("antigen_iso") |>
       unique(),
     lambda_start = 0.1,
     build_graph = FALSE,
@@ -108,7 +109,7 @@ estimate_scr_by <- function(
     to_return <-
       estimate_scr(
         pop_data = pop_data,
-        curve_params = curve_params,
+        sr_params = curve_params,
         noise_params = noise_params,
         lambda_start = lambda_start,
         antigen_isos = antigen_isos,
@@ -130,15 +131,15 @@ estimate_scr_by <- function(
   # Split data per stratum
   stratum_data_list <- stratify_data(
     antigen_isos = antigen_isos,
-    data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
-    curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
-    noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
+    data = pop_data |> filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = curve_params |> filter(.data$antigen_iso %in% antigen_isos),
+    noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames
   )
 
-  strata_table <- stratum_data_list %>% attr("strata")
+  strata_table <- stratum_data_list |> attr("strata")
 
   if (verbose) {
     cli::cli_inform(
@@ -164,7 +165,7 @@ estimate_scr_by <- function(
   if (num_cores > 1L) {
     requireNamespace("parallel", quietly = FALSE)
 
-    num_cores <- num_cores %>% check_parallel_cores()
+    num_cores <- num_cores |> check_parallel_cores()
 
     if (verbose) {
       cli::cli_inform("Setting up parallel processing with
@@ -173,8 +174,8 @@ estimate_scr_by <- function(
 
     lib_paths <- .libPaths()
     cl <-
-      num_cores %>%
-      parallel::makeCluster() %>%
+      num_cores |>
+      parallel::makeCluster() |>
       suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
@@ -226,7 +227,7 @@ estimate_scr_by <- function(
 
       for (cur_stratum in names(stratum_data_list)) {
         cur_stratum_vars <-
-          strata_table %>%
+          strata_table |>
           dplyr::filter(.data$Stratum == cur_stratum)
 
         if (verbose) {
@@ -263,7 +264,7 @@ estimate_scr_by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.by" %>% union(class(fits))
+    class = "seroincidence.by" |> union(class(fits))
   )
 
   return(incidence_data)
@@ -279,7 +280,7 @@ estimate_scr_by <- function(
 #' @keywords internal
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
-  ...) {
+    ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence.by()", "estimate_scr_by()")
   estimate_scr_by(
     ...

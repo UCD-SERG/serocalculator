@@ -217,8 +217,8 @@ Using the function `est.incidence`, we filter to sites in Pakistan and define th
 
 est1 <- estimate_scr(
   pop_data = xs_data |> filter(Country == "Pakistan"),
-  curve_param = curves,
-  noise_param = noise |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 

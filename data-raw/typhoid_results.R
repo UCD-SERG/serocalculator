@@ -5,11 +5,11 @@ xs_data <- load_pop_data(
   value = "result",
   id = "index_id",
   standardize = TRUE
-) %>%
+) |>
   filter(Country == "Pakistan")
 
 # get noise data
-noise <- load_noise_params("https://osf.io/download//hqy4v/") %>%
+noise <- load_noise_params("https://osf.io/download//hqy4v/") |>
   filter(Country == "Pakistan")
 
 # get curve data
@@ -21,20 +21,21 @@ start <- .05
 # Estimate incidence
 fit <- estimate_scr(
   pop_data = xs_data,
-  curve_param = curve,
+  sr_params = curve,
   noise_param = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 )
 
-typhoid_results <- fit %>%
+typhoid_results <- fit |>
   summary.seroincidence(
     coverage = .95,
     start = start
-  ) %>%
+  ) |>
   mutate(
     ageCat = NULL,
     antigen.iso = paste(collapse = "+", "HlyE_IgG")
-  ) %>%
+  ) |>
   structure(noise.parameters = noise)
 
-saveRDS(object = typhoid_results,file = "tests/testthat/fixtures/typhoid_results.rds")
+saveRDS(object = typhoid_results,
+        file = "tests/testthat/fixtures/typhoid_results.rds")

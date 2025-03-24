@@ -1,0 +1,43 @@
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+name: "Documentation check"
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::roxygen2
+          needs: roxygen2
+
+      - name: Document
+        run: roxygen2::roxygenise()
+        shell: Rscript {0}
+
+      - name: Check for changed files
+        run: |
+          git add --all
+          changes=$(git diff-index HEAD --name-only -- man/ NAMESPACE DESCRIPTION)
+          if [ -n "$changes" ]; then
+            echo "Changes found after documenting."
+            git --no-pager diff
+            echo "$changes"
+            echo "Please update documentation."
+            exit 1
+          else
+            echo "No changes found after documenting."
+            exit 0
+          fi

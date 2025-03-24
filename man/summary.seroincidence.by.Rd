@@ -7,52 +7,80 @@
 \method{summary}{seroincidence.by}(
   object,
   confidence_level = 0.95,
-  showDeviance = TRUE,
-  showConvergence = TRUE,
+  show_deviance = TRUE,
+  show_convergence = TRUE,
+  verbose = FALSE,
   ...
 )
 }
 \arguments{
-\item{object}{A dataframe containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
+\item{object}{A dataframe containing output of function \code{\link[=estimate_scr_by]{estimate_scr_by()}}.}
 
 \item{confidence_level}{desired confidence interval coverage probability}
 
-\item{showDeviance}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting deviance
-(-2*log(likelihood) at estimated seroincidence. Default = \code{TRUE}.}
+\item{show_deviance}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting deviance
+(-2*log(likelihood) at estimated seroincidence.
+Default = \code{TRUE}.}
 
-\item{showConvergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence (see
-help for \code{\link[=optim]{optim()}} for details). Default = \code{FALSE}.}
+\item{show_convergence}{Logical flag (\code{FALSE}/\code{TRUE}) for reporting convergence
+(see help for \code{\link[=optim]{optim()}} for details).
+Default = \code{FALSE}.}
+
+\item{verbose}{a \link{logical}
+scalar indicating whether to print verbose messages to the console}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
-A \code{summary.seroincidence.by} object, which is a \link[tibble:tibble]{tibble::tibble}, with the following columns:
+A \code{summary.seroincidence.by} object, which is a \link[tibble:tibble]{tibble::tibble},
+with the following columns:
 \itemize{
 \item \code{incidence.rate} maximum likelihood estimate of \code{lambda} (seroincidence)
 \item \code{CI.lwr} lower confidence bound for lambda
 \item \code{CI.upr} upper confidence bound for lambda
-\item \code{Deviance} (included if \code{showDeviance = TRUE}) Negative log likelihood (NLL) at estimated (maximum likelihood)
-\code{lambda})
-\itemize{
-\item \code{nlm.convergence.code} (included if \code{showConvergence = TRUE}) Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
-The object also has the following metadata (accessible through \code{\link[base:attr]{base::attr()}}):
+\item \code{Deviance} (included if \code{show_deviance = TRUE})
+Negative log likelihood (NLL) at estimated (maximum likelihood) \code{lambda})
+\item \code{nlm.convergence.code} (included if \code{show_convergence = TRUE})
+Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
 }
-\item \code{antigen_isos} Character vector with names of input antigen isotypes used in \code{\link[=est.incidence.by]{est.incidence.by()}}
-\item \code{Strata} Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}
+
+The object also has the following metadata
+(accessible through \code{\link[base:attr]{base::attr()}}):
+\itemize{
+\item \code{antigen_isos}
+Character vector with names of input antigen isotypes
+used in \code{\link[=estimate_scr_by]{estimate_scr_by()}}
+\item \code{Strata} Character with names of strata used in \code{\link[=estimate_scr_by]{estimate_scr_by()}}
 }
 }
 \description{
 Calculate seroincidence from output of the seroincidence calculator
-\code{\link[=est.incidence.by]{est.incidence.by()}}.
+\code{\link[=estimate_scr_by]{estimate_scr_by()}}.
 }
 \examples{
+library(dplyr)
 
-\dontrun{
+xs_data <-
+  sees_pop_data_pk_100
+
+curve <-
+  typhoid_curves_nostrat_100 |>
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
 # estimate seroincidence
-seroincidence <- est.incidence.by(...)
+est2 <- estimate_scr_by(
+  strata = c("catchment"),
+  pop_data = xs_data,
+  curve_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  # num_cores = 8 # Allow for parallel processing to decrease run time
+)
 
 # calculate summary statistics for the seroincidence object
-seroincidenceSummary <- summary(seroincidence)
-}
+summary(est2)
 
 }

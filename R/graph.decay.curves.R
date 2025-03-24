@@ -1,119 +1,96 @@
-#' Graph an antibody decay curve model
+#' @title Graph an antibody decay curve model
 #'
-#' @param curve_params [data.frame()] of curve parameters (one or more MCMC samples)
+#' @param object a [data.frame()] of curve parameters (one or more MCMC samples)
 #' @param verbose verbose output
 #' @param xlim range of x values to graph
 #' @param n_curves how many curves to plot (see details).
-#' @param rows_to_graph which rows of `curve_params` to plot (overrides `n_curves`).
-#' @param alpha (passed to [ggplot2::geom_function()]) how transparent the curves should be:
+#' @param n_points Number of points to interpolate along the x axis
+#' (passed to [ggplot2::geom_function()])
+#' @param rows_to_graph which rows of `curve_params` to plot
+#' (overrides `n_curves`).
+#' @param alpha (passed to [ggplot2::geom_function()])
+#' how transparent the curves should be:
 #' * 0 = fully transparent (invisible)
-#' * 1 = fully opaque (no transparency)
+#' * 1 = fully opaque
+#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`)
+#' or linear scale (`FALSE`, default)?
+#' @param log_y should the Y-axis be on a logarithmic scale
+#' (default, `TRUE`) or linear scale (`FALSE`)?
 #' @inheritParams ggplot2::geom_function
+#' @inheritDotParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
-#' @export
 #' @details
 #' ## `n_curves` and `rows_to_graph`
-#' In most cases, `curve_params` will contain too many rows of MCMC samples for all of these samples to be plotted at once.
-#' * Setting the  `n_curves` argument to a value smaller than the number of rows in `curve_params` will cause this function to randomly select (without replacement) a subset of `n_curves` rows to graph.
-#' * Setting `n_curves` larger than the number of rows in ` will result all curves being plotted.
-#' * If the user directly specifies the `rows_to_graph` argument, then `n_curves` has no effect.
+#' In most cases, `curve_params` will contain too many rows of MCMC
+#' samples for all of these samples to be plotted at once.
+#' * Setting the  `n_curves` argument to a value smaller than the
+#' number of rows in `curve_params` will cause this function to select
+#' the first `n_curves` rows to graph.
+#' * Setting `n_curves` larger than the number of rows in ` will
+#' result all curves being plotted.
+#' * If the user directly specifies the `rows_to_graph` argument,
+#' then `n_curves` has no effect.
 #' @examples
-#' \dontrun{
-#' curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
-#' plot1 = graph.curve.params(curve_params)
-#' print(plot1)
+#' \donttest{
+#' library(dplyr) # loads the `%>%` operator and `dplyr::filter()`
+#'
+#' curve <-
+#'   typhoid_curves_nostrat_100 %>%
+#'   filter(antigen_iso == ("HlyE_IgG")) %>%
+#'   serocalculator:::plot_curve_params_one_ab()
+#'
+#'   curve
 #' }
-graph.decay.curves = function(
-    curve_params,
+#' @keywords internal
+plot_curve_params_one_ab <- function(
+    object,
     verbose = FALSE,
     alpha = .4,
     n_curves = 100,
-    rows_to_graph = sample.int(
-      n = nrow(curve_params),
-      size = min(n_curves, nrow(curve_params)),
-      replace = FALSE
-    ),
-    xlim = c(10^-1, 10^3.1),
-    ...)
-{
-
-  bt <- function(y0, y1, t1)
-  {
-    to_return = try(log(y1 / y0) / t1 )
-    # if(inherits(to_return, "try-error")) browser()
-    return(to_return)
-  }
-
-  # uses r > 1 scale for shape
-  ab0 <- function(
-    t,
-    curve_params)
-
-  {
-
-    y0 = curve_params[["y0"]]
-    y1 = curve_params[["y1"]]
-    t1 = curve_params[["t1"]]
-    alpha = curve_params[["alpha"]]
-    shape = curve_params[["r"]]
-
-    beta <- bt(y0, y1, t1)
-
-    yt <- 0
-
-    yt_1 = y0 * exp(beta * t)
-    yt_2 = (y1 ^ (1 - shape) - (1 - shape) * alpha * (t - t1)) ^ (1 / (1 - shape))
-    yt = if_else(t <= t1, yt_1, yt_2)
-    return(yt)
-
-  }
-
-  # ab = Vectorize(ab, vectorize.args = "t")
-
-  plot1 =
+    n_points = 1000,
+    log_x = FALSE,
+    log_y = TRUE,
+    rows_to_graph = seq_len(min(n_curves, nrow(object))),
+    xlim = c(10 ^ -1, 10 ^ 3.1),
+    ...) {
+  plot1 <-
     ggplot2::ggplot() +
-    ggplot2::xlim(xlim) +
-    ggplot2::scale_y_log10(
-      # limits = c(0.9, 2000),
-      breaks = c(1, 10, 100, 1000),
-      minor_breaks = NULL
-    ) +
     # ggplot2::scale_x_log10() +
-    ggplot2::theme_minimal()  +
-    ggplot2::theme(
-      axis.line = ggplot2::element_line()) +
-    ggplot2::labs(
-      x = "Days since fever onset",
-      y = "ELISA units")
+    ggplot2::theme_linedraw() +
+    ggplot2::theme(axis.line = ggplot2::element_line()) +
+    ggplot2::labs(x = "Days since fever onset", y = "Antibody concentration") +
+    ggplot2::ggtitle("Antibody Response Curve") +
+    ggplot2::theme(plot.title =
+                   ggplot2::element_text(size = 20, face = "bold"))
 
-  layer_function = function(cur_row)
-  {
-    cur_params = curve_params[cur_row, ]
-    ggplot2::geom_function(
-        alpha = alpha,
-        # aes(color = cur_row),
-        fun = function(x) ab0(x, curve_params = cur_params))
+  if (log_y) {
+    plot1 <-
+      plot1 +
+      ggplot2::scale_y_log10(labels = scales::label_comma(),
+                             minor_breaks = NULL)
   }
 
+  layer_function <- function(cur_row) {
+    cur_params <- object[cur_row, ]
+    ggplot2::geom_function(
+      alpha = alpha,
+      fun = ab0,
+      args = list(curve_params = cur_params),
+      n = n_points,
+      ...)
+  }
 
+  layers <-
+    lapply(X = rows_to_graph, FUN = layer_function)
 
-  layers =
-    lapply(
-      X = rows_to_graph,
-      F = layer_function)
+  plot1 <- plot1 + layers
 
-  plot1 = plot1 + layers
+  if (log_x) {
+    plot1 <- plot1 +
+      ggplot2::scale_x_log10(limits = xlim, labels = scales::label_comma())
+  } else {
+    plot1 <- plot1 + ggplot2::xlim(xlim)
+  }
 
   return(plot1)
 }
-
-
-# ggplot() +
-#   geom_line(data = serocourse.all, aes(x= t, y = res, group = iter)) +
-#   facet_wrap(~antigen_iso, ncol=2) +
-#   scale_y_log10(limits = c(0.9, 2000), breaks = c(1, 10, 100, 1000), minor_breaks = NULL) +
-#   theme_minimal()  +
-#   theme(axis.line=element_line()) +
-#   labs(x="Days since fever onset", y="ELISA units")
-
-# mcmc |> ungroup() |> slice_head(by = antigen_iso, n = 10) |> droplevels() |> graph.decay.curves(alpha  = .4) |> print()

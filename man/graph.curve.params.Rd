@@ -7,7 +7,10 @@
 graph.curve.params(
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
-  verbose = FALSE
+  verbose = FALSE,
+  show_quantiles = TRUE,
+  show_all_curves = FALSE,
+  alpha_samples = 0.3
 )
 }
 \arguments{
@@ -16,6 +19,13 @@ graph.curve.params(
 \item{antigen_isos}{antigen isotypes}
 
 \item{verbose}{verbose output}
+
+\item{show_quantiles}{whether to show point-wise (over time) quantiles}
+
+\item{show_all_curves}{whether to show individual curves under quantiles}
+
+\item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
+(has no effect if \code{show_all_curves = FALSE})}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
@@ -24,9 +34,15 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Graph estimated antibody decay curve
 }
 \examples{
-\dontrun{
-curve_params = readRDS(url("https://osf.io/download/rtw5k/"))
-plot1 = graph.curve.params(curve_params)
+curve <-
+  typhoid_curves_nostrat_100 |>
+  dplyr::filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
+
+plot1 <- graph.curve.params(curve)
+
 print(plot1)
-}
+
+plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
+show(plot2)
+
 }

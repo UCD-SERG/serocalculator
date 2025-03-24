@@ -60,6 +60,14 @@ Epidemiology and Infection 133, no. 4 (August 1, 2005): 737--48.
 Epidemiology and Infection 129, no. 3 (December 10, 2002):479. doi:10.1017/S0950268802007896.
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/UCD-SERG/serocalculator}
+  \item \url{https://ucd-serg.github.io/serocalculator/}
+}
+
+}
 \author{
 \itemize{
 \item Peter Teunis \email{p.teunis@emory.edu}

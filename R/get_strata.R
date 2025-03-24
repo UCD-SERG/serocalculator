@@ -1,3 +1,12 @@
+#' Count observations by stratum
+#'
+#' @param data
+#' @param strata_varnames
+#'
+#' @return a [tibble::tbl]
+#' @export
+#'
+#' @examples
 count.strata = function(data, strata_varnames)
 {
   to_return =

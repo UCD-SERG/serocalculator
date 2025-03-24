@@ -1,3 +1,16 @@
+#' Count observations by stratum
+#'
+#' @param data a `"pop_data"` object (e.g., from [as_pop_data()])
+#' @param strata_varnames a [vector] of [character] strings matching
+#' colnames to stratify on from `data`
+#' @param biomarker_names_var a [character] string indicating the column
+#' of `data` indicating which biomarker is being measured
+#'
+#' @returns a [tibble::tbl] counting observations by stratum
+#' @export
+#' @keywords internal
+#' @examples
+#' sees_pop_data_pk_100 |> count_strata(strata_varnames = "catchment")
 count_strata <- function(data,
                          strata_varnames,
                          biomarker_names_var = get_biomarker_names_var(data)

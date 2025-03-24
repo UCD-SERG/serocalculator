@@ -107,7 +107,7 @@ estimate_scr <- function(
   }
 
   if (verbose) {
-    message("nrow(sr_params) = ", nrow(sr_params))
+    cli::cli_inform(c(i = "nrow(sr_params) = {nrow(sr_params)}"))
   }
 
   if (nrow(noise_params) != length(antigen_isos)) {

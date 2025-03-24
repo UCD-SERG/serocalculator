@@ -24,7 +24,7 @@
         noise_param = example_noise_params_pk, antigen_isos = c("HlyE_IgG",
           "HlyE_IgA"), verbose = TRUE)
     Message
-      nrow(curve_params) = 200
+      i nrow(sr_params) = 200
       Initial negative log-likelihood: 533.379886031329
       about to call `nlm()`
     Output

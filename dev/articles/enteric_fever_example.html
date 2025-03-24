@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9043</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9045</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -392,8 +392,8 @@ isotypes, but users can add additional pairs if available.</p>
 <span></span>
 <span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/estimate_scr.html">estimate_scr</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
-<span>  curve_param <span class="op">=</span> <span class="va">curves</span>,</span>
-<span>  noise_param <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>

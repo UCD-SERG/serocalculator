@@ -1,4 +1,4 @@
-# estimate_scr() produces expected results for typhoid data
+# est_seroincidence() produces expected results for typhoid data
 
     Code
       summary(typhoid_results, coverage = 0.95)
@@ -20,7 +20,7 @@
 # verbose output is consistent
 
     Code
-      estimate_scr(pop_data = sees_pop_data_pk_100, sr_param = typhoid_curves_nostrat_100,
+      est_seroincidence(pop_data = sees_pop_data_pk_100, sr_param = typhoid_curves_nostrat_100,
         noise_param = example_noise_params_pk, antigen_isos = c("HlyE_IgG",
           "HlyE_IgA"), verbose = TRUE)
     Message

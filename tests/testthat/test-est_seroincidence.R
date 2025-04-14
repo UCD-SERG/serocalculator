@@ -1,5 +1,5 @@
-test_that("estimate_scr() produces expected results for typhoid data", {
-  typhoid_results <- estimate_scr(
+test_that("est_seroincidence() produces expected results for typhoid data", {
+  typhoid_results <- est_seroincidence(
     pop_data = sees_pop_data_pk_100,
     sr_param = typhoid_curves_nostrat_100,
     noise_param = example_noise_params_pk,
@@ -16,14 +16,14 @@ test_that(
   "`estimate_scr()` produces consistent results
           regardless of whether data colnames are standardized.",
   {
-    est_true <- estimate_scr(
+    est_true <- est_seroincidence(
       pop_data = sees_pop_data_pk_100,
       sr_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     )
 
-    est_false <- estimate_scr(
+    est_false <- est_seroincidence(
       pop_data = sees_pop_data_pk_100_old_names,
       sr_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,
@@ -43,7 +43,7 @@ test_that(
                               width = 80,
                               digits = 8))
 
-    estimate_scr(
+    est_seroincidence(
       pop_data = sees_pop_data_pk_100,
       sr_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,

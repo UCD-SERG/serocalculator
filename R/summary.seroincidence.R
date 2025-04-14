@@ -2,7 +2,7 @@
 #' @description
 #' This function is a `summary()` method for `seroincidence` objects.
 #'
-#' @param object a [list()], outputted by [stats::nlm()] or [est_seroincidence()]
+#' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param verbose whether to produce verbose messaging
 #' @param ... unused

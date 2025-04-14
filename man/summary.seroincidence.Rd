@@ -7,7 +7,7 @@
 \method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, ...)
 }
 \arguments{
-\item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est_seroincidence]{est_seroincidence()}}}
+\item{object}{a \code{\link[=list]{list()}} outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est_seroincidence]{est_seroincidence()}}}
 
 \item{coverage}{desired confidence interval coverage probability}
 

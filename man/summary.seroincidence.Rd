@@ -7,7 +7,7 @@
 \method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, ...)
 }
 \arguments{
-\item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=estimate_scr]{estimate_scr()}}}
+\item{object}{a \code{\link[=list]{list()}}, outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est_seroincidence]{est_seroincidence()}}}
 
 \item{coverage}{desired confidence interval coverage probability}
 
@@ -25,7 +25,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 \item \code{CI.upr}: upper limit of confidence interval for incidence rate
 \item \code{coverage}: coverage probability
 \item \code{log.lik}:
-log-likelihood of the data used in the call to \code{estimate_scr()},
+log-likelihood of the data used in the call to \code{est_seroincidence()},
 evaluated at the maximum-likelihood estimate of lambda
 (i.e., at \code{incidence.rate})
 \item \code{iterations}: the number of iterations used
@@ -43,7 +43,7 @@ current iterate is probably solution.
 \item 3: Last global step failed to locate a point lower than x.
 Either x is an approximate local minimum of the function,
 the function is too non-linear for this algorithm,
-or \code{stepmin} in \code{\link[=estimate_scr]{estimate_scr()}}
+or \code{stepmin} in \code{\link[=est_seroincidence]{est_seroincidence()}}
 (a.k.a., \code{steptol} in \code{\link[stats:nlm]{stats::nlm()}}) is too large.
 \item 4: iteration limit exceeded; increase \code{iterlim}.
 \item 5: maximum step size \code{stepmax} exceeded five consecutive times.
@@ -70,7 +70,7 @@ curve <-
 noise <-
   example_noise_params_pk
 
-est1 <- estimate_scr(
+est1 <- est_seroincidence(
   pop_data = xs_data,
   sr_params = curve,
   noise_params = noise,

@@ -19,7 +19,7 @@ curve <- load_sr_params("https://osf.io/download/rtw5k/")
 start <- .05
 
 # Estimate incidence
-fit <- estimate_scr(
+fit <- est_seroincidence(
   pop_data = xs_data,
   sr_params = curve,
   noise_param = noise,

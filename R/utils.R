@@ -37,7 +37,7 @@
   if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
     stop(
       paste0(
-        "In `estimate_scr()`, the argument `antigen_isos` should be a ",
+        "In `est_seroincidence()`, the argument `antigen_isos` should be a ",
         "`character()` or `factor()` variable, but ",
         'currently, `class(antigen_isos) == "',
         class(antigen_isos),

@@ -13,7 +13,7 @@
 #' @param build_graph whether to graph the log-likelihood function across
 #' a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph
-#' in the course of running `estimate_scr()`
+#' in the course of running `est_seroincidence()`
 #' @param stepmin A positive scalar providing the minimum allowable
 #' relative step length.
 #' @param sr_params a [data.frame()] containing MCMC samples of parameters
@@ -47,7 +47,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- estimate_scr(
+#' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = sr_curve,
 #'   noise_params = noise,
@@ -68,7 +68,7 @@ est_seroincidence <- function(
     print_graph = build_graph & verbose,
     ...) {
   if (verbose > 1) {
-    message("inputs to `estimate_scr()`:")
+    message("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
   }
 

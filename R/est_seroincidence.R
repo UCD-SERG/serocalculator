@@ -239,14 +239,14 @@ est_seroincidence <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence()` was renamed to [estimate_scr()] to create a more
+#' `est.incidence()` was renamed to [est_seroincidence()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
     ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "estimate_scr()")
-  estimate_scr(
+  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
+  est_seroincidence(
     ...
   )
 }

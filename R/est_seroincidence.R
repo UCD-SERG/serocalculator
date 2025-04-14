@@ -55,7 +55,7 @@
 #' )
 #'
 #' summary(est1)
-estimate_scr <- function(
+est_seroincidence <- function(
     pop_data,
     sr_params,
     noise_params,

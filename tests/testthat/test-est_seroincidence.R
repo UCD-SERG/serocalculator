@@ -1,4 +1,4 @@
-test_that("est_seroincidence() produces expected results for typhoid data", {
+test_that("results are as expected for typhoid data", {
   typhoid_results <- est_seroincidence(
     pop_data = sees_pop_data_pk_100,
     sr_param = typhoid_curves_nostrat_100,
@@ -13,7 +13,7 @@ test_that("est_seroincidence() produces expected results for typhoid data", {
 })
 
 test_that(
-  "`estimate_scr()` produces consistent results
+  "results are consistent
           regardless of whether data colnames are standardized.",
   {
     est_true <- est_seroincidence(

@@ -199,7 +199,7 @@ estimate_scr_by <- function(
         X = stratum_data_list,
         fun = function(x) {
           do.call(
-            what = estimate_scr,
+            what = est_seroincidence,
             args = c(
               x,
               list(

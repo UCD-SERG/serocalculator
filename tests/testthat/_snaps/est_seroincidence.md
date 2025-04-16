@@ -1,4 +1,4 @@
-# est_seroincidence() produces expected results for typhoid data
+# results are as expected for typhoid data
 
     Code
       summary(typhoid_results, coverage = 0.95)

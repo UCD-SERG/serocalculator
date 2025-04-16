@@ -259,10 +259,10 @@ print(lik_both)
 
 ## estimate incidence
 
-We can estimate incidence with `estimate_scr()`:
+We can estimate incidence with `est_seroincidence()`:
 
 ```{r "est.incidence"}
-est1 <- estimate_scr(
+est1 <- est_seroincidence(
   pop_data = csdata,
   sr_params = dmcmc,
   noise_params = cond,
@@ -270,7 +270,7 @@ est1 <- estimate_scr(
   build_graph = TRUE,
   verbose = verbose,
   print_graph = FALSE, # display the log-likelihood curve while
-  #`estimate_scr()` is running
+  #`est_seroincidence()` is running
   antigen_isos = antibodies
 )
 ```
@@ -421,9 +421,9 @@ ests_summary |>
 
 Solutions to `nlm()` exit codes 3-5:
 
-* 3: decrease the `stepmin` argument to `estimate_scr()`/`estimate_scr_by()`
-* 4: increase the `iterlim` argument to `estimate_scr()`/`estimate_scr_by()`
-* 5: increase the `stepmax` argument to `estimate_scr()`/`estimate_scr_by()`
+* 3: decrease the `stepmin` argument to `est_seroincidence()`/`estimate_scr_by()`
+* 4: increase the `iterlim` argument to `est_seroincidence()`/`estimate_scr_by()`
+* 5: increase the `stepmax` argument to `est_seroincidence()`/`estimate_scr_by()`
 
 We can extract the indices of problematic strata, if there are any:
 

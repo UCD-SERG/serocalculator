@@ -2,9 +2,9 @@
 #' Print Method for `seroincidence` Class
 #'
 #' @description
-#' Custom [print()] function for `seroincidence` objects from [estimate_scr()]
+#' Custom [print()] function for `seroincidence` objects from [est_seroincidence()]
 #'
-#' @param x A list containing output of function [estimate_scr()].
+#' @param x A list containing output of function [est_seroincidence()].
 #' @param ... Additional arguments affecting the summary produced.
 #' @returns an [invisible] copy of input parameter `x`
 #' @examples
@@ -20,7 +20,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- estimate_scr(
+#' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = curve,
 #'   noise_params = noise,

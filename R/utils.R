@@ -4,7 +4,7 @@
 
 .appendNames <- function(abNames) {
   res <- c()
-  for (k in seq_along(length(abNames))) {
+  for (k in seq_along(abNames)) {
     res <- c(
       res,
       paste0(abNames[k], ".lo"),

@@ -19,6 +19,7 @@
 * Improved y-limit calculation in `graph.curve.params()` (#368)
 * Added option for `graph.curve.params()` to show all curves (#368)
 * Added color-coding for `graph.curve.params()` (#383)
+* Added `quantiles` parameter to `graph.curve.params()` and corresponding “plot4” test in `test-graph.curve.params.R` (#434)
 * Removed `warn.missing.strata()` from API (#366)
 
 * Added more details about contributing PRs in `Contributing.md` (#280)

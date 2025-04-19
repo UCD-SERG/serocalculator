@@ -8,6 +8,9 @@
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
 #' (has no effect if `show_all_curves = FALSE`)
 #' @param show_quantiles whether to show point-wise (over time) quantiles
+#' @param quantiles optional character vector of which quantiles to plot;
+#' must be a subset of `c("p10","med","p90")`; if `NULL` then controlled
+#' by `show_quantiles` (default `NULL`)
 #'
 #' @returns a [ggplot2::ggplot()] object
 #' @export
@@ -30,13 +33,23 @@ graph.curve.params <- function( # nolint: object_name_linter
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = FALSE,
-  alpha_samples = 0.3
+  alpha_samples = 0.3,
+  quantiles = NULL
 ) {
   if (verbose) {
     message(
       "Graphing curves for antigen isotypes: ",
       paste(antigen_isos, collapse = ", ")
     )
+  }
+
+  #--- Decide which quantiles to draw, if caller didn’t name them
+  if (is.null(quantiles)) {
+    if (show_quantiles) {
+      quantiles <- c("p10","med","p90")
+    } else {
+      quantiles <- character(0)
+    }
   }
 
   curve_params <- curve_params |>
@@ -205,23 +218,22 @@ graph.curve.params <- function( # nolint: object_name_linter
       labels = scales::label_comma(),
       minor_breaks = NULL
     )
-
+  #--- Only overlay the quantile lines that the user asked for:
   if (show_quantiles) {
-    plot1 <-
-      plot1 +
+    plot1 <- plot1 +
       ggplot2::geom_line(
-        ggplot2::aes(col = "median"),
-        data = serocourse_sum |> filter(.data$quantile == "med"),
+        data = serocourse_sum |> filter(quantile == "med"  & "med"  %in% quantiles),
+        aes(col = "median"),
         linewidth = 1
       ) +
       ggplot2::geom_line(
-        ggplot2::aes(col = "10% quantile"),
-        data = serocourse_sum |> filter(quantile == "p10"),
+        data = serocourse_sum |> filter(quantile == "p10"  & "p10"  %in% quantiles),
+        aes(col = "10% quantile"),
         linewidth = .5
       ) +
       ggplot2::geom_line(
-        ggplot2::aes(col = "90% quantile"),
-        data = serocourse_sum |> filter(quantile == "p90"),
+        data = serocourse_sum |> filter(quantile == "p90"  & "p90"  %in% quantiles),
+        aes(col = "90% quantile"),
         linewidth = .5
       )
   }

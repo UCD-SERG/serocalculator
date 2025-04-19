@@ -17,5 +17,12 @@ test_that(
     )
     plot3 |>
       vdiffr::expect_doppelganger(title = "curve-samples")
+    # New test: custom quantiles only
+    plot4 <- graph.curve.params(
+      curve,
+      show_quantiles = TRUE,
+      quantiles = c("med")
+    )
+    plot4 |> vdiffr::expect_doppelganger(title = "curve-custom-quantiles")
   }
 )

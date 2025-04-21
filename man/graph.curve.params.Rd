@@ -10,7 +10,8 @@ graph.curve.params(
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = FALSE,
-  alpha_samples = 0.3
+  alpha_samples = 0.3,
+  quantiles = NULL
 )
 }
 \arguments{
@@ -26,6 +27,10 @@ graph.curve.params(
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{show_all_curves = FALSE})}
+
+\item{quantiles}{optional character vector of which quantiles to plot;
+must be a subset of \code{c("p10","med","p90")}; if \code{NULL} then controlled
+by \code{show_quantiles} (default \code{NULL})}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

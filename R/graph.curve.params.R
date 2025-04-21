@@ -46,7 +46,7 @@ graph.curve.params <- function( # nolint: object_name_linter
   #--- Decide which quantiles to draw, if caller didn’t name them
   if (is.null(quantiles)) {
     if (show_quantiles) {
-      quantiles <- c("p10","med","p90")
+      quantiles <- c("p10", "med", "p90")
     } else {
       quantiles <- character(0)
     }
@@ -222,17 +222,20 @@ graph.curve.params <- function( # nolint: object_name_linter
   if (show_quantiles) {
     plot1 <- plot1 +
       ggplot2::geom_line(
-        data = serocourse_sum |> filter(quantile == "med"  & "med"  %in% quantiles),
+        data = serocourse_sum |>
+          filter(quantile == "med"  & "med"  %in% quantiles),
         aes(col = "median"),
         linewidth = 1
       ) +
       ggplot2::geom_line(
-        data = serocourse_sum |> filter(quantile == "p10"  & "p10"  %in% quantiles),
+        data = serocourse_sum |>
+          filter(quantile == "p10"  & "p10"  %in% quantiles),
         aes(col = "10% quantile"),
         linewidth = .5
       ) +
       ggplot2::geom_line(
-        data = serocourse_sum |> filter(quantile == "p90"  & "p90"  %in% quantiles),
+        data = serocourse_sum |>
+          filter(quantile == "p90"  & "p90"  %in% quantiles),
         aes(col = "90% quantile"),
         linewidth = .5
       )

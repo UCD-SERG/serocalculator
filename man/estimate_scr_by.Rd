@@ -77,10 +77,10 @@ then the computations are executed in parallel. Default = 1L.}
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{print_graph}{whether to display the log-likelihood curve graph
-in the course of running \code{estimate_scr()}}
+in the course of running \code{est_seroincidence()}}
 
 \item{...}{
-  Arguments passed on to \code{\link[=estimate_scr]{estimate_scr}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link[=est_seroincidence]{est_seroincidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
     \item{\code{stepmin}}{A positive scalar providing the minimum allowable
 relative step length.}
@@ -113,7 +113,7 @@ relative step length.}
 \itemize{
 \item if \code{strata} has meaningful inputs:
 An object of class \code{"seroincidence.by"}; i.e., a list of
-\code{"seroincidence"} objects from \code{\link[=estimate_scr]{estimate_scr()}}, one for each stratum,
+\code{"seroincidence"} objects from \code{\link[=est_seroincidence]{est_seroincidence()}}, one for each stratum,
 with some meta-data attributes.
 \item if \code{strata} is missing, \code{NULL}, \code{NA}, or \code{""}:
 An object of class \code{"seroincidence"}.
@@ -126,10 +126,10 @@ response model.
 }
 \details{
 If \code{strata} is left empty, a warning will be produced,
-recommending that you use \code{\link[=estimate_scr]{estimate_scr()}} for unstratified analyses,
-and then the data will be passed to \code{\link[=estimate_scr]{estimate_scr()}}.
+recommending that you use \code{\link[=est_seroincidence]{est_seroincidence()}} for unstratified analyses,
+and then the data will be passed to \code{\link[=est_seroincidence]{est_seroincidence()}}.
 If for some reason you want to use \code{\link[=estimate_scr_by]{estimate_scr_by()}}
-with no strata instead of calling \code{\link[=estimate_scr]{estimate_scr()}},
+with no strata instead of calling \code{\link[=est_seroincidence]{est_seroincidence()}},
 you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata}
 argument to avoid that warning.
 }

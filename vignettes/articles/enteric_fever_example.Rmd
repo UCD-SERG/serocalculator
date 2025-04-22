@@ -215,7 +215,7 @@ Using the function `est.incidence`, we filter to sites in Pakistan and define th
 ```{r est}
 # Using est.incidence (no strata)
 
-est1 <- estimate_scr(
+est1 <- est_seroincidence(
   pop_data = xs_data |> filter(Country == "Pakistan"),
   sr_params = curves,
   noise_params = noise |> filter(Country == "Pakistan"),

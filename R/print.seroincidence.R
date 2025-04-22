@@ -2,7 +2,7 @@
 #' Print Method for `seroincidence` Class
 #'
 #' @description
-#' Custom [print()] function for `seroincidence` objects from [est_seroincidence()]
+#' [print()] function for `seroincidence` objects from [est_seroincidence()]
 #'
 #' @param x A list containing output of function [est_seroincidence()].
 #' @param ... Additional arguments affecting the summary produced.

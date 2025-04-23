@@ -7,7 +7,7 @@
 #' @inheritParams stats::nlm
 #' @param pop_data a [data.frame] with cross-sectional serology data per
 #' antibody and age, and additional columns
-#' @param lambda_start starting guess for incidence rate, in years/event.
+#' @param lambda_start starting guess for incidence rate, in events/year.
 #' @param antigen_isos Character vector with one or more antibody names.
 #' Must match `pop_data`
 #' @param build_graph whether to graph the log-likelihood function across

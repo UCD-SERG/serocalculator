@@ -48,7 +48,8 @@ graph.curve.params <- function(
     log(y1 / y0) / t1
   }
 
-  ab <- function(t, y0, y1, t1, alpha, shape) {
+  # uses r > 1 scale for shape
+  ab <- function(t, y0, y1, t1, alpha, shape) { # more concise and idiomatic
     beta <- bt(y0, y1, t1)
     if (t <= t1) {
       y0 * exp(beta * t)
@@ -62,16 +63,30 @@ graph.curve.params <- function(
   # FIXED: avoid use of dot in slice() context
   dT_base <- data.frame(t = tx2) |>
     dplyr::mutate(ID = dplyr::row_number()) |>
-    tidyr::pivot_wider(names_from = "ID", values_from = "t",
+    tidyr::pivot_wider(names_from = "ID",
+                       values_from = "t",
                        names_prefix = "time")
   dT <- dT_base |>
     dplyr::slice(rep(seq_len(nrow(dT_base)), each = nrow(d)))
 
-  serocourse_all <- cbind(d, dT) |>
-    tidyr::pivot_longer(cols = dplyr::starts_with("time"), values_to = "t") |>
-    dplyr::select(-"name") |>
+  serocourse_all <-
+    cbind(d, dT) |>
+    tidyr::pivot_longer(
+      cols       = dplyr::starts_with("time"),
+      values_to  = "t"
+    ) |>
+    dplyr::select(-name) |>
     dplyr::rowwise() |>
-    dplyr::mutate(res = ab(t, y0, y1, t1, alpha, r)) |>
+    dplyr::mutate(
+      res = ab(
+        .data$t,
+        .data$y0,
+        .data$y1,
+        .data$t1,
+        .data$alpha,
+        .data$r
+      )
+    ) |>
     dplyr::ungroup()
 
   if (verbose) message("starting to compute quantiles")
@@ -91,42 +106,52 @@ graph.curve.params <- function(
       tidyr::unnest(quantiles_df)
   }
 
-  range <- serocourse_all |>
+  range <-
+    serocourse_all |>
     dplyr::summarize(
       min = min(.data$res, na.rm = TRUE),
       max = max(.data$res, na.rm = TRUE)
     )
 
   plot1 <- ggplot2::ggplot() +
-    ggplot2::aes(x = t, y = res) +
+    ggplot2::aes(x = .data$t, y = .data$res) +
     ggplot2::facet_wrap(~ antigen_iso, ncol = 2) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(
-      x = "Days since fever onset",
-      y = "ELISA units",
+      x   = "Days since fever onset",
+      y   = "ELISA units",
       col = if (show_all_curves) "MCMC chain" else NULL
     ) +
     ggplot2::theme(legend.position = "bottom")
 
+
   if (show_all_curves) {
-    group_vars <- c("iter", "chain") |> intersect(names(serocourse_all))
-    if (length(group_vars) > 1) {
-      serocourse_all <- serocourse_all |>
-        dplyr::mutate(iter =
-                        interaction(dplyr::across(dplyr::all_of(group_vars))))
-      plot1 <- plot1 +
+    group_vars <- c("iter", "chain") |>
+      intersect(names(serocourse_all))
+
+  if (length(group_vars) > 1) {
+    serocourse_all <- serocourse_all |>
+      dplyr::mutate(
+        iter = interaction(dplyr::across(dplyr::all_of(group_vars)))
+        )
+
+    plot1 <-
+        plot1 +
         ggplot2::geom_line(
           data = serocourse_all,
           alpha = alpha_samples,
-          aes(color = factor(chain), group = iter)
+          aes(
+            color = factor(.data$chain),
+            group = .data$iter
+            )
         )
     } else {
       plot1 <- plot1 +
         ggplot2::geom_line(
           data = serocourse_all,
           alpha = alpha_samples,
-          aes(group = iter)
+          aes(group = .data$iter)
         )
     }
     plot1 <- plot1 + ggplot2::expand_limits(y = unlist(range))
@@ -143,11 +168,19 @@ graph.curve.params <- function(
     plot1 <- plot1 +
       ggplot2::geom_line(
         data = serocourse_sum,
-        aes(color = paste0("q", quantile), group = quantile),
+        aes(
+          color = paste0("q", .data$quantile),
+          group = .data$quantile
+          ),
         linewidth = 0.75
-      ) +
-      ggplot2::labs(col = if_else(show_all_curves, "MCMC chain", NULL))
+      )
+
+    if (show_all_curves) {
+      plot1 <- plot1 +
+        ggplot2::labs(col = "MCMC chain")
+    }
   }
+
 
   return(plot1)
 }

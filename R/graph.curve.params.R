@@ -146,7 +146,7 @@ graph.curve.params <- function(
         aes(color = paste0("q", quantile), group = quantile),
         linewidth = 0.75
       ) +
-      ggplot2::scale_color_discrete(name = "MCMC chain")
+      ggplot2::labs(col = if_else(show_all_curves, "MCMC chain", NULL))
   }
 
   return(plot1)

@@ -8,10 +8,9 @@ graph.curve.params(
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
-  show_quantiles = TRUE,
   show_all_curves = FALSE,
   alpha_samples = 0.3,
-  quantiles = NULL
+  quantiles = c(0.1, 0.5, 0.9)
 )
 }
 \arguments{
@@ -21,16 +20,13 @@ graph.curve.params(
 
 \item{verbose}{verbose output}
 
-\item{show_quantiles}{whether to show point-wise (over time) quantiles}
-
 \item{show_all_curves}{whether to show individual curves under quantiles}
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{show_all_curves = FALSE})}
 
-\item{quantiles}{optional character vector of which quantiles to plot;
-must be a subset of \code{c("p10","med","p90")}; if \code{NULL} then controlled
-by \code{show_quantiles} (default \code{NULL})}
+\item{quantiles}{Optional numeric vector of quantiles to plot
+(e.g., \code{c(0.1, 0.5, 0.9)}). If \code{NULL}, no quantile lines are shown.}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
@@ -47,7 +43,8 @@ plot1 <- graph.curve.params(curve)
 
 print(plot1)
 
-plot2 <- graph.curve.params(curve, show_all_curves = TRUE)
-show(plot2)
+plot2 <- graph.curve.params(curve, show_all_curves = TRUE,
+quantiles = c(0.1, 0.5, 0.9))
+print(plot2)
 
 }

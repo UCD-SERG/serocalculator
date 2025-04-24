@@ -75,7 +75,7 @@ graph.curve.params <- function(
       cols       = dplyr::starts_with("time"),
       values_to  = "t"
     ) |>
-    dplyr::select(-name) |>
+    dplyr::select(-.data$name) |>
     dplyr::rowwise() |>
     dplyr::mutate(
       res = ab(
@@ -92,18 +92,21 @@ graph.curve.params <- function(
   if (verbose) message("starting to compute quantiles")
   if (!is.null(quantiles)) {
     serocourse_sum <- serocourse_all |>
-      dplyr::group_by(antigen_iso, t) |>
+      dplyr::group_by(.data$antigen_iso, .data$t) |>
       dplyr::summarise(
-        res_vals = list(res),
+        res_vals = list(.data$res),
         .groups = "drop"
       ) |>
       dplyr::mutate(
-        quantiles_df = purrr::map(res_vals, ~ tibble::tibble(
+        quantiles_df = purrr::map(
+          .data$res_vals,
+          ~ tibble::tibble(
           quantile = quantiles,
-          res = quantile(.x, probs = quantiles, na.rm = TRUE)
-        ))
-      ) |>
-      tidyr::unnest(quantiles_df)
+          res = stats::quantile(.x, probs = quantiles, na.rm = TRUE)
+        )
+      )
+    ) |>
+    tidyr::unnest(.data$quantiles_df)
   }
 
   range <-

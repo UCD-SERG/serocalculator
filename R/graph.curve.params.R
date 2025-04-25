@@ -27,12 +27,12 @@
 #' print(plot2)
 #'
 graph.curve.params <- function(
-    curve_params,
-    antigen_isos = unique(curve_params$antigen_iso),
-    verbose = FALSE,
-    show_all_curves = FALSE,
-    alpha_samples = 0.3,
-    quantiles = c(0.1, 0.5, 0.9)  # numeric, flexible
+  curve_params,
+  antigen_isos = unique(curve_params$antigen_iso),
+  verbose = FALSE,
+  show_all_curves = FALSE,
+  alpha_samples = 0.3,
+  quantiles = c(0.1, 0.5, 0.9)  # numeric, flexible
 ) {
   if (verbose) {
     message("Graphing curves for antigen isotypes: ",
@@ -61,13 +61,13 @@ graph.curve.params <- function(
   d <- curve_params
 
   # FIXED: avoid use of dot in slice() context
-  dT_base <- data.frame(t = tx2) |>
+  dT.base <- data.frame(t = tx2) |>
     dplyr::mutate(ID = dplyr::row_number()) |>
     tidyr::pivot_wider(names_from = "ID",
                        values_from = "t",
                        names_prefix = "time")
-  dT <- dT_base |>
-    dplyr::slice(rep(seq_len(nrow(dT_base)), each = nrow(d)))
+  dT <- dT.base |>
+    dplyr::slice(rep(seq_len(nrow(dT.base)), each = nrow(d)))
 
   serocourse_all <-
     cbind(d, dT) |>
@@ -75,7 +75,7 @@ graph.curve.params <- function(
       cols       = dplyr::starts_with("time"),
       values_to  = "t"
     ) |>
-    dplyr::select(-name) |>
+    dplyr::select(-.data$name) |>
     dplyr::rowwise() |>
     dplyr::mutate(
       res = ab(
@@ -101,12 +101,12 @@ graph.curve.params <- function(
         quantiles_df = purrr::map(
           .data$res_vals,
           ~ tibble::tibble(
-          quantile = quantiles,
-          res = stats::quantile(.x, probs = quantiles, na.rm = TRUE)
+            quantile = quantiles,
+            res = stats::quantile(.x, probs = quantiles, na.rm = TRUE)
         )
       )
     ) |>
-    tidyr::unnest(quantiles_df)
+    tidyr::unnest(.data$quantiles_df)
   }
 
   range <-
@@ -139,8 +139,8 @@ graph.curve.params <- function(
         dplyr::mutate(
           iter = interaction(
             dplyr::across(dplyr::all_of(group_vars))
-            )
-          )
+         )
+        )
 
       plot1 <-
         plot1 +
@@ -152,7 +152,7 @@ graph.curve.params <- function(
             group = .data$iter
           )
         )
-      } else {
+    } else {
       plot1 <-
         plot1 +
         ggplot2::geom_line(
@@ -160,10 +160,10 @@ graph.curve.params <- function(
           alpha = alpha_samples,
           aes(group = .data$iter)
         )
-      }
+    }
       plot1 <-
         plot1 + ggplot2::expand_limits(y = unlist(range))
-    }
+  }
 
   plot1 <- plot1 +
     ggplot2::scale_y_log10(
@@ -179,7 +179,7 @@ graph.curve.params <- function(
         aes(
           color = paste0("q", .data$quantile),
           group = .data$quantile
-          ),
+        ),
         linewidth = 0.75
       )
 

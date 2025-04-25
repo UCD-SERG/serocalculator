@@ -75,7 +75,7 @@ graph.curve.params <- function(# nolint: object_name_linter
       cols       = dplyr::starts_with("time"),
       values_to  = "t"
     ) |>
-    dplyr::select(-.data$name) |>
+    dplyr::select(-c("name")) |>
     dplyr::rowwise() |>
     dplyr::mutate(
       res = ab(
@@ -106,7 +106,7 @@ graph.curve.params <- function(# nolint: object_name_linter
           )
         )
       ) |>
-      tidyr::unnest(.data$quantiles_df)
+      tidyr::unnest(c("quantiles_df"))
   }
 
   range <-

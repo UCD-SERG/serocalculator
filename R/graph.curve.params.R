@@ -104,7 +104,7 @@ graph.curve.params <- function(
             quantile = quantiles,
             res = stats::quantile(.x, probs = quantiles, na.rm = TRUE)
           )
-      )
+        )
     ) |>
     tidyr::unnest(.data$quantiles_df)
   }
@@ -162,7 +162,7 @@ graph.curve.params <- function(
         )
     }
     plot1 <-
-        plot1 + ggplot2::expand_limits(y = unlist(range))
+     plot1 + ggplot2::expand_limits(y = unlist(range))
   }
 
   plot1 <- plot1 +

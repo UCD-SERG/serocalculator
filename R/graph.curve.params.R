@@ -103,7 +103,7 @@ graph.curve.params <- function(
           ~ tibble::tibble(
             quantile = quantiles,
             res = stats::quantile(.x, probs = quantiles, na.rm = TRUE)
-        )
+          )
       )
     ) |>
     tidyr::unnest(.data$quantiles_df)
@@ -139,7 +139,7 @@ graph.curve.params <- function(
         dplyr::mutate(
           iter = interaction(
             dplyr::across(dplyr::all_of(group_vars))
-         )
+          )
         )
 
       plot1 <-
@@ -161,7 +161,7 @@ graph.curve.params <- function(
           aes(group = .data$iter)
         )
     }
-      plot1 <-
+    plot1 <-
         plot1 + ggplot2::expand_limits(y = unlist(range))
   }
 

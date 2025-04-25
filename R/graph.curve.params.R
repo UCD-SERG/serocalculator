@@ -106,7 +106,7 @@ graph.curve.params <- function(
           )
         )
       ) |>
-    tidyr::unnest(.data$quantiles_df)
+      tidyr::unnest(.data$quantiles_df)
   }
 
   range <-

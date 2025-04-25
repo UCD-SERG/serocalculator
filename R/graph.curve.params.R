@@ -26,7 +26,7 @@
 #' quantiles = c(0.1, 0.5, 0.9))
 #' print(plot2)
 #'
-graph.curve.params <- function(
+graph.curve.params <- function(# nolint: object_name_linter
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
@@ -66,7 +66,7 @@ graph.curve.params <- function(
     tidyr::pivot_wider(names_from = "ID",
                        values_from = "t",
                        names_prefix = "time")
-  dT <- dT_base |>
+  dT <- dT_base |> # nolint: object_name_linter
     dplyr::slice(rep(seq_len(nrow(dT_base)), each = nrow(d)))
 
   serocourse_all <-

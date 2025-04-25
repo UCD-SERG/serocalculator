@@ -133,13 +133,16 @@ graph.curve.params <- function(
     group_vars <- c("iter", "chain") |>
       intersect(names(serocourse_all))
 
-  if (length(group_vars) > 1) {
-    serocourse_all <- serocourse_all |>
-      dplyr::mutate(
-        iter = interaction(dplyr::across(dplyr::all_of(group_vars)))
-        )
+    if (length(group_vars) > 1) {
+      serocourse_all <-
+        serocourse_all |>
+        dplyr::mutate(
+          iter = interaction(
+            dplyr::across(dplyr::all_of(group_vars))
+            )
+          )
 
-    plot1 <-
+      plot1 <-
         plot1 +
         ggplot2::geom_line(
           data = serocourse_all,
@@ -147,18 +150,20 @@ graph.curve.params <- function(
           aes(
             color = factor(.data$chain),
             group = .data$iter
-            )
+          )
         )
-    } else {
-      plot1 <- plot1 +
+      } else {
+      plot1 <-
+        plot1 +
         ggplot2::geom_line(
           data = serocourse_all,
           alpha = alpha_samples,
           aes(group = .data$iter)
         )
+      }
+      plot1 <-
+        plot1 + ggplot2::expand_limits(y = unlist(range))
     }
-    plot1 <- plot1 + ggplot2::expand_limits(y = unlist(range))
-  }
 
   plot1 <- plot1 +
     ggplot2::scale_y_log10(

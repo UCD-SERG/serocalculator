@@ -61,13 +61,13 @@ graph.curve.params <- function(
   d <- curve_params
 
   # FIXED: avoid use of dot in slice() context
-  dT.base <- data.frame(t = tx2) |>
+  dT_base <- data.frame(t = tx2) |>
     dplyr::mutate(ID = dplyr::row_number()) |>
     tidyr::pivot_wider(names_from = "ID",
                        values_from = "t",
                        names_prefix = "time")
-  dT <- dT.base |>
-    dplyr::slice(rep(seq_len(nrow(dT.base)), each = nrow(d)))
+  dT <- dT_base |>
+    dplyr::slice(rep(seq_len(nrow(dT_base)), each = nrow(d)))
 
   serocourse_all <-
     cbind(d, dT) |>

@@ -58,10 +58,10 @@ graph.curve.params <- function(
     }
   }
 
-  d <- curve_params
+  d <- curve_params  # nolint: object_name_linter
 
   # FIXED: avoid use of dot in slice() context
-  dT_base <- data.frame(t = tx2) |>
+  dT_base <- data.frame(t = tx2) |>  # nolint: object_name_linter
     dplyr::mutate(ID = dplyr::row_number()) |>
     tidyr::pivot_wider(names_from = "ID",
                        values_from = "t",

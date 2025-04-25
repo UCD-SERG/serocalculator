@@ -34,9 +34,6 @@ graph.curve.params <- function(# nolint: object_name_linter
   alpha_samples = 0.3,
   quantiles = c(0.1, 0.5, 0.9)  # numeric, flexible
 ) {
-  if (getRversion() >= "2.15.1") {
-    utils::globalVariables(c("name", "quantiles_df"))
-  }
   if (verbose) {
     message("Graphing curves for antigen isotypes: ",
             paste(antigen_isos, collapse = ", "))
@@ -78,7 +75,7 @@ graph.curve.params <- function(# nolint: object_name_linter
       cols       = dplyr::starts_with("time"),
       values_to  = "t"
     ) |>
-    dplyr::select(-name) |>
+    dplyr::select(-.data$name) |>
     dplyr::rowwise() |>
     dplyr::mutate(
       res = ab(
@@ -109,7 +106,7 @@ graph.curve.params <- function(# nolint: object_name_linter
           )
         )
       ) |>
-      tidyr::unnest(quantiles_df)
+      tidyr::unnest(.data$quantiles_df)
   }
 
   range <-

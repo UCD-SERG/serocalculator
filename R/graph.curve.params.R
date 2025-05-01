@@ -8,7 +8,7 @@
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
 #' (has no effect if `show_all_curves = FALSE`)
 #' @param quantiles Optional [numeric] [vector] of quantiles to plot
-#' (e.g., `c(0.1, 0.5, 0.9)`). If `NULL`, no quantile lines are shown.
+#' (e.g., 10%, 50%, and 90% = `c(0.1, 0.5, 0.9)`). If `NULL`, no quantile lines are shown.
 #'
 #' @returns a [ggplot2::ggplot()] object
 #' @export

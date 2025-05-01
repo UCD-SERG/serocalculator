@@ -7,7 +7,7 @@
 #' @param antigen_isos antigen isotypes
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
 #' (has no effect if `show_all_curves = FALSE`)
-#' @param quantiles Optional numeric vector of quantiles to plot
+#' @param quantiles Optional [numeric] [vector] of quantiles to plot
 #' (e.g., `c(0.1, 0.5, 0.9)`). If `NULL`, no quantile lines are shown.
 #'
 #' @returns a [ggplot2::ggplot()] object

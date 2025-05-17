@@ -11,7 +11,9 @@
 #' (e.g., 10%, 50%, and 90% = `c(0.1, 0.5, 0.9)`). If `NULL`, no quantile
 #' lines are shown.
 #'
-#' @returns a [ggplot2::ggplot()] object
+#' @returns a [ggplot2::ggplot()] object object showing the antibody dynamic
+#' kinetics of selected antigen/isotype combinations, with optional posterior
+#' distribution quantile curves.
 #' @export
 #'
 #' @examples
@@ -90,7 +92,6 @@ graph.curve.params <- function(# nolint: object_name_linter
     ) |>
     dplyr::ungroup()
 
-  if (verbose) message("starting to compute quantiles")
   if (!is.null(quantiles)) {
     serocourse_sum <- serocourse_all |>
       dplyr::group_by(.data$antigen_iso, .data$t) |>

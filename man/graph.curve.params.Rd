@@ -30,7 +30,7 @@ graph.curve.params(
 lines are shown.}
 }
 \value{
-a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object object showing the antibody dynamic
+a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object showing the antibody dynamic
 kinetics of selected antigen/isotype combinations, with optional posterior
 distribution quantile curves.
 }

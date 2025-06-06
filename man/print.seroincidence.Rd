@@ -15,7 +15,7 @@
 an \link{invisible} copy of input parameter \code{x}
 }
 \description{
-Custom \code{\link[=print]{print()}} function for \code{seroincidence} objects from \code{\link[=est_seroincidence]{est_seroincidence()}}
+\code{\link[=print]{print()}} function for \code{seroincidence} objects from \code{\link[=est_seroincidence]{est_seroincidence()}}
 }
 \examples{
 library(dplyr)

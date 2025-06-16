@@ -57,7 +57,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est2 <- estimate_scr_by(
+#' est2 <- est_seroincidence_by(
 #'   strata = "catchment",
 #'   pop_data = xs_data,
 #'   curve_params = curve,
@@ -69,7 +69,7 @@
 #' print(est2)
 #' summary(est2)
 #'
-estimate_scr_by <- function(
+est_seroincidence_by <- function(
     pop_data,
     curve_params,
     noise_params,
@@ -275,13 +275,13 @@ estimate_scr_by <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence.by()` was renamed to [estimate_scr_by()] to create a more
+#' `est.incidence.by()` was renamed to [est_seroincidence_by()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
     ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence.by()", "estimate_scr_by()")
+  lifecycle::deprecate_soft("1.4.0", "est.incidence.by()", "est_seroincidence_by()")
   estimate_scr_by(
     ...
   )

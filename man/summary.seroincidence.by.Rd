@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{object}{A dataframe containing output of function \code{\link[=estimate_scr_by]{estimate_scr_by()}}.}
+\item{object}{A dataframe containing output of function \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}.}
 
 \item{confidence_level}{desired confidence interval coverage probability}
 
@@ -49,13 +49,13 @@ The object also has the following metadata
 \itemize{
 \item \code{antigen_isos}
 Character vector with names of input antigen isotypes
-used in \code{\link[=estimate_scr_by]{estimate_scr_by()}}
-\item \code{Strata} Character with names of strata used in \code{\link[=estimate_scr_by]{estimate_scr_by()}}
+used in \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
+\item \code{Strata} Character with names of strata used in \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
 }
 }
 \description{
 Calculate seroincidence from output of the seroincidence calculator
-\code{\link[=estimate_scr_by]{estimate_scr_by()}}.
+\code{\link[=est_seroincidence_by]{est_seroincidence_by()}}.
 }
 \examples{
 library(dplyr)
@@ -71,7 +71,7 @@ noise <-
   example_noise_params_pk
 
 # estimate seroincidence
-est2 <- estimate_scr_by(
+est2 <- est_seroincidence_by(
   strata = c("catchment"),
   pop_data = xs_data,
   curve_params = curve,

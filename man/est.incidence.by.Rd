@@ -9,7 +9,7 @@ est.incidence.by(...)
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-\code{est.incidence.by()} was renamed to \code{\link[=estimate_scr_by]{estimate_scr_by()}} to create a more
+\code{est.incidence.by()} was renamed to \code{\link[=est_seroincidence_by]{est_seroincidence_by()}} to create a more
 consistent API.
 }
 \keyword{internal}

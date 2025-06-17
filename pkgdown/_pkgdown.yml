@@ -41,7 +41,7 @@ reference:
 - title: Estimate seroconversion incidence rates
   contents:
   - estimate_scr
-  - estimate_scr_by
+  - est_seroincidence_by
 - title: Summarize seroconversion incidence rate estimates
   contents:
   - summary.seroincidence

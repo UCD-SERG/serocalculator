@@ -1,7 +1,7 @@
 #' Plot `seroincidence.by` log-likelihoods
 #' @description
 #' Plots log-likelihood curves by stratum, for `seroincidence.by` objects
-#' @param object a '"seroincidence.by"' object (from [estimate_scr_by()])
+#' @param object a '"seroincidence.by"' object (from [est_seroincidence_by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams autoplot.seroincidence
 #' @return an object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
@@ -21,7 +21,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est2 <- estimate_scr_by(
+#' est2 <- est_seroincidence_by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data,
 #'   curve_params = curve,
@@ -47,7 +47,7 @@ autoplot.seroincidence.by = function(
   if (!attr(object, "graphs_included")) {
     stop(
       "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `estimate_scr_by()`"
+      "`build_graph` was not `TRUE` in the call to `est_seroincidence_by()`"
     )
     figure <- NULL
   }

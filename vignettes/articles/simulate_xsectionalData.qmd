@@ -351,7 +351,7 @@ sim_df |>
 
 ```{r, "est-by-stratum"}
 ests <-
-  estimate_scr_by(
+  est_seroincidence_by(
     pop_data = sim_df,
     curve_params = dmcmc,
     noise_params = cond,
@@ -421,9 +421,9 @@ ests_summary |>
 
 Solutions to `nlm()` exit codes 3-5:
 
-* 3: decrease the `stepmin` argument to `estimate_scr()`/`estimate_scr_by()`
-* 4: increase the `iterlim` argument to `estimate_scr()`/`estimate_scr_by()`
-* 5: increase the `stepmax` argument to `estimate_scr()`/`estimate_scr_by()`
+* 3: decrease the `stepmin` argument to `estimate_scr()`/`est_seroincidence_by()`
+* 4: increase the `iterlim` argument to `estimate_scr()`/`est_seroincidence_by()`
+* 5: increase the `stepmax` argument to `estimate_scr()`/`est_seroincidence_by()`
 
 We can extract the indices of problematic strata, if there are any:
 
@@ -491,7 +491,7 @@ sim_df_renew <-
   )
 
 ests_renew <-
-  estimate_scr_by(
+  est_seroincidence_by(
     pop_data = sim_df_renew,
     curve_params = dmcmc,
     noise_params = cond,

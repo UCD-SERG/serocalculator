@@ -253,7 +253,7 @@ test_that(
 )
 
 test_that("results are consistent with `strata = NULL`", {
-  typhoid_results_simple <- estimate_scr(
+  typhoid_results_simple <- est_seroincidence(
     pop_data = sees_pop_data_pk_100,
     sr_params = typhoid_curves_nostrat_100,
     noise_param = example_noise_params_pk,

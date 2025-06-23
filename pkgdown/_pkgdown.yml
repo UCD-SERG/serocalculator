@@ -40,7 +40,7 @@ reference:
   - log_likelihood
 - title: Estimate seroconversion incidence rates
   contents:
-  - estimate_scr
+  - est_seroincidence
   - est_seroincidence_by
 - title: Summarize seroconversion incidence rate estimates
   contents:

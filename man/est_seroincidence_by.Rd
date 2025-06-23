@@ -126,17 +126,10 @@ response model.
 }
 \details{
 If \code{strata} is left empty, a warning will be produced,
-<<<<<<< HEAD:man/est_seroincidence_by.Rd
-recommending that you use \code{\link[=estimate_scr]{estimate_scr()}} for unstratified analyses,
-and then the data will be passed to \code{\link[=estimate_scr]{estimate_scr()}}.
-If for some reason you want to use \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
-with no strata instead of calling \code{\link[=estimate_scr]{estimate_scr()}},
-=======
 recommending that you use \code{\link[=est_seroincidence]{est_seroincidence()}} for unstratified analyses,
 and then the data will be passed to \code{\link[=est_seroincidence]{est_seroincidence()}}.
-If for some reason you want to use \code{\link[=estimate_scr_by]{estimate_scr_by()}}
+If for some reason you want to use \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
 with no strata instead of calling \code{\link[=est_seroincidence]{est_seroincidence()}},
->>>>>>> main:man/estimate_scr_by.Rd
 you may use \code{NA}, \code{NULL}, or \code{""} as the \code{strata}
 argument to avoid that warning.
 }

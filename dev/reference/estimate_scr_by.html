@@ -11,7 +11,7 @@ response model."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9045</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9046</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,11 +162,11 @@ then the computations are executed in parallel. Default = 1L.</p></dd>
 
 <dt id="arg-print-graph">print_graph<a class="anchor" aria-label="anchor" href="#arg-print-graph"></a></dt>
 <dd><p>whether to display the log-likelihood curve graph
-in the course of running <code><a href="estimate_scr.html">estimate_scr()</a></code></p></dd>
+in the course of running <code><a href="est_seroincidence.html">est_seroincidence()</a></code></p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="estimate_scr.html">estimate_scr</a></code>, <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm</a></code></p><dl><dt><code>stepmin</code></dt>
+<dd><p>Arguments passed on to <code><a href="est_seroincidence.html">est_seroincidence</a></code>, <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm</a></code></p><dl><dt><code>stepmin</code></dt>
 <dd><p>A positive scalar providing the minimum allowable
 relative step length.</p></dd>
 
@@ -216,7 +216,7 @@ relative step length.</p></dd>
 
 <ul><li><p>if <code>strata</code> has meaningful inputs:
 An object of class <code>"seroincidence.by"</code>; i.e., a list of
-<code>"seroincidence"</code> objects from <code><a href="estimate_scr.html">estimate_scr()</a></code>, one for each stratum,
+<code>"seroincidence"</code> objects from <code><a href="est_seroincidence.html">est_seroincidence()</a></code>, one for each stratum,
 with some meta-data attributes.</p></li>
 <li><p>if <code>strata</code> is missing, <code>NULL</code>, <code>NA</code>, or <code>""</code>:
 An object of class <code>"seroincidence"</code>.</p></li>
@@ -224,10 +224,10 @@ An object of class <code>"seroincidence"</code>.</p></li>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If <code>strata</code> is left empty, a warning will be produced,
-recommending that you use <code><a href="estimate_scr.html">estimate_scr()</a></code> for unstratified analyses,
-and then the data will be passed to <code><a href="estimate_scr.html">estimate_scr()</a></code>.
+recommending that you use <code><a href="est_seroincidence.html">est_seroincidence()</a></code> for unstratified analyses,
+and then the data will be passed to <code><a href="est_seroincidence.html">est_seroincidence()</a></code>.
 If for some reason you want to use <code>estimate_scr_by()</code>
-with no strata instead of calling <code><a href="estimate_scr.html">estimate_scr()</a></code>,
+with no strata instead of calling <code><a href="est_seroincidence.html">est_seroincidence()</a></code>,
 you may use <code>NA</code>, <code>NULL</code>, or <code>""</code> as the <code>strata</code>
 argument to avoid that warning.</p>
     </div>
@@ -299,7 +299,7 @@ argument to avoid that warning.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
     </footer></div>

@@ -4,7 +4,7 @@
 #' @param object a '"seroincidence.by"' object (from [est_seroincidence_by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams autoplot.seroincidence
-#' @return an object of class `"ggarrange"`, which is a [ggplot2::ggplot()] or a [list()] of [ggplot2::ggplot()]s.
+#' @return a `"ggarrange"` object: a single or [list()] of [ggplot2::ggplot()]s
 #' @export
 #' @examples
 #'\donttest{
@@ -36,7 +36,7 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est2)
 #'}
-autoplot.seroincidence.by = function(
+autoplot.seroincidence.by <- function(
     object,
     ncol = min(3, length(object)),
     ...) {
@@ -55,8 +55,7 @@ autoplot.seroincidence.by = function(
   labels <- names(object)
   figs <- lapply(object, FUN = autoplot.seroincidence, ...)
 
-  for (i in 1:length(figs))
-  {
+  for (i in seq_along(figs)){
     figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 

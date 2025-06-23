@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{object}{A dataframe containing output of function \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}.}
+\item{object}{A dataframe containing output of \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}.}
 
 \item{confidence_level}{desired confidence interval coverage probability}
 

@@ -5,7 +5,7 @@
 #' Calculate seroincidence from output of the seroincidence calculator
 #' [est_seroincidence_by()].
 #'
-#' @param object A dataframe containing output of function [est_seroincidence_by()].
+#' @param object A dataframe containing output of [est_seroincidence_by()].
 #' @param verbose a [logical]
 #' scalar indicating whether to print verbose messages to the console
 #' @param ... Additional arguments affecting the summary produced.

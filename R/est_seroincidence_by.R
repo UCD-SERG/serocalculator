@@ -281,8 +281,9 @@ est_seroincidence_by <- function(
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
     ...) {
-  lifecycle::deprecate_soft("1.4.0", "est.incidence.by()", "est_seroincidence_by()")
-  estimate_scr_by(
+  lifecycle::deprecate_soft("1.4.0", "est.incidence.by()",
+                            "est_seroincidence_by()")
+  est_seroincidence_by(
     ...
   )
 }

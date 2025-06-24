@@ -33,7 +33,7 @@ noise <-
   example_noise_params_pk
 
 # estimate seroincidence
-est2 <- estimate_scr_by(
+est2 <- est_seroincidence_by(
   strata = c("catchment"),
   pop_data = xs_data,
   curve_params = curve,

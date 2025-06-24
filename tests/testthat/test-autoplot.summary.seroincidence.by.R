@@ -15,7 +15,7 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
       curve_params = curve,
@@ -70,7 +70,7 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
       curve_params = curve,
@@ -111,7 +111,7 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
       curve_params = curve,
@@ -154,7 +154,7 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
       curve_params = curve,
@@ -198,7 +198,7 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
       curve_params = curve,

@@ -3,6 +3,7 @@
 ## New features
 
 * Reorder authors to reflect author preference (#441)
+* Rename `estimate_scr_by()` to `est_seroincidence_by()` (#432)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
 * Rename argument `curve_params` to `sr_params` (#424)
 * added documentation for `count_strata()` (#431)

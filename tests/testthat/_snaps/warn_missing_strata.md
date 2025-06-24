@@ -16,7 +16,7 @@
     Condition <missing strata vars>
       Warning:
       `sees_pop_data_pk_100` is missing `place` and will only be stratified by `Country`
-      i To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `estimate_scr_by()`.
+      i To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est_seroincidence_by()`.
     Output
       [1] "Country"
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.3.0.9046</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.3.0.9048</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>a '"seroincidence.by"' object (from <code><a href="estimate_scr_by.html">estimate_scr_by()</a></code>)</p></dd>
+<dd><p>a '"seroincidence.by"' object (from <code><a href="est_seroincidence_by.html">est_seroincidence_by()</a></code>)</p></dd>
 
 
 <dt id="arg-ncol">ncol<a class="anchor" aria-label="anchor" href="#arg-ncol"></a></dt>
@@ -87,7 +87,7 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>an object of class <code>"ggarrange"</code>, which is a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> or a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> of <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code>s.</p>
+    <p>a <code>"ggarrange"</code> object: a single or <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> of <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code>s</p>
     </div>
 
     <div class="section level2">
@@ -106,7 +106,7 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
 <span class="r-in"><span><span class="va">noise</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="va">example_noise_params_pk</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="estimate_scr_by.html">estimate_scr_by</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span></span>
 <span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">curve</span>,</span></span>

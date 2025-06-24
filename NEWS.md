@@ -2,6 +2,7 @@
 
 ## New features
 
+* Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
 * Rename argument `curve_params` to `sr_params` (#424)
 * added documentation for `count_strata()` (#431)

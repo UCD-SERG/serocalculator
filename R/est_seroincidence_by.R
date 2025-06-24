@@ -23,7 +23,7 @@
 #' If `strata` is left empty, a warning will be produced,
 #' recommending that you use [est_seroincidence()] for unstratified analyses,
 #' and then the data will be passed to [est_seroincidence()].
-#' If for some reason you want to use [estimate_scr_by()]
+#' If for some reason you want to use [est_seroincidence_by()]
 #' with no strata instead of calling [est_seroincidence()],
 #' you may use `NA`, `NULL`, or `""` as the `strata`
 #' argument to avoid that warning.
@@ -57,7 +57,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est2 <- estimate_scr_by(
+#' est2 <- est_seroincidence_by(
 #'   strata = "catchment",
 #'   pop_data = xs_data,
 #'   curve_params = curve,
@@ -69,7 +69,7 @@
 #' print(est2)
 #' summary(est2)
 #'
-estimate_scr_by <- function(
+est_seroincidence_by <- function(
     pop_data,
     curve_params,
     noise_params,
@@ -275,14 +275,15 @@ estimate_scr_by <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence.by()` was renamed to [estimate_scr_by()] to create a more
+#' `est.incidence.by()` was renamed to [est_seroincidence_by()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
     ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence.by()", "estimate_scr_by()")
-  estimate_scr_by(
+  lifecycle::deprecate_soft("1.4.0", "est.incidence.by()",
+                            "est_seroincidence_by()")
+  est_seroincidence_by(
     ...
   )
 }

@@ -274,3 +274,17 @@ test_that("results are consistent with `strata = NULL`", {
   )
 
 })
+
+test_that("deprecate warning is as expected", {
+  est2 <- est.incidence.by(
+    strata = c("catchment"),
+    pop_data = sees_pop_data_pk_100,
+    curve_params = typhoid_curves_nostrat_100,
+    curve_strata_varnames= NULL,
+    noise_strata_varnames = NULL,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    build_graph = TRUE
+  ) |>
+    expect_warning()
+})

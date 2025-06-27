@@ -201,7 +201,7 @@ true_lambda <- 0.01
 
 ```{r, echo=FALSE, message=FALSE}
 # Define the function to compute statistics
-compute_statistics <- function(data, true_lambda) {
+analyze_sims <- function(data, true_lambda) {
   # Filter out rows where CI.lwr or CI.upr is Inf or NaN
   data <- data %>%
     filter(is.finite(CI.lwr) & is.finite(CI.upr))
@@ -246,10 +246,10 @@ compute_statistics <- function(data, true_lambda) {
   ))
 }
 
-statistics_50<-compute_statistics(final_table_50, true_lambda)
-statistics_100<-compute_statistics(final_table_100, true_lambda)
-statistics_150<-compute_statistics(final_table_150, true_lambda)
-statistics_200<-compute_statistics(final_table_200, true_lambda)
+statistics_50<-analyze_sims(final_table_50, true_lambda)
+statistics_100<-analyze_sims(final_table_100, true_lambda)
+statistics_150<-analyze_sims(final_table_150, true_lambda)
+statistics_200<-analyze_sims(final_table_200, true_lambda)
 
 
 # Convert the statistics lists to data frames
@@ -387,10 +387,10 @@ final_table_200_2 <- generate_final_table(results_200_2, 100)
 # Table (renew.params=FALSE)
 
 ```{r}
-statistics_50_2<-compute_statistics(final_table_50_2, true_lambda)
-statistics_100_2<-compute_statistics(final_table_100_2, true_lambda)
-statistics_150_2<-compute_statistics(final_table_150_2, true_lambda)
-statistics_200_2<-compute_statistics(final_table_200_2, true_lambda)
+statistics_50_2<-analyze_sims(final_table_50_2, true_lambda)
+statistics_100_2<-analyze_sims(final_table_100_2, true_lambda)
+statistics_150_2<-analyze_sims(final_table_150_2, true_lambda)
+statistics_200_2<-analyze_sims(final_table_200_2, true_lambda)
 
 
 # Convert the statistics lists to data frames

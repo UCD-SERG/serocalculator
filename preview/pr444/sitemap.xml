@@ -13,6 +13,7 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/index.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/news/index.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/ab.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/analyze_sims.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/as_curve_params.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/as_noise_params.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/as_pop_data.html</loc></url>
@@ -21,6 +22,7 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/autoplot.pop_data.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/autoplot.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/autoplot.seroincidence.html</loc></url>
+<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/autoplot.sim_results.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/autoplot.summary.seroincidence.by.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/baseline.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/check_pop_data.html</loc></url>
@@ -75,7 +77,6 @@
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/sim_pop_data_multi.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/simcs.tinf.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/simresp.tinf.html</loc></url>
-<url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/simulate_seroincidence.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/strat_ests_barplot.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/strat_ests_scatterplot.html</loc></url>
 <url><loc>https:/ucd-serg.github.io/serocalculator/preview/pr444/reference/strata.default.html</loc></url>

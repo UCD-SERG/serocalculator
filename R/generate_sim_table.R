@@ -2,7 +2,7 @@
 #'
 #' @param results_list output from [simulate_seroincidence()]
 #' @param sample_size sample size of simulated data sets
-#'
+#' @noRd
 #' @returns a [tibble::tbl_df]
 generate_sim_table <- function(
     results_list,

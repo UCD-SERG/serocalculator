@@ -12,7 +12,7 @@
 #' @param cond Noise parameters
 #'
 #' @returns a [list] of simulation results
-#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' simulate_seroincidence(sr_params = typhoid_curves_nostrat_100)

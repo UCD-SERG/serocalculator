@@ -15,7 +15,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
   lifespan <- c(0, 10)
 
   # Cross-sectional sample size
-  nrep <- 100
+  sample_sizes <- c(100, 50)
 
   # Biologic noise distribution
   dlims <- rbind(
@@ -26,7 +26,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
   pop_data_multi <- sim_pop_data_multi(
     curve_params = dmcmc,
     lambdas = lambdas,
-    sample_sizes = nrep,
+    sample_sizes = sample_sizes,
     age_range = lifespan,
     antigen_isos = antibodies,
     n_mcmc_samples = 0,

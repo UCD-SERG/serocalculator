@@ -52,15 +52,21 @@ sim_pop_data_multi <- function(
   # trying to reproduce results using parallel
   rng <- rngtools::RNGseq(n_sample_sizes * n_lambda * nclus, rng_seed)
 
-  # rng <- rng |>
-  #   array(
-  #     dim = c(n_sample_sizes, n_lambda, nclus),
-  #     dimnames = list(
-  #       "sample size" = sample_sizes,
-  #       "lambda" = lambdas,
-  #       "iteration" = 1:nclus
-  #     )
-  #   )
+  dimnames1 <-
+    list(
+      "iteration" = 1:nclus,
+      "lambda" = lambdas,
+      "sample size" = sample_sizes
+    )
+
+  dims1 <-
+    sapply(FUN = length, dimnames1)
+
+  rng <- rng |>
+    array(
+      dimnames = dimnames1,
+      dim = dims1
+    )
   i <- NA
   j <- 1
   r <- NA
@@ -68,15 +74,18 @@ sim_pop_data_multi <- function(
   sim_df <-
     foreach::foreach(
       .combine = bind_rows,
-      # j = seq_along(sample_sizes),
+      j = seq_along(sample_sizes)
+
+    ) %:%
+    foreach::foreach(
+      .combine = bind_rows,
       i = seq_along(lambdas)
 
     ) %:%
     foreach::foreach(
       .combine = bind_rows,
       n = 1:nclus,
-      r = rng[(i - 1) * nclus + 1:nclus]
-      # r = rng[i, j, 1:nclus]
+      r = rng[1:nclus, i, j]
     ) %dopar% {
       l <- lambdas[i]
       ns <- sample_sizes[j]
@@ -88,7 +97,7 @@ sim_pop_data_multi <- function(
       ) |>
         mutate(
           lambda.sim = l,
-          # sample_size = ns,
+          sample_size = ns,
           cluster = n
         ) |>
         structure(r = r)

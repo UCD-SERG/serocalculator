@@ -158,7 +158,7 @@ plan(sequential)  # Return to sequential processing
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 # Define a function to generate final tables
-generate_final_table <- function(results_list, sample_size) {
+generate_sim_table <- function(results_list, sample_size) {
   # Initialize an empty list to store the results
   summary_results <- list()
   
@@ -187,10 +187,10 @@ generate_final_table <- function(results_list, sample_size) {
 }
 
 # Store each sample size's summary as table
-final_table_50 <- generate_final_table(results_50, 50)
-final_table_100 <- generate_final_table(results_100, 100)
-final_table_150 <- generate_final_table(results_150, 100)
-final_table_200 <- generate_final_table(results_200, 100)
+final_table_50 <- generate_sim_table(results_50, 50)
+final_table_100 <- generate_sim_table(results_100, 100)
+final_table_150 <- generate_sim_table(results_150, 100)
+final_table_200 <- generate_sim_table(results_200, 100)
 
 # Define the true lambda
 true_lambda <- 0.01
@@ -334,10 +334,10 @@ plan(sequential)  # Return to sequential processing
 
 ```{r, echo=FALSE, message=FALSE}
 # Store each sample size's summary as table
-final_table_50_2 <- generate_final_table(results_50_2, 50)
-final_table_100_2 <- generate_final_table(results_100_2, 100)
-final_table_150_2 <- generate_final_table(results_150_2, 100)
-final_table_200_2 <- generate_final_table(results_200_2, 100)
+final_table_50_2 <- generate_sim_table(results_50_2, 50)
+final_table_100_2 <- generate_sim_table(results_100_2, 100)
+final_table_150_2 <- generate_sim_table(results_150_2, 100)
+final_table_200_2 <- generate_sim_table(results_200_2, 100)
 
 ```
 

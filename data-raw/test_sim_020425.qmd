@@ -158,7 +158,7 @@ plan(sequential)  # Return to sequential processing
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 # Define a function to generate final tables
-generate_final_table <- function(results_list, sample_size) {
+generate_sim_table <- function(results_list, sample_size) {
   # Initialize an empty list to store the results
   summary_results <- list()
   
@@ -187,10 +187,10 @@ generate_final_table <- function(results_list, sample_size) {
 }
 
 # Store each sample size's summary as table
-final_table_50 <- generate_final_table(results_50, 50)
-final_table_100 <- generate_final_table(results_100, 100)
-final_table_150 <- generate_final_table(results_150, 100)
-final_table_200 <- generate_final_table(results_200, 100)
+final_table_50 <- generate_sim_table(results_50, 50)
+final_table_100 <- generate_sim_table(results_100, 100)
+final_table_150 <- generate_sim_table(results_150, 100)
+final_table_200 <- generate_sim_table(results_200, 100)
 
 # Define the true lambda
 true_lambda <- 0.01
@@ -201,50 +201,6 @@ true_lambda <- 0.01
 
 ```{r, echo=FALSE, message=FALSE}
 # Define the function to compute statistics
-analyze_sims <- function(data, true_lambda) {
-  # Filter out rows where CI.lwr or CI.upr is Inf or NaN
-  data <- data %>%
-    filter(is.finite(CI.lwr) & is.finite(CI.upr))
-  
-  # Compute Bias (Mean - True Value, assuming true value is the mean of incidence rates)
-  true_value <- mean(data$incidence.rate, na.rm = TRUE)
-  bias <- mean(data$incidence.rate - true_value, na.rm = TRUE)
-  
-  # Standard Error (Mean of reported standard errors)
-  standard_error <- mean(data$SE, na.rm = TRUE)
-  
-  # RMSE (Root Mean Square Error)
-  rmse <- sqrt(mean((data$incidence.rate - true_value)^2, na.rm = TRUE))
-  
-  # Confidence Interval Width (Mean of Upper - Lower bounds, now without Inf values)
-  ci_width <- mean(data$CI.upr - data$CI.lwr, na.rm = TRUE)
-  
-  # CI Coverage Calculation
-  coverage_count <- data %>%
-    filter(CI.lwr <= true_lambda & CI.upr >= true_lambda) %>%
-    nrow()
-  
-  # Compute Coverage and its Confidence Interval
-  compute_coverage_ci <- function(coverage_count, total_count) {
-    test_result <- binom.test(coverage_count, total_count, conf.level = 0.95) # 95% CI
-    coverage_proportion <- coverage_count / total_count
-    ci_lower <- test_result$conf.int[1]
-    ci_upper <- test_result$conf.int[2]
-    
-    return(list(coverage = coverage_proportion, ci_lower = ci_lower, ci_upper = ci_upper))
-  }
-  
-  coverage_result <- compute_coverage_ci(coverage_count, nrow(data))
-  
-  # Return computed statistics as a list
-  return(list(
-    Bias = bias,
-    Standard_Error = standard_error,
-    RMSE = rmse,
-    CI_Width = ci_width,
-    CI_Coverage = coverage_result$coverage
-  ))
-}
 
 statistics_50<-analyze_sims(final_table_50, true_lambda)
 statistics_100<-analyze_sims(final_table_100, true_lambda)
@@ -377,10 +333,10 @@ plan(sequential)  # Return to sequential processing
 
 ```{r, echo=FALSE, message=FALSE}
 # Store each sample size's summary as table
-final_table_50_2 <- generate_final_table(results_50_2, 50)
-final_table_100_2 <- generate_final_table(results_100_2, 100)
-final_table_150_2 <- generate_final_table(results_150_2, 100)
-final_table_200_2 <- generate_final_table(results_200_2, 100)
+final_table_50_2 <- generate_sim_table(results_50_2, 50)
+final_table_100_2 <- generate_sim_table(results_100_2, 100)
+final_table_150_2 <- generate_sim_table(results_150_2, 100)
+final_table_200_2 <- generate_sim_table(results_200_2, 100)
 
 ```
 

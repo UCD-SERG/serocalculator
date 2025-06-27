@@ -104,7 +104,7 @@ plan(sequential)  # Return to sequential processing
 ## First approach
 
 # Define a function to generate final tables with all summary columns
-generate_final_table <- function(results_list, sample_size, lambda_sim) {
+generate_sim_table <- function(results_list, sample_size, lambda_sim) {
   # Initialize an empty list to store the results
   summary_results <- list()
 
@@ -131,10 +131,10 @@ generate_final_table <- function(results_list, sample_size, lambda_sim) {
 
 
 # Store each sample size's summary as table
-final_table_50_11 <- generate_final_table(results_50_11, 50, 0.01)
-final_table_50_22 <- generate_final_table(results_50_22, 50, 0.05)
-final_table_50_33 <- generate_final_table(results_50_33, 50, 0.1)
-final_table_50_44 <- generate_final_table(results_50_44, 50, 0.2)
+final_table_50_11 <- generate_sim_table(results_50_11, 50, 0.01)
+final_table_50_22 <- generate_sim_table(results_50_22, 50, 0.05)
+final_table_50_33 <- generate_sim_table(results_50_33, 50, 0.1)
+final_table_50_44 <- generate_sim_table(results_50_44, 50, 0.2)
 
 # Merge the four tables into one data frame
 table_merged_50 <- bind_rows(

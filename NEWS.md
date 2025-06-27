@@ -2,7 +2,7 @@
 
 ## New features
 
-* Extended `sim_pop_data_multi()` to loop over multiple sample sizes
+* Extended `sim_pop_data_multi()` to loop over multiple sample sizes (#444)
 * Added new functions `analyze_sims()` and `autoplot.sim_results()` (#444)
 * Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)

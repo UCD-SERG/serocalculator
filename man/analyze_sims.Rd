@@ -7,7 +7,7 @@
 analyze_sims(data)
 }
 \arguments{
-\item{data}{a \link[tibble:tibble]{tibble::tibble} with columns:
+\item{data}{a \link[tibble:tbl_df-class]{tibble::tbl_df} with columns:
 \itemize{
 \item \code{lambda.sim},
 \item \code{incidence.rate},

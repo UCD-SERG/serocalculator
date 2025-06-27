@@ -1,6 +1,6 @@
 #' Analyze simulation results
 #'
-#' @param data a [tibble::tibble] with columns:
+#' @param data a [tibble::tbl_df] with columns:
 #' * `lambda.sim`,
 #' * `incidence.rate`,
 #' * `SE`,

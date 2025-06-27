@@ -50,6 +50,7 @@ csv
 dev
 devtools
 displaystyle
+df
 dt
 eps
 estimands
@@ -114,6 +115,7 @@ serosurvey
 serosurveys
 smp
 subfigures
+tbl
 th
 tibble
 titers

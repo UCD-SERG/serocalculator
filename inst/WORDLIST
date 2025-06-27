@@ -1,5 +1,4 @@
 Aga
-ageCat
 CMD
 Chiang
 CodeFactor
@@ -39,6 +38,7 @@ Vellore
 Volterra
 al
 ast
+autoplot
 behaviour
 bioassays
 biomarker
@@ -81,6 +81,7 @@ modelled
 multicohort
 nd
 nr
+olds
 overcount
 overcounts
 overline
@@ -123,4 +124,3 @@ varepsilon
 vec
 vee
 yaml
-olds

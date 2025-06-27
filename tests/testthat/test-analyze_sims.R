@@ -11,8 +11,7 @@ test_that(
         sample_size == 50
       ) |>
       analyze_sims(
-        true_lambda = ests_summary$lambda.sim[1],
-        sample_size = ests_summary$sample_size[1]) |>
+        true_lambda = ests_summary$lambda.sim[1]) |>
       ssdtools:::expect_snapshot_data(name = "sim_results")
 
 

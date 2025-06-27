@@ -1,7 +1,13 @@
 #' Analyze simulation results
 #'
-#' @param data a tibble with
-#' @param true_lambda data-generating incidence rate
+#' @param data a [tibble::tibble] with columns:
+#' * `lambda.sim`,
+#' * `incidence.rate`,
+#' * `SE`,
+#' * `CI.lwr`,
+#' * `CI.upr`
+#' for example, as produced by [summary.seroincidence.by()] with
+#' `lambda.sim` as a stratifying variable
 #'
 #' @returns a [list]
 #' @export
@@ -9,8 +15,7 @@
 #' @examples
 analyze_sims <- function(
   data,
-  true_lambda = data |> attr("true_lambda"),
-  sample_size = data |> attr("sample_size")
+  true_lambda = data$lambda.sim
 ) {
   # Filter out rows where CI.lwr or CI.upr is Inf or NaN
   data <- data |>
@@ -48,8 +53,6 @@ analyze_sims <- function(
   coverage_result <- compute_coverage_ci(coverage_count, nrow(data))
 
   to_return <- tibble(
-    true_lambda = true_lambda,
-    Sample_Size = sample_size,
     Bias = bias,
     Mean_Est_SE = standard_error,
     Empirical_SE = sd(data$incidence.rate, na.rm = TRUE),

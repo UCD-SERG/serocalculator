@@ -45,4 +45,6 @@ ests <-
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-ests |> summary() |> readr::write_rds(file = "tests/testthat/fixtures/test_sim_results.rds")
+ests |>
+  summary() |>
+  readr::write_rds(file = "tests/testthat/fixtures/test_sim_results.rds")

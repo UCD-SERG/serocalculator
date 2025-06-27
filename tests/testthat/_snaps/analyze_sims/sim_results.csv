@@ -1,0 +1,2 @@
+true_lambda,Sample_Size,Bias,Mean_Est_SE,Empirical_SE,RMSE,Mean_CI_Width,CI_Coverage
+0.05,50,0.00320384,0.0129978,0.0134506,0.0134958,0.0529853,0.95

@@ -12,7 +12,6 @@
 #' @param cond Noise parameters
 #'
 #' @returns a [list] of simulation results
-#' @export
 #' @keywords internal
 #'
 #' @examples

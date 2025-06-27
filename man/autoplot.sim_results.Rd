@@ -30,7 +30,11 @@ autoplot method for \code{sim_results} objects
 
   # incidence rate in e
   lambdas <- c(.05, .8)
-
+  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+  dlims <- rbind(
+    "HlyE_IgA" = c(min = 0, max = 0.5),
+    "HlyE_IgG" = c(min = 0, max = 0.5)
+  )
   sim_df <-
     sim_pop_data_multi(
       n_cores = n_cores,

@@ -3,53 +3,18 @@
 #' @param nclus  number of clusters
 #' @param rng_seed starting seed for random number generator,
 #' passed to [rngtools::RNGseq()]
-#' @param lambdas #incidence rate, in events/person*year
+#' @param sample_sizes sample sizes to simulate
+#' @param lambdas incidence rate, in events/person*year
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
 #' @param ... arguments passed to [sim.cs()]
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export
-#' @examples
-#' # Load curve parameters
-#' dmcmc <- typhoid_curves_nostrat_100
-#'
-#' # Specify the antibody-isotype responses to include in analyses
-#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
-#'
-#' # Set seed to reproduce results
-#' set.seed(54321)
-#'
-#' # Simulated incidence rate per person-year
-#' lambdas = c(.05, .1, .15, .2, .3)
-#'
-#' # Range covered in simulations
-#' lifespan <- c(0, 10);
-#'
-#' # Cross-sectional sample size
-#' nrep <- 100
-#'
-#' # Biologic noise distribution
-#' dlims <- rbind(
-#'   "HlyE_IgA" = c(min = 0, max = 0.5),
-#'   "HlyE_IgG" = c(min = 0, max = 0.5)
-#' )
-#'
-#' sim_pop_data_multi(
-#'   curve_params = dmcmc,
-#'   lambdas = lambdas,
-#'   n_samples = nrep,
-#'   age_range = lifespan,
-#'   antigen_isos = antibodies,
-#'   n_mcmc_samples = 0,
-#'   renew_params = TRUE,
-#'   add_noise = TRUE,
-#'   noise_limits = dlims,
-#'   format = "long",
-#'   nclus = 10)
-#'
+#' @example inst/examples/eexm-sim_pop_data_multi.R
 sim_pop_data_multi <- function(
     nclus = 10,
+    sample_sizes = 100,
     lambdas = c(.05, .1, .15, .2, .3),
     num_cores = max(1, parallel::detectCores() - 1),
     rng_seed = 1234,
@@ -81,31 +46,52 @@ sim_pop_data_multi <- function(
   }
 
   doParallel::registerDoParallel(cores = num_cores)
-
+  n_sample_sizes <- length(sample_sizes)
   n_lambda <- length(lambdas)
 
   # trying to reproduce results using parallel
-  rng <- rngtools::RNGseq(n_lambda * nclus, rng_seed)
+  rng <- rngtools::RNGseq(n_sample_sizes * n_lambda * nclus, rng_seed)
+
+  # rng <- rng |>
+  #   array(
+  #     dim = c(n_sample_sizes, n_lambda, nclus),
+  #     dimnames = list(
+  #       "sample size" = sample_sizes,
+  #       "lambda" = lambdas,
+  #       "iteration" = 1:nclus
+  #     )
+  #   )
   i <- NA
+  j <- 1
   r <- NA
 
   sim_df <-
     foreach::foreach(
-      .combine = bind_rows,
+      # .combine = bind_rows,
+      j = seq_along(sample_sizes),
       i = seq_along(lambdas)
+
     ) %:%
     foreach::foreach(
-      .combine = bind_rows,
+      # .combine = bind_rows,
       n = 1:nclus,
       r = rng[(i - 1) * nclus + 1:nclus]
+      # r = rng[i, j, 1:nclus]
     ) %dopar% {
       l <- lambdas[i]
+      ns <- sample_sizes[j]
       rngtools::setRNG(r)
       sim_pop_data(
         lambda = l,
+        n_samples = ns,
         ...
       ) |>
-        mutate(lambda.sim = l, cluster = n)
+        mutate(
+          lambda.sim = l,
+          # sample_size = ns,
+          cluster = n
+        ) |>
+        structure(r = r)
     }
   doParallel::stopImplicitCluster()
   sim_df <- sim_df |> set_biomarker_var(biomarker = "antigen_iso")

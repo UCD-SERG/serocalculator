@@ -80,5 +80,11 @@ simulate_seroincidence <- function(
     )
   }, .options = furrr_options(seed = TRUE))
 
+  results <-
+    results |>
+    structure(
+      lambda_true = lambda,
+      sample_size = nrep)
+
   return(results)
 }

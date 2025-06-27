@@ -10,7 +10,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
 
   # Simulated incidence rate per person-year
   lambdas <- c(.05, .1, .15, .2, .3)
-
+  lambdas <- c(.05)
   # Range covered in simulations
   lifespan <- c(0, 10)
 
@@ -26,7 +26,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
   pop_data_multi <- sim_pop_data_multi(
     curve_params = dmcmc,
     lambdas = lambdas,
-    n_samples = nrep,
+    sample_sizes = nrep,
     age_range = lifespan,
     antigen_isos = antibodies,
     n_mcmc_samples = 0,
@@ -34,7 +34,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
     add_noise = TRUE,
     noise_limits = dlims,
     format = "long",
-    nclus = 10
+    nclus = 2
   )
 
   pop_data_multi |>

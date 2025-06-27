@@ -98,10 +98,10 @@ plan(sequential)  # Return to sequential processing
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 # Store each sample size's summary as table
-final_table_50 <- generate_sim_table(results_50, 50)
-final_table_100 <- generate_sim_table(results_100, 100)
-final_table_150 <- generate_sim_table(results_150, 100)
-final_table_200 <- generate_sim_table(results_200, 100)
+final_table_50 <- generate_sim_table(results_50)
+final_table_100 <- generate_sim_table(results_100)
+final_table_150 <- generate_sim_table(results_150)
+final_table_200 <- generate_sim_table(results_200)
 
 
 
@@ -113,29 +113,36 @@ final_table_200 <- generate_sim_table(results_200, 100)
 # Define the function to compute statistics
 
 
-statistics_50<-analyze_sims(final_table_50, true_lambda)
-statistics_100<-analyze_sims(final_table_100, true_lambda)
-statistics_150<-analyze_sims(final_table_150, true_lambda)
-statistics_200<-analyze_sims(final_table_200, true_lambda)
+statistics_50  <- analyze_sims(final_table_50)
+statistics_100 <- analyze_sims(final_table_100)
+statistics_150 <- analyze_sims(final_table_150)
+statistics_200 <- analyze_sims(final_table_200)
 
 
 # Convert the statistics lists to data frames
-df_50 <- as_tibble(statistics_50) |> mutate(Sample_Size = 50)
-df_100 <- as_tibble(statistics_100) |> mutate(Sample_Size = 100)
-df_150 <- as_tibble(statistics_150) |> mutate(Sample_Size = 150)
-df_200 <- as_tibble(statistics_200) |> mutate(Sample_Size = 200)
-
+df_50 <- as_tibble(statistics_50)  
+df_100 <- as_tibble(statistics_100)
+df_150 <- as_tibble(statistics_150)
+df_200 <- as_tibble(statistics_200)
 # Combine all statistics into a single table
 final_statistics_table <- bind_rows(df_50, df_100, df_150, df_200) |>
   select(Sample_Size, everything())  # Reorder to show Sample Size first
 
-# Convert Bias to scientific notation for better visibility
-final_statistics_table <- final_statistics_table |>
-  mutate(Bias = formatC(Bias, format = "e", digits = 4)) # Scientific notation
+## Convert Bias to scientific notation for better visibility
+# final_statistics_table <- final_statistics_table |>
+#   mutate(Bias = formatC(Bias, format = "e", digits = 4)) # Scientific notation
 
 ```
 
-Since some values in CI.upr and CI.lwr are Inf or extremely large due to outliers, we should filter them out before computing the statistics.
+```{r}
+final_statistics_table |> 
+  autoplot(statistic = "Standard_Error")
+  
+```
+
+
+Since some values in CI.upr and CI.lwr are Inf or extremely large due to outliers, 
+we should filter them out before computing the statistics.
 
 # Table (renew_params=TRUE)
 
@@ -218,7 +225,7 @@ kable(final_statistics_table2,
 
 ```
 
-\newpage
+{{< pagebreak >}}
 
 # Table (renew_params:TRUE vs. FALSE)
 

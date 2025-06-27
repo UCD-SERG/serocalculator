@@ -1,3 +1,13 @@
+#' Simulate seroincidence
+#'
+#' @param nrep
+#' @param n_sim
+#'
+#' @returns
+#' @export
+#' @keywords internal
+#'
+#' @examples
 simulate_seroincidence <- function(nrep, n_sim) {
   # Parameters
   dmcmc <- test_sim  # Curve parameters

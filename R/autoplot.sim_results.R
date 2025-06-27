@@ -1,15 +1,17 @@
-#' autoplot method for `sim_results` objects
+#' Plot simulation results
+#' `autoplot()` method for `sim_results` objects
 #'
 #' @param object a `sim_results` object (from [analyze_sims()])
 #' @param statistic which column of `object` should be the y-axis?
-#'
+#' @param ... unused
 #' @returns a [ggplot2::ggplot]
 #' @export
 #'
 #' @example inst/examples/exm-autoplot.sim_results.R
 autoplot.sim_results <- function(
     object,
-    statistic = "Empirical_SE")
+    statistic = "Empirical_SE",
+    ...)
 {
   object |>
     dplyr::mutate(lambda.sim = factor(lambda.sim)) |>

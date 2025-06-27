@@ -2,20 +2,24 @@
 % Please edit documentation in R/autoplot.sim_results.R
 \name{autoplot.sim_results}
 \alias{autoplot.sim_results}
-\title{autoplot method for \code{sim_results} objects}
+\title{Plot simulation results
+\code{autoplot()} method for \code{sim_results} objects}
 \usage{
-\method{autoplot}{sim_results}(object, statistic = "Empirical_SE")
+\method{autoplot}{sim_results}(object, statistic = "Empirical_SE", ...)
 }
 \arguments{
 \item{object}{a \code{sim_results} object (from \code{\link[=analyze_sims]{analyze_sims()}})}
 
 \item{statistic}{which column of \code{object} should be the y-axis?}
+
+\item{...}{unused}
 }
 \value{
 a \link[ggplot2:ggplot]{ggplot2::ggplot}
 }
 \description{
-autoplot method for \code{sim_results} objects
+Plot simulation results
+\code{autoplot()} method for \code{sim_results} objects
 }
 \examples{
 \donttest{

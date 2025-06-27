@@ -2,6 +2,7 @@
 
 ## New features
 
+* Added new functions `analyze_sims()` and `autoplot.sim_results()`
 * Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
 * Rename argument `curve_params` to `sr_params` (#424)

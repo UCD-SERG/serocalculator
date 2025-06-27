@@ -6,15 +6,11 @@ test_that(
       readr::read_rds()
 
     ests_summary |>
-      filter(
-        lambda.sim == 0.05,
-        sample_size == 50
-      ) |>
-      analyze_sims(
-        true_lambda = ests_summary$lambda.sim[1]) |>
+      dplyr::group_by(
+        lambda.sim, sample_size) |>
+      dplyr::group_map(~analyze_sims(.x), .keep = TRUE) |>
+      bind_rows() |>
       ssdtools:::expect_snapshot_data(name = "sim_results")
-
-
 
   }
 )

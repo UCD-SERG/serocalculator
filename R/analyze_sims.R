@@ -13,7 +13,17 @@
 #' @export
 #'
 #' @examples
+#'
 analyze_sims <- function(
+    data) {
+  data |>
+    dplyr::group_by(
+      lambda.sim, sample_size) |>
+    dplyr::group_map(~analyze_sims_one_stratum(.x), .keep = TRUE) |>
+    bind_rows()
+}
+
+analyze_sims_one_stratum <- function(
   data,
   true_lambda = data$lambda.sim
 ) {

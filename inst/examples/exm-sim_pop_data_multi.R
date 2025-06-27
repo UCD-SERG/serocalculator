@@ -22,7 +22,7 @@ dlims <- rbind(
   "HlyE_IgG" = c(min = 0, max = 0.5)
 )
 
-sim_pop_data_multi(
+sim_data <- sim_pop_data_multi(
   curve_params = dmcmc,
   lambdas = lambdas,
   sample_sizes = nrep,
@@ -34,3 +34,5 @@ sim_pop_data_multi(
   noise_limits = dlims,
   format = "long",
   nclus = 10)
+
+sim_data

@@ -4,12 +4,19 @@
 \alias{analyze_sims}
 \title{Analyze simulation results}
 \usage{
-analyze_sims(data, true_lambda = attr(data, "true_lambda"))
+analyze_sims(data, true_lambda = data$lambda.sim)
 }
 \arguments{
-\item{data}{a tibble with}
-
-\item{true_lambda}{data-generating incidence rate}
+\item{data}{a \link[tibble:tibble]{tibble::tibble} with columns:
+\itemize{
+\item \code{lambda.sim},
+\item \code{incidence.rate},
+\item \code{SE},
+\item \code{CI.lwr},
+\item \code{CI.upr}
+for example, as produced by \code{\link[=summary.seroincidence.by]{summary.seroincidence.by()}} with
+\code{lambda.sim} as a stratifying variable
+}}
 }
 \value{
 a \link{list}

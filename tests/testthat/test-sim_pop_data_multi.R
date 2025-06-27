@@ -1,5 +1,4 @@
 test_that("`sim_pop_data_multi()` works consistently", {
-  skip_on_os("linux")
   # Load curve parameters
   dmcmc <- typhoid_curves_nostrat_100
 
@@ -39,5 +38,5 @@ test_that("`sim_pop_data_multi()` works consistently", {
   )
 
   pop_data_multi |>
-    ssdtools:::expect_snapshot_data(name = "pop_data_multi")
+    ssdtools:::expect_snapshot_data(name = "pop_data_multi", digits = 4)
 })

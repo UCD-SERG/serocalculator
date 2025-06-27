@@ -11,15 +11,16 @@
 autoplot.sim_results <- function(
     object,
     statistic = "Empirical_SE",
-    ...)
-{
+    ...) {
   object |>
     dplyr::mutate(lambda.sim = factor(.data$lambda.sim)) |>
     ggplot2::ggplot() +
-    ggplot2::aes(x = .data$sample_size,
-        group = .data$lambda.sim,
-        col = .data$lambda.sim,
-        y = .data[[statistic]]) +
+    ggplot2::aes(
+      x = .data$sample_size,
+      group = .data$lambda.sim,
+      col = .data$lambda.sim,
+      y = .data[[statistic]]
+    ) +
     ggplot2::geom_point() +
     ggplot2::geom_line() +
     ggplot2::theme(legend.position = "bottom")

@@ -16,15 +16,13 @@
 #'
 analyze_sims <- function(
     data) {
+
   to_return <-
     data |>
-    dplyr::summarize(
-      .by = c("lambda.sim", "sample_size"),
-      analyze_sims_one_stratum(
-        data = across(everything()),
-        true_lambda = .data$lambda.sim
-      )
-    )
+    split(
+      f = ~  sample_size + lambda.sim) |>
+    lapply(FUN = analyze_sims_one_stratum) |>
+    bind_rows()
 
   class(to_return) <- union("sim_results", class(to_return))
 
@@ -33,7 +31,9 @@ analyze_sims <- function(
 
 analyze_sims_one_stratum <- function(
     data,
-    true_lambda = data$lambda.sim) {
+    true_lambda = data$lambda.sim,
+    sample_size = data$sample_size) {
+
   # Filter out rows where CI.lwr or CI.upr is Inf or NaN
   data <- data |>
     filter(is.finite(.data$CI.lwr) & is.finite(.data$CI.upr))
@@ -57,30 +57,11 @@ analyze_sims_one_stratum <- function(
   coverage_prop <-
     mean(data$CI.lwr <= true_lambda & data$CI.upr >= true_lambda, na.rm = TRUE)
 
-  # Compute Coverage and its Confidence Interval
-  compute_coverage_ci <- function(coverage_count, total_count) {
-    test_result <- stats::binom.test(
-      coverage_count,
-      total_count,
-      conf.level = 0.95
-    )
-    # 95% CI
-    coverage_proportion <- coverage_count / total_count
-    ci_lower <- test_result$conf.int[1]
-    ci_upper <- test_result$conf.int[2]
 
-    return(
-      list(
-        coverage = coverage_proportion,
-        ci_lower = ci_lower,
-        ci_upper = ci_upper
-      )
-    )
-  }
-
-  coverage_result <- compute_coverage_ci(coverage_count, nrow(data)) # nolint: object_usage_linter
 
   to_return <- tibble(
+    lambda.sim = mean(true_lambda),
+    sample_size = mean(sample_size),
     Bias = bias,
     Mean_Est_SE = standard_error,
     Empirical_SE = sd(data$incidence.rate, na.rm = TRUE),

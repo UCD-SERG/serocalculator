@@ -68,7 +68,7 @@ sim_pop_data_multi <- function(
       dim = dims1
     )
   i <- NA
-  j <- 1
+  j <- NA
   r <- NA
 
   sim_df <-

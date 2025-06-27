@@ -467,6 +467,25 @@ ests_summary |>
 
 ```
 
+---
+
+We can analyze the simulation results with `analyze_sims()`:
+
+```{r}
+ests_summary |> analyze_sims()
+```
+
+---
+
+We can graph the analysis results with an `autoplot()` method:
+
+```{r}
+
+ests_summary |> analyze_sims() |> autoplot(statistic = "Empirical_SE")
+
+```
+
+
 ## Effect of `renew_params`
 
 Setting `renew_params = TRUE` is more realistic, 

@@ -64,7 +64,7 @@ analyze_sims_one_stratum <- function(
     sample_size = mean(sample_size),
     Bias = bias,
     Mean_Est_SE = standard_error,
-    Empirical_SE = sd(data$incidence.rate, na.rm = TRUE),
+    Empirical_SE = stats::sd(data$incidence.rate, na.rm = TRUE),
     RMSE = rmse,
     Mean_CI_Width = ci_width,
     CI_Coverage = coverage_prop

@@ -14,7 +14,7 @@ autoplot.sim_results <- function(
     ...)
 {
   object |>
-    dplyr::mutate(lambda.sim = factor(lambda.sim)) |>
+    dplyr::mutate(lambda.sim = factor(.data$lambda.sim)) |>
     ggplot2::ggplot() +
     ggplot2::aes(x = .data$sample_size,
         group = .data$lambda.sim,

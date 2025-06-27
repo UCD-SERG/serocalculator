@@ -154,85 +154,21 @@ kable(final_statistics_table,
 The true lambda is 0.01 and lambda_start is 0.005.
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
-# Define the simulation function
-simulate_seroincidence2 <- function(nrep, n_sim) {
-  # Parameters
-  dmcmc <- test_sim  # Curve parameters
-  antibodies <-c("HlyE_IgA", "HlyE_IgG")
-  lambda <- 0.01  # Simulated incidence rate per person-year
-  lifespan <- c(0, 10)  # Age range
-  
-  # biologic noise distribution
-  dlims <- rbind(
-    "HlyE_IgA" = c(min = 0, max = 0.5),
-    "HlyE_IgG" = c(min = 0, max = 0.5)
-  )
-  
-  # Noise parameters
-  cond <- tibble(
-    antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
-    nu = c(0.5, 0.5),  # Biologic noise (nu)
-    eps = c(0, 0),     # Measurement noise (eps)
-    y.low = c(1, 1),   # Low cutoff (llod)
-    y.high = c(5e6, 5e6)  # High cutoff (y.high)
-  )
-  
-  # Perform simulations in parallel
-  results <- future_map(1:n_sim, function(i) {
-    # Generate cross-sectional data
-    csdata <- sim.cs(
-      curve_params = dmcmc,
-      lambda = lambda,
-      n.smpl = nrep,
-      age.rng = lifespan,
-      antigen_isos = antibodies,
-      n.mc = 0,
-      renew.params = FALSE,  # Use different parameters for each simulation
-      add.noise = TRUE,
-      noise_limits = dlims,
-      format = "long"
-    )
-    
-    # Estimate seroincidence
-    est <- est.incidence(
-      pop_data = csdata,
-      curve_params = dmcmc,
-      noise_params = cond,
-      lambda_start = 0.005,
-      build_graph = TRUE,
-      verbose = FALSE,
-      print_graph = FALSE,
-      antigen_isos = antibodies
-    )
-    
-    # Return results for this simulation
-    list(
-      csdata = csdata,
-      est1 = est
-    )
-  }, .options = furrr_options(seed = TRUE))
-  
-  return(results)
-}
-
-```
-
-```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
 ## Run simulation
 plan(multisession)  # Use multiple sessions for parallelism (local machine)
 
 # Run the simulations in parallel
 set.seed(129255)
-results_50_2 <- simulate_seroincidence2(nrep = 50, n_sim = 300)
+results_50_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 50, n_sim = 300)
 
 set.seed(129256)
-results_100_2 <- simulate_seroincidence2(nrep = 100, n_sim = 300)
+results_100_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 100, n_sim = 300)
 
 set.seed(129257)
-results_150_2 <- simulate_seroincidence2(nrep = 150, n_sim = 300)
+results_150_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 150, n_sim = 300)
 
 set.seed(129258)
-results_200_2 <- simulate_seroincidence2(nrep = 200, n_sim = 300)
+results_200_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 200, n_sim = 300)
 
 # Stop parallel processing
 plan(sequential)  # Return to sequential processing

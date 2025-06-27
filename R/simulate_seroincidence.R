@@ -2,13 +2,14 @@
 #'
 #' @param nrep
 #' @param n_sim
+#' @param renew.params
 #'
 #' @returns
 #' @export
 #' @keywords internal
 #'
 #' @examples
-simulate_seroincidence <- function(nrep, n_sim) {
+simulate_seroincidence <- function(nrep, n_sim, renew.params = TRUE) {
   # Parameters
   dmcmc <- test_sim  # Curve parameters
   antibodies <-c("HlyE_IgA", "HlyE_IgG")
@@ -40,7 +41,7 @@ simulate_seroincidence <- function(nrep, n_sim) {
       age.rng = lifespan,
       antigen_isos = antibodies,
       n.mc = 0,
-      renew.params = TRUE,  # Use different parameters for each simulation
+      renew.params = renew.params,  # Use different parameters for each simulation
       add.noise = TRUE,
       noise_limits = dlims,
       format = "long"

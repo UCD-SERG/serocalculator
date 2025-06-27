@@ -1,6 +1,8 @@
 Aga
+ageCat
 CMD
 Chiang
+CodeFactor
 Codecov
 Dhulikhel
 FIC
@@ -30,6 +32,7 @@ SeroEpidemiology
 Seroincidence
 Serological
 TW
+UC
 Unif
 Vectorized
 Vellore
@@ -42,11 +45,14 @@ biomarker
 biomarkers
 boldsymbol
 cdot
+codecov
 csv
 dev
 devtools
 displaystyle
 dt
+eps
+estimands
 et
 expf
 forall
@@ -116,3 +122,5 @@ unstratified
 varepsilon
 vec
 vee
+yaml
+olds

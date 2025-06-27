@@ -38,13 +38,13 @@ check_pop_data <- function(pop_data, verbose = FALSE) {
   }
 
   missing_value <- is.element(
-    pop_data %>% get_value_var(),
+    pop_data %>% get_values_var(),
     pop_data %>% names()
   )
 
   if (!missing_value) {
     "Argument {.arg pop_data} is missing column
-    {.var {pop_data %>% get_value_var()}} (antibody measurement)" %>%
+    {.var {pop_data %>% get_values_var()}} (antibody measurement)" %>%
       cli::cli_abort(class = "missing-var")
   }
 

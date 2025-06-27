@@ -43,7 +43,7 @@ warn_missing_strata <- function(
       "To avoid this warning,",
       "specify the desired set of stratifying variables",
       "in the `curve_strata_varnames` and",
-      "`noise_strata_varnames` arguments to `est.incidence.by()`."
+      "`noise_strata_varnames` arguments to `est_seroincidence_by()`."
     )
 
 
@@ -54,12 +54,10 @@ warn_missing_strata <- function(
   }
 
   if (length(present_strata_vars) > 0) {
-    strata2 <- data |> count_strata(present_strata_vars)
-
     missing_strata <-
       anti_join(
         strata,
-        strata2,
+        data,
         by = present_strata_vars
       ) |>
       distinct(across(all_of(present_strata_vars)))

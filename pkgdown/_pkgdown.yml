@@ -12,16 +12,22 @@ search:
   exclude: ['preview/']
 
 reference:
-- title: Prepare data
+- title: Prepare data, kinetics models, and noise parameters for analysis
   contents:
   - as_pop_data
   - load_pop_data
-  - as_curve_params
-  - load_curve_params
+  - as_sr_params
+  - load_sr_params
   - as_noise_params
   - load_noise_params
   - check_pop_data
   - strata
+- title: Extract information from data, seroresponse models, and noise parameters
+  contents:
+  - get_biomarker_levels
+  - get_biomarker_names_var
+  - get_values_var
+  - get_values
 - title: Summarize data
   contents:
   - summary.pop_data
@@ -34,8 +40,8 @@ reference:
   - log_likelihood
 - title: Estimate seroconversion incidence rates
   contents:
-  - est.incidence
-  - est.incidence.by
+  - est_seroincidence
+  - est_seroincidence_by
 - title: Summarize seroconversion incidence rate estimates
   contents:
   - summary.seroincidence
@@ -52,6 +58,7 @@ reference:
   - typhoid_curves_nostrat_100
   - example_noise_params_sees
   - example_noise_params_pk
+  - sees_typhoid_ests_strat
   - serocalculator_example
 - title: Simulate data sets
   contents:

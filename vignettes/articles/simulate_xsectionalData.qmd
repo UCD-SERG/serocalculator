@@ -75,7 +75,7 @@ library(ggbeeswarm) # for plotting
 library(dplyr)
 dmcmc <-
   "https://osf.io/download/rtw5k" |>
-  load_curve_params() |>
+  load_sr_params() |>
   dplyr::filter(iter < 500) # reduce number of mcmc samples for speed
 ```
 
@@ -173,8 +173,8 @@ csdata |>
   aes(x = as.factor(antigen_iso),
       y = value) +
   geom_beeswarm(
-    size = .2,
-    alpha = .3,
+    size = .5,
+    alpha = .5,
     aes(color = antigen_iso),
     show.legend = FALSE
   ) +
@@ -259,18 +259,18 @@ print(lik_both)
 
 ## estimate incidence
 
-We can estimate incidence with `est.incidence()`:
+We can estimate incidence with `est_seroincidence()`:
 
 ```{r "est.incidence"}
-est1 <- est.incidence(
+est1 <- est_seroincidence(
   pop_data = csdata,
-  curve_params = dmcmc,
+  sr_params = dmcmc,
   noise_params = cond,
   lambda_start = .1,
   build_graph = TRUE,
   verbose = verbose,
   print_graph = FALSE, # display the log-likelihood curve while
-  #`est.incidence()` is running
+  #`est_seroincidence()` is running
   antigen_isos = antibodies
 )
 ```
@@ -343,14 +343,15 @@ sim_df |>
   geom_boxplot(outlier.colour = NA, fill = NA) +
   scale_y_log10() +
   facet_wrap(~ antigen_iso + lambda.sim, nrow = 2) +
-  theme_linedraw()
+  theme_linedraw()  +
+  theme(legend.position = "bottom")
 ```
 
 ## Estimate incidence in each cluster
 
 ```{r, "est-by-stratum"}
 ests <-
-  est.incidence.by(
+  est_seroincidence_by(
     pop_data = sim_df,
     curve_params = dmcmc,
     noise_params = cond,
@@ -420,9 +421,9 @@ ests_summary |>
 
 Solutions to `nlm()` exit codes 3-5:
 
-* 3: decrease the `stepmin` argument to `est.incidence()`/`est.incidence.by()`
-* 4: increase the `iterlim` argument to `est.incidence()`/`est.incidence.by()`
-* 5: increase the `stepmax` argument to `est.incidence()`/`est.incidence.by()`
+* 3: decrease the `stepmin` argument to `est_seroincidence()`/`est_seroincidence_by()`
+* 4: increase the `iterlim` argument to `est_seroincidence()`/`est_seroincidence_by()`
+* 5: increase the `stepmax` argument to `est_seroincidence()`/`est_seroincidence_by()`
 
 We can extract the indices of problematic strata, if there are any:
 
@@ -452,8 +453,9 @@ Finally, we can look at our simulation results:
 
 library(ggplot2)
 ests_summary |>
-  autoplot(xvar = "lambda.sim", 
-           CI = TRUE, 
+  autoplot(type = "scatter",
+           xvar = "lambda.sim",
+           CI = TRUE,
            dodge_width = .05) +
   ggplot2::geom_function(
     fun = function(x) x,
@@ -489,7 +491,7 @@ sim_df_renew <-
   )
 
 ests_renew <-
-  est.incidence.by(
+  est_seroincidence_by(
     pop_data = sim_df_renew,
     curve_params = dmcmc,
     noise_params = cond,
@@ -511,8 +513,9 @@ ests_renew_summary <-
 ```{r, "graph_renew"}
 
 ests_renew_summary |>
-  autoplot(xvar = "lambda.sim",
-           CI = TRUE, 
+  autoplot(type = "scatter",
+           xvar = "lambda.sim",
+           CI = TRUE,
            dodge_width = .05) +
   ggplot2::geom_function(
     fun = function(x) x,

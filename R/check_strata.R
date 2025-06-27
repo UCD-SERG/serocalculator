@@ -32,16 +32,26 @@ check_strata <- function(pop_data,
     message0 <- c(
       "Can't stratify provided {.arg pop_data}
        with the provided {.arg strata}:",
-      "i" = "variable {.var {missing_strata_vars}}
+      "x" = "variable {.var {missing_strata_vars}}
              {?is/are} missing in {.arg pop_data}."
     )
 
-    partial_matches <-
-      purrr::map(missing_strata_vars, function(x) {
-        stringr::str_subset(string = names(pop_data), pattern = x) |>
+    f1 <- function(x) {
+      temp <- stringr::str_subset(string = names(pop_data), pattern = x)
+
+      if (length(temp) > 0) {
+        temp <- temp |>
           glue::backtick() |>
           and::or()
-      }) |>
+      } else {
+        temp = character()
+      }
+
+      return(temp)
+    }
+
+    partial_matches <-
+      purrr::map(missing_strata_vars, f1) |>
       rlang::set_names(missing_strata_vars) |>
       purrr::keep(~ length(.x) > 0)
 

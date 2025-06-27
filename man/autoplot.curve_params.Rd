@@ -4,40 +4,18 @@
 \alias{autoplot.curve_params}
 \title{graph antibody decay curves by antigen isotype}
 \usage{
-\method{autoplot}{curve_params}(
-  object,
-  antigen_isos = unique(object$antigen_iso),
-  ncol = min(3, length(antigen_isos)),
-  ...
-)
+\method{autoplot}{curve_params}(object, antigen_isos = unique(object$antigen_iso), ...)
 }
 \arguments{
 \item{object}{a \code{\link[=data.frame]{data.frame()}} of curve parameters (one or more MCMC samples)}
 
-\item{antigen_isos}{antigen isotypes to analyze (can subset \code{curve_params})}
-
-\item{ncol}{how many columns of subfigures to use in panel plot}
+\item{antigen_isos}{antigen isotypes to analyze
+(can subset \code{curve_params})}
 
 \item{...}{
-  Arguments passed on to \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab}}
+  Arguments passed on to \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1}}
   \describe{
-    \item{\code{verbose}}{verbose output}
-    \item{\code{xlim}}{range of x values to graph}
-    \item{\code{n_curves}}{how many curves to plot (see details).}
-    \item{\code{n_points}}{Number of points to interpolate along the x axis
-(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
-    \item{\code{rows_to_graph}}{which rows of \code{curve_params} to plot
-(overrides \code{n_curves}).}
-    \item{\code{alpha}}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})
-how transparent the curves should be:
-\itemize{
-\item 0 = fully transparent (invisible)
-\item 1 = fully opaque
-}}
-    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE})
-or linear scale (\code{FALSE}, default)?}
-    \item{\code{log_y}}{should the Y-axis be on a logarithmic scale
-(default, \code{TRUE}) or linear scale (\code{FALSE})?}
+    \item{\code{ncol}}{how many columns of subfigures to use in panel plot}
   }}
 }
 \value{
@@ -46,22 +24,6 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 \description{
 graph antibody decay curves by antigen isotype
 }
-\details{
-\subsection{\code{rows_to_graph}}{
-
-If you directly specify \code{rows_to_graph} when calling this function,
-the row numbers are enumerated separately for each antigen isotype;
-in other words, for the purposes of this argument,
-row numbers start over at 1 for each antigen isotype.
-There is currently no way to specify different row numbers for different antigen isotypes;
-if you want to do that,
-you will could call \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab()}} directly for each antigen isotype
-and combine the resulting panels yourself.
-Or you could subset \code{curve_params} manually,
-before passing it to this function,
-and set the \code{n_curves} argument to \code{Inf}.
-}
-}
 \examples{
 \donttest{
 library(dplyr)
@@ -69,10 +31,10 @@ library(ggplot2)
 library(magrittr)
 
 curve <-
-  serocalculator_example("example_curve_params.csv") \%>\%
-  read.csv() \%>\%
-  as_curve_params() \%>\%
-  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) \%>\%
+  serocalculator_example("example_curve_params.csv") |>
+  read.csv() |>
+  as_sr_params() |>
+  filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG")) |>
   autoplot()
 
 curve

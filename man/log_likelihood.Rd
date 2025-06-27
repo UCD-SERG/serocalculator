@@ -15,7 +15,8 @@ log_likelihood(
 )
 }
 \arguments{
-\item{lambda}{a \link{numeric} vector of incidence parameters, in events per person-year}
+\item{lambda}{a \link{numeric} vector of incidence parameters,
+in events per person-year}
 
 \item{pop_data}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data
 by antibody and age, and additional columns}

@@ -10,7 +10,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
 
   # Simulated incidence rate per person-year
   lambdas <- c(.05, .1, .15, .2, .3)
-  lambdas <- c(.05)
+  # lambdas <- c(.05)
   # Range covered in simulations
   lifespan <- c(0, 10)
 
@@ -34,7 +34,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
     add_noise = TRUE,
     noise_limits = dlims,
     format = "long",
-    nclus = 2
+    nclus = 10
   )
 
   pop_data_multi |>

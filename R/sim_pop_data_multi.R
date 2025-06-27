@@ -67,13 +67,13 @@ sim_pop_data_multi <- function(
 
   sim_df <-
     foreach::foreach(
-      # .combine = bind_rows,
-      j = seq_along(sample_sizes),
+      .combine = bind_rows,
+      # j = seq_along(sample_sizes),
       i = seq_along(lambdas)
 
     ) %:%
     foreach::foreach(
-      # .combine = bind_rows,
+      .combine = bind_rows,
       n = 1:nclus,
       r = rng[(i - 1) * nclus + 1:nclus]
       # r = rng[i, j, 1:nclus]

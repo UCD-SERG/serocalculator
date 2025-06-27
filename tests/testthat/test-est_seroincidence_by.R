@@ -1,11 +1,11 @@
 test_that(
-  desc = "estimate_scr_by() warns about missing data",
+  desc = "est_seroincidence_by() warns about missing data",
   code = {
 
     withr::local_package("dplyr")
     withr::local_package("readr")
 
-    estimate_scr_by(
+    est_seroincidence_by(
       pop_data =
         sees_pop_data_pk_100 |>
         dplyr::filter(catchment == "kgh" | antigen_iso == "HlyE_IgA"),
@@ -22,13 +22,13 @@ test_that(
 )
 
 
-test_that("estimate_scr_by() warns about missing data", {
+test_that("est_seroincidence_by() warns about missing data", {
 
   withr::local_package("dplyr")
   withr::local_package("readr")
 
 
-  estimate_scr_by(
+  est_seroincidence_by(
     pop_data = sees_pop_data_pk_100 |>
       tail(-1),
     curve_params = typhoid_curves_nostrat_100,
@@ -41,9 +41,9 @@ test_that("estimate_scr_by() warns about missing data", {
     expect_warning(class = "incomplete-obs")
 })
 
-test_that("`estimate_scr_by()` warns user when strata is missing", {
+test_that("`est_seroincidence_by()` warns user when strata is missing", {
   expect_warning(
-    estimate_scr_by(
+    est_seroincidence_by(
       pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
@@ -54,11 +54,11 @@ test_that("`estimate_scr_by()` warns user when strata is missing", {
 })
 
 test_that(
-  "`estimate_scr_by()` aborts when elements that don't exactly
+  "`est_seroincidence_by()` aborts when elements that don't exactly
           match the columns of `pop_data` are provided",
   {
     expect_error(
-      object = estimate_scr_by(
+      object = est_seroincidence_by(
         strata = c("ag", "catch", "Count"),
         pop_data = sees_pop_data_pk_100,
         curve_params = typhoid_curves_nostrat_100,
@@ -76,10 +76,10 @@ test_that(
 
 
 test_that(
-  desc = "`estimate_scr_by()` produces consistent results for typhoid data",
+  desc = "`est_seroincidence_by()` produces consistent results for typhoid data",
   code = {
     withr::local_options(width = 80)
-    typhoid_results <- estimate_scr_by(
+    typhoid_results <- est_seroincidence_by(
       strata = "catchment",
       pop_data = sees_pop_data_pk_100,
       curve_param = typhoid_curves_nostrat_100,
@@ -99,10 +99,10 @@ test_that(
 )
 
 test_that(
-  "`estimate_scr_by()` produces expected results
+  "`est_seroincidence_by()` produces expected results
           regardless of whether varnames have been standardized.",
   {
-    est_true <- estimate_scr_by(
+    est_true <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
@@ -113,7 +113,7 @@ test_that(
       num_cores = 1 # Allow for parallel processing to decrease run time
     )
 
-    est_false <- estimate_scr_by(
+    est_false <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
       curve_params = typhoid_curves_nostrat_100,
@@ -130,11 +130,11 @@ test_that(
 
 
 test_that(
-  "`estimate_scr_by()` produces expected results
+  "`est_seroincidence_by()` produces expected results
           regardless of whether using parallel processing or not.",
   {
 
-    ests_1_core <- estimate_scr_by(
+    ests_1_core <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
@@ -145,7 +145,7 @@ test_that(
       num_cores = 1
     )
 
-    ests_2_cores <- estimate_scr_by(
+    ests_2_cores <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
       curve_params = typhoid_curves_nostrat_100,
@@ -161,7 +161,7 @@ test_that(
 )
 
 test_that(
-  "`estimate_scr_by()` produces expected results
+  "`est_seroincidence_by()` produces expected results
           regardless of whether using verbose messaging or not.
           with single core.",
   {
@@ -169,7 +169,7 @@ test_that(
     capture.output(
       file = nullfile(),
       {
-        ests_verbose_sc <- estimate_scr_by(
+        ests_verbose_sc <- est_seroincidence_by(
           strata = c("catchment"),
           pop_data = sees_pop_data_pk_100,
           curve_params = typhoid_curves_nostrat_100,
@@ -183,7 +183,7 @@ test_that(
       }
     )
 
-    ests_non_verbose_sc <- estimate_scr_by(
+    ests_non_verbose_sc <- est_seroincidence_by(
       verbose = FALSE,
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
@@ -200,12 +200,12 @@ test_that(
 )
 
 test_that(
-  "`estimate_scr_by()` produces expected results
+  "`est_seroincidence_by()` produces expected results
           regardless of whether using verbose messaging or not
           with multi-core processing.",
   {
 
-    ests_verbose_mc <- estimate_scr_by(
+    ests_verbose_mc <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
       curve_params = typhoid_curves_nostrat_100,
@@ -218,7 +218,7 @@ test_that(
     ) |>
       suppressMessages()
 
-    ests_non_verbose_mc <- estimate_scr_by(
+    ests_non_verbose_mc <- est_seroincidence_by(
       verbose = FALSE,
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
@@ -241,7 +241,7 @@ test_that(
 test_that(
   "a warning is produced when `strata = NULL",
   code = {
-    estimate_scr_by(
+    est_seroincidence_by(
       strata = NULL,
       pop_data = sees_pop_data_pk_100,
       curve_param = typhoid_curves_nostrat_100,
@@ -253,14 +253,14 @@ test_that(
 )
 
 test_that("results are consistent with `strata = NULL`", {
-  typhoid_results_simple <- estimate_scr(
+  typhoid_results_simple <- est_seroincidence(
     pop_data = sees_pop_data_pk_100,
     sr_params = typhoid_curves_nostrat_100,
     noise_param = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-  typhoid_results_nullstrata <- estimate_scr_by(
+  typhoid_results_nullstrata <- est_seroincidence_by(
     strata = NULL,
     pop_data = sees_pop_data_pk_100,
     curve_param = typhoid_curves_nostrat_100,
@@ -273,4 +273,18 @@ test_that("results are consistent with `strata = NULL`", {
     typhoid_results_nullstrata
   )
 
+})
+
+test_that("deprecate warning is as expected", {
+  est2 <- est.incidence.by(
+    strata = c("catchment"),
+    pop_data = sees_pop_data_pk_100,
+    curve_params = typhoid_curves_nostrat_100,
+    curve_strata_varnames= NULL,
+    noise_strata_varnames = NULL,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    build_graph = TRUE
+  ) |>
+    expect_warning()
 })

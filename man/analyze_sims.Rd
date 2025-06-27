@@ -7,7 +7,7 @@
 analyze_sims(data, true_lambda = attr(data, "true_lambda"))
 }
 \arguments{
-\item{data}{output from \code{\link[=generate_sim_table]{generate_sim_table()}}}
+\item{data}{a tibble with}
 
 \item{true_lambda}{data-generating incidence rate}
 }

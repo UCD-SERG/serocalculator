@@ -4,9 +4,6 @@
 #' @param sample_size sample size of simulated data sets
 #'
 #' @returns a [tibble::tbl_df]
-#' @export
-#'
-#' @examples
 generate_sim_table <- function(
     results_list,
     sample_size = results_list |> attr("sample_size")) {

@@ -4,7 +4,7 @@
 \alias{autoplot.sim_results}
 \title{autoplot method for \code{sim_results} objects}
 \usage{
-\method{autoplot}{sim_results}(object, statistic = "Standard_Error")
+\method{autoplot}{sim_results}(object, statistic = "Empirical_SE")
 }
 \arguments{
 \item{object}{a \code{sim_results} object (from \code{\link[=analyze_sims]{analyze_sims()}})}

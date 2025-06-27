@@ -11,7 +11,7 @@
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export
-#' @example inst/examples/eexm-sim_pop_data_multi.R
+#' @example inst/examples/exm-sim_pop_data_multi.R
 sim_pop_data_multi <- function(
     nclus = 10,
     sample_sizes = 100,

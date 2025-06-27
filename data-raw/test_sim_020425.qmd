@@ -60,8 +60,8 @@ The true lambda is 0.01 and lambda_start is 0.005.
 # Get parameters from longitudinal data
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
-test_sim<-"https://osf.io/download/rtw5k" %>%
-  load_sr_params() %>%
+test_sim<-"https://osf.io/download/rtw5k" |>
+  load_sr_params() |>
   dplyr::filter(iter < 500) 
 
 ```
@@ -116,17 +116,17 @@ statistics_200<-analyze_sims(final_table_200, true_lambda)
 
 
 # Convert the statistics lists to data frames
-df_50 <- as_tibble(statistics_50) %>% mutate(Sample_Size = 50)
-df_100 <- as_tibble(statistics_100) %>% mutate(Sample_Size = 100)
-df_150 <- as_tibble(statistics_150) %>% mutate(Sample_Size = 150)
-df_200 <- as_tibble(statistics_200) %>% mutate(Sample_Size = 200)
+df_50 <- as_tibble(statistics_50) |> mutate(Sample_Size = 50)
+df_100 <- as_tibble(statistics_100) |> mutate(Sample_Size = 100)
+df_150 <- as_tibble(statistics_150) |> mutate(Sample_Size = 150)
+df_200 <- as_tibble(statistics_200) |> mutate(Sample_Size = 200)
 
 # Combine all statistics into a single table
-final_statistics_table <- bind_rows(df_50, df_100, df_150, df_200) %>%
+final_statistics_table <- bind_rows(df_50, df_100, df_150, df_200) |>
   select(Sample_Size, everything())  # Reorder to show Sample Size first
 
 # Convert Bias to scientific notation for better visibility
-final_statistics_table <- final_statistics_table %>%
+final_statistics_table <- final_statistics_table |>
   mutate(Bias = formatC(Bias, format = "e", digits = 4)) # Scientific notation
 
 ```
@@ -257,17 +257,17 @@ statistics_200_2<-analyze_sims(final_table_200_2, true_lambda)
 
 
 # Convert the statistics lists to data frames
-df_50_2 <- as_tibble(statistics_50_2) %>% mutate(Sample_Size = 50)
-df_100_2 <- as_tibble(statistics_100_2) %>% mutate(Sample_Size = 100)
-df_150_2 <- as_tibble(statistics_150_2) %>% mutate(Sample_Size = 150)
-df_200_2 <- as_tibble(statistics_200_2) %>% mutate(Sample_Size = 200)
+df_50_2 <- as_tibble(statistics_50_2) |> mutate(Sample_Size = 50)
+df_100_2 <- as_tibble(statistics_100_2) |> mutate(Sample_Size = 100)
+df_150_2 <- as_tibble(statistics_150_2) |> mutate(Sample_Size = 150)
+df_200_2 <- as_tibble(statistics_200_2) |> mutate(Sample_Size = 200)
 
 # Combine all statistics into a single table
-final_statistics_table2 <- bind_rows(df_50_2, df_100_2, df_150_2, df_200_2) %>%
+final_statistics_table2 <- bind_rows(df_50_2, df_100_2, df_150_2, df_200_2) |>
   select(Sample_Size, everything())  # Reorder to show Sample Size first
 
 # Convert Bias to scientific notation for better visibility
-final_statistics_table2 <- final_statistics_table2 %>%
+final_statistics_table2 <- final_statistics_table2 |>
   mutate(Bias = formatC(Bias, format = "e", digits = 4)) # Scientific notation
 
 # Display the table in a simple format for PDF output
@@ -284,25 +284,25 @@ kable(final_statistics_table2,
 
 ```{r, echo=FALSE, message=FALSE}
 # Convert the statistics lists to data frames and add 'Renew_Params' column
-df_50_true <- as_tibble(statistics_50) %>% mutate(Sample_Size = 50, renew.params = "TRUE")
-df_100_true <- as_tibble(statistics_100) %>% mutate(Sample_Size = 100, renew.params = "TRUE")
-df_150_true <- as_tibble(statistics_150) %>% mutate(Sample_Size = 150, renew.params = "TRUE")
-df_200_true <- as_tibble(statistics_200) %>% mutate(Sample_Size = 200, renew.params = "TRUE")
+df_50_true <- as_tibble(statistics_50) |> mutate(Sample_Size = 50, renew.params = "TRUE")
+df_100_true <- as_tibble(statistics_100) |> mutate(Sample_Size = 100, renew.params = "TRUE")
+df_150_true <- as_tibble(statistics_150) |> mutate(Sample_Size = 150, renew.params = "TRUE")
+df_200_true <- as_tibble(statistics_200) |> mutate(Sample_Size = 200, renew.params = "TRUE")
 
-df_50_false <- as_tibble(statistics_50_2) %>% mutate(Sample_Size = 50, renew.params = "FALSE")
-df_100_false <- as_tibble(statistics_100_2) %>% mutate(Sample_Size = 100, renew.params = "FALSE")
-df_150_false <- as_tibble(statistics_150_2) %>% mutate(Sample_Size = 150, renew.params = "FALSE")
-df_200_false <- as_tibble(statistics_200_2) %>% mutate(Sample_Size = 200, renew.params = "FALSE")
+df_50_false <- as_tibble(statistics_50_2) |> mutate(Sample_Size = 50, renew.params = "FALSE")
+df_100_false <- as_tibble(statistics_100_2) |> mutate(Sample_Size = 100, renew.params = "FALSE")
+df_150_false <- as_tibble(statistics_150_2) |> mutate(Sample_Size = 150, renew.params = "FALSE")
+df_200_false <- as_tibble(statistics_200_2) |> mutate(Sample_Size = 200, renew.params = "FALSE")
 
 # Combine all statistics into a single table
 final_statistics_table_merged <- bind_rows(
   df_50_true, df_100_true, df_150_true, df_200_true,
   df_50_false, df_100_false, df_150_false, df_200_false
-) %>%
+) |>
   select(Sample_Size, renew.params, everything())  # Reorder columns
 
 # Convert Bias to scientific notation for better visibility
-final_statistics_table_merged <- final_statistics_table_merged %>%
+final_statistics_table_merged <- final_statistics_table_merged |>
   mutate(Bias = formatC(Bias, format = "e", digits = 4))
 
 # Display the table in a simple format for PDF output

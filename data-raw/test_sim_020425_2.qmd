@@ -41,7 +41,8 @@ library(tidyverse)
 library(gtsummary)
 library(readxl)
 library(purrr)
-library(serocalculator)
+# library(serocalculator)
+devtools::load_all()
 library(runjags)
 library(coda)
 library(ggmcmc)
@@ -60,8 +61,8 @@ The true lambda is 0.01 and lambda_start is 0.005.
 # Get parameters from longitudinal data
 
 ```{r,echo=FALSE, message=FALSE, warning=FALSE,results='hide'}
-test_sim<-"https://osf.io/download/rtw5k" %>%
-  load_sr_params() %>%
+test_sim<-"https://osf.io/download/rtw5k" |>
+  load_sr_params() |>
   dplyr::filter(iter < 500) 
 
 ```
@@ -74,18 +75,21 @@ test_sim<-"https://osf.io/download/rtw5k" %>%
 ## Run simulation
 plan(multisession)  # Use multiple sessions for parallelism (local machine)
 
+# Define the true lambda
+true_lambda <- 0.01
+
 # Run the simulations in parallel
 set.seed(129251)
-results_50 <- simulate_seroincidence(nrep = 50, n_sim = 300)
+results_50 <- simulate_seroincidence(sr_params = test_sim, nrep = 50, n_sim = 300, lambda = true_lambda)
 
 set.seed(129252)
-results_100 <- simulate_seroincidence(nrep = 100, n_sim = 300)
+results_100 <- simulate_seroincidence(sr_params = test_sim, nrep = 100, n_sim = 300, lambda = true_lambda)
 
 set.seed(129253)
-results_150 <- simulate_seroincidence(nrep = 150, n_sim = 300)
+results_150 <- simulate_seroincidence(sr_params = test_sim, nrep = 150, n_sim = 300, lambda = true_lambda)
 
 set.seed(129254)
-results_200 <- simulate_seroincidence(nrep = 200, n_sim = 300)
+results_200 <- simulate_seroincidence(sr_params = test_sim, nrep = 200, n_sim = 300, lambda = true_lambda)
 
 # Stop parallel processing
 plan(sequential)  # Return to sequential processing
@@ -99,8 +103,7 @@ final_table_100 <- generate_sim_table(results_100, 100)
 final_table_150 <- generate_sim_table(results_150, 100)
 final_table_200 <- generate_sim_table(results_200, 100)
 
-# Define the true lambda
-true_lambda <- 0.01
+
 
 ```
 
@@ -117,17 +120,17 @@ statistics_200<-analyze_sims(final_table_200, true_lambda)
 
 
 # Convert the statistics lists to data frames
-df_50 <- as_tibble(statistics_50) %>% mutate(Sample_Size = 50)
-df_100 <- as_tibble(statistics_100) %>% mutate(Sample_Size = 100)
-df_150 <- as_tibble(statistics_150) %>% mutate(Sample_Size = 150)
-df_200 <- as_tibble(statistics_200) %>% mutate(Sample_Size = 200)
+df_50 <- as_tibble(statistics_50) |> mutate(Sample_Size = 50)
+df_100 <- as_tibble(statistics_100) |> mutate(Sample_Size = 100)
+df_150 <- as_tibble(statistics_150) |> mutate(Sample_Size = 150)
+df_200 <- as_tibble(statistics_200) |> mutate(Sample_Size = 200)
 
 # Combine all statistics into a single table
-final_statistics_table <- bind_rows(df_50, df_100, df_150, df_200) %>%
+final_statistics_table <- bind_rows(df_50, df_100, df_150, df_200) |>
   select(Sample_Size, everything())  # Reorder to show Sample Size first
 
 # Convert Bias to scientific notation for better visibility
-final_statistics_table <- final_statistics_table %>%
+final_statistics_table <- final_statistics_table |>
   mutate(Bias = formatC(Bias, format = "e", digits = 4)) # Scientific notation
 
 ```
@@ -159,16 +162,16 @@ plan(multisession)  # Use multiple sessions for parallelism (local machine)
 
 # Run the simulations in parallel
 set.seed(129255)
-results_50_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 50, n_sim = 300)
+results_50_2 <- simulate_seroincidence(sr_params = test_sim, renew.params = FALSE, nrep = 50, n_sim = 300)
 
 set.seed(129256)
-results_100_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 100, n_sim = 300)
+results_100_2 <- simulate_seroincidence(sr_params = test_sim, renew.params = FALSE, nrep = 100, n_sim = 300)
 
 set.seed(129257)
-results_150_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 150, n_sim = 300)
+results_150_2 <- simulate_seroincidence(sr_params = test_sim, renew.params = FALSE, nrep = 150, n_sim = 300)
 
 set.seed(129258)
-results_200_2 <- simulate_seroincidence(renew.params = TRUE, nrep = 200, n_sim = 300)
+results_200_2 <- simulate_seroincidence(sr_params = test_sim, renew.params = FALSE, nrep = 200, n_sim = 300)
 
 # Stop parallel processing
 plan(sequential)  # Return to sequential processing
@@ -194,17 +197,17 @@ statistics_200_2<-analyze_sims(final_table_200_2, true_lambda)
 
 
 # Convert the statistics lists to data frames
-df_50_2 <- as_tibble(statistics_50_2) %>% mutate(Sample_Size = 50)
-df_100_2 <- as_tibble(statistics_100_2) %>% mutate(Sample_Size = 100)
-df_150_2 <- as_tibble(statistics_150_2) %>% mutate(Sample_Size = 150)
-df_200_2 <- as_tibble(statistics_200_2) %>% mutate(Sample_Size = 200)
+df_50_2 <- as_tibble(statistics_50_2) |> mutate(Sample_Size = 50)
+df_100_2 <- as_tibble(statistics_100_2) |> mutate(Sample_Size = 100)
+df_150_2 <- as_tibble(statistics_150_2) |> mutate(Sample_Size = 150)
+df_200_2 <- as_tibble(statistics_200_2) |> mutate(Sample_Size = 200)
 
 # Combine all statistics into a single table
-final_statistics_table2 <- bind_rows(df_50_2, df_100_2, df_150_2, df_200_2) %>%
+final_statistics_table2 <- bind_rows(df_50_2, df_100_2, df_150_2, df_200_2) |>
   select(Sample_Size, everything())  # Reorder to show Sample Size first
 
 # Convert Bias to scientific notation for better visibility
-final_statistics_table2 <- final_statistics_table2 %>%
+final_statistics_table2 <- final_statistics_table2 |>
   mutate(Bias = formatC(Bias, format = "e", digits = 4)) # Scientific notation
 
 # Display the table in a simple format for PDF output
@@ -221,25 +224,25 @@ kable(final_statistics_table2,
 
 ```{r, echo=FALSE, message=FALSE}
 # Convert the statistics lists to data frames and add 'renew_params' column
-df_50_true <- as_tibble(statistics_50) %>% mutate(Sample_Size = 50, renew_params = "TRUE")
-df_100_true <- as_tibble(statistics_100) %>% mutate(Sample_Size = 100, renew_params = "TRUE")
-df_150_true <- as_tibble(statistics_150) %>% mutate(Sample_Size = 150, renew_params = "TRUE")
-df_200_true <- as_tibble(statistics_200) %>% mutate(Sample_Size = 200, renew_params = "TRUE")
+df_50_true <- as_tibble(statistics_50) |> mutate(Sample_Size = 50, renew_params = "TRUE")
+df_100_true <- as_tibble(statistics_100) |> mutate(Sample_Size = 100, renew_params = "TRUE")
+df_150_true <- as_tibble(statistics_150) |> mutate(Sample_Size = 150, renew_params = "TRUE")
+df_200_true <- as_tibble(statistics_200) |> mutate(Sample_Size = 200, renew_params = "TRUE")
 
-df_50_false <- as_tibble(statistics_50_2) %>% mutate(Sample_Size = 50, renew_params = "FALSE")
-df_100_false <- as_tibble(statistics_100_2) %>% mutate(Sample_Size = 100, renew_params = "FALSE")
-df_150_false <- as_tibble(statistics_150_2) %>% mutate(Sample_Size = 150, renew_params = "FALSE")
-df_200_false <- as_tibble(statistics_200_2) %>% mutate(Sample_Size = 200, renew_params = "FALSE")
+df_50_false <- as_tibble(statistics_50_2) |> mutate(Sample_Size = 50, renew_params = "FALSE")
+df_100_false <- as_tibble(statistics_100_2) |> mutate(Sample_Size = 100, renew_params = "FALSE")
+df_150_false <- as_tibble(statistics_150_2) |> mutate(Sample_Size = 150, renew_params = "FALSE")
+df_200_false <- as_tibble(statistics_200_2) |> mutate(Sample_Size = 200, renew_params = "FALSE")
 
 # Combine all statistics into a single table
 final_statistics_table_merged <- bind_rows(
   df_50_true, df_100_true, df_150_true, df_200_true,
   df_50_false, df_100_false, df_150_false, df_200_false
-) %>%
+) |>
   select(Sample_Size, renew_params, everything())  # Reorder columns
 
 # Convert Bias to scientific notation for better visibility
-final_statistics_table_merged <- final_statistics_table_merged %>%
+final_statistics_table_merged <- final_statistics_table_merged |>
   mutate(Bias = formatC(Bias, format = "e", digits = 4))
 
 # Display the table in a simple format for PDF output

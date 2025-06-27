@@ -9,6 +9,7 @@
 
   # incidence rate in e
   lambdas <- c(.05, .8)
+  lifespan <- c(0, 10)
   antibodies <- c("HlyE_IgA", "HlyE_IgG")
   dlims <- rbind(
     "HlyE_IgA" = c(min = 0, max = 0.5),

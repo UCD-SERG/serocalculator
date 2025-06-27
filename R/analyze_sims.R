@@ -16,30 +16,29 @@
 #'
 analyze_sims <- function(
     data) {
-
   to_return <-
     data |>
     dplyr::summarize(
-      .by = c(lambda.sim, sample_size),
+      .by = c("lambda.sim", "sample_size"),
       analyze_sims_one_stratum(
         data = across(everything()),
-        true_lambda = lambda.sim))
+        true_lambda = .data$lambda.sim
+      )
+    )
 
   class(to_return) <- union("sim_results", class(to_return))
 
   return(to_return)
-
 }
 
 analyze_sims_one_stratum <- function(
-  data,
-  true_lambda = data$lambda.sim
-) {
+    data,
+    true_lambda = data$lambda.sim) {
   # Filter out rows where CI.lwr or CI.upr is Inf or NaN
   data <- data |>
-    filter(is.finite(CI.lwr) & is.finite(CI.upr))
+    filter(is.finite(.data$CI.lwr) & is.finite(.data$CI.upr))
 
-  # Compute Bias (Mean - True Value, assuming true value is the mean of incidence rates)
+  # Compute Bias
   bias <- mean(data$incidence.rate - true_lambda, na.rm = TRUE)
 
   # Standard Error (Mean of reported standard errors)
@@ -48,7 +47,7 @@ analyze_sims_one_stratum <- function(
   # RMSE (Root Mean Square Error)
   rmse <- mean((data$incidence.rate - true_lambda)^2, na.rm = TRUE) |> sqrt()
 
-  # Confidence Interval Width (Mean of Upper - Lower bounds, now without Inf values)
+  # Confidence Interval Width (Mean of Upper - Lower bounds, without Inf values)
   ci_width <- mean(data$CI.upr - data$CI.lwr, na.rm = TRUE)
 
   # CI Coverage Calculation
@@ -60,15 +59,22 @@ analyze_sims_one_stratum <- function(
 
   # Compute Coverage and its Confidence Interval
   compute_coverage_ci <- function(coverage_count, total_count) {
-    test_result <- binom.test(coverage_count, total_count, conf.level = 0.95) # 95% CI
+    test_result <- binom.test(coverage_count, total_count, conf.level = 0.95)
+    # 95% CI
     coverage_proportion <- coverage_count / total_count
     ci_lower <- test_result$conf.int[1]
     ci_upper <- test_result$conf.int[2]
 
-    return(list(coverage = coverage_proportion, ci_lower = ci_lower, ci_upper = ci_upper))
+    return(
+      list(
+        coverage = coverage_proportion,
+        ci_lower = ci_lower,
+        ci_upper = ci_upper
+      )
+    )
   }
 
-  coverage_result <- compute_coverage_ci(coverage_count, nrow(data))
+  coverage_result <- compute_coverage_ci(coverage_count, nrow(data)) # nolint: object_usage_linter
 
   to_return <- tibble(
     Bias = bias,

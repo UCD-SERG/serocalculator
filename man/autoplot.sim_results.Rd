@@ -21,8 +21,7 @@ autoplot method for \code{sim_results} objects
 \donttest{
   dmcmc <- typhoid_curves_nostrat_100
 
-  library(parallel)
-  n_cores <- max(1, parallel::detectCores() - 1)
+  n_cores <- 2
 
   nclus <- 20
   # cross-sectional sample size
@@ -30,6 +29,7 @@ autoplot method for \code{sim_results} objects
 
   # incidence rate in e
   lambdas <- c(.05, .8)
+  lifespan <- c(0, 10)
   antibodies <- c("HlyE_IgA", "HlyE_IgG")
   dlims <- rbind(
     "HlyE_IgA" = c(min = 0, max = 0.5),

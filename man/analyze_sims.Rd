@@ -28,8 +28,7 @@ Analyze simulation results
 \donttest{
 dmcmc <- typhoid_curves_nostrat_100
 
-library(parallel)
-n_cores <- max(1, parallel::detectCores() - 1)
+n_cores <- 2
 
 nclus <- 20
 # cross-sectional sample size

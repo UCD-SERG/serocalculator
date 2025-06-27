@@ -4,7 +4,7 @@
 \alias{analyze_sims}
 \title{Analyze simulation results}
 \usage{
-analyze_sims(data, true_lambda = data$lambda.sim)
+analyze_sims(data)
 }
 \arguments{
 \item{data}{a \link[tibble:tibble]{tibble::tibble} with columns:

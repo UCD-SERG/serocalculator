@@ -9,18 +9,25 @@
 #' for example, as produced by [summary.seroincidence.by()] with
 #' `lambda.sim` as a stratifying variable
 #'
-#' @returns a [list]
+#' @returns a `sim_results` object (extends [tibble::tbl_df])
 #' @export
 #'
-#' @examples
+#' @example inst/examples/exm-analyze_sims.R
 #'
 analyze_sims <- function(
     data) {
-  data |>
+
+  to_return <-
+    data |>
     dplyr::group_by(
       lambda.sim, sample_size) |>
     dplyr::group_map(~analyze_sims_one_stratum(.x), .keep = TRUE) |>
     bind_rows()
+
+  class(to_return) <- union("sim_results", class(to_return))
+
+  return(to_return)
+
 }
 
 analyze_sims_one_stratum <- function(

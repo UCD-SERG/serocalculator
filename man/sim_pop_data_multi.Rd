@@ -82,6 +82,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}}
 Simulate multiple data sets
 }
 \examples{
+\donttest{
 # Load curve parameters
 dmcmc <- typhoid_curves_nostrat_100
 
@@ -120,4 +121,6 @@ sim_data <- sim_pop_data_multi(
   nclus = 10)
 
 sim_data
+
+}
 }

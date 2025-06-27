@@ -1,3 +1,4 @@
+\donttest{
 dmcmc <- typhoid_curves_nostrat_100
 
 library(parallel)
@@ -48,3 +49,5 @@ ests <-
 ests |>
   summary() |>
   analyze_sims()
+
+}

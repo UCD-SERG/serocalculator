@@ -1,12 +1,24 @@
+#' autoplot method for `sim_results` objects
+#'
+#' @param object a `sim_results` object (from [analyze_sims()])
+#' @param statistic which column of `object` should be the y-axis?
+#'
+#' @returns a [ggplot2::ggplot]
+#' @export
+#'
+#' @example inst/examples/exm-autoplot.sim_results.R
 autoplot.sim_results <- function(
     object,
-    statistic = "Standard_Error")
+    statistic = "Empirical_SE")
 {
   object |>
+    dplyr::mutate(lambda.sim = factor(lambda.sim)) |>
     ggplot2::ggplot() +
-    aes(x = .data$Sample_Size,
-        group = .data$true_lambda,
+    ggplot2::aes(x = .data$sample_size,
+        group = .data$lambda.sim,
+        col = .data$lambda.sim,
         y = .data[[statistic]]) +
-    geom_point() +
-    geom_line()
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::theme(legend.position = "bottom")
 }

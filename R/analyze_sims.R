@@ -19,10 +19,11 @@ analyze_sims <- function(
 
   to_return <-
     data |>
-    dplyr::group_by(
-      lambda.sim, sample_size) |>
-    dplyr::group_map(~analyze_sims_one_stratum(.x), .keep = TRUE) |>
-    bind_rows()
+    dplyr::summarize(
+      .by = c(lambda.sim, sample_size),
+      analyze_sims_one_stratum(
+        data = across(everything()),
+        true_lambda = lambda.sim))
 
   class(to_return) <- union("sim_results", class(to_return))
 

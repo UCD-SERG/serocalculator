@@ -20,7 +20,8 @@ analyze_sims <- function(
   to_return <-
     data |>
     split(
-      f = ~  sample_size + lambda.sim) |>
+      f = ~  sample_size + lambda.sim
+    ) |>
     lapply(FUN = analyze_sims_one_stratum) |>
     bind_rows()
 
@@ -50,14 +51,8 @@ analyze_sims_one_stratum <- function(
   # Confidence Interval Width (Mean of Upper - Lower bounds, without Inf values)
   ci_width <- mean(data$CI.upr - data$CI.lwr, na.rm = TRUE)
 
-  # CI Coverage Calculation
-  coverage_count <-
-    sum(data$CI.lwr <= true_lambda & data$CI.upr >= true_lambda, na.rm = TRUE)
-
   coverage_prop <-
     mean(data$CI.lwr <= true_lambda & data$CI.upr >= true_lambda, na.rm = TRUE)
-
-
 
   to_return <- tibble(
     lambda.sim = mean(true_lambda),

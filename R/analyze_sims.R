@@ -59,7 +59,11 @@ analyze_sims_one_stratum <- function(
 
   # Compute Coverage and its Confidence Interval
   compute_coverage_ci <- function(coverage_count, total_count) {
-    test_result <- binom.test(coverage_count, total_count, conf.level = 0.95)
+    test_result <- stats::binom.test(
+      coverage_count,
+      total_count,
+      conf.level = 0.95
+    )
     # 95% CI
     coverage_proportion <- coverage_count / total_count
     ci_lower <- test_result$conf.int[1]

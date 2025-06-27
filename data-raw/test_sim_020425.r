@@ -9,7 +9,7 @@ library(serocalculator)
 ## Load longitudinal parameters
 
 test_sim<-"https://osf.io/download/rtw5k" %>%
-  load_curve_params() %>%
+  load_sr_params() %>%
   dplyr::filter(iter < 500)
 ###############################################################################
 

@@ -28,5 +28,10 @@ Authors:
   \item Douglas Ezra Morrison \email{demorrison@ucdavis.edu}
 }
 
+Other contributors:
+\itemize{
+  \item Kwan Ho Lee \email{ksjlee@ucdavis.edu} [contributor]
+}
+
 }
 \keyword{internal}

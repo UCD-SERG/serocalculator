@@ -1,4 +1,4 @@
-# estimate_scr() produces expected results for typhoid data
+# results are as expected for typhoid data
 
     Code
       summary(typhoid_results, coverage = 0.95)
@@ -20,11 +20,11 @@
 # verbose output is consistent
 
     Code
-      estimate_scr(pop_data = sees_pop_data_pk_100, sr_param = typhoid_curves_nostrat_100,
+      est_seroincidence(pop_data = sees_pop_data_pk_100, sr_param = typhoid_curves_nostrat_100,
         noise_param = example_noise_params_pk, antigen_isos = c("HlyE_IgG",
           "HlyE_IgA"), verbose = TRUE)
     Message
-      nrow(curve_params) = 200
+      i nrow(sr_params) = 200
       Initial negative log-likelihood: 533.379886031329
       about to call `nlm()`
     Output

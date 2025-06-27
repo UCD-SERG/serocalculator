@@ -1,5 +1,4 @@
 Aga
-ageCat
 CMD
 Chiang
 CodeFactor
@@ -39,6 +38,7 @@ Vellore
 Volterra
 al
 ast
+autoplot
 behaviour
 bioassays
 biomarker
@@ -50,6 +50,7 @@ csv
 dev
 devtools
 displaystyle
+df
 dt
 eps
 estimands
@@ -81,6 +82,7 @@ modelled
 multicohort
 nd
 nr
+olds
 overcount
 overcounts
 overline
@@ -113,6 +115,7 @@ serosurvey
 serosurveys
 smp
 subfigures
+tbl
 th
 tibble
 titers
@@ -123,4 +126,3 @@ varepsilon
 vec
 vee
 yaml
-olds

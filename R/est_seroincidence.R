@@ -1,14 +1,21 @@
 #' Find the maximum likelihood estimate of the incidence rate parameter
 #'
-#' This function models seroincidence using maximum likelihood estimation; that is, it finds the value of the seroincidence parameter which maximizes the likelihood (i.e., joint probability) of the data.
+#' This function models seroincidence using maximum likelihood estimation;
+#' that is, it finds the value of the seroincidence parameter which
+#' maximizes the likelihood (i.e., joint probability) of the data.
 #' @inheritParams log_likelihood
 #' @inheritParams stats::nlm
-#' @param pop_data a [data.frame] with cross-sectional serology data per antibody and age, and additional columns
+#' @param pop_data a [data.frame] with cross-sectional serology data per
+#' antibody and age, and additional columns
 #' @param lambda_start starting guess for incidence rate, in years/event.
-#' @param antigen_isos Character vector with one or more antibody names. Values must match `pop_data`
-#' @param build_graph whether to graph the log-likelihood function across a range of incidence rates (lambda values)
-#' @param print_graph whether to display the log-likelihood curve graph in the course of running `estimate_scr()`
-#' @param stepmin A positive scalar providing the minimum allowable relative step length.
+#' @param antigen_isos Character vector with one or more antibody names.
+#' Must match `pop_data`
+#' @param build_graph whether to graph the log-likelihood function across
+#' a range of incidence rates (lambda values)
+#' @param print_graph whether to display the log-likelihood curve graph
+#' in the course of running `est_seroincidence()`
+#' @param stepmin A positive scalar providing the minimum allowable
+#' relative step length.
 #' @param sr_params a [data.frame()] containing MCMC samples of parameters
 #' from the Bayesian posterior distribution of a longitudinal decay curve model.
 #' The parameter columns must be named:
@@ -23,7 +30,8 @@
 #' - `r`: shape factor of antibody decay
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
-#' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object with extra meta-data attributes `lambda_start`, `antigen_isos`, and `ll_graph`
+#' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object
+#' with extra metadata attributes `lambda_start`, `antigen_isos`, and `ll_graph`
 #' @export
 #' @examples
 #'
@@ -33,13 +41,13 @@
 #'   sees_pop_data_pk_100
 #'
 #' sr_curve <-
-#'   typhoid_curves_nostrat_100 %>%
+#'   typhoid_curves_nostrat_100 |>
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- estimate_scr(
+#' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = sr_curve,
 #'   noise_params = noise,
@@ -47,7 +55,7 @@
 #' )
 #'
 #' summary(est1)
-estimate_scr <- function(
+est_seroincidence <- function(
     pop_data,
     sr_params,
     noise_params,
@@ -60,8 +68,8 @@ estimate_scr <- function(
     print_graph = build_graph & verbose,
     ...) {
   if (verbose > 1) {
-    message("inputs to `estimate_scr()`:")
-    print(environment() %>% as.list())
+    message("inputs to `est_seroincidence()`:")
+    print(environment() |> as.list())
   }
 
   .errorCheck(
@@ -70,27 +78,27 @@ estimate_scr <- function(
     curve_params = sr_params
   )
 
-  pop_data <- pop_data %>%
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
+  pop_data <- pop_data |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     dplyr::select(
-      pop_data %>% get_values_var(),
-      pop_data %>% get_age_var(),
+      pop_data |> get_values_var(),
+      pop_data |> get_age_var(),
       "antigen_iso"
-    ) %>%
+    ) |>
     filter(if_all(everything(), ~!is.na(.x)))
 
-  sr_params <- sr_params %>%
-    ungroup() %>%
+  sr_params <- sr_params |>
+    ungroup() |>
     dplyr::mutate(
       alpha = .data$alpha * 365.25,
       d = .data$r - 1
-    ) %>%
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
-    dplyr::select("y1", "alpha", "d", "antigen_iso") %>%
+    ) |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
+    dplyr::select("y1", "alpha", "d", "antigen_iso") |>
     droplevels()
 
-  noise_params <- noise_params %>%
-    dplyr::filter(.data$antigen_iso %in% antigen_isos) %>%
+  noise_params <- noise_params |>
+    dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
     droplevels()
 
   # incidence can not be calculated if there are zero observations.
@@ -99,16 +107,16 @@ estimate_scr <- function(
   }
 
   if (verbose) {
-    message("nrow(curve_params) = ", nrow(sr_params))
+    cli::cli_inform(c(i = "nrow(sr_params) = {nrow(sr_params)}"))
   }
 
   if (nrow(noise_params) != length(antigen_isos)) {
     stop("too many rows of noise parameters.")
   }
 
-  pop_data <- pop_data %>% split(~antigen_iso)
-  sr_params <- sr_params %>% split(~antigen_iso)
-  noise_params <- noise_params %>% split(~antigen_iso)
+  pop_data <- pop_data |> split(~antigen_iso)
+  sr_params <- sr_params |> split(~antigen_iso)
+  noise_params <- noise_params |> split(~antigen_iso)
 
   # First, check if we find numeric results...
   res <- .nll(
@@ -122,7 +130,7 @@ estimate_scr <- function(
   )
 
   if (is.na(res)) {
-    warning("Could not calculate the log-likelihood with starting parameter value.")
+    warning("Could not calculate log-likelihood with starting parameter value.")
     return(NULL)
   }
 
@@ -153,13 +161,14 @@ estimate_scr <- function(
   }
 
 
-  # [stats::nlm()] expects an objective function `f` "returning a single numeric value",
+  # [stats::nlm()] expects an objective function `f`
+  # "returning a single numeric value",
   # but [.nll()] is vectorized via its subfunction [f_dev()].
   # The vectorization doesn't appear to cause a problem for [nlm()].
 
   if (verbose) message("about to call `nlm()`")
   # Estimate lambda
-  time <-
+  time <- system.time(
     {
       fit <- nlm(
         f = .nll,
@@ -175,8 +184,8 @@ estimate_scr <- function(
         print.level = ifelse(verbose, 2, 0),
         ...
       )
-    } %>%
-    system.time()
+    }
+  )
 
   code_text <- nlm_exit_codes[fit$code]
   message1 <- "\n`nlm()` completed with the following convergence code:\n"
@@ -195,7 +204,7 @@ estimate_scr <- function(
 
   if (build_graph) {
     graph <-
-      graph %>%
+      graph |>
       add_point_to_graph(
         fit = fit,
         pop_data = pop_data,
@@ -214,7 +223,7 @@ estimate_scr <- function(
     }
   }
 
-  fit <- fit %>%
+  fit <- fit |>
     structure(
       class = union("seroincidence", class(fit)),
       lambda_start = lambda_start,
@@ -230,14 +239,14 @@ estimate_scr <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence()` was renamed to [estimate_scr()] to create a more
+#' `est.incidence()` was renamed to [est_seroincidence()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
     ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "estimate_scr()")
-  estimate_scr(
+  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
+  est_seroincidence(
     ...
   )
 }

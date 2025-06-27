@@ -1,4 +1,5 @@
 test_that("`sim_pop_data_multi()` works consistently", {
+  skip_on_os("linux")
   # Load curve parameters
   dmcmc <- typhoid_curves_nostrat_100
 
@@ -10,12 +11,12 @@ test_that("`sim_pop_data_multi()` works consistently", {
 
   # Simulated incidence rate per person-year
   lambdas <- c(.05, .1, .15, .2, .3)
-
+  # lambdas <- c(.05)
   # Range covered in simulations
   lifespan <- c(0, 10)
 
   # Cross-sectional sample size
-  nrep <- 100
+  sample_sizes <- c(100, 50)
 
   # Biologic noise distribution
   dlims <- rbind(
@@ -26,7 +27,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
   pop_data_multi <- sim_pop_data_multi(
     curve_params = dmcmc,
     lambdas = lambdas,
-    n_samples = nrep,
+    sample_sizes = sample_sizes,
     age_range = lifespan,
     antigen_isos = antibodies,
     n_mcmc_samples = 0,

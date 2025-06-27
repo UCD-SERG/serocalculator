@@ -11,6 +11,8 @@ nrep <- c(50, 200)
 # incidence rate in e
 lambdas <- c(.05, .8)
 
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+lifespan <- c(0, 10)
 sim_df <-
   sim_pop_data_multi(
     n_cores = n_cores,

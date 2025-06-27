@@ -62,6 +62,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sim_pop_data_multi</span><span class="op">(</span></span>
 <span>  nclus <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  sample_sizes <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  lambdas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  rng_seed <span class="op">=</span> <span class="fl">1234</span>,</span>
@@ -78,8 +79,12 @@
 <dd><p>number of clusters</p></dd>
 
 
+<dt id="arg-sample-sizes">sample_sizes<a class="anchor" aria-label="anchor" href="#arg-sample-sizes"></a></dt>
+<dd><p>sample sizes to simulate</p></dd>
+
+
 <dt id="arg-lambdas">lambdas<a class="anchor" aria-label="anchor" href="#arg-lambdas"></a></dt>
-<dd><p>#incidence rate, in events/person*year</p></dd>
+<dd><p>incidence rate, in events/person*year</p></dd>
 
 
 <dt id="arg-num-cores">num_cores<a class="anchor" aria-label="anchor" href="#arg-num-cores"></a></dt>
@@ -163,7 +168,8 @@ combinations</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load curve parameters</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Load curve parameters</span></span></span>
 <span class="r-in"><span><span class="va">dmcmc</span> <span class="op">&lt;-</span> <span class="va">typhoid_curves_nostrat_100</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Specify the antibody-isotype responses to include in analyses</span></span></span>
@@ -187,10 +193,10 @@ combinations</p></li>
 <span class="r-in"><span>  <span class="st">"HlyE_IgG"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">sim_pop_data_multi</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu">sim_pop_data_multi</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span></span>
 <span class="r-in"><span>  lambdas <span class="op">=</span> <span class="va">lambdas</span>,</span></span>
-<span class="r-in"><span>  n_samples <span class="op">=</span> <span class="va">nrep</span>,</span></span>
+<span class="r-in"><span>  sample_sizes <span class="op">=</span> <span class="va">nrep</span>,</span></span>
 <span class="r-in"><span>  age_range <span class="op">=</span> <span class="va">lifespan</span>,</span></span>
 <span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span></span>
 <span class="r-in"><span>  n_mcmc_samples <span class="op">=</span> <span class="fl">0</span>,</span></span>
@@ -199,21 +205,24 @@ combinations</p></li>
 <span class="r-in"><span>  noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span></span>
 <span class="r-in"><span>  format <span class="op">=</span> <span class="st">"long"</span>,</span></span>
 <span class="r-in"><span>  nclus <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10,000 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      age id    antigen_iso value lambda.sim cluster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  3.53 1     HlyE_IgA    0.757       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  3.53 1     HlyE_IgG    0.520       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  2.27 2     HlyE_IgA    0.819       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  2.27 2     HlyE_IgG    0.707       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  9.05 3     HlyE_IgA    0.150       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  9.05 3     HlyE_IgG    0.506       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  5.94 4     HlyE_IgA    0.837       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  5.94 4     HlyE_IgG    0.870       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  9.88 5     HlyE_IgA    0.297       0.05       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  9.88 5     HlyE_IgG    0.272       0.05       1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sim_data</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10,000 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      age id    antigen_iso value lambda.sim sample_size cluster</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  3.53 1     HlyE_IgA    0.757       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  3.53 1     HlyE_IgG    0.520       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  2.27 2     HlyE_IgA    0.819       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  2.27 2     HlyE_IgG    0.707       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  9.05 3     HlyE_IgA    0.150       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  9.05 3     HlyE_IgG    0.506       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  5.94 4     HlyE_IgA    0.837       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  5.94 4     HlyE_IgG    0.870       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  9.88 5     HlyE_IgA    0.297       0.05         100       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  9.88 5     HlyE_IgG    0.272       0.05         100       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9,990 more rows</span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

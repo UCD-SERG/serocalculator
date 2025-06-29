@@ -102,16 +102,31 @@
 <span class="r-in"><span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span></span>
-<span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">curve</span>,</span></span>
+<span class="r-in"><span>  sr_params <span class="op">=</span> <span class="va">curve</span>,</span></span>
 <span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span></span>
 <span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="co"># num_cores = 8 # Allow for parallel processing to decrease run time</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in est_seroincidence_by(strata = c("catchment"), pop_data = xs_data,     curve_params = curve, noise_params = noise, antigen_isos = c("HlyE_IgG",         "HlyE_IgA"), ):</span> argument "sr_params" is missing, with no default</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`curve_params` is missing all strata variables and will be used unstratified.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   `est_seroincidence_by()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`noise_params` is missing all strata variables and will be used unstratified.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   `est_seroincidence_by()`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate summary statistics for the seroincidence object</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'est2' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `seroincidence.by` object estimated given the following setup:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b) Strata       : catchment </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> This object is a list of `seroincidence` objects, with added meta-data attributes:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `antigen_isos` - Character vector of antigen isotypes used in analysis.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `Strata`       - Input parameter strata of function `est_seroincidence_by()`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call the `summary()` function to obtain output results.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

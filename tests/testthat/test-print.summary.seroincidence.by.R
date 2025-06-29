@@ -3,7 +3,7 @@ test_that("print method works consistently", {
   typhoid_results <- est_seroincidence_by(
     strata = "catchment",
     pop_data = sees_pop_data_pk_100,
-    curve_param = typhoid_curves_nostrat_100,
+    sr_param = typhoid_curves_nostrat_100,
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     noise_param = example_noise_params_pk,

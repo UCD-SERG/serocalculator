@@ -197,7 +197,7 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 est <- est_seroincidence_by(
   strata = c("country"),
   pop_data = xs_data,
-  curve_params = curves,
+  sr_params = curves,
   noise_params = noise,
   antigen_isos = c("OT56kda_IgG"),
   num_cores = 8 # Allow for parallel processing to decrease run time
@@ -217,7 +217,7 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 est2 <- est_seroincidence_by(
   strata = c("country", "ageQ"),
   pop_data = xs_data,
-  curve_params = curves,
+  sr_params = curves,
   noise_params = noise,
   antigen_isos = c("OT56kda_IgG"),
   num_cores = 8 # Allow for parallel processing to decrease run time

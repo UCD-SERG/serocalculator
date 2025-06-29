@@ -12,7 +12,7 @@ noise <- "https://osf.io/download//hqy4v/" |> readr::read_rds()
 sees_typhoid_ests_strat <- est_seroincidence_by(
   strata = c("ageCat", "Country"),
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = curve,
   curve_strata_varnames = NULL,
   noise_params = noise,
   noise_strata_varnames = "Country",

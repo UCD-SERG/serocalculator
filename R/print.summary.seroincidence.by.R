@@ -26,7 +26,7 @@
 #' est2 <- est_seroincidence_by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time

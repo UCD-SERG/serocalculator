@@ -1,4 +1,4 @@
-# `est_seroincidence_by()` produces consistent results for typhoid data
+# `est_seroincidence_by()` produces consistent results for sample data
 
     structure(list("Stratum 1" = structure(list(minimum = 269.456336163178, 
         estimate = -1.9659114149187, gradient = -9.97551535545146e-06, 
@@ -17,9 +17,9 @@
 # a warning is produced when `strata = NULL
 
     Code
-      est_seroincidence_by(strata = NULL, pop_data = sees_pop_data_pk_100,
-        curve_param = typhoid_curves_nostrat_100, noise_param = example_noise_params_pk,
-        antigen_isos = c("HlyE_IgG", "HlyE_IgA"))
+      est_seroincidence_by(strata = NULL, pop_data = sees_pop_data_pk_100, sr_param = typhoid_curves_nostrat_100,
+        noise_param = example_noise_params_pk, antigen_isos = c("HlyE_IgG",
+          "HlyE_IgA"))
     Condition
       Warning:
       The `strata` argument to `est.incidence.by()` is missing.

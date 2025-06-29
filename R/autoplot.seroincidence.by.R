@@ -24,7 +24,7 @@
 #' est2 <- est_seroincidence_by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   curve_strata_varnames= NULL,
 #'   noise_strata_varnames = NULL,
 #'   noise_params = noise,

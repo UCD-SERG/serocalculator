@@ -9,7 +9,7 @@ test_that(
       pop_data =
         sees_pop_data_pk_100 |>
         dplyr::filter(catchment == "kgh" | antigen_iso == "HlyE_IgA"),
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params =
         example_noise_params_sees |>
         dplyr::filter(Country == "Nepal"),
@@ -31,7 +31,7 @@ test_that("est_seroincidence_by() warns about missing data", {
   est_seroincidence_by(
     pop_data = sees_pop_data_pk_100 |>
       tail(-1),
-    curve_params = typhoid_curves_nostrat_100,
+    sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_sees |>
       dplyr::filter(Country == "Nepal"),
     strata = "catchment",
@@ -45,7 +45,7 @@ test_that("`est_seroincidence_by()` warns user when strata is missing", {
   expect_warning(
     est_seroincidence_by(
       pop_data = sees_pop_data_pk_100,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     ),
@@ -61,7 +61,7 @@ test_that(
       object = est_seroincidence_by(
         strata = c("ag", "catch", "Count"),
         pop_data = sees_pop_data_pk_100,
-        curve_params = typhoid_curves_nostrat_100,
+        sr_params = typhoid_curves_nostrat_100,
         noise_params = example_noise_params_pk,
         antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
         num_cores = 8,
@@ -76,13 +76,13 @@ test_that(
 
 
 test_that(
-  desc = "`est_seroincidence_by()` produces consistent results for typhoid data",
+  desc = "`est_seroincidence_by()` produces consistent results for sample data",
   code = {
     withr::local_options(width = 80)
     typhoid_results <- est_seroincidence_by(
       strata = "catchment",
       pop_data = sees_pop_data_pk_100,
-      curve_param = typhoid_curves_nostrat_100,
+      sr_param = typhoid_curves_nostrat_100,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
       noise_param = example_noise_params_pk,
@@ -105,7 +105,7 @@ test_that(
     est_true <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
       curve_strata_varnames = NULL,
@@ -116,7 +116,7 @@ test_that(
     est_false <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -137,7 +137,7 @@ test_that(
     ests_1_core <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
       curve_strata_varnames = NULL,
@@ -148,7 +148,7 @@ test_that(
     ests_2_cores <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -172,7 +172,7 @@ test_that(
         ests_verbose_sc <- est_seroincidence_by(
           strata = c("catchment"),
           pop_data = sees_pop_data_pk_100,
-          curve_params = typhoid_curves_nostrat_100,
+          sr_params = typhoid_curves_nostrat_100,
           noise_params = example_noise_params_pk,
           antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
           curve_strata_varnames = NULL,
@@ -187,7 +187,7 @@ test_that(
       verbose = FALSE,
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -208,7 +208,7 @@ test_that(
     ests_verbose_mc <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
       curve_strata_varnames = NULL,
@@ -222,7 +222,7 @@ test_that(
       verbose = FALSE,
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
-      curve_params = typhoid_curves_nostrat_100,
+      sr_params = typhoid_curves_nostrat_100,
       noise_params = example_noise_params_pk,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -244,7 +244,7 @@ test_that(
     est_seroincidence_by(
       strata = NULL,
       pop_data = sees_pop_data_pk_100,
-      curve_param = typhoid_curves_nostrat_100,
+      sr_param = typhoid_curves_nostrat_100,
       noise_param = example_noise_params_pk,
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     ) |>
@@ -263,7 +263,7 @@ test_that("results are consistent with `strata = NULL`", {
   typhoid_results_nullstrata <- est_seroincidence_by(
     strata = NULL,
     pop_data = sees_pop_data_pk_100,
-    curve_param = typhoid_curves_nostrat_100,
+    sr_param = typhoid_curves_nostrat_100,
     noise_param = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   ) |> suppressWarnings()
@@ -279,8 +279,8 @@ test_that("deprecate warning is as expected", {
   est2 <- est.incidence.by(
     strata = c("catchment"),
     pop_data = sees_pop_data_pk_100,
-    curve_params = typhoid_curves_nostrat_100,
-    curve_strata_varnames= NULL,
+    sr_params = typhoid_curves_nostrat_100,
+    curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),

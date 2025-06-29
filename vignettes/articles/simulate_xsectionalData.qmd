@@ -353,7 +353,7 @@ sim_df |>
 ests <-
   est_seroincidence_by(
     pop_data = sim_df,
-    curve_params = dmcmc,
+    sr_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,
     strata = c("sample_size", "lambda.sim", "cluster"),
@@ -512,7 +512,7 @@ sim_df_renew <-
 ests_renew <-
   est_seroincidence_by(
     pop_data = sim_df_renew,
-    curve_params = dmcmc,
+    sr_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,
     strata = c("sample_size", "lambda.sim", "cluster"),

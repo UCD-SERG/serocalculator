@@ -109,7 +109,7 @@ est_seroincidence_by <- function(
     to_return <-
       est_seroincidence(
         pop_data = pop_data,
-        curve_params = sr_params,
+        sr_params = sr_params,
         noise_params = noise_params,
         lambda_start = lambda_start,
         antigen_isos = antigen_isos,

@@ -67,7 +67,7 @@ cond <- tibble::tibble(
 ests <-
   est_seroincidence_by(
     pop_data = sim_df,
-    curve_params = dmcmc,
+    sr_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,
     strata = c("lambda.sim", "sample_size", "cluster"),

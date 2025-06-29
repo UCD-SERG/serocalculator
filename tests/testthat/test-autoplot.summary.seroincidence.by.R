@@ -201,7 +201,7 @@ test_that(
     est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,

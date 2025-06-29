@@ -76,7 +76,7 @@ test_that(
 
 
 test_that(
-  desc = "`est_seroincidence_by()` produces consistent results for typhoid data",
+  desc = "`est_seroincidence_by()` produces consistent results for sample data",
   code = {
     withr::local_options(width = 80)
     typhoid_results <- est_seroincidence_by(
@@ -280,7 +280,7 @@ test_that("deprecate warning is as expected", {
     strata = c("catchment"),
     pop_data = sees_pop_data_pk_100,
     sr_params = typhoid_curves_nostrat_100,
-    curve_strata_varnames= NULL,
+    curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),

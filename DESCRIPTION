@@ -7,6 +7,7 @@ Authors@R: c(
            comment = "Author of the method and original code."),
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
+    person("Kwan Ho", "Lee", , "ksjlee@ucdavis.edu", role = "ctb"),
     person("Kristen", "Aiemjoy", , "kaiemjoy@ucdavis.edu", role = "aut"),
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = "aut")
   )

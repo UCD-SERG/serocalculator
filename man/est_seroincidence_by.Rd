@@ -64,7 +64,7 @@ Values must be variable names in \code{noise_params}. Default = "".}
 \item{antigen_isos}{Character vector with one or more antibody names.
 Must match \code{pop_data}}
 
-\item{lambda_start}{starting guess for incidence rate, in years/event.}
+\item{lambda_start}{starting guess for incidence rate, in events/year.}
 
 \item{build_graph}{whether to graph the log-likelihood function across
 a range of incidence rates (lambda values)}

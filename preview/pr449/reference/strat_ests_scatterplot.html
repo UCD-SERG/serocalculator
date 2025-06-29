@@ -141,24 +141,22 @@ to connect points with lines (<code>NULL</code> for no lines)</p></dd>
 <span class="r-in"><span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"catchment"</span>, <span class="st">"ageCat"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span></span>
-<span class="r-in"><span>  curve_params <span class="op">=</span> <span class="va">curve</span>,</span></span>
+<span class="r-in"><span>  sr_params <span class="op">=</span> <span class="va">curve</span>,</span></span>
 <span class="r-in"><span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span></span>
 <span class="r-in"><span>  curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>  noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  num_cores <span class="op">=</span> <span class="fl">2</span> <span class="co"># Allow for parallel processing to decrease run time</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in est_seroincidence_by(strata = c("catchment", "ageCat"), pop_data = xs_data,     curve_params = curve, noise_params = noise, curve_strata_varnames = NULL,     noise_strata_varnames = NULL, antigen_isos = c("HlyE_IgG",         "HlyE_IgA"), num_cores = 2):</span> argument "sr_params" is missing, with no default</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">est2sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'est2' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">strat_ests_scatterplot</span><span class="op">(</span><span class="va">est2sum</span>,</span></span>
 <span class="r-in"><span>                       xvar <span class="op">=</span> <span class="st">"ageCat"</span>,</span></span>
 <span class="r-in"><span>                       color_var <span class="op">=</span> <span class="st">"catchment"</span>,</span></span>
 <span class="r-in"><span>                       CIs <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                       group_var <span class="op">=</span> <span class="st">"catchment"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'est2sum' not found</span>
+<span class="r-plt img"><img src="strat_ests_scatterplot-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

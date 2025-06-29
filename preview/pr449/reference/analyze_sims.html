@@ -127,7 +127,7 @@ for example, as produced by <code><a href="summary.seroincidence.by.html">summar
 <span class="r-in"><span><span class="va">ests</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span></span>
-<span class="r-in"><span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span></span>
+<span class="r-in"><span>    sr_params <span class="op">=</span> <span class="va">dmcmc</span>,</span></span>
 <span class="r-in"><span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span></span>
 <span class="r-in"><span>    num_cores <span class="op">=</span> <span class="va">n_cores</span>,</span></span>
 <span class="r-in"><span>    strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lambda.sim"</span>, <span class="st">"sample_size"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span></span>
@@ -137,12 +137,18 @@ for example, as produced by <code><a href="summary.seroincidence.by.html">summar
 <span class="r-in"><span>    build_graph <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># slows down the function substantially</span></span></span>
 <span class="r-in"><span>    antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in est_seroincidence_by(pop_data = sim_df, curve_params = dmcmc,     noise_params = cond, num_cores = n_cores, strata = c("lambda.sim",         "sample_size", "cluster"), curve_strata_varnames = NULL,     noise_strata_varnames = NULL, verbose = FALSE, build_graph = FALSE,     antigen_isos = c("HlyE_IgG", "HlyE_IgA")):</span> argument "sr_params" is missing, with no default</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ests</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">analyze_sims</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'ests' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   lambda.sim sample_size     Bias Mean_Est_SE Empirical_SE    RMSE Mean_CI_Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>       0.05          50  3.20<span style="color: #949494;">e</span><span style="color: #BB0000;">-3</span>     0.013<span style="text-decoration: underline;">0</span>       0.013<span style="text-decoration: underline;">5</span>  0.013<span style="text-decoration: underline;">5</span>         0.053<span style="text-decoration: underline;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>       0.05         200 -<span style="color: #BB0000;">5.60</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>     0.006<span style="text-decoration: underline;">26</span>      0.007<span style="text-decoration: underline;">93</span> 0.007<span style="text-decoration: underline;">75</span>        0.024<span style="text-decoration: underline;">8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>       0.8           50  2.14<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>     0.144        0.189   0.282          0.571 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>       0.8          200  1.95<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>     0.071<span style="text-decoration: underline;">0</span>       0.087<span style="text-decoration: underline;">9</span>  0.213          0.279 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: CI_Coverage &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

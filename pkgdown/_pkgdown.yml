@@ -64,6 +64,8 @@ reference:
   contents:
   - sim_pop_data
   - sim_pop_data_multi
+  - analyze_sims
+  - autoplot.sim_results
 
 articles:
 - title: Get started

@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9050</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9051</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -467,7 +467,7 @@
 <code class="sourceCode R"><span><span class="va">ests</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>    pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
-<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    sr_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
 <span>    num_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
 <span>    strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span>
@@ -713,7 +713,7 @@
 <span><span class="va">ests_renew</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>    pop_data <span class="op">=</span> <span class="va">sim_df_renew</span>,</span>
-<span>    curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
+<span>    sr_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>    noise_params <span class="op">=</span> <span class="va">cond</span>,</span>
 <span>    num_cores <span class="op">=</span> <span class="va">n_cores</span>,</span>
 <span>    strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span>

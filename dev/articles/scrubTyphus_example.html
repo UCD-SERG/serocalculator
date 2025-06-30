@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9050</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9051</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,7 +181,7 @@ longitudinal antibody responses among confirmed enteric fever cases.</p>
 <code class="sourceCode R"><span><span class="co"># Import longitudinal antibody parameters from OSF</span></span>
 <span></span>
 <span><span class="va">curves</span> <span class="op">&lt;-</span></span>
-<span>  <span class="st">"https://osf.io/download/u5gxh/"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="st">"https://osf.io/download/u5gxh/"</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -190,7 +190,7 @@ longitudinal antibody responses among confirmed enteric fever cases.</p>
 <p>We can graph the decay curves with an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>
 method:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">curves</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">curves</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 </div>
 <div class="section level4">
@@ -213,7 +213,7 @@ method:</p>
 <p>We can check that <code>xs_data</code> has the correct formatting
 using the <code><a href="../reference/check_pop_data.html">check_pop_data()</a></code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/check_pop_data.html">check_pop_data</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/check_pop_data.html">check_pop_data</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; data format is as expected.</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -223,7 +223,7 @@ using the <code><a href="../reference/check_pop_data.html">check_pop_data()</a><
 data with a <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for <code>pop_data</code>
 objects:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: There were 2 warnings in `dplyr::summarize()`.</span></span>
 <span><span class="co">#&gt; The first warning was:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span></span>
@@ -306,10 +306,10 @@ noise parameter below.</p>
 <p><em>Note that variable names are case-sensitive.</em></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># biologic noise</span></span>
-<span><span class="va">b_noise</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&lt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># restrict to young ages to capture recent exposures</span></span>
+<span><span class="va">b_noise</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&lt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># restrict to young ages to capture recent exposures</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/do.html" class="external-link">do</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
 <span>    <span class="co"># Fit the mixture model</span></span>
@@ -340,7 +340,7 @@ noise parameter below.</p>
 <span>  eps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="co"># M noise (eps)</span></span>
 <span>  y.low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="co"># low cutoff (llod)</span></span>
 <span>  y.high <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># high cutoff (y.high)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># high cutoff (y.high)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">round</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -356,7 +356,7 @@ rates.</p>
 <span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
@@ -396,7 +396,7 @@ rates.</p>
 <span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"country"</span>, <span class="st">"ageQ"</span><span class="op">)</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
@@ -445,7 +445,7 @@ rates.</p>
 <code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
 <span></span>
 <span><span class="co"># Save summary(est) as a dataframe</span></span>
-<span><span class="va">estdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">estdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ageQ <span class="op">=</span> <span class="st">"Overall"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Save summary(est2) as a dataframe</span></span>

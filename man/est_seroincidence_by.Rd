@@ -6,7 +6,7 @@
 \usage{
 est_seroincidence_by(
   pop_data,
-  curve_params,
+  sr_params,
   noise_params,
   strata,
   curve_strata_varnames = strata,
@@ -25,7 +25,7 @@ est_seroincidence_by(
 antibody and age, and additional columns corresponding to
 each element of the \code{strata} input}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+\item{sr_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
 from the Bayesian posterior distribution of a longitudinal decay curve model.
 The parameter columns must be named:
 \itemize{
@@ -150,7 +150,7 @@ noise <-
 est2 <- est_seroincidence_by(
   strata = "catchment",
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = curve,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   # num_cores = 8 # Allow for parallel processing to decrease run time

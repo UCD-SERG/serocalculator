@@ -11,31 +11,18 @@
 )
 }
 \arguments{
-\item{object}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+\item{object}{a \code{curve_params} object (constructed using \code{\link[=as_curve_params]{as_curve_params()}}), which is
+a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 
 \item{method}{a \link{character} string indicating whether to use
 \itemize{
 \item \code{\link[=graph.curve.params]{graph.curve.params()}} (default) or
 \item \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1()}} (previous default)
-}
+as the graphing method.
+}}
 
-as the graphing method.}
-
-\item{...}{
-  Arguments passed on to \code{\link[=graph.curve.params]{graph.curve.params}}
-  \describe{
-    \item{\code{verbose}}{verbose output}
-    \item{\code{show_all_curves}}{whether to show individual curves under quantiles}
-    \item{\code{antigen_isos}}{antigen isotypes to analyze
-(can subset \code{object})}
-    \item{\code{alpha_samples}}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
-(has no effect if \code{show_all_curves = FALSE})}
-    \item{\code{show_quantiles}}{whether to show point-wise (over time) quantiles}
-    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE})
-or linear scale (\code{FALSE}, default)?}
-    \item{\code{log_y}}{should the Y-axis be on a logarithmic scale
-(default, \code{TRUE}) or linear scale (\code{FALSE})?}
-  }}
+\item{...}{additional arguments passed to the sub-function
+indicated by the \code{method} argument.}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

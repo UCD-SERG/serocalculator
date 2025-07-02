@@ -39,7 +39,7 @@ autoplot.curve_params <- function(
   # spaghettified in order to swap out implementations with minimal
   # disruption to API
   method <- match.arg(method)
-  cur_function <- get(method)
+  cur_function <- match.fun(method)
   object |>
     cur_function(...)
 }

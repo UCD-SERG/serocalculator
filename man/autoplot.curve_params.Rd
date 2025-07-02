@@ -2,27 +2,35 @@
 % Please edit documentation in R/autoplot.curve_params.R
 \name{autoplot.curve_params}
 \alias{autoplot.curve_params}
-\title{graph antibody decay curves by antigen isotype}
+\title{Graph antibody decay curves by antigen isotype}
 \usage{
-\method{autoplot}{curve_params}(object, antigen_isos = unique(object$antigen_iso), ...)
+\method{autoplot}{curve_params}(object, ...)
 }
 \arguments{
-\item{object}{a \code{\link[=data.frame]{data.frame()}} of curve parameters (one or more MCMC samples)}
+\item{...}{
+  Arguments passed on to \code{\link[=graph.curve.params]{graph.curve.params}}
+  \describe{
+    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+    \item{\code{verbose}}{verbose output}
+    \item{\code{show_all_curves}}{whether to show individual curves under quantiles}
+    \item{\code{alpha_samples}}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
+(has no effect if \code{show_all_curves = FALSE})}
+    \item{\code{show_quantiles}}{whether to show point-wise (over time) quantiles}
+  }}
 
 \item{antigen_isos}{antigen isotypes to analyze
 (can subset \code{curve_params})}
-
-\item{...}{
-  Arguments passed on to \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1}}
-  \describe{
-    \item{\code{ncol}}{how many columns of subfigures to use in panel plot}
-  }}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
-graph antibody decay curves by antigen isotype
+Graph antibody decay curves by antigen isotype
+}
+\details{
+Currently, the backend for this method is \code{\link[=graph.curve.params]{graph.curve.params()}}.
+Previously, the backend for this method was \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1()}}.
+That function is still available if preferred.
 }
 \examples{
 \donttest{

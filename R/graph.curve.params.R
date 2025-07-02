@@ -1,14 +1,15 @@
-#' Graph estimated antibody decay curve
+#' Graph estimated antibody decay curves
 #'
 #' @param curve_params
 #' a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #' @param verbose verbose output
 #' @param show_all_curves whether to show individual curves under quantiles
-#' @param antigen_isos antigen isotypes
+#' @param antigen_isos antigen isotypes to analyze
+#' (can subset `curve_params`)
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
 #' (has no effect if `show_all_curves = FALSE`)
 #' @param show_quantiles whether to show point-wise (over time) quantiles
-#'
+#' @param ... not currently used
 #' @returns a [ggplot2::ggplot()] object
 #' @export
 #'
@@ -29,8 +30,9 @@ graph.curve.params <- function( # nolint: object_name_linter
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
   show_quantiles = TRUE,
-  show_all_curves = FALSE,
-  alpha_samples = 0.3
+  show_all_curves = TRUE,
+  alpha_samples = 0.3,
+  ...
 ) {
   if (verbose) {
     message(

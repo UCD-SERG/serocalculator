@@ -1,7 +1,11 @@
-#' graph antibody decay curves by antigen isotype
+#' Graph antibody decay curves by antigen isotype
+#' @details
+#' Currently, the backend for this method is [graph.curve.params()].
+#' Previously, the backend for this method was [graph_seroresponse_model_1()].
+#' That function is still available if preferred.
 #'
-#' @inheritParams graph_seroresponse_model_1
-#' @inheritDotParams graph_seroresponse_model_1
+#'
+#' @inheritDotParams graph.curve.params
 #' @param antigen_isos antigen isotypes to analyze
 #' (can subset `curve_params`)
 #' @return a [ggplot2::ggplot()] object
@@ -23,14 +27,10 @@
 #' }
 autoplot.curve_params <- function(
     object,
-    antigen_isos = unique(object$antigen_iso),
     ...) {
 
   # spaghettified in order to swap out implementations with minimal
   # disruption to API
   object |>
-    graph_seroresponse_model_1(
-      antigen_isos = antigen_isos,
-      ...
-    )
+    graph.curve.params(...)
 }

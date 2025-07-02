@@ -2,21 +2,23 @@
 % Please edit documentation in R/graph.curve.params.R
 \name{graph.curve.params}
 \alias{graph.curve.params}
-\title{Graph estimated antibody decay curve}
+\title{Graph estimated antibody decay curves}
 \usage{
 graph.curve.params(
   curve_params,
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
   show_quantiles = TRUE,
-  show_all_curves = FALSE,
-  alpha_samples = 0.3
+  show_all_curves = TRUE,
+  alpha_samples = 0.3,
+  ...
 )
 }
 \arguments{
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 
-\item{antigen_isos}{antigen isotypes}
+\item{antigen_isos}{antigen isotypes to analyze
+(can subset \code{curve_params})}
 
 \item{verbose}{verbose output}
 
@@ -26,12 +28,14 @@ graph.curve.params(
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{show_all_curves = FALSE})}
+
+\item{...}{not currently used}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
-Graph estimated antibody decay curve
+Graph estimated antibody decay curves
 }
 \examples{
 curve <-

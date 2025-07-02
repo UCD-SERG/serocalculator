@@ -9,7 +9,7 @@
 #'
 #' as the graphing method.
 #'
-#' @param ... additional arugments passed to the sub-function
+#' @param ... additional arguments passed to the sub-function
 #' indicated by the `method` argument.
 #' @return a [ggplot2::ggplot()] object
 #' @export

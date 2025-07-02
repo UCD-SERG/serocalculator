@@ -1,7 +1,8 @@
 #' Plot the log-likelihood curve for the incidence rate estimate
 #'
-#' @param object a `seroincidence` object (from [estimate_scr()])
-#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`) or linear scale (`FALSE`, default)?
+#' @param object a `seroincidence` object (from [est_seroincidence()])
+#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`)
+#' or linear scale (`FALSE`, default)?
 #' @param ... unused
 #'
 #' @return a [ggplot2::ggplot()]
@@ -21,9 +22,9 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- estimate_scr(
+#' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
-#'   curve_param = curve,
+#'   sr_param = curve,
 #'   noise_param = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   build_graph = TRUE
@@ -32,17 +33,15 @@
 #' # Plot the log-likelihood curve
 #' autoplot(est1)
 #'}
-autoplot.seroincidence =
-  function(object, log_x = FALSE, ...)
-{
-  to_return = attr(object, "ll_graph")
+autoplot.seroincidence <-
+  function(object, log_x = FALSE, ...) {
+    to_return <- attr(object, "ll_graph")
 
     if (is.null(to_return)) {
       stop(
         "Graphs cannot be extracted; ",
-        "`build_graph` was not `TRUE` in the call to `estimate_scr()`"
+        "`build_graph` was not `TRUE` in the call to `est_seroincidence()`"
       )
-      figure <- NULL
     }
 
     if (log_x) {

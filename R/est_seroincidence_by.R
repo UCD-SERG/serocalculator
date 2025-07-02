@@ -21,22 +21,23 @@
 #' @details
 #'
 #' If `strata` is left empty, a warning will be produced,
-#' recommending that you use [estimate_scr()] for unstratified analyses,
-#' and then the data will be passed to [estimate_scr()].
-#' If for some reason you want to use [estimate_scr_by()]
-#' with no strata instead of calling [estimate_scr()],
+#' recommending that you use [est_seroincidence()] for unstratified analyses,
+#' and then the data will be passed to [est_seroincidence()].
+#' If for some reason you want to use [est_seroincidence_by()]
+#' with no strata instead of calling [est_seroincidence()],
 #' you may use `NA`, `NULL`, or `""` as the `strata`
 #' argument to avoid that warning.
 #'
 #'
-#' @inheritParams estimate_scr
-#' @inheritDotParams estimate_scr
+#' @inheritParams est_seroincidence
+#' @inheritParams log_likelihood
+#' @inheritDotParams est_seroincidence
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 #'
 #' @return
 #' * if `strata` has meaningful inputs:
 #' An object of class `"seroincidence.by"`; i.e., a list of
-#' `"seroincidence"` objects from [estimate_scr()], one for each stratum,
+#' `"seroincidence"` objects from [est_seroincidence()], one for each stratum,
 #' with some meta-data attributes.
 #' * if `strata` is missing, `NULL`, `NA`, or `""`:
 #' An object of class `"seroincidence"`.
@@ -50,16 +51,16 @@
 #'   sees_pop_data_pk_100
 #'
 #' curve <-
-#'   typhoid_curves_nostrat_100 %>%
+#'   typhoid_curves_nostrat_100 |>
 #'   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 #'
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est2 <- estimate_scr_by(
+#' est2 <- est_seroincidence_by(
 #'   strata = "catchment",
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time
@@ -68,15 +69,15 @@
 #' print(est2)
 #' summary(est2)
 #'
-estimate_scr_by <- function(
+est_seroincidence_by <- function(
     pop_data,
-    curve_params,
+    sr_params,
     noise_params,
     strata,
     curve_strata_varnames = strata,
     noise_strata_varnames = strata,
-    antigen_isos = pop_data %>%
-      pull("antigen_iso") %>%
+    antigen_isos = pop_data |>
+      pull("antigen_iso") |>
       unique(),
     lambda_start = 0.1,
     build_graph = FALSE,
@@ -97,7 +98,7 @@ estimate_scr_by <- function(
       c(
         "The {.arg strata} argument to {.fn est.incidence.by} is missing.",
         "i" = "If you do not want to stratify your data,
-               consider using the {.fn estimate_scr} function to
+               consider using the {.fn est_seroincidence} function to
                simplify your code and avoid this warning.",
         "i" = "Since the {.arg strata} argument is empty,
                {.fn est.incidence.by} will return a {.cls seroincidence} object,
@@ -106,9 +107,9 @@ estimate_scr_by <- function(
     )
 
     to_return <-
-      estimate_scr(
+      est_seroincidence(
         pop_data = pop_data,
-        curve_params = curve_params,
+        sr_params = sr_params,
         noise_params = noise_params,
         lambda_start = lambda_start,
         antigen_isos = antigen_isos,
@@ -124,21 +125,21 @@ estimate_scr_by <- function(
   .errorCheck(
     data = pop_data,
     antigen_isos = antigen_isos,
-    curve_params = curve_params
+    curve_params = sr_params
   )
 
   # Split data per stratum
   stratum_data_list <- stratify_data(
     antigen_isos = antigen_isos,
-    data = pop_data %>% filter(.data$antigen_iso %in% antigen_isos),
-    curve_params = curve_params %>% filter(.data$antigen_iso %in% antigen_isos),
-    noise_params = noise_params %>% filter(.data$antigen_iso %in% antigen_isos),
+    data = pop_data |> filter(.data$antigen_iso %in% antigen_isos),
+    curve_params = sr_params |> filter(.data$antigen_iso %in% antigen_isos),
+    noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames
   )
 
-  strata_table <- stratum_data_list %>% attr("strata")
+  strata_table <- stratum_data_list |> attr("strata")
 
   if (verbose) {
     cli::cli_inform(
@@ -164,7 +165,7 @@ estimate_scr_by <- function(
   if (num_cores > 1L) {
     requireNamespace("parallel", quietly = FALSE)
 
-    num_cores <- num_cores %>% check_parallel_cores()
+    num_cores <- num_cores |> check_parallel_cores()
 
     if (verbose) {
       cli::cli_inform("Setting up parallel processing with
@@ -173,8 +174,8 @@ estimate_scr_by <- function(
 
     lib_paths <- .libPaths()
     cl <-
-      num_cores %>%
-      parallel::makeCluster() %>%
+      num_cores |>
+      parallel::makeCluster() |>
       suppressMessages()
     on.exit({
       parallel::stopCluster(cl)
@@ -198,7 +199,7 @@ estimate_scr_by <- function(
         X = stratum_data_list,
         fun = function(x) {
           do.call(
-            what = estimate_scr,
+            what = est_seroincidence,
             args = c(
               x,
               list(
@@ -226,7 +227,7 @@ estimate_scr_by <- function(
 
       for (cur_stratum in names(stratum_data_list)) {
         cur_stratum_vars <-
-          strata_table %>%
+          strata_table |>
           dplyr::filter(.data$Stratum == cur_stratum)
 
         if (verbose) {
@@ -235,7 +236,7 @@ estimate_scr_by <- function(
         }
 
         fits[[cur_stratum]] <- do.call(
-          what = estimate_scr,
+          what = est_seroincidence,
           args = c(
             stratum_data_list[[cur_stratum]],
             list(
@@ -263,7 +264,7 @@ estimate_scr_by <- function(
     antigen_isos = antigen_isos,
     Strata = strata_table,
     graphs_included = build_graph,
-    class = "seroincidence.by" %>% union(class(fits))
+    class = "seroincidence.by" |> union(class(fits))
   )
 
   return(incidence_data)
@@ -274,14 +275,15 @@ estimate_scr_by <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence.by()` was renamed to [estimate_scr_by()] to create a more
+#' `est.incidence.by()` was renamed to [est_seroincidence_by()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
-  ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence.by()", "estimate_scr_by()")
-  estimate_scr_by(
+    ...) {
+  lifecycle::deprecate_soft("1.4.0", "est.incidence.by()",
+                            "est_seroincidence_by()")
+  est_seroincidence_by(
     ...
   )
 }

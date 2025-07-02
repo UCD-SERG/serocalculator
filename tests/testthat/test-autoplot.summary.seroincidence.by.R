@@ -2,9 +2,8 @@ test_that(
   desc = "scatterplot results are consistent",
   code = {
 
-
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -16,10 +15,10 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -58,9 +57,8 @@ test_that(
   desc = "barplot results are consistent",
   code = {
 
-
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -72,10 +70,10 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -100,8 +98,8 @@ test_that(
   desc = "error on plot type",
   code = {
 
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -113,10 +111,10 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -143,8 +141,8 @@ test_that(
 test_that(
   desc = "error on incorrect yvar",
   code = {
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -156,10 +154,10 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,
@@ -187,8 +185,8 @@ test_that(
 test_that(
   desc = "color palette works as expected",
   code = {
-    library(dplyr)
-    library(ggplot2)
+    withr::local_package("dplyr")
+    withr::local_package("ggplot2")
 
     xs_data <-
       sees_pop_data_pk_100
@@ -200,10 +198,10 @@ test_that(
     noise <-
       example_noise_params_pk
 
-    est2 <- estimate_scr_by(
+    est2 <- est_seroincidence_by(
       strata = c("catchment", "ageCat"),
       pop_data = xs_data,
-      curve_params = curve,
+      sr_params = curve,
       noise_params = noise,
       curve_strata_varnames = NULL,
       noise_strata_varnames = NULL,

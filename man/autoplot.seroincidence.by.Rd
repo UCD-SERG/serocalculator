@@ -7,18 +7,19 @@
 \method{autoplot}{seroincidence.by}(object, ncol = min(3, length(object)), ...)
 }
 \arguments{
-\item{object}{a '"seroincidence.by"' object (from \code{\link[=estimate_scr_by]{estimate_scr_by()}})}
+\item{object}{a '"seroincidence.by"' object (from \code{\link[=est_seroincidence_by]{est_seroincidence_by()}})}
 
 \item{ncol}{number of columns to use for panel of plots}
 
 \item{...}{
   Arguments passed on to \code{\link[=autoplot.seroincidence]{autoplot.seroincidence}}
   \describe{
-    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE}) or linear scale (\code{FALSE}, default)?}
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE})
+or linear scale (\code{FALSE}, default)?}
   }}
 }
 \value{
-an object of class \code{"ggarrange"}, which is a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} or a \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s.
+a \code{"ggarrange"} object: a single or \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s
 }
 \description{
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects
@@ -38,10 +39,10 @@ curve <-
 noise <-
   example_noise_params_pk
 
-est2 <- estimate_scr_by(
+est2 <- est_seroincidence_by(
   strata = c("catchment"),
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = curve,
   curve_strata_varnames= NULL,
   noise_strata_varnames = NULL,
   noise_params = noise,

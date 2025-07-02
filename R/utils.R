@@ -4,7 +4,7 @@
 
 .appendNames <- function(abNames) {
   res <- c()
-  for (k in seq_len(length(abNames))) {
+  for (k in seq_along(abNames)) {
     res <- c(
       res,
       paste0(abNames[k], ".lo"),
@@ -31,13 +31,12 @@
 }
 
 .checkAntibodies <- function(pop_data,
-                             antigen_isos = pop_data %>% attr("antigen_isos"))
-{
+                             antigen_isos = pop_data |>  attr("antigen_isos")) {
 
   if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
     stop(
       paste0(
-        "In `estimate_scr()`, the argument `antigen_isos` should be a ",
+        "In `est_seroincidence()`, the argument `antigen_isos` should be a ",
         "`character()` or `factor()` variable, but ",
         'currently, `class(antigen_isos) == "',
         class(antigen_isos),
@@ -56,13 +55,13 @@
     )
   }
 
-  missing_AIs =
-    antigen_isos %>%
-    setdiff(pop_data %>% get_biomarker_names())
+  missing_AIs <-
+    antigen_isos |>
+    setdiff(pop_data |>  get_biomarker_names())
 
-  if (length(missing_AIs) != 0)
-  {
-    message = "`pop_data` has no observations for the following {pop_data %>% get_biomarker_names_var()}s: {missing_AIs"
+  if (length(missing_AIs) != 0) {
+    message = "`pop_data` has no observations for the following
+    {pop_data %>% get_biomarker_names_var()}s: {missing_AIs"
 
     cli::cli_warn(message = message, class = "missing_biomarker")
   }
@@ -72,8 +71,8 @@
 
 .checkParams <- function(antigen_isos, params) {
   message1 <- paste(
-    "Please provide a `data.frame()` containing Monte Carlo samples of the longitudinal parameters",
-    "`y1`, `alpha`, and `r`",
+    "Please provide a `data.frame()` containing Monte Carlo samples",
+    "of the longitudinal parameters `y1`, `alpha`, and `r`",
     "for each value of `antigen_iso` in `pop_data`"
   )
 

@@ -259,18 +259,18 @@ print(lik_both)
 
 ## estimate incidence
 
-We can estimate incidence with `estimate_scr()`:
+We can estimate incidence with `est_seroincidence()`:
 
 ```{r "est.incidence"}
-est1 <- estimate_scr(
+est1 <- est_seroincidence(
   pop_data = csdata,
-  curve_params = dmcmc,
+  sr_params = dmcmc,
   noise_params = cond,
   lambda_start = .1,
   build_graph = TRUE,
   verbose = verbose,
   print_graph = FALSE, # display the log-likelihood curve while
-  #`estimate_scr()` is running
+  #`est_seroincidence()` is running
   antigen_isos = antibodies
 )
 ```
@@ -317,7 +317,7 @@ sim_df <-
     n_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
-    n_samples = nrep,
+    sample_sizes = nrep,
     age_range = lifespan,
     antigen_isos = antibodies,
     renew_params = renew_params,
@@ -351,12 +351,12 @@ sim_df |>
 
 ```{r, "est-by-stratum"}
 ests <-
-  estimate_scr_by(
+  est_seroincidence_by(
     pop_data = sim_df,
-    curve_params = dmcmc,
+    sr_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,
-    strata = c("lambda.sim", "cluster"),
+    strata = c("sample_size", "lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     verbose = verbose,
@@ -421,9 +421,9 @@ ests_summary |>
 
 Solutions to `nlm()` exit codes 3-5:
 
-* 3: decrease the `stepmin` argument to `estimate_scr()`/`estimate_scr_by()`
-* 4: increase the `iterlim` argument to `estimate_scr()`/`estimate_scr_by()`
-* 5: increase the `stepmax` argument to `estimate_scr()`/`estimate_scr_by()`
+* 3: decrease the `stepmin` argument to `est_seroincidence()`/`est_seroincidence_by()`
+* 4: increase the `iterlim` argument to `est_seroincidence()`/`est_seroincidence_by()`
+* 5: increase the `stepmax` argument to `est_seroincidence()`/`est_seroincidence_by()`
 
 We can extract the indices of problematic strata, if there are any:
 
@@ -467,6 +467,25 @@ ests_summary |>
 
 ```
 
+---
+
+We can analyze the simulation results with `analyze_sims()`:
+
+```{r}
+ests_summary |> analyze_sims()
+```
+
+---
+
+We can graph the analysis results with an `autoplot()` method:
+
+```{r}
+
+ests_summary |> analyze_sims() |> autoplot(statistic = "Empirical_SE")
+
+```
+
+
 ## Effect of `renew_params`
 
 Setting `renew_params = TRUE` is more realistic, 
@@ -480,7 +499,7 @@ sim_df_renew <-
     n_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
-    n_samples = nrep,
+    sample_sizes = nrep,
     age_range = lifespan,
     antigen_isos = antibodies,
     renew_params = TRUE,
@@ -491,12 +510,12 @@ sim_df_renew <-
   )
 
 ests_renew <-
-  estimate_scr_by(
+  est_seroincidence_by(
     pop_data = sim_df_renew,
-    curve_params = dmcmc,
+    sr_params = dmcmc,
     noise_params = cond,
     num_cores = n_cores,
-    strata = c("lambda.sim", "cluster"),
+    strata = c("sample_size", "lambda.sim", "cluster"),
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
     verbose = verbose,

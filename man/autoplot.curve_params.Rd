@@ -22,7 +22,7 @@ a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody de
 
 as the graphing method.}
 
-\item{...}{additional arugments passed to the sub-function
+\item{...}{additional arguments passed to the sub-function
 indicated by the \code{method} argument.}
 }
 \value{

@@ -206,11 +206,6 @@ graph.curve.params <- function( # nolint: object_name_linter
 
   }
 
-  if (log_x) {
-    plot1 <- plot1 +
-      ggplot2::scale_x_log10(labels = scales::label_comma())
-  }
-
   if (log_y) {
     plot1 <-
       plot1 +
@@ -219,6 +214,11 @@ graph.curve.params <- function( # nolint: object_name_linter
         labels = scales::label_comma(),
         minor_breaks = NULL
       )
+  }
+
+  if (log_x) {
+    plot1 <- plot1 +
+      ggplot2::scale_x_log10(labels = scales::label_comma())
   }
 
   if (show_quantiles) {

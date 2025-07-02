@@ -31,6 +31,10 @@ as the graphing method.}
     \item{\code{alpha_samples}}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{show_all_curves = FALSE})}
     \item{\code{show_quantiles}}{whether to show point-wise (over time) quantiles}
+    \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE})
+or linear scale (\code{FALSE}, default)?}
+    \item{\code{log_y}}{should the Y-axis be on a logarithmic scale
+(default, \code{TRUE}) or linear scale (\code{FALSE})?}
   }}
 }
 \value{

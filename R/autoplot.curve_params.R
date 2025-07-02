@@ -1,6 +1,5 @@
 #' Graph antibody decay curves by antigen isotype
 #'
-#' @param object
 #' @param method a [character] string indicating whether to use
 #'  - [graph.curve.params()] (default) or
 #'  - [graph_seroresponse_model_1()] (previous default)

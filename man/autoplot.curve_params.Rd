@@ -4,22 +4,34 @@
 \alias{autoplot.curve_params}
 \title{Graph antibody decay curves by antigen isotype}
 \usage{
-\method{autoplot}{curve_params}(object, ...)
+\method{autoplot}{curve_params}(
+  object,
+  method = c("graph.curve.params", "graph_seroresponse_model_1"),
+  ...
+)
 }
 \arguments{
+\item{object}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+
+\item{method}{a \link{character} string indicating whether to use
+\itemize{
+\item \code{\link[=graph.curve.params]{graph.curve.params()}} (default) or
+\item \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1()}} (previous default)
+}
+
+as the graphing method.}
+
 \item{...}{
   Arguments passed on to \code{\link[=graph.curve.params]{graph.curve.params}}
   \describe{
-    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
     \item{\code{verbose}}{verbose output}
     \item{\code{show_all_curves}}{whether to show individual curves under quantiles}
+    \item{\code{antigen_isos}}{antigen isotypes to analyze
+(can subset \code{object})}
     \item{\code{alpha_samples}}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{show_all_curves = FALSE})}
     \item{\code{show_quantiles}}{whether to show point-wise (over time) quantiles}
   }}
-
-\item{antigen_isos}{antigen isotypes to analyze
-(can subset \code{curve_params})}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

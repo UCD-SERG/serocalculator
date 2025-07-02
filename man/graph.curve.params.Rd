@@ -5,8 +5,8 @@
 \title{Graph estimated antibody decay curves}
 \usage{
 graph.curve.params(
-  curve_params,
-  antigen_isos = unique(curve_params$antigen_iso),
+  object,
+  antigen_isos = unique(object$antigen_iso),
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = TRUE,
@@ -15,10 +15,10 @@ graph.curve.params(
 )
 }
 \arguments{
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+\item{object}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 
 \item{antigen_isos}{antigen isotypes to analyze
-(can subset \code{curve_params})}
+(can subset \code{object})}
 
 \item{verbose}{verbose output}
 

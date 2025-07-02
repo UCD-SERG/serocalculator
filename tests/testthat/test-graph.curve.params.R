@@ -34,6 +34,6 @@ test_that(
       log_x = TRUE
     )
     plot3 |>
-      vdiffr::expect_doppelganger(title = "curve-samples")
+      vdiffr::expect_doppelganger(title = "curve-samples-log_x")
   }
 )

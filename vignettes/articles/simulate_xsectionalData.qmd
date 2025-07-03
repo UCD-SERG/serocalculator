@@ -86,24 +86,33 @@ of model parameters using a `autoplot.curve_params()` method for the
 `autoplot()` function:
 
 ```{r}
-dmcmc |> autoplot(n_curves = 50)
+dmcmc |> autoplot(
+  show_quantiles = FALSE,
+  show_all_curves = TRUE
+)
 ```
 
 We can use a logarithmic scale for the x-axis if desired:
 
 ```{r}
-dmcmc |> autoplot(log_x = TRUE, n_curves = 50)
+dmcmc |> autoplot(
+  show_quantiles = FALSE,
+  show_all_curves = TRUE,
+  log_x = TRUE
+)
 ```
 
-We can graph the median, 10%, and 90% quantiles of the model using the `graph.curve.params()` function:
+We can add the median, 10%, and 90% quantiles of the model:
 
 ```{r, "graph-curve-params"}
 # Specify the antibody-isotype responses to include in analyses
 antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
 dmcmc |>
-  graph.curve.params(antigen_isos = antibodies) |>
-  print()
+  autoplot(
+    show_quantiles = TRUE,
+    show_all_curves = TRUE
+  )
 ```
 
 

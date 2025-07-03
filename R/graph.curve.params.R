@@ -29,7 +29,7 @@ graph.curve.params <- function( # nolint: object_name_linter
   antigen_isos = unique(curve_params$antigen_iso),
   verbose = FALSE,
   show_quantiles = TRUE,
-  show_all_curves = FALSE,
+  show_all_curves = TRUE,
   alpha_samples = 0.3
 ) {
   if (verbose) {

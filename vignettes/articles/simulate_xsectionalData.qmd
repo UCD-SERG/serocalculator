@@ -4,6 +4,14 @@ description: "A demonstration of the accuracy of the estimation approach"
 bibliography: ../references.bib
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
 
 This vignette shows how to simulate a cross-sectional sample of 
 seroresponses for incident infections as a Poisson process with 
@@ -49,16 +57,6 @@ given a value in 1:4000,
 the chosen number is fixed and reused
 in any subsequent infection. 
 This is for diagnostic purposes.
-
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7,
-  fig.height = 5
-)
-```
 
 # Simulate a single dataset
 

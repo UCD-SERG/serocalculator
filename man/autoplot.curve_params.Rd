@@ -6,21 +6,20 @@
 \usage{
 \method{autoplot}{curve_params}(
   object,
-  method = c("graph_seroresponse_model_1", "graph.curve.params"),
+  method = c("graph.curve.params", "graph_seroresponse_model_1"),
   ...
 )
 }
 \arguments{
-\item{object}{a \code{curve_params} object (constructed using \code{\link[=as_curve_params]{as_curve_params()}}), which is
+\item{object}{a \code{curve_params} object (constructed using \code{\link[=as_sr_params]{as_sr_params()}}), which is
 a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 
 \item{method}{a \link{character} string indicating whether to use
 \itemize{
-\item \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1()}} (default)
-\item \code{\link[=graph.curve.params]{graph.curve.params()}}
-}
-
-as the graphing method.}
+\item \code{\link[=graph.curve.params]{graph.curve.params()}} (default) or
+\item \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1()}} (previous default)
+as the graphing method.
+}}
 
 \item{...}{additional arguments passed to the sub-function
 indicated by the \code{method} argument.}
@@ -30,6 +29,11 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 Graph antibody decay curves by antigen isotype
+}
+\details{
+Currently, the backend for this method is \code{\link[=graph.curve.params]{graph.curve.params()}}.
+Previously, the backend for this method was \code{\link[=graph_seroresponse_model_1]{graph_seroresponse_model_1()}}.
+That function is still available if preferred.
 }
 \examples{
 \donttest{

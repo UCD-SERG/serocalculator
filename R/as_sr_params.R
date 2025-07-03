@@ -67,6 +67,22 @@ as_sr_params <- function(data, antigen_isos = NULL) {
     ))
   }
 
+  # if `object` lacks an `iter` column, add it:
+  if (!is.element("iter", names(curve_data))) {
+    cli::cli_warn(
+      c(
+        "`data` is missing `iter` column",
+        "It will be inferred from row ordering."
+      )
+    )
+    curve_data <-
+      curve_data |>
+      mutate(
+        .by = any_of(c("antigen_iso", "chain")),
+        iter = row_number()
+      )
+  }
+
   # assign antigen attribute
   attr(curve_data, "antigen_isos") <- antigen_isos
 

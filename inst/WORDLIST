@@ -38,7 +38,6 @@ Vellore
 Volterra
 al
 ast
-autoplot
 behaviour
 bioassays
 biomarker
@@ -50,7 +49,6 @@ csv
 dev
 devtools
 displaystyle
-df
 dt
 eps
 estimands
@@ -115,7 +113,6 @@ serosurvey
 serosurveys
 smp
 subfigures
-tbl
 th
 tibble
 titers

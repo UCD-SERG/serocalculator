@@ -1,6 +1,5 @@
 ---
-title: "Generate a simulated cross-sectional sample and estimate seroincidence"
-subtitle: "Simulation of Enteric Fever using HlyE IgG and/or HlyE IgA"
+title: "Simulation studies"
 description: "A demonstration of the accuracy of the estimation approach"
 bibliography: ../references.bib
 ---

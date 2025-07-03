@@ -94,8 +94,7 @@ curves <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curves |> 
-  autoplot()
+curves |> autoplot()
 ```
 
 

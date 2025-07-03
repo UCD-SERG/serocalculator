@@ -8,19 +8,19 @@ test_that(
     plot1 <- graph.curve.params(
       curve,
       show_quantiles = TRUE,
-      show_all_curves = FALSE
+      n_curves = 0
     )
     plot1 |> vdiffr::expect_doppelganger(title = "curve-quantiles")
     plot2 <- graph.curve.params(
       curve,
       show_quantiles = TRUE,
-      show_all_curves = TRUE
+      n_curves = Inf
     )
     plot2 |>
       vdiffr::expect_doppelganger(title = "curve-quantiles-and-samples")
     plot3 <- graph.curve.params(
       curve,
-      show_all_curves = TRUE,
+      n_curves = Inf,
       show_quantiles = FALSE
     )
     plot3 |>
@@ -37,7 +37,7 @@ test_that(
       dplyr::mutate(.by = antigen_iso, chain = rep(1:2, times = n() / 2))
     plot3 <- graph.curve.params(
       curve,
-      show_all_curves = TRUE,
+      n_curves = Inf,
       show_quantiles = TRUE,
       log_x = TRUE
     )

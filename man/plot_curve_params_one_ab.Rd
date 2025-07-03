@@ -12,7 +12,7 @@ plot_curve_params_one_ab(
   n_points = 1000,
   log_x = FALSE,
   log_y = TRUE,
-  rows_to_graph = seq_len(min(n_curves, nrow(object))),
+  iters_to_graph = seq_len(min(n_curves, nrow(object))),
   xlim = c(10^-1, 10^3.1),
   ...
 )
@@ -40,7 +40,7 @@ or linear scale (\code{FALSE}, default)?}
 \item{log_y}{should the Y-axis be on a logarithmic scale
 (default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
-\item{rows_to_graph}{which rows of \code{curve_params} to plot
+\item{iters_to_graph}{which rows of \code{curve_params} to plot
 (overrides \code{n_curves}).}
 
 \item{xlim}{range of x values to graph}
@@ -97,9 +97,9 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Graph an antibody decay curve model
 }
 \details{
-\subsection{\code{n_curves} and \code{rows_to_graph}}{
+\subsection{\code{n_curves} and \code{iters_to_graph}}{
 
-In most cases, \code{curve_params} will contain too many rows of MCMC
+In most cases, \code{object} will contain too many rows of MCMC
 samples for all of these samples to be plotted at once.
 \itemize{
 \item Setting the  \code{n_curves} argument to a value smaller than the
@@ -107,7 +107,7 @@ number of rows in \code{curve_params} will cause this function to select
 the first \code{n_curves} rows to graph.
 \item Setting \code{n_curves} larger than the number of rows in ` will
 result all curves being plotted.
-\item If the user directly specifies the \code{rows_to_graph} argument,
+\item If the user directly specifies the \code{iters_to_graph} argument,
 then \code{n_curves} has no effect.
 }
 }

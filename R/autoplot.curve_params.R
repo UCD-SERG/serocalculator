@@ -1,6 +1,6 @@
 #' Graph antibody decay curves by antigen isotype
 #' @param object
-#' a `curve_params` object (constructed using [as_curve_params()]), which is
+#' a `curve_params` object (constructed using [as_sr_params()]), which is
 #' a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #' @param method a [character] string indicating whether to use
 #'  - [graph.curve.params()] (default) or

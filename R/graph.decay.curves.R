@@ -6,7 +6,7 @@
 #' @param n_curves how many curves to plot (see details).
 #' @param n_points Number of points to interpolate along the x axis
 #' (passed to [ggplot2::geom_function()])
-#' @param rows_to_graph which rows of `curve_params` to plot
+#' @param iters_to_graph which rows of `curve_params` to plot
 #' (overrides `n_curves`).
 #' @param alpha (passed to [ggplot2::geom_function()])
 #' how transparent the curves should be:
@@ -20,15 +20,15 @@
 #' @inheritDotParams ggplot2::geom_function
 #' @returns a [ggplot2::ggplot()] object
 #' @details
-#' ## `n_curves` and `rows_to_graph`
-#' In most cases, `curve_params` will contain too many rows of MCMC
+#' ## `n_curves` and `iters_to_graph`
+#' In most cases, `object` will contain too many rows of MCMC
 #' samples for all of these samples to be plotted at once.
 #' * Setting the  `n_curves` argument to a value smaller than the
 #' number of rows in `curve_params` will cause this function to select
 #' the first `n_curves` rows to graph.
 #' * Setting `n_curves` larger than the number of rows in ` will
 #' result all curves being plotted.
-#' * If the user directly specifies the `rows_to_graph` argument,
+#' * If the user directly specifies the `iters_to_graph` argument,
 #' then `n_curves` has no effect.
 #' @examples
 #' \donttest{
@@ -50,7 +50,7 @@ plot_curve_params_one_ab <- function(
     n_points = 1000,
     log_x = FALSE,
     log_y = TRUE,
-    rows_to_graph = seq_len(min(n_curves, nrow(object))),
+    iters_to_graph = seq_len(min(n_curves, nrow(object))),
     xlim = c(10 ^ -1, 10 ^ 3.1),
     ...) {
   plot1 <-
@@ -81,7 +81,7 @@ plot_curve_params_one_ab <- function(
   }
 
   layers <-
-    lapply(X = rows_to_graph, FUN = layer_function)
+    lapply(X = iters_to_graph, FUN = layer_function)
 
   plot1 <- plot1 + layers
 

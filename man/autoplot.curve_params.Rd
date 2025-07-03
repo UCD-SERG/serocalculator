@@ -11,7 +11,7 @@
 )
 }
 \arguments{
-\item{object}{a \code{curve_params} object (constructed using \code{\link[=as_curve_params]{as_curve_params()}}), which is
+\item{object}{a \code{curve_params} object (constructed using \code{\link[=as_sr_params]{as_sr_params()}}), which is
 a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 
 \item{method}{a \link{character} string indicating whether to use

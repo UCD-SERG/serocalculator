@@ -13,6 +13,8 @@ graph.curve.params(
   alpha_samples = 0.3,
   log_x = FALSE,
   log_y = TRUE,
+  n_curves = 100,
+  iters_to_graph = head(unique(object$iter), n_curves),
   ...
 )
 }
@@ -37,6 +39,11 @@ or linear scale (\code{FALSE}, default)?}
 \item{log_y}{should the Y-axis be on a logarithmic scale
 (default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
+\item{n_curves}{how many curves to plot (see details).}
+
+\item{iters_to_graph}{which rows of \code{curve_params} to plot
+(overrides \code{n_curves}).}
+
 \item{...}{not currently used}
 }
 \value{
@@ -44,6 +51,22 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 Graph estimated antibody decay curves
+}
+\details{
+\subsection{\code{n_curves} and \code{iters_to_graph}}{
+
+In most cases, \code{object} will contain too many rows of MCMC
+samples for all of these samples to be plotted at once.
+\itemize{
+\item Setting the  \code{n_curves} argument to a value smaller than the
+number of rows in \code{curve_params} will cause this function to select
+the first \code{n_curves} rows to graph.
+\item Setting \code{n_curves} larger than the number of rows in ` will
+result all curves being plotted.
+\item If the user directly specifies the \code{iters_to_graph} argument,
+then \code{n_curves} has no effect.
+}
+}
 }
 \examples{
 curve <-

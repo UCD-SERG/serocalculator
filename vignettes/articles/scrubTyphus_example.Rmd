@@ -18,11 +18,21 @@ This vignette reproduces the analysis for: [**Estimating the seroincidence of sc
 
 ## Methods
 
-The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. 
+The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, 
+as originally published in @Simonsen_2009 and @Teunis_2012, 
+and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. 
+In short, 
+longitudinal seroresponses from confirmed cases with a known symptom onset date 
+are assumed to represent the time course of human serum antibodies against a specific pathogen. 
+Therefore, 
+by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, 
+an incidence estimate can be calculated. 
 
 ### The Seroincidence Estimator
 
-The **serocalculator** package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.
+The **serocalculator** package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. 
+The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). 
+Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.
 
 
 
@@ -84,7 +94,8 @@ curves <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curves |> autoplot()
+curves |> 
+  autoplot()
 ```
 
 

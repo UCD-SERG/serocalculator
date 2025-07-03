@@ -26,7 +26,7 @@ graph_seroresponse_model_1(
     \item{\code{n_curves}}{how many curves to plot (see details).}
     \item{\code{n_points}}{Number of points to interpolate along the x axis
 (passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})}
-    \item{\code{iters_to_graph}}{which rows of \code{curve_params} to plot
+    \item{\code{iters_to_graph}}{which MCMC iterations in \code{curve_params} to plot
 (overrides \code{n_curves}).}
     \item{\code{alpha}}{(passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}})
 how transparent the curves should be:

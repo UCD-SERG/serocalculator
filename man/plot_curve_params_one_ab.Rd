@@ -40,7 +40,7 @@ or linear scale (\code{FALSE}, default)?}
 \item{log_y}{should the Y-axis be on a logarithmic scale
 (default, \code{TRUE}) or linear scale (\code{FALSE})?}
 
-\item{iters_to_graph}{which rows of \code{curve_params} to plot
+\item{iters_to_graph}{which MCMC iterations in \code{curve_params} to plot
 (overrides \code{n_curves}).}
 
 \item{xlim}{range of x values to graph}

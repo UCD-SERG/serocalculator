@@ -38,7 +38,7 @@ or linear scale (\code{FALSE}, default)?}
 
 \item{n_curves}{how many curves to plot (see details).}
 
-\item{iters_to_graph}{which rows of \code{curve_params} to plot
+\item{iters_to_graph}{which MCMC iterations in \code{curve_params} to plot
 (overrides \code{n_curves}).}
 
 \item{...}{not currently used}

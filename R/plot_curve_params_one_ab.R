@@ -6,7 +6,7 @@
 #' @param n_curves how many curves to plot (see details).
 #' @param n_points Number of points to interpolate along the x axis
 #' (passed to [ggplot2::geom_function()])
-#' @param iters_to_graph which rows of `curve_params` to plot
+#' @param iters_to_graph which MCMC iterations in `curve_params` to plot
 #' (overrides `n_curves`).
 #' @param alpha (passed to [ggplot2::geom_function()])
 #' how transparent the curves should be:
@@ -71,8 +71,8 @@ plot_curve_params_one_ab <- function(
                              minor_breaks = NULL)
   }
 
-  layer_function <- function(cur_row) {
-    cur_params <- object[cur_row, ]
+  layer_function <- function(cur_iter) {
+    cur_params <- object |> filter(.data$iter == cur_iter)
     ggplot2::geom_function(
       alpha = alpha,
       fun = ab0,

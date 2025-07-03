@@ -60,8 +60,9 @@ plot_curve_params_one_ab <- function(
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(x = "Days since fever onset", y = "Antibody concentration") +
     ggplot2::ggtitle("Antibody Response Curve") +
-    ggplot2::theme(plot.title =
-                   ggplot2::element_text(size = 20, face = "bold"))
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(size = 20, face = "bold")
+    )
 
   if (log_y) {
     plot1 <-
@@ -77,7 +78,8 @@ plot_curve_params_one_ab <- function(
       fun = ab0,
       args = list(curve_params = cur_params),
       n = n_points,
-      ...)
+      ...
+    )
   }
 
   layers <-

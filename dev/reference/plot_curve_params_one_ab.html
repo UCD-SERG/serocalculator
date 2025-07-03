@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9053</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9054</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
@@ -50,7 +50,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Graph an antibody decay curve model</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/R/graph.decay.curves.R" class="external-link"><code>R/graph.decay.curves.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/main/R/plot_curve_params_one_ab.R" class="external-link"><code>R/plot_curve_params_one_ab.R</code></a></small>
       <div class="d-none name"><code>plot_curve_params_one_ab.Rd</code></div>
     </div>
 
@@ -68,7 +68,7 @@
 <span>  n_points <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  log_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  log_y <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rows_to_graph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n_curves</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  iters_to_graph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n_curves</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">^</span><span class="fl">3.1</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -112,8 +112,8 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
 (default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
 
 
-<dt id="arg-rows-to-graph">rows_to_graph<a class="anchor" aria-label="anchor" href="#arg-rows-to-graph"></a></dt>
-<dd><p>which rows of <code>curve_params</code> to plot
+<dt id="arg-iters-to-graph">iters_to_graph<a class="anchor" aria-label="anchor" href="#arg-iters-to-graph"></a></dt>
+<dd><p>which MCMC iterations in <code>curve_params</code> to plot
 (overrides <code>n_curves</code>).</p></dd>
 
 
@@ -184,16 +184,16 @@ the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.or
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
 
 <div class="section">
-<h3 id="n-curves-and-rows-to-graph"><code>n_curves</code> and <code>rows_to_graph</code><a class="anchor" aria-label="anchor" href="#n-curves-and-rows-to-graph"></a></h3>
+<h3 id="n-curves-and-iters-to-graph"><code>n_curves</code> and <code>iters_to_graph</code><a class="anchor" aria-label="anchor" href="#n-curves-and-iters-to-graph"></a></h3>
 
 
-<p>In most cases, <code>curve_params</code> will contain too many rows of MCMC
+<p>In most cases, <code>object</code> will contain too many rows of MCMC
 samples for all of these samples to be plotted at once.</p><ul><li><p>Setting the  <code>n_curves</code> argument to a value smaller than the
 number of rows in <code>curve_params</code> will cause this function to select
 the first <code>n_curves</code> rows to graph.</p></li>
 <li><p>Setting <code>n_curves</code> larger than the number of rows in ` will
 result all curves being plotted.</p></li>
-<li><p>If the user directly specifies the <code>rows_to_graph</code> argument,
+<li><p>If the user directly specifies the <code>iters_to_graph</code> argument,
 then <code>n_curves</code> has no effect.</p></li>
 </ul></div>
 

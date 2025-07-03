@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9053</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9054</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
@@ -98,8 +98,8 @@
 <dd><p>Number of points to interpolate along the x axis
 (passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function()</a></code>)</p></dd>
 
-    <dt><code>rows_to_graph</code></dt>
-<dd><p>which rows of <code>curve_params</code> to plot
+    <dt><code>iters_to_graph</code></dt>
+<dd><p>which MCMC iterations in <code>curve_params</code> to plot
 (overrides <code>n_curves</code>).</p></dd>
 
     <dt><code>alpha</code></dt>
@@ -128,10 +128,10 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
 
 <div class="section">
-<h3 id="rows-to-graph"><code>rows_to_graph</code><a class="anchor" aria-label="anchor" href="#rows-to-graph"></a></h3>
+<h3 id="iters-to-graph"><code>iters_to_graph</code><a class="anchor" aria-label="anchor" href="#iters-to-graph"></a></h3>
 
 
-<p>If you directly specify <code>rows_to_graph</code> when calling this function,
+<p>If you directly specify <code>iters_to_graph</code> when calling this function,
 the row numbers are enumerated separately for each antigen isotype;
 in other words, for the purposes of this argument,
 row numbers start over at 1 for each antigen isotype.

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9053</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9054</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
@@ -65,10 +65,11 @@
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">antigen_iso</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show_quantiles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  show_all_curves <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  alpha_samples <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  log_x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  log_y <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  n_curves <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  iters_to_graph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">iter</span><span class="op">)</span>, <span class="va">n_curves</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -94,13 +95,9 @@
 <dd><p>whether to show point-wise (over time) quantiles</p></dd>
 
 
-<dt id="arg-show-all-curves">show_all_curves<a class="anchor" aria-label="anchor" href="#arg-show-all-curves"></a></dt>
-<dd><p>whether to show individual curves under quantiles</p></dd>
-
-
 <dt id="arg-alpha-samples">alpha_samples<a class="anchor" aria-label="anchor" href="#arg-alpha-samples"></a></dt>
 <dd><p><code>alpha</code> parameter passed to <a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">ggplot2::geom_line</a>
-(has no effect if <code>show_all_curves = FALSE</code>)</p></dd>
+(has no effect if <code>iters_to_graph</code> is empty)</p></dd>
 
 
 <dt id="arg-log-x">log_x<a class="anchor" aria-label="anchor" href="#arg-log-x"></a></dt>
@@ -113,6 +110,15 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
 (default, <code>TRUE</code>) or linear scale (<code>FALSE</code>)?</p></dd>
 
 
+<dt id="arg-n-curves">n_curves<a class="anchor" aria-label="anchor" href="#arg-n-curves"></a></dt>
+<dd><p>how many curves to plot (see details).</p></dd>
+
+
+<dt id="arg-iters-to-graph">iters_to_graph<a class="anchor" aria-label="anchor" href="#arg-iters-to-graph"></a></dt>
+<dd><p>which MCMC iterations in <code>curve_params</code> to plot
+(overrides <code>n_curves</code>).</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>not currently used</p></dd>
 
@@ -120,6 +126,24 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code> object</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+
+<div class="section">
+<h3 id="n-curves-and-iters-to-graph"><code>n_curves</code> and <code>iters_to_graph</code><a class="anchor" aria-label="anchor" href="#n-curves-and-iters-to-graph"></a></h3>
+
+
+<p>In most cases, <code>object</code> will contain too many rows of MCMC
+samples for all of these samples to be plotted at once.</p><ul><li><p>Setting the  <code>n_curves</code> argument to a value smaller than the
+number of rows in <code>curve_params</code> will cause this function to select
+the first <code>n_curves</code> rows to graph.</p></li>
+<li><p>Setting <code>n_curves</code> larger than the number of rows in ` will
+result all curves being plotted.</p></li>
+<li><p>If the user directly specifies the <code>iters_to_graph</code> argument,
+then <code>n_curves</code> has no effect.</p></li>
+</ul></div>
+
     </div>
 
     <div class="section level2">
@@ -133,7 +157,7 @@ or linear scale (<code>FALSE</code>, default)?</p></dd>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph.curve.params-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">graph.curve.params</span><span class="op">(</span><span class="va">curve</span>, show_all_curves <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">plot2</span> <span class="op">&lt;-</span> <span class="fu">graph.curve.params</span><span class="op">(</span><span class="va">curve</span>, n_curves <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">show</span><span class="op">(</span><span class="va">plot2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph.curve.params-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

@@ -122,8 +122,8 @@ graph.curve.params <- function( # nolint: object_name_linter
     serocourse_sum |>
     dplyr::filter(.data$quantile %in% c("med", "p10", "p90")) |>
     dplyr::summarize(
-      min = min(.data$res, 0.9),
-      max = max(.data$res, 2000)
+      min = min(.data$res),
+      max = max(.data$res)
     )
 
 

@@ -138,12 +138,15 @@ graph.curve.params <- function( # nolint: object_name_linter
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
-    ggplot2::labs(x = "Days since fever onset",
-                  y = "ELISA units",
-                  col = if_else(
-                    length(iters_to_graph) > 0,
-                    "MCMC chain",
-                    "")) +
+    ggplot2::labs(
+      x = "Days since fever onset",
+      y = "ELISA units",
+      col = if_else(
+        length(iters_to_graph) > 0,
+        "MCMC chain",
+        ""
+      )
+    ) +
     ggplot2::theme(legend.position = "bottom")
 
   if (length(iters_to_graph) > 0) {

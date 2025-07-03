@@ -1,14 +1,19 @@
-#' Graph estimated antibody decay curve
+#' Graph estimated antibody decay curves
 #'
-#' @param curve_params
+#' @param object
 #' a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #' @param verbose verbose output
 #' @param show_all_curves whether to show individual curves under quantiles
-#' @param antigen_isos antigen isotypes
+#' @param antigen_isos antigen isotypes to analyze
+#' (can subset `object`)
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
 #' (has no effect if `show_all_curves = FALSE`)
 #' @param show_quantiles whether to show point-wise (over time) quantiles
-#'
+#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`)
+#' or linear scale (`FALSE`, default)?
+#' @param log_y should the Y-axis be on a logarithmic scale
+#' (default, `TRUE`) or linear scale (`FALSE`)?
+#' @param ... not currently used
 #' @returns a [ggplot2::ggplot()] object
 #' @export
 #'
@@ -25,12 +30,15 @@
 #' show(plot2)
 #'
 graph.curve.params <- function( # nolint: object_name_linter
-  curve_params,
-  antigen_isos = unique(curve_params$antigen_iso),
+  object,
+  antigen_isos = unique(object$antigen_iso),
   verbose = FALSE,
   show_quantiles = TRUE,
   show_all_curves = TRUE,
-  alpha_samples = 0.3
+  alpha_samples = 0.3,
+  log_x = FALSE,
+  log_y = TRUE,
+  ...
 ) {
   if (verbose) {
     message(
@@ -39,7 +47,7 @@ graph.curve.params <- function( # nolint: object_name_linter
     )
   }
 
-  curve_params <- curve_params |>
+  object <- object |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
@@ -66,7 +74,7 @@ graph.curve.params <- function( # nolint: object_name_linter
   }
 
 
-  d <- curve_params
+  d <- object
 
   dT <- # nolint: object_linter
     data.frame(t = tx2) |>
@@ -198,13 +206,20 @@ graph.curve.params <- function( # nolint: object_name_linter
 
   }
 
-  plot1 <-
-    plot1 +
-    ggplot2::scale_y_log10(
-      limits = unlist(range),
-      labels = scales::label_comma(),
-      minor_breaks = NULL
-    )
+  if (log_y) {
+    plot1 <-
+      plot1 +
+      ggplot2::scale_y_log10(
+        limits = unlist(range),
+        labels = scales::label_comma(),
+        minor_breaks = NULL
+      )
+  }
+
+  if (log_x) {
+    plot1 <- plot1 +
+      ggplot2::scale_x_log10(labels = scales::label_comma())
+  }
 
   if (show_quantiles) {
     plot1 <-

@@ -8,7 +8,8 @@ test_that(
     # 1. Default quantiles: c(0.1, 0.5, 0.9)
     plot1 <- graph.curve.params(
       curve,
-      n_curves = 0)
+      n_curves = 0
+    )
     plot1 |> vdiffr::expect_doppelganger(title = "curve-quantiles")
 
     # 2. Default quantiles + all MCMC samples

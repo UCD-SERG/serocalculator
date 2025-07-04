@@ -33,12 +33,12 @@ graph.curve.params <- function(# nolint: object_name_linter
     )
   }
 
-  curve_params <- curve_params |>
+  object <- object |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
 
-  d <- curve_params  # nolint: object_name_linter
+  d <- object
 
   # FIXED: avoid use of dot in slice() context
   dT_base <- data.frame(t = tx2) |>  # nolint: object_name_linter

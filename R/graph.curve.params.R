@@ -179,7 +179,7 @@ graph.curve.params <- function(# nolint: object_name_linter
       ggplot2::geom_line(
         data = serocourse_sum,
         aes(
-          color = paste0("q", .data$quantile),
+          color = paste0(.data$quantile * 100, "% quantile"),
           group = .data$quantile
         ),
         linewidth = 0.75

@@ -38,20 +38,6 @@ graph.curve.params <- function(# nolint: object_name_linter
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
 
-  bt <- function(y0, y1, t1) {
-    log(y1 / y0) / t1
-  }
-
-  # uses r > 1 scale for shape
-  ab <- function(t, y0, y1, t1, alpha, shape) { # more concise and idiomatic
-    beta <- bt(y0, y1, t1)
-    if (t <= t1) {
-      y0 * exp(beta * t)
-    } else {
-      (y1^(1 - shape) - (1 - shape) * alpha * (t - t1))^(1 / (1 - shape))
-    }
-  }
-
   d <- curve_params  # nolint: object_name_linter
 
   # FIXED: avoid use of dot in slice() context
@@ -72,7 +58,7 @@ graph.curve.params <- function(# nolint: object_name_linter
     dplyr::select(-c("name")) |>
     dplyr::rowwise() |>
     dplyr::mutate(
-      res = ab(
+      res = ab1(
         .data$t,
         .data$y0,
         .data$y1,

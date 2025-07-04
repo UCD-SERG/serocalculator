@@ -2,9 +2,14 @@
 
 ## New features
 
+* Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
+* Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 
+`autoplot.curve_params()` (#453)
+* Extended `sim_pop_data_multi()` to loop over multiple sample sizes (#444)
+* Added new functions `analyze_sims()` and `autoplot.sim_results()` (#444)
 * Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
-* Rename argument `curve_params` to `sr_params` (#424)
+* Rename argument `curve_params` to `sr_params` for estimation functions (#424)
 * added documentation for `count_strata()` (#431)
 * Rename  `as_curve_params()` to `as_sr_params()` (#421)
 * Rename `load_curve_params()` to `load_sr_params()` (#421)

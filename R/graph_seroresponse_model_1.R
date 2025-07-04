@@ -5,8 +5,8 @@
 #' @param antigen_isos antigen isotypes to analyze (can subset `curve_params`)
 #' @param ncol how many columns of subfigures to use in panel plot
 #' @details
-#' ## `rows_to_graph`
-#' If you directly specify `rows_to_graph` when calling this function,
+#' ## `iters_to_graph`
+#' If you directly specify `iters_to_graph` when calling this function,
 #' the row numbers are enumerated separately for each antigen isotype;
 #' in other words, for the purposes of this argument,
 #' row numbers start over at 1 for each antigen isotype.

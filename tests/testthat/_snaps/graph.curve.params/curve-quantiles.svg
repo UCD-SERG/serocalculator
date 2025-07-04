@@ -98,12 +98,12 @@
 <text x='47.44' y='83.16' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='29.36px' lengthAdjust='spacingAndGlyphs'>1,000.0</text>
 <text x='383.44' y='529.04' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='111.30px' lengthAdjust='spacingAndGlyphs'>Days since fever onset</text>
 <text transform='translate(13.05,272.67) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='57.49px' lengthAdjust='spacingAndGlyphs'>ELISA units</text>
-<line x1='319.86' y1='556.40' x2='333.68' y2='556.40' style='stroke-width: 1.60; stroke: #F8766D; stroke-linecap: butt;' />
-<line x1='365.23' y1='556.40' x2='379.05' y2='556.40' style='stroke-width: 1.60; stroke: #00BA38; stroke-linecap: butt;' />
-<line x1='410.59' y1='556.40' x2='424.42' y2='556.40' style='stroke-width: 1.60; stroke: #619CFF; stroke-linecap: butt;' />
-<text x='340.89' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>q0.1</text>
-<text x='386.26' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>q0.5</text>
-<text x='431.63' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>q0.9</text>
+<line x1='271.97' y1='556.40' x2='285.79' y2='556.40' style='stroke-width: 1.60; stroke: #F8766D; stroke-linecap: butt;' />
+<line x1='351.09' y1='556.40' x2='364.91' y2='556.40' style='stroke-width: 1.60; stroke: #00BA38; stroke-linecap: butt;' />
+<line x1='430.21' y1='556.40' x2='444.04' y2='556.40' style='stroke-width: 1.60; stroke: #619CFF; stroke-linecap: butt;' />
+<text x='293.00' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>10% quantile</text>
+<text x='372.12' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>50% quantile</text>
+<text x='451.24' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>90% quantile</text>
 <text x='52.37' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='89.53px' lengthAdjust='spacingAndGlyphs'>curve-quantiles</text>
 </g>
 </svg>

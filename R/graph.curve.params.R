@@ -1,30 +1,41 @@
-#' Graph estimated antibody decay curve
+#' Graph estimated antibody decay curves
 #'
-#' @param curve_params
+#' @param object
 #' a [data.frame()] containing MCMC samples of antibody decay curve parameters
 #' @param verbose verbose output
-#' @param show_all_curves whether to show individual curves under quantiles
-#' @param antigen_isos antigen isotypes
+#' @param antigen_isos antigen isotypes to analyze
+#' (can subset `object`)
 #' @param alpha_samples `alpha` parameter passed to [ggplot2::geom_line]
-#' (has no effect if `show_all_curves = FALSE`)
-#' @param quantiles Optional [numeric] [vector] of quantiles to plot
-#' (e.g., 10%, 50%, and 90% = `c(0.1, 0.5, 0.9)`). If `NULL`, no quantile
-#' lines are shown.
-#'
+#' (has no effect if `iters_to_graph` is empty)
+#' @param quantiles Optional [numeric] [vector] of point-wise (over time)
+#' quantiles to plot (e.g., 10%, 50%, and 90% = `c(0.1, 0.5, 0.9)`).
+#' If `NULL`, no quantile lines are shown.
+#' @param log_x should the x-axis be on a logarithmic scale (`TRUE`)
+#' or linear scale (`FALSE`, default)?
+#' @param log_y should the Y-axis be on a logarithmic scale
+#' (default, `TRUE`) or linear scale (`FALSE`)?
+#' @inheritParams plot_curve_params_one_ab
+#' @param ... not currently used
 #' @returns a [ggplot2::ggplot()] object showing the antibody dynamic
 #' kinetics of selected antigen/isotype combinations, with optional posterior
 #' distribution quantile curves.
 #' @export
+#' @inherit plot_curve_params_one_ab details
 #'
 #' @examples inst/examples/exm-graph.curve.params.R
 #'
-graph.curve.params <- function(# nolint: object_name_linter
-  curve_params,
-  antigen_isos = unique(curve_params$antigen_iso),
+
+graph.curve.params <- function( # nolint: object_name_linter
+  object,
+  antigen_isos = unique(object$antigen_iso),
   verbose = FALSE,
-  show_all_curves = FALSE,
+  quantiles = c(0.1, 0.5, 0.9),
   alpha_samples = 0.3,
-  quantiles = c(0.1, 0.5, 0.9)  # numeric, flexible
+  log_x = FALSE,
+  log_y = TRUE,
+  n_curves = 100,
+  iters_to_graph = object$iter |> unique() |> head(n_curves),
+  ...
 ) {
   if (verbose) {
     message(
@@ -61,19 +72,17 @@ graph.curve.params <- function(# nolint: object_name_linter
       cols = dplyr::starts_with("time"),
       values_to = "t"
     ) |>
-    dplyr::select(-c("name")) |>
+    dplyr::select(-"name") |>
     dplyr::rowwise() |>
-    dplyr::mutate(
-      res = ab1(
-        .data$t,
-        .data$y0,
-        .data$y1,
-        .data$t1,
-        .data$alpha,
-        .data$r
-      )
-    ) |>
-    dplyr::ungroup()
+    dplyr::mutate(res = ab1(
+      .data$t,
+      .data$y0,
+      .data$y1,
+      .data$t1,
+      .data$alpha,
+      .data$r
+    )) |>
+    ungroup()
 
   if (!is.null(quantiles)) {
     serocourse_sum <- serocourse_all |>
@@ -107,55 +116,78 @@ graph.curve.params <- function(# nolint: object_name_linter
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(
-      x   = "Days since fever onset",
-      y   = "ELISA units",
-      col = if (show_all_curves) "MCMC chain" else NULL
+      x = "Days since fever onset",
+      y = "ELISA units",
+      col = if_else(
+        length(iters_to_graph) > 0,
+        "MCMC chain",
+        ""
+      )
     ) +
     ggplot2::theme(legend.position = "bottom")
 
+  if (length(iters_to_graph) > 0) {
 
-  if (show_all_curves) {
-    group_vars <- c("iter", "chain") |>
-      intersect(names(serocourse_all))
+    sc_to_graph <-
+      serocourse_all |>
+      filter(.data$iter %in% iters_to_graph)
+
+    range <-
+      sc_to_graph |>
+      dplyr::summarize(
+        min = min(.data$res),
+        max = max(.data$res)
+      )
+
+    group_vars <-
+      c("iter", "chain") |>
+      intersect(names(sc_to_graph))
 
     if (length(group_vars) > 1) {
-      serocourse_all <-
-        serocourse_all |>
-        dplyr::mutate(
-          iter = interaction(
-            dplyr::across(dplyr::all_of(group_vars))
-          )
+      sc_to_graph <-
+        sc_to_graph |>
+        mutate(
+          group = interaction(across(all_of(group_vars)))
         )
 
       plot1 <-
         plot1 +
-        ggplot2::geom_line(
-          data = serocourse_all,
+        geom_line(
+          data = sc_to_graph,
           alpha = alpha_samples,
           aes(
-            color = factor(.data$chain),
-            group = .data$iter
+            color = .data$chain |> factor(),
+            group = .data$group
           )
         )
     } else {
       plot1 <-
         plot1 +
-        ggplot2::geom_line(
-          data = serocourse_all,
-          alpha = alpha_samples,
-          aes(group = .data$iter)
-        )
+        geom_line(data = sc_to_graph,
+                  alpha = alpha_samples,
+                  aes(group = .data$iter)) +
+        ggplot2::expand_limits(y = range)
+
     }
     plot1 <-
       plot1 + ggplot2::expand_limits(y = unlist(range))
   }
 
-  plot1 <- plot1 +
-    ggplot2::scale_y_log10(
-      limits = unlist(range),
-      labels = scales::label_comma(),
-      minor_breaks = NULL
-    )
+
+  if (log_y) {
+    plot1 <-
+      plot1 +
+      ggplot2::scale_y_log10(
+        limits = unlist(range),
+        labels = scales::label_comma(),
+        minor_breaks = NULL
+      )
+  }
+
+  if (log_x) {
+    plot1 <- plot1 +
+      ggplot2::scale_x_log10(labels = scales::label_comma())
+  }
 
   if (!is.null(quantiles)) {
     plot1 <- plot1 +
@@ -168,7 +200,7 @@ graph.curve.params <- function(# nolint: object_name_linter
         linewidth = 0.75
       )
 
-    if (show_all_curves) {
+    if (length(iters_to_graph) > 0) {
       plot1 <- plot1 +
         ggplot2::labs(col = "MCMC chain")
     }

@@ -27,8 +27,10 @@ graph.curve.params <- function(# nolint: object_name_linter
   quantiles = c(0.1, 0.5, 0.9)  # numeric, flexible
 ) {
   if (verbose) {
-    message("Graphing curves for antigen isotypes: ",
-            paste(antigen_isos, collapse = ", "))
+    message(
+      "Graphing curves for antigen isotypes: ",
+      paste(antigen_isos, collapse = ", ")
+    )
   }
 
   curve_params <- curve_params |>

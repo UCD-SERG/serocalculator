@@ -40,14 +40,20 @@ graph.curve.params <- function(# nolint: object_name_linter
 
   d <- object
 
-  # FIXED: avoid use of dot in slice() context
-  dT_base <- data.frame(t = tx2) |>  # nolint: object_name_linter
-    dplyr::mutate(ID = dplyr::row_number()) |>
-    tidyr::pivot_wider(names_from = "ID",
-                       values_from = "t",
-                       names_prefix = "time")
-  dT <- dT_base |> # nolint: object_name_linter
-    dplyr::slice(rep(seq_len(nrow(dT_base)), each = nrow(d)))
+  dT <- # nolint: object_linter
+    data.frame(t = tx2) |>
+    mutate(ID = dplyr::row_number()) |>
+    pivot_wider(
+      names_from = "ID",
+      values_from = "t",
+      names_prefix = "time"
+    ) |>
+    dplyr::slice(
+      rep(
+        seq_len(dplyr::n()),
+        each = nrow(d)
+      )
+    )
 
   serocourse_all <-
     cbind(d, dT) |>

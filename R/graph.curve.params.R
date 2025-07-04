@@ -16,18 +16,7 @@
 #' distribution quantile curves.
 #' @export
 #'
-#' @examples
-#' curve <-
-#'   typhoid_curves_nostrat_100 |>
-#'   dplyr::filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
-#'
-#' plot1 <- graph.curve.params(curve)
-#'
-#' print(plot1)
-#'
-#' plot2 <- graph.curve.params(curve, show_all_curves = TRUE,
-#' quantiles = c(0.1, 0.5, 0.9))
-#' print(plot2)
+#' @examples inst/examples/exm-graph.curve.params.R
 #'
 graph.curve.params <- function(# nolint: object_name_linter
   curve_params,

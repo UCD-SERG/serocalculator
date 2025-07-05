@@ -8,7 +8,7 @@ graph.curve.params(
   object,
   antigen_isos = unique(object$antigen_iso),
   verbose = FALSE,
-  show_quantiles = TRUE,
+  quantiles = c(0.1, 0.5, 0.9),
   alpha_samples = 0.3,
   log_x = FALSE,
   log_y = TRUE,
@@ -25,7 +25,9 @@ graph.curve.params(
 
 \item{verbose}{verbose output}
 
-\item{show_quantiles}{whether to show point-wise (over time) quantiles}
+\item{quantiles}{Optional \link{numeric} \link{vector} of point-wise (over time)
+quantiles to plot (e.g., 10\%, 50\%, and 90\% = \code{c(0.1, 0.5, 0.9)}).
+If \code{NULL}, no quantile lines are shown.}
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{iters_to_graph} is empty)}
@@ -44,7 +46,9 @@ or linear scale (\code{FALSE}, default)?}
 \item{...}{not currently used}
 }
 \value{
-a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
+a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object showing the antibody dynamic
+kinetics of selected antigen/isotype combinations, with optional posterior
+distribution quantile curves.
 }
 \description{
 Graph estimated antibody decay curves
@@ -66,15 +70,19 @@ then \code{n_curves} has no effect.
 }
 }
 \examples{
-curve <-
-  typhoid_curves_nostrat_100 |>
+# Load example dataset
+curve <- typhoid_curves_nostrat_100 |>
   dplyr::filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
-plot1 <- graph.curve.params(curve)
-
+# Plot quantiles without showing all curves
+plot1 <- graph.curve.params(curve, n_curves = 0)
 print(plot1)
 
-plot2 <- graph.curve.params(curve, n_curves = 100)
-show(plot2)
-
+# Plot with additional quantiles and show all curves
+plot2 <- graph.curve.params(
+  curve,
+  n_curves = Inf,
+  quantiles = c(0.1, 0.5, 0.9)
+)
+print(plot2)
 }

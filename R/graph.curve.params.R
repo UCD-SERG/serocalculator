@@ -22,7 +22,7 @@
 #' @export
 #' @inherit plot_curve_params_one_ab details
 #'
-#' @examples inst/examples/exm-graph.curve.params.R
+#' @example inst/examples/exm-graph.curve.params.R
 #'
 
 graph.curve.params <- function( # nolint: object_name_linter

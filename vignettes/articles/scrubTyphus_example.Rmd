@@ -18,11 +18,21 @@ This vignette reproduces the analysis for: [**Estimating the seroincidence of sc
 
 ## Methods
 
-The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in @Simonsen_2009 and @Teunis_2012, and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. 
+The **serocalculator** R package provides a rapid and computationally simple method for calculating seroconversion rates, 
+as originally published in @Simonsen_2009 and @Teunis_2012, 
+and further developed in subsequent publications by @de_Graaf_2014, @Teunis_2016, and @Teunis_2020. 
+In short, 
+longitudinal seroresponses from confirmed cases with a known symptom onset date 
+are assumed to represent the time course of human serum antibodies against a specific pathogen. 
+Therefore, 
+by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, 
+an incidence estimate can be calculated. 
 
 ### The Seroincidence Estimator
 
-The **serocalculator** package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.
+The **serocalculator** package was designed to calculate the incidence of seroconversion by using the longitudinal seroresponse characteristics. 
+The distribution of serum antibody concentrations in a cross–sectional population sample is calculated as a function of the longitudinal seroresponse and the frequency of seroconversion (or seroincidence). 
+Given the seroresponse, this marginal distribution of antibody concentrations can be fitted to the cross-sectional data and thereby providing a means to estimate the seroincidence.
 
 
 
@@ -75,7 +85,7 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 # Import longitudinal antibody parameters from OSF
 
 curves <-
-  "https://osf.io/download/u5gxh/" %>%
+  "https://osf.io/download/u5gxh/" |> 
   load_sr_params()
 ```
 
@@ -84,7 +94,7 @@ curves <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curves %>% autoplot()
+curves |> autoplot()
 ```
 
 
@@ -108,7 +118,7 @@ xs_data <- load_pop_data(
 We can check that `xs_data` has the correct formatting using the `check_pop_data()` function:
 
 ```{r, message = TRUE}
-xs_data %>% check_pop_data(verbose = TRUE)
+xs_data |> check_pop_data(verbose = TRUE)
 ```
 
 #### Summarize antibody data
@@ -116,7 +126,7 @@ xs_data %>% check_pop_data(verbose = TRUE)
 We can compute numerical summaries of our cross-sectional antibody data with a `summary()` method for `pop_data` objects:
 
 ```{r}
-xs_data %>% summary(strata = "country")
+xs_data |> summary(strata = "country")
 ```
 
 
@@ -151,10 +161,10 @@ Column Name | Description
 
 ```{r message=FALSE, warning=FALSE}
 # biologic noise
-b_noise <- xs_data %>%
-  group_by(antigen_iso) %>%
-  filter(!is.na(value)) %>%
-  filter(age < 40) %>% # restrict to young ages to capture recent exposures
+b_noise <- xs_data |>
+  group_by(antigen_iso) |>
+  filter(!is.na(value)) |>
+  filter(age < 40) |> # restrict to young ages to capture recent exposures
   do({
     set.seed(54321)
     # Fit the mixture model
@@ -183,7 +193,7 @@ noise <- data.frame(
   eps = c(0.2, 0.2), # M noise (eps)
   y.low = c(0.2, 0.2), # low cutoff (llod)
   y.high = c(200, 200)
-) %>% # high cutoff (y.high)
+) |> # high cutoff (y.high)
   mutate(across(where(is.numeric), round, digits = 2))
 ```
 
@@ -194,10 +204,10 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 ```{r estby}
 # Using est.incidence.by (strata)
 
-est <- estimate_scr_by(
+est <- est_seroincidence_by(
   strata = c("country"),
   pop_data = xs_data,
-  curve_params = curves,
+  sr_params = curves,
   noise_params = noise,
   antigen_isos = c("OT56kda_IgG"),
   num_cores = 8 # Allow for parallel processing to decrease run time
@@ -214,10 +224,10 @@ Now we are ready to begin estimating seroincidence. We will use `est.incidence.b
 ```{r estby2}
 # Using est.incidence.by (strata)
 
-est2 <- estimate_scr_by(
+est2 <- est_seroincidence_by(
   strata = c("country", "ageQ"),
   pop_data = xs_data,
-  curve_params = curves,
+  sr_params = curves,
   noise_params = noise,
   antigen_isos = c("OT56kda_IgG"),
   num_cores = 8 # Allow for parallel processing to decrease run time
@@ -239,7 +249,7 @@ Let's visualize our seroincidence estimates by strata.
 # Plot seroincidence estimates
 
 # Save summary(est) as a dataframe
-estdf <- summary(est) %>%
+estdf <- summary(est) |>
   mutate(ageQ = "Overall")
 
 # Save summary(est2) as a dataframe

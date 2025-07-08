@@ -3,9 +3,9 @@
 #'
 #' @description
 #' Custom [print()] function for `seroincidence.by` objects
-#' (from [estimate_scr_by()])
+#' (from [est_seroincidence_by()])
 #'
-#' @param x A list containing output of function [estimate_scr_by()].
+#' @param x A list containing output of function [est_seroincidence_by()].
 #' @param ... Additional arguments affecting the summary produced.
 #' @inherit print.seroincidence return
 #' @examples
@@ -22,10 +22,10 @@
 #'   example_noise_params_pk
 #'
 #' # estimate seroincidence
-#' est2 <- estimate_scr_by(
+#' est2 <- est_seroincidence_by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time
@@ -51,7 +51,7 @@ print.seroincidence.by <- function(x, ...) {
   cat("`antigen_isos` -",
       "Character vector of antigen isotypes used in analysis.\n")
   cat("`Strata`       -",
-      "Input parameter strata of function `estimate_scr_by()`\n")
+      "Input parameter strata of function `est_seroincidence_by()`\n")
   cat("\n")
   cat("Call the `summary()` function to obtain output results.\n")
   invisible(x)

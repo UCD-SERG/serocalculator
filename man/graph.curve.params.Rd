@@ -2,49 +2,87 @@
 % Please edit documentation in R/graph.curve.params.R
 \name{graph.curve.params}
 \alias{graph.curve.params}
-\title{Graph estimated antibody decay curve}
+\title{Graph estimated antibody decay curves}
 \usage{
 graph.curve.params(
-  curve_params,
-  antigen_isos = unique(curve_params$antigen_iso),
+  object,
+  antigen_isos = unique(object$antigen_iso),
   verbose = FALSE,
-  show_all_curves = FALSE,
+  quantiles = c(0.1, 0.5, 0.9),
   alpha_samples = 0.3,
-  quantiles = c(0.1, 0.5, 0.9)
+  log_x = FALSE,
+  log_y = TRUE,
+  n_curves = 100,
+  iters_to_graph = head(unique(object$iter), n_curves),
+  ...
 )
 }
 \arguments{
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
+\item{object}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of antibody decay curve parameters}
 
-\item{antigen_isos}{antigen isotypes}
+\item{antigen_isos}{antigen isotypes to analyze
+(can subset \code{object})}
 
 \item{verbose}{verbose output}
 
-\item{show_all_curves}{whether to show individual curves under quantiles}
+\item{quantiles}{Optional \link{numeric} \link{vector} of point-wise (over time)
+quantiles to plot (e.g., 10\%, 50\%, and 90\% = \code{c(0.1, 0.5, 0.9)}).
+If \code{NULL}, no quantile lines are shown.}
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
-(has no effect if \code{show_all_curves = FALSE})}
+(has no effect if \code{iters_to_graph} is empty)}
 
-\item{quantiles}{Optional numeric vector of quantiles to plot
-(e.g., \code{c(0.1, 0.5, 0.9)}). If \code{NULL}, no quantile lines are shown.}
+\item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE})
+or linear scale (\code{FALSE}, default)?}
+
+\item{log_y}{should the Y-axis be on a logarithmic scale
+(default, \code{TRUE}) or linear scale (\code{FALSE})?}
+
+\item{n_curves}{how many curves to plot (see details).}
+
+\item{iters_to_graph}{which MCMC iterations in \code{curve_params} to plot
+(overrides \code{n_curves}).}
+
+\item{...}{not currently used}
 }
 \value{
-a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
+a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object showing the antibody dynamic
+kinetics of selected antigen/isotype combinations, with optional posterior
+distribution quantile curves.
 }
 \description{
-Graph estimated antibody decay curve
+Graph estimated antibody decay curves
+}
+\details{
+\subsection{\code{n_curves} and \code{iters_to_graph}}{
+
+In most cases, \code{object} will contain too many rows of MCMC
+samples for all of these samples to be plotted at once.
+\itemize{
+\item Setting the  \code{n_curves} argument to a value smaller than the
+number of rows in \code{curve_params} will cause this function to select
+the first \code{n_curves} rows to graph.
+\item Setting \code{n_curves} larger than the number of rows in ` will
+result all curves being plotted.
+\item If the user directly specifies the \code{iters_to_graph} argument,
+then \code{n_curves} has no effect.
+}
+}
 }
 \examples{
-curve <-
-  typhoid_curves_nostrat_100 |>
+# Load example dataset
+curve <- typhoid_curves_nostrat_100 |>
   dplyr::filter(antigen_iso \%in\% c("HlyE_IgA", "HlyE_IgG"))
 
-plot1 <- graph.curve.params(curve)
-
+# Plot quantiles without showing all curves
+plot1 <- graph.curve.params(curve, n_curves = 0)
 print(plot1)
 
-plot2 <- graph.curve.params(curve, show_all_curves = TRUE,
-quantiles = c(0.1, 0.5, 0.9))
+# Plot with additional quantiles and show all curves
+plot2 <- graph.curve.params(
+  curve,
+  n_curves = Inf,
+  quantiles = c(0.1, 0.5, 0.9)
+)
 print(plot2)
-
 }

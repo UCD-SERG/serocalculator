@@ -36,6 +36,14 @@ test_that(
     )
     plot4 |> vdiffr::expect_doppelganger(title = "curve-custom-quantiles")
 
+    # 5. MCMC chains in black
+    plot5 <- graph.curve.params(
+      curve,
+      n_curves = Inf,
+      quantiles = c(0.05, 0.55, 0.95),
+      chain_color = FALSE
+    )
+    plot5 |> vdiffr::expect_doppelganger(title = "curve-black-chains")
   }
 )
 
@@ -49,7 +57,7 @@ test_that(
     plot3 <- graph.curve.params(
       curve,
       n_curves = Inf,
-      show_quantiles = TRUE,
+      quantiles = NULL,
       log_x = TRUE
     )
     plot3 |>

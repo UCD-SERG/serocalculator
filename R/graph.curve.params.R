@@ -14,7 +14,8 @@
 #' or linear scale (`FALSE`, default)?
 #' @param log_y should the Y-axis be on a logarithmic scale
 #' (default, `TRUE`) or linear scale (`FALSE`)?
-#' @param chain_color logical, if `TRUE` (default), MCMC chain lines are colored by chain.
+#' @param chain_color logical, if `TRUE` (default), MCMC chain lines
+#' are colored by chain.
 #' If `FALSE`, all MCMC chain lines are black.
 #' @inheritParams plot_curve_params_one_ab
 #' @param ... not currently used
@@ -154,8 +155,7 @@ graph.curve.params <- function( # nolint: object_name_linter
           group = interaction(across(all_of(group_vars)))
         )
 
-      if(chain_color)
-      {
+      if (chain_color) {
         plot1 <-
           plot1 +
           geom_line(

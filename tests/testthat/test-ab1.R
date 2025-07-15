@@ -8,5 +8,5 @@ test_that("results are consistent", {
     dplyr::rename(shape = r) |>
     dplyr::mutate(t = 10) |>
     do.call(what = ab1) |>
-    expect_snapshot()
+    expect_snapshot_value(style = "deparse")
 })

@@ -298,13 +298,12 @@
 <text x='47.44' y='83.16' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='29.36px' lengthAdjust='spacingAndGlyphs'>1,000.0</text>
 <text x='383.44' y='529.04' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='111.30px' lengthAdjust='spacingAndGlyphs'>Days since fever onset</text>
 <text transform='translate(13.05,272.67) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='57.49px' lengthAdjust='spacingAndGlyphs'>ELISA units</text>
-<text x='232.97' y='560.19' style='font-size: 11.00px; font-family: sans;' textLength='63.58px' lengthAdjust='spacingAndGlyphs'>MCMC chain</text>
-<line x1='303.76' y1='556.40' x2='317.58' y2='556.40' style='stroke-width: 1.60; stroke: #F8766D; stroke-linecap: butt;' />
-<line x1='382.88' y1='556.40' x2='396.71' y2='556.40' style='stroke-width: 1.60; stroke: #00BA38; stroke-linecap: butt;' />
-<line x1='462.00' y1='556.40' x2='475.83' y2='556.40' style='stroke-width: 1.60; stroke: #619CFF; stroke-linecap: butt;' />
-<text x='324.79' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>10% quantile</text>
-<text x='403.91' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>50% quantile</text>
-<text x='483.04' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>90% quantile</text>
+<line x1='271.97' y1='556.40' x2='285.79' y2='556.40' style='stroke-width: 1.60; stroke: #F8766D; stroke-linecap: butt;' />
+<line x1='351.09' y1='556.40' x2='364.91' y2='556.40' style='stroke-width: 1.60; stroke: #00BA38; stroke-linecap: butt;' />
+<line x1='430.21' y1='556.40' x2='444.04' y2='556.40' style='stroke-width: 1.60; stroke: #619CFF; stroke-linecap: butt;' />
+<text x='293.00' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>10% quantile</text>
+<text x='372.12' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>50% quantile</text>
+<text x='451.24' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>90% quantile</text>
 <text x='52.37' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='134.30px' lengthAdjust='spacingAndGlyphs'>autoplot.curve_params</text>
 </g>
 </svg>

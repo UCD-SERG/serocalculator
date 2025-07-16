@@ -220,8 +220,13 @@ graph.curve.params <- function( # nolint: object_name_linter
       )
 
     if (length(iters_to_graph) > 0) {
-      plot1 <- plot1 +
-        ggplot2::labs(col = "")
+      if (chain_color) {
+        plot1 <- plot1 +
+          ggplot2::labs(col = "MCMC chain")
+      } else {
+        plot1 <- plot1 +
+          ggplot2::labs(col = "")
+      }
     } else {
       plot1 <- plot1 + ggplot2::labs(col = "Quantile")
     }

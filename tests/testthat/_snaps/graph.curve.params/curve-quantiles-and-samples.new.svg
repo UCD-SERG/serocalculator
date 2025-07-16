@@ -298,17 +298,16 @@
 <text x='47.44' y='83.16' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='29.36px' lengthAdjust='spacingAndGlyphs'>1,000.0</text>
 <text x='383.44' y='529.04' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='111.30px' lengthAdjust='spacingAndGlyphs'>Days since fever onset</text>
 <text transform='translate(13.05,272.67) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='57.49px' lengthAdjust='spacingAndGlyphs'>ELISA units</text>
-<text x='261.77' y='560.19' style='font-size: 11.00px; font-family: sans;' textLength='40.97px' lengthAdjust='spacingAndGlyphs'>Quantile</text>
-<line x1='309.95' y1='556.40' x2='323.78' y2='556.40' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.30; stroke-linecap: butt;' />
-<line x1='343.09' y1='556.40' x2='356.91' y2='556.40' style='stroke-width: 1.07; stroke: #A3A500; stroke-opacity: 0.30; stroke-linecap: butt;' />
-<line x1='376.22' y1='556.40' x2='390.04' y2='556.40' style='stroke-width: 1.60; stroke: #00BF7D; stroke-linecap: butt;' />
-<line x1='421.59' y1='556.40' x2='435.41' y2='556.40' style='stroke-width: 1.60; stroke: #00B0F6; stroke-linecap: butt;' />
-<line x1='466.95' y1='556.40' x2='480.78' y2='556.40' style='stroke-width: 1.60; stroke: #E76BF3; stroke-linecap: butt;' />
-<text x='330.98' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='364.12' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='397.25' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>q0.1</text>
-<text x='442.62' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>q0.5</text>
-<text x='487.99' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='17.13px' lengthAdjust='spacingAndGlyphs'>q0.9</text>
+<line x1='238.83' y1='556.40' x2='252.66' y2='556.40' style='stroke-width: 1.07; stroke: #F8766D; stroke-opacity: 0.30; stroke-linecap: butt;' />
+<line x1='271.97' y1='556.40' x2='285.79' y2='556.40' style='stroke-width: 1.07; stroke: #A3A500; stroke-opacity: 0.30; stroke-linecap: butt;' />
+<line x1='305.10' y1='556.40' x2='318.93' y2='556.40' style='stroke-width: 1.60; stroke: #00BF7D; stroke-linecap: butt;' />
+<line x1='384.22' y1='556.40' x2='398.05' y2='556.40' style='stroke-width: 1.60; stroke: #00B0F6; stroke-linecap: butt;' />
+<line x1='463.35' y1='556.40' x2='477.17' y2='556.40' style='stroke-width: 1.60; stroke: #E76BF3; stroke-linecap: butt;' />
+<text x='259.87' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='293.00' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='326.13' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>10% quantile</text>
+<text x='405.25' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>50% quantile</text>
+<text x='484.38' y='559.43' style='font-size: 8.80px; font-family: sans;' textLength='50.88px' lengthAdjust='spacingAndGlyphs'>90% quantile</text>
 <text x='52.37' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='169.51px' lengthAdjust='spacingAndGlyphs'>curve-quantiles-and-samples</text>
 </g>
 </svg>

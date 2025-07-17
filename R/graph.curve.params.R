@@ -148,46 +148,35 @@ graph.curve.params <- function( # nolint: object_name_linter
       c("iter", "chain") |>
       intersect(names(sc_to_graph))
 
+    line_params <- list(
+      data = sc_to_graph,
+      alpha = alpha_samples
+    )
+
     if (length(group_vars) > 1) {
       sc_to_graph <-
         sc_to_graph |>
         mutate(
           group = interaction(across(all_of(group_vars)))
         )
+      line_params$data <- sc_to_graph
 
       if (chain_color) {
-        plot1 <-
-          plot1 +
-          geom_line(
-            data = sc_to_graph,
-            alpha = alpha_samples,
-            aes(
-              color = .data$chain |> factor(),
-              group = .data$group
-            )
-          )
+        line_params$mapping <- ggplot2::aes(
+          color = .data$chain |> factor(),
+          group = .data$group
+        )
       } else {
-        plot1 <-
-          plot1 +
-          geom_line(
-            data = sc_to_graph,
-            alpha = alpha_samples,
-            color = "black",
-            aes(
-              group = .data$group
-            )
-          )
+        line_params$mapping <- ggplot2::aes(group = .data$group)
+        line_params$color <- "black"
       }
-
     } else {
-      plot1 <-
-        plot1 +
-        geom_line(data = sc_to_graph,
-                  alpha = alpha_samples,
-                  aes(group = .data$iter)) +
-        ggplot2::expand_limits(y = range)
-
+      line_params$mapping <- ggplot2::aes(group = .data$iter)
     }
+
+    plot1 <- plot1 +
+      rlang::exec(ggplot2::geom_line, !!!line_params)
+
     plot1 <-
       plot1 + ggplot2::expand_limits(y = unlist(range))
   }
@@ -197,7 +186,7 @@ graph.curve.params <- function( # nolint: object_name_linter
     plot1 <-
       plot1 +
       ggplot2::scale_y_log10(
-        limits = unlist(range),
+        limits = if (!is.null(range)) unlist(range) else NULL,
         labels = scales::label_comma(),
         minor_breaks = NULL
       )
@@ -228,7 +217,7 @@ graph.curve.params <- function( # nolint: object_name_linter
           ggplot2::labs(col = "")
       }
     } else {
-      plot1 <- plot1 + ggplot2::labs(col = "Quantile")
+      plot1 <- plot1 + ggplot2::labs(col = "")
     }
   }
 

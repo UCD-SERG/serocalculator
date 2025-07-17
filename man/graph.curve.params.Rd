@@ -33,9 +33,9 @@ If \code{NULL}, no quantile lines are shown.}
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{iters_to_graph} is empty)}
 
-\item{chain_color}{logical, if \code{TRUE} (default), MCMC chain lines
+\item{chain_color}{\link{logical}: if \link{TRUE} (default), MCMC chain lines
 are colored by chain.
-If \code{FALSE}, all MCMC chain lines are black.}
+If \link{FALSE}, all MCMC chain lines are black.}
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE})
 or linear scale (\code{FALSE}, default)?}

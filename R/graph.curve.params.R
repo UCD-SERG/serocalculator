@@ -14,9 +14,9 @@
 #' or linear scale (`FALSE`, default)?
 #' @param log_y should the Y-axis be on a logarithmic scale
 #' (default, `TRUE`) or linear scale (`FALSE`)?
-#' @param chain_color logical, if `TRUE` (default), MCMC chain lines
+#' @param chain_color [logical]: if [TRUE] (default), MCMC chain lines
 #' are colored by chain.
-#' If `FALSE`, all MCMC chain lines are black.
+#' If [FALSE], all MCMC chain lines are black.
 #' @inheritParams plot_curve_params_one_ab
 #' @param ... not currently used
 #' @returns a [ggplot2::ggplot()] object showing the antibody dynamic

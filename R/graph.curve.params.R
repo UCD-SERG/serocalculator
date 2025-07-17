@@ -154,31 +154,16 @@ graph.curve.params <- function( # nolint: object_name_linter
         mutate(
           group = interaction(across(all_of(group_vars)))
         )
-
-      if (chain_color) {
-        plot1 <-
-          plot1 +
-          geom_line(
-            data = sc_to_graph,
-            alpha = alpha_samples,
-            aes(
-              color = .data$chain |> factor(),
-              group = .data$group
-            )
+      plot1 <-
+        plot1 +
+        geom_line(
+          data = sc_to_graph,
+          alpha = alpha_samples,
+          aes(
+            color = if (chain_color) .data$chain |> factor(),
+            group = .data$group
           )
-      } else {
-        plot1 <-
-          plot1 +
-          geom_line(
-            data = sc_to_graph,
-            alpha = alpha_samples,
-            color = "black",
-            aes(
-              group = .data$group
-            )
-          )
-      }
-
+        )
     } else {
       plot1 <-
         plot1 +
@@ -228,7 +213,7 @@ graph.curve.params <- function( # nolint: object_name_linter
           ggplot2::labs(col = "")
       }
     } else {
-      plot1 <- plot1 + ggplot2::labs(col = "Quantile")
+      plot1 <- plot1 + ggplot2::labs(col = "")
     }
   }
 

@@ -204,17 +204,12 @@ graph.curve.params <- function( # nolint: object_name_linter
         linewidth = 0.75
       )
 
-    if (length(iters_to_graph) > 0) {
-      if (chain_color) {
-        plot1 <- plot1 +
-          ggplot2::labs(col = "MCMC chain")
-      } else {
-        plot1 <- plot1 +
-          ggplot2::labs(col = "")
-      }
+    label <- if (length(iters_to_graph) > 0 && chain_color) {
+      "MCMC chain"
     } else {
-      plot1 <- plot1 + ggplot2::labs(col = "")
+      ""
     }
+    plot1 <- plot1 + ggplot2::labs(col = label)
   }
 
 

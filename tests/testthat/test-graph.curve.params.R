@@ -59,7 +59,6 @@ test_that(
     plot3 <- graph.curve.params(
       curve,
       n_curves = Inf,
-      quantiles = NULL,
       log_x = TRUE
     )
     plot3 |>

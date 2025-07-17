@@ -177,7 +177,6 @@ graph.curve.params <- function( # nolint: object_name_linter
       plot1 + ggplot2::expand_limits(y = unlist(range))
   }
 
-
   if (log_y) {
     plot1 <-
       plot1 +

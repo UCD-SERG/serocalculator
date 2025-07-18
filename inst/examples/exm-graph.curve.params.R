@@ -13,3 +13,12 @@ plot2 <- graph.curve.params(
   quantiles = c(0.1, 0.5, 0.9)
 )
 print(plot2)
+
+# Plot with MCMC chains in black
+plot3 <- graph.curve.params(
+  curve,
+  n_curves = Inf,
+  quantiles = c(0.1, 0.5, 0.9),
+  chain_color = FALSE
+)
+print(plot3)

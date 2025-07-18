@@ -10,6 +10,7 @@ graph.curve.params(
   verbose = FALSE,
   quantiles = c(0.1, 0.5, 0.9),
   alpha_samples = 0.3,
+  chain_color = TRUE,
   log_x = FALSE,
   log_y = TRUE,
   n_curves = 100,
@@ -31,6 +32,10 @@ If \code{NULL}, no quantile lines are shown.}
 
 \item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{iters_to_graph} is empty)}
+
+\item{chain_color}{\link{logical}: if \link{TRUE} (default), MCMC chain lines
+are colored by chain.
+If \link{FALSE}, all MCMC chain lines are black.}
 
 \item{log_x}{should the x-axis be on a logarithmic scale (\code{TRUE})
 or linear scale (\code{FALSE}, default)?}
@@ -85,4 +90,13 @@ plot2 <- graph.curve.params(
   quantiles = c(0.1, 0.5, 0.9)
 )
 print(plot2)
+
+# Plot with MCMC chains in black
+plot3 <- graph.curve.params(
+  curve,
+  n_curves = Inf,
+  quantiles = c(0.1, 0.5, 0.9),
+  chain_color = FALSE
+)
+print(plot3)
 }

@@ -14,6 +14,9 @@
 #' or linear scale (`FALSE`, default)?
 #' @param log_y should the Y-axis be on a logarithmic scale
 #' (default, `TRUE`) or linear scale (`FALSE`)?
+#' @param chain_color [logical]: if [TRUE] (default), MCMC chain lines
+#' are colored by chain.
+#' If [FALSE], all MCMC chain lines are black.
 #' @inheritParams plot_curve_params_one_ab
 #' @param ... not currently used
 #' @returns a [ggplot2::ggplot()] object showing the antibody dynamic
@@ -31,6 +34,7 @@ graph.curve.params <- function( # nolint: object_name_linter
   verbose = FALSE,
   quantiles = c(0.1, 0.5, 0.9),
   alpha_samples = 0.3,
+  chain_color = TRUE,
   log_x = FALSE,
   log_y = TRUE,
   n_curves = 100,
@@ -150,14 +154,13 @@ graph.curve.params <- function( # nolint: object_name_linter
         mutate(
           group = interaction(across(all_of(group_vars)))
         )
-
       plot1 <-
         plot1 +
         geom_line(
           data = sc_to_graph,
           alpha = alpha_samples,
           aes(
-            color = .data$chain |> factor(),
+            color = if (chain_color) .data$chain |> factor(),
             group = .data$group
           )
         )
@@ -201,10 +204,12 @@ graph.curve.params <- function( # nolint: object_name_linter
         linewidth = 0.75
       )
 
-    if (length(iters_to_graph) > 0) {
-      plot1 <- plot1 +
-        ggplot2::labs(col = "MCMC chain")
+    label <- if (length(iters_to_graph) > 0 && chain_color) {
+      "MCMC chain"
+    } else {
+      ""
     }
+    plot1 <- plot1 + ggplot2::labs(col = label)
   }
 
 

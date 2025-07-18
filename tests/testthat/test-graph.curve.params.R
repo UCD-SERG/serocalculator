@@ -19,7 +19,7 @@ test_that(
     )
     plot2 |> vdiffr::expect_doppelganger(title = "curve-quantiles-and-samples")
 
-    # 3. Curves only, no quantiles
+    # 3. Test that disabling quantiles works correctly (curves only)
     plot3 <- graph.curve.params(
       curve,
       n_curves = Inf,
@@ -28,7 +28,7 @@ test_that(
 
     plot3 |> vdiffr::expect_doppelganger(title = "curve-samples")
 
-    # 4. Custom numeric quantiles only
+    # 4. Test that custom numeric quantiles are drawn correctly
     plot4 <- graph.curve.params(
       curve,
       n_curves = 0,
@@ -36,6 +36,14 @@ test_that(
     )
     plot4 |> vdiffr::expect_doppelganger(title = "curve-custom-quantiles")
 
+    # 5. Test that chain_color = FALSE works correctly
+    plot5 <- graph.curve.params(
+      curve,
+      n_curves = Inf,
+      quantiles = c(0.05, 0.55, 0.95),
+      chain_color = FALSE
+    )
+    plot5 |> vdiffr::expect_doppelganger(title = "curve-black-chains")
   }
 )
 
@@ -46,10 +54,11 @@ test_that(
       typhoid_curves_nostrat_100 |>
       dplyr::filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")) |>
       dplyr::mutate(.by = antigen_iso, chain = rep(1:2, times = n() / 2))
+
+    # Test that log_x argument works with samples only
     plot3 <- graph.curve.params(
       curve,
       n_curves = Inf,
-      show_quantiles = TRUE,
       log_x = TRUE
     )
     plot3 |>

@@ -2,6 +2,7 @@
 
 ## New features
 
+* Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
 * Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
 * Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 
 `autoplot.curve_params()` (#453)

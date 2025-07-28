@@ -78,16 +78,16 @@ graph.curve.params <- function( # nolint: object_name_linter
       values_to = "t"
     ) |>
     dplyr::select(-"name") |>
-    dplyr::rowwise() |>
-    dplyr::mutate(res = ab1(
-      .data$t,
-      .data$y0,
-      .data$y1,
-      .data$t1,
-      .data$alpha,
-      .data$r
-    )) |>
-    ungroup()
+    dplyr::mutate(
+      res = ab1(
+        .data$t,
+        .data$y0,
+        .data$y1,
+        .data$t1,
+        .data$alpha,
+        .data$r
+      )
+    )
 
   if (!is.null(quantiles)) {
     serocourse_sum <- serocourse_all |>

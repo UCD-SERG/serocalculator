@@ -237,7 +237,7 @@ Let's compare estimates across all countries and by age group.
 est_country_age <- est_seroincidence_by(
   strata = c("Country", "ageCat"),
   pop_data = xs_data,
-  curve_params = curves,
+  sr_params = curves,
   curve_strata_varnames = NULL,
   noise_params = noise,
   noise_strata_varnames = "Country",

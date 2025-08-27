@@ -2,11 +2,15 @@
 
 ## New features
 
+* Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
+* Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
+* Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 
+`autoplot.curve_params()` (#453)
 * Extended `sim_pop_data_multi()` to loop over multiple sample sizes (#444)
 * Added new functions `analyze_sims()` and `autoplot.sim_results()` (#444)
 * Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
-* Rename argument `curve_params` to `sr_params` (#424)
+* Rename argument `curve_params` to `sr_params` for estimation functions (#424)
 * added documentation for `count_strata()` (#431)
 * Rename  `as_curve_params()` to `as_sr_params()` (#421)
 * Rename `load_curve_params()` to `load_sr_params()` (#421)
@@ -23,6 +27,7 @@
 * Improved y-limit calculation in `graph.curve.params()` (#368)
 * Added option for `graph.curve.params()` to show all curves (#368)
 * Added color-coding for `graph.curve.params()` (#383)
+* Added `quantiles` parameter to `graph.curve.params()` and corresponding test in `test-graph.curve.params.R` (#434)
 * Removed `warn.missing.strata()` from API (#366)
 
 * Added more details about contributing PRs in `Contributing.md` (#280)
@@ -56,6 +61,7 @@ would get merged by `ggplot2::aes(group = iter)` (#382)
 
 ## Internal changes
 
+* generalized `ab1()`
 * added codecov/test-results-action to test-coverage.yaml workflow
 * added test for censored data in f_dev() (#399)
 * added test for `autoplot.curve_params()`

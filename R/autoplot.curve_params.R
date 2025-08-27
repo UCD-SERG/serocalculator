@@ -1,9 +1,18 @@
-#' graph antibody decay curves by antigen isotype
+#' Graph antibody decay curves by antigen isotype
+#' @param object
+#' a `curve_params` object (constructed using [as_sr_params()]), which is
+#' a [data.frame()] containing MCMC samples of antibody decay curve parameters
+#' @param method a [character] string indicating whether to use
+#'  - [graph.curve.params()] (default) or
+#'  - [graph_seroresponse_model_1()] (previous default)
+#' as the graphing method.
 #'
-#' @inheritParams graph_seroresponse_model_1
-#' @inheritDotParams graph_seroresponse_model_1
-#' @param antigen_isos antigen isotypes to analyze
-#' (can subset `curve_params`)
+#' @param ... additional arguments passed to the sub-function
+#' indicated by the `method` argument.
+#' @details
+#' Currently, the backend for this method is [graph.curve.params()].
+#' Previously, the backend for this method was [graph_seroresponse_model_1()].
+#' That function is still available if preferred.
 #' @return a [ggplot2::ggplot()] object
 #' @export
 #' @examples
@@ -23,14 +32,12 @@
 #' }
 autoplot.curve_params <- function(
     object,
-    antigen_isos = unique(object$antigen_iso),
+    method = c("graph.curve.params", "graph_seroresponse_model_1"),
     ...) {
 
   # spaghettified in order to swap out implementations with minimal
   # disruption to API
-  object |>
-    graph_seroresponse_model_1(
-      antigen_isos = antigen_isos,
-      ...
-    )
+  method <- match.arg(method)
+  cur_function <- match.fun(method)
+  object |> cur_function(...)
 }

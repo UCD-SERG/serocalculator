@@ -52,7 +52,7 @@ on each row
 \item{antigen_isos}{Character vector with one or more antibody names.
 Must match \code{pop_data}}
 
-\item{lambda_start}{starting guess for incidence rate, in years/event.}
+\item{lambda_start}{starting guess for incidence rate, in events/year.}
 
 \item{stepmin}{A positive scalar providing the minimum allowable
 relative step length.}

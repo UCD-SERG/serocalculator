@@ -38,8 +38,8 @@
 #' @importFrom ggplot2 autoplot
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 vars
 #' @importFrom ggplot2 labs
+#' @importFrom ggplot2 vars
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
 #' @importFrom Rcpp sourceCpp
@@ -66,6 +66,7 @@
 #' @importFrom tidyselect ends_with
 #' @importFrom utils capture.output
 #' @importFrom utils download.file unzip
+#' @importFrom utils head
 #' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end

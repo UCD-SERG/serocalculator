@@ -10,7 +10,7 @@
 #' sees_pop_data_pk_100 |>
 #'   check_strata(strata = c("ag", "catch", "Count")) |>
 #'   try()
-#' @dev
+
 check_strata <- function(pop_data,
                          strata,
                          biomarker_names_var =

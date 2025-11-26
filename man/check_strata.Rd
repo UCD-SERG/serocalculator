@@ -29,4 +29,3 @@ sees_pop_data_pk_100 |>
   check_strata(strata = c("ag", "catch", "Count")) |>
   try()
 }
-\keyword{internal}

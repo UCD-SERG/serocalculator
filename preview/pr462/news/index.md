@@ -32,6 +32,12 @@
   [`autoplot.sim_results()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.sim_results.md)
   ([\#444](https://github.com/UCD-SERG/serocalculator/issues/444))
 
+- Extended
+  [`autoplot.sim_results()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.sim_results.md)
+  to allow customization of x-axis, group, and color aesthetics via
+  `x_var`, `group_var`, and `color_var` parameters
+  ([\#462](https://github.com/UCD-SERG/serocalculator/issues/462))
+
 - Rename `estimate_scr()` to
   [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence_by.md)
   ([\#439](https://github.com/UCD-SERG/serocalculator/issues/439))

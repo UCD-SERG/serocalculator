@@ -27,6 +27,6 @@ test_that("`ab()` works consistently", {
 
    preds2 <- preds |> as_tibble()
 
-   ssdtools:::expect_snapshot_data(preds2, name = "ab-preds")
+   expect_snapshot_data(preds2, name = "ab-preds")
 
 })

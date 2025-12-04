@@ -11,7 +11,9 @@
 #' @export
 #' @keywords internal
 #' @examples
-#' expect_snapshot_data(iris, name = iris)
+#' \donttest {
+#' expect_snapshot_data(iris, name = "iris")
+#' }
 expect_snapshot_data <- function(x, name, digits = 6) {
   fun <- function(x) signif(x, digits = digits)
   lapply_fun <- function(x) I(lapply(x, fun))

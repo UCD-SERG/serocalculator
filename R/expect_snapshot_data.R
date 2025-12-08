@@ -11,7 +11,7 @@
 #' @export
 #' @keywords internal
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' expect_snapshot_data(iris, name = "iris")
 #' }
 expect_snapshot_data <- function(x, name, digits = 6) {

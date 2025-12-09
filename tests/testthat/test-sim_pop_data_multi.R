@@ -11,7 +11,6 @@ test_that("`sim_pop_data_multi()` works consistently", {
 
   # Simulated incidence rate per person-year
   lambdas <- c(.05, .1, .15, .2, .3)
-  # lambdas <- c(.05)
   # Range covered in simulations
   lifespan <- c(0, 10)
 

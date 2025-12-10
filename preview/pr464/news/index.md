@@ -330,7 +330,8 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using `devtag::use_devtag()`)
+- Added `devtag` to package (using
+  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

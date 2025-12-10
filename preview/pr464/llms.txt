@@ -197,11 +197,6 @@ QR code for `serocalculator` website
 
   Extract `Strata` metadata from an object
 
-- [`check_strata()`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/check_strata.md)
-  :
-
-  Check a `pop_data` object for requested strata variables
-
 ## Extract information from data, seroresponse models, and noise parameters
 
 - [`get_biomarker_levels()`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/get_biomarker_levels.md)

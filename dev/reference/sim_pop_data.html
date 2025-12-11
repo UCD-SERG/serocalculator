@@ -9,7 +9,7 @@ and adds noise, if desired."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9059</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.3.0.9061</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,8 +156,31 @@ combinations</p></li>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="simcs.tinf.html">simcs.tinf</a></code></p><dl><dt><code></code></dt>
-<dd></dd>
+<dd><p>Arguments passed on to <code><a href="simcs.tinf.html">simcs.tinf</a></code>, <code><a href="ldpar.html">ldpar</a></code>, <code><a href="ab.html">ab</a></code>, <code><a href="mk_baseline.html">mk_baseline</a></code></p><dl><dt><code>age</code></dt>
+<dd><p>age at infection</p></dd>
+
+    <dt><code>nmc</code></dt>
+<dd><p>mcmc sample to use</p></dd>
+
+    <dt><code>npar</code></dt>
+<dd><p>number of parameters</p></dd>
+
+    <dt><code>t</code></dt>
+<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> of elapsed times since start of infection</p></dd>
+
+    <dt><code>par</code></dt>
+<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a> of model parameters:</p><ul><li><p>rows are parameters</p></li>
+<li><p>columns are biomarkers</p></li>
+</ul></dd>
+
+    <dt><code>kab</code></dt>
+<dd><p><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> indicating which row to read from <code>blims</code></p></dd>
+
+    <dt><code>n</code></dt>
+<dd><p>number of observations</p></dd>
+
+    <dt><code>blims</code></dt>
+<dd><p>range of possible baseline antibody levels</p></dd>
 
 
 </dl></dd>
@@ -219,7 +242,7 @@ data, with columns:</p><ul><li><p><code>age</code>: age (in days)</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
     </footer></div>

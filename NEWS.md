@@ -1,4 +1,4 @@
-# serocalculator (development version)
+# serocalculator 1.3.1
 
 ## New features
 
@@ -54,6 +54,7 @@
 
 ## Bug fixes
 
+* Fixed CRAN errors (#464)
 * Fixed stratification issue in enteric fever vignette (#418)
 * Fixed issue in `graph.curve.params()` where MCMC samples 
 with the same iteration number from different MCMC chains

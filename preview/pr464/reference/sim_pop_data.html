@@ -156,8 +156,31 @@ combinations</p></li>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed on to <code><a href="simcs.tinf.html">simcs.tinf</a></code></p><dl><dt><code></code></dt>
-<dd></dd>
+<dd><p>Arguments passed on to <code><a href="simcs.tinf.html">simcs.tinf</a></code>, <code><a href="ldpar.html">ldpar</a></code>, <code><a href="ab.html">ab</a></code>, <code><a href="mk_baseline.html">mk_baseline</a></code></p><dl><dt><code>age</code></dt>
+<dd><p>age at infection</p></dd>
+
+    <dt><code>nmc</code></dt>
+<dd><p>mcmc sample to use</p></dd>
+
+    <dt><code>npar</code></dt>
+<dd><p>number of parameters</p></dd>
+
+    <dt><code>t</code></dt>
+<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> of elapsed times since start of infection</p></dd>
+
+    <dt><code>par</code></dt>
+<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a> of model parameters:</p><ul><li><p>rows are parameters</p></li>
+<li><p>columns are biomarkers</p></li>
+</ul></dd>
+
+    <dt><code>kab</code></dt>
+<dd><p><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> indicating which row to read from <code>blims</code></p></dd>
+
+    <dt><code>n</code></dt>
+<dd><p>number of observations</p></dd>
+
+    <dt><code>blims</code></dt>
+<dd><p>range of possible baseline antibody levels</p></dd>
 
 
 </dl></dd>

@@ -115,9 +115,50 @@ sim_pop_data(
 - ...:
 
   Arguments passed on to
-  [`simcs.tinf`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/simcs.tinf.md)
+  [`simcs.tinf`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/simcs.tinf.md),
+  [`ldpar`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/ldpar.md),
+  [`ab`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/ab.md),
+  [`mk_baseline`](https:/ucd-serg.github.io/serocalculator/preview/pr464/reference/mk_baseline.md)
 
-  :   
+  `age`
+
+  :   age at infection
+
+  `nmc`
+
+  :   mcmc sample to use
+
+  `npar`
+
+  :   number of parameters
+
+  `t`
+
+  :   [numeric](https://rdrr.io/r/base/numeric.html)
+      [vector](https://rdrr.io/r/base/vector.html) of elapsed times
+      since start of infection
+
+  `par`
+
+  :   [numeric](https://rdrr.io/r/base/numeric.html)
+      [matrix](https://rdrr.io/r/base/matrix.html) of model parameters:
+
+      - rows are parameters
+
+      - columns are biomarkers
+
+  `kab`
+
+  :   [integer](https://rdrr.io/r/base/integer.html) indicating which
+      row to read from `blims`
+
+  `n`
+
+  :   number of observations
+
+  `blims`
+
+  :   range of possible baseline antibody levels
 
 ## Value
 

@@ -29,6 +29,9 @@
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
 #' @inheritDotParams simcs.tinf
+#' @inheritDotParams ldpar
+#' @inheritDotParams ab
+#' @inheritDotParams mk_baseline
 #' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
 #' data, with columns:

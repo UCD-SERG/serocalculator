@@ -7,7 +7,7 @@ test_that(
 
     test_sim_results |>
       analyze_sims() |>
-      ssdtools:::expect_snapshot_data(name = "sim_results")
+      expect_snapshot_data(name = "sim_results")
 
   }
 )

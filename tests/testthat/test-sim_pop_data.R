@@ -38,5 +38,5 @@ test_that("`sim_pop_data()` produces consistent results", {
     format = "long"
   )
 
-  ssdtools:::expect_snapshot_data(csdata, "sim_pop_data")
+  expect_snapshot_data(csdata, name = "sim_pop_data")
 })

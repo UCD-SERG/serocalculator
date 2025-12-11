@@ -9,8 +9,5 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 notes
 
-* There are some words flagged as misspellings in DESCRIPTION, however these are spelled correctly. 
-
-* Package was previously archived on CRAN

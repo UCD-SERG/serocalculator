@@ -1,4 +1,4 @@
-# serocalculator 1.3.1
+# serocalculator 1.4.0
 
 ## New features
 

@@ -73,7 +73,7 @@ If you need to modify the Copilot environment setup:
 2. **VS Code**: Install "Dev Containers" extension, then "Reopen in Container"
 3. **GitHub Codespaces**: Automatically uses the devcontainer configuration
 
-See `.devcontainer/README.md` for detailed documentation (if available).
+**Note**: Devcontainer configuration is not currently set up for this repository. See the "Alternative: Quick Start with Docker" or "Manual Installation" sections below.
 
 ### Alternative: Quick Start with Docker
 
@@ -121,8 +121,10 @@ The package requires R version 4.1.0 or higher. Install R for your platform:
   # Add CRAN repository for latest R version
   sudo apt-get update
   sudo apt-get install -y software-properties-common dirmngr
-  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/maruti.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-  sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/pubkey.gpg | \
+    sudo tee /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+  sudo add-apt-repository \
+    "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
   sudo apt-get update
   sudo apt-get install -y r-base r-base-dev
   
@@ -364,7 +366,7 @@ Team members can trigger actions by commenting on PRs:
 
 ### Configuration Files
 
-- **DESCRIPTION**: Package metadata, dependencies, version (1.3.0.9061)
+- **DESCRIPTION**: Package metadata, dependencies, and version
 - **NAMESPACE**: Auto-generated exports - **DO NOT EDIT**
 - **.lintr**: Custom lintr configuration
 - **.Rprofile**: Interactive session setup (if exists)

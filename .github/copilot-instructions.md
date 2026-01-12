@@ -8,7 +8,7 @@
 - **Size**: ~43MB, ~393 files, ~84 R source files, ~5,178 lines of R code
 - **Language**: R (>= 4.1.0)
 - **Key Dependencies**: Rcpp, dplyr, ggplot2, tidyr, cli, foreach, doParallel
-- **Lifecycle**: Stable (version 1.3.0.9061)
+- **Lifecycle**: Stable
 
 ## Critical Setup Requirements
 
@@ -59,23 +59,9 @@ If you need to modify the Copilot environment setup:
 4. Keep timeout under 59 minutes
 5. Update this documentation to reflect any significant changes
 
-### Quick Start with Docker (RECOMMENDED)
-
-**The easiest way to get started is to use the provided dev container configuration**, which automatically sets up R and all dependencies in a persistent environment.
-
-**Benefits:**
-- **Cached setup**: Container persists between Copilot sessions - no need to reinstall everything
-- **Zero manual setup**: Everything is pre-configured and ready to use
-- **Consistent environment**: Same R version and system libraries every time
-
-**How to use:**
-1. **GitHub Copilot Workspace**: Automatically detects and uses the devcontainer
-2. **VS Code**: Install "Dev Containers" extension, then "Reopen in Container"
-3. **GitHub Codespaces**: Automatically uses the devcontainer configuration
-
-**Note**: Devcontainer configuration is not currently set up for this repository. See the "Alternative: Quick Start with Docker" or "Manual Installation" sections below.
-
 ### Alternative: Quick Start with Docker
+
+**If you prefer manual Docker setup**, you can use the rocker/verse Docker image which includes R, RStudio, tidyverse, TeX, and many common R packages pre-installed.
 
 **If you prefer manual Docker setup**, you can use the rocker/verse Docker image which includes R, RStudio, tidyverse, TeX, and many common R packages pre-installed.
 

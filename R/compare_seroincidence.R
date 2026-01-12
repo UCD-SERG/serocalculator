@@ -92,11 +92,11 @@ compare_seroincidence.seroincidence <- function(x, y = NULL, coverage = 0.95, ve
 
   # Compute z-statistic and p-value
   z_stat <- diff / se_diff
-  p_value <- 2 * pnorm(-abs(z_stat))
+  p_value <- 2 * stats::pnorm(-abs(z_stat))
 
   # Compute confidence interval for the difference
   alpha <- 1 - coverage
-  z_crit <- qnorm(1 - alpha / 2)
+  z_crit <- stats::qnorm(1 - alpha / 2)
   ci_lower <- diff - z_crit * se_diff
   ci_upper <- diff + z_crit * se_diff
 
@@ -168,11 +168,11 @@ compare_seroincidence.seroincidence.by <- function(x, y = NULL, coverage = 0.95,
 
       # Compute z-statistic and p-value
       z_stat <- diff / se_diff
-      p_value <- 2 * pnorm(-abs(z_stat))
+      p_value <- 2 * stats::pnorm(-abs(z_stat))
 
       # Compute confidence interval for the difference
       alpha <- 1 - coverage
-      z_crit <- qnorm(1 - alpha / 2)
+      z_crit <- stats::qnorm(1 - alpha / 2)
       ci_lower <- diff - z_crit * se_diff
       ci_upper <- diff + z_crit * se_diff
 

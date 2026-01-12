@@ -63,8 +63,6 @@ If you need to modify the Copilot environment setup:
 
 **If you prefer manual Docker setup**, you can use the rocker/verse Docker image which includes R, RStudio, tidyverse, TeX, and many common R packages pre-installed.
 
-**If you prefer manual Docker setup**, you can use the rocker/verse Docker image which includes R, RStudio, tidyverse, TeX, and many common R packages pre-installed.
-
 To use Docker:
 
 ```bash

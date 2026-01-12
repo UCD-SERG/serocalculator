@@ -61,7 +61,7 @@
 
   if (length(missing_AIs) != 0) {
     message = "`pop_data` has no observations for the following
-    {pop_data %>% get_biomarker_names_var()}s: {missing_AIs}"
+    {pop_data |> get_biomarker_names_var()}s: {missing_AIs}"
 
     cli::cli_warn(message = message, class = "missing_biomarker")
   }

@@ -154,6 +154,10 @@ compare_seroincidence.seroincidence.by <- function(x, y = NULL, coverage = 0.95,
   comparisons <- list()
   idx <- 1
 
+  # Pre-compute string patterns for column relocation
+  strata_patterns_1 <- paste0(strata_vars, ".1")
+  strata_patterns_2 <- paste0(strata_vars, ".2")
+
   for (i in 1:(n_strata - 1)) {
     for (j in (i + 1):n_strata) {
       # Extract data for this pair
@@ -199,8 +203,8 @@ compare_seroincidence.seroincidence.by <- function(x, y = NULL, coverage = 0.95,
       # Reorder columns to put stratum variables first
       comparison <- comparison |>
         dplyr::relocate(
-          tidyselect::starts_with(paste0(strata_vars, ".1")),
-          tidyselect::starts_with(paste0(strata_vars, ".2")),
+          tidyselect::starts_with(strata_patterns_1),
+          tidyselect::starts_with(strata_patterns_2),
           .before = "incidence.rate.1"
         )
 

@@ -2,7 +2,7 @@
 
 ## New features
 
-* Added `compare_seroincidence()` function for statistical comparison of seroincidence rates (#XXX)
+* Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
   - Performs two-sample z-tests to compare seroincidence estimates
   - Returns `htest` format when comparing two single estimates
   - Returns formatted table with all pairwise comparisons for stratified estimates

@@ -3,14 +3,14 @@ test_that("compare_seroincidence works with two seroincidence objects", {
 
   # Create two separate estimates
   est1 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
   est2 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c2"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "aku"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -119,7 +119,7 @@ test_that("compare_seroincidence errors when y is missing for seroincidence obje
   withr::local_package("dplyr")
 
   est1 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -135,7 +135,7 @@ test_that("compare_seroincidence errors when y is wrong class", {
   withr::local_package("dplyr")
 
   est1 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -160,7 +160,7 @@ test_that("compare_seroincidence errors with fewer than 2 strata", {
   # Create an estimate with only one stratum by filtering
   est_by <- est_seroincidence_by(
     strata = "catchment",
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
@@ -178,14 +178,14 @@ test_that("compare_seroincidence respects coverage parameter", {
   withr::local_package("dplyr")
 
   est1 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
   est2 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c2"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "aku"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -218,7 +218,7 @@ test_that("compare_seroincidence warns when y is provided for seroincidence.by",
   )
 
   est1 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -234,14 +234,14 @@ test_that("compare_seroincidence produces mathematically correct results", {
   withr::local_package("dplyr")
 
   est1 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c1"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "kgh"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
   est2 <- est_seroincidence(
-    pop_data = sees_pop_data_pk_100 |> filter(catchment == "c2"),
+    pop_data = sees_pop_data_pk_100 |> filter(catchment == "aku"),
     sr_params = typhoid_curves_nostrat_100,
     noise_params = example_noise_params_pk,
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
@@ -254,17 +254,17 @@ test_that("compare_seroincidence produces mathematically correct results", {
   sum2 <- summary(est2, coverage = 0.95, verbose = FALSE)
 
   # Check that estimates match
-  expect_equal(result$estimate["incidence rate 1"], sum1$incidence.rate)
-  expect_equal(result$estimate["incidence rate 2"], sum2$incidence.rate)
+  expect_equal(result$estimate["incidence rate 1"], sum1$incidence.rate, ignore_attr = TRUE)
+  expect_equal(result$estimate["incidence rate 2"], sum2$incidence.rate, ignore_attr = TRUE)
 
   # Check that difference is computed correctly
   expected_diff <- sum1$incidence.rate - sum2$incidence.rate
-  expect_equal(result$estimate["difference"], expected_diff)
+  expect_equal(result$estimate["difference"], expected_diff, ignore_attr = TRUE)
 
   # Check that SE is computed correctly
   expected_se <- sqrt(sum1$SE^2 + sum2$SE^2)
   expected_z <- expected_diff / expected_se
-  expect_equal(result$statistic["z"], expected_z, tolerance = 1e-10)
+  expect_equal(result$statistic["z"], expected_z, tolerance = 1e-10, ignore_attr = TRUE)
 
   # Check that p-value is computed correctly
   expected_p <- 2 * pnorm(-abs(expected_z))

@@ -11,6 +11,9 @@ development:
 search:
   exclude: ['preview/']
 
+search:
+  exclude: ['preview/']
+
 reference:
 - title: Prepare data, kinetics models, and noise parameters for analysis
   contents:

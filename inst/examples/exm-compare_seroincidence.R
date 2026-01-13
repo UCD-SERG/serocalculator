@@ -11,8 +11,8 @@ noise <- example_noise_params_pk
 
 # Example 1: Compare two single seroincidence estimates
 # Create estimates for two different catchments
-xs_data_c1 <- xs_data |> filter(catchment == "c1")
-xs_data_c2 <- xs_data |> filter(catchment == "c2")
+xs_data_c1 <- xs_data |> filter(catchment == "kgh")
+xs_data_c2 <- xs_data |> filter(catchment == "aku")
 
 est_c1 <- est_seroincidence(
   pop_data = xs_data_c1,

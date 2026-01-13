@@ -77,17 +77,18 @@ a range of incidence rates (lambda values)}
 in the course of running \code{est_seroincidence()}}
 
 \item{cluster_var}{optional name of the variable in \code{pop_data} containing
-cluster identifiers for clustered sampling designs (e.g., households, schools).
-When provided, standard errors will be adjusted for within-cluster correlation
-using cluster-robust variance estimation.}
+cluster identifiers for clustered sampling designs
+(e.g., households, schools).
+When provided, standard errors will be adjusted for within-cluster
+correlation using cluster-robust variance estimation.}
 
 \item{stratum_var}{optional name of the variable in \code{pop_data} containing
 stratum identifiers. Used in combination with \code{cluster_var} for
 stratified cluster sampling designs.}
 
-\item{sampling_weights}{optional \link{data.frame} containing sampling weights
-with columns for cluster/stratum identifiers and their sampling probabilities.
-Currently not implemented; reserved for future use.}
+\item{sampling_weights}{optional \link{data.frame} containing sampling
+weights with columns for cluster/stratum identifiers and their sampling
+probabilities. Currently not implemented; reserved for future use.}
 
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}

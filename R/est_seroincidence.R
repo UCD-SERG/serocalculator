@@ -29,15 +29,16 @@
 #' (1/days for the current longitudinal parameter sets)
 #' - `r`: shape factor of antibody decay
 #' @param cluster_var optional name of the variable in `pop_data` containing
-#' cluster identifiers for clustered sampling designs (e.g., households, schools).
-#' When provided, standard errors will be adjusted for within-cluster correlation
-#' using cluster-robust variance estimation.
+#' cluster identifiers for clustered sampling designs
+#' (e.g., households, schools).
+#' When provided, standard errors will be adjusted for within-cluster
+#' correlation using cluster-robust variance estimation.
 #' @param stratum_var optional name of the variable in `pop_data` containing
 #' stratum identifiers. Used in combination with `cluster_var` for
 #' stratified cluster sampling designs.
-#' @param sampling_weights optional [data.frame] containing sampling weights
-#' with columns for cluster/stratum identifiers and their sampling probabilities.
-#' Currently not implemented; reserved for future use.
+#' @param sampling_weights optional [data.frame] containing sampling
+#' weights with columns for cluster/stratum identifiers and their sampling
+#' probabilities. Currently not implemented; reserved for future use.
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object
@@ -120,7 +121,10 @@ est_seroincidence <- function(
   if (!is.null(cluster_var)) {
     if (!cluster_var %in% names(pop_data)) {
       cli::cli_abort(
-        "{.arg cluster_var} = {.val {cluster_var}} is not a column in {.arg pop_data}."
+        paste(
+          "{.arg cluster_var} = {.val {cluster_var}}",
+          "is not a column in {.arg pop_data}."
+        )
       )
     }
   }
@@ -128,7 +132,10 @@ est_seroincidence <- function(
   if (!is.null(stratum_var)) {
     if (!stratum_var %in% names(pop_data)) {
       cli::cli_abort(
-        "{.arg stratum_var} = {.val {stratum_var}} is not a column in {.arg pop_data}."
+        paste(
+          "{.arg stratum_var} = {.val {stratum_var}}",
+          "is not a column in {.arg pop_data}."
+        )
       )
     }
   }
@@ -138,9 +145,6 @@ est_seroincidence <- function(
     antigen_isos = antigen_isos,
     curve_params = sr_params
   )
-
-  # Store original pop_data for cluster information before filtering
-  pop_data_orig <- pop_data
 
   # Prepare columns to keep
   cols_to_keep <- c(
@@ -335,7 +339,7 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-  ...) {
+    ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

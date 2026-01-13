@@ -12,9 +12,10 @@
 #' @return variance of log(lambda) accounting for clustering
 #' @keywords internal
 #' @noRd
-.compute_cluster_robust_variance <- function(fit,
-                                              cluster_var,
-                                              stratum_var = NULL) {
+.compute_cluster_robust_var <- function(
+    fit,
+    cluster_var,
+    stratum_var = NULL) {
   # Extract stored data (already split by antigen_iso)
   pop_data_list <- attr(fit, "pop_data")
   sr_params_list <- attr(fit, "sr_params")
@@ -24,11 +25,12 @@
   # Get MLE estimate
   log_lambda_mle <- fit$estimate
 
-  # Combine pop_data list back into a single data frame to get cluster info
+  # Combine pop_data list back into a single data frame
+  # to get cluster info
   pop_data_combined <- do.call(rbind, pop_data_list)
 
-  # Compute score (gradient) for each observation using numerical differentiation
-  # The score is the derivative of log-likelihood with respect to log(lambda)
+  # Compute score (gradient) using numerical differentiation
+  # The score is the derivative of log-likelihood w.r.t. log(lambda)
   epsilon <- 1e-6
 
   # For each observation, compute the contribution to the score
@@ -52,9 +54,13 @@
     pop_data_cluster <- pop_data_combined[cluster_mask, , drop = FALSE]
 
     # Split by antigen
-    pop_data_cluster_list <- split(pop_data_cluster, pop_data_cluster$antigen_iso)
+    pop_data_cluster_list <- split(
+      pop_data_cluster,
+      pop_data_cluster$antigen_iso
+    )
 
-    # Ensure all antigen_isos are represented (add empty data frames if missing)
+    # Ensure all antigen_isos are represented
+    # (add empty data frames if missing)
     for (ag in antigen_isos) {
       if (!ag %in% names(pop_data_cluster_list)) {
         # Create empty data frame with correct structure
@@ -88,14 +94,14 @@
 
   # Compute B matrix (middle of sandwich)
   # B = sum of outer products of cluster scores
-  B <- sum(cluster_scores^2)
+  b_matrix <- sum(cluster_scores^2) # nolint: object_name_linter
 
   # Get Hessian (already computed by nlm)
-  H <- fit$hessian
+  h_matrix <- fit$hessian # nolint: object_name_linter
 
   # Sandwich variance: V = H^(-1) * B * H^(-1)
   # Since we have a scalar parameter, this simplifies to:
-  var_log_lambda_robust <- B / (H^2)
+  var_log_lambda_robust <- b_matrix / (h_matrix^2)
 
   return(var_log_lambda_robust)
 }

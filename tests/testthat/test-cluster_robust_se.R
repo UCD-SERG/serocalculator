@@ -35,8 +35,9 @@ test_that("cluster-robust standard errors work correctly", {
     sum_with_cluster$incidence.rate
   )
 
-  # Standard errors should generally be different (typically larger with clustering)
-  # We can't test direction reliably, but they should exist and be positive
+  # Standard errors should generally be different
+  # (typically larger with clustering)
+  # We can't test direction reliably, but should exist and be positive
   expect_true(sum_no_cluster$SE > 0)
   expect_true(sum_with_cluster$SE > 0)
 

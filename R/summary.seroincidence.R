@@ -1,9 +1,9 @@
 #' @title Summarizing fitted seroincidence models
 #' @description
 #' This function is a `summary()` method for `seroincidence` objects.
-#' When the model was fit with clustered data (using the `cluster_var` parameter
-#' in [est_seroincidence()]), this function automatically computes cluster-robust
-#' standard errors to account for within-cluster correlation.
+#' When the model was fit with clustered data (using the `cluster_var`
+#' parameter in [est_seroincidence()]), this function automatically computes
+#' cluster-robust standard errors to account for within-cluster correlation.
 #'
 #' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
@@ -95,10 +95,13 @@ summary.seroincidence <- function(
   if (use_cluster_robust) {
     if (verbose) {
       cli::cli_inform(
-        "Computing cluster-robust standard errors using {.field {cluster_var}} variable."
+        paste(
+          "Computing cluster-robust standard errors using",
+          "{.field {cluster_var}} variable."
+        )
       )
     }
-    var_log_lambda <- .compute_cluster_robust_variance(
+    var_log_lambda <- serocalculator:::.compute_cluster_robust_var(
       fit = object,
       cluster_var = cluster_var,
       stratum_var = stratum_var

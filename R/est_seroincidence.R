@@ -28,6 +28,16 @@
 #' - `alpha`: antibody decay rate
 #' (1/days for the current longitudinal parameter sets)
 #' - `r`: shape factor of antibody decay
+#' @param cluster_var optional name of the variable in `pop_data` containing
+#' cluster identifiers for clustered sampling designs (e.g., households, schools).
+#' When provided, standard errors will be adjusted for within-cluster correlation
+#' using cluster-robust variance estimation.
+#' @param stratum_var optional name of the variable in `pop_data` containing
+#' stratum identifiers. Used in combination with `cluster_var` for
+#' stratified cluster sampling designs.
+#' @param sampling_weights optional [data.frame] containing sampling weights
+#' with columns for cluster/stratum identifiers and their sampling probabilities.
+#' Currently not implemented; reserved for future use.
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object
@@ -47,6 +57,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
+#' # Basic usage without clustering
 #' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = sr_curve,
@@ -55,6 +66,30 @@
 #' )
 #'
 #' summary(est1)
+#'
+#' # Usage with clustered sampling design
+#' # Standard errors will be adjusted for within-cluster correlation
+#' est2 <- est_seroincidence(
+#'   pop_data = xs_data,
+#'   sr_params = sr_curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   cluster_var = "cluster"
+#' )
+#'
+#' summary(est2)
+#'
+#' # With both cluster and stratum variables
+#' est3 <- est_seroincidence(
+#'   pop_data = xs_data,
+#'   sr_params = sr_curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   cluster_var = "cluster",
+#'   stratum_var = "catchment"
+#' )
+#'
+#' summary(est3)
 est_seroincidence <- function(
     pop_data,
     sr_params,
@@ -66,10 +101,36 @@ est_seroincidence <- function(
     verbose = FALSE,
     build_graph = FALSE,
     print_graph = build_graph & verbose,
+    cluster_var = NULL,
+    stratum_var = NULL,
+    sampling_weights = NULL,
     ...) {
   if (verbose > 1) {
     message("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
+  }
+
+  # Validate cluster/stratum parameters
+  if (!is.null(sampling_weights)) {
+    cli::cli_warn(
+      "{.arg sampling_weights} is not yet implemented and will be ignored."
+    )
+  }
+
+  if (!is.null(cluster_var)) {
+    if (!cluster_var %in% names(pop_data)) {
+      cli::cli_abort(
+        "{.arg cluster_var} = {.val {cluster_var}} is not a column in {.arg pop_data}."
+      )
+    }
+  }
+
+  if (!is.null(stratum_var)) {
+    if (!stratum_var %in% names(pop_data)) {
+      cli::cli_abort(
+        "{.arg stratum_var} = {.val {stratum_var}} is not a column in {.arg pop_data}."
+      )
+    }
   }
 
   .errorCheck(
@@ -78,13 +139,27 @@ est_seroincidence <- function(
     curve_params = sr_params
   )
 
+  # Store original pop_data for cluster information before filtering
+  pop_data_orig <- pop_data
+
+  # Prepare columns to keep
+  cols_to_keep <- c(
+    pop_data |> get_values_var(),
+    pop_data |> get_age_var(),
+    "antigen_iso"
+  )
+
+  # Add cluster/stratum variables if specified
+  if (!is.null(cluster_var)) {
+    cols_to_keep <- c(cols_to_keep, cluster_var)
+  }
+  if (!is.null(stratum_var)) {
+    cols_to_keep <- c(cols_to_keep, stratum_var)
+  }
+
   pop_data <- pop_data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select(
-      pop_data |> get_values_var(),
-      pop_data |> get_age_var(),
-      "antigen_iso"
-    ) |>
+    dplyr::select(dplyr::all_of(cols_to_keep)) |>
     filter(if_all(everything(), ~!is.na(.x)))
 
   sr_params <- sr_params |>
@@ -223,13 +298,29 @@ est_seroincidence <- function(
     }
   }
 
-  fit <- fit |>
-    structure(
-      class = union("seroincidence", class(fit)),
-      lambda_start = lambda_start,
-      antigen_isos = antigen_isos,
-      ll_graph = graph
-    )
+  # Store clustering-related attributes only if clustering is being used
+  if (!is.null(cluster_var)) {
+    fit <- fit |>
+      structure(
+        class = union("seroincidence", class(fit)),
+        lambda_start = lambda_start,
+        antigen_isos = antigen_isos,
+        ll_graph = graph,
+        cluster_var = cluster_var,
+        stratum_var = stratum_var,
+        pop_data = pop_data,
+        sr_params = sr_params,
+        noise_params = noise_params
+      )
+  } else {
+    fit <- fit |>
+      structure(
+        class = union("seroincidence", class(fit)),
+        lambda_start = lambda_start,
+        antigen_isos = antigen_isos,
+        ll_graph = graph
+      )
+  }
 
   return(fit)
 }

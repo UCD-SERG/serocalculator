@@ -2,6 +2,11 @@
 
 ## New features
 
+* Added support for cluster-robust standard errors in `est_seroincidence()` through
+  new `cluster_var` and `stratum_var` parameters. When `cluster_var` is specified,
+  `summary.seroincidence()` automatically computes cluster-robust (sandwich) variance
+  estimates to account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
 * Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
 * Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
 * Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 

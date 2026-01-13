@@ -15,6 +15,9 @@ est_seroincidence(
   verbose = FALSE,
   build_graph = FALSE,
   print_graph = build_graph & verbose,
+  cluster_var = NULL,
+  stratum_var = NULL,
+  sampling_weights = NULL,
   ...
 )
 }
@@ -73,6 +76,19 @@ a range of incidence rates (lambda values)}
 \item{print_graph}{whether to display the log-likelihood curve graph
 in the course of running \code{est_seroincidence()}}
 
+\item{cluster_var}{optional name of the variable in \code{pop_data} containing
+cluster identifiers for clustered sampling designs (e.g., households, schools).
+When provided, standard errors will be adjusted for within-cluster correlation
+using cluster-robust variance estimation.}
+
+\item{stratum_var}{optional name of the variable in \code{pop_data} containing
+stratum identifiers. Used in combination with \code{cluster_var} for
+stratified cluster sampling designs.}
+
+\item{sampling_weights}{optional \link{data.frame} containing sampling weights
+with columns for cluster/stratum identifiers and their sampling probabilities.
+Currently not implemented; reserved for future use.}
+
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
   \describe{
@@ -117,6 +133,7 @@ sr_curve <-
 noise <-
   example_noise_params_pk
 
+# Basic usage without clustering
 est1 <- est_seroincidence(
   pop_data = xs_data,
   sr_params = sr_curve,
@@ -125,4 +142,28 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
+
+# Usage with clustered sampling design
+# Standard errors will be adjusted for within-cluster correlation
+est2 <- est_seroincidence(
+  pop_data = xs_data,
+  sr_params = sr_curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+summary(est2)
+
+# With both cluster and stratum variables
+est3 <- est_seroincidence(
+  pop_data = xs_data,
+  sr_params = sr_curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster",
+  stratum_var = "catchment"
+)
+
+summary(est3)
 }

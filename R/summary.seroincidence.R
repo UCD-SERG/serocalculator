@@ -1,6 +1,9 @@
 #' @title Summarizing fitted seroincidence models
 #' @description
 #' This function is a `summary()` method for `seroincidence` objects.
+#' When the model was fit with clustered data (using the `cluster_var` parameter
+#' in [est_seroincidence()]), this function automatically computes cluster-robust
+#' standard errors to account for within-cluster correlation.
 #'
 #' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
@@ -69,6 +72,8 @@ summary.seroincidence <- function(
     ...) {
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")
+  cluster_var <- object |> attr("cluster_var")
+  stratum_var <- object |> attr("stratum_var")
 
   alpha <- 1 - coverage
   h_alpha <- alpha / 2
@@ -83,7 +88,26 @@ summary.seroincidence <- function(
   }
 
   log_lambda <- object$estimate
-  var_log_lambda <- 1 / object$hessian |> as.vector()
+
+  # Check if cluster-robust variance should be computed
+  use_cluster_robust <- !is.null(cluster_var)
+
+  if (use_cluster_robust) {
+    if (verbose) {
+      cli::cli_inform(
+        "Computing cluster-robust standard errors using {.field {cluster_var}} variable."
+      )
+    }
+    var_log_lambda <- .compute_cluster_robust_variance(
+      fit = object,
+      cluster_var = cluster_var,
+      stratum_var = stratum_var
+    )
+  } else {
+    # Standard variance from Hessian
+    var_log_lambda <- 1 / object$hessian |> as.vector()
+  }
+
   se_log_lambda <- sqrt(var_log_lambda)
 
   to_return <- tibble::tibble(

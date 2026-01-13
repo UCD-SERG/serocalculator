@@ -24,3 +24,4 @@ NEWS_files
 junit.xml
 
 **/*.quarto_ipynb
+*.knit.md

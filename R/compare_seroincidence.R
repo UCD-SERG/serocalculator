@@ -171,7 +171,7 @@ compare_seroincidence.seroincidence.by <- function(
   }
 
   # Get summary of stratified estimates
-  sum_x <- summary(x, confidence_level = coverage, verbose = FALSE)
+  sum_x <- summary(x, coverage = coverage, verbose = FALSE)
 
   # Extract strata information
   strata_vars <- attr(sum_x, "Strata")

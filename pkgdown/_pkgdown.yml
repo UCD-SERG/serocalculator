@@ -42,6 +42,9 @@ reference:
   contents:
   - est_seroincidence
   - est_seroincidence_by
+- title: Compare seroconversion incidence rates
+  contents:
+  - compare_seroincidence
 - title: Summarize seroconversion incidence rate estimates
   contents:
   - summary.seroincidence

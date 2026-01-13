@@ -1,27 +1,31 @@
 #' Compare seroincidence rates between two groups
 #'
 #' @description
-#' Perform a two-sample z-test to compare seroincidence rates between two groups.
-#' Since we use maximum likelihood estimation (MLE) for each seroincidence estimate
-#' and estimates from different strata or data sets are uncorrelated, we can use a
-#' simple two-sample z-test using the Gaussian distribution. The standard error for
-#' the difference is computed by adding the estimated variances and taking the square root.
+#' Perform a two-sample z-test to compare seroincidence rates between
+#' two groups. Since we use maximum likelihood estimation (MLE) for each
+#' seroincidence estimate and estimates from different strata or data sets
+#' are uncorrelated, we can use a simple two-sample z-test using the
+#' Gaussian distribution. The standard error for the difference is computed
+#' by adding the estimated variances and taking the square root.
 #'
 #' @param x A `"seroincidence"` object from [est_seroincidence()] or
 #'   a `"seroincidence.by"` object from [est_seroincidence_by()]
-#' @param y A `"seroincidence"` object from [est_seroincidence()] (optional if `x` is
-#'   a `"seroincidence.by"` object)
-#' @param coverage Desired confidence interval coverage probability (default = 0.95)
-#' @param verbose Logical indicating whether to print verbose messages (default = FALSE)
+#' @param y A `"seroincidence"` object from [est_seroincidence()]
+#'   (optional if `x` is a `"seroincidence.by"` object)
+#' @param coverage Desired confidence interval coverage probability
+#'   (default = 0.95)
+#' @param verbose Logical indicating whether to print verbose messages
+#'   (default = FALSE)
 #' @param ... Additional arguments (currently unused)
 #'
 #' @details
 #' When comparing two single `"seroincidence"` objects, this function performs a
 #' two-sample z-test and returns results in the standard `htest` format.
 #'
-#' When applied to a `"seroincidence.by"` object (stratified estimates), the function
-#' compares all pairs of strata and returns a nicely formatted table with point estimates
-#' for the difference in seroincidence, p-values, and confidence intervals.
+#' When applied to a `"seroincidence.by"` object (stratified estimates),
+#' the function compares all pairs of strata and returns a nicely formatted
+#' table with point estimates for the difference in seroincidence, p-values,
+#' and confidence intervals.
 #'
 #' The test statistic is computed as:
 #' \deqn{z = \frac{\lambda_1 - \lambda_2}{\sqrt{SE_1^2 + SE_2^2}}}
@@ -30,38 +34,61 @@
 #' and \eqn{SE_1} and \eqn{SE_2} are their standard errors.
 #'
 #' @return
-#' * When comparing two `"seroincidence"` objects: An object of class `"htest"`
-#'   containing the test statistic, p-value, confidence interval, and estimates.
-#' * When applied to a `"seroincidence.by"` object: A [tibble::tibble()] with columns
-#'   for each pair of strata, the difference in incidence rates, standard error,
-#'   z-statistic, p-value, and confidence interval bounds.
+#' * When comparing two `"seroincidence"` objects: An object of class
+#'   `"htest"` containing the test statistic, p-value, confidence interval,
+#'   and estimates.
+#' * When applied to a `"seroincidence.by"` object: A [tibble::tibble()]
+#'   with columns for each pair of strata, the difference in incidence rates,
+#'   standard error, z-statistic, p-value, and confidence interval bounds.
 #'
 #' @export
 #' @examples
 #' \dontrun{
 #' # See inst/examples/exm-compare_seroincidence.R for complete examples
 #' }
-compare_seroincidence <- function(x, y = NULL, coverage = 0.95, verbose = FALSE, ...) {
+compare_seroincidence <- function(
+    x,
+    y = NULL,
+    coverage = 0.95,
+    verbose = FALSE,
+    ...) {
   UseMethod("compare_seroincidence")
 }
 
 #' @export
-compare_seroincidence.default <- function(x, y = NULL, coverage = 0.95, verbose = FALSE, ...) {
+compare_seroincidence.default <- function(
+    x,
+    y = NULL,
+    coverage = 0.95,
+    verbose = FALSE,
+    ...) {
   cli::cli_abort(
     c(
-      "{.arg x} must be a {.cls seroincidence} or {.cls seroincidence.by} object.",
+      paste0(
+        "{.arg x} must be a {.cls seroincidence} or ",
+        "{.cls seroincidence.by} object."
+      ),
       "x" = "You supplied an object of class {.cls {class(x)}}."
     )
   )
 }
 
 #' @export
-#' @describeIn compare_seroincidence Compare two single seroincidence estimates
-compare_seroincidence.seroincidence <- function(x, y = NULL, coverage = 0.95, verbose = FALSE, ...) {
+#' @describeIn compare_seroincidence Compare two single seroincidence
+#'   estimates
+compare_seroincidence.seroincidence <- function(
+    x,
+    y = NULL,
+    coverage = 0.95,
+    verbose = FALSE,
+    ...) {
   if (is.null(y)) {
     cli::cli_abort(
       c(
-        "When {.arg x} is a {.cls seroincidence} object, {.arg y} must also be provided.",
+        paste0(
+          "When {.arg x} is a {.cls seroincidence} object, ",
+          "{.arg y} must also be provided."
+        ),
         "x" = "{.arg y} is {.val NULL}."
       )
     )
@@ -123,12 +150,21 @@ compare_seroincidence.seroincidence <- function(x, y = NULL, coverage = 0.95, ve
 }
 
 #' @export
-#' @describeIn compare_seroincidence Compare all pairs of stratified seroincidence estimates
-compare_seroincidence.seroincidence.by <- function(x, y = NULL, coverage = 0.95, verbose = FALSE, ...) {
+#' @describeIn compare_seroincidence Compare all pairs of stratified
+#'   seroincidence estimates
+compare_seroincidence.seroincidence.by <- function(
+    x,
+    y = NULL,
+    coverage = 0.95,
+    verbose = FALSE,
+    ...) {
   if (!is.null(y)) {
     cli::cli_warn(
       c(
-        "When {.arg x} is a {.cls seroincidence.by} object, {.arg y} is ignored.",
+        paste0(
+          "When {.arg x} is a {.cls seroincidence.by} object, ",
+          "{.arg y} is ignored."
+        ),
         "i" = "Comparisons will be made among all strata in {.arg x}."
       )
     )

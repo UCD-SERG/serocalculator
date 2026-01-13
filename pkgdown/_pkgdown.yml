@@ -42,9 +42,6 @@ reference:
   contents:
   - est_seroincidence
   - est_seroincidence_by
-- title: Compare seroconversion incidence rates
-  contents:
-  - compare_seroincidence
 - title: Summarize seroconversion incidence rate estimates
   contents:
   - summary.seroincidence
@@ -54,6 +51,9 @@ reference:
   - autoplot.seroincidence
   - autoplot.seroincidence.by
   - autoplot.summary.seroincidence.by
+- title: Compare seroconversion incidence rates
+  contents:
+  - compare_seroincidence
 - title: Example data sets
   contents:
   - sees_pop_data_100

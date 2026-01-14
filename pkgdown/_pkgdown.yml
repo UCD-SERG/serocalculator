@@ -6,7 +6,7 @@ template:
 bibliography: vignettes/references.bib
 
 development:
-  mode: false
+  mode: auto
 
 search:
   exclude: ['preview/']

@@ -101,7 +101,7 @@ summary.seroincidence <- function(
         )
       )
     }
-    var_log_lambda <- serocalculator:::.compute_cluster_robust_var(
+    var_log_lambda <- .compute_cluster_robust_var(
       fit = object,
       cluster_var = cluster_var,
       stratum_var = stratum_var

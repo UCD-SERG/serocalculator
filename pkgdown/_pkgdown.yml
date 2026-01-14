@@ -5,9 +5,6 @@ template:
 
 bibliography: vignettes/references.bib
 
-development:
-  mode: auto
-
 search:
   exclude: ['preview/']
 

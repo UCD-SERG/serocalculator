@@ -2,6 +2,10 @@
 
 ## serocalculator (development version)
 
+## serocalculator 1.4.0
+
+CRAN release: 2025-12-11
+
 ### New features
 
 - Added
@@ -174,6 +178,8 @@
 
 ### Bug fixes
 
+- Fixed CRAN errors
+  ([\#464](https://github.com/UCD-SERG/serocalculator/issues/464))
 - Fixed stratification issue in enteric fever vignette
   ([\#418](https://github.com/UCD-SERG/serocalculator/issues/418))
 - Fixed issue in
@@ -340,8 +346,7 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using
-  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
+- Added `devtag` to package (using `devtag::use_devtag()`)
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

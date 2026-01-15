@@ -9,6 +9,10 @@
   - Returns `htest` format when comparing two single estimates
   - Returns formatted table with all pairwise comparisons for stratified estimates
   - Added examples to tutorial vignette and comprehensive unit tests
+* Implemented multi-version pkgdown documentation with version dropdown menu
+  - Users can now switch between main, latest-tag, and versioned releases
+  - Default landing page shows latest-tag (most recent release)
+  - Based on insightsengineering/r-pkgdown-multiversion setup
 * Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
 * Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
 * Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 

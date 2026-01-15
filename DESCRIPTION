@@ -64,7 +64,8 @@ Suggests:
     vdiffr,
     withr,
     forcats,
-    snapr (>= 0.0.0.9000)
+    snapr (>= 0.0.0.9000),
+    rex
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3

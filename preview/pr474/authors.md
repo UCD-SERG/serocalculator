@@ -2,14 +2,14 @@
 
 ## Authors
 
-- **Peter Teunis**. Author, copyright holder.  
-  Author of the method and original code.
-
 - **Kristina Lai**. Author, maintainer.
 
 - **Chris Orwa**. Author.
 
 - **Kwan Ho Lee**. Contributor.
+
+- **Peter Teunis**. Author, copyright holder.  
+  Author of the method and original code.
 
 - **Kristen Aiemjoy**. Author.
 
@@ -20,14 +20,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/UCD-SERG/serocalculator/blob/copilot/adapt-pkgdown-setup/DESCRIPTION)
 
-Teunis P, Lai K, Orwa C, Aiemjoy K, Morrison D (2026). *serocalculator:
+Lai K, Orwa C, Teunis P, Aiemjoy K, Morrison D (2026). *serocalculator:
 Estimating Infection Rates from Serological Data*. R package version
-1.3.0.9061, <https://ucd-serg.github.io/serocalculator/>.
+1.4.0.9001, <https://ucd-serg.github.io/serocalculator/>.
 
     @Manual{,
       title = {serocalculator: Estimating Infection Rates from Serological Data},
-      author = {Peter Teunis and Kristina Lai and Chris Orwa and Kristen Aiemjoy and Douglas Ezra Morrison},
+      author = {Kristina Lai and Chris Orwa and Peter Teunis and Kristen Aiemjoy and Douglas Ezra Morrison},
       year = {2026},
-      note = {R package version 1.3.0.9061},
+      note = {R package version 1.4.0.9001},
       url = {https://ucd-serg.github.io/serocalculator/},
     }

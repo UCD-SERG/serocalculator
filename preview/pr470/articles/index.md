@@ -3,26 +3,26 @@
 ### Get started
 
 - [Introduction to
-  serocalculator](https:/ucd-serg.github.io/serocalculator/preview/pr470/articles/serocalculator.md):
+  serocalculator](https://ucd-serg.github.io/serocalculator/articles/serocalculator.md):
 
   A summary of the methods behind serocalculator.
 
 ### Methodology
 
-- [Methodology](https:/ucd-serg.github.io/serocalculator/preview/pr470/articles/methodology.md):
+- [Methodology](https://ucd-serg.github.io/serocalculator/articles/methodology.md):
 
 - [Simulation
-  studies](https:/ucd-serg.github.io/serocalculator/preview/pr470/articles/simulate_xsectionalData.md):
+  studies](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.md):
 
   A demonstration of the accuracy of the estimation approach
 
 ### Examples
 
 - [Enteric Fever Seroincidence
-  Vignette](https:/ucd-serg.github.io/serocalculator/preview/pr470/articles/enteric_fever_example.md):
+  Vignette](https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.md):
 - [Scrub Typhus Seroincidence
-  Vignette](https:/ucd-serg.github.io/serocalculator/preview/pr470/articles/scrubTyphus_example.md):
+  Vignette](https://ucd-serg.github.io/serocalculator/articles/scrubTyphus_example.md):
 
 ### Other
 
-- [test-quarto-article](https:/ucd-serg.github.io/serocalculator/preview/pr470/articles/test-quarto-article.md):
+- [test-quarto-article](https://ucd-serg.github.io/serocalculator/articles/test-quarto-article.md):

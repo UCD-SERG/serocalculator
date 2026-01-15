@@ -24,14 +24,14 @@ compare_seroincidence(x, y = NULL, coverage = 0.95, verbose = FALSE, ...)
 - x:
 
   A `"seroincidence"` object from
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
   or a `"seroincidence.by"` object from
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md)
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 - y:
 
   A `"seroincidence"` object from
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
   (optional if `x` is a `"seroincidence.by"` object)
 
 - coverage:

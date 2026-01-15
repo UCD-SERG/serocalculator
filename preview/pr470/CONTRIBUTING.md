@@ -87,7 +87,7 @@ More details
 
 Please note that the serocalculator project is released with a
 [Contributor Code of
-Conduct](https:/ucd-serg.github.io/serocalculator/preview/pr470/CODE_OF_CONDUCT.md).
+Conduct](https://ucd-serg.github.io/serocalculator/CODE_OF_CONDUCT.md).
 By contributing to this project you agree to abide by its terms.
 
 ## Guide to the package structure
@@ -96,7 +96,7 @@ You can use the [foodwebr](https://lewinfox.com/foodwebr/) package to
 visualize the internal structure of
 [serocalculator](https://ucd-serg.github.io/serocalculator/); for
 example, to see the subfunctions of
-[`sim_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/sim_pop_data.md),
+[`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md),
 you can call:
 
 ``` r

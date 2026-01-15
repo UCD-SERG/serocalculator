@@ -13,7 +13,7 @@ typhoid_curves_nostrat_100
 ### `typhoid_curves_nostrat_100`
 
 A `curve_params` object (from
-[`as_sr_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/as_sr_params.md))
+[`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md))
 with 500 rows and 7 columns:
 
 - antigen_iso:

@@ -46,7 +46,7 @@ sim_pop_data_multi(
 - ...:
 
   Arguments passed on to
-  [`sim_pop_data`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/sim_pop_data.md)
+  [`sim_pop_data`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
 
   `lambda`
 

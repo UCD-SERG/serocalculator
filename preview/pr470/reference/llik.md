@@ -6,7 +6,7 @@ response data, for a given incidence rate (`lambda`) value.
 **\[deprecated\]**
 
 `llik()` was renamed to
-[`log_likelihood()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/log_likelihood.md)
+[`log_likelihood()`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md)
 to create a more consistent API.
 
 ## Usage

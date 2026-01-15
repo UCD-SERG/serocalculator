@@ -2,7 +2,7 @@
 
 Custom [`print()`](https://rdrr.io/r/base/print.html) function for
 `seroincidence.by` objects (from
-[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md))
+[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md))
 
 ## Usage
 
@@ -16,7 +16,7 @@ print(x, ...)
 - x:
 
   A list containing output of function
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md).
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
 
 - ...:
 

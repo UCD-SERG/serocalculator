@@ -394,7 +394,7 @@ autoplot(
 After estimating seroincidence rates across different groups, we may
 want to statistically compare these rates to determine if observed
 differences are significant. The
-[`compare_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/compare_seroincidence.md)
+[`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)
 function performs two-sample z-tests to compare seroincidence rates.
 
 ### Comparing Two Individual Estimates

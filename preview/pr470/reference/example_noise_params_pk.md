@@ -14,7 +14,7 @@ example_noise_params_pk
 ### `example_noise_params_pk`
 
 A `curve_params` object (from
-[`as_sr_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/as_sr_params.md))
+[`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md))
 with 4 rows and 7 columns:
 
 - antigen_iso:

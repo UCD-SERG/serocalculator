@@ -1,7 +1,7 @@
 # Extract `Strata` metadata from an object
 
 Generic method for extracting strata metadata from objects. See
-[`strata.default()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/strata.default.md)
+[`strata.default()`](https://ucd-serg.github.io/serocalculator/reference/strata.default.md)
 
 ## Usage
 

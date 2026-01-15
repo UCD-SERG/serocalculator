@@ -1,7 +1,7 @@
 # Calculate negative log-likelihood
 
 Same as
-[`log_likelihood()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/log_likelihood.md),
+[`log_likelihood()`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md),
 except negated and requiring lambda on log scale (used in combination
 with [`nlm()`](https://rdrr.io/r/stats/nlm.html), to ensure that the
 optimization search doesn't stray into negative values of `lambda`).
@@ -21,7 +21,7 @@ optimization search doesn't stray into negative values of `lambda`).
 - ...:
 
   Arguments passed on to
-  [`log_likelihood`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/log_likelihood.md)
+  [`log_likelihood`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md)
 
   `pop_data`
 

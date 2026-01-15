@@ -25,7 +25,7 @@ analyze_sims(data)
   - `CI.lwr`,
 
   - `CI.upr` for example, as produced by
-    [`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/summary.seroincidence.by.md)
+    [`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md)
     with `lambda.sim` as a stratifying variable
 
 ## Value

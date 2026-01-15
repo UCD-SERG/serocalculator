@@ -1,7 +1,7 @@
 # Summary Method for `"seroincidence.by"` Objects
 
 Calculate seroincidence from output of the seroincidence calculator
-[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md).
+[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
 
 ## Usage
 
@@ -22,7 +22,7 @@ summary(
 - object:
 
   A dataframe containing output of
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md).
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
 
 - confidence_level:
 
@@ -73,10 +73,10 @@ The object also has the following metadata (accessible through
 
 - `antigen_isos` Character vector with names of input antigen isotypes
   used in
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md)
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 - `Strata` Character with names of strata used in
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr470/reference/est_seroincidence_by.md)
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 ## Examples
 

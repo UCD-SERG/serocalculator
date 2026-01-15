@@ -42,7 +42,7 @@ test_that("compare_seroincidence works with seroincidence.by object", {
   # Check that result is a tibble with correct class and structure
   expect_s3_class(result, "tbl_df")
   expect_s3_class(result, "comparison.seroincidence.by")
-  
+
   # Use snapshot to validate structure and values
   expect_snapshot_value(result, style = "serialize", tolerance = 1e-4)
 })

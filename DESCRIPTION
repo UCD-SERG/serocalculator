@@ -63,7 +63,8 @@ Suggests:
     qrcode,
     vdiffr,
     withr,
-    forcats
+    forcats,
+    snapr (>= 0.0.0.9000)
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
@@ -77,3 +78,5 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.3
+Remotes:  
+    d-morrison/snapr

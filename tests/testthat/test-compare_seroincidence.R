@@ -18,8 +18,9 @@ test_that("compare_seroincidence works with two seroincidence objects", {
 
   result <- compare_seroincidence(est1, est2)
 
+  # Check that result is an htest object with correct structure
   expect_s3_class(result, "htest")
-  snapr::expect_snapshot_object(result, "two-objects")
+  expect_snapshot(result)
 })
 
 test_that("compare_seroincidence works with seroincidence.by object", {
@@ -38,9 +39,12 @@ test_that("compare_seroincidence works with seroincidence.by object", {
 
   result <- compare_seroincidence(est_by)
 
+  # Check that result is a tibble with correct class and structure
   expect_s3_class(result, "tbl_df")
   expect_s3_class(result, "comparison.seroincidence.by")
-  snapr::expect_snapshot_object(result, "seroincidence-by")
+
+  # Use snapshot to validate structure and values
+  expect_snapshot_value(result, style = "serialize", tolerance = 1e-4)
 })
 
 test_that("compare_seroincidence works with multiple strata variables", {
@@ -59,7 +63,8 @@ test_that("compare_seroincidence works with multiple strata variables", {
 
   result <- compare_seroincidence(est_by)
 
-  snapr::expect_snapshot_object(result, "multiple-strata")
+  # Validate structure via snapshot
+  expect_snapshot_value(result, style = "serialize", tolerance = 1e-4)
 })
 
 test_that("compare_seroincidence errors appropriately", {

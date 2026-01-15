@@ -20,7 +20,7 @@ test_that("compare_seroincidence works with two seroincidence objects", {
 
   # Check that result is an htest object with correct structure
   expect_s3_class(result, "htest")
-  expect_snapshot(result)
+  expect_snapshot(result, variant = tolower(Sys.info()[["sysname"]]))
 })
 
 test_that("compare_seroincidence works with seroincidence.by object", {

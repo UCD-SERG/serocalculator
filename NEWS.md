@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+# serocalculator 1.4.0
+
 ## New features
 
 * Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
@@ -59,6 +61,7 @@
 
 ## Bug fixes
 
+* Fixed CRAN errors (#464)
 * Fixed stratification issue in enteric fever vignette (#418)
 * Fixed issue in `graph.curve.params()` where MCMC samples 
 with the same iteration number from different MCMC chains

@@ -2,6 +2,10 @@
 
 ## serocalculator (development version)
 
+## serocalculator 1.4.0
+
+CRAN release: 2025-12-11
+
 ### New features
 
 - Added `chain_color` option to
@@ -164,6 +168,8 @@
 
 ### Bug fixes
 
+- Fixed CRAN errors
+  ([\#464](https://github.com/UCD-SERG/serocalculator/issues/464))
 - Fixed stratification issue in enteric fever vignette
   ([\#418](https://github.com/UCD-SERG/serocalculator/issues/418))
 - Fixed issue in

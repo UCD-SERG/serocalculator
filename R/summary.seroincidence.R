@@ -14,8 +14,10 @@
 #' * `est.start`: the starting guess for incidence rate
 #' * `ageCat`: the age category we are analyzing
 #' * `incidence.rate`: the estimated incidence rate, per person year
+#' * `SE`: standard error of the incidence rate estimate
 #' * `CI.lwr`: lower limit of confidence interval for incidence rate
 #' * `CI.upr`: upper limit of confidence interval for incidence rate
+#' * `se_type`: type of standard error used ("standard" or "cluster-robust")
 #' * `coverage`: coverage probability
 #' * `log.lik`:
 #'    log-likelihood of the data used in the call to `est_seroincidence()`,
@@ -111,6 +113,8 @@ summary.seroincidence <- function(
     var_log_lambda <- 1 / object$hessian |> as.vector()
   }
 
+  # Ensure var_log_lambda is a scalar
+  var_log_lambda <- as.numeric(var_log_lambda)[1]
   se_log_lambda <- sqrt(var_log_lambda)
 
   to_return <- tibble::tibble(
@@ -120,6 +124,7 @@ summary.seroincidence <- function(
     # https://en.wikipedia.org/wiki/Delta_method#Univariate_delta_method
     CI.lwr = exp(log_lambda - qnorm(1 - h_alpha) * se_log_lambda),
     CI.upr = exp(log_lambda + qnorm(1 - h_alpha) * se_log_lambda),
+    se_type = if (use_cluster_robust) "cluster-robust" else "standard",
     coverage = coverage,
     log.lik = -object$minimum,
     iterations = object$iterations,

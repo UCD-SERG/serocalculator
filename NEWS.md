@@ -1,5 +1,18 @@
 # serocalculator (development version)
 
+## New features
+
+* Added `compute_icc()` function to calculate the Intraclass Correlation Coefficient
+  (ICC) for seroincidence estimates from clustered sampling designs. The ICC measures
+  the proportion of variance due to between-cluster variation.
+
+## Bug fixes
+
+* Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
+  errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
+* Added `se_type` column to `summary.seroincidence()` output to clearly indicate whether
+  "standard" or "cluster-robust" standard errors are being used.
+
 # serocalculator 1.4.0
 
 ## New features

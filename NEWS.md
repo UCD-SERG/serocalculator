@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+# serocalculator 1.4.0
+
 ## New features
 
 * Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
@@ -54,6 +56,7 @@
 
 ## Bug fixes
 
+* Fixed CRAN errors (#464)
 * Fixed stratification issue in enteric fever vignette (#418)
 * Fixed issue in `graph.curve.params()` where MCMC samples 
 with the same iteration number from different MCMC chains

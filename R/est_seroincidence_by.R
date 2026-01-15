@@ -84,6 +84,8 @@ est_seroincidence_by <- function(
     num_cores = 1L,
     verbose = FALSE,
     print_graph = FALSE,
+    cluster_var = NULL,
+    stratum_var = NULL,
     ...) {
 
   strata_is_empty <-
@@ -115,6 +117,8 @@ est_seroincidence_by <- function(
         antigen_isos = antigen_isos,
         build_graph = build_graph,
         verbose = verbose,
+        cluster_var = cluster_var,
+        stratum_var = stratum_var,
         ...
       )
     return(to_return)
@@ -136,7 +140,9 @@ est_seroincidence_by <- function(
     noise_params = noise_params |> filter(.data$antigen_iso %in% antigen_isos),
     strata_varnames = strata,
     curve_strata_varnames = curve_strata_varnames,
-    noise_strata_varnames = noise_strata_varnames
+    noise_strata_varnames = noise_strata_varnames,
+    cluster_var = cluster_var,
+    stratum_var = stratum_var
   )
 
   strata_table <- stratum_data_list |> attr("strata")
@@ -181,8 +187,20 @@ est_seroincidence_by <- function(
       parallel::stopCluster(cl)
     })
 
-    # Export library paths to the cluster
-    parallel::clusterExport(cl, "lib_paths", envir = environment())
+    # Export library paths and cluster variables to the cluster
+    parallel::clusterExport(
+      cl,
+      c("lib_paths", "lambda_start", "build_graph"),
+      envir = environment()
+    )
+    
+    # Export cluster_var and stratum_var specifically
+    if (!is.null(cluster_var)) {
+      parallel::clusterExport(cl, "cluster_var", envir = environment())
+    }
+    if (!is.null(stratum_var)) {
+      parallel::clusterExport(cl, "stratum_var", envir = environment())
+    }
 
     # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {
@@ -207,7 +225,8 @@ est_seroincidence_by <- function(
                 build_graph = build_graph,
                 print_graph = FALSE,
                 verbose = FALSE,
-                ...
+                cluster_var = cluster_var,
+                stratum_var = stratum_var
               )
             )
           )
@@ -244,6 +263,8 @@ est_seroincidence_by <- function(
               build_graph = build_graph,
               print_graph = print_graph,
               verbose = verbose,
+              cluster_var = cluster_var,
+              stratum_var = stratum_var,
               ...
             )
           )

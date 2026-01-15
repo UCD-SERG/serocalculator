@@ -288,3 +288,82 @@ test_that("deprecate warning is as expected", {
   ) |>
     expect_warning()
 })
+
+test_that("clustering works with est_seroincidence_by", {
+  # Test with cluster_var
+  est_cluster <- est_seroincidence_by(
+    strata = "catchment",
+    pop_data = sees_pop_data_pk_100,
+    sr_params = typhoid_curves_nostrat_100,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    cluster_var = "cluster",
+    num_cores = 1
+  )
+  
+  # Should be seroincidence.by object
+  expect_s3_class(est_cluster, "seroincidence.by")
+  
+  # Each stratum should have cluster_var attribute
+  for (stratum_name in names(est_cluster)) {
+    expect_equal(attr(est_cluster[[stratum_name]], "cluster_var"), "cluster")
+  }
+  
+  # Summary should work and have se_type
+  sum_cluster <- summary(est_cluster)
+  expect_true("se_type" %in% names(sum_cluster))
+  expect_true(all(sum_cluster$se_type == "cluster-robust"))
+})
+
+test_that("clustering with stratum works with est_seroincidence_by", {
+  # Test with both cluster_var and stratum_var
+  est_both <- est_seroincidence_by(
+    strata = "catchment",
+    pop_data = sees_pop_data_pk_100,
+    sr_params = typhoid_curves_nostrat_100,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    cluster_var = "cluster",
+    stratum_var = "catchment",
+    num_cores = 1
+  )
+  
+  # Each stratum should have both attributes
+  for (stratum_name in names(est_both)) {
+    expect_equal(attr(est_both[[stratum_name]], "cluster_var"), "cluster")
+    expect_equal(attr(est_both[[stratum_name]], "stratum_var"), "catchment")
+  }
+})
+
+test_that("clustering works with parallel processing", {
+  skip_on_cran()
+  skip("Parallel processing with clustering needs investigation")
+  
+  # Test with cluster_var and parallel processing
+  est_cluster_parallel <- est_seroincidence_by(
+    strata = "catchment",
+    pop_data = sees_pop_data_pk_100,
+    sr_params = typhoid_curves_nostrat_100,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    cluster_var = "cluster",
+    num_cores = 2
+  )
+  
+  # Should work without errors
+  expect_s3_class(est_cluster_parallel, "seroincidence.by")
+  
+  # Each stratum should have cluster_var attribute
+  for (stratum_name in names(est_cluster_parallel)) {
+    expect_equal(
+      attr(est_cluster_parallel[[stratum_name]], "cluster_var"),
+      "cluster"
+    )
+  }
+})

@@ -5,6 +5,8 @@
 * Added `compute_icc()` function to calculate the Intraclass Correlation Coefficient
   (ICC) for seroincidence estimates from clustered sampling designs. The ICC measures
   the proportion of variance due to between-cluster variation.
+* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence_by()` to
+  support cluster-robust standard error estimation in stratified analyses.
 
 ## Bug fixes
 
@@ -12,6 +14,9 @@
   errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
 * Added `se_type` column to `summary.seroincidence()` output to clearly indicate whether
   "standard" or "cluster-robust" standard errors are being used.
+* Fixed `est_seroincidence_by()` to properly pass cluster and stratum variables through
+  to stratified analyses. Previously, these variables were dropped during data stratification,
+  causing errors when trying to use clustering with `est_seroincidence_by()`.
 
 # serocalculator 1.4.0
 

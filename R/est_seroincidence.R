@@ -72,7 +72,7 @@ est_seroincidence <- function(
     print(environment() |> as.list())
   }
 
-  .errorCheck(
+  .error_check(
     data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = sr_params

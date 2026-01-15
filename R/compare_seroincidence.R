@@ -108,14 +108,14 @@ compare_seroincidence.seroincidence <- function(
   sum_y <- summary(y, coverage = coverage, verbose = FALSE)
 
   # Extract estimates and standard errors
-  lambda_1 <- sum_x$incidence.rate
-  lambda_2 <- sum_y$incidence.rate
-  se_1 <- sum_x$SE
-  se_2 <- sum_y$SE
+  lambda1 <- sum_x$incidence.rate
+  lambda2 <- sum_y$incidence.rate
+  se1 <- sum_x$SE
+  se2 <- sum_y$SE
 
   # Compute difference and its standard error
-  diff <- lambda_1 - lambda_2
-  se_diff <- sqrt(se_1^2 + se_2^2)
+  diff <- lambda1 - lambda2
+  se_diff <- sqrt(se1^2 + se2^2)
 
   # Compute z-statistic and p-value
   z_stat <- diff / se_diff
@@ -132,8 +132,8 @@ compare_seroincidence.seroincidence <- function(
     statistic = c(z = z_stat),
     p.value = p_value,
     estimate = c(
-      "incidence rate 1" = lambda_1,
-      "incidence rate 2" = lambda_2,
+      "incidence rate 1" = lambda1,
+      "incidence rate 2" = lambda2,
       "difference" = diff
     ),
     conf.int = c(ci_lower, ci_upper),
@@ -191,20 +191,20 @@ compare_seroincidence.seroincidence.by <- function(
   idx <- 1
 
   # Pre-compute string patterns for column relocation
-  strata_patterns_1 <- paste0(strata_vars, ".1")
-  strata_patterns_2 <- paste0(strata_vars, ".2")
+  strata_patterns1 <- paste0(strata_vars, ".1")
+  strata_patterns2 <- paste0(strata_vars, ".2")
 
   for (i in 1:(n_strata - 1)) {
     for (j in (i + 1):n_strata) {
       # Extract data for this pair
-      lambda_1 <- sum_x$incidence.rate[i]
-      lambda_2 <- sum_x$incidence.rate[j]
-      se_1 <- sum_x$SE[i]
-      se_2 <- sum_x$SE[j]
+      lambda1 <- sum_x$incidence.rate[i]
+      lambda2 <- sum_x$incidence.rate[j]
+      se1 <- sum_x$SE[i]
+      se2 <- sum_x$SE[j]
 
       # Compute difference and its standard error
-      diff <- lambda_1 - lambda_2
-      se_diff <- sqrt(se_1^2 + se_2^2)
+      diff <- lambda1 - lambda2
+      se_diff <- sqrt(se1^2 + se2^2)
 
       # Compute z-statistic and p-value
       z_stat <- diff / se_diff
@@ -220,8 +220,8 @@ compare_seroincidence.seroincidence.by <- function(
       comparison <- tibble::tibble(
         Stratum_1 = sum_x$Stratum[i],
         Stratum_2 = sum_x$Stratum[j],
-        incidence.rate.1 = lambda_1,
-        incidence.rate.2 = lambda_2,
+        incidence.rate.1 = lambda1,
+        incidence.rate.2 = lambda2,
         difference = diff,
         SE = se_diff,
         z.statistic = z_stat,
@@ -239,8 +239,8 @@ compare_seroincidence.seroincidence.by <- function(
       # Reorder columns to put stratum variables first
       comparison <- comparison |>
         dplyr::relocate(
-          tidyselect::starts_with(strata_patterns_1),
-          tidyselect::starts_with(strata_patterns_2),
+          tidyselect::starts_with(strata_patterns1),
+          tidyselect::starts_with(strata_patterns2),
           .before = "incidence.rate.1"
         )
 

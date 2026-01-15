@@ -78,9 +78,6 @@ exclusions <- list(
   "inst/examples" = list(
     undesirable_function_linter = Inf
   ),
-  "inst/analyses" = list(
-    undesirable_function_linter = Inf
-  ),
   "tests/testthat.R" = list(
     undesirable_function_linter = Inf
   )

@@ -18,6 +18,8 @@ on:
       - "LICENSE.*"
       - NAMESPACE
       - ".github/workflows/docs.yaml"
+  release:
+    types: [published]
   pull_request:
     types:
       - opened
@@ -62,7 +64,11 @@ jobs:
       - name: Get current branch or tag 🏷️
         id: current-branch-or-tag
         run: |
-          if [ "${{ steps.branch-name.outputs.is_tag }}" == "true" ]; then
+          if [ "${{ github.event_name }}" == "release" ]; then
+            # For release events, use the tag from the release
+            echo "Release tag: ${{ github.event.release.tag_name }}"
+            echo "ref-name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.branch-name.outputs.is_tag }}" == "true" ]; then
             echo "Current tag: ${{ steps.branch-name.outputs.tag }}"
             echo "ref-name=${{ steps.branch-name.outputs.tag }}" >> $GITHUB_OUTPUT
           else

@@ -8,6 +8,9 @@
 #' @param object A dataframe containing output of [est_seroincidence_by()].
 #' @param verbose a [logical]
 #' scalar indicating whether to print verbose messages to the console
+#' @param show_full_input logical; if `TRUE`, include metadata columns
+#'   with noise parameters, observation counts, and input object names.
+#'   Default is `FALSE`.
 #' @param ... Additional arguments affecting the summary produced.
 #' @param show_deviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence.
@@ -27,6 +30,24 @@
 #'     Negative log likelihood (NLL) at estimated (maximum likelihood) `lambda`)
 #'  * `nlm.convergence.code` (included if `show_convergence = TRUE`)
 #'    Convergence information returned by [stats::nlm()]
+#'
+#' If `show_full_input = TRUE`, the following columns are also included:
+#'  * `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
+#'    measurement noise parameters (eps) for each antigen isotype, where
+#'    `<antigen>` is the antigen-isotype name
+#'  * `biological.noise.<antigen>`, `biological.noise.<antigen>`, etc.:
+#'    biological noise parameters (nu) for each antigen isotype, where
+#'    `<antigen>` is the antigen-isotype name
+#'  * `n.seroresponse.params`: number of longitudinal seroresponse parameter
+#'    observations for each stratum
+#'  * `seroresponse.params.stratified`: logical indicating whether seroresponse
+#'    parameters were stratified for each stratum
+#'  * `pop_data`: name of the population data object passed to
+#'    `est_seroincidence_by()`
+#'  * `sr_params`: name of the seroresponse parameters object passed to
+#'    `est_seroincidence_by()`
+#'  * `noise_params`: name of the noise parameters object passed to
+#'    `est_seroincidence_by()`
 #'
 #' The object also has the following metadata
 #' (accessible through [base::attr()]):
@@ -69,12 +90,13 @@ summary.seroincidence.by <- function(
     show_deviance = TRUE,
     show_convergence = TRUE,
     verbose = FALSE,
+    show_full_input = FALSE,
     ...) {
   alpha <- 1 - confidence_level
   quantiles <- c(alpha / 2, 1 - alpha / 2)
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
-    stop("Incorrectly specified quantiles")
+    cli::cli_abort("Incorrectly specified quantiles")
   }
 
   if (quantiles[1] > quantiles[2]) {
@@ -82,13 +104,18 @@ summary.seroincidence.by <- function(
                    less than the lower bound.")
   }
 
-  results <-
-    object |>
+  # Extract summaries and metadata from each stratum
+  summaries_list <- object |>
     lapply(
       FUN = summary.seroincidence,
       coverage = confidence_level,
-      verbose = verbose
-    ) |>
+      verbose = verbose,
+      show_full_input = show_full_input
+    )
+
+  # Bind summaries into a single data frame
+  # Metadata is now in columns, not attributes
+  results <- summaries_list |>
     bind_rows(.id = "Stratum")
 
   results <-

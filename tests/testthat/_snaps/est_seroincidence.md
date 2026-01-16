@@ -3,11 +3,15 @@
     Code
       summary(typhoid_results, coverage = 0.95)
     Output
-      # A tibble: 1 x 10
+      # A tibble: 1 x 19
         est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
             <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
       1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-      # i 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+      # i 11 more variables: antigen.isos <chr>, nlm.convergence.code <ord>,
+      #   measurement.noise.HlyE_IgA <dbl>, biological.noise.HlyE_IgA <dbl>,
+      #   measurement.noise.HlyE_IgG <dbl>, biological.noise.HlyE_IgG <dbl>,
+      #   n.seroresponse.params <int>, seroresponse.params.stratified <lgl>,
+      #   pop_data <chr>, sr_params <chr>, noise_params <chr>
 
 ---
 
@@ -15,7 +19,11 @@
         gradient = 3.60891331241403e-06, hessian = structure(86.991906300701, dim = c(1L, 
         1L)), code = 1L, iterations = 5L), class = c("seroincidence", 
     "list"), lambda_start = 0.1, antigen_isos = c("HlyE_IgG", "HlyE_IgA"
-    ))
+    ), noise_params = structure(list(antigen_iso = c("HlyE_IgA", 
+    "HlyE_IgG"), eps = c(0.2793208827, 0.1456403573), nu = c(2.59560775795, 
+    2.3600514143)), row.names = c(NA, -2L), antigen_isos = c("HlyE_IgA", 
+    "HlyE_IgG", "LPS_IgA", "LPS_IgG"), class = c("noise_params", 
+    "tbl_df", "tbl", "data.frame")), n_sr_params = 200L, sr_params_stratified = FALSE, pop_data_name = "sees_pop_data_pk_100", sr_params_name = "typhoid_curves_nostrat_100", noise_params_name = "example_noise_params_pk")
 
 # verbose output is consistent
 

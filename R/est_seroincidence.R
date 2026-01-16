@@ -67,6 +67,29 @@ est_seroincidence <- function(
     build_graph = FALSE,
     print_graph = build_graph & verbose,
     ...) {
+  # Capture object names for metadata
+  # Check if names were passed via ... (from est_seroincidence_by)
+  dots <- list(...)
+  if (!is.null(dots$.pop_data_name)) {
+    pop_data_name <- dots$.pop_data_name
+  } else {
+    pop_data_name <- deparse(substitute(pop_data)) |> paste(collapse = " ")
+  }
+  if (!is.null(dots$.sr_params_name)) {
+    sr_params_name <- dots$.sr_params_name
+  } else {
+    sr_params_name <- deparse(substitute(sr_params)) |> paste(collapse = " ")
+  }
+  if (!is.null(dots$.noise_params_name)) {
+    noise_params_name <- dots$.noise_params_name
+  } else {
+    noise_params_name <- deparse(substitute(noise_params)) |> paste(collapse = " ")
+  }
+  # Remove the name parameters from dots so they don't interfere
+  dots$.pop_data_name <- NULL
+  dots$.sr_params_name <- NULL
+  dots$.noise_params_name <- NULL
+  
   if (verbose > 1) {
     message("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
@@ -223,12 +246,28 @@ est_seroincidence <- function(
     }
   }
 
+  # Extract noise parameters for storage
+  noise_params_summary <- noise_params |>
+    bind_rows() |>
+    select("antigen_iso", "eps", "nu")
+
+  # Count sr_params observations
+  n_sr_params <- sr_params |>
+    bind_rows() |>
+    nrow()
+
   fit <- fit |>
     structure(
       class = union("seroincidence", class(fit)),
       lambda_start = lambda_start,
       antigen_isos = antigen_isos,
-      ll_graph = graph
+      ll_graph = graph,
+      noise_params = noise_params_summary,
+      n_sr_params = n_sr_params,
+      sr_params_stratified = FALSE,
+      pop_data_name = pop_data_name,
+      sr_params_name = sr_params_name,
+      noise_params_name = noise_params_name
     )
 
   return(fit)
@@ -244,7 +283,7 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-  ...) {
+    ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

@@ -10,6 +10,7 @@
   show_deviance = TRUE,
   show_convergence = TRUE,
   verbose = FALSE,
+  show_full_input = FALSE,
   ...
 )
 }
@@ -29,6 +30,10 @@ Default = \code{FALSE}.}
 \item{verbose}{a \link{logical}
 scalar indicating whether to print verbose messages to the console}
 
+\item{show_full_input}{logical; if \code{TRUE}, include metadata columns
+with noise parameters, observation counts, and input object names.
+Default is \code{FALSE}.}
+
 \item{...}{Additional arguments affecting the summary produced.}
 }
 \value{
@@ -42,6 +47,26 @@ with the following columns:
 Negative log likelihood (NLL) at estimated (maximum likelihood) \code{lambda})
 \item \code{nlm.convergence.code} (included if \code{show_convergence = TRUE})
 Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
+}
+
+If \code{show_full_input = TRUE}, the following columns are also included:
+\itemize{
+\item \verb{measurement.noise.<antigen>}, \verb{measurement.noise.<antigen>}, etc.:
+measurement noise parameters (eps) for each antigen isotype, where
+\verb{<antigen>} is the antigen-isotype name
+\item \verb{biological.noise.<antigen>}, \verb{biological.noise.<antigen>}, etc.:
+biological noise parameters (nu) for each antigen isotype, where
+\verb{<antigen>} is the antigen-isotype name
+\item \code{n.seroresponse.params}: number of longitudinal seroresponse parameter
+observations for each stratum
+\item \code{seroresponse.params.stratified}: logical indicating whether seroresponse
+parameters were stratified for each stratum
+\item \code{pop_data}: name of the population data object passed to
+\code{est_seroincidence_by()}
+\item \code{sr_params}: name of the seroresponse parameters object passed to
+\code{est_seroincidence_by()}
+\item \code{noise_params}: name of the noise parameters object passed to
+\code{est_seroincidence_by()}
 }
 
 The object also has the following metadata

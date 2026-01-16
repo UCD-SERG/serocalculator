@@ -35,15 +35,20 @@ test_that(
             summ2 <- summary(est2)
 
             # Check that noise parameter columns exist for each row
-            expect_true("measurement.noise.1" %in% names(summ2))
-            expect_true("measurement.noise.2" %in% names(summ2))
-            expect_true("biological.noise.1" %in% names(summ2))
-            expect_true("biological.noise.2" %in% names(summ2))
+            # with antigen names
+            expect_true("measurement.noise.HlyE_IgA" %in% names(summ2))
+            expect_true("measurement.noise.HlyE_IgG" %in% names(summ2))
+            expect_true("biological.noise.HlyE_IgA" %in% names(summ2))
+            expect_true("biological.noise.HlyE_IgG" %in% names(summ2))
 
             # Check that metadata columns exist
             expect_true("n.seroresponse.params" %in% names(summ2))
             expect_true("n.pop.data" %in% names(summ2))
             expect_true("seroresponse.params.stratified" %in% names(summ2))
+
+            # Check that object name columns exist
+            expect_true("seroresponse.params.name" %in% names(summ2))
+            expect_true("noise.params.name" %in% names(summ2))
 
             # Check values for both strata
             expect_equal(nrow(summ2), 2)  # Two strata

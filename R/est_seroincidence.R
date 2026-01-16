@@ -67,6 +67,10 @@ est_seroincidence <- function(
     build_graph = FALSE,
     print_graph = build_graph & verbose,
     ...) {
+  # Capture object names for metadata
+  sr_params_name <- deparse(substitute(sr_params)) |> paste(collapse = " ")
+  noise_params_name <- deparse(substitute(noise_params)) |> paste(collapse = " ")
+  
   if (verbose > 1) {
     message("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
@@ -248,7 +252,9 @@ est_seroincidence <- function(
       noise_params = noise_params_summary,
       n_sr_params = n_sr_params,
       n_pop_data = n_pop_data,
-      sr_params_stratified = FALSE
+      sr_params_stratified = FALSE,
+      sr_params_name = sr_params_name,
+      noise_params_name = noise_params_name
     )
 
   return(fit)

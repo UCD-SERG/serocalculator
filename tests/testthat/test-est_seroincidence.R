@@ -78,11 +78,11 @@ test_that("summary includes noise_params and sr_params metadata", {
 
   summ <- summary(est1)
 
-  # Check that noise parameter columns exist
-  expect_true("measurement.noise.1" %in% names(summ))
-  expect_true("measurement.noise.2" %in% names(summ))
-  expect_true("biological.noise.1" %in% names(summ))
-  expect_true("biological.noise.2" %in% names(summ))
+  # Check that noise parameter columns exist with antigen names
+  expect_true("measurement.noise.HlyE_IgA" %in% names(summ))
+  expect_true("measurement.noise.HlyE_IgG" %in% names(summ))
+  expect_true("biological.noise.HlyE_IgA" %in% names(summ))
+  expect_true("biological.noise.HlyE_IgG" %in% names(summ))
 
   # Check that metadata columns exist and have correct values
   expect_true("n.seroresponse.params" %in% names(summ))
@@ -93,4 +93,9 @@ test_that("summary includes noise_params and sr_params metadata", {
 
   expect_true("seroresponse.params.stratified" %in% names(summ))
   expect_false(summ$seroresponse.params.stratified)
+
+  # Check that object name columns exist
+  expect_true("seroresponse.params.name" %in% names(summ))
+  expect_true("noise.params.name" %in% names(summ))
+  expect_equal(summ$noise.params.name, "example_noise_params_pk")
 })

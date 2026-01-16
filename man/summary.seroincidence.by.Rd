@@ -42,15 +42,19 @@ with the following columns:
 Negative log likelihood (NLL) at estimated (maximum likelihood) \code{lambda})
 \item \code{nlm.convergence.code} (included if \code{show_convergence = TRUE})
 Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
-\item \code{measurement.noise.1}, \code{measurement.noise.2}, etc.: measurement noise
-parameters (eps) for each antigen isotype
-\item \code{biological.noise.1}, \code{biological.noise.2}, etc.: biological noise
-parameters (nu) for each antigen isotype
+\item \verb{measurement.noise.<antigen>}, \verb{measurement.noise.<antigen>}, etc.:
+measurement noise parameters (eps) for each antigen isotype, where
+\verb{<antigen>} is the antigen-isotype name
+\item \verb{biological.noise.<antigen>}, \verb{biological.noise.<antigen>}, etc.:
+biological noise parameters (nu) for each antigen isotype, where
+\verb{<antigen>} is the antigen-isotype name
 \item \code{n.seroresponse.params}: number of longitudinal seroresponse parameter
 observations for each stratum
 \item \code{n.pop.data}: number of population data observations for each stratum
 \item \code{seroresponse.params.stratified}: logical indicating whether seroresponse
 parameters were stratified for each stratum
+\item \code{seroresponse.params.name}: name of the seroresponse parameters object
+\item \code{noise.params.name}: name of the noise parameters object
 }
 
 The object also has the following metadata

@@ -39,15 +39,19 @@
 #'         Either the function is unbounded below,
 #'        becomes asymptotic to a finite value from above in some direction,
 #'        or `stepmax` is too small.
-#' * `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
-#'   parameters (eps) for each antigen isotype
-#' * `biological.noise.1`, `biological.noise.2`, etc.: biological noise
-#'   parameters (nu) for each antigen isotype
+#' * `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
+#'   measurement noise parameters (eps) for each antigen isotype, where
+#'   `<antigen>` is the antigen-isotype name
+#' * `biological.noise.<antigen>`, `biological.noise.<antigen>`, etc.:
+#'   biological noise parameters (nu) for each antigen isotype, where
+#'   `<antigen>` is the antigen-isotype name
 #' * `n.seroresponse.params`: number of longitudinal seroresponse parameter
 #'   observations
 #' * `n.pop.data`: number of population data observations
 #' * `seroresponse.params.stratified`: logical indicating whether seroresponse
 #'   parameters were stratified (`FALSE` for unstratified)
+#' * `seroresponse.params.name`: name of the seroresponse parameters object
+#' * `noise.params.name`: name of the noise parameters object
 #' @export
 #' @examples
 #'
@@ -82,6 +86,8 @@ summary.seroincidence <- function(
   n_sr_params <- object |> attr("n_sr_params")
   n_pop_data <- object |> attr("n_pop_data")
   sr_params_stratified <- object |> attr("sr_params_stratified")
+  sr_params_name <- object |> attr("sr_params_name")
+  noise_params_name <- object |> attr("noise_params_name")
 
   alpha <- 1 - coverage
   h_alpha <- alpha / 2
@@ -117,20 +123,23 @@ summary.seroincidence <- function(
     # |> factor(levels = 1:5, labels = nlm_exit_codes)
   )
 
-  # Add noise parameters as columns
+  # Add noise parameters as columns with antigen_iso names
   if (!is.null(noise_params) && nrow(noise_params) > 0) {
     for (i in seq_len(nrow(noise_params))) {
-      col_name_eps <- paste0("measurement.noise.", i)
-      col_name_nu <- paste0("biological.noise.", i)
+      antigen_name <- make.names(noise_params$antigen_iso[i])
+      col_name_eps <- paste0("measurement.noise.", antigen_name)
+      col_name_nu <- paste0("biological.noise.", antigen_name)
       to_return[[col_name_eps]] <- noise_params$eps[i]
       to_return[[col_name_nu]] <- noise_params$nu[i]
     }
   }
 
-  # Add metadata counts as columns
+  # Add metadata counts and object names as columns
   to_return$n.seroresponse.params <- n_sr_params
   to_return$n.pop.data <- n_pop_data
   to_return$seroresponse.params.stratified <- sr_params_stratified
+  to_return$seroresponse.params.name <- sr_params_name
+  to_return$noise.params.name <- noise_params_name
 
   class(to_return) <-
     "summary.seroincidence" |>

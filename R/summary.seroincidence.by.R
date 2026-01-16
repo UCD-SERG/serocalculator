@@ -27,15 +27,19 @@
 #'     Negative log likelihood (NLL) at estimated (maximum likelihood) `lambda`)
 #'  * `nlm.convergence.code` (included if `show_convergence = TRUE`)
 #'    Convergence information returned by [stats::nlm()]
-#'  * `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
-#'    parameters (eps) for each antigen isotype
-#'  * `biological.noise.1`, `biological.noise.2`, etc.: biological noise
-#'    parameters (nu) for each antigen isotype
+#'  * `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
+#'    measurement noise parameters (eps) for each antigen isotype, where
+#'    `<antigen>` is the antigen-isotype name
+#'  * `biological.noise.<antigen>`, `biological.noise.<antigen>`, etc.:
+#'    biological noise parameters (nu) for each antigen isotype, where
+#'    `<antigen>` is the antigen-isotype name
 #'  * `n.seroresponse.params`: number of longitudinal seroresponse parameter
 #'    observations for each stratum
 #'  * `n.pop.data`: number of population data observations for each stratum
 #'  * `seroresponse.params.stratified`: logical indicating whether seroresponse
 #'    parameters were stratified for each stratum
+#'  * `seroresponse.params.name`: name of the seroresponse parameters object
+#'  * `noise.params.name`: name of the noise parameters object
 #'
 #' The object also has the following metadata
 #' (accessible through [base::attr()]):

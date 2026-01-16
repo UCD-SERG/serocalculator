@@ -28,11 +28,15 @@
 #' - `alpha`: antibody decay rate
 #' (1/days for the current longitudinal parameter sets)
 #' - `r`: shape factor of antibody decay
-#' @param cluster_var optional name of the variable in `pop_data` containing
-#' cluster identifiers for clustered sampling designs
+#' @param cluster_var optional name(s) of the variable(s) in `pop_data`
+#' containing cluster identifiers for clustered sampling designs
 #' (e.g., households, schools).
-#' When provided, standard errors will be adjusted for within-cluster
-#' correlation using cluster-robust variance estimation.
+#' Can be a single variable name (character string) or a vector of
+#' variable names for multi-level clustering (e.g., `c("school",
+#' "classroom")`). When provided, standard errors will be adjusted for
+#' within-cluster correlation using cluster-robust variance estimation.
+#' Note: ICC calculation via `compute_icc()` only supports
+#' single-level clustering.
 #' @param stratum_var optional name of the variable in `pop_data` containing
 #' stratum identifiers. Used in combination with `cluster_var` for
 #' stratified cluster sampling designs.
@@ -119,10 +123,12 @@ est_seroincidence <- function(
   }
 
   if (!is.null(cluster_var)) {
-    if (!cluster_var %in% names(pop_data)) {
+    # Check all cluster variables exist in pop_data
+    missing_vars <- setdiff(cluster_var, names(pop_data))
+    if (length(missing_vars) > 0) {
       cli::cli_abort(
         paste(
-          "{.arg cluster_var} = {.val {cluster_var}}",
+          "{.arg cluster_var} = {.val {missing_vars}}",
           "is not a column in {.arg pop_data}."
         )
       )

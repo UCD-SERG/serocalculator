@@ -76,11 +76,14 @@ a range of incidence rates (lambda values)}
 \item{print_graph}{whether to display the log-likelihood curve graph
 in the course of running \code{est_seroincidence()}}
 
-\item{cluster_var}{optional name of the variable in \code{pop_data} containing
-cluster identifiers for clustered sampling designs
+\item{cluster_var}{optional name(s) of the variable(s) in \code{pop_data}
+containing cluster identifiers for clustered sampling designs
 (e.g., households, schools).
-When provided, standard errors will be adjusted for within-cluster
-correlation using cluster-robust variance estimation.}
+Can be a single variable name (character string) or a vector of
+variable names for multi-level clustering (e.g., \code{c("school", "classroom")}). When provided, standard errors will be adjusted for
+within-cluster correlation using cluster-robust variance estimation.
+Note: ICC calculation via \code{compute_icc()} only supports
+single-level clustering.}
 
 \item{stratum_var}{optional name of the variable in \code{pop_data} containing
 stratum identifiers. Used in combination with \code{cluster_var} for

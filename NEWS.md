@@ -11,6 +11,13 @@
   support cluster-robust standard error estimation in stratified analyses.
 * `compute_icc()` output now includes antigen isotypes information to clarify which
   antibodies were used in the analysis.
+* `compute_icc()` output now includes minimum and maximum cluster sizes in addition
+  to the average, providing more complete information about cluster size distribution.
+  The print method now clarifies that cluster size refers to "observations per cluster".
+* `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
+  for multi-level clustered sampling designs. Cluster-robust standard errors will account
+  for all specified clustering levels. Note: ICC calculation only supports single-level
+  clustering and will produce an error if multiple cluster variables are provided.
 
 ## Bug fixes
 

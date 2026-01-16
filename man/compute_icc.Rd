@@ -14,7 +14,8 @@ fitted with clustering (i.e., with \code{cluster_var} specified)}
 \value{
 \itemize{
 \item For \code{seroincidence} objects: A list with components \code{icc}, \code{deff},
-\code{avg_cluster_size}, \code{n_clusters}, \code{cluster_var}, and \code{antigen_isos}
+\code{avg_cluster_size}, \code{min_cluster_size}, \code{max_cluster_size}, \code{n_clusters},
+\code{cluster_var}, and \code{antigen_isos}
 \item For \code{seroincidence.by} objects: A data frame with one row per stratum
 containing the same information plus stratum identifiers
 }

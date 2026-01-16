@@ -17,7 +17,8 @@
 #'
 #' @return
 #' * For `seroincidence` objects: A list with components `icc`, `deff`,
-#'   `avg_cluster_size`, `n_clusters`, `cluster_var`, and `antigen_isos`
+#'   `avg_cluster_size`, `min_cluster_size`, `max_cluster_size`, `n_clusters`,
+#'   `cluster_var`, and `antigen_isos`
 #' * For `seroincidence.by` objects: A data frame with one row per stratum
 #'   containing the same information plus stratum identifiers
 #'
@@ -79,6 +80,8 @@ compute_icc <- function(fit) {
         icc = x$icc,
         deff = x$deff,
         avg_cluster_size = x$avg_cluster_size,
+        min_cluster_size = x$min_cluster_size,
+        max_cluster_size = x$max_cluster_size,
         n_clusters = x$n_clusters,
         cluster_var = x$cluster_var,
         antigen_isos = x$antigen_isos,
@@ -134,6 +137,15 @@ compute_icc <- function(fit) {
       Please specify {.arg cluster_var} in {.fun est_seroincidence}."
     )
   }
+  
+  # Check for multiple clustering levels
+  if (length(cluster_var) > 1) {
+    cli::cli_abort(
+      "ICC calculation only allowed for one level of clustering.
+      {.arg cluster_var} has {length(cluster_var)} levels: {cluster_var}.
+      Please use a single cluster variable."
+    )
+  }
 
   stratum_var <- attr(fit, "stratum_var")
   antigen_isos <- attr(fit, "antigen_isos")
@@ -147,9 +159,11 @@ compute_icc <- function(fit) {
   unique_clusters <- unique(cluster_ids)
   n_clusters <- length(unique_clusters)
 
-  # Calculate average cluster size
+  # Calculate cluster sizes (number of observations per cluster)
   cluster_sizes <- table(cluster_ids)
   avg_cluster_size <- mean(cluster_sizes)
+  min_cluster_size <- min(cluster_sizes)
+  max_cluster_size <- max(cluster_sizes)
 
   # Compute standard variance (from Hessian)
   var_standard <- 1 / fit$hessian |> as.numeric()
@@ -182,6 +196,8 @@ compute_icc <- function(fit) {
     icc = icc,
     deff = deff,
     avg_cluster_size = avg_cluster_size,
+    min_cluster_size = min_cluster_size,
+    max_cluster_size = max_cluster_size,
     n_clusters = n_clusters,
     cluster_var = cluster_var,
     antigen_isos = paste(antigen_isos, collapse = ", ")
@@ -204,7 +220,12 @@ print.icc_seroincidence <- function(x, ...) {
   cli::cli_text("Antigen isotypes: {.field {x$antigen_isos}}")
   cli::cli_text("Cluster variable: {.field {x$cluster_var}}")
   cli::cli_text("Number of clusters: {.val {x$n_clusters}}")
-  cli::cli_text("Average cluster size: {.val {round(x$avg_cluster_size, 2)}}")
+  cli::cli_text(
+    "Cluster size (observations per cluster): 
+    mean = {.val {round(x$avg_cluster_size, 2)}}, 
+    min = {.val {x$min_cluster_size}}, 
+    max = {.val {x$max_cluster_size}}"
+  )
   cli::cli_text("")
   cli::cli_text("Design effect (DEFF): {.val {round(x$deff, 3)}}")
   cli::cli_text("ICC: {.val {round(x$icc, 3)}}")
@@ -256,7 +277,8 @@ print.icc_seroincidence.by <- function(x, ...) {
 #' This adjusts the standard errors to account for within-cluster correlation.
 #'
 #' @param fit a `seroincidence` object from [est_seroincidence()]
-#' @param cluster_var name of the cluster variable in the data
+#' @param cluster_var name(s) of the cluster variable(s) in the data.
+#'   Can be a single variable or vector of variables for multi-level clustering.
 #' @param stratum_var optional name of the stratum variable
 #'
 #' @return variance of log(lambda) accounting for clustering
@@ -285,7 +307,18 @@ print.icc_seroincidence.by <- function(x, ...) {
 
   # For each observation, compute the contribution to the score
   # We need to identify which cluster each observation belongs to
-  cluster_ids <- pop_data_combined[[cluster_var]]
+  
+  # Handle multiple clustering levels by creating composite cluster ID
+  if (length(cluster_var) == 1) {
+    cluster_ids <- pop_data_combined[[cluster_var]]
+  } else {
+    # Create composite cluster ID from multiple variables
+    cluster_ids <- interaction(
+      pop_data_combined[, cluster_var, drop = FALSE],
+      drop = TRUE,
+      sep = "_"
+    )
+  }
 
   # Get unique clusters
   unique_clusters <- unique(cluster_ids)

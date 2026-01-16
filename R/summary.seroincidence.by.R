@@ -91,17 +91,7 @@ summary.seroincidence.by <- function(
                    less than the lower bound.")
   }
 
-  results <-
-    object |>
-    lapply(
-      FUN = summary.seroincidence,
-      coverage = confidence_level,
-      verbose = verbose
-    ) |>
-    bind_rows(.id = "Stratum")
-
-  # Extract noise_params, n_sr_params, n_pop_data from each stratum's summary
-  # and store them as separate data frames/lists
+  # Extract summaries and metadata from each stratum
   summaries_list <- object |>
     lapply(
       FUN = summary.seroincidence,
@@ -109,6 +99,11 @@ summary.seroincidence.by <- function(
       verbose = verbose
     )
 
+  # Bind summaries into a single data frame
+  results <- summaries_list |>
+    bind_rows(.id = "Stratum")
+
+  # Extract metadata from each stratum's summary
   noise_params_list <- summaries_list |>
     lapply(function(s) attr(s, "noise_params"))
 

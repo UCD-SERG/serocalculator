@@ -8,8 +8,9 @@
 #' @param object A dataframe containing output of [est_seroincidence_by()].
 #' @param verbose a [logical]
 #' scalar indicating whether to print verbose messages to the console
-#' @param show_full_input logical; if `TRUE` (default), include metadata columns
-#'   with noise parameters, observation counts, and input object names
+#' @param show_full_input logical; if `TRUE`, include metadata columns
+#'   with noise parameters, observation counts, and input object names.
+#'   Default is `FALSE`.
 #' @param ... Additional arguments affecting the summary produced.
 #' @param show_deviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence.
@@ -89,7 +90,7 @@ summary.seroincidence.by <- function(
     show_deviance = TRUE,
     show_convergence = TRUE,
     verbose = FALSE,
-    show_full_input = TRUE,
+    show_full_input = FALSE,
     ...) {
   alpha <- 1 - confidence_level
   quantiles <- c(alpha / 2, 1 - alpha / 2)

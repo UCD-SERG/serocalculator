@@ -5,8 +5,9 @@
 #' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param verbose whether to produce verbose messaging
-#' @param show_full_input logical; if `TRUE` (default), include metadata columns
-#'   with noise parameters, observation counts, and input object names
+#' @param show_full_input logical; if `TRUE`, include metadata columns
+#'   with noise parameters, observation counts, and input object names.
+#'   Default is `FALSE`.
 #' @param ... unused
 #'
 #' @return a [tibble::tibble()] containing the following:
@@ -86,7 +87,7 @@ summary.seroincidence <- function(
     object,
     coverage = .95,
     verbose = TRUE,
-    show_full_input = TRUE,
+    show_full_input = FALSE,
     ...) {
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")

@@ -81,7 +81,7 @@ test_that("summary includes noise_params and sr_params metadata", {
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-  summ <- summary(est1)
+  summ <- summary(est1, show_full_input = TRUE)
 
   # Check that noise parameter columns exist with antigen names
   expect_true("measurement.noise.HlyE_IgA" %in% names(summ))

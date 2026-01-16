@@ -10,7 +10,7 @@
   show_deviance = TRUE,
   show_convergence = TRUE,
   verbose = FALSE,
-  show_full_input = TRUE,
+  show_full_input = FALSE,
   ...
 )
 }
@@ -30,8 +30,9 @@ Default = \code{FALSE}.}
 \item{verbose}{a \link{logical}
 scalar indicating whether to print verbose messages to the console}
 
-\item{show_full_input}{logical; if \code{TRUE} (default), include metadata columns
-with noise parameters, observation counts, and input object names}
+\item{show_full_input}{logical; if \code{TRUE}, include metadata columns
+with noise parameters, observation counts, and input object names.
+Default is \code{FALSE}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }

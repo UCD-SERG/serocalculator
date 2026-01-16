@@ -4,7 +4,7 @@
 \alias{summary.seroincidence}
 \title{Summarizing fitted seroincidence models}
 \usage{
-\method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, show_full_input = TRUE, ...)
+\method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, show_full_input = FALSE, ...)
 }
 \arguments{
 \item{object}{a \code{\link[=list]{list()}} outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est_seroincidence]{est_seroincidence()}}}
@@ -13,8 +13,9 @@
 
 \item{verbose}{whether to produce verbose messaging}
 
-\item{show_full_input}{logical; if \code{TRUE} (default), include metadata columns
-with noise parameters, observation counts, and input object names}
+\item{show_full_input}{logical; if \code{TRUE}, include metadata columns
+with noise parameters, observation counts, and input object names.
+Default is \code{FALSE}.}
 
 \item{...}{unused}
 }

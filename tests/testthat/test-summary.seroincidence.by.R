@@ -32,7 +32,7 @@ test_that(
               antigen_isos = c("HlyE_IgG", "HlyE_IgA")
             )
 
-            summ2 <- summary(est2)
+            summ2 <- summary(est2, show_full_input = TRUE)
 
             # Check that noise parameter columns exist for each row
             # with antigen names

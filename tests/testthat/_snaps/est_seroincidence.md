@@ -10,9 +10,8 @@
       # i 11 more variables: antigen.isos <chr>, nlm.convergence.code <ord>,
       #   measurement.noise.HlyE_IgA <dbl>, biological.noise.HlyE_IgA <dbl>,
       #   measurement.noise.HlyE_IgG <dbl>, biological.noise.HlyE_IgG <dbl>,
-      #   n.seroresponse.params <int>, n.pop.data <int>,
-      #   seroresponse.params.stratified <lgl>, seroresponse.params.name <chr>,
-      #   noise.params.name <chr>
+      #   n.seroresponse.params <int>, seroresponse.params.stratified <lgl>,
+      #   pop_data <chr>, sr_params <chr>, noise_params <chr>
 
 ---
 
@@ -24,7 +23,7 @@
     "HlyE_IgG"), eps = c(0.2793208827, 0.1456403573), nu = c(2.59560775795, 
     2.3600514143)), row.names = c(NA, -2L), antigen_isos = c("HlyE_IgA", 
     "HlyE_IgG", "LPS_IgA", "LPS_IgG"), class = c("noise_params", 
-    "tbl_df", "tbl", "data.frame")), n_sr_params = 200L, n_pop_data = 200L, sr_params_stratified = FALSE, sr_params_name = "typhoid_curves_nostrat_100", noise_params_name = "example_noise_params_pk")
+    "tbl_df", "tbl", "data.frame")), n_sr_params = 200L, sr_params_stratified = FALSE, pop_data_name = "sees_pop_data_pk_100", sr_params_name = "typhoid_curves_nostrat_100", noise_params_name = "example_noise_params_pk")
 
 # verbose output is consistent
 

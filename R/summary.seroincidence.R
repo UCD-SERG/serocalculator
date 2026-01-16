@@ -5,6 +5,8 @@
 #' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param verbose whether to produce verbose messaging
+#' @param show_full_input logical; if `TRUE` (default), include metadata columns
+#'   with noise parameters, observation counts, and input object names
 #' @param ... unused
 #'
 #' @return a [tibble::tibble()] containing the following:
@@ -39,6 +41,8 @@
 #'         Either the function is unbounded below,
 #'        becomes asymptotic to a finite value from above in some direction,
 #'        or `stepmax` is too small.
+#'
+#' If `show_full_input = TRUE`, the following columns are also included:
 #' * `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
 #'   measurement noise parameters (eps) for each antigen isotype, where
 #'   `<antigen>` is the antigen-isotype name
@@ -47,11 +51,14 @@
 #'   `<antigen>` is the antigen-isotype name
 #' * `n.seroresponse.params`: number of longitudinal seroresponse parameter
 #'   observations
-#' * `n.pop.data`: number of population data observations
 #' * `seroresponse.params.stratified`: logical indicating whether seroresponse
 #'   parameters were stratified (`FALSE` for unstratified)
-#' * `seroresponse.params.name`: name of the seroresponse parameters object
-#' * `noise.params.name`: name of the noise parameters object
+#' * `pop_data`: name of the population data object passed to
+#'   `est_seroincidence()`
+#' * `sr_params`: name of the seroresponse parameters object passed to
+#'   `est_seroincidence()`
+#' * `noise_params`: name of the noise parameters object passed to
+#'   `est_seroincidence()`
 #' @export
 #' @examples
 #'
@@ -79,13 +86,14 @@ summary.seroincidence <- function(
     object,
     coverage = .95,
     verbose = TRUE,
+    show_full_input = TRUE,
     ...) {
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")
   noise_params <- object |> attr("noise_params")
   n_sr_params <- object |> attr("n_sr_params")
-  n_pop_data <- object |> attr("n_pop_data")
   sr_params_stratified <- object |> attr("sr_params_stratified")
+  pop_data_name <- object |> attr("pop_data_name")
   sr_params_name <- object |> attr("sr_params_name")
   noise_params_name <- object |> attr("noise_params_name")
 
@@ -123,23 +131,26 @@ summary.seroincidence <- function(
     # |> factor(levels = 1:5, labels = nlm_exit_codes)
   )
 
-  # Add noise parameters as columns with antigen_iso names
-  if (!is.null(noise_params) && nrow(noise_params) > 0) {
-    for (i in seq_len(nrow(noise_params))) {
-      antigen_name <- make.names(noise_params$antigen_iso[i])
-      col_name_eps <- paste0("measurement.noise.", antigen_name)
-      col_name_nu <- paste0("biological.noise.", antigen_name)
-      to_return[[col_name_eps]] <- noise_params$eps[i]
-      to_return[[col_name_nu]] <- noise_params$nu[i]
+  # Add full input metadata if requested
+  if (show_full_input) {
+    # Add noise parameters as columns with antigen_iso names
+    if (!is.null(noise_params) && nrow(noise_params) > 0) {
+      for (i in seq_len(nrow(noise_params))) {
+        antigen_name <- make.names(noise_params$antigen_iso[i])
+        col_name_eps <- paste0("measurement.noise.", antigen_name)
+        col_name_nu <- paste0("biological.noise.", antigen_name)
+        to_return[[col_name_eps]] <- noise_params$eps[i]
+        to_return[[col_name_nu]] <- noise_params$nu[i]
+      }
     }
-  }
 
-  # Add metadata counts and object names as columns
-  to_return$n.seroresponse.params <- n_sr_params
-  to_return$n.pop.data <- n_pop_data
-  to_return$seroresponse.params.stratified <- sr_params_stratified
-  to_return$seroresponse.params.name <- sr_params_name
-  to_return$noise.params.name <- noise_params_name
+    # Add metadata counts and object names as columns
+    to_return$n.seroresponse.params <- n_sr_params
+    to_return$seroresponse.params.stratified <- sr_params_stratified
+    to_return$pop_data <- pop_data_name
+    to_return$sr_params <- sr_params_name
+    to_return$noise_params <- noise_params_name
+  }
 
   class(to_return) <-
     "summary.seroincidence" |>

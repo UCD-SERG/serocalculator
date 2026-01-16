@@ -30,6 +30,11 @@ test_that(
       antigen_isos = c("HlyE_IgG", "HlyE_IgA")
     )
 
+    # Remove pop_data_name attribute before comparison
+    # since it will differ based on input variable name
+    attr(est_true, "pop_data_name") <- NULL
+    attr(est_false, "pop_data_name") <- NULL
+
     expect_equal(est_true, est_false)
   }
 )
@@ -88,14 +93,12 @@ test_that("summary includes noise_params and sr_params metadata", {
   expect_true("n.seroresponse.params" %in% names(summ))
   expect_equal(summ$n.seroresponse.params, 200)
 
-  expect_true("n.pop.data" %in% names(summ))
-  expect_equal(summ$n.pop.data, 200)
-
   expect_true("seroresponse.params.stratified" %in% names(summ))
   expect_false(summ$seroresponse.params.stratified)
 
-  # Check that object name columns exist
-  expect_true("seroresponse.params.name" %in% names(summ))
-  expect_true("noise.params.name" %in% names(summ))
-  expect_equal(summ$noise.params.name, "example_noise_params_pk")
+  # Check that object name columns exist with correct new names
+  expect_true("pop_data" %in% names(summ))
+  expect_true("sr_params" %in% names(summ))
+  expect_true("noise_params" %in% names(summ))
+  expect_equal(summ$noise_params, "example_noise_params_pk")
 })

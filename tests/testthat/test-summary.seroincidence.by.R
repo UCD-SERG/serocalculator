@@ -43,12 +43,12 @@ test_that(
 
             # Check that metadata columns exist
             expect_true("n.seroresponse.params" %in% names(summ2))
-            expect_true("n.pop.data" %in% names(summ2))
             expect_true("seroresponse.params.stratified" %in% names(summ2))
 
-            # Check that object name columns exist
-            expect_true("seroresponse.params.name" %in% names(summ2))
-            expect_true("noise.params.name" %in% names(summ2))
+            # Check that object name columns exist with new names
+            expect_true("pop_data" %in% names(summ2))
+            expect_true("sr_params" %in% names(summ2))
+            expect_true("noise_params" %in% names(summ2))
 
             # Check values for both strata
             expect_equal(nrow(summ2), 2)  # Two strata

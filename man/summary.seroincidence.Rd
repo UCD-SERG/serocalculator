@@ -4,7 +4,7 @@
 \alias{summary.seroincidence}
 \title{Summarizing fitted seroincidence models}
 \usage{
-\method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, ...)
+\method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, show_full_input = TRUE, ...)
 }
 \arguments{
 \item{object}{a \code{\link[=list]{list()}} outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est_seroincidence]{est_seroincidence()}}}
@@ -12,6 +12,9 @@
 \item{coverage}{desired confidence interval coverage probability}
 
 \item{verbose}{whether to produce verbose messaging}
+
+\item{show_full_input}{logical; if \code{TRUE} (default), include metadata columns
+with noise parameters, observation counts, and input object names}
 
 \item{...}{unused}
 }
@@ -51,6 +54,10 @@ Either the function is unbounded below,
 becomes asymptotic to a finite value from above in some direction,
 or \code{stepmax} is too small.
 }
+}
+
+If \code{show_full_input = TRUE}, the following columns are also included:
+\itemize{
 \item \verb{measurement.noise.<antigen>}, \verb{measurement.noise.<antigen>}, etc.:
 measurement noise parameters (eps) for each antigen isotype, where
 \verb{<antigen>} is the antigen-isotype name
@@ -59,11 +66,14 @@ biological noise parameters (nu) for each antigen isotype, where
 \verb{<antigen>} is the antigen-isotype name
 \item \code{n.seroresponse.params}: number of longitudinal seroresponse parameter
 observations
-\item \code{n.pop.data}: number of population data observations
 \item \code{seroresponse.params.stratified}: logical indicating whether seroresponse
 parameters were stratified (\code{FALSE} for unstratified)
-\item \code{seroresponse.params.name}: name of the seroresponse parameters object
-\item \code{noise.params.name}: name of the noise parameters object
+\item \code{pop_data}: name of the population data object passed to
+\code{est_seroincidence()}
+\item \code{sr_params}: name of the seroresponse parameters object passed to
+\code{est_seroincidence()}
+\item \code{noise_params}: name of the noise parameters object passed to
+\code{est_seroincidence()}
 }
 }
 \description{

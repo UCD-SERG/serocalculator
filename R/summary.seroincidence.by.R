@@ -8,6 +8,8 @@
 #' @param object A dataframe containing output of [est_seroincidence_by()].
 #' @param verbose a [logical]
 #' scalar indicating whether to print verbose messages to the console
+#' @param show_full_input logical; if `TRUE` (default), include metadata columns
+#'   with noise parameters, observation counts, and input object names
 #' @param ... Additional arguments affecting the summary produced.
 #' @param show_deviance Logical flag (`FALSE`/`TRUE`) for reporting deviance
 #'   (-2*log(likelihood) at estimated seroincidence.
@@ -27,6 +29,8 @@
 #'     Negative log likelihood (NLL) at estimated (maximum likelihood) `lambda`)
 #'  * `nlm.convergence.code` (included if `show_convergence = TRUE`)
 #'    Convergence information returned by [stats::nlm()]
+#'
+#' If `show_full_input = TRUE`, the following columns are also included:
 #'  * `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
 #'    measurement noise parameters (eps) for each antigen isotype, where
 #'    `<antigen>` is the antigen-isotype name
@@ -35,11 +39,14 @@
 #'    `<antigen>` is the antigen-isotype name
 #'  * `n.seroresponse.params`: number of longitudinal seroresponse parameter
 #'    observations for each stratum
-#'  * `n.pop.data`: number of population data observations for each stratum
 #'  * `seroresponse.params.stratified`: logical indicating whether seroresponse
 #'    parameters were stratified for each stratum
-#'  * `seroresponse.params.name`: name of the seroresponse parameters object
-#'  * `noise.params.name`: name of the noise parameters object
+#'  * `pop_data`: name of the population data object passed to
+#'    `est_seroincidence_by()`
+#'  * `sr_params`: name of the seroresponse parameters object passed to
+#'    `est_seroincidence_by()`
+#'  * `noise_params`: name of the noise parameters object passed to
+#'    `est_seroincidence_by()`
 #'
 #' The object also has the following metadata
 #' (accessible through [base::attr()]):
@@ -82,6 +89,7 @@ summary.seroincidence.by <- function(
     show_deviance = TRUE,
     show_convergence = TRUE,
     verbose = FALSE,
+    show_full_input = TRUE,
     ...) {
   alpha <- 1 - confidence_level
   quantiles <- c(alpha / 2, 1 - alpha / 2)
@@ -100,7 +108,8 @@ summary.seroincidence.by <- function(
     lapply(
       FUN = summary.seroincidence,
       coverage = confidence_level,
-      verbose = verbose
+      verbose = verbose,
+      show_full_input = show_full_input
     )
 
   # Bind summaries into a single data frame

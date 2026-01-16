@@ -68,6 +68,7 @@ est_seroincidence <- function(
     print_graph = build_graph & verbose,
     ...) {
   # Capture object names for metadata
+  pop_data_name <- deparse(substitute(pop_data)) |> paste(collapse = " ")
   sr_params_name <- deparse(substitute(sr_params)) |> paste(collapse = " ")
   noise_params_name <- deparse(substitute(noise_params)) |> paste(collapse = " ")
   
@@ -237,12 +238,6 @@ est_seroincidence <- function(
     bind_rows() |>
     nrow()
 
-  # Count pop_data observations (before filtering)
-  # We need the original count, which is the total rows in pop_data
-  n_pop_data <- pop_data |>
-    bind_rows() |>
-    nrow()
-
   fit <- fit |>
     structure(
       class = union("seroincidence", class(fit)),
@@ -251,8 +246,8 @@ est_seroincidence <- function(
       ll_graph = graph,
       noise_params = noise_params_summary,
       n_sr_params = n_sr_params,
-      n_pop_data = n_pop_data,
       sr_params_stratified = FALSE,
+      pop_data_name = pop_data_name,
       sr_params_name = sr_params_name,
       noise_params_name = noise_params_name
     )

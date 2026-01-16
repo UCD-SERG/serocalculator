@@ -113,13 +113,13 @@ summary.seroincidence.by <- function(
     lapply(function(s) attr(s, "noise_params"))
 
   n_sr_params_list <- summaries_list |>
-    sapply(function(s) attr(s, "n_sr_params"))
+    vapply(function(s) attr(s, "n_sr_params"), FUN.VALUE = integer(1))
 
   n_pop_data_list <- summaries_list |>
-    sapply(function(s) attr(s, "n_pop_data"))
+    vapply(function(s) attr(s, "n_pop_data"), FUN.VALUE = integer(1))
 
   sr_params_stratified_list <- summaries_list |>
-    sapply(function(s) attr(s, "sr_params_stratified"))
+    vapply(function(s) attr(s, "sr_params_stratified"), FUN.VALUE = logical(1))
 
   results <-
     inner_join(

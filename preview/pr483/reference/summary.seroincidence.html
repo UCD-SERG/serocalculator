@@ -117,12 +117,15 @@ Either the function is unbounded below,
 becomes asymptotic to a finite value from above in some direction,
 or <code>stepmax</code> is too small.</p></li>
 </ul></li>
-</ul><p>The returned object also has the following attributes:</p><ul><li><p><code>noise_params</code>: a <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble::tibble()</a></code> with exact numeric noise parameters
-(<code>antigen_iso</code>, <code>eps</code> (measurement noise), <code>nu</code> (biological noise))</p></li>
-<li><p><code>n_sr_params</code>: number of longitudinal seroresponse parameter observations</p></li>
-<li><p><code>n_pop_data</code>: number of population data observations</p></li>
-<li><p><code>sr_params_stratified</code>: logical indicating whether seroresponse parameters
-were stratified (<code>FALSE</code> for unstratified)</p></li>
+<li><p><code>measurement.noise.1</code>, <code>measurement.noise.2</code>, etc.: measurement noise
+parameters (eps) for each antigen isotype</p></li>
+<li><p><code>biological.noise.1</code>, <code>biological.noise.2</code>, etc.: biological noise
+parameters (nu) for each antigen isotype</p></li>
+<li><p><code>n.seroresponse.params</code>: number of longitudinal seroresponse parameter
+observations</p></li>
+<li><p><code>n.pop.data</code>: number of population data observations</p></li>
+<li><p><code>seroresponse.params.stratified</code>: logical indicating whether seroresponse
+parameters were stratified (<code>FALSE</code> for unstratified)</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -148,11 +151,15 @@ were stratified (<code>FALSE</code> for unstratified)</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 17</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>       0.1          0.166 0.017<span style="text-decoration: underline;">8</span>  0.135  0.205     0.95   -<span style="color: #BB0000;">524.</span>          5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   measurement.noise.2 &lt;dbl&gt;, biological.noise.2 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

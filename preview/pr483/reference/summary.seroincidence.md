@@ -83,20 +83,19 @@ containing the following:
     finite value from above in some direction, or `stepmax` is too
     small.
 
-The returned object also has the following attributes:
+- `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
+  parameters (eps) for each antigen isotype
 
-- `noise_params`: a
-  [`tibble::tibble()`](https://tibble.tidyverse.org/reference/tibble.html)
-  with exact numeric noise parameters (`antigen_iso`, `eps` (measurement
-  noise), `nu` (biological noise))
+- `biological.noise.1`, `biological.noise.2`, etc.: biological noise
+  parameters (nu) for each antigen isotype
 
-- `n_sr_params`: number of longitudinal seroresponse parameter
+- `n.seroresponse.params`: number of longitudinal seroresponse parameter
   observations
 
-- `n_pop_data`: number of population data observations
+- `n.pop.data`: number of population data observations
 
-- `sr_params_stratified`: logical indicating whether seroresponse
-  parameters were stratified (`FALSE` for unstratified)
+- `seroresponse.params.stratified`: logical indicating whether
+  seroresponse parameters were stratified (`FALSE` for unstratified)
 
 ## Examples
 
@@ -121,9 +120,13 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 10
+#> # A tibble: 1 × 17
 #>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
 #>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
 #> 1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # ℹ 9 more variables: antigen.isos <chr>, nlm.convergence.code <ord>,
+#> #   measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
+#> #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
+#> #   n.seroresponse.params <int>, n.pop.data <int>,
+#> #   seroresponse.params.stratified <lgl>
 ```

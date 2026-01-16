@@ -68,6 +68,20 @@ with the following columns:
   Convergence information returned by
   [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html)
 
+- `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
+  parameters (eps) for each antigen isotype
+
+- `biological.noise.1`, `biological.noise.2`, etc.: biological noise
+  parameters (nu) for each antigen isotype
+
+- `n.seroresponse.params`: number of longitudinal seroresponse parameter
+  observations for each stratum
+
+- `n.pop.data`: number of population data observations for each stratum
+
+- `seroresponse.params.stratified`: logical indicating whether
+  seroresponse parameters were stratified for each stratum
+
 The object also has the following metadata (accessible through
 [`base::attr()`](https://rdrr.io/r/base/attr.html)):
 
@@ -77,20 +91,6 @@ The object also has the following metadata (accessible through
 
 - `Strata` Character with names of strata used in
   [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
-
-- `noise_params` List of
-  [`tibble::tibble()`](https://tibble.tidyverse.org/reference/tibble.html)
-  objects (one per stratum) with exact numeric noise parameters
-  (`antigen_iso`, `eps` (measurement noise), `nu` (biological noise))
-
-- `n_sr_params` Named numeric vector with number of longitudinal
-  seroresponse parameter observations for each stratum
-
-- `n_pop_data` Named numeric vector with number of population data
-  observations for each stratum
-
-- `sr_params_stratified` Named logical vector indicating whether
-  seroresponse parameters were stratified for each stratum
 
 ## Examples
 
@@ -132,11 +132,14 @@ summary(est2)
 #> b) Strata       : catchment 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 2 × 13
+#> # A tibble: 2 × 20
 #>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage
 #>   <chr>   <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
 #> 1 Stratu… aku          53       0.1          0.140 0.0216  0.104  0.189     0.95
 #> 2 Stratu… kgh          47       0.1          0.200 0.0301  0.149  0.268     0.95
-#> # ℹ 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
-#> #   nlm.convergence.code <ord>
+#> # ℹ 11 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
+#> #   measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
+#> #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
+#> #   n.seroresponse.params <int>, n.pop.data <int>,
+#> #   seroresponse.params.stratified <lgl>, nlm.convergence.code <ord>
 ```

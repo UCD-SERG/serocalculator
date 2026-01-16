@@ -78,22 +78,19 @@ test_that("summary includes noise_params and sr_params metadata", {
 
   summ <- summary(est1)
 
-  # Check that noise_params attribute exists and has correct structure
-  expect_true(!is.null(attr(summ, "noise_params")))
-  noise_params <- attr(summ, "noise_params")
-  expect_s3_class(noise_params, "tbl_df")
-  expect_true(all(c("antigen_iso", "eps", "nu") %in% names(noise_params)))
-  expect_equal(nrow(noise_params), 2)
+  # Check that noise parameter columns exist
+  expect_true("measurement.noise.1" %in% names(summ))
+  expect_true("measurement.noise.2" %in% names(summ))
+  expect_true("biological.noise.1" %in% names(summ))
+  expect_true("biological.noise.2" %in% names(summ))
 
-  # Check that n_sr_params attribute exists and is correct
-  expect_true(!is.null(attr(summ, "n_sr_params")))
-  expect_equal(attr(summ, "n_sr_params"), 200)
+  # Check that metadata columns exist and have correct values
+  expect_true("n.seroresponse.params" %in% names(summ))
+  expect_equal(summ$n.seroresponse.params, 200)
 
-  # Check that n_pop_data attribute exists and is correct
-  expect_true(!is.null(attr(summ, "n_pop_data")))
-  expect_equal(attr(summ, "n_pop_data"), 200)
+  expect_true("n.pop.data" %in% names(summ))
+  expect_equal(summ$n.pop.data, 200)
 
-  # Check that sr_params_stratified attribute exists and is FALSE
-  expect_true(!is.null(attr(summ, "sr_params_stratified")))
-  expect_false(attr(summ, "sr_params_stratified"))
+  expect_true("seroresponse.params.stratified" %in% names(summ))
+  expect_false(summ$seroresponse.params.stratified)
 })

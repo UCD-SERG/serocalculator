@@ -34,39 +34,19 @@ test_that(
 
             summ2 <- summary(est2)
 
-            # Check that noise_params attribute exists and is a list
-            expect_true(!is.null(attr(summ2, "noise_params")))
-            noise_params_list <- attr(summ2, "noise_params")
-            expect_type(noise_params_list, "list")
-            expect_equal(length(noise_params_list), 2)  # Two strata
+            # Check that noise parameter columns exist for each row
+            expect_true("measurement.noise.1" %in% names(summ2))
+            expect_true("measurement.noise.2" %in% names(summ2))
+            expect_true("biological.noise.1" %in% names(summ2))
+            expect_true("biological.noise.2" %in% names(summ2))
 
-            # Check each stratum's noise_params
-            for (i in seq_along(noise_params_list)) {
-              noise_params <- noise_params_list[[i]]
-              expect_s3_class(noise_params, "tbl_df")
-              expect_true(all(c("antigen_iso", "eps", "nu") %in%
-                                names(noise_params)))
-              expect_equal(nrow(noise_params), 2)
-            }
+            # Check that metadata columns exist
+            expect_true("n.seroresponse.params" %in% names(summ2))
+            expect_true("n.pop.data" %in% names(summ2))
+            expect_true("seroresponse.params.stratified" %in% names(summ2))
 
-            # Check that n_sr_params attribute exists and is a named vector
-            expect_true(!is.null(attr(summ2, "n_sr_params")))
-            n_sr_params <- attr(summ2, "n_sr_params")
-            expect_type(n_sr_params, "integer")
-            expect_equal(length(n_sr_params), 2)
-            expect_equal(as.vector(n_sr_params), c(200, 200))
-
-            # Check that n_pop_data attribute exists and is a named vector
-            expect_true(!is.null(attr(summ2, "n_pop_data")))
-            n_pop_data <- attr(summ2, "n_pop_data")
-            expect_type(n_pop_data, "integer")
-            expect_equal(length(n_pop_data), 2)
-
-            # Check that sr_params_stratified attribute exists
-            expect_true(!is.null(attr(summ2, "sr_params_stratified")))
-            sr_params_stratified <- attr(summ2, "sr_params_stratified")
-            expect_type(sr_params_stratified, "logical")
-            expect_equal(length(sr_params_stratified), 2)
-            # Should be FALSE for both strata
-            expect_true(all(!sr_params_stratified))
+            # Check values for both strata
+            expect_equal(nrow(summ2), 2)  # Two strata
+            expect_equal(summ2$n.seroresponse.params, c(200, 200))
+            expect_true(all(!summ2$seroresponse.params.stratified))
           })

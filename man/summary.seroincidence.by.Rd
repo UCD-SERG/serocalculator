@@ -42,6 +42,15 @@ with the following columns:
 Negative log likelihood (NLL) at estimated (maximum likelihood) \code{lambda})
 \item \code{nlm.convergence.code} (included if \code{show_convergence = TRUE})
 Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
+\item \code{measurement.noise.1}, \code{measurement.noise.2}, etc.: measurement noise
+parameters (eps) for each antigen isotype
+\item \code{biological.noise.1}, \code{biological.noise.2}, etc.: biological noise
+parameters (nu) for each antigen isotype
+\item \code{n.seroresponse.params}: number of longitudinal seroresponse parameter
+observations for each stratum
+\item \code{n.pop.data}: number of population data observations for each stratum
+\item \code{seroresponse.params.stratified}: logical indicating whether seroresponse
+parameters were stratified for each stratum
 }
 
 The object also has the following metadata
@@ -51,15 +60,6 @@ The object also has the following metadata
 Character vector with names of input antigen isotypes
 used in \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
 \item \code{Strata} Character with names of strata used in \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
-\item \code{noise_params} List of \code{\link[tibble:tibble]{tibble::tibble()}} objects (one per stratum) with
-exact numeric noise parameters (\code{antigen_iso}, \code{eps} (measurement noise),
-\code{nu} (biological noise))
-\item \code{n_sr_params} Named numeric vector with number of longitudinal seroresponse
-parameter observations for each stratum
-\item \code{n_pop_data} Named numeric vector with number of population data
-observations for each stratum
-\item \code{sr_params_stratified} Named logical vector indicating whether seroresponse
-parameters were stratified for each stratum
 }
 }
 \description{

@@ -39,14 +39,15 @@
 #'         Either the function is unbounded below,
 #'        becomes asymptotic to a finite value from above in some direction,
 #'        or `stepmax` is too small.
-#'
-#' The returned object also has the following attributes:
-#' * `noise_params`: a [tibble::tibble()] with exact numeric noise parameters
-#'   (`antigen_iso`, `eps` (measurement noise), `nu` (biological noise))
-#' * `n_sr_params`: number of longitudinal seroresponse parameter observations
-#' * `n_pop_data`: number of population data observations
-#' * `sr_params_stratified`: logical indicating whether seroresponse parameters
-#'   were stratified (`FALSE` for unstratified)
+#' * `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
+#'   parameters (eps) for each antigen isotype
+#' * `biological.noise.1`, `biological.noise.2`, etc.: biological noise
+#'   parameters (nu) for each antigen isotype
+#' * `n.seroresponse.params`: number of longitudinal seroresponse parameter
+#'   observations
+#' * `n.pop.data`: number of population data observations
+#' * `seroresponse.params.stratified`: logical indicating whether seroresponse
+#'   parameters were stratified (`FALSE` for unstratified)
 #' @export
 #' @examples
 #'
@@ -116,11 +117,20 @@ summary.seroincidence <- function(
     # |> factor(levels = 1:5, labels = nlm_exit_codes)
   )
 
-  # Add noise parameters as attributes
-  attr(to_return, "noise_params") <- noise_params
-  attr(to_return, "n_sr_params") <- n_sr_params
-  attr(to_return, "n_pop_data") <- n_pop_data
-  attr(to_return, "sr_params_stratified") <- sr_params_stratified
+  # Add noise parameters as columns
+  if (!is.null(noise_params) && nrow(noise_params) > 0) {
+    for (i in seq_len(nrow(noise_params))) {
+      col_name_eps <- paste0("measurement.noise.", i)
+      col_name_nu <- paste0("biological.noise.", i)
+      to_return[[col_name_eps]] <- noise_params$eps[i]
+      to_return[[col_name_nu]] <- noise_params$nu[i]
+    }
+  }
+
+  # Add metadata counts as columns
+  to_return$n.seroresponse.params <- n_sr_params
+  to_return$n.pop.data <- n_pop_data
+  to_return$seroresponse.params.stratified <- sr_params_stratified
 
   class(to_return) <-
     "summary.seroincidence" |>

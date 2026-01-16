@@ -51,16 +51,15 @@ Either the function is unbounded below,
 becomes asymptotic to a finite value from above in some direction,
 or \code{stepmax} is too small.
 }
-}
-
-The returned object also has the following attributes:
-\itemize{
-\item \code{noise_params}: a \code{\link[tibble:tibble]{tibble::tibble()}} with exact numeric noise parameters
-(\code{antigen_iso}, \code{eps} (measurement noise), \code{nu} (biological noise))
-\item \code{n_sr_params}: number of longitudinal seroresponse parameter observations
-\item \code{n_pop_data}: number of population data observations
-\item \code{sr_params_stratified}: logical indicating whether seroresponse parameters
-were stratified (\code{FALSE} for unstratified)
+\item \code{measurement.noise.1}, \code{measurement.noise.2}, etc.: measurement noise
+parameters (eps) for each antigen isotype
+\item \code{biological.noise.1}, \code{biological.noise.2}, etc.: biological noise
+parameters (nu) for each antigen isotype
+\item \code{n.seroresponse.params}: number of longitudinal seroresponse parameter
+observations
+\item \code{n.pop.data}: number of population data observations
+\item \code{seroresponse.params.stratified}: logical indicating whether seroresponse
+parameters were stratified (\code{FALSE} for unstratified)
 }
 }
 \description{

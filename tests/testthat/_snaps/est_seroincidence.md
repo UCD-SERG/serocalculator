@@ -3,11 +3,15 @@
     Code
       summary(typhoid_results, coverage = 0.95)
     Output
-      # A tibble: 1 x 10
+      # A tibble: 1 x 17
         est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
             <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
       1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-      # i 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+      # i 9 more variables: antigen.isos <chr>, nlm.convergence.code <ord>,
+      #   measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
+      #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
+      #   n.seroresponse.params <int>, n.pop.data <int>,
+      #   seroresponse.params.stratified <lgl>
 
 ---
 

@@ -27,6 +27,15 @@
 #'     Negative log likelihood (NLL) at estimated (maximum likelihood) `lambda`)
 #'  * `nlm.convergence.code` (included if `show_convergence = TRUE`)
 #'    Convergence information returned by [stats::nlm()]
+#'  * `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
+#'    parameters (eps) for each antigen isotype
+#'  * `biological.noise.1`, `biological.noise.2`, etc.: biological noise
+#'    parameters (nu) for each antigen isotype
+#'  * `n.seroresponse.params`: number of longitudinal seroresponse parameter
+#'    observations for each stratum
+#'  * `n.pop.data`: number of population data observations for each stratum
+#'  * `seroresponse.params.stratified`: logical indicating whether seroresponse
+#'    parameters were stratified for each stratum
 #'
 #' The object also has the following metadata
 #' (accessible through [base::attr()]):
@@ -34,15 +43,6 @@
 #'   Character vector with names of input antigen isotypes
 #'   used in [est_seroincidence_by()]
 #' * `Strata` Character with names of strata used in [est_seroincidence_by()]
-#' * `noise_params` List of [tibble::tibble()] objects (one per stratum) with
-#'   exact numeric noise parameters (`antigen_iso`, `eps` (measurement noise),
-#'   `nu` (biological noise))
-#' * `n_sr_params` Named numeric vector with number of longitudinal seroresponse
-#'   parameter observations for each stratum
-#' * `n_pop_data` Named numeric vector with number of population data
-#'   observations for each stratum
-#' * `sr_params_stratified` Named logical vector indicating whether seroresponse
-#'   parameters were stratified for each stratum
 #'
 #'
 #' @examples
@@ -100,21 +100,9 @@ summary.seroincidence.by <- function(
     )
 
   # Bind summaries into a single data frame
+  # Metadata is now in columns, not attributes
   results <- summaries_list |>
     bind_rows(.id = "Stratum")
-
-  # Extract metadata from each stratum's summary
-  noise_params_list <- summaries_list |>
-    lapply(function(s) attr(s, "noise_params"))
-
-  n_sr_params_list <- summaries_list |>
-    vapply(function(s) attr(s, "n_sr_params"), FUN.VALUE = integer(1))
-
-  n_pop_data_list <- summaries_list |>
-    vapply(function(s) attr(s, "n_pop_data"), FUN.VALUE = integer(1))
-
-  sr_params_stratified_list <- summaries_list |>
-    vapply(function(s) attr(s, "sr_params_stratified"), FUN.VALUE = logical(1))
 
   results <-
     inner_join(
@@ -145,10 +133,6 @@ summary.seroincidence.by <- function(
       antigen_isos = attr(object, "antigen_isos"),
       Strata = attr(object, "Strata") |> attr("strata_vars"),
       Quantiles = quantiles,
-      noise_params = noise_params_list,
-      n_sr_params = n_sr_params_list,
-      n_pop_data = n_pop_data_list,
-      sr_params_stratified = sr_params_stratified_list,
       class = "summary.seroincidence.by" |>
         union(class(results))
     )

@@ -66,3 +66,35 @@ test_that(
       expect_warning()
   }
 )
+
+test_that("summary includes noise_params and sr_params metadata", {
+  est1 <- est_seroincidence(
+    pop_data = sees_pop_data_pk_100,
+    sr_param = typhoid_curves_nostrat_100 |>
+      dplyr::filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG")),
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  summ <- summary(est1)
+
+  # Check that noise_params attribute exists and has correct structure
+  expect_true(!is.null(attr(summ, "noise_params")))
+  noise_params <- attr(summ, "noise_params")
+  expect_s3_class(noise_params, "tbl_df")
+  expect_true(all(c("antigen_iso", "eps", "nu") %in% names(noise_params)))
+  expect_equal(nrow(noise_params), 2)
+
+  # Check that n_sr_params attribute exists and is correct
+  expect_true(!is.null(attr(summ, "n_sr_params")))
+  expect_equal(attr(summ, "n_sr_params"), 200)
+
+  # Check that n_pop_data attribute exists and is correct
+  expect_true(!is.null(attr(summ, "n_pop_data")))
+  expect_equal(attr(summ, "n_pop_data"), 200)
+
+  # Check that sr_params_stratified attribute exists and is FALSE
+  expect_true(!is.null(attr(summ, "sr_params_stratified")))
+  expect_false(attr(summ, "sr_params_stratified"))
+})
+

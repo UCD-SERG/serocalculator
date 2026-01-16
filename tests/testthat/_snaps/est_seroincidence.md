@@ -15,7 +15,11 @@
         gradient = 3.60891331241403e-06, hessian = structure(86.991906300701, dim = c(1L, 
         1L)), code = 1L, iterations = 5L), class = c("seroincidence", 
     "list"), lambda_start = 0.1, antigen_isos = c("HlyE_IgG", "HlyE_IgA"
-    ))
+    ), noise_params = structure(list(antigen_iso = c("HlyE_IgA", 
+    "HlyE_IgG"), eps = c(0.2793208827, 0.1456403573), nu = c(2.59560775795, 
+    2.3600514143)), row.names = c(NA, -2L), antigen_isos = c("HlyE_IgA", 
+    "HlyE_IgG", "LPS_IgA", "LPS_IgG"), class = c("noise_params", 
+    "tbl_df", "tbl", "data.frame")), n_sr_params = 200L, n_pop_data = 200L, sr_params_stratified = FALSE)
 
 # verbose output is consistent
 

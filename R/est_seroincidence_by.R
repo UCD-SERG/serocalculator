@@ -85,6 +85,10 @@ est_seroincidence_by <- function(
     verbose = FALSE,
     print_graph = FALSE,
     ...) {
+  # Capture object names at the top level for metadata
+  pop_data_name <- deparse(substitute(pop_data)) |> paste(collapse = " ")
+  sr_params_name <- deparse(substitute(sr_params)) |> paste(collapse = " ")
+  noise_params_name <- deparse(substitute(noise_params)) |> paste(collapse = " ")
 
   strata_is_empty <-
     missing(strata) ||
@@ -183,6 +187,8 @@ est_seroincidence_by <- function(
 
     # Export library paths to the cluster
     parallel::clusterExport(cl, "lib_paths", envir = environment())
+    parallel::clusterExport(cl, c("pop_data_name", "sr_params_name", "noise_params_name"), 
+                           envir = environment())
 
     # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {
@@ -207,6 +213,9 @@ est_seroincidence_by <- function(
                 build_graph = build_graph,
                 print_graph = FALSE,
                 verbose = FALSE,
+                .pop_data_name = pop_data_name,
+                .sr_params_name = sr_params_name,
+                .noise_params_name = noise_params_name,
                 ...
               )
             )
@@ -244,6 +253,9 @@ est_seroincidence_by <- function(
               build_graph = build_graph,
               print_graph = print_graph,
               verbose = verbose,
+              .pop_data_name = pop_data_name,
+              .sr_params_name = sr_params_name,
+              .noise_params_name = noise_params_name,
               ...
             )
           )

@@ -68,9 +68,27 @@ est_seroincidence <- function(
     print_graph = build_graph & verbose,
     ...) {
   # Capture object names for metadata
-  pop_data_name <- deparse(substitute(pop_data)) |> paste(collapse = " ")
-  sr_params_name <- deparse(substitute(sr_params)) |> paste(collapse = " ")
-  noise_params_name <- deparse(substitute(noise_params)) |> paste(collapse = " ")
+  # Check if names were passed via ... (from est_seroincidence_by)
+  dots <- list(...)
+  if (!is.null(dots$.pop_data_name)) {
+    pop_data_name <- dots$.pop_data_name
+  } else {
+    pop_data_name <- deparse(substitute(pop_data)) |> paste(collapse = " ")
+  }
+  if (!is.null(dots$.sr_params_name)) {
+    sr_params_name <- dots$.sr_params_name
+  } else {
+    sr_params_name <- deparse(substitute(sr_params)) |> paste(collapse = " ")
+  }
+  if (!is.null(dots$.noise_params_name)) {
+    noise_params_name <- dots$.noise_params_name
+  } else {
+    noise_params_name <- deparse(substitute(noise_params)) |> paste(collapse = " ")
+  }
+  # Remove the name parameters from dots so they don't interfere
+  dots$.pop_data_name <- NULL
+  dots$.sr_params_name <- NULL
+  dots$.noise_params_name <- NULL
   
   if (verbose > 1) {
     message("inputs to `est_seroincidence()`:")

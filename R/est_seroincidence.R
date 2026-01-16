@@ -68,7 +68,7 @@ est_seroincidence <- function(
     print_graph = build_graph & verbose,
     ...) {
   if (verbose > 1) {
-    cli::cli_inform("inputs to `est_seroincidence()`:")
+    message("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
   }
 
@@ -103,7 +103,7 @@ est_seroincidence <- function(
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(pop_data) == 0) {
-    cli::cli_abort("No data provided.")
+    stop("No data provided.")
   }
 
   if (verbose) {
@@ -111,7 +111,7 @@ est_seroincidence <- function(
   }
 
   if (nrow(noise_params) != length(antigen_isos)) {
-    cli::cli_abort("too many rows of noise parameters.")
+    stop("too many rows of noise parameters.")
   }
 
   pop_data <- pop_data |> split(~antigen_iso)
@@ -130,18 +130,16 @@ est_seroincidence <- function(
   )
 
   if (is.na(res)) {
-    cli::cli_warn(
-      "Could not calculate log-likelihood with starting parameter value."
-    )
+    warning("Could not calculate log-likelihood with starting parameter value.")
     return(NULL)
   }
 
   if (verbose) {
-    cli::cli_inform("Initial negative log-likelihood: {res}")
+    message("Initial negative log-likelihood: ", res)
   }
 
   if (build_graph) {
-    if (verbose) cli::cli_inform("building likelihood graph")
+    if (verbose) message("building likelihood graph")
     graph <- graph_loglik(
       highlight_points = lambda_start,
       highlight_point_names = "lambda_start",
@@ -168,7 +166,7 @@ est_seroincidence <- function(
   # but [.nll()] is vectorized via its subfunction [f_dev()].
   # The vectorization doesn't appear to cause a problem for [nlm()].
 
-  if (verbose) cli::cli_inform("about to call `nlm()`")
+  if (verbose) message("about to call `nlm()`")
   # Estimate lambda
   time <- system.time(
     {
@@ -192,17 +190,15 @@ est_seroincidence <- function(
   code_text <- nlm_exit_codes[fit$code]
   message1 <- "\n`nlm()` completed with the following convergence code:\n"
   if (fit$code %in% 3:5) {
-    cli::cli_warn(
-      c(
-        "`nlm()` may not have reached the maximum likelihood estimate.",
-        "i" = message1,
-        "i" = code_text
-      )
+    warning(
+      "`nlm()` may not have reached the maximum likelihood estimate.",
+      message1,
+      code_text
     )
   }
 
   if (verbose >= 2) {
-    cli::cli_inform("\nElapsed time: ")
+    message("\nElapsed time: ")
     print(time)
   }
 

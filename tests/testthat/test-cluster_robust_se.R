@@ -76,6 +76,7 @@ test_that("compute_icc works correctly", {
   expect_true("avg_cluster_size" %in% names(icc_result))
   expect_true("n_clusters" %in% names(icc_result))
   expect_true("cluster_var" %in% names(icc_result))
+  expect_true("antigen_isos" %in% names(icc_result))
 
   # Check values are reasonable
   expect_true(is.numeric(icc_result$icc))
@@ -84,9 +85,56 @@ test_that("compute_icc works correctly", {
   expect_true(icc_result$avg_cluster_size > 0)
   expect_true(icc_result$n_clusters > 0)
   expect_equal(icc_result$cluster_var, "cluster")
+  expect_true(grepl("HlyE_IgG", icc_result$antigen_isos))
 
   # DEFF should be >= 0 (typically >= 1 for positive ICC)
   expect_true(icc_result$deff >= 0)
+
+  # Print should work without error
+  expect_no_error(print(icc_result))
+})
+
+test_that("compute_icc works with est_seroincidence_by", {
+  # Test with stratified data
+  withr::local_seed(20241213)
+
+  # Run with clustering and stratification
+  est_by_cluster <- est_seroincidence_by(
+    pop_data = sees_pop_data_pk_100,
+    strata = "catchment",
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "cluster",
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL
+  ) |> suppressWarnings()
+
+  # Compute ICC
+  icc_result <- compute_icc(est_by_cluster)
+
+  # Check structure
+  expect_s3_class(icc_result, "icc_seroincidence.by")
+  expect_true(is.data.frame(icc_result))
+  
+  # Check required columns
+  expect_true("Stratum" %in% names(icc_result))
+  expect_true("icc" %in% names(icc_result))
+  expect_true("deff" %in% names(icc_result))
+  expect_true("avg_cluster_size" %in% names(icc_result))
+  expect_true("n_clusters" %in% names(icc_result))
+  expect_true("cluster_var" %in% names(icc_result))
+  expect_true("antigen_isos" %in% names(icc_result))
+  expect_true("catchment" %in% names(icc_result))
+
+  # Should have 2 rows (one per stratum)
+  expect_equal(nrow(icc_result), 2)
+
+  # All cluster_var should be "cluster"
+  expect_true(all(icc_result$cluster_var == "cluster"))
+  
+  # All should have antigen_isos specified
+  expect_true(all(grepl("HlyE_IgG", icc_result$antigen_isos)))
 
   # Print should work without error
   expect_no_error(print(icc_result))

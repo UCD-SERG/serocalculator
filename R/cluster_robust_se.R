@@ -11,15 +11,15 @@
 #' where DEFF is the ratio of cluster-robust to standard variance, and
 #' \eqn{\bar{m}} is the average cluster size.
 #'
-#' @param fit a `seroincidence` object from [est_seroincidence()] that was
+#' @param fit a `seroincidence` object from [est_seroincidence()] or a
+#'   `seroincidence.by` object from [est_seroincidence_by()] that was
 #'   fitted with clustering (i.e., with `cluster_var` specified)
 #'
-#' @return A list with the following components:
-#' * `icc`: the estimated intraclass correlation coefficient
-#' * `deff`: the design effect (ratio of cluster-robust to standard variance)
-#' * `avg_cluster_size`: average number of observations per cluster
-#' * `n_clusters`: number of clusters
-#' * `cluster_var`: name of the cluster variable used
+#' @return
+#' * For `seroincidence` objects: A list with components `icc`, `deff`,
+#'   `avg_cluster_size`, `n_clusters`, `cluster_var`, and `antigen_isos`
+#' * For `seroincidence.by` objects: A data frame with one row per stratum
+#'   containing the same information plus stratum identifiers
 #'
 #' @export
 #' @examples
@@ -45,15 +45,87 @@
 #' # Calculate ICC
 #' icc_result <- compute_icc(est_cluster)
 #' print(icc_result$icc)
+#'
+#' # With stratified analysis
+#' est_by_cluster <- est_seroincidence_by(
+#'   pop_data = xs_data,
+#'   strata = "catchment",
+#'   sr_params = curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   cluster_var = "cluster"
+#' )
+#'
+#' # Calculate ICC for each stratum
+#' icc_by_result <- compute_icc(est_by_cluster)
+#' print(icc_by_result)
 compute_icc <- function(fit) {
+  # Check if this is a seroincidence.by object
+  if (inherits(fit, "seroincidence.by")) {
+    # Process each stratum
+    icc_results <- lapply(names(fit), function(stratum_name) {
+      stratum_fit <- fit[[stratum_name]]
+      icc_res <- .compute_icc_single(stratum_fit)
+      
+      # Add stratum identifier
+      icc_res$Stratum <- stratum_name
+      icc_res
+    })
+    
+    # Combine into a data frame
+    result_df <- do.call(rbind, lapply(icc_results, function(x) {
+      data.frame(
+        Stratum = x$Stratum,
+        icc = x$icc,
+        deff = x$deff,
+        avg_cluster_size = x$avg_cluster_size,
+        n_clusters = x$n_clusters,
+        cluster_var = x$cluster_var,
+        antigen_isos = x$antigen_isos,
+        stringsAsFactors = FALSE
+      )
+    }))
+    
+    # Add strata information from attributes
+    strata_info <- attr(fit, "Strata")
+    if (!is.null(strata_info)) {
+      result_df <- merge(
+        strata_info,
+        result_df,
+        by = "Stratum",
+        all.y = TRUE
+      )
+      
+      # Reorder columns to put Stratum and strata variables first
+      strata_cols <- setdiff(names(strata_info), "Stratum")
+      other_cols <- setdiff(
+        names(result_df),
+        c("Stratum", strata_cols)
+      )
+      result_df <- result_df[, c("Stratum", strata_cols, other_cols)]
+    }
+    
+    class(result_df) <- c("icc_seroincidence.by", "data.frame")
+    return(result_df)
+  }
+  
   # Check that fit is a seroincidence object
   if (!inherits(fit, "seroincidence")) {
     cli::cli_abort(
-      "{.arg fit} must be a {.cls seroincidence} object from
-      {.fun est_seroincidence}."
+      "{.arg fit} must be a {.cls seroincidence} or
+      {.cls seroincidence.by} object from {.fun est_seroincidence}
+      or {.fun est_seroincidence_by}."
     )
   }
+  
+  # Single seroincidence object
+  return(.compute_icc_single(fit))
+}
 
+#' Internal function to compute ICC for a single seroincidence object
+#' @noRd
+#' @keywords internal
+.compute_icc_single <- function(fit) {
   # Check that clustering was used
   cluster_var <- attr(fit, "cluster_var")
   if (is.null(cluster_var)) {
@@ -64,6 +136,7 @@ compute_icc <- function(fit) {
   }
 
   stratum_var <- attr(fit, "stratum_var")
+  antigen_isos <- attr(fit, "antigen_isos")
 
   # Get the combined population data
   pop_data_list <- attr(fit, "pop_data")
@@ -110,7 +183,8 @@ compute_icc <- function(fit) {
     deff = deff,
     avg_cluster_size = avg_cluster_size,
     n_clusters = n_clusters,
-    cluster_var = cluster_var
+    cluster_var = cluster_var,
+    antigen_isos = paste(antigen_isos, collapse = ", ")
   )
 
   class(result) <- c("icc_seroincidence", "list")
@@ -120,13 +194,14 @@ compute_icc <- function(fit) {
 
 #' Print method for ICC results
 #'
-#' @param x an object of class `icc_seroincidence`
+#' @param x an object of class `icc_seroincidence` or `icc_seroincidence.by`
 #' @param ... unused
 #' @return invisible x
 #' @export
 print.icc_seroincidence <- function(x, ...) {
   cli::cli_h1("Intraclass Correlation Coefficient (ICC)")
   cli::cli_text("")
+  cli::cli_text("Antigen isotypes: {.field {x$antigen_isos}}")
   cli::cli_text("Cluster variable: {.field {x$cluster_var}}")
   cli::cli_text("Number of clusters: {.val {x$n_clusters}}")
   cli::cli_text("Average cluster size: {.val {round(x$avg_cluster_size, 2)}}")
@@ -154,6 +229,22 @@ print.icc_seroincidence <- function(x, ...) {
     }
   }
 
+  invisible(x)
+}
+
+#' Print method for stratified ICC results
+#'
+#' @param x an object of class `icc_seroincidence.by`
+#' @param ... unused
+#' @return invisible x
+#' @export
+print.icc_seroincidence.by <- function(x, ...) {
+  cli::cli_h1("Intraclass Correlation Coefficient (ICC) by Stratum")
+  cli::cli_text("")
+  
+  # Print as a data frame
+  print(tibble::as_tibble(x))
+  
   invisible(x)
 }
 

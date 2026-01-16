@@ -7,7 +7,7 @@
 \method{print}{icc_seroincidence}(x, ...)
 }
 \arguments{
-\item{x}{an object of class \code{icc_seroincidence}}
+\item{x}{an object of class \code{icc_seroincidence} or \code{icc_seroincidence.by}}
 
 \item{...}{unused}
 }

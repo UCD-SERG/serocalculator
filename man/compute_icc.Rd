@@ -7,17 +7,16 @@
 compute_icc(fit)
 }
 \arguments{
-\item{fit}{a \code{seroincidence} object from \code{\link[=est_seroincidence]{est_seroincidence()}} that was
+\item{fit}{a \code{seroincidence} object from \code{\link[=est_seroincidence]{est_seroincidence()}} or a
+\code{seroincidence.by} object from \code{\link[=est_seroincidence_by]{est_seroincidence_by()}} that was
 fitted with clustering (i.e., with \code{cluster_var} specified)}
 }
 \value{
-A list with the following components:
 \itemize{
-\item \code{icc}: the estimated intraclass correlation coefficient
-\item \code{deff}: the design effect (ratio of cluster-robust to standard variance)
-\item \code{avg_cluster_size}: average number of observations per cluster
-\item \code{n_clusters}: number of clusters
-\item \code{cluster_var}: name of the cluster variable used
+\item For \code{seroincidence} objects: A list with components \code{icc}, \code{deff},
+\code{avg_cluster_size}, \code{n_clusters}, \code{cluster_var}, and \code{antigen_isos}
+\item For \code{seroincidence.by} objects: A data frame with one row per stratum
+containing the same information plus stratum identifiers
 }
 }
 \description{
@@ -54,4 +53,18 @@ est_cluster <- est_seroincidence(
 # Calculate ICC
 icc_result <- compute_icc(est_cluster)
 print(icc_result$icc)
+
+# With stratified analysis
+est_by_cluster <- est_seroincidence_by(
+  pop_data = xs_data,
+  strata = "catchment",
+  sr_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Calculate ICC for each stratum
+icc_by_result <- compute_icc(est_by_cluster)
+print(icc_by_result)
 }

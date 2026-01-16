@@ -4,9 +4,13 @@
 
 * Added `compute_icc()` function to calculate the Intraclass Correlation Coefficient
   (ICC) for seroincidence estimates from clustered sampling designs. The ICC measures
-  the proportion of variance due to between-cluster variation.
+  the proportion of variance due to between-cluster variation. Now works with both
+  `seroincidence` and `seroincidence.by` objects, calculating ICC for each stratum
+  when used with stratified analyses.
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence_by()` to
   support cluster-robust standard error estimation in stratified analyses.
+* `compute_icc()` output now includes antigen isotypes information to clarify which
+  antibodies were used in the analysis.
 
 ## Bug fixes
 

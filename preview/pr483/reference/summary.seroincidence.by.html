@@ -70,6 +70,7 @@ est_seroincidence_by()."></head><body>
 <span>  show_deviance <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  show_convergence <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show_full_input <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -103,6 +104,12 @@ Default = <code>FALSE</code>.</p></dd>
 scalar indicating whether to print verbose messages to the console</p></dd>
 
 
+<dt id="arg-show-full-input">show_full_input<a class="anchor" aria-label="anchor" href="#arg-show-full-input"></a></dt>
+<dd><p>logical; if <code>TRUE</code>, include metadata columns
+with noise parameters, observation counts, and input object names.
+Default is <code>FALSE</code>.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments affecting the summary produced.</p></dd>
 
@@ -117,15 +124,22 @@ with the following columns:</p><ul><li><p><code>incidence.rate</code> maximum li
 Negative log likelihood (NLL) at estimated (maximum likelihood) <code>lambda</code>)</p></li>
 <li><p><code>nlm.convergence.code</code> (included if <code>show_convergence = TRUE</code>)
 Convergence information returned by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code></p></li>
-<li><p><code>measurement.noise.1</code>, <code>measurement.noise.2</code>, etc.: measurement noise
-parameters (eps) for each antigen isotype</p></li>
-<li><p><code>biological.noise.1</code>, <code>biological.noise.2</code>, etc.: biological noise
-parameters (nu) for each antigen isotype</p></li>
+</ul><p>If <code>show_full_input = TRUE</code>, the following columns are also included:</p><ul><li><p><code>measurement.noise.&lt;antigen&gt;</code>, <code>measurement.noise.&lt;antigen&gt;</code>, etc.:
+measurement noise parameters (eps) for each antigen isotype, where
+<code>&lt;antigen&gt;</code> is the antigen-isotype name</p></li>
+<li><p><code>biological.noise.&lt;antigen&gt;</code>, <code>biological.noise.&lt;antigen&gt;</code>, etc.:
+biological noise parameters (nu) for each antigen isotype, where
+<code>&lt;antigen&gt;</code> is the antigen-isotype name</p></li>
 <li><p><code>n.seroresponse.params</code>: number of longitudinal seroresponse parameter
 observations for each stratum</p></li>
-<li><p><code>n.pop.data</code>: number of population data observations for each stratum</p></li>
 <li><p><code>seroresponse.params.stratified</code>: logical indicating whether seroresponse
 parameters were stratified for each stratum</p></li>
+<li><p><code>pop_data</code>: name of the population data object passed to
+<code><a href="est_seroincidence_by.html">est_seroincidence_by()</a></code></p></li>
+<li><p><code>sr_params</code>: name of the seroresponse parameters object passed to
+<code><a href="est_seroincidence_by.html">est_seroincidence_by()</a></code></p></li>
+<li><p><code>noise_params</code>: name of the noise parameters object passed to
+<code><a href="est_seroincidence_by.html">est_seroincidence_by()</a></code></p></li>
 </ul><p>The object also has the following metadata
 (accessible through <code><a href="https://rdrr.io/r/base/attr.html" class="external-link">base::attr()</a></code>):</p><ul><li><p><code>antigen_isos</code>
 Character vector with names of input antigen isotypes
@@ -172,16 +186,13 @@ used in <code><a href="est_seroincidence_by.html">est_seroincidence_by()</a></co
 <span class="r-out co"><span class="r-pr">#&gt;</span> b) Strata       : catchment </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Seroincidence estimates:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 20</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Stratu… aku          53       0.1          0.140 0.021<span style="text-decoration: underline;">6</span>  0.104  0.189     0.95</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Stratu… kgh          47       0.1          0.200 0.030<span style="text-decoration: underline;">1</span>  0.149  0.268     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: log.lik &lt;dbl&gt;, iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   measurement.noise.2 &lt;dbl&gt;, biological.noise.2 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;, nlm.convergence.code &lt;ord&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: log.lik &lt;dbl&gt;, iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   nlm.convergence.code &lt;ord&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

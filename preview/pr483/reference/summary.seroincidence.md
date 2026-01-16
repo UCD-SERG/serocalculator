@@ -7,7 +7,7 @@ method for `seroincidence` objects.
 
 ``` r
 # S3 method for class 'seroincidence'
-summary(object, coverage = 0.95, verbose = TRUE, ...)
+summary(object, coverage = 0.95, verbose = TRUE, show_full_input = FALSE, ...)
 ```
 
 ## Arguments
@@ -25,6 +25,11 @@ summary(object, coverage = 0.95, verbose = TRUE, ...)
 - verbose:
 
   whether to produce verbose messaging
+
+- show_full_input:
+
+  logical; if `TRUE`, include metadata columns with noise parameters,
+  observation counts, and input object names. Default is `FALSE`.
 
 - ...:
 
@@ -83,19 +88,30 @@ containing the following:
     finite value from above in some direction, or `stepmax` is too
     small.
 
-- `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
-  parameters (eps) for each antigen isotype
+If `show_full_input = TRUE`, the following columns are also included:
 
-- `biological.noise.1`, `biological.noise.2`, etc.: biological noise
-  parameters (nu) for each antigen isotype
+- `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
+  measurement noise parameters (eps) for each antigen isotype, where
+  `<antigen>` is the antigen-isotype name
+
+- `biological.noise.<antigen>`, `biological.noise.<antigen>`, etc.:
+  biological noise parameters (nu) for each antigen isotype, where
+  `<antigen>` is the antigen-isotype name
 
 - `n.seroresponse.params`: number of longitudinal seroresponse parameter
   observations
 
-- `n.pop.data`: number of population data observations
-
 - `seroresponse.params.stratified`: logical indicating whether
   seroresponse parameters were stratified (`FALSE` for unstratified)
+
+- `pop_data`: name of the population data object passed to
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+
+- `sr_params`: name of the seroresponse parameters object passed to
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+
+- `noise_params`: name of the noise parameters object passed to
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 
 ## Examples
 
@@ -120,13 +136,9 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 17
+#> # A tibble: 1 × 10
 #>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
 #>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
 #> 1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-#> # ℹ 9 more variables: antigen.isos <chr>, nlm.convergence.code <ord>,
-#> #   measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
-#> #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
-#> #   n.seroresponse.params <int>, n.pop.data <int>,
-#> #   seroresponse.params.stratified <lgl>
+#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
 ```

@@ -3,9 +3,13 @@
 ## serocalculator (development version)
 
 - Summary objects for `seroincidence` and `seroincidence.by` now include
-  additional metadata attributes: noise parameters (`noise_params`),
-  seroresponse parameter count (`n_sr_params`), population data count
-  (`n_pop_data`), and stratification status (`sr_params_stratified`)
+  additional metadata as **columns** (when `show_full_input = TRUE`):
+  antigen-specific noise parameters (`measurement.noise.<antigen>`,
+  `biological.noise.<antigen>`), seroresponse parameter count
+  (`n.seroresponse.params`), stratification status
+  (`seroresponse.params.stratified`), and input object names
+  (`pop_data`, `sr_params`, `noise_params`). The default is
+  `show_full_input = FALSE` to keep summary output clean.
 
 ## serocalculator 1.4.0
 

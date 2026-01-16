@@ -397,15 +397,11 @@ isotypes, but users can add additional pairs if available.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 17</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 10</span></span></span>
 <span><span class="co">#&gt;   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations</span></span>
 <span><span class="co">#&gt;       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>       0.1          0.128 0.006<span style="text-decoration: underline;">82</span>  0.115  0.142     0.95  -<span style="color: #BB0000; text-decoration: underline;">2</span><span style="color: #BB0000;">376.</span>          4</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 9 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   measurement.noise.2 &lt;dbl&gt;, biological.noise.2 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="stratified-seroincidence">Stratified Seroincidence<a class="anchor" aria-label="anchor" href="#stratified-seroincidence"></a>
@@ -447,7 +443,7 @@ age group.</p>
 <span><span class="co">#&gt; b) Strata       : Country, ageCat </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Seroincidence estimates:</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 21</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 14</span></span></span>
 <span><span class="co">#&gt;   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 Banglad… &lt;5       101       0.1         0.400  0.039<span style="text-decoration: underline;">5</span>  0.330  0.485 </span></span>
@@ -459,11 +455,8 @@ age group.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Stratum 7 Pakistan &lt;5       126       0.1         0.106  0.013<span style="text-decoration: underline;">6</span>  0.082<span style="text-decoration: underline;">3</span> 0.136 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Stratum 8 Pakistan 5-15     261       0.1         0.115  0.008<span style="text-decoration: underline;">45</span> 0.099<span style="text-decoration: underline;">1</span> 0.132 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Stratum 9 Pakistan 16+      107       0.1         0.190  0.020<span style="text-decoration: underline;">4</span>  0.154  0.235 </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   measurement.noise.2 &lt;dbl&gt;, biological.noise.2 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 <p>Note that we get a warning about uneven observations between antigen
 isotypes, meaning some participants do not have results for both
 <em>HlyE IgA</em> and <em>HlyE IgG</em>. The warning indicates that the

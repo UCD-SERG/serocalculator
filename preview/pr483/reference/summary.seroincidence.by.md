@@ -13,6 +13,7 @@ summary(
   show_deviance = TRUE,
   show_convergence = TRUE,
   verbose = FALSE,
+  show_full_input = FALSE,
   ...
 )
 ```
@@ -44,6 +45,11 @@ summary(
   a [logical](https://rdrr.io/r/base/logical.html) scalar indicating
   whether to print verbose messages to the console
 
+- show_full_input:
+
+  logical; if `TRUE`, include metadata columns with noise parameters,
+  observation counts, and input object names. Default is `FALSE`.
+
 - ...:
 
   Additional arguments affecting the summary produced.
@@ -68,19 +74,30 @@ with the following columns:
   Convergence information returned by
   [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html)
 
-- `measurement.noise.1`, `measurement.noise.2`, etc.: measurement noise
-  parameters (eps) for each antigen isotype
+If `show_full_input = TRUE`, the following columns are also included:
 
-- `biological.noise.1`, `biological.noise.2`, etc.: biological noise
-  parameters (nu) for each antigen isotype
+- `measurement.noise.<antigen>`, `measurement.noise.<antigen>`, etc.:
+  measurement noise parameters (eps) for each antigen isotype, where
+  `<antigen>` is the antigen-isotype name
+
+- `biological.noise.<antigen>`, `biological.noise.<antigen>`, etc.:
+  biological noise parameters (nu) for each antigen isotype, where
+  `<antigen>` is the antigen-isotype name
 
 - `n.seroresponse.params`: number of longitudinal seroresponse parameter
   observations for each stratum
 
-- `n.pop.data`: number of population data observations for each stratum
-
 - `seroresponse.params.stratified`: logical indicating whether
   seroresponse parameters were stratified for each stratum
+
+- `pop_data`: name of the population data object passed to
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+
+- `sr_params`: name of the seroresponse parameters object passed to
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+
+- `noise_params`: name of the noise parameters object passed to
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 The object also has the following metadata (accessible through
 [`base::attr()`](https://rdrr.io/r/base/attr.html)):
@@ -132,14 +149,11 @@ summary(est2)
 #> b) Strata       : catchment 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 2 × 20
+#> # A tibble: 2 × 13
 #>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage
 #>   <chr>   <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
 #> 1 Stratu… aku          53       0.1          0.140 0.0216  0.104  0.189     0.95
 #> 2 Stratu… kgh          47       0.1          0.200 0.0301  0.149  0.268     0.95
-#> # ℹ 11 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
-#> #   measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
-#> #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
-#> #   n.seroresponse.params <int>, n.pop.data <int>,
-#> #   seroresponse.params.stratified <lgl>, nlm.convergence.code <ord>
+#> # ℹ 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```

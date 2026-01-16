@@ -377,15 +377,13 @@ rates.</p>
 <span><span class="co">#&gt; b) Strata       : country </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Seroincidence estimates:</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 18</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 13</span></span></span>
 <span><span class="co">#&gt;   Stratum country     n est.start incidence.rate      SE  CI.lwr CI.upr coverage</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratu… India     721       0.1        0.020<span style="text-decoration: underline;">2</span>  0.001<span style="text-decoration: underline;">48</span> 0.017<span style="text-decoration: underline;">5</span>  0.023<span style="text-decoration: underline;">3</span>     0.95</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Stratu… Nepal    <span style="text-decoration: underline;">1</span>105       0.1        0.008<span style="text-decoration: underline;">54</span> 0.001<span style="text-decoration: underline;">07</span> 0.006<span style="text-decoration: underline;">68</span> 0.010<span style="text-decoration: underline;">9</span>     0.95</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 9 more variables: log.lik &lt;dbl&gt;, iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: log.lik &lt;dbl&gt;, iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="estimate-seroincidence-by-study-site-and-age-strata">Estimate Seroincidence by study site and age strata<a class="anchor" aria-label="anchor" href="#estimate-seroincidence-by-study-site-and-age-strata"></a>
@@ -433,7 +431,7 @@ rates.</p>
 <span><span class="co">#&gt; b) Strata       : country, ageQ </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Seroincidence estimates:</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 19</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 14</span></span></span>
 <span><span class="co">#&gt;   Stratum   country ageQ      n est.start incidence.rate      SE  CI.lwr  CI.upr</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Stratum 1 India   18-29    59       0.1        0.009<span style="text-decoration: underline;">85</span> 0.003<span style="text-decoration: underline;">30</span> 0.005<span style="text-decoration: underline;">11</span> 0.019<span style="text-decoration: underline;">0</span> </span></span>
@@ -441,10 +439,8 @@ rates.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Stratum 3 India   50-89   360       0.1        0.028<span style="text-decoration: underline;">8</span>  0.002<span style="text-decoration: underline;">90</span> 0.023<span style="text-decoration: underline;">6</span>  0.035<span style="text-decoration: underline;">0</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Stratum 4 Nepal   0-17    876       0.1        0.006<span style="text-decoration: underline;">06</span> 0.001<span style="text-decoration: underline;">08</span> 0.004<span style="text-decoration: underline;">28</span> 0.008<span style="text-decoration: underline;">60</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Stratum 5 Nepal   18-29   229       0.1        0.014<span style="text-decoration: underline;">4</span>  0.002<span style="text-decoration: underline;">59</span> 0.010<span style="text-decoration: underline;">1</span>  0.020<span style="text-decoration: underline;">5</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 10 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></span></code></pre></div>
 <p>Let’s visualize our seroincidence estimates by strata.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>

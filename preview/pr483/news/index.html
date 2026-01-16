@@ -55,7 +55,7 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="serocalculator-development-version">serocalculator (development version)<a class="anchor" aria-label="anchor" href="#serocalculator-development-version"></a></h2>
-<ul><li>Summary objects for <code>seroincidence</code> and <code>seroincidence.by</code> now include additional metadata attributes: noise parameters (<code>noise_params</code>), seroresponse parameter count (<code>n_sr_params</code>), population data count (<code>n_pop_data</code>), and stratification status (<code>sr_params_stratified</code>)</li>
+<ul><li>Summary objects for <code>seroincidence</code> and <code>seroincidence.by</code> now include additional metadata as <strong>columns</strong> (when <code>show_full_input = TRUE</code>): antigen-specific noise parameters (<code>measurement.noise.&lt;antigen&gt;</code>, <code>biological.noise.&lt;antigen&gt;</code>), seroresponse parameter count (<code>n.seroresponse.params</code>), stratification status (<code>seroresponse.params.stratified</code>), and input object names (<code>pop_data</code>, <code>sr_params</code>, <code>noise_params</code>). The default is <code>show_full_input = FALSE</code> to keep summary output clean.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.0" id="serocalculator-140">serocalculator 1.4.0<a class="anchor" aria-label="anchor" href="#serocalculator-140"></a></h2><p class="text-muted">CRAN release: 2025-12-11</p>

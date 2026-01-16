@@ -290,15 +290,11 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 17
+#> # A tibble: 1 × 10
 #>   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations
 #>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
 #> 1       0.1          0.128 0.00682  0.115  0.142     0.95  -2376.          4
-#> # ℹ 9 more variables: antigen.isos <chr>, nlm.convergence.code <ord>,
-#> #   measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
-#> #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
-#> #   n.seroresponse.params <int>, n.pop.data <int>,
-#> #   seroresponse.params.stratified <lgl>
+#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
 ```
 
 ### Stratified Seroincidence
@@ -340,7 +336,7 @@ summary(est_country_age)
 #> b) Strata       : Country, ageCat 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 9 × 21
+#> # A tibble: 9 × 14
 #>   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr
 #>   <chr>     <chr>    <fct>  <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl>
 #> 1 Stratum 1 Banglad… <5       101       0.1         0.400  0.0395  0.330  0.485 
@@ -352,11 +348,8 @@ summary(est_country_age)
 #> 7 Stratum 7 Pakistan <5       126       0.1         0.106  0.0136  0.0823 0.136 
 #> 8 Stratum 8 Pakistan 5-15     261       0.1         0.115  0.00845 0.0991 0.132 
 #> 9 Stratum 9 Pakistan 16+      107       0.1         0.190  0.0204  0.154  0.235 
-#> # ℹ 12 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
-#> #   antigen.isos <chr>, measurement.noise.1 <dbl>, biological.noise.1 <dbl>,
-#> #   measurement.noise.2 <dbl>, biological.noise.2 <dbl>,
-#> #   n.seroresponse.params <int>, n.pop.data <int>,
-#> #   seroresponse.params.stratified <lgl>, nlm.convergence.code <ord>
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```
 
 Note that we get a warning about uneven observations between antigen

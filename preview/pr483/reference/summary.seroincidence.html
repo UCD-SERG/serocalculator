@@ -61,7 +61,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'seroincidence'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, coverage <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, coverage <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, show_full_input <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -78,6 +78,12 @@
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>whether to produce verbose messaging</p></dd>
+
+
+<dt id="arg-show-full-input">show_full_input<a class="anchor" aria-label="anchor" href="#arg-show-full-input"></a></dt>
+<dd><p>logical; if <code>TRUE</code>, include metadata columns
+with noise parameters, observation counts, and input object names.
+Default is <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -117,15 +123,22 @@ Either the function is unbounded below,
 becomes asymptotic to a finite value from above in some direction,
 or <code>stepmax</code> is too small.</p></li>
 </ul></li>
-<li><p><code>measurement.noise.1</code>, <code>measurement.noise.2</code>, etc.: measurement noise
-parameters (eps) for each antigen isotype</p></li>
-<li><p><code>biological.noise.1</code>, <code>biological.noise.2</code>, etc.: biological noise
-parameters (nu) for each antigen isotype</p></li>
+</ul><p>If <code>show_full_input = TRUE</code>, the following columns are also included:</p><ul><li><p><code>measurement.noise.&lt;antigen&gt;</code>, <code>measurement.noise.&lt;antigen&gt;</code>, etc.:
+measurement noise parameters (eps) for each antigen isotype, where
+<code>&lt;antigen&gt;</code> is the antigen-isotype name</p></li>
+<li><p><code>biological.noise.&lt;antigen&gt;</code>, <code>biological.noise.&lt;antigen&gt;</code>, etc.:
+biological noise parameters (nu) for each antigen isotype, where
+<code>&lt;antigen&gt;</code> is the antigen-isotype name</p></li>
 <li><p><code>n.seroresponse.params</code>: number of longitudinal seroresponse parameter
 observations</p></li>
-<li><p><code>n.pop.data</code>: number of population data observations</p></li>
 <li><p><code>seroresponse.params.stratified</code>: logical indicating whether seroresponse
 parameters were stratified (<code>FALSE</code> for unstratified)</p></li>
+<li><p><code>pop_data</code>: name of the population data object passed to
+<code><a href="est_seroincidence.html">est_seroincidence()</a></code></p></li>
+<li><p><code>sr_params</code>: name of the seroresponse parameters object passed to
+<code><a href="est_seroincidence.html">est_seroincidence()</a></code></p></li>
+<li><p><code>noise_params</code>: name of the noise parameters object passed to
+<code><a href="est_seroincidence.html">est_seroincidence()</a></code></p></li>
 </ul></div>
 
     <div class="section level2">
@@ -151,15 +164,11 @@ parameters were stratified (<code>FALSE</code> for unstratified)</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>       0.1          0.166 0.017<span style="text-decoration: underline;">8</span>  0.135  0.205     0.95   -<span style="color: #BB0000;">524.</span>          5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   measurement.noise.1 &lt;dbl&gt;, biological.noise.1 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   measurement.noise.2 &lt;dbl&gt;, biological.noise.2 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   n.seroresponse.params &lt;int&gt;, n.pop.data &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   seroresponse.params.stratified &lt;lgl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

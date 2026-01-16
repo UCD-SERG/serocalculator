@@ -130,7 +130,9 @@ est_seroincidence <- function(
   )
 
   if (is.na(res)) {
-    cli::cli_warn("Could not calculate log-likelihood with starting parameter value.")
+    cli::cli_warn(
+      "Could not calculate log-likelihood with starting parameter value."
+    )
     return(NULL)
   }
 

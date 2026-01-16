@@ -1,5 +1,10 @@
 # serocalculator (development version)
 
+* Summary objects for `seroincidence` and `seroincidence.by` now include 
+  additional metadata attributes: noise parameters (`noise_params`), 
+  seroresponse parameter count (`n_sr_params`), population data count 
+  (`n_pop_data`), and stratification status (`sr_params_stratified`)
+
 # serocalculator 1.4.0
 
 ## New features

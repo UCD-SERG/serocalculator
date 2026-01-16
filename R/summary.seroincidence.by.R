@@ -34,6 +34,15 @@
 #'   Character vector with names of input antigen isotypes
 #'   used in [est_seroincidence_by()]
 #' * `Strata` Character with names of strata used in [est_seroincidence_by()]
+#' * `noise_params` List of [tibble::tibble()] objects (one per stratum) with
+#'   exact numeric noise parameters (`antigen_iso`, `eps` (measurement noise),
+#'   `nu` (biological noise))
+#' * `n_sr_params` Named numeric vector with number of longitudinal seroresponse
+#'   parameter observations for each stratum
+#' * `n_pop_data` Named numeric vector with number of population data
+#'   observations for each stratum
+#' * `sr_params_stratified` Named logical vector indicating whether seroresponse
+#'   parameters were stratified for each stratum
 #'
 #'
 #' @examples
@@ -91,6 +100,27 @@ summary.seroincidence.by <- function(
     ) |>
     bind_rows(.id = "Stratum")
 
+  # Extract noise_params, n_sr_params, n_pop_data from each stratum's summary
+  # and store them as separate data frames/lists
+  summaries_list <- object |>
+    lapply(
+      FUN = summary.seroincidence,
+      coverage = confidence_level,
+      verbose = verbose
+    )
+
+  noise_params_list <- summaries_list |>
+    lapply(function(s) attr(s, "noise_params"))
+
+  n_sr_params_list <- summaries_list |>
+    sapply(function(s) attr(s, "n_sr_params"))
+
+  n_pop_data_list <- summaries_list |>
+    sapply(function(s) attr(s, "n_pop_data"))
+
+  sr_params_stratified_list <- summaries_list |>
+    sapply(function(s) attr(s, "sr_params_stratified"))
+
   results <-
     inner_join(
       object |> attr("Strata"),
@@ -120,6 +150,10 @@ summary.seroincidence.by <- function(
       antigen_isos = attr(object, "antigen_isos"),
       Strata = attr(object, "Strata") |> attr("strata_vars"),
       Quantiles = quantiles,
+      noise_params = noise_params_list,
+      n_sr_params = n_sr_params_list,
+      n_pop_data = n_pop_data_list,
+      sr_params_stratified = sr_params_stratified_list,
       class = "summary.seroincidence.by" |>
         union(class(results))
     )

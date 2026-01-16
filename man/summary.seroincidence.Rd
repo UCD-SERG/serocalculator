@@ -52,6 +52,16 @@ becomes asymptotic to a finite value from above in some direction,
 or \code{stepmax} is too small.
 }
 }
+
+The returned object also has the following attributes:
+\itemize{
+\item \code{noise_params}: a \code{\link[tibble:tibble]{tibble::tibble()}} with exact numeric noise parameters
+(\code{antigen_iso}, \code{eps} (measurement noise), \code{nu} (biological noise))
+\item \code{n_sr_params}: number of longitudinal seroresponse parameter observations
+\item \code{n_pop_data}: number of population data observations
+\item \code{sr_params_stratified}: logical indicating whether seroresponse parameters
+were stratified (\code{FALSE} for unstratified)
+}
 }
 \description{
 This function is a \code{summary()} method for \code{seroincidence} objects.

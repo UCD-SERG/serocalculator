@@ -223,12 +223,32 @@ est_seroincidence <- function(
     }
   }
 
+  # Extract noise parameters for storage
+  noise_params_summary <- noise_params |>
+    bind_rows() |>
+    select("antigen_iso", "eps", "nu")
+
+  # Count sr_params observations
+  n_sr_params <- sr_params |>
+    bind_rows() |>
+    nrow()
+
+  # Count pop_data observations (before filtering)
+  # We need the original count, which is the total rows in pop_data
+  n_pop_data <- pop_data |>
+    bind_rows() |>
+    nrow()
+
   fit <- fit |>
     structure(
       class = union("seroincidence", class(fit)),
       lambda_start = lambda_start,
       antigen_isos = antigen_isos,
-      ll_graph = graph
+      ll_graph = graph,
+      noise_params = noise_params_summary,
+      n_sr_params = n_sr_params,
+      n_pop_data = n_pop_data,
+      sr_params_stratified = FALSE
     )
 
   return(fit)

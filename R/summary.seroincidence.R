@@ -39,6 +39,14 @@
 #'         Either the function is unbounded below,
 #'        becomes asymptotic to a finite value from above in some direction,
 #'        or `stepmax` is too small.
+#'
+#' The returned object also has the following attributes:
+#' * `noise_params`: a [tibble::tibble()] with exact numeric noise parameters
+#'   (`antigen_iso`, `eps` (measurement noise), `nu` (biological noise))
+#' * `n_sr_params`: number of longitudinal seroresponse parameter observations
+#' * `n_pop_data`: number of population data observations
+#' * `sr_params_stratified`: logical indicating whether seroresponse parameters
+#'   were stratified (`FALSE` for unstratified)
 #' @export
 #' @examples
 #'
@@ -69,6 +77,10 @@ summary.seroincidence <- function(
     ...) {
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")
+  noise_params <- object |> attr("noise_params")
+  n_sr_params <- object |> attr("n_sr_params")
+  n_pop_data <- object |> attr("n_pop_data")
+  sr_params_stratified <- object |> attr("sr_params_stratified")
 
   alpha <- 1 - coverage
   h_alpha <- alpha / 2
@@ -103,6 +115,12 @@ summary.seroincidence <- function(
       labelled::set_label_attribute("`nlm()` convergence code")
     # |> factor(levels = 1:5, labels = nlm_exit_codes)
   )
+
+  # Add noise parameters as attributes
+  attr(to_return, "noise_params") <- noise_params
+  attr(to_return, "n_sr_params") <- n_sr_params
+  attr(to_return, "n_pop_data") <- n_pop_data
+  attr(to_return, "sr_params_stratified") <- sr_params_stratified
 
   class(to_return) <-
     "summary.seroincidence" |>

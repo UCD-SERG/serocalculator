@@ -97,4 +97,3 @@ test_that("summary includes noise_params and sr_params metadata", {
   expect_true(!is.null(attr(summ, "sr_params_stratified")))
   expect_false(attr(summ, "sr_params_stratified"))
 })
-

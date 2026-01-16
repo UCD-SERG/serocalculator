@@ -68,7 +68,7 @@ est_seroincidence <- function(
     print_graph = build_graph & verbose,
     ...) {
   if (verbose > 1) {
-    message("inputs to `est_seroincidence()`:")
+    cli::cli_inform("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
   }
 
@@ -103,7 +103,7 @@ est_seroincidence <- function(
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(pop_data) == 0) {
-    stop("No data provided.")
+    cli::cli_abort("No data provided.")
   }
 
   if (verbose) {
@@ -111,7 +111,7 @@ est_seroincidence <- function(
   }
 
   if (nrow(noise_params) != length(antigen_isos)) {
-    stop("too many rows of noise parameters.")
+    cli::cli_abort("too many rows of noise parameters.")
   }
 
   pop_data <- pop_data |> split(~antigen_iso)
@@ -130,16 +130,16 @@ est_seroincidence <- function(
   )
 
   if (is.na(res)) {
-    warning("Could not calculate log-likelihood with starting parameter value.")
+    cli::cli_warn("Could not calculate log-likelihood with starting parameter value.")
     return(NULL)
   }
 
   if (verbose) {
-    message("Initial negative log-likelihood: ", res)
+    cli::cli_inform("Initial negative log-likelihood: {res}")
   }
 
   if (build_graph) {
-    if (verbose) message("building likelihood graph")
+    if (verbose) cli::cli_inform("building likelihood graph")
     graph <- graph_loglik(
       highlight_points = lambda_start,
       highlight_point_names = "lambda_start",
@@ -166,7 +166,7 @@ est_seroincidence <- function(
   # but [.nll()] is vectorized via its subfunction [f_dev()].
   # The vectorization doesn't appear to cause a problem for [nlm()].
 
-  if (verbose) message("about to call `nlm()`")
+  if (verbose) cli::cli_inform("about to call `nlm()`")
   # Estimate lambda
   time <- system.time(
     {
@@ -190,15 +190,17 @@ est_seroincidence <- function(
   code_text <- nlm_exit_codes[fit$code]
   message1 <- "\n`nlm()` completed with the following convergence code:\n"
   if (fit$code %in% 3:5) {
-    warning(
-      "`nlm()` may not have reached the maximum likelihood estimate.",
-      message1,
-      code_text
+    cli::cli_warn(
+      c(
+        "`nlm()` may not have reached the maximum likelihood estimate.",
+        "i" = message1,
+        "i" = code_text
+      )
     )
   }
 
   if (verbose >= 2) {
-    message("\nElapsed time: ")
+    cli::cli_inform("\nElapsed time: ")
     print(time)
   }
 
@@ -264,7 +266,7 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-  ...) {
+    ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

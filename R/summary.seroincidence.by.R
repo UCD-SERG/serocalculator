@@ -83,7 +83,7 @@ summary.seroincidence.by <- function(
   quantiles <- c(alpha / 2, 1 - alpha / 2)
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
-    stop("Incorrectly specified quantiles")
+    cli::cli_abort("Incorrectly specified quantiles")
   }
 
   if (quantiles[1] > quantiles[2]) {

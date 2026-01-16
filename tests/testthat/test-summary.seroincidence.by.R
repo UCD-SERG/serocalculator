@@ -17,7 +17,9 @@ test_that("`summary.seroincidence.by()` produces consistent results",
                                   tolerance = 1e-4)
           })
 
-test_that("summary.seroincidence.by includes noise_params and sr_params metadata", {
+test_that(
+  "summary.seroincidence.by includes noise_params and sr_params metadata",
+  {
   est2 <- est_seroincidence_by(
     strata = "catchment",
     pop_data = sees_pop_data_pk_100,
@@ -63,6 +65,6 @@ test_that("summary.seroincidence.by includes noise_params and sr_params metadata
   sr_params_stratified <- attr(summ2, "sr_params_stratified")
   expect_type(sr_params_stratified, "logical")
   expect_equal(length(sr_params_stratified), 2)
-  expect_true(all(!sr_params_stratified))  # Should be FALSE for both strata
+  # Should be FALSE for both strata
+  expect_true(all(!sr_params_stratified))
 })
-

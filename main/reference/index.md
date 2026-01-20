@@ -90,6 +90,11 @@
 
   Plot method for `summary.seroincidence.by` objects
 
+## Compare seroconversion incidence rates
+
+- [`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)
+  : Compare seroincidence rates between two groups
+
 ## Example data sets
 
 - [`sees_pop_data_100`](https://ucd-serg.github.io/serocalculator/reference/sees_pop_data_100.md)

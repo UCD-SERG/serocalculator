@@ -8,6 +8,16 @@ CRAN release: 2025-12-11
 
 ### New features
 
+- Added
+  [`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)
+  function for statistical comparison of seroincidence rates
+
+  - Performs two-sample z-tests to compare seroincidence estimates
+  - Returns `htest` format when comparing two single estimates
+  - Returns formatted table with all pairwise comparisons for stratified
+    estimates
+  - Added examples to tutorial vignette and comprehensive unit tests
+
 - Implemented multi-version pkgdown documentation with version dropdown
   menu
 

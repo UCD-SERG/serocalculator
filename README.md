@@ -156,7 +156,7 @@ reproducible example](https://reprex.tidyverse.org/) on
 
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
-GitHub: <https://epirhandbook.com/en/getting-help.html>
+GitHub: <https://epirhandbook.com/en/new_pages/help.html>
 
 ## Contributing to this project
 
@@ -169,6 +169,8 @@ for more information.
 
 This QR code is a direct link to the latest-release version of the
 package website:
+
+    #> Warning: package 'qrcode' was built under R version 4.4.2
 
 <figure id="fig-website-QR">
 <img src="man/figures/qr.svg"

@@ -28,6 +28,7 @@
 #' @importFrom dplyr rowwise
 #' @importFrom dplyr select
 #' @importFrom dplyr semi_join
+#' @importFrom dplyr slice_head
 #' @importFrom dplyr summarise
 #' @importFrom dplyr ungroup
 #' @importFrom foreach %:%
@@ -40,9 +41,9 @@
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 theme_bw
+#' @importFrom ggplot2 vars
 #' @importFrom lifecycle deprecated
 #' @importFrom magrittr %>%
-#' @importFrom mixtools normalmixEM
 #' @importFrom Rcpp sourceCpp
 #' @importFrom rlang .data
 #' @importFrom rlang .env
@@ -69,6 +70,7 @@
 #' @importFrom tidyselect ends_with
 #' @importFrom utils capture.output
 #' @importFrom utils download.file unzip
+#' @importFrom utils head
 #' @importFrom utils tail
 #' @useDynLib serocalculator, .registration = TRUE
 ## usethis namespace: end

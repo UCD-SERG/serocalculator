@@ -10,3 +10,5 @@ rsconnect
 *.docx
 /.quarto/
 *.rmarkdown
+
+**/*.quarto_ipynb

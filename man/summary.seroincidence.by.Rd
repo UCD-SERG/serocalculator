@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{object}{A dataframe containing output of function \code{\link[=est.incidence.by]{est.incidence.by()}}.}
+\item{object}{A dataframe containing output of \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}.}
 
 \item{confidence_level}{desired confidence interval coverage probability}
 
@@ -49,13 +49,13 @@ The object also has the following metadata
 \itemize{
 \item \code{antigen_isos}
 Character vector with names of input antigen isotypes
-used in \code{\link[=est.incidence.by]{est.incidence.by()}}
-\item \code{Strata} Character with names of strata used in \code{\link[=est.incidence.by]{est.incidence.by()}}
+used in \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
+\item \code{Strata} Character with names of strata used in \code{\link[=est_seroincidence_by]{est_seroincidence_by()}}
 }
 }
 \description{
 Calculate seroincidence from output of the seroincidence calculator
-\code{\link[=est.incidence.by]{est.incidence.by()}}.
+\code{\link[=est_seroincidence_by]{est_seroincidence_by()}}.
 }
 \examples{
 library(dplyr)
@@ -71,10 +71,10 @@ noise <-
   example_noise_params_pk
 
 # estimate seroincidence
-est2 <- est.incidence.by(
+est2 <- est_seroincidence_by(
   strata = c("catchment"),
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = curve,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   # num_cores = 8 # Allow for parallel processing to decrease run time

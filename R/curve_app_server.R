@@ -12,15 +12,15 @@ curve_app_server = function(input, output, session)
         alpha = input$alpha |> exp10(),
         rho = input$rho,
         t1 = t1f(
-          mu_y = mu_y,
-          mu_b = mu_b,
-          gamma = gamma,
-          y0 = y0,
-          b0 = b0),
+          mu_y = .data$mu_y,
+          mu_b = .data$mu_b,
+          gamma = .data$gamma,
+          y0 = .data$y0,
+          b0 = .data$b0),
         y1 = y1f(
-          y0 = y0,
-          mu_y = mu_y,
-          t1 = t1)
+          y0 = .data$y0,
+          mu_y = .data$mu_y,
+          t1 = .data$t1)
       )
     }|> reactive()
 

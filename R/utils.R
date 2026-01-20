@@ -103,3 +103,6 @@
 
   invisible(NULL)
 }
+
+# Declare global variables used in curve_app functions to avoid R CMD check NOTEs
+utils::globalVariables(c("mu_y", "mu_b", "y0", "b0", "t1"))

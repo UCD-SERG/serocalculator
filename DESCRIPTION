@@ -23,6 +23,7 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     cli,
+    config,
     doParallel,
     dplyr,
     foreach,
@@ -30,8 +31,6 @@ Imports:
     ggpubr,
     lifecycle,
     magrittr,
-    mixtools,
-    pkgload,
     Rcpp,
     rlang,
     rngtools,

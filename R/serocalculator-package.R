@@ -49,8 +49,12 @@
 #' @importFrom rlang .env
 #' @importFrom rngtools RNGseq
 #' @importFrom rngtools setRNG
+#' @importFrom shiny h2
 #' @importFrom shiny reactive
+#' @importFrom shiny renderPlot
+#' @importFrom shiny renderTable
 #' @importFrom shiny renderText
+#' @importFrom shiny sliderInput
 #' @importFrom stats dlnorm optim pgamma plnorm
 #' @importFrom stats formula
 #' @importFrom stats lm

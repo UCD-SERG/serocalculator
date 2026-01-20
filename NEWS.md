@@ -29,6 +29,19 @@
   to stratified analyses. Previously, these variables were dropped during data stratification,
   causing errors when trying to use clustering with `est_seroincidence_by()`.
 
+## Code organization
+
+* Refactored clustering-related code following package organization policies:
+  - Moved `compute_icc()` S3 generic and methods to `R/compute_icc.R`
+  - Moved `.compute_icc_single()` to `R/compute_icc_single.R`
+  - Moved `print.icc_seroincidence()` to `R/print.icc_seroincidence.R`
+  - Moved `print.icc_seroincidence.by()` to `R/print.icc_seroincidence.by.R`
+  - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
+  - Extracted anonymous function to `.icc_single_to_df_row()` in `R/icc_single_to_df_row.R`
+  - Moved long examples to `inst/examples/exm-compute_icc.R` and linked using `@example`
+  - Each function now in its own file for better maintainability and git history
+* Updated copilot-instructions.md with code organization policies
+
 # serocalculator 1.4.0
 
 ## New features

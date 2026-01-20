@@ -454,6 +454,54 @@ expect_false(has_missing_values(complete_data))
 4. **Run tests**: Validate all tests pass, updating snapshots only when changes are intentional
 5. **Review snapshots**: When snapshots change, review the diff to ensure changes are expected
 
+## Code Organization Policies
+
+**CRITICAL**: Follow these strict code organization policies for all new code and refactoring work:
+
+### File Organization
+
+1. **One function per file**: Each exported function and its associated S3 methods should be in its own file
+   - File name should match the function name (e.g., `compute_icc.R` for `compute_icc()`)
+   - S3 methods for the same generic can be in the same file (e.g., `compute_icc.seroincidence()`, `compute_icc.seroincidence.by()`, and `compute_icc.default()` all in `compute_icc.R`)
+
+2. **Internal helper functions**: Move to separate files
+   - Use descriptive file names (e.g., `compute_icc_single.R` for `.compute_icc_single()`)
+   - Keep related internal functions together when logical
+   - Internal functions should use `.function_name()` naming convention
+
+3. **Print methods**: Each print method in its own file
+   - File name: `print.{class_name}.R` (e.g., `print.icc_seroincidence.R`)
+
+4. **Extract anonymous functions**: Convert complex anonymous functions to named helper functions in separate files
+   - If an anonymous function is longer than ~5 lines, extract it
+   - Name should describe its purpose (e.g., `.icc_single_to_df_row()`)
+
+### Example Organization
+
+1. **Long examples**: Move to `inst/examples/exm-{function_name}.R`
+   - Use `@example inst/examples/exm-{function_name}.R` in roxygen documentation
+   - Keep inline `@examples` short (1-3 lines) for simple demonstrations
+
+2. **Example file naming**: `exm-{function_name}.R`
+   - Example: `exm-compute_icc.R` for `compute_icc()` examples
+
+### Benefits
+
+- **Easier navigation**: Find functions quickly by file name
+- **Better git history**: Changes to one function don't pollute history of unrelated functions
+- **Clearer code review**: Reviewers can focus on individual functions
+- **Reduced merge conflicts**: Multiple people can work on different functions simultaneously
+- **Better organization**: Logical structure makes codebase more maintainable
+
+### Migration Strategy
+
+When refactoring existing code:
+1. Extract functions to separate files
+2. Update any internal calls if needed
+3. Run `devtools::document()` to regenerate documentation
+4. Run `devtools::check()` to ensure no breakage
+5. Run tests to verify functionality unchanged
+
 ## Code Style Guidelines
 
 - **Follow tidyverse style guide**: https://style.tidyverse.org

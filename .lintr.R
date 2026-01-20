@@ -1,4 +1,12 @@
 
+library_info <- paste(
+  "\nuse `::`, `usethis::use_import_from()`, or `withr::local_package()`",
+  "instead of modifying the global search path.",
+  "\nSee:\n",
+  "<https://r-pkgs.org/code.html#sec-code-r-landscape> and\n",
+  "<https://r-pkgs.org/testing-design.html#sec-testing-design-self-contained>",
+  "\nfor more details."
+)
 
 undesirable_functions <-
   lintr::default_undesirable_functions |>
@@ -19,14 +27,7 @@ undesirable_functions <-
     "cli_alert_success" = "use cli::cli_inform()",
     "cli_alert_warning" = "use cli::cli_inform()",
 
-    library = paste(
-      "\nuse `::`, `usethis::use_import_from()`, or `withr::local_package()`",
-      "instead of modifying the global search path.",
-      "\nSee:\n",
-      "<https://r-pkgs.org/code.html#sec-code-r-landscape> and\n",
-      "<https://r-pkgs.org/testing-design.html#sec-testing-design-self-contained>",
-      "\nfor more details."
-    ),
+    "library" = library_info,
 
     structure = NULL,
     browser = NULL
@@ -41,10 +42,16 @@ withr::local_package("rex")
 snake_case_ACROs1 <- rex::rex(
   start,
   maybe("."),
-  list(some_of(upper), maybe("s"), zero_or_more(digit)) %or% list(some_of(lower), zero_or_more(digit)),
+  list(some_of(upper), maybe("s"), zero_or_more(digit)) %or%
+    list(some_of(lower), zero_or_more(digit)),
   zero_or_more(
     "_",
-    list(some_of(upper), maybe("s"), zero_or_more(digit)) %or% list(some_of(lower), zero_or_more(digit))
+    list(some_of(upper), maybe("s"), zero_or_more(digit)) %or%
+      list(some_of(lower), zero_or_more(digit))
+  ),
+  zero_or_more(
+    "_",
+    some_of(digit)
   ),
   end
 )
@@ -66,6 +73,7 @@ linters <- lintr::linters_with_defaults(
 # prevent warnings from lintr::read_settings:
 rm(undesirable_functions)
 rm(snake_case_ACROs1)
+rm(library_info)
 exclusions <- list(
   `data-raw` = list(
     pipe_consistency_linter = Inf,

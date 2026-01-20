@@ -1,0 +1,363 @@
+---
+name: Docs 📚
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+    paths:
+      - "inst/templates/**"
+      - "pkgdown/**"
+      - "_pkgdown.*"
+      - DESCRIPTION
+      - "**.md"
+      - "**.Rmd"
+      - "man/**"
+      - "LICENSE.*"
+      - NAMESPACE
+      - ".github/workflows/docs.yaml"
+  release:
+    types: [published]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - closed
+    branches:
+      - main
+    paths:
+      - "inst/templates/**"
+      - "pkgdown/**"
+      - "_pkgdown.*"
+      - DESCRIPTION
+      - "**.md"
+      - "**.Rmd"
+      - "man/**"
+      - "LICENSE.*"
+      - NAMESPACE
+      - ".github/workflows/docs.yaml"
+  workflow_dispatch:
+
+concurrency:
+  group: docs-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docs:
+    name: Generate 🐣
+    runs-on: ubuntu-latest
+    if: >
+      (github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip docs]'))
+        && !(github.event_name == 'pull_request' && github.event.action == 'closed')
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Get branch names 🌿
+        id: branch-name
+        uses: tj-actions/branch-names@v9.0.0
+
+      - name: Get current branch or tag 🏷️
+        id: current-branch-or-tag
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            # For release events, use the tag from the release
+            echo "Release tag: ${{ github.event.release.tag_name }}"
+            echo "ref-name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.branch-name.outputs.is_tag }}" == "true" ]; then
+            echo "Current tag: ${{ steps.branch-name.outputs.tag }}"
+            echo "ref-name=${{ steps.branch-name.outputs.tag }}" >> $GITHUB_OUTPUT
+          else
+            echo "Current branch: ${{ steps.branch-name.outputs.current_branch }}"
+            echo "ref-name=${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Checkout repo (PR) 🛎
+        uses: actions/checkout@v4.3.1
+        if: github.event_name == 'pull_request'
+        with:
+          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
+          path: ${{ github.event.repository.name }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Checkout repo 🛎
+        uses: actions/checkout@v4.3.1
+        if: github.event_name != 'pull_request'
+        with:
+          ref: ${{ steps.current-branch-or-tag.outputs.ref-name }}
+          path: ${{ github.event.repository.name }}
+
+      - name: Check commit message 💬
+        run: |
+          git config --global --add safe.directory $(pwd)
+          export head_commit_message="$(git show -s --format=%B | tr '\r\n' ' ' | tr '\n' ' ')"
+          echo "head_commit_message = $head_commit_message"
+          if [[ $head_commit_message == *"$SKIP_INSTRUCTION"* ]]; then
+            echo "Skip instruction detected - cancelling the workflow."
+            exit 1
+          fi
+        shell: bash
+        working-directory: ${{ github.event.repository.name }}
+        env:
+          SKIP_INSTRUCTION: "[skip docs]"
+
+      - uses: r-lib/actions/setup-pandoc@v2
+      
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tinytex: true
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: ${{ github.event.repository.name }}
+          needs: website
+          extra-packages: |
+            any::pkgdown
+
+      - name: Install R package 🚧
+        run: |
+          if (file.exists("renv.lock")) renv::restore()
+          install.packages(".", repos=NULL, type="source")
+        shell: Rscript {0}
+        working-directory: ${{ github.event.repository.name }}
+
+      - name: Build docs 🏗
+        if: >
+          github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')
+            || github.event_name == 'push'
+        run: |
+          # Set devel = FALSE for version tags, TRUE for everything else
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            Rscript -e 'pkgdown::build_site(devel = FALSE)'
+          else
+            Rscript -e 'pkgdown::build_site(devel = TRUE)'
+          fi
+        shell: bash
+        working-directory: ${{ github.event.repository.name }}
+
+      - name: Checkout gh-pages 🛎
+        if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'push'
+        uses: actions/checkout@v4.3.1
+        with:
+          path: "gh-pages"
+          fetch-depth: 0
+          ref: "gh-pages"
+
+      - name: Upload docs to gh-pages 📙
+        if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'push'
+        run: |
+          GH_PAGES_DIR="gh-pages/${{ steps.current-branch-or-tag.outputs.ref-name }}"
+          mkdir -p $GH_PAGES_DIR
+          echo "Current contents of $GH_PAGES_DIR:"
+          ls -l $GH_PAGES_DIR || echo "Directory is empty or doesn't exist yet"
+          
+          # Remove any existing documentation for this version, but retain coverage and test reports
+          directories_to_retain="coverage-report,unit-test-report"
+          IFS=',' read -ra DIRECTORIES_TO_RETAIN <<< "$directories_to_retain"
+          echo "The following directories will be retained:"
+          for dir in "${DIRECTORIES_TO_RETAIN[@]}"; do
+            echo "$dir"
+          done
+          
+          # Remove all files from GH_PAGES_DIR, except any DIRECTORIES_TO_RETAIN
+          find $GH_PAGES_DIR -mindepth 1 -maxdepth 1 -print0 2>/dev/null | while IFS= read -r -d '' file; do
+            file_to_be_removed="true"
+            # Check if the file/directory matches any directory to be retained
+            for dir in "${DIRECTORIES_TO_RETAIN[@]}"; do
+              if [[ "$GH_PAGES_DIR/$dir" == "$file" ]]; then
+                echo "Not removing $file"
+                file_to_be_removed="false"
+              fi
+            done
+            if [[ "$file_to_be_removed" == "true" ]]; then
+              echo "Removing $file"
+              rm -rf "$file"
+            fi
+          done
+          
+          echo "::group::gh-pages contents"
+          echo "Current contents of $GH_PAGES_DIR:"
+          ls -l $GH_PAGES_DIR || echo "Directory is empty"
+          echo "::endgroup::"
+          
+          # Copy generated pkgdown documentation to gh-pages branch
+          cp -a ${{ github.event.repository.name }}/docs/. $GH_PAGES_DIR
+          
+          echo "::group::gh-pages contents after copy"
+          echo "Current contents of $GH_PAGES_DIR:"
+          ls -l $GH_PAGES_DIR
+          echo "::endgroup::"
+          
+          cd gh-pages
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git config pull.rebase false
+          git status
+          # Random delay to avoid conflicts
+          sleep $((RANDOM % 10))
+          git pull origin gh-pages || true
+          git add -f .
+          git commit -m "Update pkgdown documentation ${{ github.sha }}" || true
+          git push origin gh-pages
+        shell: bash
+
+      - name: Create documentation artifact 📂
+        if: github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')
+        run: |
+          pushd ${{ github.event.repository.name }}/docs/
+          zip -r9 $OLDPWD/pkgdown.zip *
+          popd
+        shell: bash
+
+      - name: Upload docs for review ⬆
+        if: github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: pkgdown.zip
+          path: pkgdown.zip
+
+      - name: Checkout gh-pages for PR preview 🛎
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4.3.1
+        with:
+          path: "gh-pages-preview"
+          fetch-depth: 0
+          ref: "gh-pages"
+
+      - name: Deploy PR preview 🚀
+        if: github.event_name == 'pull_request'
+        id: deploy-pr-preview
+        run: |
+          cd gh-pages-preview
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git config pull.rebase false
+          
+          # Create preview directory
+          PREVIEW_DIR="preview/pr${{ github.event.pull_request.number }}"
+          mkdir -p $PREVIEW_DIR
+          
+          # Copy built docs to preview directory
+          cp -a ../${{ github.event.repository.name }}/docs/. $PREVIEW_DIR/
+          
+          git add -f .
+          git commit -m "Update PR #${{ github.event.pull_request.number }} preview" || true
+          git pull origin gh-pages || true
+          git push origin gh-pages
+          
+          # Set output URL
+          REPO_NAME="${{ github.event.repository.name }}"
+          REPO_OWNER="${{ github.repository_owner }}"
+          echo "url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${PREVIEW_DIR}/" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Comment PR with preview link 💬
+        if: github.event_name == 'pull_request'
+        uses: hasura/comment-progress@v2.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.pull_request.number }}
+          id: pkgdown-deploy
+          append: false
+          message: >
+            :book: ${{ steps.deploy-pr-preview.outputs.url }}
+
+            Preview documentation for this PR (at commit ${{ github.event.pull_request.head.sha }})
+
+  multi-version-docs:
+    name: Multi-version docs 📑
+    needs: docs
+    runs-on: ubuntu-latest
+    if: >
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    steps:
+      - name: Checkout repo 🛎
+        uses: actions/checkout@v4.3.1
+        with:
+          path: ${{ github.event.repository.name }}
+          ref: "gh-pages"
+
+      - name: Create and publish docs ↗️
+        uses: insightsengineering/r-pkgdown-multiversion@v3
+        with:
+          path: ${{ github.event.repository.name }}
+          default-landing-page: "latest-tag"
+          refs-order: "main latest-tag"
+          branches-or-tags-to-list: '^main$|^latest-tag$|^(serocalculator |v)([0-9]+\\.)?([0-9]+\\.)?([0-9]+)$'
+
+  upload-release-assets:
+    name: Upload documentation assets 🔼
+    needs: docs
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout repo 🛎
+        uses: actions/checkout@v4.3.1
+
+      - name: Download artifact ⏬
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: pkgdown.zip
+
+      - name: Check if release exists ❓
+        id: check-if-release-exists
+        uses: insightsengineering/release-existence-action@v1
+
+      - name: Upload binaries to release ⤴
+        if: >-
+          steps.check-if-release-exists.outputs.release-exists == 'true'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: pkgdown.zip
+          asset_name: pkgdown.zip
+          tag: ${{ github.ref }}
+          overwrite: true
+
+  cleanup-pr-preview:
+    name: Clean up PR preview 🧹
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    steps:
+      - name: Checkout gh-pages 🛎
+        uses: actions/checkout@v4.3.1
+        with:
+          ref: "gh-pages"
+
+      - name: Remove PR preview 🗑️
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
+          preview_dir="preview/pr${{ github.event.pull_request.number }}"
+          if [ -d "$preview_dir" ]; then
+            git rm -r $preview_dir
+            git commit -m "Remove $preview_dir (GitHub Actions)" || echo 'No preview to remove'
+            git push origin || echo 'No preview to remove'
+          else
+            echo 'No preview to remove'
+          fi
+        shell: bash
+
+      - name: Notify cleanup 💬
+        uses: hasura/comment-progress@v2.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.pull_request.number }}
+          id: pkgdown-deploy
+          message: |
+            _:closed_book: Preview documentation for this PR has been cleaned up._

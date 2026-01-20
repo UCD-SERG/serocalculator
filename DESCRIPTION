@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9002
+Version: 1.4.0.9004
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -64,6 +64,7 @@ Suggests:
     vdiffr,
     withr,
     forcats,
+    snapr (>= 0.0.0.9000),
     rex
 LinkingTo: 
     Rcpp
@@ -78,3 +79,5 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 RoxygenNote: 7.3.3
+Remotes: 
+    d-morrison/snapr

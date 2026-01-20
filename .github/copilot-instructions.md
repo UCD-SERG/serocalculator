@@ -258,12 +258,17 @@ Tests are located in `tests/testthat/`. The package uses testthat 3.0+ with snap
 The package uses a custom lintr configuration (`.lintr`) with specific requirements:
 
 ```r
+# ALWAYS load the package first before linting
+devtools::load_all()
+
 # Lint the entire package
 lintr::lint_package()
 
 # Lint specific file
 lintr::lint("R/filename.R")
 ```
+
+**Important**: Always run `devtools::load_all()` before linting to avoid false positives about undefined functions. This loads the package in development mode, making internal and package functions available to the linter.
 
 **Key linting rules**:
 - Use native pipe `|>` (configured in .lintr)

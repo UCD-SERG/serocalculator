@@ -4,7 +4,7 @@
       result
     Output
       
-      Two-sample z-test for difference in seroincidence rates
+      	Two-sample z-test for difference in seroincidence rates
       
       data:  seroincidence estimates
       z = 1.611, p-value = 0.1072

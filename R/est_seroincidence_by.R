@@ -122,7 +122,7 @@ est_seroincidence_by <- function(
 
   check_strata(pop_data, strata = strata)
 
-  .errorCheck(
+  .error_check(
     data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = sr_params

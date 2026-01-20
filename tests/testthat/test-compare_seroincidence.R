@@ -129,17 +129,17 @@ test_that("compare_seroincidence respects coverage parameter", {
     antigen_isos = c("HlyE_IgG", "HlyE_IgA")
   )
 
-  result95 <- compare_seroincidence(est1, est2, coverage = 0.95)
-  result90 <- compare_seroincidence(est1, est2, coverage = 0.90)
+  result_95 <- compare_seroincidence(est1, est2, coverage = 0.95)
+  result_90 <- compare_seroincidence(est1, est2, coverage = 0.90)
 
   # Check that confidence levels are set correctly
-  expect_equal(attr(result95$conf.int, "conf.level"), 0.95)
-  expect_equal(attr(result90$conf.int, "conf.level"), 0.90)
+  expect_equal(attr(result_95$conf.int, "conf.level"), 0.95)
+  expect_equal(attr(result_90$conf.int, "conf.level"), 0.90)
 
   # Check that 90% CI is narrower than 95% CI
-  ci_width95 <- result95$conf.int[2] - result95$conf.int[1]
-  ci_width90 <- result90$conf.int[2] - result90$conf.int[1]
-  expect_true(ci_width90 < ci_width95)
+  ci_width_95 <- result_95$conf.int[2] - result_95$conf.int[1]
+  ci_width_90 <- result_90$conf.int[2] - result_90$conf.int[1]
+  expect_true(ci_width_90 < ci_width_95)
 })
 
 test_that(

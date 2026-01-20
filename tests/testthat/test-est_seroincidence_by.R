@@ -314,6 +314,7 @@ test_that("clustering works with est_seroincidence_by", {
   # Summary should work and have se_type
   sum_cluster <- summary(est_cluster)
   expect_true("se_type" %in% names(sum_cluster))
+  # sum_cluster has one row per stratum, check all are cluster-robust
   expect_true(all(sum_cluster$se_type == "cluster-robust"))
 })
 

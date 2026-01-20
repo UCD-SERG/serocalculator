@@ -126,23 +126,23 @@ est_seroincidence <- function(
     # Check all cluster variables exist in pop_data
     missing_vars <- setdiff(cluster_var, names(pop_data))
     if (length(missing_vars) > 0) {
-      cli::cli_abort(
-        paste(
+      cli::cli_abort(c(
+        "x" = paste(
           "{.arg cluster_var} = {.val {missing_vars}}",
           "is not a column in {.arg pop_data}."
         )
-      )
+      ))
     }
   }
 
   if (!is.null(stratum_var)) {
     if (!stratum_var %in% names(pop_data)) {
-      cli::cli_abort(
-        paste(
+      cli::cli_abort(c(
+        "x" = paste(
           "{.arg stratum_var} = {.val {stratum_var}}",
           "is not a column in {.arg pop_data}."
         )
-      )
+      ))
     }
   }
 

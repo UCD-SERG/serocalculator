@@ -96,12 +96,12 @@ summary.seroincidence <- function(
 
   if (use_cluster_robust) {
     if (verbose) {
-      cli::cli_inform(
-        paste(
+      cli::cli_inform(c(
+        "i" = paste(
           "Computing cluster-robust standard errors using",
           "{.field {cluster_var}} variable."
         )
-      )
+      ))
     }
     var_log_lambda <- .compute_cluster_robust_var(
       fit = object,

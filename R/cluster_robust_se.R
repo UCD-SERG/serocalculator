@@ -61,68 +61,74 @@
 #' icc_by_result <- compute_icc(est_by_cluster)
 #' print(icc_by_result)
 compute_icc <- function(fit) {
-  # Check if this is a seroincidence.by object
-  if (inherits(fit, "seroincidence.by")) {
-    # Process each stratum
-    icc_results <- lapply(names(fit), function(stratum_name) {
-      stratum_fit <- fit[[stratum_name]]
-      icc_res <- .compute_icc_single(stratum_fit)
-      
-      # Add stratum identifier
-      icc_res$Stratum <- stratum_name
-      icc_res
-    })
-    
-    # Combine into a data frame
-    result_df <- do.call(rbind, lapply(icc_results, function(x) {
-      data.frame(
-        Stratum = x$Stratum,
-        icc = x$icc,
-        deff = x$deff,
-        avg_cluster_size = x$avg_cluster_size,
-        min_cluster_size = x$min_cluster_size,
-        max_cluster_size = x$max_cluster_size,
-        n_clusters = x$n_clusters,
-        cluster_var = x$cluster_var,
-        antigen_isos = x$antigen_isos,
-        stringsAsFactors = FALSE
-      )
-    }))
-    
-    # Add strata information from attributes
-    strata_info <- attr(fit, "Strata")
-    if (!is.null(strata_info)) {
-      result_df <- merge(
-        strata_info,
-        result_df,
-        by = "Stratum",
-        all.y = TRUE
-      )
-      
-      # Reorder columns to put Stratum and strata variables first
-      strata_cols <- setdiff(names(strata_info), "Stratum")
-      other_cols <- setdiff(
-        names(result_df),
-        c("Stratum", strata_cols)
-      )
-      result_df <- result_df[, c("Stratum", strata_cols, other_cols)]
-    }
-    
-    class(result_df) <- c("icc_seroincidence.by", "data.frame")
-    return(result_df)
-  }
-  
-  # Check that fit is a seroincidence object
-  if (!inherits(fit, "seroincidence")) {
-    cli::cli_abort(
-      "{.arg fit} must be a {.cls seroincidence} or
-      {.cls seroincidence.by} object from {.fun est_seroincidence}
-      or {.fun est_seroincidence_by}."
-    )
-  }
-  
-  # Single seroincidence object
+  UseMethod("compute_icc")
+}
+
+#' @export
+compute_icc.seroincidence <- function(fit) {
   return(.compute_icc_single(fit))
+}
+
+#' @export
+compute_icc.seroincidence.by <- function(fit) {
+  # Process each stratum
+  icc_results <- lapply(names(fit), function(stratum_name) {
+    stratum_fit <- fit[[stratum_name]]
+    icc_res <- .compute_icc_single(stratum_fit)
+    
+    # Add stratum identifier
+    icc_res$Stratum <- stratum_name
+    icc_res
+  })
+  
+  # Combine into a data frame
+  result_df <- do.call(rbind, lapply(icc_results, function(x) {
+    data.frame(
+      Stratum = x$Stratum,
+      icc = x$icc,
+      deff = x$deff,
+      avg_cluster_size = x$avg_cluster_size,
+      min_cluster_size = x$min_cluster_size,
+      max_cluster_size = x$max_cluster_size,
+      n_clusters = x$n_clusters,
+      cluster_var = x$cluster_var,
+      antigen_isos = x$antigen_isos,
+      stringsAsFactors = FALSE
+    )
+  }))
+  
+  # Add strata information from attributes
+  strata_info <- attr(fit, "Strata")
+  if (!is.null(strata_info)) {
+    result_df <- merge(
+      strata_info,
+      result_df,
+      by = "Stratum",
+      all.y = TRUE
+    )
+    
+    # Reorder columns to put Stratum and strata variables first
+    strata_cols <- setdiff(names(strata_info), "Stratum")
+    other_cols <- setdiff(
+      names(result_df),
+      c("Stratum", strata_cols)
+    )
+    result_df <- result_df[, c("Stratum", strata_cols, other_cols)]
+  }
+  
+  class(result_df) <- c("icc_seroincidence.by", "data.frame")
+  return(result_df)
+}
+
+#' @export
+compute_icc.default <- function(fit) {
+  cli::cli_abort(c(
+    "x" = paste(
+      "{.arg fit} must be a {.cls seroincidence} or",
+      "{.cls seroincidence.by} object from {.fun est_seroincidence}",
+      "or {.fun est_seroincidence_by}."
+    )
+  ))
 }
 
 #' Internal function to compute ICC for a single seroincidence object
@@ -132,19 +138,23 @@ compute_icc <- function(fit) {
   # Check that clustering was used
   cluster_var <- attr(fit, "cluster_var")
   if (is.null(cluster_var)) {
-    cli::cli_abort(
-      "ICC can only be computed for models fitted with clustering.
-      Please specify {.arg cluster_var} in {.fun est_seroincidence}."
-    )
+    cli::cli_abort(c(
+      "x" = paste(
+        "ICC can only be computed for models fitted with clustering.",
+        "Please specify {.arg cluster_var} in {.fun est_seroincidence}."
+      )
+    ))
   }
   
   # Check for multiple clustering levels
   if (length(cluster_var) > 1) {
-    cli::cli_abort(
-      "ICC calculation only allowed for one level of clustering.
-      {.arg cluster_var} has {length(cluster_var)} levels: {cluster_var}.
-      Please use a single cluster variable."
-    )
+    cli::cli_abort(c(
+      "x" = paste(
+        "ICC calculation only allowed for one level of clustering.",
+        "{.arg cluster_var} has {length(cluster_var)} levels:",
+        "{cluster_var}. Please use a single cluster variable."
+      )
+    ))
   }
 
   stratum_var <- attr(fit, "stratum_var")
@@ -184,10 +194,12 @@ compute_icc <- function(fit) {
   if (avg_cluster_size > 1) {
     icc <- (deff - 1) / (avg_cluster_size - 1)
   } else {
-    cli::cli_warn(
-      "Average cluster size is 1; ICC cannot be computed.
-      Returning NA."
-    )
+    cli::cli_warn(c(
+      "!" = paste(
+        "Average cluster size is 1; ICC cannot be computed.",
+        "Returning NA."
+      )
+    ))
     icc <- NA_real_
   }
 
@@ -220,12 +232,11 @@ print.icc_seroincidence <- function(x, ...) {
   cli::cli_text("Antigen isotypes: {.field {x$antigen_isos}}")
   cli::cli_text("Cluster variable: {.field {x$cluster_var}}")
   cli::cli_text("Number of clusters: {.val {x$n_clusters}}")
-  cli::cli_text(
-    "Cluster size (observations per cluster): 
-    mean = {.val {round(x$avg_cluster_size, 2)}}, 
-    min = {.val {x$min_cluster_size}}, 
-    max = {.val {x$max_cluster_size}}"
-  )
+  cli::cli_text(paste(
+    "Cluster size (observations per cluster): mean =",
+    "{.val {round(x$avg_cluster_size, 2)}}, min =",
+    "{.val {x$min_cluster_size}}, max = {.val {x$max_cluster_size}}"
+  ))
   cli::cli_text("")
   cli::cli_text("Design effect (DEFF): {.val {round(x$deff, 3)}}")
   cli::cli_text("ICC: {.val {round(x$icc, 3)}}")
@@ -233,20 +244,24 @@ print.icc_seroincidence <- function(x, ...) {
 
   if (!is.na(x$icc)) {
     if (x$icc < 0) {
-      cli::cli_inform(
-        c(
-          "!" = "Negative ICC suggests no clustering effect or
-          model misspecification."
+      cli::cli_inform(c(
+        "!" = paste(
+          "Negative ICC suggests no clustering effect or",
+          "model misspecification."
         )
-      )
+      ))
     } else if (x$icc < 0.05) {
-      cli::cli_inform(c("i" = "Low ICC suggests weak clustering effect."))
+      cli::cli_inform(c(
+        "i" = "Low ICC suggests weak clustering effect."
+      ))
     } else if (x$icc < 0.15) {
-      cli::cli_inform(
-        c("i" = "Moderate ICC suggests notable clustering effect.")
-      )
+      cli::cli_inform(c(
+        "i" = "Moderate ICC suggests notable clustering effect."
+      ))
     } else {
-      cli::cli_inform(c("i" = "High ICC suggests strong clustering effect."))
+      cli::cli_inform(c(
+        "i" = "High ICC suggests strong clustering effect."
+      ))
     }
   }
 

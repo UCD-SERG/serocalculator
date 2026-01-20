@@ -297,11 +297,15 @@
 <h3 id="linting">Linting<a class="anchor" aria-label="anchor" href="#linting"></a></h3>
 <p>The package uses a custom lintr configuration (<code>.lintr</code>) with specific requirements:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Lint the entire package</span></span>
+<code class="sourceCode R"><span><span class="co"># ALWAYS load the package first before linting</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">load_all</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Lint the entire package</span></span>
 <span><span class="fu">lintr</span><span class="fu">::</span><span class="fu">lint_package</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Lint specific file</span></span>
 <span><span class="fu">lintr</span><span class="fu">::</span><span class="fu">lint</span><span class="op">(</span><span class="st">"R/filename.R"</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Important</strong>: Always run <code>devtools::load_all()</code> before linting to avoid false positives about undefined functions. This loads the package in development mode, making internal and package functions available to the linter.</p>
 <p><strong>Key linting rules</strong>: - Use native pipe <code>|&gt;</code> (configured in .lintr) - Follow snake_case naming conventions - Avoid trailing whitespace - Ensure consistent code style</p>
 <p>Exclusions: Some vignettes may be exempt from specific linters (see <code>.lintr</code> configuration).</p>
 </div>

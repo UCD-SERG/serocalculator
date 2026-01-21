@@ -1,6 +1,7 @@
 ---
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     branches:
       - main
 
@@ -17,7 +18,19 @@ jobs:
 
     steps:
 
+      - name: Check if version increment is required
+        id: check_label
+        run: |
+          if [[ '${{ contains(github.event.pull_request.labels.*.name, 'no version increment') }}' == 'true' ]]; then
+            echo "Version increment not required (label present)"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Version increment required (label not present)"
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: checkout working HEAD
+        if: steps.check_label.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -26,6 +39,7 @@ jobs:
           path: working
 
       - name: checkout base HEAD
+        if: steps.check_label.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
@@ -34,6 +48,7 @@ jobs:
           path: compare
 
       - name: show files
+        if: steps.check_label.outputs.skip != 'true'
         run: |
           ls -lR working compare
           echo "\nWORKING:\n"
@@ -42,11 +57,13 @@ jobs:
           cat compare/DESCRIPTION
 
       - name: Setup R
+        if: steps.check_label.outputs.skip != 'true'
         uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
       - name: compare versions
+        if: steps.check_label.outputs.skip != 'true'
         run: |
           Rscript -e " \
             install.packages('desc'); \

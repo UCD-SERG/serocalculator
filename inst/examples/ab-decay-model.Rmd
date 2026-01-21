@@ -1,0 +1,177 @@
+---
+title: "ab-decay-model"
+output: html_document
+runtime: shiny
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  message = FALSE
+)
+```
+
+```{r setup}
+library(serocalculator)
+library(dplyr)
+library(ggplot2); 
+library(plotly)
+```
+
+
+```{r}
+fluidRow(
+  sliderInput(
+    inputId = "y0", 
+    label = "log10(y0)", 
+    min = -2, 
+    max = 2, 
+    step = .1,
+    val =  0) |> column(width = 4), 
+  
+  
+  sliderInput(
+    inputId = "b0", 
+    label = "log10(b0)", 
+    min = -2, 
+    max = 2, 
+    step = .1,
+    val =  0) |> column(width = 4)
+  
+)
+
+fluidRow(
+  
+  sliderInput(
+    inputId = "mu_b", 
+    label = "log10(mu_b)", 
+    min = -2, 
+    max = 2, 
+    step = .1,
+    val =  log10(0.18432798)) |> column(width = 4),
+  sliderInput(
+    inputId = "mu_y", 
+    label = "log10(mu_y)", 
+    min = -2, 
+    max = 2, 
+    step = .1,
+    val =  log10(0.36853621)) |> column(width = 4), 
+  
+  
+  sliderInput(
+    inputId = "gamma", 
+    label = "log10(gamma)", 
+    min = -10, 
+    max = 10, 
+    step = .1,
+    val =  log10(0.0013040664)) |> column(width = 4)
+)
+
+fluidRow(
+  sliderInput(
+    inputId = "rho", 
+    label = "rho", 
+    min = 1, 
+    max = 3, 
+    step = .1,
+    val =  2) |> column(width = 4),
+  
+  sliderInput(
+    inputId = "alpha", 
+    label = "log10(alpha)", 
+    min = -8, 
+    max = -1, 
+    step = .1,
+    val =  log10(0.00002192627)) |> column(width = 4))
+
+fluidRow(
+  sliderInput(
+    inputId = "ymax", 
+    label = "log10(ymax)", 
+    min = 2, 
+    max = 10, 
+    step = .1,
+    val = 4.5) |> column(width = 4))
+```
+
+```{r, eval = TRUE}
+exp10 = function(x) 10^x
+derived_params = 
+  {
+    tibble(
+      mu_y = input$mu_y |> exp10(), 
+      mu_b = input$mu_b |> exp10(), 
+      gamma = input$gamma |> exp10(), 
+      y0 = input$y0 |> exp10(),
+      b0 = input$b0 |> exp10(),
+      alpha = input$alpha |> exp10(),
+      rho = input$rho,
+      t1 = t1f(
+        mu_y = mu_y,
+        mu_b = mu_b, 
+        gamma = gamma, 
+        y0 = y0,
+        b0 = b0),
+      y1 = y1f(y0 = input$y0 |> exp10(), mu_y = mu_y, t1 = t1)
+    ) 
+  }|> reactive()
+
+
+
+derived_params() |> shiny::renderTable(digits = 4)
+```
+
+```{r,fig.height=6}
+
+plot1 = 
+  plot_decay_curve(
+    decay_function = antibody_decay_curve,
+    mu_y = input$mu_y |> exp10(),
+    mu_b = input$mu_b |> exp10(),
+    gamma = input$gamma |> exp10(),
+    y0 = input$y0 |> exp10(),
+    b0 = input$b0 |> exp10(),
+    alpha = input$alpha |> exp10(),
+    rho = input$rho,
+    ymax = 10^input$ymax
+  ) |> eventReactive(eventExpr = derived_params())
+
+plot2 = 
+  plot_decay_curve(
+    decay_function = pathogen_decay_curve,
+    mu_y = input$mu_y |> exp10(),
+    mu_b = input$mu_b |> exp10(),
+    gamma = input$gamma |> exp10(),
+    y0 = input$y0 |> exp10(),
+    b0 = input$b0 |> exp10()
+  ) |> eventReactive(eventExpr = derived_params())
+```
+
+```{r}
+
+fluidRow(
+  
+  
+  column(
+    width = 6, 
+         h2("Pathogen"),
+  plot2() |> 
+    # renderPlot() |> 
+    plotly::ggplotly()  |>
+    plotly::layout(legend = list(orientation = 'h')) |>
+    plotly::renderPlotly()),
+  
+  column(
+    width = 6, 
+    h2("Antibody"),
+  plot1() |> 
+    renderPlot()
+    # plotly::ggplotly()  |>
+    # plotly::layout(legend = list(orientation = 'h')) |>
+    # plotly::renderPlotly() |> 
+)
+    
+)
+```

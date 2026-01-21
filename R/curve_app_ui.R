@@ -1,7 +1,6 @@
-curve_app_ui = function(request)
-{
+curve_app_ui <- function(request) {
 
-  sidebar = shiny::sidebarPanel(
+  sidebar <- shiny::sidebarPanel(
     width = 3,
 
     sliderInput(
@@ -10,7 +9,8 @@ curve_app_ui = function(request)
       min = -2,
       max = 2,
       step = .1,
-      value =  0),
+      value =  0
+    ),
 
 
     sliderInput(
@@ -19,7 +19,8 @@ curve_app_ui = function(request)
       min = -2,
       max = 2,
       step = .1,
-      value =  0),
+      value =  0
+    ),
 
     sliderInput(
       inputId = "mu_b",
@@ -27,21 +28,24 @@ curve_app_ui = function(request)
       min = -2,
       max = 2,
       step = .1,
-      value =  log10(0.18432798)),
+      value =  log10(0.18432798)
+    ),
     sliderInput(
       inputId = "mu_y",
       label = "log10(mu_y)",
       min = -2,
       max = 2,
       step = .1,
-      value =  log10(0.36853621)),
+      value =  log10(0.36853621)
+    ),
     sliderInput(
       inputId = "gamma",
       label = "log10(gamma)",
       min = -10,
       max = 10,
       step = .1,
-      value =  log10(0.0013040664)),
+      value =  log10(0.0013040664)
+    ),
 
     sliderInput(
       inputId = "rho",
@@ -49,7 +53,8 @@ curve_app_ui = function(request)
       min = 1,
       max = 3,
       step = .1,
-      value =  2),
+      value =  2
+    ),
 
     sliderInput(
       inputId = "alpha",
@@ -57,7 +62,8 @@ curve_app_ui = function(request)
       min = -8,
       max = -1,
       step = .1,
-      value =  log10(0.00002192627))
+      value =  log10(0.00002192627)
+    )
   )
 
 
@@ -73,7 +79,6 @@ curve_app_ui = function(request)
         shiny::column(
           width = 12,
           h2("pathogens"),
-          # plotly::plotlyOutput("plot2")),
           shiny::plotOutput(height = "300px", "plot2"),
           shiny::sliderInput(
             inputId = "ymax2",
@@ -81,20 +86,19 @@ curve_app_ui = function(request)
             min = 0,
             max = 5,
             step = .1,
-            value = 1),
-          # shiny::column(
-          # width = 6,
+            value = 1
+          ),
           h2("antibodies"),
-          # plotly::plotlyOutput("plot1"))
-          shiny::plotOutput(height = "300px", 'plot1'),
+          shiny::plotOutput(height = "300px", "plot1"),
           shiny::sliderInput(
             inputId = "ymax1",
             label = "log10(ymax)",
             min = 2,
             max = 10,
             step = .1,
-            value = 4.5)
+            value = 4.5
           )
+        )
 
 
       )

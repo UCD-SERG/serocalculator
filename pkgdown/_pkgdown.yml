@@ -35,6 +35,16 @@ reference:
   - graph.curve.params
   - graph_loglik
   - log_likelihood
+- title: Interactive visualization
+  contents:
+  - curve_app
+- title: Modeling and plotting decay curves
+  contents:
+  - antibody_decay_curve
+  - pathogen_decay_curve
+  - plot_decay_curve
+  - t1f
+  - y1f
 - title: Estimate seroconversion incidence rates
   contents:
   - est_seroincidence

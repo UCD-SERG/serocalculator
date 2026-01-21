@@ -5,9 +5,6 @@ template:
 
 bibliography: vignettes/references.bib
 
-development:
-  mode: auto
-
 search:
   exclude: ['preview/']
 
@@ -51,6 +48,9 @@ reference:
   - autoplot.seroincidence
   - autoplot.seroincidence.by
   - autoplot.summary.seroincidence.by
+- title: Compare seroconversion incidence rates
+  contents:
+  - compare_seroincidence
 - title: Example data sets
   contents:
   - sees_pop_data_100

@@ -7,13 +7,13 @@
 #' @inheritParams stats::nlm
 #' @param pop_data a [data.frame] with cross-sectional serology data per
 #' antibody and age, and additional columns
-#' @param lambda_start starting guess for incidence rate, in years/event.
+#' @param lambda_start starting guess for incidence rate, in events/year.
 #' @param antigen_isos Character vector with one or more antibody names.
 #' Must match `pop_data`
 #' @param build_graph whether to graph the log-likelihood function across
 #' a range of incidence rates (lambda values)
 #' @param print_graph whether to display the log-likelihood curve graph
-#' in the course of running `estimate_scr()`
+#' in the course of running `est_seroincidence()`
 #' @param stepmin A positive scalar providing the minimum allowable
 #' relative step length.
 #' @param sr_params a [data.frame()] containing MCMC samples of parameters
@@ -47,7 +47,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- estimate_scr(
+#' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = sr_curve,
 #'   noise_params = noise,
@@ -55,7 +55,7 @@
 #' )
 #'
 #' summary(est1)
-estimate_scr <- function(
+est_seroincidence <- function(
     pop_data,
     sr_params,
     noise_params,
@@ -68,11 +68,11 @@ estimate_scr <- function(
     print_graph = build_graph & verbose,
     ...) {
   if (verbose > 1) {
-    message("inputs to `estimate_scr()`:")
+    message("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
   }
 
-  .errorCheck(
+  .error_check(
     data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = sr_params
@@ -239,14 +239,14 @@ estimate_scr <- function(
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `est.incidence()` was renamed to [estimate_scr()] to create a more
+#' `est.incidence()` was renamed to [est_seroincidence()] to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-    ...) {
-  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "estimate_scr()")
-  estimate_scr(
+  ...) {
+  lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
+  est_seroincidence(
     ...
   )
 }

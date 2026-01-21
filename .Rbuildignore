@@ -38,3 +38,4 @@ allpopsamples_hlye.csv$
 ^man/check_strata\.Rd$
 ^[\.]?air\.toml$
 ^\.vscode$
+^\.lintr\.R$

@@ -1,10 +1,10 @@
 test_that("`summary.seroincidence.by()` produces consistent results",
           {
             typhoid_results <-
-              estimate_scr_by(
+              est_seroincidence_by(
                 strata = "catchment",
                 pop_data = sees_pop_data_pk_100,
-                curve_param = typhoid_curves_nostrat_100,
+                sr_param = typhoid_curves_nostrat_100,
                 curve_strata_varnames = NULL,
                 noise_strata_varnames = NULL,
                 noise_param = example_noise_params_pk,

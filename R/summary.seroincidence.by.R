@@ -3,9 +3,9 @@
 #'
 #' @description
 #' Calculate seroincidence from output of the seroincidence calculator
-#' [estimate_scr_by()].
+#' [est_seroincidence_by()].
 #'
-#' @param object A dataframe containing output of function [estimate_scr_by()].
+#' @param object A dataframe containing output of [est_seroincidence_by()].
 #' @param verbose a [logical]
 #' scalar indicating whether to print verbose messages to the console
 #' @param ... Additional arguments affecting the summary produced.
@@ -32,8 +32,8 @@
 #' (accessible through [base::attr()]):
 #' * `antigen_isos`
 #'   Character vector with names of input antigen isotypes
-#'   used in [estimate_scr_by()]
-#' * `Strata` Character with names of strata used in [estimate_scr_by()]
+#'   used in [est_seroincidence_by()]
+#' * `Strata` Character with names of strata used in [est_seroincidence_by()]
 #'
 #'
 #' @examples
@@ -50,10 +50,10 @@
 #'   example_noise_params_pk
 #'
 #' # estimate seroincidence
-#' est2 <- estimate_scr_by(
+#' est2 <- est_seroincidence_by(
 #'   strata = c("catchment"),
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 #'   # num_cores = 8 # Allow for parallel processing to decrease run time

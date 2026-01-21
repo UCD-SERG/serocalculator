@@ -88,6 +88,12 @@ exclusions <- list(
   ),
   "tests/testthat.R" = list(
     undesirable_function_linter = Inf
+  ),
+  "R/t1.R" = list(
+    object_name_linter = Inf
+  ),
+  "R/y1.R" = list(
+    object_name_linter = Inf
   )
 
 )

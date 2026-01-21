@@ -2,6 +2,7 @@
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
@@ -168,8 +169,6 @@ for more information.
 
 This QR code is a direct link to the latest-release version of the
 package website:
-
-    #> Warning: package 'qrcode' was built under R version 4.4.2
 
 <figure id="fig-website-QR">
 <img src="man/figures/qr.svg"

@@ -5,7 +5,7 @@
 #' @export
 #'
 #' @examples
-#' library(ggplot2);
+#' library(ggplot2)
 #' ggplot() + geom_function(
 #' fun = pathogen_decay_curve,
 #' args = list(

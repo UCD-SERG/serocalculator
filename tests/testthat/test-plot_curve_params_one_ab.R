@@ -6,6 +6,7 @@ test_that("`plot_curve_params_one_ab()` produces consistent results", {
       t1 = 9.5,
       alpha = 0.01,
       r = 1,
+      iter = 1,
       antigen_iso = "test"
     ) |>
     as_sr_params()

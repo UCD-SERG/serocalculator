@@ -30,7 +30,7 @@ test_that("`as_sr_params()` produces expected results", {
 
   expect_snapshot_value(x = test_data, style = "serialize")
 
-  test_data |>  ssdtools:::expect_snapshot_data(name = "curve-data")
+  test_data |>  expect_snapshot_data(name = "curve-data")
 
 
 })

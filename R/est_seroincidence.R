@@ -7,7 +7,7 @@
 #' @inheritParams stats::nlm
 #' @param pop_data a [data.frame] with cross-sectional serology data per
 #' antibody and age, and additional columns
-#' @param lambda_start starting guess for incidence rate, in years/event.
+#' @param lambda_start starting guess for incidence rate, in events/year.
 #' @param antigen_isos Character vector with one or more antibody names.
 #' Must match `pop_data`
 #' @param build_graph whether to graph the log-likelihood function across
@@ -72,7 +72,7 @@ est_seroincidence <- function(
     print(environment() |> as.list())
   }
 
-  .errorCheck(
+  .error_check(
     data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = sr_params
@@ -244,7 +244,7 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-    ...) {
+  ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

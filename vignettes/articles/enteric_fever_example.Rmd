@@ -237,7 +237,7 @@ Let's compare estimates across all countries and by age group.
 est_country_age <- est_seroincidence_by(
   strata = c("Country", "ageCat"),
   pop_data = xs_data,
-  curve_params = curves,
+  sr_params = curves,
   curve_strata_varnames = NULL,
   noise_params = noise,
   noise_strata_varnames = "Country",
@@ -273,6 +273,62 @@ autoplot(
   CIs = TRUE
 )
 ```
+
+
+## Comparing Seroincidence Rates
+
+After estimating seroincidence rates across different groups, we may want to statistically compare these rates to determine if observed differences are significant. The `compare_seroincidence()` function performs two-sample z-tests to compare seroincidence rates.
+
+### Comparing Two Individual Estimates
+
+First, let's compare seroincidence rates between two countries directly. We'll estimate seroincidence for Bangladesh and Nepal separately, then compare them:
+
+```{r compare_two}
+# Estimate seroincidence for Bangladesh
+est_bangladesh <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Bangladesh"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Bangladesh"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+# Estimate seroincidence for Nepal
+est_nepal <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Nepal"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Nepal"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+# Compare the two estimates
+comparison <- compare_seroincidence(est_bangladesh, est_nepal)
+print(comparison)
+```
+
+The output follows the standard `htest` format in R, providing the z-statistic, p-value, estimates for both groups, and a confidence interval for the difference in incidence rates.
+
+### Comparing All Pairs of Stratified Estimates
+
+For stratified analyses, we can compare all pairs of strata at once. This is particularly useful when we have multiple groups and want a comprehensive view of all pairwise differences:
+
+```{r compare_strata}
+# Compare all pairs of country-age combinations
+comparisons_table <- compare_seroincidence(est_country_age)
+
+# Display the results
+print(comparisons_table)
+```
+
+This produces a table with one row for each pairwise comparison, showing:
+- The two strata being compared
+- Incidence rates for each group
+- The difference in rates
+- Standard error of the difference
+- Z-statistic
+- P-value
+- 95% confidence interval for the difference
+
+We can use this to identify which differences are statistically significant (typically using p < 0.05 as a threshold).
 
 
 ```{r include=FALSE}

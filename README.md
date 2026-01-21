@@ -155,7 +155,7 @@ reproducible example](https://reprex.tidyverse.org/) on
 
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
-GitHub: <https://epirhandbook.com/en/getting-help.html>
+GitHub: <https://epirhandbook.com/en/new_pages/help.html>
 
 ## Contributing to this project
 

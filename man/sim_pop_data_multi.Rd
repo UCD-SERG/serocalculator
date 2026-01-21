@@ -6,6 +6,7 @@
 \usage{
 sim_pop_data_multi(
   nclus = 10,
+  sample_sizes = 100,
   lambdas = c(0.05, 0.1, 0.15, 0.2, 0.3),
   num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
@@ -16,7 +17,9 @@ sim_pop_data_multi(
 \arguments{
 \item{nclus}{number of clusters}
 
-\item{lambdas}{#incidence rate, in events/person*year}
+\item{sample_sizes}{sample sizes to simulate}
+
+\item{lambdas}{incidence rate, in events/person*year}
 
 \item{num_cores}{number of cores to use for parallel computations}
 
@@ -79,6 +82,7 @@ a \code{\link[tibble:tibble]{tibble::tibble()}}
 Simulate multiple data sets
 }
 \examples{
+\donttest{
 # Load curve parameters
 dmcmc <- typhoid_curves_nostrat_100
 
@@ -103,10 +107,10 @@ dlims <- rbind(
   "HlyE_IgG" = c(min = 0, max = 0.5)
 )
 
-sim_pop_data_multi(
+sim_data <- sim_pop_data_multi(
   curve_params = dmcmc,
   lambdas = lambdas,
-  n_samples = nrep,
+  sample_sizes = nrep,
   age_range = lifespan,
   antigen_isos = antibodies,
   n_mcmc_samples = 0,
@@ -116,4 +120,7 @@ sim_pop_data_multi(
   format = "long",
   nclus = 10)
 
+sim_data
+
+}
 }

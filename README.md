@@ -142,7 +142,7 @@ The full documentation for the current CRAN release version of
 <https://ucd-serg.github.io/serocalculator/>, and the the documentation
 for the [`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
 in-development version can be accessed at
-<https://ucd-serg.github.io/serocalculator/dev/>.
+<https://ucd-serg.github.io/serocalculator/main/>.
 
 ## Getting Help
 

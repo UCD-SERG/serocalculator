@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,11 +39,13 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -86,7 +88,7 @@
 Seroepidemiology Research Group (SERG)</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/vignettes/articles/scrubTyphus_example.Rmd" class="external-link"><code>vignettes/articles/scrubTyphus_example.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/v1.4.0/vignettes/articles/scrubTyphus_example.Rmd" class="external-link"><code>vignettes/articles/scrubTyphus_example.Rmd</code></a></small>
       <div class="d-none name"><code>scrubTyphus_example.Rmd</code></div>
     </div>
 
@@ -155,7 +157,7 @@ packages. If you haven’t installed already, you will need to do so
 before loading. We will also need to have the <code>tidyverse</code> and
 <code>mixtools</code> packages installed for data manipulation and
 graphics operations we will perform in this vignette. Please see the
-websites for <a href="https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package" class="external-link"><code>serocalculator</code></a>,
+websites for <a href="https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package"><code>serocalculator</code></a>,
 <a href="https://tidyverse.tidyverse.org/#installation" class="external-link"><code>tidyverse</code></a>,
 and <a href="https://github.com/dsy109/mixtools?tab=readme-ov-file#installation" class="external-link"><code>mixtools</code></a>
 for guidance on installing these packages into your R package
@@ -163,7 +165,7 @@ library.</p>
 <p>Once all three of those packages are installed, we can load them into
 our active R session environment:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serocalculator" class="external-link">serocalculator</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dsy109/mixtools" class="external-link">mixtools</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -186,8 +188,10 @@ longitudinal antibody responses among confirmed enteric fever cases.</p>
 <code class="sourceCode R"><span><span class="co"># Import longitudinal antibody parameters from OSF</span></span>
 <span></span>
 <span><span class="va">curves</span> <span class="op">&lt;-</span></span>
-<span>  <span class="st">"https://osf.io/download/u5gxh/"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/load_curve_params.html">load_curve_params</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="st">"https://osf.io/download/u5gxh/"</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `data` is missing `iter` column</span></span>
+<span><span class="co">#&gt; It will be inferred from row ordering.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="visualize-curve-parameters">Visualize curve parameters<a class="anchor" aria-label="anchor" href="#visualize-curve-parameters"></a>
@@ -195,8 +199,8 @@ longitudinal antibody responses among confirmed enteric fever cases.</p>
 <p>We can graph the decay curves with an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>
 method:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">curves</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<code class="sourceCode R"><span><span class="va">curves</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="load-and-prepare-cross-sectional-data">Load and prepare cross-sectional data<a class="anchor" aria-label="anchor" href="#load-and-prepare-cross-sectional-data"></a>
@@ -218,7 +222,7 @@ method:</p>
 <p>We can check that <code>xs_data</code> has the correct formatting
 using the <code><a href="../reference/check_pop_data.html">check_pop_data()</a></code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/check_pop_data.html">check_pop_data</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/check_pop_data.html">check_pop_data</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; data format is as expected.</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -228,11 +232,11 @@ using the <code><a href="../reference/check_pop_data.html">check_pop_data()</a><
 data with a <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for <code>pop_data</code>
 objects:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: There were 2 warnings in `dplyr::summarize()`.</span></span>
 <span><span class="co">#&gt; The first warning was:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `across(...)`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In group 4: `antigen_iso = OT56kda_IgM` and `country = Nepal`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In group 4: `antigen_iso = OT56kda_IgM` `country = Nepal`.</span></span>
 <span><span class="co">#&gt; Caused by warning in `min()`:</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> no non-missing arguments to min; returning Inf</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span></span>
@@ -266,7 +270,7 @@ objects:</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">xs_data</span>, type <span class="op">=</span> <span class="st">"age-scatter"</span>, strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 1105 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
-<p><img src="scrubTyphus_example_files/figure-html/plot-age-1.png" width="672"></p>
+<p><img src="scrubTyphus_example_files/figure-html/plot-age-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level3">
@@ -311,10 +315,10 @@ noise parameter below.</p>
 <p><em>Note that variable names are case-sensitive.</em></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># biologic noise</span></span>
-<span><span class="va">b_noise</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&lt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># restrict to young ages to capture recent exposures</span></span>
+<span><span class="va">b_noise</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&lt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># restrict to young ages to capture recent exposures</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/do.html" class="external-link">do</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
 <span>    <span class="co"># Fit the mixture model</span></span>
@@ -345,7 +349,7 @@ noise parameter below.</p>
 <span>  eps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="co"># M noise (eps)</span></span>
 <span>  y.low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="co"># low cutoff (llod)</span></span>
 <span>  y.high <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># high cutoff (y.high)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># high cutoff (y.high)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">round</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -358,23 +362,22 @@ rates.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using est.incidence.by (strata)</span></span>
 <span></span>
-<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in warn.missing.strata(data = curve_params, strata = strata %&gt;% : curve_params is missing all strata variables, and will be used unstratified.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
-<span><span class="co">#&gt; Warning in warn.missing.strata(data = noise_params, strata = strata %&gt;% : noise_params is missing all strata variables, and will be used unstratified.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
-<span><span class="co">#&gt; Warning in check_parallel_cores(.): This computer appears to have 4 cores</span></span>
-<span><span class="co">#&gt; available. `est.incidence.by()` has reduced its `num_cores` argument to 3 to</span></span>
-<span><span class="co">#&gt; avoid destabilizing the computer.</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
@@ -399,23 +402,36 @@ rates.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using est.incidence.by (strata)</span></span>
 <span></span>
-<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
+<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"country"</span>, <span class="st">"ageQ"</span><span class="op">)</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span><span class="op">)</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in warn.missing.strata(data = curve_params, strata = strata %&gt;% : curve_params is missing all strata variables, and will be used unstratified.</span></span>
+<span><span class="co">#&gt; Warning: Some strata are completely missing one or more biomarkers.</span></span>
+<span><span class="co">#&gt; , , antigen_iso = OT56kda_IgM</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
-<span><span class="co">#&gt; Warning in warn.missing.strata(data = noise_params, strata = strata %&gt;% : noise_params is missing all strata variables, and will be used unstratified.</span></span>
+<span><span class="co">#&gt;        ageQ</span></span>
+<span><span class="co">#&gt; country 0-17 18-29 30-49 50-89</span></span>
+<span><span class="co">#&gt;   India    0    59   302   360</span></span>
+<span><span class="co">#&gt;   Nepal  876   229     0     0</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; To avoid this warning, specify the desired set of stratifying variables in the `curve_strata_varnames` and `noise_strata_varnames` arguments to `est.incidence.by()`.</span></span>
-<span><span class="co">#&gt; Warning in check_parallel_cores(.): This computer appears to have 4 cores</span></span>
-<span><span class="co">#&gt; available. `est.incidence.by()` has reduced its `num_cores` argument to 3 to</span></span>
-<span><span class="co">#&gt; avoid destabilizing the computer.</span></span>
+<span><span class="co">#&gt; , , antigen_iso = OT56kda_IgG</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;        ageQ</span></span>
+<span><span class="co">#&gt; country 0-17 18-29 30-49 50-89</span></span>
+<span><span class="co">#&gt;   India    0    59   302   360</span></span>
+<span><span class="co">#&gt;   Nepal  876   229     0     0</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
@@ -438,7 +454,7 @@ rates.</p>
 <code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
 <span></span>
 <span><span class="co"># Save summary(est) as a dataframe</span></span>
-<span><span class="va">estdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">estdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ageQ <span class="op">=</span> <span class="st">"Overall"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Save summary(est2) as a dataframe</span></span>
@@ -463,7 +479,7 @@ rates.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span>,</span>
 <span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange2"</span>, <span class="st">"#39558CFF"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
@@ -527,11 +543,11 @@ in Medicine</em> 31 (20): 2240–48. <a href="https://doi.org/10.1002/sim.5322" 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Peter Teunis, Kristina Lai, Chris Orwa, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
+  <p>Developed by Kristina Lai, Chris Orwa, Peter Teunis, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

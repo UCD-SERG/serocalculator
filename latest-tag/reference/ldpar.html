@@ -13,15 +13,9 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="extract a row from longitudinal parameter set — ldpar">
 <meta name="description" content="take a random sample from longitudinal parameter set
-given age at infection, for a  list of antibodies
-
-ldpar() was renamed to row_longitudinal_parameter() to create a more
-consistent API.">
+given age at infection, for a list of antibodies">
 <meta property="og:description" content="take a random sample from longitudinal parameter set
-given age at infection, for a  list of antibodies
-
-ldpar() was renamed to row_longitudinal_parameter() to create a more
-consistent API.">
+given age at infection, for a list of antibodies">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -31,7 +25,7 @@ consistent API.">
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,11 +43,13 @@ consistent API.">
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -88,16 +84,13 @@ consistent API.">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>extract a row from longitudinal parameter set</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/R/sim.cs-utils.r" class="external-link"><code>R/sim.cs-utils.r</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/v1.4.0/R/ldpar.R" class="external-link"><code>R/ldpar.R</code></a></small>
       <div class="d-none name"><code>ldpar.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p>take a random sample from longitudinal parameter set
-given age at infection, for a  list of antibodies
-<a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>
-<code>ldpar()</code> was renamed to <code><a href="row_longitudinal_parameter.html">row_longitudinal_parameter()</a></code> to create a more
-consistent API.</p>
+given age at infection, for a list of antibodies</p>
     </div>
 
     <div class="section level2">
@@ -141,7 +134,7 @@ consistent API.</p>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a>
 </h2>
-    <p>an array of parameters:
+    <p>an array of 7 parameters and initial conditions:
 c(y0,b0,mu0,mu1,c1,alpha,shape)</p>
     </div>
 
@@ -151,11 +144,11 @@ c(y0,b0,mu0,mu1,c1,alpha,shape)</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Peter Teunis, Kristina Lai, Chris Orwa, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
+  <p>Developed by Kristina Lai, Chris Orwa, Peter Teunis, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

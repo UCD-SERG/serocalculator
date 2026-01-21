@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,13 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -80,7 +82,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Check the formatting of a cross-sectional antibody survey dataset.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/R/check_pop_data.R" class="external-link"><code>R/check_pop_data.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/v1.4.0/R/check_pop_data.R" class="external-link"><code>R/check_pop_data.R</code></a></small>
       <div class="d-none name"><code>check_pop_data.Rd</code></div>
     </div>
 
@@ -123,8 +125,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">xs_data</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_pop_data.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_pop_data.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="as_pop_data.html">as_pop_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">check_pop_data</span><span class="op">(</span><span class="va">xs_data</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -138,11 +140,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Peter Teunis, Kristina Lai, Chris Orwa, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
+  <p>Developed by Kristina Lai, Chris Orwa, Peter Teunis, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

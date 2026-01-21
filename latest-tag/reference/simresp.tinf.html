@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,13 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -80,7 +82,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>simulate antibody kinetics of y over a time interval</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/R/simresp.tinf.R" class="external-link"><code>R/simresp.tinf.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/v1.4.0/R/simresp.tinf.R" class="external-link"><code>R/simresp.tinf.R</code></a></small>
       <div class="d-none name"><code>simresp.tinf.Rd</code></div>
     </div>
 
@@ -93,11 +95,11 @@
 </h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simresp.tinf</span><span class="op">(</span></span>
 <span>  <span class="va">lambda</span>,</span>
-<span>  <span class="va">t.end</span>,</span>
-<span>  <span class="va">age.fx</span>,</span>
+<span>  <span class="va">t_end</span>,</span>
+<span>  <span class="va">age_fixed</span>,</span>
 <span>  <span class="va">antigen_isos</span>,</span>
-<span>  n.mc <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  <span class="va">renew.params</span>,</span>
+<span>  n_mcmc_samples <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  <span class="va">renew_params</span>,</span>
 <span>  <span class="va">predpar</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -114,15 +116,15 @@
 <dd><p>seroconversion rate (1/days),</p></dd>
 
 
-<dt id="arg-t-end">t.end<a class="anchor" aria-label="anchor" href="#arg-t-end"></a>
+<dt id="arg-t-end">t_end<a class="anchor" aria-label="anchor" href="#arg-t-end"></a>
 </dt>
 <dd><p>end of time interval (beginning is time 0) in days(?)</p></dd>
 
 
-<dt id="arg-age-fx">age.fx<a class="anchor" aria-label="anchor" href="#arg-age-fx"></a>
+<dt id="arg-age-fixed">age_fixed<a class="anchor" aria-label="anchor" href="#arg-age-fixed"></a>
 </dt>
-<dd><p>parameter estimates for fixed age (age.fx in years) or not.
-when age.fx = NA then age at infection is used.</p></dd>
+<dd><p>parameter estimates for fixed age (age_fixed in years) or not.
+when age_fixed = NA then age at infection is used.</p></dd>
 
 
 <dt id="arg-antigen-isos">antigen_isos<a class="anchor" aria-label="anchor" href="#arg-antigen-isos"></a>
@@ -130,16 +132,19 @@ when age.fx = NA then age at infection is used.</p></dd>
 <dd><p>antigen isotypes</p></dd>
 
 
-<dt id="arg-n-mc">n.mc<a class="anchor" aria-label="anchor" href="#arg-n-mc"></a>
+<dt id="arg-n-mcmc-samples">n_mcmc_samples<a class="anchor" aria-label="anchor" href="#arg-n-mcmc-samples"></a>
 </dt>
 <dd><p>a posterior sample may be selected (1:4000), or not
-when n.mc = 0 a posterior sample is chosen at random.</p></dd>
+when n_mcmc_samples = 0 a posterior sample is chosen at random.</p></dd>
 
 
-<dt id="arg-renew-params">renew.params<a class="anchor" aria-label="anchor" href="#arg-renew-params"></a>
+<dt id="arg-renew-params">renew_params<a class="anchor" aria-label="anchor" href="#arg-renew-params"></a>
 </dt>
-<dd><p>At infection, a new parameter sample may be generated (when <code>renew.params = TRUE</code>).
-Otherwise (when <code>renew.params = FALSE</code>), a sample is generated at birth and kept,
+<dd><p>At infection,
+a new parameter sample may be generated
+(when <code>renew_params = TRUE</code>).
+Otherwise (when <code>renew_params = FALSE</code>),
+a sample is generated at birth and kept,
 but baseline y0 are carried over from prior infections.</p></dd>
 
 
@@ -158,7 +163,7 @@ but baseline y0 are carried over from prior infections.</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a>
 </dt>
 <dd>
-<p>Arguments passed on to <code><a href="row_longitudinal_parameter.html">row_longitudinal_parameter</a></code>, <code><a href="ab.html">ab</a></code>, <code><a href="mk_baseline.html">mk_baseline</a></code></p>
+<p>Arguments passed on to <code><a href="ldpar.html">ldpar</a></code>, <code><a href="ab.html">ab</a></code>, <code><a href="mk_baseline.html">mk_baseline</a></code></p>
 <dl>
 <dt><code>age</code></dt>
 <dd><p>age at infection</p></dd>
@@ -170,13 +175,19 @@ but baseline y0 are carried over from prior infections.</p></dd>
 <dd><p>number of parameters</p></dd>
 
     <dt><code>t</code></dt>
-<dd><p>age at infection?</p></dd>
+<dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> of elapsed times since start of infection</p></dd>
 
     <dt><code>par</code></dt>
-<dd><p>parameters</p></dd>
+<dd>
+<p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a> of model parameters:</p>
+<ul>
+<li><p>rows are parameters</p></li>
+<li><p>columns are biomarkers</p></li>
+</ul>
+</dd>
 
     <dt><code>kab</code></dt>
-<dd><p>index for which row of antibody baseline limits to read from <code>blims</code></p></dd>
+<dd><p><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer</a> indicating which row to read from <code>blims</code></p></dd>
 
     <dt><code>n</code></dt>
 <dd><p>number of observations</p></dd>
@@ -193,10 +204,11 @@ but baseline y0 are carried over from prior infections.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a>
 </h2>
-    <p>This function returns a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> with:</p>
+    <p>a <a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> with:</p>
 <ul>
 <li><p>t = times (in days, birth at day 0),</p></li>
-<li><p>b = bacteria level, for each antibody signal (not used; probably meaningless),</p></li>
+<li><p>b = bacteria level, for each antibody signal
+(not used; probably meaningless),</p></li>
 <li><p>y = antibody level, for each antibody signal</p></li>
 <li><p>smp = whether an infection involves a big jump or a small jump</p></li>
 <li><p>t.inf = times when infections have occurred.</p></li>
@@ -209,11 +221,11 @@ but baseline y0 are carried over from prior infections.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Peter Teunis, Kristina Lai, Chris Orwa, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
+  <p>Developed by Kristina Lai, Chris Orwa, Peter Teunis, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

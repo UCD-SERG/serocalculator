@@ -12,8 +12,8 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="collect cross-sectional data — simcs.tinf">
-<meta name="description" content="output: (age, y(t) set)">
-<meta property="og:description" content="output: (age, y(t) set)">
+<meta name="description" content="collect cross-sectional data">
+<meta property="og:description" content="collect cross-sectional data">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,13 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
     <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
-    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Generate a simulated cross-sectional sample and estimate seroincidence</a></li>
+    <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li>
     <li><a class="dropdown-item" href="../articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -80,12 +82,12 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>collect cross-sectional data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/update-pkgdown-1.3.0/R/simcs.tinf.R" class="external-link"><code>R/simcs.tinf.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/v1.4.0/R/simcs.tinf.R" class="external-link"><code>R/simcs.tinf.R</code></a></small>
       <div class="d-none name"><code>simcs.tinf.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>output: (age, y(t) set)</p>
+    <p>collect cross-sectional data</p>
     </div>
 
     <div class="section level2">
@@ -93,12 +95,12 @@
 </h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simcs.tinf</span><span class="op">(</span></span>
 <span>  <span class="va">lambda</span>,</span>
-<span>  <span class="va">n.smpl</span>,</span>
-<span>  <span class="va">age.rng</span>,</span>
-<span>  age.fx <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  <span class="va">n_samples</span>,</span>
+<span>  <span class="va">age_range</span>,</span>
+<span>  age_fixed <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  <span class="va">antigen_isos</span>,</span>
-<span>  n.mc <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  renew.params <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  n_mcmc_samples <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  renew_params <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -114,52 +116,74 @@
 <dd><p>seroconversion rate (in events/person-day)</p></dd>
 
 
-<dt id="arg-n-smpl">n.smpl<a class="anchor" aria-label="anchor" href="#arg-n-smpl"></a>
+<dt id="arg-n-samples">n_samples<a class="anchor" aria-label="anchor" href="#arg-n-samples"></a>
 </dt>
-<dd><p>number of samples n.smpl (= nr of simulated records)</p></dd>
+<dd><p>number of samples n_samples (= nr of simulated records)</p></dd>
 
 
-<dt id="arg-age-rng">age.rng<a class="anchor" aria-label="anchor" href="#arg-age-rng"></a>
+<dt id="arg-age-range">age_range<a class="anchor" aria-label="anchor" href="#arg-age-range"></a>
 </dt>
 <dd><p>age range to use for simulating data, in days</p></dd>
 
 
-<dt id="arg-age-fx">age.fx<a class="anchor" aria-label="anchor" href="#arg-age-fx"></a>
+<dt id="arg-age-fixed">age_fixed<a class="anchor" aria-label="anchor" href="#arg-age-fixed"></a>
 </dt>
-<dd><p>age.fx for parameter sample (age.fx = NA for age at infection)</p></dd>
+<dd><p>age_fixed for parameter sample
+(age_fixed = NA for age at infection)</p></dd>
 
 
 <dt id="arg-antigen-isos">antigen_isos<a class="anchor" aria-label="anchor" href="#arg-antigen-isos"></a>
 </dt>
-<dd><p>Character vector with one or more antibody names. Values must match <code>curve_params</code>.</p></dd>
+<dd><p><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a> <a href="https://rdrr.io/r/base/vector.html" class="external-link">vector</a> with one or more antibody names.
+Values must match <code>curve_params</code>.</p></dd>
 
 
-<dt id="arg-n-mc">n.mc<a class="anchor" aria-label="anchor" href="#arg-n-mc"></a>
+<dt id="arg-n-mcmc-samples">n_mcmc_samples<a class="anchor" aria-label="anchor" href="#arg-n-mcmc-samples"></a>
 </dt>
 <dd><ul>
-<li><p>when <code>n.mc</code> is in 1:4000 a fixed posterior sample is used</p></li>
-<li><p>when n.mc = 0 a random sample is chosen</p></li>
+<li><p>when <code>n_mcmc_samples</code> is in 1:4000,
+a fixed posterior sample is used</p></li>
+<li><p>when n_mcmc_samples = 0 a random sample is chosen</p></li>
 </ul></dd>
 
 
-<dt id="arg-renew-params">renew.params<a class="anchor" aria-label="anchor" href="#arg-renew-params"></a>
+<dt id="arg-renew-params">renew_params<a class="anchor" aria-label="anchor" href="#arg-renew-params"></a>
 </dt>
 <dd><ul>
-<li><p><code>renew.params = TRUE</code> generates a new parameter set for each infection</p></li>
-<li><p><code>renew.params = FALSE</code> keeps the one selected at birth, but updates baseline y0</p></li>
+<li><p><code>renew_params = TRUE</code>
+generates a new parameter set for each infection</p></li>
+<li><p><code>renew_params = FALSE</code>
+keeps the one selected at birth, but updates baseline y0</p></li>
 </ul></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a>
 </dt>
-<dd><p>arguments passed to <code><a href="simresp.tinf.html">simresp.tinf()</a></code></p></dd>
+<dd>
+<p>Arguments passed on to <code><a href="simresp.tinf.html">simresp.tinf</a></code></p>
+<dl>
+<dt><code>predpar</code></dt>
+<dd>
+<p>an <code><a href="https://rdrr.io/r/base/array.html" class="external-link">array()</a></code> with dimensions named:</p>
+<ul>
+<li><p><code>antigen_iso</code></p></li>
+<li><p><code>parameter</code></p></li>
+<li><p><code>obs</code></p></li>
+</ul>
+</dd>
+
+
+</dl>
+</dd>
 
 </dl>
 </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a>
 </h2>
-    <p>an <code><a href="https://rdrr.io/r/base/array.html" class="external-link">array()</a></code></p>
+    <p>an <code><a href="https://rdrr.io/r/base/array.html" class="external-link">array()</a></code> with dimensions
+<code>n_samples</code>, <code>length(antigen_isos) + 1</code>,
+where rows are observations and columns are age and biomarkers y(t)</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -168,11 +192,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Peter Teunis, Kristina Lai, Chris Orwa, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
+  <p>Developed by Kristina Lai, Chris Orwa, Peter Teunis, Kristen Aiemjoy, Douglas Ezra Morrison.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

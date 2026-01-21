@@ -36,4 +36,6 @@ allpopsamples_hlye.csv$
 ^vignettes/articles/\.quarto$
 ^vignettes/articles/*_files$
 ^man/check_strata\.Rd$
+^[\.]?air\.toml$
+^\.vscode$
 ^\.lintr\.R$

@@ -51,9 +51,9 @@ library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.6
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
-#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-#> ✔ purrr     1.2.0     
+#> ✔ ggplot2   4.0.1     ✔ tibble    3.3.1
+#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+#> ✔ purrr     1.2.1     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -70,7 +70,7 @@ dmcmc <-
 
 We can graph individual MCMC samples from the posterior distribution of
 model parameters using a
-[`autoplot.curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.curve_params.md)
+[`autoplot.curve_params()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.md)
 method for the
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
 function:
@@ -227,7 +227,7 @@ print(ll_a + ll_g)
 
 We can also graph the log-likelihoods, even without finding the MLEs,
 using
-[`graph_loglik()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph_loglik.md):
+[`graph_loglik()`](https://ucd-serg.github.io/serocalculator/reference/graph_loglik.md):
 
 ``` r
 lik_HlyE_IgA <-
@@ -265,7 +265,7 @@ print(lik_both)
 ### estimate incidence
 
 We can estimate incidence with
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md):
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md):
 
 ``` r
 est1 <- est_seroincidence(
@@ -501,11 +501,11 @@ ests_summary |>
 Solutions to [`nlm()`](https://rdrr.io/r/stats/nlm.html) exit codes 3-5:
 
 - 3: decrease the `stepmin` argument to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence_by.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 - 4: increase the `iterlim` argument to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence_by.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 - 5: increase the `stepmax` argument to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence_by.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 We can extract the indices of problematic strata, if there are any:
 
@@ -557,7 +557,7 @@ ests_summary |>
 ------------------------------------------------------------------------
 
 We can analyze the simulation results with
-[`analyze_sims()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/analyze_sims.md):
+[`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md):
 
 ``` r
 ests_summary |> analyze_sims()

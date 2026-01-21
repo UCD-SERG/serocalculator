@@ -15,7 +15,7 @@ autoplot(object, log = FALSE, type = "density", strata = NULL, ...)
 - object:
 
   A `pop_data` object (from
-  [`load_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_pop_data.md))
+  [`load_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/load_pop_data.md))
 
 - log:
 

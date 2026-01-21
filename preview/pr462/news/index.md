@@ -2,80 +2,102 @@
 
 ## serocalculator (development version)
 
+## serocalculator 1.4.0
+
+CRAN release: 2025-12-11
+
 ### New features
 
+- Added
+  [`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)
+  function for statistical comparison of seroincidence rates
+
+  - Performs two-sample z-tests to compare seroincidence estimates
+  - Returns `htest` format when comparing two single estimates
+  - Returns formatted table with all pairwise comparisons for stratified
+    estimates
+  - Added examples to tutorial vignette and comprehensive unit tests
+
+- Implemented multi-version pkgdown documentation with version dropdown
+  menu
+
+  - Users can now switch between main, latest-tag, and versioned
+    releases
+  - Default landing page shows latest-tag (most recent release)
+  - Based on insightsengineering/r-pkgdown-multiversion setup
+
 - Added `chain_color` option to
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   to control MCMC line color
   ([\#455](https://github.com/UCD-SERG/serocalculator/issues/455))
 
 - Made
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   the default sub-method for
-  [`autoplot.curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.curve_params.md)
+  [`autoplot.curve_params()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.md)
   ([\#450](https://github.com/UCD-SERG/serocalculator/issues/450))
 
 - Added `log_x` and `log_y` options to
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   sub-method for
-  [`autoplot.curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.curve_params.md)
+  [`autoplot.curve_params()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.md)
   ([\#453](https://github.com/UCD-SERG/serocalculator/issues/453))
 
 - Extended
-  [`sim_pop_data_multi()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim_pop_data_multi.md)
+  [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
   to loop over multiple sample sizes
   ([\#444](https://github.com/UCD-SERG/serocalculator/issues/444))
 
 - Added new functions
-  [`analyze_sims()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/analyze_sims.md)
+  [`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md)
   and
-  [`autoplot.sim_results()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.sim_results.md)
+  [`autoplot.sim_results()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.sim_results.md)
   ([\#444](https://github.com/UCD-SERG/serocalculator/issues/444))
 
 - Extended
-  [`autoplot.sim_results()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.sim_results.md)
+  [`autoplot.sim_results()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.sim_results.md)
   to allow customization of x-axis, group, and color aesthetics via
   `x_var`, `group_var`, and `color_var` parameters
   ([\#462](https://github.com/UCD-SERG/serocalculator/issues/462))
 
 - Rename `estimate_scr()` to
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence_by.md)
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
   ([\#439](https://github.com/UCD-SERG/serocalculator/issues/439))
 
 - Rename `estimate_scr()` to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
   ([\#432](https://github.com/UCD-SERG/serocalculator/issues/432))
 
 - Rename argument `curve_params` to `sr_params` for estimation functions
   ([\#424](https://github.com/UCD-SERG/serocalculator/issues/424))
 
 - added documentation for
-  [`count_strata()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/count_strata.md)
+  [`count_strata()`](https://ucd-serg.github.io/serocalculator/reference/count_strata.md)
   ([\#431](https://github.com/UCD-SERG/serocalculator/issues/431))
 
 - Rename
-  [`as_curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/as_curve_params.md)
+  [`as_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/as_curve_params.md)
   to
-  [`as_sr_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/as_sr_params.md)
+  [`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md)
   ([\#421](https://github.com/UCD-SERG/serocalculator/issues/421))
 
 - Rename
-  [`load_curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_curve_params.md)
+  [`load_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/load_curve_params.md)
   to
-  [`load_sr_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_sr_params.md)
+  [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
   ([\#421](https://github.com/UCD-SERG/serocalculator/issues/421))
 
 - added default for `xvar` in `"scatter"` option for
-  [`autoplot.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.seroincidence.by.md)
+  [`autoplot.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.by.md)
   ([\#417](https://github.com/UCD-SERG/serocalculator/issues/417))
 
 - Extended
-  [`autoplot.summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.summary.seroincidence.by.md)
+  [`autoplot.summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.summary.seroincidence.by.md)
   to include types for either scatter or bar plots of stratified results
   ([\#397](https://github.com/UCD-SERG/serocalculator/issues/397))
 
 - added option to add lines using `group_var` input to
-  [`autoplot.summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.summary.seroincidence.by.md)
+  [`autoplot.summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.summary.seroincidence.by.md)
   ([\#410](https://github.com/UCD-SERG/serocalculator/issues/410))
 
 - `autoplot.pop_data(type = "age-scatter")` now shows legend at bottom
@@ -86,40 +108,40 @@
   ([\#406](https://github.com/UCD-SERG/serocalculator/issues/406))
 
 - Rename
-  [`est.incidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est.incidence.by.md)
+  [`est.incidence.by()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.md)
   to `estimate_scr_by()`
   ([\#389](https://github.com/UCD-SERG/serocalculator/issues/389))
 
 - Rename
-  [`est.incidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est.incidence.md)
+  [`est.incidence()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.md)
   to `estimate_scr()`
   ([\#389](https://github.com/UCD-SERG/serocalculator/issues/389))
 
 - Improved warning messages for
-  [`get_biomarker_names_var()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/get_biomarker_names_var.md)
+  [`get_biomarker_names_var()`](https://ucd-serg.github.io/serocalculator/reference/get_biomarker_names_var.md)
 
 - Added `get_*()` extractor functions to API
   ([\#380](https://github.com/UCD-SERG/serocalculator/issues/380))
 
 - Added optional CI error bars to
-  [`autoplot.summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.summary.seroincidence.by.md)
+  [`autoplot.summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.summary.seroincidence.by.md)
   ([\#372](https://github.com/UCD-SERG/serocalculator/issues/372))
 
 - Improved y-limit calculation in
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   ([\#368](https://github.com/UCD-SERG/serocalculator/issues/368))
 
 - Added option for
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   to show all curves
   ([\#368](https://github.com/UCD-SERG/serocalculator/issues/368))
 
 - Added color-coding for
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   ([\#383](https://github.com/UCD-SERG/serocalculator/issues/383))
 
 - Added `quantiles` parameter to
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   and corresponding test in `test-graph.curve.params.R`
   ([\#434](https://github.com/UCD-SERG/serocalculator/issues/434))
 
@@ -148,9 +170,9 @@
   ([\#353](https://github.com/UCD-SERG/serocalculator/issues/353))
 
 - Added verbose option for
-  [`summary.seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/summary.seroincidence.md)
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
   and
-  [`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/summary.seroincidence.by.md)
+  [`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md)
   ([\#348](https://github.com/UCD-SERG/serocalculator/issues/348))
 
 - Extended `simulate_xsectionalData.Rmd` article to explore
@@ -161,24 +183,31 @@
   ([\#281](https://github.com/UCD-SERG/serocalculator/issues/281),
   [\#373](https://github.com/UCD-SERG/serocalculator/issues/373)):
 
-  - [`sim.cs()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim.cs.md)
+  - [`sim.cs()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.md)
     -\>
-    [`sim_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim_pop_data.md)
-  - [`sim.cs.multi()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim.cs.multi.md)
+    [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+  - [`sim.cs.multi()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.multi.md)
     -\>
-    [`sim_pop_data_multi()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim_pop_data_multi.md)
+    [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
 
 ### Bug fixes
 
+- Fixed CRAN errors
+  ([\#464](https://github.com/UCD-SERG/serocalculator/issues/464))
 - Fixed stratification issue in enteric fever vignette
   ([\#418](https://github.com/UCD-SERG/serocalculator/issues/418))
 - Fixed issue in
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   where MCMC samples with the same iteration number from different MCMC
   chains would get merged by `ggplot2::aes(group = iter)`
   ([\#382](https://github.com/UCD-SERG/serocalculator/issues/382))
 
 ### Internal changes
+
+- switched
+  [`expect_snapshot_data()`](https://ucd-serg.github.io/serocalculator/reference/expect_snapshot_data.md)
+  to an internal function due to CRAN errors
+  ([\#464](https://github.com/UCD-SERG/serocalculator/issues/464))
 
 - generalized `ab1()`
 
@@ -188,10 +217,10 @@
   ([\#399](https://github.com/UCD-SERG/serocalculator/issues/399))
 
 - added test for
-  [`autoplot.curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.curve_params.md)
+  [`autoplot.curve_params()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.md)
 
 - added test for
-  [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/graph.curve.params.md)
+  [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   ([\#368](https://github.com/UCD-SERG/serocalculator/issues/368))
 
 - reverted Readme source file from qmd to Rmd.
@@ -201,7 +230,7 @@
   ([\#359](https://github.com/UCD-SERG/serocalculator/issues/359))
 
 - added test for
-  [`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/summary.seroincidence.by.md)
+  [`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md)
   ([\#352](https://github.com/UCD-SERG/serocalculator/issues/352))
 
 - Started checking for use of base pipe instead of magrittr pipe by
@@ -209,20 +238,20 @@
   ([\#347](https://github.com/UCD-SERG/serocalculator/issues/347))
 
 - Removed
-  [`ldpar()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ldpar.md)
+  [`ldpar()`](https://ucd-serg.github.io/serocalculator/reference/ldpar.md)
   from API
   ([\#345](https://github.com/UCD-SERG/serocalculator/issues/345))
 
 - Added test for
-  [`sim.cs()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim.cs.md)
+  [`sim.cs()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.md)
   ([\#344](https://github.com/UCD-SERG/serocalculator/issues/344))
 
 - Added test for internal function
-  [`ab()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ab.md)
+  [`ab()`](https://ucd-serg.github.io/serocalculator/reference/ab.md)
   ([\#342](https://github.com/UCD-SERG/serocalculator/issues/342))
 
 - Reverted name change
-  [`ldpar()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ldpar.md)-\>
+  [`ldpar()`](https://ucd-serg.github.io/serocalculator/reference/ldpar.md)-\>
   `row_longitudinal_parameter()`
   ([\#343](https://github.com/UCD-SERG/serocalculator/issues/343))
 
@@ -242,7 +271,7 @@ CRAN release: 2025-01-25
   ([\#329](https://github.com/UCD-SERG/serocalculator/issues/329))
 
 - Added
-  [`serocalculator_example()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/serocalculator_example.md)
+  [`serocalculator_example()`](https://ucd-serg.github.io/serocalculator/reference/serocalculator_example.md)
   function to help locate example data files
   ([\#329](https://github.com/UCD-SERG/serocalculator/issues/329))
 
@@ -253,7 +282,7 @@ CRAN release: 2025-01-25
   ([\#314](https://github.com/UCD-SERG/serocalculator/issues/314))
 
 - Improved error messaging for
-  [`autoplot.pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.pop_data.md)
+  [`autoplot.pop_data()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.md)
   ([\#234](https://github.com/UCD-SERG/serocalculator/issues/234)).
 
 - Clarified package installation instructions in scrub typhus vignette
@@ -267,7 +296,7 @@ CRAN release: 2025-01-25
   ([\#289](https://github.com/UCD-SERG/serocalculator/issues/289))
 
 - Added default value for `antigen_isos` argument in
-  [`log_likelihood()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/log_likelihood.md)
+  [`log_likelihood()`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md)
   ([\#286](https://github.com/UCD-SERG/serocalculator/issues/286))
 
 - Updated enteric fever example article with upgraded code and
@@ -305,7 +334,7 @@ CRAN release: 2025-01-25
   ([\#227](https://github.com/UCD-SERG/serocalculator/issues/227))
 
 - Added `snapshot_value` test for
-  [`est.incidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est.incidence.md)
+  [`est.incidence()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.md)
   ([\#315](https://github.com/UCD-SERG/serocalculator/issues/315))
 
 - Sped up `lint-changed-files` GitHub Action
@@ -322,13 +351,13 @@ CRAN release: 2025-01-25
   ([\#278](https://github.com/UCD-SERG/serocalculator/issues/278))
 
 - created unit test for
-  [`df_to_array()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/df_to_array.md)
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
 - fixed
   [`dplyr::select()`](https://dplyr.tidyverse.org/reference/select.html)
   deprecation warning in
-  [`df_to_array()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/df_to_array.md)
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
 - Added `devtag` to package (using `devtag::use_devtag()`)
@@ -369,25 +398,25 @@ CRAN release: 2025-01-25
 - Added stratification to `summary.pop_data`
 
 - Added `verbose` option for
-  [`check_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/check_pop_data.md),
+  [`check_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/check_pop_data.md),
   changing default behavior to avoid printing an OK message.
 
 ## serocalculator 1.1.0
 
 - Renamed
-  [`llik()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/llik.md)
+  [`llik()`](https://ucd-serg.github.io/serocalculator/reference/llik.md)
   to
-  [`log_likelihood()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/log_likelihood.md)
+  [`log_likelihood()`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md)
 
 - Renamed
-  [`fdev()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/fdev.md)
+  [`fdev()`](https://ucd-serg.github.io/serocalculator/reference/fdev.md)
   to
-  [`f_dev()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/f_dev.md)
+  [`f_dev()`](https://ucd-serg.github.io/serocalculator/reference/f_dev.md)
 
 - Renamed
-  [`df.to.array()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/df.to.array.md)
+  [`df.to.array()`](https://ucd-serg.github.io/serocalculator/reference/df.to.array.md)
   to
-  [`df_to_array()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/df_to_array.md)
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
 
 - Renamed `getAdditionalData()` to `get_additional_data()`
 
@@ -396,43 +425,43 @@ CRAN release: 2025-01-25
 - Remove `clean_pop_data()` dependency functions documentation examples
 
 - Added `age`, `value`, `id` and `standardize` arguments to
-  [`load_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_pop_data.md)
+  [`load_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/load_pop_data.md)
 
 - Added the following methods to `pop_data` class:
 
   - `set_age()`
   - `set_value()`
-  - [`set_id_var()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/set_id_var.md)
+  - [`set_id_var()`](https://ucd-serg.github.io/serocalculator/reference/set_id_var.md)
   - `get_age()`
-  - [`get_values()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/get_values.md)
-  - [`ids()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ids.md)
+  - [`get_values()`](https://ucd-serg.github.io/serocalculator/reference/get_values.md)
+  - [`ids()`](https://ucd-serg.github.io/serocalculator/reference/ids.md)
   - `get_age_var()`
-  - [`get_values_var()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/get_values_var.md)
-  - [`ids_varname()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ids_varname.md)
+  - [`get_values_var()`](https://ucd-serg.github.io/serocalculator/reference/get_values_var.md)
+  - [`ids_varname()`](https://ucd-serg.github.io/serocalculator/reference/ids_varname.md)
 
 - Added additional warnings to
-  [`load_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_pop_data.md)
+  [`load_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/load_pop_data.md)
 
 - Added
   [`scales::pseudo_log_trans()`](https://scales.r-lib.org/reference/transform_log.html)
   to
-  [`autoplot.pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.pop_data.md)
+  [`autoplot.pop_data()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.md)
   to avoid log 0
 
 - Added `test-est.incidence-status.R` test to check output when
   `standardize` option is FALSE on
-  [`load_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_pop_data.md)
+  [`load_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/load_pop_data.md)
 
 - Replaced column name comparison on
-  [`check_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/check_pop_data.md)
+  [`check_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/check_pop_data.md)
   to use attribute name on `pop_data` class
 
 ## serocalculator 1.0.1
 
 - added `n_points` argument to
-  [`plot_curve_params_one_ab()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/plot_curve_params_one_ab.md)
+  [`plot_curve_params_one_ab()`](https://ucd-serg.github.io/serocalculator/reference/plot_curve_params_one_ab.md)
 - Added `type = "age-scatter"` option for
-  [`autoplot.pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.pop_data.md)
+  [`autoplot.pop_data()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.md)
 
 ### serocalculator 1.0.0
 
@@ -444,14 +473,14 @@ CRAN release: 2025-01-25
 
 - Added functions and methods:
 
-  - [`load_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_pop_data.md)
-  - [`check_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/check_pop_data.md)
-  - [`summary.pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/summary.pop_data.md)
-  - [`autoplot.pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.pop_data.md)
-  - [`load_curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/load_curve_params.md)
+  - [`load_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/load_pop_data.md)
+  - [`check_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/check_pop_data.md)
+  - [`summary.pop_data()`](https://ucd-serg.github.io/serocalculator/reference/summary.pop_data.md)
+  - [`autoplot.pop_data()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.md)
+  - [`load_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/load_curve_params.md)
 
 - Renamed `graph.decay.curves.by()` to
-  [`autoplot.curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.curve_params.md)
+  [`autoplot.curve_params()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.md)
 
 ### serocalculator 0.4.0
 
@@ -462,15 +491,15 @@ CRAN release: 2025-01-25
 
 - added visualization of curve parameters
 
-- [`sim.cs()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/sim.cs.md)
+- [`sim.cs()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.md)
   now has `format` argument to specify long or wide format for output.
 
 #### serocalculator 0.3.2
 
 Fixed bug in passing `antigen_isos` from
-[`est.incidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est.incidence.by.md)
+[`est.incidence.by()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.md)
 to
-[`est.incidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est.incidence.md).
+[`est.incidence()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.md).
 
 #### serocalculator 0.3.1
 

@@ -62,9 +62,9 @@ simresp.tinf(
 - ...:
 
   Arguments passed on to
-  [`ldpar`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ldpar.md),
-  [`ab`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/ab.md),
-  [`mk_baseline`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/mk_baseline.md)
+  [`ldpar`](https://ucd-serg.github.io/serocalculator/reference/ldpar.md),
+  [`ab`](https://ucd-serg.github.io/serocalculator/reference/ab.md),
+  [`mk_baseline`](https://ucd-serg.github.io/serocalculator/reference/mk_baseline.md)
 
   `age`
 

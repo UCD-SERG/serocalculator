@@ -131,7 +131,7 @@ accessed at <https://ucd-serg.github.io/serocalculator/>, and the the
 documentation for the
 [`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
 in-development version can be accessed at
-<https://ucd-serg.github.io/serocalculator/dev/>.
+<https://ucd-serg.github.io/serocalculator/main/>.
 
 ## Getting Help
 
@@ -145,7 +145,7 @@ reproducible example](https://reprex.tidyverse.org/) on
 
 Another great resource is **The Epidemiologist R Handbook**, which
 includes an introductory page on asking for help with R packages via
-GitHub: <https://epirhandbook.com/en/getting-help.html>
+GitHub: <https://epirhandbook.com/en/new_pages/help.html>
 
 ## Contributing to this project
 
@@ -158,10 +158,6 @@ for more information.
 
 This QR code is a direct link to the latest-release version of the
 package website:
-
-``` R
-#> Warning: package 'qrcode' was built under R version 4.4.2
-```
 
 ![QR code for serocalculator website](reference/figures/qr.svg)
 

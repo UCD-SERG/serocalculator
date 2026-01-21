@@ -24,7 +24,7 @@ autoplot(
 
   a [data.frame](https://rdrr.io/r/base/data.frame.html) containing the
   columns expected for a `sim_results` object (from
-  [`analyze_sims()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/analyze_sims.md))
+  [`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md))
 
 - statistic:
 

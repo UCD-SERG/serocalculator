@@ -16,7 +16,7 @@ summary(object, coverage = 0.95, verbose = TRUE, ...)
 
   a [`list()`](https://rdrr.io/r/base/list.html) outputted by
   [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html) or
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 
 - coverage:
 
@@ -49,7 +49,7 @@ containing the following:
 - `coverage`: coverage probability
 
 - `log.lik`: log-likelihood of the data used in the call to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md),
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
   evaluated at the maximum-likelihood estimate of lambda (i.e., at
   `incidence.rate`)
 
@@ -72,7 +72,7 @@ containing the following:
   - 3: Last global step failed to locate a point lower than x. Either x
     is an approximate local minimum of the function, the function is too
     non-linear for this algorithm, or `stepmin` in
-    [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md)
+    [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
     (a.k.a., `steptol` in
     [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html)) is too large.
 

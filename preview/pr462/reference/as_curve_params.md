@@ -3,7 +3,7 @@
 **\[deprecated\]**
 
 `as_curve_params()` was renamed to
-[`as_sr_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/as_sr_params.md)
+[`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md)
 to create a more consistent API.
 
 ## Usage

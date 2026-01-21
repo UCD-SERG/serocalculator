@@ -18,7 +18,7 @@ print(x, ...)
 - object:
 
   a `pop_data` object (from
-  [`as_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/as_pop_data.md))
+  [`as_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/as_pop_data.md))
 
 - strata:
 

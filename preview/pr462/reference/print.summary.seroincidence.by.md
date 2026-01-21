@@ -2,7 +2,7 @@
 
 Custom [`print()`](https://rdrr.io/r/base/print.html) function for
 "summary.seroincidence.by" objects (constructed by
-[`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/summary.seroincidence.by.md))
+[`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md))
 
 ## Usage
 
@@ -16,7 +16,7 @@ print(x, ...)
 - x:
 
   A "summary.seroincidence.by" object (constructed by
-  [`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/summary.seroincidence.by.md))
+  [`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md))
 
 - ...:
 

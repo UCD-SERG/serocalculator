@@ -14,7 +14,7 @@ autoplot(object, ncol = min(3, length(object)), ...)
 - object:
 
   a '"seroincidence.by"' object (from
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence_by.md))
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md))
 
 - ncol:
 
@@ -23,7 +23,7 @@ autoplot(object, ncol = min(3, length(object)), ...)
 - ...:
 
   Arguments passed on to
-  [`autoplot.seroincidence`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/autoplot.seroincidence.md)
+  [`autoplot.seroincidence`](https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.md)
 
   `log_x`
 

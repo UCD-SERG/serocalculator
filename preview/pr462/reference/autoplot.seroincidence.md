@@ -14,7 +14,7 @@ autoplot(object, log_x = FALSE, ...)
 - object:
 
   a `seroincidence` object (from
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/est_seroincidence.md))
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md))
 
 - log_x:
 

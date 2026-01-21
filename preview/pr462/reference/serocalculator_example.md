@@ -1,7 +1,7 @@
 # Get path to an example file
 
 The
-[serocalculator](https:/ucd-serg.github.io/serocalculator/preview/pr462/reference/serocalculator-package.md)
+[serocalculator](https://ucd-serg.github.io/serocalculator/reference/serocalculator-package.md)
 package comes bundled with a number of sample files in its
 `inst/extdata` directory. This `serocalculator_example()` function make
 those sample files easy to access.
@@ -39,5 +39,5 @@ serocalculator_example()
 #> [3] "example_noise_params.csv" "example_noise_params.rds"
 #> [5] "example_pop_data.csv"     "example_pop_data.rds"    
 serocalculator_example("example_pop_data.csv")
-#> /home/runner/work/_temp/Library/serocalculator/extdata/example_pop_data.csv
+#> /home/runner/work/serocalculator/serocalculator/serocalculator/inst/extdata/example_pop_data.csv
 ```

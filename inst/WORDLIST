@@ -32,6 +32,7 @@ Seroincidence
 Serological
 TW
 UC
+UI
 Unif
 Vellore
 Volterra
@@ -58,6 +59,7 @@ expf
 forall
 frac
 geoms
+ggplot
 ggproto
 hemolysin
 infty

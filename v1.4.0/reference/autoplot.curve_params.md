@@ -18,7 +18,7 @@ autoplot(
 - object:
 
   a `curve_params` object (constructed using
-  [`as_sr_params()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/as_sr_params.md)),
+  [`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md)),
   which is a [`data.frame()`](https://rdrr.io/r/base/data.frame.html)
   containing MCMC samples of antibody decay curve parameters
 
@@ -27,10 +27,10 @@ autoplot(
   a [character](https://rdrr.io/r/base/character.html) string indicating
   whether to use
 
-  - [`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/graph.curve.params.md)
+  - [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
     (default) or
 
-  - [`graph_seroresponse_model_1()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/graph_seroresponse_model_1.md)
+  - [`graph_seroresponse_model_1()`](https://ucd-serg.github.io/serocalculator/reference/graph_seroresponse_model_1.md)
     (previous default) as the graphing method.
 
 - ...:
@@ -47,9 +47,9 @@ object
 ## Details
 
 Currently, the backend for this method is
-[`graph.curve.params()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/graph.curve.params.md).
+[`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md).
 Previously, the backend for this method was
-[`graph_seroresponse_model_1()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/graph_seroresponse_model_1.md).
+[`graph_seroresponse_model_1()`](https://ucd-serg.github.io/serocalculator/reference/graph_seroresponse_model_1.md).
 That function is still available if preferred.
 
 ## Examples

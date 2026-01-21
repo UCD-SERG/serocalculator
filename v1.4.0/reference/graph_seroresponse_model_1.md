@@ -31,7 +31,7 @@ graph_seroresponse_model_1(
 - ...:
 
   Arguments passed on to
-  [`plot_curve_params_one_ab`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/plot_curve_params_one_ab.md)
+  [`plot_curve_params_one_ab`](https://ucd-serg.github.io/serocalculator/reference/plot_curve_params_one_ab.md)
 
   `verbose`
 
@@ -91,7 +91,7 @@ words, for the purposes of this argument, row numbers start over at 1
 for each antigen isotype. There is currently no way to specify different
 row numbers for different antigen isotypes; if you want to do that, you
 will could call
-[`plot_curve_params_one_ab()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/plot_curve_params_one_ab.md)
+[`plot_curve_params_one_ab()`](https://ucd-serg.github.io/serocalculator/reference/plot_curve_params_one_ab.md)
 directly for each antigen isotype and combine the resulting panels
 yourself. Or you could subset `curve_params` manually, before passing it
 to this function, and set the `n_curves` argument to `Inf`.

@@ -20,7 +20,7 @@ load_pop_data(file_path, ...)
 - ...:
 
   Arguments passed on to
-  [`as_pop_data`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/as_pop_data.md)
+  [`as_pop_data`](https://ucd-serg.github.io/serocalculator/reference/as_pop_data.md)
 
   `data`
 

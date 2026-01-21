@@ -127,7 +127,7 @@ xs_data <- load_pop_data(
 #### Check formatting
 
 We can check that `xs_data` has the correct formatting using the
-[`check_pop_data()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/check_pop_data.md)
+[`check_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/check_pop_data.md)
 function:
 
 ``` r

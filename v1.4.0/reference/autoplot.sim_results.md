@@ -16,7 +16,7 @@ autoplot(object, statistic = "Empirical_SE", ...)
 - object:
 
   a `sim_results` object (from
-  [`analyze_sims()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/analyze_sims.md))
+  [`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md))
 
 - statistic:
 

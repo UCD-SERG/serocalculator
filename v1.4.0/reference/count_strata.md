@@ -17,7 +17,7 @@ count_strata(
 - data:
 
   a `"pop_data"` object (e.g., from
-  [`as_pop_data()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/as_pop_data.md))
+  [`as_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/as_pop_data.md))
 
 - strata_varnames:
 

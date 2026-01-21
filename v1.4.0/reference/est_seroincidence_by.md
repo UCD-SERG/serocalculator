@@ -117,12 +117,12 @@ est_seroincidence_by(
 
   whether to display the log-likelihood curve graph in the course of
   running
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 
 - ...:
 
   Arguments passed on to
-  [`est_seroincidence`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/est_seroincidence.md),
+  [`est_seroincidence`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
   [`stats::nlm`](https://rdrr.io/r/stats/nlm.html)
 
   `stepmin`
@@ -176,7 +176,7 @@ est_seroincidence_by(
 
 - if `strata` has meaningful inputs: An object of class
   `"seroincidence.by"`; i.e., a list of `"seroincidence"` objects from
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/est_seroincidence.md),
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
   one for each stratum, with some meta-data attributes.
 
 - if `strata` is missing, `NULL`, `NA`, or `""`: An object of class
@@ -186,12 +186,12 @@ est_seroincidence_by(
 
 If `strata` is left empty, a warning will be produced, recommending that
 you use
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/est_seroincidence.md)
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 for unstratified analyses, and then the data will be passed to
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/est_seroincidence.md).
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md).
 If for some reason you want to use `est_seroincidence_by()` with no
 strata instead of calling
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/est_seroincidence.md),
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
 you may use `NA`, `NULL`, or `""` as the `strata` argument to avoid that
 warning.
 

@@ -58,7 +58,7 @@ simcs.tinf(
 - ...:
 
   Arguments passed on to
-  [`simresp.tinf`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/simresp.tinf.md)
+  [`simresp.tinf`](https://ucd-serg.github.io/serocalculator/reference/simresp.tinf.md)
 
   `predpar`
 

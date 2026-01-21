@@ -115,10 +115,10 @@ sim_pop_data(
 - ...:
 
   Arguments passed on to
-  [`simcs.tinf`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/simcs.tinf.md),
-  [`ldpar`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/ldpar.md),
-  [`ab`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/ab.md),
-  [`mk_baseline`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/mk_baseline.md)
+  [`simcs.tinf`](https://ucd-serg.github.io/serocalculator/reference/simcs.tinf.md),
+  [`ldpar`](https://ucd-serg.github.io/serocalculator/reference/ldpar.md),
+  [`ab`](https://ucd-serg.github.io/serocalculator/reference/ab.md),
+  [`mk_baseline`](https://ucd-serg.github.io/serocalculator/reference/mk_baseline.md)
 
   `age`
 

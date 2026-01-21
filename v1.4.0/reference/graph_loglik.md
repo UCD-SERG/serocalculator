@@ -103,7 +103,7 @@ graph_loglik(
 - ...:
 
   Arguments passed on to
-  [`log_likelihood`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/log_likelihood.md)
+  [`log_likelihood`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md)
 
   `verbose`
 

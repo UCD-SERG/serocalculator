@@ -3,7 +3,7 @@
 **\[deprecated\]**
 
 `df.to.array()` was renamed to
-[`df_to_array()`](https:/ucd-serg.github.io/serocalculator/v1.4.0/reference/df_to_array.md)
+[`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
 to create a more consistent API.
 
 ## Usage

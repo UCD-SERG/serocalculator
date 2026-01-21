@@ -33,7 +33,6 @@ Serological
 TW
 UC
 Unif
-Vectorized
 Vellore
 Volterra
 al
@@ -44,11 +43,15 @@ biomarker
 biomarkers
 boldsymbol
 cdot
+codecov
+colour
 csv
 dev
 devtools
 displaystyle
+dropdown
 dt
+eps
 estimands
 et
 expf
@@ -58,11 +61,11 @@ geoms
 ggproto
 hemolysin
 infty
+insightsengineering
 invf
 isos
 isotype
 isotypes
-jitter
 kDa
 le
 leq
@@ -74,10 +77,13 @@ mathbb
 mathbf
 mathcal
 mcmc
+mitre
 modelled
 multicohort
+multiversion
 nd
 nr
+olds
 overcount
 overcounts
 overline
@@ -93,7 +99,6 @@ qmd
 qquad
 recombinant
 renewcommand
-rescale
 sectionally
 sera
 seroconversion
@@ -119,3 +124,4 @@ unstratified
 varepsilon
 vec
 vee
+yaml

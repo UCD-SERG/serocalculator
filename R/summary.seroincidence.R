@@ -2,7 +2,7 @@
 #' @description
 #' This function is a `summary()` method for `seroincidence` objects.
 #'
-#' @param object a [list()], outputted by [stats::nlm()] or [est.incidence()]
+#' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param verbose whether to produce verbose messaging
 #' @param ... unused
@@ -15,7 +15,7 @@
 #' * `CI.upr`: upper limit of confidence interval for incidence rate
 #' * `coverage`: coverage probability
 #' * `log.lik`:
-#'    log-likelihood of the data used in the call to `est.incidence()`,
+#'    log-likelihood of the data used in the call to `est_seroincidence()`,
 #'    evaluated at the maximum-likelihood estimate of lambda
 #'    (i.e., at `incidence.rate`)
 #' * `iterations`: the number of iterations used
@@ -32,7 +32,7 @@
 #'    * 3: Last global step failed to locate a point lower than x.
 #'         Either x is an approximate local minimum of the function,
 #'         the function is too non-linear for this algorithm,
-#'         or `stepmin` in [est.incidence()]
+#'         or `stepmin` in [est_seroincidence()]
 #'         (a.k.a., `steptol` in [stats::nlm()]) is too large.
 #'    * 4: iteration limit exceeded; increase `iterlim`.
 #'    * 5: maximum step size `stepmax` exceeded five consecutive times.
@@ -54,9 +54,9 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
-#' est1 <- est.incidence(
+#' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
-#'   curve_params = curve,
+#'   sr_params = curve,
 #'   noise_params = noise,
 #'   antigen_isos = c("HlyE_IgG", "HlyE_IgA")
 #' )
@@ -97,7 +97,10 @@ summary.seroincidence <- function(
     log.lik = -object$minimum,
     iterations = object$iterations,
     antigen.isos = antigen_isos |> paste(collapse = "+"),
-    nlm.convergence.code = object$code |> factor(levels = 1:5, ordered = TRUE)
+    nlm.convergence.code =
+      object$code |>
+      factor(levels = 1:5, ordered = TRUE) |>
+      labelled::set_label_attribute("`nlm()` convergence code")
     # |> factor(levels = 1:5, labels = nlm_exit_codes)
   )
 

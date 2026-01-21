@@ -7,7 +7,7 @@
 \format{
 \subsection{\code{typhoid_curves_nostrat_100}}{
 
-A \code{curve_params} object (from \code{\link[=as_curve_params]{as_curve_params()}}) with 500 rows and 7
+A \code{curve_params} object (from \code{\link[=as_sr_params]{as_sr_params()}}) with 500 rows and 7
 columns:
 \describe{
 \item{antigen_iso}{which antigen and isotype are being measured

@@ -1,12 +1,13 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.3.0.9029
+Version: 1.4.0.9003
 Authors@R: c(
-    person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
-           comment = "Author of the method and original code."),
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
+    person("Kwan Ho", "Lee", , "ksjlee@ucdavis.edu", role = "ctb"),
+    person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
+           comment = "Author of the method and original code."),
     person("Kristen", "Aiemjoy", , "kaiemjoy@ucdavis.edu", role = "aut"),
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = "aut")
   )
@@ -22,6 +23,7 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     cli,
+    config,
     doParallel,
     dplyr,
     foreach,
@@ -29,8 +31,6 @@ Imports:
     ggpubr,
     lifecycle,
     magrittr,
-    mixtools,
-    pkgload,
     Rcpp,
     rlang,
     rngtools,
@@ -45,13 +45,15 @@ Imports:
     and,
     glue,
     stringr,
-    parallel
+    parallel,
+    labelled
 Suggests:
     bookdown,
     DT,
     fs,
     ggbeeswarm,
     knitr,
+    mixtools,
     pak,
     readr,
     quarto,
@@ -62,7 +64,10 @@ Suggests:
     tidyverse,
     qrcode,
     vdiffr,
-    withr
+    withr,
+    forcats,
+    snapr (>= 0.0.0.9000),
+    rex
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
@@ -75,4 +80,6 @@ Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
+Remotes: 
+    d-morrison/snapr

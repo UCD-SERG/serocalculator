@@ -39,5 +39,5 @@ serocalculator_example()
 #> [3] "example_noise_params.csv" "example_noise_params.rds"
 #> [5] "example_pop_data.csv"     "example_pop_data.rds"    
 serocalculator_example("example_pop_data.csv")
-#> /tmp/RtmpU1XbLC/temp_libpath1d796af67629/serocalculator/extdata/example_pop_data.csv
+#> /tmp/RtmpDHQxAm/temp_libpath1d72e658830/serocalculator/extdata/example_pop_data.csv
 ```

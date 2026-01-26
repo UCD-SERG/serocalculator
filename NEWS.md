@@ -1,5 +1,25 @@
 # serocalculator (development version)
 
+## New features
+
+* Added interactive Shiny app for visualizing antigen-antibody kinetics models
+  - `curve_app()`: Launch interactive Shiny application
+  - `curve_app_ui()`: UI components for the kinetics visualization app
+  - `curve_app_server()`: Server logic for the kinetics visualization app
+  - App allows real-time parameter adjustments via sliders for exploring model behavior
+* Added mathematical functions for modeling antibody and pathogen decay
+  - `antibody_decay_curve()`: Simulate and plot antibody decay over time
+  - `pathogen_decay_curve()`: Simulate and plot pathogen decay over time
+  - `t1f()`: Calculate time to end of active infection
+  - `y1f()`: Calculate peak antibody concentration
+* Added `plot_decay_curve()` for easy plotting of decay functions using ggplot2
+* Added app configuration utilities (`app_sys()`, `get_golem_config()`)
+
+## Improvements
+
+* Improved error messages in `autoplot.seroincidence()` and 
+  `autoplot.seroincidence.by()` to use `cli::cli_abort()` for clearer errors
+
 # serocalculator 1.4.0
 
 ## New features

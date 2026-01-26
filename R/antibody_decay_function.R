@@ -15,20 +15,18 @@
 #' @examples
 #' library(ggplot2)
 #' ggplot() + geom_function(fun = antibody_decay_curve) + xlim(1,100)
-antibody_decay_curve = function(
-    t,
-    y0 = 0.74916052, # taken from simpar run from vignette
-    b0 = 1,
-    mu_b = 0.18432798,
-    mu_y = 0.36853621,
-    gamma = 0.0013040664,
-    alpha = 0.00002192627,
-    rho = 2
-    # rho = 2 # exponential decay?
-)
-{
+antibody_decay_curve <- function(
+  t,
+  y0 = 0.74916052, # taken from simpar run from vignette
+  b0 = 1,
+  mu_b = 0.18432798,
+  mu_y = 0.36853621,
+  gamma = 0.0013040664,
+  alpha = 0.00002192627,
+  rho = 2
+) {
 
-  t1 = t1f(
+  t1 <- t1f(
     b0 = b0,
     y0 = y0,
     mu_y = mu_y,
@@ -36,15 +34,16 @@ antibody_decay_curve = function(
     gamma = gamma
   )
 
-  y1 = y1f(
+  y1 <- y1f(
     y0 = y0,
     mu_y = mu_y,
-    t1 = t1)
+    t1 = t1
+  )
 
   phase2_rho1 <- y1 * exp(-alpha * (t - t1))
   phase2_default <-
-    y1 * (1+ (rho-1) * (y1 ^ (rho - 1)) * alpha * (t - t1))^(-1/(rho - 1))
-  yt = ifelse(
+    y1 * (1 + (rho - 1) * (y1^(rho - 1)) * alpha * (t - t1))^(-1 / (rho - 1))
+  yt <- ifelse(
     t < t1,
     y0 * exp(mu_y * t),
     ifelse(

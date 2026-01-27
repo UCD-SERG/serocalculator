@@ -1,5 +1,3 @@
-## Cluster-robust standard errors for clustered sampling designs
-
 In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.
 
 ### Why clustering matters
@@ -19,12 +17,17 @@ $$V_{\text{robust}} = H^{-1} B H^{-1}$$
 
 where:
 
-* $H$ is the Hessian matrix (second derivatives of the log-likelihood)
+* $V_{\text{robust}}$ is the cluster-robust variance-covariance matrix for the parameter estimates
+* $H$ is the Hessian matrix (matrix of second partial derivatives of the log-likelihood with respect to the parameters, evaluated at the MLE $\hat{\lambda}$)
 * $B$ is the "meat" of the sandwich, calculated from cluster-level score contributions:
 
 $$B = \sum_{c=1}^C U_c U_c^T$$
 
-where $U_c$ is the score contribution (gradient of log-likelihood) from cluster $c$.
+where:
+
+* $C$ is the total number of clusters in the sample
+* $U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)$ is the score contribution (gradient of log-likelihood with respect to $\lambda$) from all observations in cluster $c$
+* $\nabla_\lambda$ denotes the gradient operator (vector of partial derivatives with respect to the parameter $\lambda$)
 
 ### Implementation in serocalculator
 

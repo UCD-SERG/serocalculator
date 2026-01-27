@@ -244,6 +244,36 @@ To regenerate:
 rmarkdown::render("README.Rmd")
 ```
 
+### Vignette Subfiles
+
+When creating subfiles to be included in vignettes (e.g., using Quarto's `{{< include >}}` directive):
+
+**CRITICAL**: Always keep the main section header in the parent file, not in the subfile.
+
+- ✅ **CORRECT**: In parent file: `## Section Title`, then `{{< include subfile.qmd >}}`
+- ❌ **INCORRECT**: Subfile contains `## Section Title` as its first line
+
+**Naming convention**: Subfiles that are included in other documents should be prefixed with `_` (underscore), e.g., `_cluster-robust-se.qmd`, `_antibody-response-model.qmd`
+
+**Example structure**:
+
+Parent file (`methodology.qmd`):
+```markdown
+## Cluster-robust standard errors
+
+{{< include articles/_cluster-robust-se.qmd >}}
+```
+
+Subfile (`articles/_cluster-robust-se.qmd`):
+```markdown
+In many survey designs, observations are clustered...
+
+### Subsection Title
+...
+```
+
+This ensures proper document structure and makes it clear where each section begins when viewing the parent document.
+
 ### Version Management
 
 **CRITICAL**: Always ensure the development version in your PR branch is one version number higher than the main branch.

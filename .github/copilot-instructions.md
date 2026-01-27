@@ -1,5 +1,20 @@
 # Copilot Instructions for serocalculator
 
+## Lab Standards and Best Practices
+
+**Follow the guidance in the [UCD-SERG Lab Manual](https://ucd-serg.github.io/lab-manual/)** for all aspects of code development, documentation, and reproducibility. The lab manual provides comprehensive guidance on:
+
+- Reproducible research practices
+- R package development workflows
+- Coding style and best practices
+- Testing requirements and strategies
+- Documentation standards
+- Version control and collaboration
+
+If you need to review the source files directly, they are available at [github.com/UCD-SERG/lab-manual](https://github.com/UCD-SERG/lab-manual).
+
+The instructions below are specific to the serocalculator repository and supplement the general lab practices documented in the lab manual.
+
 ## Repository Overview
 
 **serocalculator** is an R package for estimating infection rates from serological data. It translates antibody levels measured in cross-sectional population samples into estimates of the frequency with which seroconversions (infections) occur in the sampled populations. This package replaces the previous `seroincidence` package.

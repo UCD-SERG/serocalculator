@@ -330,6 +330,74 @@ This produces a table with one row for each pairwise comparison, showing:
 
 We can use this to identify which differences are statistically significant (typically using p < 0.05 as a threshold).
 
+## Accounting for Clustered Sampling Designs
+
+In many survey designs, observations are clustered (e.g., multiple individuals from the same household, geographic area, or school). When observations within clusters are more similar to each other than to observations from different clusters, standard errors that ignore clustering will be too small, leading to overconfident inference.
+
+The `serocalculator` package supports cluster-robust standard error estimation through the `cluster_var` parameter.
+
+### Example: Household Clustering
+
+Suppose our survey sampled individuals from households, and we want to account for potential correlation within households:
+
+```{r clustering_example, eval=FALSE}
+# Example: Account for household clustering
+# (Note: The SEES data used in this vignette doesn't include household IDs,
+# so this is a hypothetical example showing the syntax)
+
+est_with_clustering <- est_seroincidence(
+  pop_data = xs_data,
+  sr_params = curves,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "household_id"  # Specify the cluster identifier variable
+)
+
+# The summary will show cluster-robust standard errors
+summary(est_with_clustering)
+```
+
+### Multi-level Clustering
+
+For complex survey designs with multiple levels of clustering (e.g., schools within districts), you can specify multiple cluster variables:
+
+```{r multilevel_clustering, eval=FALSE}
+# Example: Multi-level clustering
+est_multilevel <- est_seroincidence(
+  pop_data = xs_data,
+  sr_params = curves,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = c("district_id", "school_id")
+)
+```
+
+### Clustering with Stratified Analysis
+
+Clustering can also be combined with stratified analysis using `est_seroincidence_by()`:
+
+```{r clustering_stratified, eval=FALSE}
+# Example: Stratified analysis with clustering
+est_country_clustered <- est_seroincidence_by(
+  pop_data = xs_data,
+  strata = c("Country", "ageCat"),
+  sr_params = curves,
+  noise_params = noise,
+  noise_strata_varnames = "Country",
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "household_id"
+)
+```
+
+### Understanding the Impact
+
+When cluster-robust standard errors are used:
+
+- **Point estimates** (incidence rates) remain unchanged
+- **Standard errors** typically increase by 5-15% to reflect within-cluster correlation
+- The `summary()` output includes a `se_type` column indicating "cluster-robust" vs "standard"
+- Confidence intervals appropriately widen to account for reduced effective sample size
+
 
 ```{r include=FALSE}
 #Calculate output values

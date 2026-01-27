@@ -1,5 +1,12 @@
 # serocalculator (development version)
 
+## New features
+
+* Added `compute_icc()` function to calculate Intraclass Correlation Coefficient (ICC) for seroincidence estimates from clustered sampling designs
+  - Computes ICC using design effect (DEFF) method
+  - Works with both single and stratified seroincidence estimates
+  - Includes print methods for formatted output
+
 # serocalculator 1.4.0
 
 ## New features

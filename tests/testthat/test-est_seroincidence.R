@@ -52,6 +52,25 @@ test_that("clustering with stratum works with est_seroincidence", {
   # Summary should work
   sum_both <- summary(est_both, verbose = FALSE)
   expect_equal(sum_both$se_type, "cluster-robust")
+  
+  # Verify functional impact: clustering should affect standard errors
+  # Compare with non-clustered version
+  est_no_cluster <- est_seroincidence(
+    pop_data = sees_pop_data_pk_100,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+  
+  sum_no_cluster <- summary(est_no_cluster, verbose = FALSE)
+  
+  # Point estimates should be identical
+  expect_equal(sum_both$incidence.rate, sum_no_cluster$incidence.rate)
+  
+  # Cluster-robust SE should generally be larger due to within-cluster correlation
+  # (though in some rare cases with negative ICC, it could be smaller)
+  # At minimum, they should be different when there's actual clustering
+  expect_false(isTRUE(all.equal(sum_both$SE, sum_no_cluster$SE)))
 })
 
 test_that("invalid cluster_var causes error", {

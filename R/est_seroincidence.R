@@ -35,8 +35,6 @@
 #' variable names for multi-level clustering (e.g., `c("school",
 #' "classroom")`). When provided, standard errors will be adjusted for
 #' within-cluster correlation using cluster-robust variance estimation.
-#' Note: ICC calculation via `compute_icc()` only supports
-#' single-level clustering.
 #' @param stratum_var optional name of the variable in `pop_data` containing
 #' stratum identifiers. Used in combination with `cluster_var` for
 #' stratified cluster sampling designs.
@@ -116,35 +114,12 @@ est_seroincidence <- function(
   }
 
   # Validate cluster/stratum parameters
-  if (!is.null(sampling_weights)) {
-    cli::cli_warn(
-      "{.arg sampling_weights} is not yet implemented and will be ignored."
-    )
-  }
-
-  if (!is.null(cluster_var)) {
-    # Check all cluster variables exist in pop_data
-    missing_vars <- setdiff(cluster_var, names(pop_data))
-    if (length(missing_vars) > 0) {
-      cli::cli_abort(c(
-        "x" = paste(
-          "{.arg cluster_var} = {.val {missing_vars}}",
-          "is not a column in {.arg pop_data}."
-        )
-      ))
-    }
-  }
-
-  if (!is.null(stratum_var)) {
-    if (!stratum_var %in% names(pop_data)) {
-      cli::cli_abort(c(
-        "x" = paste(
-          "{.arg stratum_var} = {.val {stratum_var}}",
-          "is not a column in {.arg pop_data}."
-        )
-      ))
-    }
-  }
+  .validate_cluster_params(
+    pop_data = pop_data,
+    cluster_var = cluster_var,
+    stratum_var = stratum_var,
+    sampling_weights = sampling_weights
+  )
 
   .error_check(
     data = pop_data,

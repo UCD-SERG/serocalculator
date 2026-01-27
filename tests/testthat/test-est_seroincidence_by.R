@@ -338,6 +338,33 @@ test_that("clustering with stratum works with est_seroincidence_by", {
     expect_equal(attr(est_both[[stratum_name]], "cluster_var"), "cluster")
     expect_equal(attr(est_both[[stratum_name]], "stratum_var"), "catchment")
   }
+  
+  # Verify functional impact: clustering should affect standard errors
+  # Compare with non-clustered version
+  est_no_cluster <- est_seroincidence_by(
+    strata = "catchment",
+    pop_data = sees_pop_data_pk_100,
+    sr_params = typhoid_curves_nostrat_100,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    num_cores = 1
+  )
+  
+  sum_both <- summary(est_both)
+  sum_no_cluster <- summary(est_no_cluster)
+  
+  # Point estimates should be identical across all strata
+  expect_equal(sum_both$incidence.rate, sum_no_cluster$incidence.rate)
+  
+  # Standard errors should differ when clustering is applied
+  # (may be larger or smaller depending on within-cluster correlation)
+  expect_false(isTRUE(all.equal(sum_both$SE, sum_no_cluster$SE)))
+  
+  # Verify se_type is correctly set
+  expect_true(all(sum_both$se_type == "cluster-robust"))
+  expect_true(all(sum_no_cluster$se_type == "standard"))
 })
 
 test_that("clustering works with parallel processing", {

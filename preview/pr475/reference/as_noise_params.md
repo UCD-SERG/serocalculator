@@ -30,6 +30,11 @@ with extra attribute `antigen_isos`)
 
 ``` r
 library(magrittr)
+#> 
+#> Attaching package: ‘magrittr’
+#> The following objects are masked from ‘package:testthat’:
+#> 
+#>     equals, is_less_than, not
 noise_data <-
   serocalculator_example("example_noise_params.csv") %>%
   read.csv() %>%

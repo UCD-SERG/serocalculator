@@ -3,7 +3,7 @@
 **\[deprecated\]**
 
 `sim.cs.multi()` was renamed to
-[`sim_pop_data_multi()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/sim_pop_data_multi.md)
+[`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
 to create a more consistent API.
 
 ## Usage

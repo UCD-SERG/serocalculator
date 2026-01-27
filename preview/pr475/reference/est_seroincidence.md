@@ -115,10 +115,13 @@ est_seroincidence(
 
 - cluster_var:
 
-  optional name of the variable in `pop_data` containing cluster
+  optional name(s) of the variable(s) in `pop_data` containing cluster
   identifiers for clustered sampling designs (e.g., households,
-  schools). When provided, standard errors will be adjusted for
-  within-cluster correlation using cluster-robust variance estimation.
+  schools). Can be a single variable name (character string) or a vector
+  of variable names for multi-level clustering (e.g.,
+  `c("school", "classroom")`). When provided, standard errors will be
+  adjusted for within-cluster correlation using cluster-robust variance
+  estimation.
 
 - stratum_var:
 
@@ -200,11 +203,12 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.166 0.0178  0.135  0.205 standard     0.95   -524.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 
 # Usage with clustered sampling design
 # Standard errors will be adjusted for within-cluster correlation
@@ -217,11 +221,11 @@ est2 <- est_seroincidence(
 )
 
 summary(est2)
-#> Computing cluster-robust standard errors using cluster variable.
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate SE[,1] CI.lwr[,1] CI.upr[,1] coverage log.lik
-#>       <dbl>          <dbl>  <dbl>      <dbl>      <dbl>    <dbl>   <dbl>
-#> 1       0.1          0.166 0.0193      0.132      0.209     0.95   -524.
+#> ℹ Computing cluster-robust standard errors using cluster variable.
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
+#> 1       0.1          0.166 0.0193  0.132  0.209 cluster-robust     0.95   -524.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 
@@ -236,11 +240,11 @@ est3 <- est_seroincidence(
 )
 
 summary(est3)
-#> Computing cluster-robust standard errors using cluster variable.
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate SE[,1] CI.lwr[,1] CI.upr[,1] coverage log.lik
-#>       <dbl>          <dbl>  <dbl>      <dbl>      <dbl>    <dbl>   <dbl>
-#> 1       0.1          0.166 0.0193      0.132      0.209     0.95   -524.
+#> ℹ Computing cluster-robust standard errors using cluster variable.
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
+#> 1       0.1          0.166 0.0193  0.132  0.209 cluster-robust     0.95   -524.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 ```

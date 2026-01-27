@@ -24,7 +24,7 @@ log-likelihoods, corresponding to the elements of input `lambda`
 ## Details
 
 Vectorized version of
-[`f_dev0()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/f_dev0.md);
+[`f_dev0()`](https://ucd-serg.github.io/serocalculator/reference/f_dev0.md);
 interface with C lib `serocalc.so`
 
 ## Examples

@@ -3,7 +3,7 @@
 **\[deprecated\]**
 
 `est.incidence()` was renamed to
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 to create a more consistent API.
 
 ## Usage

@@ -311,12 +311,20 @@ The package uses a custom lintr configuration (`.lintr`) with specific
 requirements:
 
 ``` r
+# ALWAYS load the package first before linting
+devtools::load_all()
+
 # Lint the entire package
 lintr::lint_package()
 
 # Lint specific file
 lintr::lint("R/filename.R")
 ```
+
+**Important**: Always run `devtools::load_all()` before linting to avoid
+false positives about undefined functions. This loads the package in
+development mode, making internal and package functions available to the
+linter.
 
 **Key linting rules**: - Use native pipe `|>` (configured in .lintr) -
 Follow snake_case naming conventions - Avoid trailing whitespace -
@@ -485,7 +493,7 @@ Choose the appropriate testing approach based on the context:
 #### When to Use Snapshot Tests
 
 Use snapshot tests (`expect_snapshot()`, `expect_snapshot_value()`, or
-[`expect_snapshot_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/expect_snapshot_data.md))
+[`expect_snapshot_data()`](https://ucd-serg.github.io/serocalculator/reference/expect_snapshot_data.md))
 when: - Testing complex data structures (data.frames, lists, model
 outputs) - Validating statistical results - Output format stability is
 important - The exact values are less important than structural
@@ -550,6 +558,65 @@ expect_false(has_missing_values(complete_data))
     changes are intentional
 5.  **Review snapshots**: When snapshots change, review the diff to
     ensure changes are expected
+
+## Code Organization Policies
+
+**CRITICAL**: Follow these strict code organization policies for all new
+code and refactoring work:
+
+### File Organization
+
+1.  **One function per file**: Each exported function and its associated
+    S3 methods should be in its own file
+    - File name should match the function name (e.g.,
+      `summary.seroincidence.R` for
+      [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md))
+    - S3 methods for the same generic can be in the same file (e.g.,
+      [`compare_seroincidence.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md),
+      [`compare_seroincidence.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md),
+      and `compare_seroincidence.default()` all in
+      `compare_seroincidence.R`)
+2.  **Internal helper functions**: Move to separate files
+    - Use descriptive file names (e.g., `compute_cluster_robust_var.R`
+      for `.compute_cluster_robust_var()`)
+    - Keep related internal functions together when logical
+    - Internal functions should use `.function_name()` naming convention
+3.  **Print methods**: Each print method in its own file
+    - File name: `print.{class_name}.R` (e.g., `print.seroincidence.R`)
+4.  **Extract anonymous functions**: Convert complex anonymous functions
+    to named helper functions in separate files
+    - If an anonymous function is longer than ~5 lines, extract it
+    - Name should describe its purpose (e.g., `.helper_function_name()`)
+
+### Example Organization
+
+1.  **Long examples**: Move to `inst/examples/exm-{function_name}.R`
+    - Use `@example inst/examples/exm-{function_name}.R` in roxygen
+      documentation
+    - Keep inline `@examples` short (1-3 lines) for simple
+      demonstrations
+2.  **Example file naming**: `exm-{function_name}.R`
+    - Example: `exm-est_seroincidence.R` for
+      [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+      examples
+
+### Benefits
+
+- **Easier navigation**: Find functions quickly by file name
+- **Better git history**: Changes to one function don’t pollute history
+  of unrelated functions
+- **Clearer code review**: Reviewers can focus on individual functions
+- **Reduced merge conflicts**: Multiple people can work on different
+  functions simultaneously
+- **Better organization**: Logical structure makes codebase more
+  maintainable
+
+### Migration Strategy
+
+When refactoring existing code: 1. Extract functions to separate files
+2. Update any internal calls if needed 3. Run `devtools::document()` to
+regenerate documentation 4. Run `devtools::check()` to ensure no
+breakage 5. Run tests to verify functionality unchanged
 
 ## Code Style Guidelines
 

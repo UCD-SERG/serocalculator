@@ -2,7 +2,7 @@
 
 Custom [`print()`](https://rdrr.io/r/base/print.html) function for
 "summary.seroincidence.by" objects (constructed by
-[`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/summary.seroincidence.by.md))
+[`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md))
 
 ## Usage
 
@@ -16,7 +16,7 @@ print(x, ...)
 - x:
 
   A "summary.seroincidence.by" object (constructed by
-  [`summary.seroincidence.by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/summary.seroincidence.by.md))
+  [`summary.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.by.md))
 
 - ...:
 
@@ -68,11 +68,11 @@ print(est2_summary)
 #> b) Strata       : catchment 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 2 × 13
-#>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage
-#>   <chr>   <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
-#> 1 Stratu… aku          53       0.1          0.140 0.0216  0.104  0.189     0.95
-#> 2 Stratu… kgh          47       0.1          0.200 0.0301  0.149  0.268     0.95
-#> # ℹ 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
-#> #   nlm.convergence.code <ord>
+#> # A tibble: 2 × 14
+#>   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#>   <chr>    <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratum… aku          53       0.1          0.140 0.0216  0.104  0.189 standa…
+#> 2 Stratum… kgh          47       0.1          0.200 0.0301  0.149  0.268 standa…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```

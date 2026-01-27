@@ -3,7 +3,7 @@
 **\[deprecated\]**
 
 `fdev()` was renamed to
-[`f_dev()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/f_dev.md)
+[`f_dev()`](https://ucd-serg.github.io/serocalculator/reference/f_dev.md)
 to create a more consistent API.
 
 ## Usage

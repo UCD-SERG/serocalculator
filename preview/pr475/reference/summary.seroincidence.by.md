@@ -1,7 +1,7 @@
 # Summary Method for `"seroincidence.by"` Objects
 
 Calculate seroincidence from output of the seroincidence calculator
-[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md).
+[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
 
 ## Usage
 
@@ -22,7 +22,7 @@ summary(
 - object:
 
   A dataframe containing output of
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md).
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
 
 - confidence_level:
 
@@ -73,10 +73,10 @@ The object also has the following metadata (accessible through
 
 - `antigen_isos` Character vector with names of input antigen isotypes
   used in
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md)
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 - `Strata` Character with names of strata used in
-  [`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md)
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 ## Examples
 
@@ -118,11 +118,11 @@ summary(est2)
 #> b) Strata       : catchment 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 2 × 13
-#>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage
-#>   <chr>   <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
-#> 1 Stratu… aku          53       0.1          0.140 0.0216  0.104  0.189     0.95
-#> 2 Stratu… kgh          47       0.1          0.200 0.0301  0.149  0.268     0.95
-#> # ℹ 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
-#> #   nlm.convergence.code <ord>
+#> # A tibble: 2 × 14
+#>   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#>   <chr>    <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratum… aku          53       0.1          0.140 0.0216  0.104  0.189 standa…
+#> 2 Stratum… kgh          47       0.1          0.200 0.0301  0.149  0.268 standa…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```

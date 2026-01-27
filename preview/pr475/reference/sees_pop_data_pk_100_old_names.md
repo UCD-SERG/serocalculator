@@ -2,7 +2,7 @@
 
 A subset of data from the SEES data, for examples and testing, data from
 Pakistan only, variable names not normalized by
-[`as_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/as_pop_data.md).
+[`as_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/as_pop_data.md).
 
 ## Usage
 
@@ -15,7 +15,7 @@ sees_pop_data_pk_100_old_names
 ### `sees_pop_data_pk_100_old_names`
 
 A `pop_data` object (from
-[`as_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/as_pop_data.md))
+[`as_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/as_pop_data.md))
 with 200 rows and 8 columns:
 
 - index_id:

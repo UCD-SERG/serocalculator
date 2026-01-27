@@ -290,11 +290,12 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.128 0.00682  0.115  0.142     0.95  -2376.          4
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate      SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.128 0.00682  0.115  0.142 standard     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```
 
 ### Stratified Seroincidence
@@ -336,7 +337,7 @@ summary(est_country_age)
 #> b) Strata       : Country, ageCat 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 9 × 14
+#> # A tibble: 9 × 15
 #>   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr
 #>   <chr>     <chr>    <fct>  <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl>
 #> 1 Stratum 1 Banglad… <5       101       0.1         0.400  0.0395  0.330  0.485 
@@ -348,8 +349,8 @@ summary(est_country_age)
 #> 7 Stratum 7 Pakistan <5       126       0.1         0.106  0.0136  0.0823 0.136 
 #> 8 Stratum 8 Pakistan 5-15     261       0.1         0.115  0.00845 0.0991 0.132 
 #> 9 Stratum 9 Pakistan 16+      107       0.1         0.190  0.0204  0.154  0.235 
-#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
-#> #   antigen.isos <chr>, nlm.convergence.code <ord>
+#> # ℹ 6 more variables: se_type <chr>, coverage <dbl>, log.lik <dbl>,
+#> #   iterations <int>, antigen.isos <chr>, nlm.convergence.code <ord>
 ```
 
 Note that we get a warning about uneven observations between antigen
@@ -388,6 +389,95 @@ autoplot(
 ```
 
 ![](enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png)
+
+## Comparing Seroincidence Rates
+
+After estimating seroincidence rates across different groups, we may
+want to statistically compare these rates to determine if observed
+differences are significant. The
+[`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)
+function performs two-sample z-tests to compare seroincidence rates.
+
+### Comparing Two Individual Estimates
+
+First, let’s compare seroincidence rates between two countries directly.
+We’ll estimate seroincidence for Bangladesh and Nepal separately, then
+compare them:
+
+``` r
+# Estimate seroincidence for Bangladesh
+est_bangladesh <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Bangladesh"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Bangladesh"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+# Estimate seroincidence for Nepal
+est_nepal <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Nepal"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Nepal"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+# Compare the two estimates
+comparison <- compare_seroincidence(est_bangladesh, est_nepal)
+print(comparison)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = 17.027, p-value < 2.2e-16
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  0.3559738 0.4485881
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>       0.45050113       0.04822018       0.40228095
+```
+
+The output follows the standard `htest` format in R, providing the
+z-statistic, p-value, estimates for both groups, and a confidence
+interval for the difference in incidence rates.
+
+### Comparing All Pairs of Stratified Estimates
+
+For stratified analyses, we can compare all pairs of strata at once.
+This is particularly useful when we have multiple groups and want a
+comprehensive view of all pairwise differences:
+
+``` r
+# Compare all pairs of country-age combinations
+comparisons_table <- compare_seroincidence(est_country_age)
+
+# Display the results
+print(comparisons_table)
+#> # A tibble: 36 × 14
+#>    Stratum_1 Stratum_2 Country.1  ageCat.1 Country.2  ageCat.2 incidence.rate.1
+#>  * <chr>     <chr>     <chr>      <fct>    <chr>      <fct>               <dbl>
+#>  1 Stratum 1 Stratum 2 Bangladesh <5       Bangladesh 5-15                0.400
+#>  2 Stratum 1 Stratum 3 Bangladesh <5       Bangladesh 16+                 0.400
+#>  3 Stratum 1 Stratum 4 Bangladesh <5       Nepal      <5                  0.400
+#>  4 Stratum 1 Stratum 5 Bangladesh <5       Nepal      5-15                0.400
+#>  5 Stratum 1 Stratum 6 Bangladesh <5       Nepal      16+                 0.400
+#>  6 Stratum 1 Stratum 7 Bangladesh <5       Pakistan   <5                  0.400
+#>  7 Stratum 1 Stratum 8 Bangladesh <5       Pakistan   5-15                0.400
+#>  8 Stratum 1 Stratum 9 Bangladesh <5       Pakistan   16+                 0.400
+#>  9 Stratum 2 Stratum 3 Bangladesh 5-15     Bangladesh 16+                 0.477
+#> 10 Stratum 2 Stratum 4 Bangladesh 5-15     Nepal      <5                  0.477
+#> # ℹ 26 more rows
+#> # ℹ 7 more variables: incidence.rate.2 <dbl>, difference <dbl>, SE <dbl>,
+#> #   z.statistic <dbl>, p.value <dbl>, CI.lwr <dbl>, CI.upr <dbl>
+```
+
+This produces a table with one row for each pairwise comparison,
+showing: - The two strata being compared - Incidence rates for each
+group - The difference in rates - Standard error of the difference -
+Z-statistic - P-value - 95% confidence interval for the difference
+
+We can use this to identify which differences are statistically
+significant (typically using p \< 0.05 as a threshold).
 
 ## Conclusions
 

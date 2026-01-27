@@ -19,6 +19,8 @@ est_seroincidence_by(
   num_cores = 1L,
   verbose = FALSE,
   print_graph = FALSE,
+  cluster_var = NULL,
+  stratum_var = NULL,
   ...
 )
 ```
@@ -117,32 +119,34 @@ est_seroincidence_by(
 
   whether to display the log-likelihood curve graph in the course of
   running
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+
+- cluster_var:
+
+  optional name(s) of the variable(s) in `pop_data` containing cluster
+  identifiers for clustered sampling designs (e.g., households,
+  schools). Can be a single variable name (character string) or a vector
+  of variable names for multi-level clustering (e.g.,
+  `c("school", "classroom")`). When provided, standard errors will be
+  adjusted for within-cluster correlation using cluster-robust variance
+  estimation.
+
+- stratum_var:
+
+  optional name of the variable in `pop_data` containing stratum
+  identifiers. Used in combination with `cluster_var` for stratified
+  cluster sampling designs.
 
 - ...:
 
   Arguments passed on to
-  [`est_seroincidence`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md),
+  [`est_seroincidence`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
   [`stats::nlm`](https://rdrr.io/r/stats/nlm.html)
 
   `stepmin`
 
   :   A positive scalar providing the minimum allowable relative step
       length.
-
-  `cluster_var`
-
-  :   optional name of the variable in `pop_data` containing cluster
-      identifiers for clustered sampling designs (e.g., households,
-      schools). When provided, standard errors will be adjusted for
-      within-cluster correlation using cluster-robust variance
-      estimation.
-
-  `stratum_var`
-
-  :   optional name of the variable in `pop_data` containing stratum
-      identifiers. Used in combination with `cluster_var` for stratified
-      cluster sampling designs.
 
   `sampling_weights`
 
@@ -197,7 +201,7 @@ est_seroincidence_by(
 
 - if `strata` has meaningful inputs: An object of class
   `"seroincidence.by"`; i.e., a list of `"seroincidence"` objects from
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md),
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
   one for each stratum, with some meta-data attributes.
 
 - if `strata` is missing, `NULL`, `NA`, or `""`: An object of class
@@ -207,12 +211,12 @@ est_seroincidence_by(
 
 If `strata` is left empty, a warning will be produced, recommending that
 you use
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 for unstratified analyses, and then the data will be passed to
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md).
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md).
 If for some reason you want to use `est_seroincidence_by()` with no
 strata instead of calling
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md),
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
 you may use `NA`, `NULL`, or `""` as the `strata` argument to avoid that
 warning.
 
@@ -264,11 +268,11 @@ summary(est2)
 #> b) Strata       : catchment 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 2 × 13
-#>   Stratum catchment     n est.start incidence.rate     SE CI.lwr CI.upr coverage
-#>   <chr>   <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
-#> 1 Stratu… aku          53       0.1          0.140 0.0216  0.104  0.189     0.95
-#> 2 Stratu… kgh          47       0.1          0.200 0.0301  0.149  0.268     0.95
-#> # ℹ 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
-#> #   nlm.convergence.code <ord>
+#> # A tibble: 2 × 14
+#>   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#>   <chr>    <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratum… aku          53       0.1          0.140 0.0216  0.104  0.189 standa…
+#> 2 Stratum… kgh          47       0.1          0.200 0.0301  0.149  0.268 standa…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```

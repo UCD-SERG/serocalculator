@@ -70,7 +70,7 @@ dmcmc <-
 
 We can graph individual MCMC samples from the posterior distribution of
 model parameters using a
-[`autoplot.curve_params()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/autoplot.curve_params.md)
+[`autoplot.curve_params()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.md)
 method for the
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
 function:
@@ -227,7 +227,7 @@ print(ll_a + ll_g)
 
 We can also graph the log-likelihoods, even without finding the MLEs,
 using
-[`graph_loglik()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/graph_loglik.md):
+[`graph_loglik()`](https://ucd-serg.github.io/serocalculator/reference/graph_loglik.md):
 
 ``` r
 lik_HlyE_IgA <-
@@ -265,7 +265,7 @@ print(lik_both)
 ### estimate incidence
 
 We can estimate incidence with
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md):
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md):
 
 ``` r
 est1 <- est_seroincidence(
@@ -286,11 +286,12 @@ We can extract summary statistics with
 
 ``` r
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.279 0.0289  0.228  0.342     0.95   -584.          6
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.279 0.0289  0.228  0.342 standard     0.95   -584.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```
 
 We can plot the log-likelihood curve with
@@ -411,7 +412,7 @@ ests_summary <- ests |> summary() |> print()
 #> b) Strata       : sample_size, lambda.sim, cluster 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 120 × 15
+#> # A tibble: 120 × 16
 #>    Stratum sample_size lambda.sim cluster     n est.start incidence.rate      SE
 #>    <chr>         <dbl>      <dbl>   <int> <int>     <dbl>          <dbl>   <dbl>
 #>  1 Stratu…         100       0.05       1   100       0.1         0.0853 0.0124 
@@ -425,8 +426,8 @@ ests_summary <- ests |> summary() |> print()
 #>  9 Stratu…         100       0.05       9   100       0.1         0.0338 0.00722
 #> 10 Stratu…         100       0.05      10   100       0.1         0.0714 0.0108 
 #> # ℹ 110 more rows
-#> # ℹ 7 more variables: CI.lwr <dbl>, CI.upr <dbl>, coverage <dbl>,
-#> #   log.lik <dbl>, iterations <int>, antigen.isos <chr>,
+#> # ℹ 8 more variables: CI.lwr <dbl>, CI.upr <dbl>, se_type <chr>,
+#> #   coverage <dbl>, log.lik <dbl>, iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 ```
 
@@ -501,11 +502,11 @@ ests_summary |>
 Solutions to [`nlm()`](https://rdrr.io/r/stats/nlm.html) exit codes 3-5:
 
 - 3: decrease the `stepmin` argument to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 - 4: increase the `iterlim` argument to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 - 5: increase the `stepmax` argument to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence_by.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)/[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
 
 We can extract the indices of problematic strata, if there are any:
 
@@ -557,7 +558,7 @@ ests_summary |>
 ------------------------------------------------------------------------
 
 We can analyze the simulation results with
-[`analyze_sims()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/analyze_sims.md):
+[`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md):
 
 ``` r
 ests_summary |> analyze_sims()

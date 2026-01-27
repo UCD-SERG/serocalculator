@@ -28,7 +28,7 @@ ab(t, par, ...)
 - ...:
 
   Arguments passed on to
-  [`baseline`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/baseline.md)
+  [`baseline`](https://ucd-serg.github.io/serocalculator/reference/baseline.md)
 
   `yvec`
 

@@ -127,7 +127,7 @@ xs_data <- load_pop_data(
 #### Check formatting
 
 We can check that `xs_data` has the correct formatting using the
-[`check_pop_data()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/check_pop_data.md)
+[`check_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/check_pop_data.md)
 function:
 
 ``` r
@@ -279,13 +279,13 @@ summary(est)
 #> b) Strata       : country 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 2 × 13
-#>   Stratum country     n est.start incidence.rate      SE  CI.lwr CI.upr coverage
-#>   <chr>   <fct>   <int>     <dbl>          <dbl>   <dbl>   <dbl>  <dbl>    <dbl>
-#> 1 Stratu… India     721       0.1        0.0202  0.00148 0.0175  0.0233     0.95
-#> 2 Stratu… Nepal    1105       0.1        0.00854 0.00107 0.00668 0.0109     0.95
-#> # ℹ 4 more variables: log.lik <dbl>, iterations <int>, antigen.isos <chr>,
-#> #   nlm.convergence.code <ord>
+#> # A tibble: 2 × 14
+#>   Stratum  country     n est.start incidence.rate      SE  CI.lwr CI.upr se_type
+#>   <chr>    <fct>   <int>     <dbl>          <dbl>   <dbl>   <dbl>  <dbl> <chr>  
+#> 1 Stratum… India     721       0.1        0.0202  0.00148 0.0175  0.0233 standa…
+#> 2 Stratum… Nepal    1105       0.1        0.00854 0.00107 0.00668 0.0109 standa…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```
 
 ## Estimate Seroincidence by study site and age strata
@@ -333,7 +333,7 @@ summary(est2)
 #> b) Strata       : country, ageQ 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 5 × 14
+#> # A tibble: 5 × 15
 #>   Stratum   country ageQ      n est.start incidence.rate      SE  CI.lwr  CI.upr
 #>   <chr>     <fct>   <fct> <int>     <dbl>          <dbl>   <dbl>   <dbl>   <dbl>
 #> 1 Stratum 1 India   18-29    59       0.1        0.00985 0.00330 0.00511 0.0190 
@@ -341,8 +341,8 @@ summary(est2)
 #> 3 Stratum 3 India   50-89   360       0.1        0.0288  0.00290 0.0236  0.0350 
 #> 4 Stratum 4 Nepal   0-17    876       0.1        0.00606 0.00108 0.00428 0.00860
 #> 5 Stratum 5 Nepal   18-29   229       0.1        0.0144  0.00259 0.0101  0.0205 
-#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
-#> #   antigen.isos <chr>, nlm.convergence.code <ord>
+#> # ℹ 6 more variables: se_type <chr>, coverage <dbl>, log.lik <dbl>,
+#> #   iterations <int>, antigen.isos <chr>, nlm.convergence.code <ord>
 ```
 
 Let’s visualize our seroincidence estimates by strata.

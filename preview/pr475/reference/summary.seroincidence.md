@@ -3,7 +3,7 @@
 This function is a [`summary()`](https://rdrr.io/r/base/summary.html)
 method for `seroincidence` objects. When the model was fit with
 clustered data (using the `cluster_var` parameter in
-[`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)),
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)),
 this function automatically computes cluster-robust standard errors to
 account for within-cluster correlation.
 
@@ -20,7 +20,7 @@ summary(object, coverage = 0.95, verbose = TRUE, ...)
 
   a [`list()`](https://rdrr.io/r/base/list.html) outputted by
   [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html) or
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
 
 - coverage:
 
@@ -46,14 +46,19 @@ containing the following:
 
 - `incidence.rate`: the estimated incidence rate, per person year
 
+- `SE`: standard error of the incidence rate estimate
+
 - `CI.lwr`: lower limit of confidence interval for incidence rate
 
 - `CI.upr`: upper limit of confidence interval for incidence rate
 
+- `se_type`: type of standard error used ("standard" or
+  "cluster-robust")
+
 - `coverage`: coverage probability
 
 - `log.lik`: log-likelihood of the data used in the call to
-  [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md),
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md),
   evaluated at the maximum-likelihood estimate of lambda (i.e., at
   `incidence.rate`)
 
@@ -76,7 +81,7 @@ containing the following:
   - 3: Last global step failed to locate a point lower than x. Either x
     is an approximate local minimum of the function, the function is too
     non-linear for this algorithm, or `stepmin` in
-    [`est_seroincidence()`](https:/ucd-serg.github.io/serocalculator/preview/pr475/reference/est_seroincidence.md)
+    [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
     (a.k.a., `steptol` in
     [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html)) is too large.
 
@@ -110,9 +115,10 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.166 0.0178  0.135  0.205 standard     0.95   -524.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```

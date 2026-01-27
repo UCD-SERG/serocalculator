@@ -32,6 +32,7 @@ where DEFF is the ratio of cluster-robust to standard variance, and
 \eqn{\bar{m}} is the average cluster size.
 }
 \examples{
+\dontrun{
 library(dplyr)
 
 xs_data <- sees_pop_data_pk_100
@@ -68,4 +69,5 @@ est_by_cluster <- est_seroincidence_by(
 # Calculate ICC for each stratum
 icc_by_result <- compute_icc(est_by_cluster)
 print(icc_by_result)
+}
 }

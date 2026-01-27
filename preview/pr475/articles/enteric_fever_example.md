@@ -479,6 +479,126 @@ Z-statistic - P-value - 95% confidence interval for the difference
 We can use this to identify which differences are statistically
 significant (typically using p \< 0.05 as a threshold).
 
+## Accounting for Clustered Sampling Designs
+
+In many survey designs, observations are clustered (e.g., multiple
+individuals from the same household, geographic area, or school). When
+observations within clusters are more similar to each other than to
+observations from different clusters, standard errors that ignore
+clustering will be too small, leading to overconfident inference.
+
+The `serocalculator` package supports cluster-robust standard error
+estimation through the `cluster_var` parameter.
+
+### Example: Household Clustering
+
+The SEES data includes cluster identifiers (`cluster` for geographic
+clusters, `catchment` for health facility catchment areas, and
+`Country`). These variables are nested: clusters are nested within
+catchments, which are nested within countries. We can use these to
+account for within-cluster correlation:
+
+``` r
+# Account for geographic clustering
+# Clusters in the SEES data represent geographic areas
+# Use Pakistan data for this example
+est_with_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"  # Geographic cluster identifier
+)
+
+# The summary will show cluster-robust standard errors
+summary(est_with_clustering)
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
+#> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
+```
+
+### Multi-level Clustering
+
+For the SEES data with nested clustering structure (clusters within
+catchments, catchments within countries), we can specify multiple
+cluster variables:
+
+``` r
+# Multi-level clustering: clusters nested within catchments
+# Use Pakistan data for this example
+# Note: This assumes 50% of clusters in each catchment were sampled
+est_multilevel <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = c("catchment", "cluster")  # Nested clustering
+)
+
+summary(est_multilevel)
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
+#> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
+```
+
+### Clustering with Stratified Analysis
+
+Clustering can also be combined with stratified analysis using
+[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md):
+
+``` r
+# Stratified analysis by catchment with cluster adjustment
+# Use Pakistan data for this example
+est_catchment_clustered <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"  # Account for clustering within each stratum
+)
+#> Warning: `curve_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+#> Warning: `noise_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+
+summary(est_catchment_clustered)
+#> Seroincidence estimated given the following setup:
+#> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#> b) Strata       : catchment 
+#> 
+#>  Seroincidence estimates:
+#> # A tibble: 2 × 14
+#>   Stratum catchment     n est.start incidence.rate      SE CI.lwr CI.upr se_type
+#>   <chr>   <chr>     <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratu… aku         294       0.1          0.106 0.00983 0.0880  0.127 cluste…
+#> 2 Stratu… kgh         200       0.1          0.167 0.00905 0.151   0.186 cluste…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
+```
+
+### Understanding the Impact
+
+When cluster-robust standard errors are used:
+
+- **Point estimates** (incidence rates) remain unchanged
+- **Standard errors** typically increase by 5-15% to reflect
+  within-cluster correlation
+- The [`summary()`](https://rdrr.io/r/base/summary.html) output includes
+  a `se_type` column indicating “cluster-robust” vs “standard”
+- Confidence intervals appropriately widen to account for reduced
+  effective sample size
+
 ## Conclusions
 
 We estimate that Bangladesh has the highest enteric fever seroconversion

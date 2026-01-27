@@ -1,5 +1,25 @@
 # Copilot Instructions for serocalculator
 
+## Lab Standards and Best Practices
+
+**Follow the guidance in the [UCD-SERG Lab
+Manual](https://ucd-serg.github.io/lab-manual/)** for all aspects of
+code development, documentation, and reproducibility. The lab manual
+provides comprehensive guidance on:
+
+- Reproducible research practices
+- R package development workflows
+- Coding style and best practices
+- Testing requirements and strategies
+- Documentation standards
+- Version control and collaboration
+
+If you need to review the source files directly, they are available at
+[github.com/UCD-SERG/lab-manual](https://github.com/UCD-SERG/lab-manual).
+
+The instructions below are specific to the serocalculator repository and
+supplement the general lab practices documented in the lab manual.
+
 ## Repository Overview
 
 **serocalculator** is an R package for estimating infection rates from
@@ -279,6 +299,32 @@ To regenerate:
 rmarkdown::render("README.Rmd")
 ```
 
+### Version Management
+
+**CRITICAL**: Always ensure the development version in your PR branch is
+one version number higher than the main branch.
+
+``` r
+# Check current version
+desc::desc_get_version()
+
+# Increment development version (use this for PRs)
+usethis::use_version('dev')
+```
+
+**Version Check Workflow**: The `version-check.yaml` workflow will fail
+if your PR branch version is not higher than the main branch version.
+Before requesting PR review, always:
+
+1.  Check the current version on the main branch (look at DESCRIPTION on
+    main)
+2.  Ensure your PR branch version is at least one development version
+    higher
+3.  If main is at 1.4.0.9003, your PR should be at minimum 1.4.0.9004
+
+**Why this matters**: This ensures proper version tracking and prevents
+conflicts when multiple PRs are merged.
+
 ### Package Checking
 
 Run R CMD check to validate the package:
@@ -363,9 +409,10 @@ The following workflows run on every PR. **All must pass** for merge:
 5.  **check-readme.yaml**: Renders README.Rmd and verifies it matches
     README.md. (~2-3 min)
 
-6.  **R-check-docs.yml**: Runs `roxygen2::roxygenise()` and checks if
-    `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails if
-    documentation is out of sync. (~2-3 min)
+6.  **R-check-docs.yml**: Runs
+    [`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
+    and checks if `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails
+    if documentation is out of sync. (~2-3 min)
 
 7.  **news.yaml**: Ensures NEWS.md is updated for every PR. Can be
     bypassed with `no-changelog` label. (~1 min)
@@ -387,8 +434,10 @@ The following workflows run on every PR. **All must pass** for merge:
 ### PR Commands
 
 Team members can trigger actions by commenting on PRs: - `/document` -
-Runs `roxygen2::roxygenise()` and commits changes - `/style` - Runs
-`styler::style_pkg()` and commits changes
+Runs
+[`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
+and commits changes - `/style` - Runs `styler::style_pkg()` and commits
+changes
 
 ## Repository Structure
 

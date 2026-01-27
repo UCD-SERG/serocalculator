@@ -461,20 +461,20 @@ expect_false(has_missing_values(complete_data))
 ### File Organization
 
 1. **One function per file**: Each exported function and its associated S3 methods should be in its own file
-   - File name should match the function name (e.g., `compute_icc.R` for `compute_icc()`)
-   - S3 methods for the same generic can be in the same file (e.g., `compute_icc.seroincidence()`, `compute_icc.seroincidence.by()`, and `compute_icc.default()` all in `compute_icc.R`)
+   - File name should match the function name (e.g., `summary.seroincidence.R` for `summary.seroincidence()`)
+   - S3 methods for the same generic can be in the same file (e.g., `compare_seroincidence.seroincidence()`, `compare_seroincidence.seroincidence.by()`, and `compare_seroincidence.default()` all in `compare_seroincidence.R`)
 
 2. **Internal helper functions**: Move to separate files
-   - Use descriptive file names (e.g., `compute_icc_single.R` for `.compute_icc_single()`)
+   - Use descriptive file names (e.g., `compute_cluster_robust_var.R` for `.compute_cluster_robust_var()`)
    - Keep related internal functions together when logical
    - Internal functions should use `.function_name()` naming convention
 
 3. **Print methods**: Each print method in its own file
-   - File name: `print.{class_name}.R` (e.g., `print.icc_seroincidence.R`)
+   - File name: `print.{class_name}.R` (e.g., `print.seroincidence.R`)
 
 4. **Extract anonymous functions**: Convert complex anonymous functions to named helper functions in separate files
    - If an anonymous function is longer than ~5 lines, extract it
-   - Name should describe its purpose (e.g., `.icc_single_to_df_row()`)
+   - Name should describe its purpose (e.g., `.helper_function_name()`)
 
 ### Example Organization
 
@@ -483,7 +483,7 @@ expect_false(has_missing_values(complete_data))
    - Keep inline `@examples` short (1-3 lines) for simple demonstrations
 
 2. **Example file naming**: `exm-{function_name}.R`
-   - Example: `exm-compute_icc.R` for `compute_icc()` examples
+   - Example: `exm-est_seroincidence.R` for `est_seroincidence()` examples
 
 ### Benefits
 

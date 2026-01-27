@@ -2,22 +2,14 @@
 
 ## New features
 
-* Added `compute_icc()` function to calculate the Intraclass Correlation Coefficient
-  (ICC) for seroincidence estimates from clustered sampling designs. The ICC measures
-  the proportion of variance due to between-cluster variation. Now works with both
-  `seroincidence` and `seroincidence.by` objects, calculating ICC for each stratum
-  when used with stratified analyses.
-* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence_by()` to
-  support cluster-robust standard error estimation in stratified analyses.
-* `compute_icc()` output now includes antigen isotypes information to clarify which
-  antibodies were used in the analysis.
-* `compute_icc()` output now includes minimum and maximum cluster sizes in addition
-  to the average, providing more complete information about cluster size distribution.
-  The print method now clarifies that cluster size refers to "observations per cluster".
+* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
+  `est_seroincidence_by()` to support cluster-robust standard error estimation. 
+  When `cluster_var` is specified, `summary.seroincidence()` automatically computes 
+  cluster-robust (sandwich) variance estimates to account for within-cluster 
+  correlation in clustered sampling designs such as household or school-based surveys.
 * `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
   for multi-level clustered sampling designs. Cluster-robust standard errors will account
-  for all specified clustering levels. Note: ICC calculation only supports single-level
-  clustering and will produce an error if multiple cluster variables are provided.
+  for all specified clustering levels.
 
 ## Bug fixes
 
@@ -32,13 +24,7 @@
 ## Code organization
 
 * Refactored clustering-related code following package organization policies:
-  - Moved `compute_icc()` S3 generic and methods to `R/compute_icc.R`
-  - Moved `.compute_icc_single()` to `R/compute_icc_single.R`
-  - Moved `print.icc_seroincidence()` to `R/print.icc_seroincidence.R`
-  - Moved `print.icc_seroincidence.by()` to `R/print.icc_seroincidence.by.R`
   - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
-  - Extracted anonymous function to `.icc_single_to_df_row()` in `R/icc_single_to_df_row.R`
-  - Moved long examples to `inst/examples/exm-compute_icc.R` and linked using `@example`
   - Each function now in its own file for better maintainability and git history
 * Updated copilot-instructions.md with code organization policies
 

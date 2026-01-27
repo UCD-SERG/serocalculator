@@ -67,9 +67,9 @@ test_that("clustering with stratum works with est_seroincidence", {
   # Point estimates should be identical
   expect_equal(sum_both$incidence.rate, sum_no_cluster$incidence.rate)
   
-  # Cluster-robust SE should generally be larger due to within-cluster correlation
-  # (though in some rare cases with negative ICC, it could be smaller)
-  # At minimum, they should be different when there's actual clustering
+  # Cluster-robust SE should generally be larger due to correlation
+  # (though in rare cases with negative ICC, it could be smaller)
+  # At minimum, they should differ when there's actual clustering
   expect_false(isTRUE(all.equal(sum_both$SE, sum_no_cluster$SE)))
 })
 

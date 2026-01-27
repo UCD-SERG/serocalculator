@@ -134,7 +134,7 @@ test_that(
           regardless of whether using parallel processing or not.",
   {
 
-    ests_1_core <- est_seroincidence_by(
+    ests_single_core <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100,
       sr_params = typhoid_curves_nostrat_100,
@@ -145,7 +145,7 @@ test_that(
       num_cores = 1
     )
 
-    ests_2_cores <- est_seroincidence_by(
+    ests_multi_cores <- est_seroincidence_by(
       strata = c("catchment"),
       pop_data = sees_pop_data_pk_100_old_names,
       sr_params = typhoid_curves_nostrat_100,
@@ -156,7 +156,7 @@ test_that(
       num_cores = 2
     )
 
-    expect_equal(ests_1_core, ests_2_cores)
+    expect_equal(ests_single_core, ests_multi_cores)
   }
 )
 

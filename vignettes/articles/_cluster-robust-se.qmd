@@ -1,0 +1,55 @@
+## Cluster-robust standard errors for clustered sampling designs
+
+In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.
+
+### Why clustering matters
+
+When observations are clustered:
+
+* Individuals within the same cluster share common exposures or characteristics
+* Standard errors that ignore clustering will be **too small** (anti-conservative)
+* Confidence intervals will be **too narrow**
+* p-values will be **too optimistic**
+
+### Cluster-robust variance estimation
+
+To account for within-cluster correlation, `serocalculator` implements the **sandwich estimator** (also known as the Huber-White robust variance estimator):
+
+$$V_{\text{robust}} = H^{-1} B H^{-1}$$
+
+where:
+
+* $H$ is the Hessian matrix (second derivatives of the log-likelihood)
+* $B$ is the "meat" of the sandwich, calculated from cluster-level score contributions:
+
+$$B = \sum_{c=1}^C U_c U_c^T$$
+
+where $U_c$ is the score contribution (gradient of log-likelihood) from cluster $c$.
+
+### Implementation in serocalculator
+
+Users can specify clustering using the `cluster_var` parameter:
+
+```{r, eval=FALSE}
+# Single-level clustering (e.g., by household)
+est <- est_seroincidence(
+  pop_data = data,
+  cluster_var = "household_id",
+  ...
+)
+
+# Multi-level clustering (e.g., schools within districts)
+est <- est_seroincidence(
+  pop_data = data,
+  cluster_var = c("district_id", "school_id"),
+  ...
+)
+```
+
+When cluster-robust standard errors are used, the `summary()` output indicates this with `se_type = "cluster-robust"`.
+
+### Effect on results
+
+* **Point estimates** (incidence rates) remain unchanged
+* **Standard errors** typically increase by 5-15% to reflect within-cluster correlation
+* **Confidence intervals** appropriately widen to account for reduced effective sample size

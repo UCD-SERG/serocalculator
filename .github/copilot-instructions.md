@@ -244,6 +244,26 @@ To regenerate:
 rmarkdown::render("README.Rmd")
 ```
 
+### Version Management
+
+**CRITICAL**: Always ensure the development version in your PR branch is one version number higher than the main branch.
+
+```r
+# Check current version
+desc::desc_get_version()
+
+# Increment development version (use this for PRs)
+usethis::use_version('dev')
+```
+
+**Version Check Workflow**: The `version-check.yaml` workflow will fail if your PR branch version is not higher than the main branch version. Before requesting PR review, always:
+
+1. Check the current version on the main branch (look at DESCRIPTION on main)
+2. Ensure your PR branch version is at least one development version higher
+3. If main is at 1.4.0.9003, your PR should be at minimum 1.4.0.9004
+
+**Why this matters**: This ensures proper version tracking and prevents conflicts when multiple PRs are merged.
+
 ### Package Checking
 
 Run R CMD check to validate the package:

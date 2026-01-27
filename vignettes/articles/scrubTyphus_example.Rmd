@@ -279,45 +279,6 @@ ggplot(est_comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
 
 
 
-## Accounting for Clustered Sampling Designs
-
-Survey designs often involve clustered sampling (e.g., multiple individuals from the same household, village, or geographic area). The `serocalculator` package supports cluster-robust standard error estimation to account for within-cluster correlation:
-
-```{r clustering_example, eval=FALSE}
-# Example: Account for household clustering
-est_with_clustering <- est_seroincidence(
-  pop_data = xs_data_india,
-  sr_params = curves,
-  noise_params = noise,
-  antigen_isos = c("IgG", "IgM"),
-  cluster_var = "household_id"  # Specify the cluster identifier variable
-)
-
-# For multi-level clustering (e.g., villages within districts)
-est_multilevel <- est_seroincidence(
-  pop_data = xs_data_india,
-  sr_params = curves,
-  noise_params = noise,
-  antigen_isos = c("IgG", "IgM"),
-  cluster_var = c("district_id", "village_id")
-)
-
-# With stratified analysis
-est_stratified_clustered <- est_seroincidence_by(
-  pop_data = xs_data_india,
-  strata = "ageQ",
-  sr_params = curves,
-  noise_params = noise,
-  antigen_isos = c("IgG", "IgM"),
-  cluster_var = "household_id"
-)
-```
-
-When cluster-robust standard errors are used, point estimates remain unchanged but standard errors appropriately increase to reflect within-cluster correlation. The `summary()` output includes a `se_type` column indicating "cluster-robust" vs "standard".
-
-
-
-
 ## Acknowledgments
 We gratefully acknowledge the study participants for their valuable time and interest in participating in these studies
 

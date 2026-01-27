@@ -343,10 +343,11 @@ The SEES data includes cluster identifiers (`cluster` for geographic clusters, `
 ```{r clustering_example}
 # Account for geographic clustering
 # Clusters in the SEES data represent geographic areas
+# Use Pakistan data for this example
 est_with_clustering <- est_seroincidence(
-  pop_data = xs_data,
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   sr_params = curves,
-  noise_params = noise,
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   cluster_var = "cluster"  # Geographic cluster identifier
 )
@@ -361,11 +362,12 @@ For the SEES data with nested clustering structure (clusters within catchments, 
 
 ```{r multilevel_clustering}
 # Multi-level clustering: clusters nested within catchments
+# Use Pakistan data for this example
 # Note: This assumes 50% of clusters in each catchment were sampled
 est_multilevel <- est_seroincidence(
-  pop_data = xs_data,
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   sr_params = curves,
-  noise_params = noise,
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   cluster_var = c("catchment", "cluster")  # Nested clustering
 )
@@ -379,11 +381,12 @@ Clustering can also be combined with stratified analysis using `est_seroincidenc
 
 ```{r clustering_stratified}
 # Stratified analysis by catchment with cluster adjustment
+# Use Pakistan data for this example
 est_catchment_clustered <- est_seroincidence_by(
-  pop_data = xs_data,
+  pop_data = xs_data |> filter(Country == "Pakistan"),
   strata = "catchment",
   sr_params = curves,
-  noise_params = noise,
+  noise_params = noise |> filter(Country == "Pakistan"),
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
   cluster_var = "cluster"  # Account for clustering within each stratum
 )

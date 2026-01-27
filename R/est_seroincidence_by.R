@@ -178,7 +178,7 @@ est_seroincidence_by <- function(
               `num_cores` = {num_cores}.")
     }
 
-    lib_paths <- .libPaths()
+    lib_paths <- .libPaths() # nolint: undesirable_function_linter
     cl <-
       num_cores |>
       parallel::makeCluster() |>
@@ -193,7 +193,7 @@ est_seroincidence_by <- function(
       c("lib_paths", "lambda_start", "build_graph"),
       envir = environment()
     )
-    
+
     # Export cluster_var and stratum_var specifically
     if (!is.null(cluster_var)) {
       parallel::clusterExport(cl, "cluster_var", envir = environment())
@@ -204,10 +204,10 @@ est_seroincidence_by <- function(
 
     # Evaluate library loading on the cluster
     parallel::clusterEvalQ(cl, {
-      .libPaths(lib_paths)
+      .libPaths(lib_paths) # nolint: undesirable_function_linter
       # note - this gets out of sync when using load_all() in development
-      require(serocalculator)
-      require(dplyr)
+      require(serocalculator) # nolint: undesirable_function_linter
+      require(dplyr) # nolint: undesirable_function_linter
     })
 
     # Perform parallel computation and record execution time

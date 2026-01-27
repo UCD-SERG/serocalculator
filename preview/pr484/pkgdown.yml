@@ -9,7 +9,7 @@ articles:
   articles/simulate_xsectionalData: simulate_xsectionalData.html
   articles/test-quarto-article: test-quarto-article.html
   articles/version-crosswalk-1.3-to-1.4: version-crosswalk-1.3-to-1.4.html
-last_built: 2026-01-27T20:29Z
+last_built: 2026-01-27T20:46Z
 urls:
   reference: https://ucd-serg.github.io/serocalculator/reference
   article: https://ucd-serg.github.io/serocalculator/articles

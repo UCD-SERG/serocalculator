@@ -99,7 +99,8 @@ We can graph the decay curves with an `autoplot()` method:
 ```{r}
 # Visualize curve parameters with custom colors
 curves |> autoplot() +
-  scale_color_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF"))
+  scale_color_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF")) + 
+  geom_point(alpha = .8)
 ```
 
 

@@ -354,7 +354,22 @@ est_with_clustering <- est_seroincidence(
 
 # The summary will show cluster-robust standard errors
 summary(est_with_clustering)
+
+# Compare with non-robust (standard) analysis
+est_no_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var specified - uses standard errors
+)
+
+summary(est_no_clustering)
 ```
+
+Notice that the point estimates (incidence rates) are identical between the two analyses, but the standard errors are larger with cluster-robust estimation. This reflects the reduced effective sample size due to within-cluster correlation.
+
+The mathematical details of cluster-robust standard errors are explained in the [Cluster-robust standard errors section](../methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs) of the methodology article.
 
 ### Multi-level Clustering
 
@@ -373,7 +388,13 @@ est_multilevel <- est_seroincidence(
 )
 
 summary(est_multilevel)
+
+# Compare with single-level clustering
+# The multi-level approach accounts for correlation at multiple nested levels
+# This typically yields slightly larger standard errors than single-level clustering
 ```
+
+Comparing `est_multilevel` with `est_with_clustering` above, you'll see that multi-level clustering (accounting for both catchment and cluster correlation) produces larger standard errors than single-level clustering (cluster only), as it accounts for correlation at multiple nested levels.
 
 ### Clustering with Stratified Analysis
 
@@ -392,7 +413,21 @@ est_catchment_clustered <- est_seroincidence_by(
 )
 
 summary(est_catchment_clustered)
+
+# Compare with stratified analysis without clustering
+est_catchment_no_clustering <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var - standard errors
+)
+
+summary(est_catchment_no_clustering)
 ```
+
+Within each stratum (catchment), the cluster-robust standard errors are larger than the standard errors, appropriately accounting for geographic clustering within each catchment area.
 
 ### Understanding the Impact
 

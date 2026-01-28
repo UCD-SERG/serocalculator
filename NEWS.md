@@ -1,5 +1,7 @@
 # serocalculator (development version)
 
+* Added docx output format for pkgdown articles in _quarto.yml configuration
+
 # serocalculator 1.4.0
 
 ## New features

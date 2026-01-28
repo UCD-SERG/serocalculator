@@ -49,6 +49,7 @@ csv
 dev
 devtools
 displaystyle
+docx
 dropdown
 dt
 eps
@@ -125,3 +126,4 @@ varepsilon
 vec
 vee
 yaml
+yml

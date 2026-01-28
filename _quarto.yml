@@ -27,4 +27,8 @@ format:
     slide-level: 2
     reference-location: document
     # reference-doc: vignettes/articles/templates/Gates_template.pptx
+  docx:
+    number-sections: true
+    toc: true
+    reference-location: document
 bibliography: vignettes/references.bib

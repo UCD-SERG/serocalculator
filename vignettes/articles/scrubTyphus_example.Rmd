@@ -319,7 +319,7 @@ knitr::kable(comparison2,
 
 
 
-Let's visualize our seroincidence estimates by strata.
+Finally, let's summarise and visualize our seroincidence estimates by strata.
 
 
 ```{r}
@@ -334,6 +334,21 @@ est2df <- summary(est2)
 
 
 est_comb <- rbind(estdf, est2df)
+
+### Summary table with seroincidence rates and 95% CIs
+summary_table <- est_comb |>
+  mutate(
+    `Seroincidence Rate` = sprintf("%.1f", incidence.rate*1000),
+    `95% CI` = sprintf("[%.1f, %.1f]", CI.lwr*1000, CI.upr*1000),
+    `Age Group` = ageQ
+    #`Standard Error` = sprintf("%.4f", SE)
+  ) %>%
+  arrange(ageQ) %>%
+  select(country, ageQ, `Seroincidence Rate`, `95% CI`)
+
+knitr::kable(summary_table,
+             caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
+
 
 # Create barplot (rescale incidence rate and CIs)
 ggplot(est_comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +

@@ -347,6 +347,10 @@ to find the MLE and corresponding standard error.
 
 :::
 
+## Cluster-robust standard errors for clustered sampling designs
+
+{{< include articles/_cluster-robust-se.qmd >}}
+
 {{< include articles/_antibody-response-model.qmd >}}
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->

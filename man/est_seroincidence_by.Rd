@@ -17,6 +17,8 @@ est_seroincidence_by(
   num_cores = 1L,
   verbose = FALSE,
   print_graph = FALSE,
+  cluster_var = NULL,
+  stratum_var = NULL,
   ...
 )
 }
@@ -79,11 +81,25 @@ then the computations are executed in parallel. Default = 1L.}
 \item{print_graph}{whether to display the log-likelihood curve graph
 in the course of running \code{est_seroincidence()}}
 
+\item{cluster_var}{optional name(s) of the variable(s) in \code{pop_data}
+containing cluster identifiers for clustered sampling designs
+(e.g., households, schools).
+Can be a single variable name (character string) or a vector of
+variable names for multi-level clustering (e.g., \code{c("school", "classroom")}). When provided, standard errors will be adjusted for
+within-cluster correlation using cluster-robust variance estimation.}
+
+\item{stratum_var}{optional name of the variable in \code{pop_data} containing
+stratum identifiers. Used in combination with \code{cluster_var} for
+stratified cluster sampling designs.}
+
 \item{...}{
   Arguments passed on to \code{\link[=est_seroincidence]{est_seroincidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
     \item{\code{stepmin}}{A positive scalar providing the minimum allowable
 relative step length.}
+    \item{\code{sampling_weights}}{optional \link{data.frame} containing sampling
+weights with columns for cluster/stratum identifiers and their sampling
+probabilities. Currently not implemented; reserved for future use.}
     \item{\code{stepmax}}{a positive scalar which gives the maximum allowable
     scaled step length.  \code{stepmax} is used to prevent steps which
     would cause the optimization function to overflow, to prevent the

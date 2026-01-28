@@ -330,6 +330,89 @@ This produces a table with one row for each pairwise comparison, showing:
 
 We can use this to identify which differences are statistically significant (typically using p < 0.05 as a threshold).
 
+## Accounting for Clustered Sampling Designs
+
+In many survey designs, observations are clustered (e.g., multiple individuals from the same household, geographic area, or school). When observations within clusters are more similar to each other than to observations from different clusters, standard errors that ignore clustering will be too small, leading to overconfident inference.
+
+The `serocalculator` package supports cluster-robust standard error estimation through the `cluster_var` parameter.
+
+### Example: Household Clustering
+
+The SEES data includes cluster identifiers (`cluster` for geographic clusters, `catchment` for health facility catchment areas, and `Country`). These variables are nested: clusters are nested within catchments, which are nested within countries. We can use these to account for within-cluster correlation:
+
+```{r clustering_example}
+# Account for geographic clustering
+# Clusters in the SEES data represent geographic areas
+# Use Pakistan data for this example
+est_with_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"  # Geographic cluster identifier
+)
+
+# The summary will show cluster-robust standard errors
+summary(est_with_clustering)
+
+# Compare with non-robust (standard) analysis
+est_no_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var specified - uses standard errors
+)
+
+summary(est_no_clustering)
+```
+
+Notice that the point estimates (incidence rates) are identical between the two analyses, but the standard errors are larger with cluster-robust estimation. This reflects the reduced effective sample size due to within-cluster correlation.
+
+The mathematical details of cluster-robust standard errors are explained in the [Cluster-robust standard errors section](../methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs) of the methodology article.
+
+### Clustering with Stratified Analysis
+
+Clustering can also be combined with stratified analysis using `est_seroincidence_by()`:
+
+```{r clustering_stratified}
+# Stratified analysis by catchment with cluster adjustment
+# Use Pakistan data for this example
+est_catchment_clustered <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"  # Account for clustering within each stratum
+)
+
+summary(est_catchment_clustered)
+
+# Compare with stratified analysis without clustering
+est_catchment_no_clustering <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var - standard errors
+)
+
+summary(est_catchment_no_clustering)
+```
+
+Within each stratum (catchment), the cluster-robust standard errors are larger than the standard errors, appropriately accounting for geographic clustering within each catchment area.
+
+### Understanding the Impact
+
+When cluster-robust standard errors are used:
+
+- **Point estimates** (incidence rates) remain unchanged
+- **Standard errors** typically increase by 5-15% to reflect within-cluster correlation
+- The `summary()` output includes a `se_type` column indicating "cluster-robust" vs "standard"
+- Confidence intervals appropriately widen to account for reduced effective sample size
+
 
 ```{r include=FALSE}
 #Calculate output values

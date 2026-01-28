@@ -1,9 +1,42 @@
 # serocalculator (development version)
 
+## New features
+
+* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
+  `est_seroincidence_by()` to support cluster-robust standard error estimation. 
+  When `cluster_var` is specified, `summary.seroincidence()` automatically computes 
+  cluster-robust (sandwich) variance estimates to account for within-cluster 
+  correlation in clustered sampling designs such as household or school-based surveys.
+* `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
+  for multi-level clustered sampling designs. Cluster-robust standard errors will account
+  for all specified clustering levels.
+
+## Bug fixes
+
+* Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
+  errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
+* Added `se_type` column to `summary.seroincidence()` output to clearly indicate whether
+  "standard" or "cluster-robust" standard errors are being used.
+* Fixed `est_seroincidence_by()` to properly pass cluster and stratum variables through
+  to stratified analyses. Previously, these variables were dropped during data stratification,
+  causing errors when trying to use clustering with `est_seroincidence_by()`.
+
+## Code organization
+
+* Refactored clustering-related code following package organization policies:
+  - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
+  - Each function now in its own file for better maintainability and git history
+* Updated copilot-instructions.md with code organization policies
+
 # serocalculator 1.4.0
 
 ## New features
 
+* Added support for cluster-robust standard errors in `est_seroincidence()` through
+  new `cluster_var` and `stratum_var` parameters. When `cluster_var` is specified,
+  `summary.seroincidence()` automatically computes cluster-robust (sandwich) variance
+  estimates to account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
 * Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
   - Performs two-sample z-tests to compare seroincidence estimates
   - Returns `htest` format when comparing two single estimates

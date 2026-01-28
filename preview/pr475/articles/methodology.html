@@ -281,62 +281,7 @@ Figure 1: Example log(likelihood) curves
 </h3>
 <p>The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:</p>
 <p>more curvature -&gt; likelihood peak is clearer -&gt; smaller standard errors</p>
-</section><section class="level2"><h3 id="cluster-robust-standard-errors-for-clustered-sampling-designs">Cluster-robust standard errors for clustered sampling designs<a class="anchor" aria-label="anchor" href="#cluster-robust-standard-errors-for-clustered-sampling-designs"></a>
-</h3>
-<p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.</p>
-<section class="level3"><h4 id="why-clustering-matters">Why clustering matters<a class="anchor" aria-label="anchor" href="#why-clustering-matters"></a>
-</h4>
-<p>When observations are clustered:</p>
-<ul>
-<li>Individuals within the same cluster share common exposures or characteristics</li>
-<li>Standard errors that ignore clustering will be <strong>too small</strong> (anti-conservative)</li>
-<li>Confidence intervals will be <strong>too narrow</strong>
-</li>
-<li>p-values will be <strong>too optimistic</strong>
-</li>
-</ul></section><section class="level3"><h4 id="cluster-robust-variance-estimation">Cluster-robust variance estimation<a class="anchor" aria-label="anchor" href="#cluster-robust-variance-estimation"></a>
-</h4>
-<p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> (also known as the Huber-White robust variance estimator):</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mtext mathvariant="normal">robust</mtext></msub><mo>=</mo><msup><mi>H</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>B</mi><msup><mi>H</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">V_{\text{robust}} = H^{-1} B H^{-1}</annotation></semantics></math></p>
-<p>where:</p>
-<ul>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math> is the Hessian matrix (second derivatives of the log-likelihood)</li>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the “meat” of the sandwich, calculated from cluster-level score contributions:</li>
-</ul>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>c</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><msub><mi>U</mi><mi>c</mi></msub><msubsup><mi>U</mi><mi>c</mi><mi>T</mi></msubsup></mrow><annotation encoding="application/x-tex">B = \sum_{c=1}^C U_c U_c^T</annotation></semantics></math></p>
-<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>U</mi><mi>c</mi></msub><annotation encoding="application/x-tex">U_c</annotation></semantics></math> is the score contribution (gradient of log-likelihood) from cluster <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</p>
-</section><section class="level3"><h4 id="implementation-in-serocalculator">Implementation in serocalculator<a class="anchor" aria-label="anchor" href="#implementation-in-serocalculator"></a>
-</h4>
-<p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Single-level clustering (e.g., by household)</span></span>
-<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">data</span>,</span>
-<span>  cluster_var <span class="op">=</span> <span class="st">"household_id"</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Multi-level clustering (e.g., schools within districts)</span></span>
-<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">data</span>,</span>
-<span>  cluster_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"district_id"</span>, <span class="st">"school_id"</span><span class="op">)</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-<p>When cluster-robust standard errors are used, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> output indicates this with <code>se_type = "cluster-robust"</code>.</p>
-</section><section class="level3"><h4 id="effect-on-results">Effect on results<a class="anchor" aria-label="anchor" href="#effect-on-results"></a>
-</h4>
-<ul>
-<li>
-<strong>Point estimates</strong> (incidence rates) remain unchanged</li>
-<li>
-<strong>Standard errors</strong> typically increase by 5-15% to reflect within-cluster correlation</li>
-<li>
-<strong>Confidence intervals</strong> appropriately widen to account for reduced effective sample size</li>
-</ul></section></section><section class="level2"><h3 id="likelihood-of-observed-data">Likelihood of observed data<a class="anchor" aria-label="anchor" href="#likelihood-of-observed-data"></a>
+</section><section class="level2"><h3 id="likelihood-of-observed-data">Likelihood of observed data<a class="anchor" aria-label="anchor" href="#likelihood-of-observed-data"></a>
 </h3>
 <div class="notes">
 <p>Unfortunately, we don’t observe infection times <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math>; we only observe antibody levels <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">{Y}</annotation></semantics></math>. So things get a little more complicated.</p>
@@ -405,7 +350,72 @@ p(Y=y)
 <div class="notes">
 <p>The derivative of this expression doesn’t come out cleanly, so we will use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code><a href="https://rdrr.io/r/stats/nlm.html" class="external-link">stats::nlm()</a></code>) to find the MLE and corresponding standard error.</p>
 </div>
-</section></section><section class="section level2"><h2 id="modeling-the-seroresponse-kinetics-curve">Modeling the seroresponse kinetics curve<a class="anchor" aria-label="anchor" href="#modeling-the-seroresponse-kinetics-curve"></a>
+</section><section class="level2"><h3 id="cluster-robust-standard-errors-for-clustered-sampling-designs">Cluster-robust standard errors for clustered sampling designs<a class="anchor" aria-label="anchor" href="#cluster-robust-standard-errors-for-clustered-sampling-designs"></a>
+</h3>
+<p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.</p>
+<section class="level3"><h4 id="why-clustering-matters">Why clustering matters<a class="anchor" aria-label="anchor" href="#why-clustering-matters"></a>
+</h4>
+<p>When observations are clustered:</p>
+<ul>
+<li>Individuals within the same cluster share common exposures or characteristics</li>
+<li>Standard errors that ignore clustering will be <strong>too small</strong> (anti-conservative)</li>
+<li>Confidence intervals will be <strong>too narrow</strong>
+</li>
+<li>p-values will be <strong>too optimistic</strong>
+</li>
+</ul></section><section class="level3"><h4 id="cluster-robust-variance-estimation">Cluster-robust variance estimation<a class="anchor" aria-label="anchor" href="#cluster-robust-variance-estimation"></a>
+</h4>
+<p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> (also known as the Huber-White robust variance estimator):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mtext mathvariant="normal">robust</mtext></msub><mo>=</mo><msup><mi>H</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>B</mi><msup><mi>H</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">V_{\text{robust}} = H^{-1} B H^{-1}</annotation></semantics></math></p>
+<p>where:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>V</mi><mtext mathvariant="normal">robust</mtext></msub><annotation encoding="application/x-tex">V_{\text{robust}}</annotation></semantics></math> is the cluster-robust variance-covariance matrix for the parameter estimates</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math> is the Hessian matrix (matrix of second partial derivatives of the log-likelihood with respect to the parameters, evaluated at the MLE <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>λ</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\lambda}</annotation></semantics></math>)</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the “meat” of the sandwich, calculated from cluster-level score contributions:</li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mo>=</mo><munderover><mo>∑</mo><mrow><mi>c</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><msub><mi>U</mi><mi>c</mi></msub><msubsup><mi>U</mi><mi>c</mi><mi>T</mi></msubsup></mrow><annotation encoding="application/x-tex">B = \sum_{c=1}^C U_c U_c^T</annotation></semantics></math></p>
+<p>where:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> is the total number of clusters in the sample</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>U</mi><mi>c</mi></msub><mo>=</mo><msub><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>c</mi></mrow></msub><msub><mi>∇</mi><mi>λ</mi></msub><mo>log</mo><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>Y</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">|</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)</annotation></semantics></math> is the score contribution (gradient of log-likelihood with respect to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>) from all observations in cluster <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
+</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>∇</mi><mi>λ</mi></msub><annotation encoding="application/x-tex">\nabla_\lambda</annotation></semantics></math> denotes the gradient operator (vector of partial derivatives with respect to the parameter <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>)</li>
+</ul></section><section class="level3"><h4 id="implementation-in-serocalculator">Implementation in serocalculator<a class="anchor" aria-label="anchor" href="#implementation-in-serocalculator"></a>
+</h4>
+<p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Single-level clustering (e.g., by household)</span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"household_id"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Multi-level clustering (e.g., schools within districts)</span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"district_id"</span>, <span class="st">"school_id"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>When cluster-robust standard errors are used, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> output indicates this with <code>se_type = "cluster-robust"</code>.</p>
+</section><section class="level3"><h4 id="effect-on-results">Effect on results<a class="anchor" aria-label="anchor" href="#effect-on-results"></a>
+</h4>
+<ul>
+<li>
+<strong>Point estimates</strong> (incidence rates) remain unchanged</li>
+<li>
+<strong>Standard errors</strong> typically increase by 5-15% to reflect within-cluster correlation</li>
+<li>
+<strong>Confidence intervals</strong> appropriately widen to account for reduced effective sample size</li>
+</ul></section></section></section><section class="section level2"><h2 id="modeling-the-seroresponse-kinetics-curve">Modeling the seroresponse kinetics curve<a class="anchor" aria-label="anchor" href="#modeling-the-seroresponse-kinetics-curve"></a>
 </h2>
 <div class="notes">
 <p>Now, we need a model for the antibody response to infection, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo>=</mo><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>T</mi><mo>=</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbb{p}(Y=y|T=t)</annotation></semantics></math>. The current version of the <a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a> package uses a two-phase model for the shape of the seroresponse <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>.</p>

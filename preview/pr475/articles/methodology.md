@@ -226,76 +226,6 @@ log-likelihood function, at the maximum:
 more curvature -\> likelihood peak is clearer -\> smaller standard
 errors
 
-### Cluster-robust standard errors for clustered sampling designs
-
-In many survey designs, observations are clustered (e.g., multiple
-individuals from the same household, school, or geographic area).
-Observations within the same cluster are often more similar to each
-other than to observations from different clusters, violating the
-independence assumption of standard maximum likelihood estimation.
-
-#### Why clustering matters
-
-When observations are clustered:
-
-- Individuals within the same cluster share common exposures or
-  characteristics
-- Standard errors that ignore clustering will be **too small**
-  (anti-conservative)
-- Confidence intervals will be **too narrow**
-- p-values will be **too optimistic**
-
-#### Cluster-robust variance estimation
-
-To account for within-cluster correlation, `serocalculator` implements
-the **sandwich estimator** (also known as the Huber-White robust
-variance estimator):
-
-$$V_{\text{robust}} = H^{-1}BH^{-1}$$
-
-where:
-
-- $H$ is the Hessian matrix (second derivatives of the log-likelihood)
-- $B$ is the “meat” of the sandwich, calculated from cluster-level score
-  contributions:
-
-$$B = \sum\limits_{c = 1}^{C}U_{c}U_{c}^{T}$$
-
-where $U_{c}$ is the score contribution (gradient of log-likelihood)
-from cluster $c$.
-
-#### Implementation in serocalculator
-
-Users can specify clustering using the `cluster_var` parameter:
-
-``` r
-# Single-level clustering (e.g., by household)
-est <- est_seroincidence(
-  pop_data = data,
-  cluster_var = "household_id",
-  ...
-)
-
-# Multi-level clustering (e.g., schools within districts)
-est <- est_seroincidence(
-  pop_data = data,
-  cluster_var = c("district_id", "school_id"),
-  ...
-)
-```
-
-When cluster-robust standard errors are used, the
-[`summary()`](https://rdrr.io/r/base/summary.html) output indicates this
-with `se_type = "cluster-robust"`.
-
-#### Effect on results
-
-- **Point estimates** (incidence rates) remain unchanged
-- **Standard errors** typically increase by 5-15% to reflect
-  within-cluster correlation
-- **Confidence intervals** appropriately widen to account for reduced
-  effective sample size
-
 ### Likelihood of observed data
 
 Unfortunately, we don’t observe infection times $T$; we only observe
@@ -370,6 +300,86 @@ The derivative of this expression doesn’t come out cleanly, so we will
 use a *numerical method* (specifically, a Newton-type algorithm,
 implemented by [`stats::nlm()`](https://rdrr.io/r/stats/nlm.html)) to
 find the MLE and corresponding standard error.
+
+### Cluster-robust standard errors for clustered sampling designs
+
+In many survey designs, observations are clustered (e.g., multiple
+individuals from the same household, school, or geographic area).
+Observations within the same cluster are often more similar to each
+other than to observations from different clusters, violating the
+independence assumption of standard maximum likelihood estimation.
+
+#### Why clustering matters
+
+When observations are clustered:
+
+- Individuals within the same cluster share common exposures or
+  characteristics
+- Standard errors that ignore clustering will be **too small**
+  (anti-conservative)
+- Confidence intervals will be **too narrow**
+- p-values will be **too optimistic**
+
+#### Cluster-robust variance estimation
+
+To account for within-cluster correlation, `serocalculator` implements
+the **sandwich estimator** (also known as the Huber-White robust
+variance estimator):
+
+$$V_{\text{robust}} = H^{-1}BH^{-1}$$
+
+where:
+
+- $V_{\text{robust}}$ is the cluster-robust variance-covariance matrix
+  for the parameter estimates
+- $H$ is the Hessian matrix (matrix of second partial derivatives of the
+  log-likelihood with respect to the parameters, evaluated at the MLE
+  $\widehat{\lambda}$)
+- $B$ is the “meat” of the sandwich, calculated from cluster-level score
+  contributions:
+
+$$B = \sum\limits_{c = 1}^{C}U_{c}U_{c}^{T}$$
+
+where:
+
+- $C$ is the total number of clusters in the sample
+- $U_{c} = \sum_{i \in c}\nabla_{\lambda}\log p\left( Y_{i}|\lambda \right)$
+  is the score contribution (gradient of log-likelihood with respect to
+  $\lambda$) from all observations in cluster $c$
+- $\nabla_{\lambda}$ denotes the gradient operator (vector of partial
+  derivatives with respect to the parameter $\lambda$)
+
+#### Implementation in serocalculator
+
+Users can specify clustering using the `cluster_var` parameter:
+
+``` r
+# Single-level clustering (e.g., by household)
+est <- est_seroincidence(
+  pop_data = data,
+  cluster_var = "household_id",
+  ...
+)
+
+# Multi-level clustering (e.g., schools within districts)
+est <- est_seroincidence(
+  pop_data = data,
+  cluster_var = c("district_id", "school_id"),
+  ...
+)
+```
+
+When cluster-robust standard errors are used, the
+[`summary()`](https://rdrr.io/r/base/summary.html) output indicates this
+with `se_type = "cluster-robust"`.
+
+#### Effect on results
+
+- **Point estimates** (incidence rates) remain unchanged
+- **Standard errors** typically increase by 5-15% to reflect
+  within-cluster correlation
+- **Confidence intervals** appropriately widen to account for reduced
+  effective sample size
 
 ## Modeling the seroresponse kinetics curve
 

@@ -547,43 +547,6 @@ in the [Cluster-robust standard errors
 section](https://ucd-serg.github.io/serocalculator/methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs)
 of the methodology article.
 
-### Multi-level Clustering
-
-For the SEES data with nested clustering structure (clusters within
-catchments, catchments within countries), we can specify multiple
-cluster variables:
-
-``` r
-# Multi-level clustering: clusters nested within catchments
-# Use Pakistan data for this example
-# Note: This assumes 50% of clusters in each catchment were sampled
-est_multilevel <- est_seroincidence(
-  pop_data = xs_data |> filter(Country == "Pakistan"),
-  sr_params = curves,
-  noise_params = noise |> filter(Country == "Pakistan"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  cluster_var = c("catchment", "cluster")  # Nested clustering
-)
-
-summary(est_multilevel)
-#> # A tibble: 1 × 11
-#>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
-#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
-#> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
-#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
-#> #   nlm.convergence.code <ord>
-
-# Compare with single-level clustering
-# The multi-level approach accounts for correlation at multiple nested levels
-# This typically yields slightly larger standard errors than single-level clustering
-```
-
-Comparing `est_multilevel` with `est_with_clustering` above, you’ll see
-that multi-level clustering (accounting for both catchment and cluster
-correlation) produces larger standard errors than single-level
-clustering (cluster only), as it accounts for correlation at multiple
-nested levels.
-
 ### Clustering with Stratified Analysis
 
 Clustering can also be combined with stratified analysis using

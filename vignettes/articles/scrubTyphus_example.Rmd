@@ -98,9 +98,7 @@ We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
 # Visualize curve parameters with custom colors
-curves |> autoplot() +
-  scale_color_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF")) + 
-  geom_point(alpha = .8)
+curves |> autoplot() 
 ```
 
 
@@ -143,7 +141,7 @@ Let's also take a look at how antibody responses change by age.
 ```{r plot-age}
 # Plot antibody responses by age with custom colors
 autoplot(object = xs_data, type = "age-scatter", strata = "country") +
-  scale_color_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF"))
+  scale_color_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF")) 
 ```
 
 As is clear from these data, the study in Nepal was performed in children, while the study in India was performed in adults, yet we can see that the values were higher on average and with less variation in Nepal.
@@ -176,9 +174,9 @@ Column Name | Description
 
 set.seed(54321)
 
-# For IgG: use data from children under 5 years
-b_noise_IgG <- xs_data |>
-  filter(!is.na(value), Age < 5, antigen_iso == "OT56kda_IgG") |>
+
+b_noise <- xs_data |>
+  filter(!is.na(value)) |>
   group_by(antigen_iso) |>
   group_modify(~{
     mixmod <- mixtools::normalmixEM(.x$value, k = 2, maxit = 1000)
@@ -188,14 +186,14 @@ b_noise_IgG <- xs_data |>
     lower_sd <- mixmod$sigma[lower_k] 
     
     tibble::tibble(
-      percentile90 = qnorm(0.9, mean = lower_mu, sd = lower_sd)
+      percentile95 = qnorm(0.95, mean = lower_mu, sd = lower_sd)
     )
   }) |>
   ungroup()
 
-# For IgM: use full population (no age restriction due to limited data in young children)
-b_noise_IgM <- xs_data |>
-  filter(!is.na(value), antigen_iso == "OT56kda_IgM") |>
+# Biologic noise calculation (using children age <2 with lower liklihood of prior exposure)
+b_noise_u5 <- xs_data |>
+  filter(!is.na(value), age <5) |>
   group_by(antigen_iso) |>
   group_modify(~{
     mixmod <- mixtools::normalmixEM(.x$value, k = 2, maxit = 1000)
@@ -205,23 +203,23 @@ b_noise_IgM <- xs_data |>
     lower_sd <- mixmod$sigma[lower_k] 
     
     tibble::tibble(
-      percentile90 = qnorm(0.9, mean = lower_mu, sd = lower_sd)
+      percentile95 = qnorm(0.95, mean = lower_mu, sd = lower_sd)
     )
   }) |>
   ungroup()
 
-# Combine the noise estimates
-b_noise <- bind_rows(b_noise_IgG, b_noise_IgM)
 
 # Define conditional parameters
 noise <- data.frame(
   antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
-  nu = as.numeric(c(b_noise[1, 2], b_noise[2, 2])), # Biologic noise (nu)
-  eps = c(0.2, 0.2), # Measurement noise (eps)
+  nu = as.numeric(c(b_noise[2, 2], b_noise[1, 2])), # Biologic noise (nu)
+  nu_u5 = as.numeric(c(b_noise_u5[1, 2], b_noise_u5[2, 2])), # Biologic noise (nu)
+  eps = c(0.2, 0.2), # M noise (eps)
   y.low = c(0.2, 0.2), # low cutoff (llod)
-  y.high = c(200, 200)
+  y.high = c(4, 4)
 ) |> # high cutoff (y.high)
   mutate(across(where(is.numeric), round, digits = 2))
+
 ```
 
 The table below shows the noise parameters that will be used in the serocalculator function:
@@ -230,12 +228,12 @@ The table below shows the noise parameters that will be used in the serocalculat
 # Display noise parameters table
 knitr::kable(noise, 
              caption = "Noise parameters for scrub typhus seroincidence estimation",
-             col.names = c("Antigen-Isotype", "Biological Noise (ν)", 
+             col.names = c("Antigen-Isotype", "Biological Noise (ν)", "Biological Noise (ν), children < 5",
                           "Measurement Noise (ε)", "Lower Limit", "Upper Limit"))
 ```
 
 ## Estimate Seroincidence by study site
-Now we are ready to begin estimating seroincidence. We will use `est.incidence.by` to calculate stratified seroincidence rates.
+Now we are ready to begin estimating seroincidence using IgG responsed to 56kda. We will use `est.incidence.by` to calculate stratified seroincidence rates.
 
 
 ```{r estby}
@@ -273,14 +271,14 @@ knitr::kable(comparison,
 # Create a nicely formatted summary table
 summary_table <- summary(est) |>
   mutate(
-    `Incidence Rate (per person-year)` = sprintf("%.4f", incidence.rate),
-    `95% CI` = sprintf("[%.4f, %.4f]", CI.lwr, CI.upr),
-    `Standard Error` = sprintf("%.4f", SE)
+    `Seroincidence Rate` = sprintf("%.1f", incidence.rate*1000),
+    `95% CI` = sprintf("[%.1f, %.1f]", CI.lwr*1000, CI.upr*1000),
+    #`Standard Error` = sprintf("%.4f", SE)
   ) |>
-  select(country, `Incidence Rate (per person-year)`, `95% CI`, `Standard Error`)
+  select(country, `Seroincidence Rate`, `95% CI`)
 
 knitr::kable(summary_table,
-             caption = "Scrub typhus seroincidence rates by country")
+             caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
 ```
 
 

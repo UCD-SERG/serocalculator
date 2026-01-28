@@ -518,7 +518,34 @@ summary(est_with_clustering)
 #> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
+
+# Compare with non-robust (standard) analysis
+est_no_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var specified - uses standard errors
+)
+
+summary(est_no_clustering)
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate      SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.128 0.00682  0.115  0.142 standard     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```
+
+Notice that the point estimates (incidence rates) are identical between
+the two analyses, but the standard errors are larger with cluster-robust
+estimation. This reflects the reduced effective sample size due to
+within-cluster correlation.
+
+The mathematical details of cluster-robust standard errors are explained
+in the [Cluster-robust standard errors
+section](https://ucd-serg.github.io/serocalculator/methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs)
+of the methodology article.
 
 ### Multi-level Clustering
 
@@ -545,7 +572,17 @@ summary(est_multilevel)
 #> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
+
+# Compare with single-level clustering
+# The multi-level approach accounts for correlation at multiple nested levels
+# This typically yields slightly larger standard errors than single-level clustering
 ```
+
+Comparing `est_multilevel` with `est_with_clustering` above, you’ll see
+that multi-level clustering (accounting for both catchment and cluster
+correlation) produces larger standard errors than single-level
+clustering (cluster only), as it accounts for correlation at multiple
+nested levels.
 
 ### Clustering with Stratified Analysis
 
@@ -585,7 +622,43 @@ summary(est_catchment_clustered)
 #> 2 Stratu… kgh         200       0.1          0.167 0.00905 0.151   0.186 cluste…
 #> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
 #> #   antigen.isos <chr>, nlm.convergence.code <ord>
+
+# Compare with stratified analysis without clustering
+est_catchment_no_clustering <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var - standard errors
+)
+#> Warning: `curve_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+#> `noise_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+
+summary(est_catchment_no_clustering)
+#> Seroincidence estimated given the following setup:
+#> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#> b) Strata       : catchment 
+#> 
+#>  Seroincidence estimates:
+#> # A tibble: 2 × 14
+#>   Stratum catchment     n est.start incidence.rate      SE CI.lwr CI.upr se_type
+#>   <chr>   <chr>     <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratu… aku         294       0.1          0.106 0.00767 0.0916  0.122 standa…
+#> 2 Stratu… kgh         200       0.1          0.167 0.0133  0.143   0.196 standa…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```
+
+Within each stratum (catchment), the cluster-robust standard errors are
+larger than the standard errors, appropriately accounting for geographic
+clustering within each catchment area.
 
 ### Understanding the Impact
 

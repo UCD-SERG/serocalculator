@@ -1,7 +1,7 @@
 ---
 title: "Scrub Typhus Seroincidence Vignette"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
-date: "First Published: 2024-08-01 | Updated: `r Sys.Date()`"
+date: "First Published: 2024-AUG-01 | Updated: 2026-JAN-28"
 output: 
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette

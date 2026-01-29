@@ -472,7 +472,7 @@ knitr::kable(comparison2,
 
 Statistical comparisons of seroincidence rates between strata
 
-Let’s visualize our seroincidence estimates by strata.
+Finally, let’s summarize and visualize seroincidence rates by strata.
 
 ``` r
 # Plot seroincidence estimates
@@ -486,6 +486,36 @@ est2df <- summary(est2)
 
 
 est_comb <- rbind(estdf, est2df)
+
+### Summary table with seroincidence rates and 95% CIs
+summary_table <- est_comb |>
+  mutate(
+    `Seroincidence Rate` = sprintf("%.1f", incidence.rate*1000),
+    `95% CI` = sprintf("[%.1f, %.1f]", CI.lwr*1000, CI.upr*1000),
+    `Age Group` = ageQ
+    #`Standard Error` = sprintf("%.4f", SE)
+  ) %>%
+  arrange(ageQ) %>%
+  select(country, ageQ, `Seroincidence Rate`, `95% CI`)
+
+knitr::kable(summary_table,
+             caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
+```
+
+| country | ageQ    | Seroincidence Rate | 95% CI         |
+|:--------|:--------|:-------------------|:---------------|
+| Nepal   | 0-17    | 4.9                | \[3.4, 7.2\]   |
+| India   | 18-29   | 8.8                | \[4.4, 17.7\]  |
+| Nepal   | 18-29   | 13.6               | \[9.5, 19.4\]  |
+| India   | 30-49   | 15.0               | \[11.9, 18.9\] |
+| India   | 50-89   | 28.4               | \[23.3, 34.6\] |
+| India   | Overall | 19.9               | \[17.3, 23.0\] |
+| Nepal   | Overall | 7.5                | \[5.8, 9.7\]   |
+
+Scrub typhus seroincidence rates by country, per 1000 person-years
+
+``` r
+
 
 # Create barplot (rescale incidence rate and CIs)
 ggplot(est_comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +

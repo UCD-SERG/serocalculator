@@ -79,8 +79,8 @@
                         <h4 data-toc-skip class="author">UC Davis
 Seroepidemiology Research Group (SERG)</h4>
             
-            <h4 data-toc-skip class="date">First Published: 2024-08-01 |
-Updated: 2026-01-28</h4>
+            <h4 data-toc-skip class="date">First Published: 2024-AUG-01
+| Updated: 2026-JAN-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/copilot/update-scrub-typhus-vignette/vignettes/articles/scrubTyphus_example.Rmd" class="external-link"><code>vignettes/articles/scrubTyphus_example.Rmd</code></a></small>
       <div class="d-none name"><code>scrubTyphus_example.Rmd</code></div>
@@ -829,7 +829,8 @@ strata</caption>
 </tr>
 </tbody>
 </table>
-<p>Let’s visualize our seroincidence estimates by strata.</p>
+<p>Finally, let’s summarize and visualize seroincidence rates by
+strata.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
 <span></span>
@@ -842,6 +843,76 @@ strata</caption>
 <span></span>
 <span></span>
 <span><span class="va">est_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">estdf</span>, <span class="va">est2df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">### Summary table with seroincidence rates and 95% CIs</span></span>
+<span><span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="va">est_comb</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    `Seroincidence Rate` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%.1f"</span>, <span class="va">incidence.rate</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>,</span>
+<span>    `95% CI` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"[%.1f, %.1f]"</span>, <span class="va">CI.lwr</span><span class="op">*</span><span class="fl">1000</span>, <span class="va">CI.upr</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>,</span>
+<span>    `Age Group` <span class="op">=</span> <span class="va">ageQ</span></span>
+<span>    <span class="co">#`Standard Error` = sprintf("%.4f", SE)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">ageQ</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">ageQ</span>, <span class="va">`Seroincidence Rate`</span>, <span class="va">`95% CI`</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">summary_table</span>,</span>
+<span>             caption <span class="op">=</span> <span class="st">"Scrub typhus seroincidence rates by country, per 1000 person-years"</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Scrub typhus seroincidence rates by country, per 1000
+person-years</caption>
+<thead><tr class="header">
+<th align="left">country</th>
+<th align="left">ageQ</th>
+<th align="left">Seroincidence Rate</th>
+<th align="left">95% CI</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Nepal</td>
+<td align="left">0-17</td>
+<td align="left">4.9</td>
+<td align="left">[3.4, 7.2]</td>
+</tr>
+<tr class="even">
+<td align="left">India</td>
+<td align="left">18-29</td>
+<td align="left">8.8</td>
+<td align="left">[4.4, 17.7]</td>
+</tr>
+<tr class="odd">
+<td align="left">Nepal</td>
+<td align="left">18-29</td>
+<td align="left">13.6</td>
+<td align="left">[9.5, 19.4]</td>
+</tr>
+<tr class="even">
+<td align="left">India</td>
+<td align="left">30-49</td>
+<td align="left">15.0</td>
+<td align="left">[11.9, 18.9]</td>
+</tr>
+<tr class="odd">
+<td align="left">India</td>
+<td align="left">50-89</td>
+<td align="left">28.4</td>
+<td align="left">[23.3, 34.6]</td>
+</tr>
+<tr class="even">
+<td align="left">India</td>
+<td align="left">Overall</td>
+<td align="left">19.9</td>
+<td align="left">[17.3, 23.0]</td>
+</tr>
+<tr class="odd">
+<td align="left">Nepal</td>
+<td align="left">Overall</td>
+<td align="left">7.5</td>
+<td align="left">[5.8, 9.7]</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="co"># Create barplot (rescale incidence rate and CIs)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">est_comb</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ageQ</span>, x <span class="op">=</span> <span class="va">incidence.rate</span> <span class="op">*</span> <span class="fl">1000</span>, fill <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>

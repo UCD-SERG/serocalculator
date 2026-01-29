@@ -319,7 +319,7 @@ knitr::kable(comparison2,
 
 
 
-Finally, let's summarise and visualize our seroincidence estimates by strata.
+Finally, let's summarize and visualize seroincidence rates by strata.
 
 
 ```{r}

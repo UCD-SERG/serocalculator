@@ -231,7 +231,7 @@ parameter below.
 # The correct approach is to use the sigma value directly from the mixture model,
 # not sqrt(sigma). This vignette uses the corrected calculation.
 
-set.seed(54321)
+set.seed(1234)
 
 
 b_noise <- xs_data |>
@@ -249,8 +249,8 @@ b_noise <- xs_data |>
     )
   }) |>
   ungroup()
-#> number of iterations= 34 
-#> number of iterations= 37
+#> number of iterations= 37 
+#> number of iterations= 31
 
 # Biologic noise calculation (using children age <2 with lower liklihood of prior exposure)
 b_noise_u5 <- xs_data |>
@@ -268,7 +268,7 @@ b_noise_u5 <- xs_data |>
     )
   }) |>
   ungroup()
-#> number of iterations= 137
+#> number of iterations= 89
 
 
 # Define conditional parameters
@@ -296,7 +296,7 @@ knitr::kable(noise,
 
 | Antigen-Isotype | Biological Noise (ν) | Biological Noise (ν), children \< 5 | Measurement Noise (ε) | Lower Limit | Upper Limit |
 |:----------------|---------------------:|------------------------------------:|----------------------:|------------:|------------:|
-| OT56kda_IgG     |                 0.77 |                                0.67 |                   0.2 |         0.2 |           4 |
+| OT56kda_IgG     |                 0.77 |                                0.41 |                   0.2 |         0.2 |           4 |
 | OT56kda_IgM     |                 0.24 |                                  NA |                   0.2 |         0.2 |           4 |
 
 Noise parameters for scrub typhus seroincidence estimation
@@ -364,29 +364,6 @@ knitr::kable(comparison,
 | Stratum 1 | Stratum 2 | India     | Nepal     |           0.0199 |           0.0075 |     0.0124 | 0.0018 |      7.0499 |       0 |  0.009 | 0.0159 |
 
 Statistical comparison of seroincidence rates between countries
-
-### Summary table with seroincidence rates
-
-``` r
-# Create a nicely formatted summary table
-summary_table <- summary(est) |>
-  mutate(
-    `Seroincidence Rate` = sprintf("%.1f", incidence.rate*1000),
-    `95% CI` = sprintf("[%.1f, %.1f]", CI.lwr*1000, CI.upr*1000),
-    #`Standard Error` = sprintf("%.4f", SE)
-  ) |>
-  select(country, `Seroincidence Rate`, `95% CI`)
-
-knitr::kable(summary_table,
-             caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
-```
-
-| country | Seroincidence Rate | 95% CI         |
-|:--------|:-------------------|:---------------|
-| India   | 19.9               | \[17.3, 23.0\] |
-| Nepal   | 7.5                | \[5.8, 9.7\]   |
-
-Scrub typhus seroincidence rates by country, per 1000 person-years
 
 ## Estimate Seroincidence by study site and age strata
 
@@ -496,21 +473,21 @@ summary_table <- est_comb |>
     #`Standard Error` = sprintf("%.4f", SE)
   ) %>%
   arrange(ageQ) %>%
-  select(country, ageQ, `Seroincidence Rate`, `95% CI`)
+  select(country, `Age Group`, `Seroincidence Rate`, `95% CI`)
 
 knitr::kable(summary_table,
              caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
 ```
 
-| country | ageQ    | Seroincidence Rate | 95% CI         |
-|:--------|:--------|:-------------------|:---------------|
-| Nepal   | 0-17    | 4.9                | \[3.4, 7.2\]   |
-| India   | 18-29   | 8.8                | \[4.4, 17.7\]  |
-| Nepal   | 18-29   | 13.6               | \[9.5, 19.4\]  |
-| India   | 30-49   | 15.0               | \[11.9, 18.9\] |
-| India   | 50-89   | 28.4               | \[23.3, 34.6\] |
-| India   | Overall | 19.9               | \[17.3, 23.0\] |
-| Nepal   | Overall | 7.5                | \[5.8, 9.7\]   |
+| country | Age Group | Seroincidence Rate | 95% CI         |
+|:--------|:----------|:-------------------|:---------------|
+| Nepal   | 0-17      | 4.9                | \[3.4, 7.2\]   |
+| India   | 18-29     | 8.8                | \[4.4, 17.7\]  |
+| Nepal   | 18-29     | 13.6               | \[9.5, 19.4\]  |
+| India   | 30-49     | 15.0               | \[11.9, 18.9\] |
+| India   | 50-89     | 28.4               | \[23.3, 34.6\] |
+| India   | Overall   | 19.9               | \[17.3, 23.0\] |
+| Nepal   | Overall   | 7.5                | \[5.8, 9.7\]   |
 
 Scrub typhus seroincidence rates by country, per 1000 person-years
 
@@ -535,7 +512,7 @@ ggplot(est_comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
   scale_fill_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF"))
 ```
 
-![](scrubTyphus_example_files/figure-html/unnamed-chunk-10-1.png)
+![](scrubTyphus_example_files/figure-html/unnamed-chunk-9-1.png)
 
 ## Acknowledgments
 

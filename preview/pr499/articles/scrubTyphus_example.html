@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -328,7 +328,7 @@ noise parameter below.</p>
 <span><span class="co"># The correct approach is to use the sigma value directly from the mixture model,</span></span>
 <span><span class="co"># not sqrt(sigma). This vignette uses the corrected calculation.</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="va">b_noise</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op">|&gt;</span></span>
@@ -346,8 +346,8 @@ noise parameter below.</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; number of iterations= 34 </span></span>
-<span><span class="co">#&gt; number of iterations= 37</span></span>
+<span><span class="co">#&gt; number of iterations= 37 </span></span>
+<span><span class="co">#&gt; number of iterations= 31</span></span>
 <span></span>
 <span><span class="co"># Biologic noise calculation (using children age &lt;2 with lower liklihood of prior exposure)</span></span>
 <span><span class="va">b_noise_u5</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op">|&gt;</span></span>
@@ -365,7 +365,7 @@ noise parameter below.</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; number of iterations= 137</span></span>
+<span><span class="co">#&gt; number of iterations= 89</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Define conditional parameters</span></span>
@@ -409,7 +409,7 @@ estimation</caption>
 <tr class="odd">
 <td align="left">OT56kda_IgG</td>
 <td align="right">0.77</td>
-<td align="right">0.67</td>
+<td align="right">0.41</td>
 <td align="right">0.2</td>
 <td align="right">0.2</td>
 <td align="right">4</td>
@@ -526,43 +526,6 @@ countries</caption>
 </tr></tbody>
 </table>
 </div>
-<div class="section level3">
-<h3 id="summary-table-with-seroincidence-rates">Summary table with seroincidence rates<a class="anchor" aria-label="anchor" href="#summary-table-with-seroincidence-rates"></a>
-</h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a nicely formatted summary table</span></span>
-<span><span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    `Seroincidence Rate` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%.1f"</span>, <span class="va">incidence.rate</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>,</span>
-<span>    `95% CI` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"[%.1f, %.1f]"</span>, <span class="va">CI.lwr</span><span class="op">*</span><span class="fl">1000</span>, <span class="va">CI.upr</span><span class="op">*</span><span class="fl">1000</span><span class="op">)</span>,</span>
-<span>    <span class="co">#`Standard Error` = sprintf("%.4f", SE)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">`Seroincidence Rate`</span>, <span class="va">`95% CI`</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">summary_table</span>,</span>
-<span>             caption <span class="op">=</span> <span class="st">"Scrub typhus seroincidence rates by country, per 1000 person-years"</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
-<caption>Scrub typhus seroincidence rates by country, per 1000
-person-years</caption>
-<thead><tr class="header">
-<th align="left">country</th>
-<th align="left">Seroincidence Rate</th>
-<th align="left">95% CI</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">India</td>
-<td align="left">19.9</td>
-<td align="left">[17.3, 23.0]</td>
-</tr>
-<tr class="even">
-<td align="left">Nepal</td>
-<td align="left">7.5</td>
-<td align="left">[5.8, 9.7]</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 <div class="section level2">
 <h2 id="estimate-seroincidence-by-study-site-and-age-strata">Estimate Seroincidence by study site and age strata<a class="anchor" aria-label="anchor" href="#estimate-seroincidence-by-study-site-and-age-strata"></a>
@@ -570,7 +533,7 @@ person-years</caption>
 <p>Now we are ready to begin estimating seroincidence. We will use
 <code>est.incidence.by</code> to calculate stratified seroincidence
 rates.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using est.incidence.by (strata)</span></span>
 <span></span>
 <span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
@@ -623,7 +586,7 @@ rates.</p>
 <div class="section level3">
 <h3 id="compare-seroincidence-rates-between-age-groups-and-countries">Compare seroincidence rates between age groups and countries<a class="anchor" aria-label="anchor" href="#compare-seroincidence-rates-between-age-groups-and-countries"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare all pairs of strata</span></span>
 <span><span class="va">comparison2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
 <span></span>
@@ -831,7 +794,7 @@ strata</caption>
 </table>
 <p>Finally, let’s summarize and visualize seroincidence rates by
 strata.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
 <span></span>
 <span><span class="co"># Save summary(est) as a dataframe</span></span>
@@ -853,7 +816,7 @@ strata.</p>
 <span>    <span class="co">#`Standard Error` = sprintf("%.4f", SE)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">ageQ</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">ageQ</span>, <span class="va">`Seroincidence Rate`</span>, <span class="va">`95% CI`</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">`Age Group`</span>, <span class="va">`Seroincidence Rate`</span>, <span class="va">`95% CI`</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">summary_table</span>,</span>
 <span>             caption <span class="op">=</span> <span class="st">"Scrub typhus seroincidence rates by country, per 1000 person-years"</span><span class="op">)</span></span></code></pre></div>
@@ -862,7 +825,7 @@ strata.</p>
 person-years</caption>
 <thead><tr class="header">
 <th align="left">country</th>
-<th align="left">ageQ</th>
+<th align="left">Age Group</th>
 <th align="left">Seroincidence Rate</th>
 <th align="left">95% CI</th>
 </tr></thead>
@@ -911,7 +874,7 @@ person-years</caption>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="co"># Create barplot (rescale incidence rate and CIs)</span></span>
@@ -930,7 +893,7 @@ person-years</caption>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span>,</span>
 <span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"India"</span> <span class="op">=</span> <span class="st">"orange2"</span>, <span class="st">"Nepal"</span> <span class="op">=</span> <span class="st">"#39558CFF"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">

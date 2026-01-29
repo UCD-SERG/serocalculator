@@ -172,7 +172,7 @@ Column Name | Description
 # The correct approach is to use the sigma value directly from the mixture model,
 # not sqrt(sigma). This vignette uses the corrected calculation.
 
-set.seed(54321)
+set.seed(1234)
 
 
 b_noise <- xs_data |>
@@ -265,21 +265,6 @@ knitr::kable(comparison,
              caption = "Statistical comparison of seroincidence rates between countries")
 ```
 
-### Summary table with seroincidence rates
-
-```{r}
-# Create a nicely formatted summary table
-summary_table <- summary(est) |>
-  mutate(
-    `Seroincidence Rate` = sprintf("%.1f", incidence.rate*1000),
-    `95% CI` = sprintf("[%.1f, %.1f]", CI.lwr*1000, CI.upr*1000),
-    #`Standard Error` = sprintf("%.4f", SE)
-  ) |>
-  select(country, `Seroincidence Rate`, `95% CI`)
-
-knitr::kable(summary_table,
-             caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
-```
 
 
 ## Estimate Seroincidence by study site and age strata
@@ -344,7 +329,7 @@ summary_table <- est_comb |>
     #`Standard Error` = sprintf("%.4f", SE)
   ) %>%
   arrange(ageQ) %>%
-  select(country, ageQ, `Seroincidence Rate`, `95% CI`)
+  select(country, `Age Group`, `Seroincidence Rate`, `95% CI`)
 
 knitr::kable(summary_table,
              caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")

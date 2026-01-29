@@ -1,4 +1,6 @@
+AJTMH
 Aga
+Bogoch
 CMD
 Chiang
 CodeFactor
@@ -13,12 +15,15 @@ HlyE
 IgA
 IgG
 IgM
+Katuwal
 LV
 Lik
 Lotka
+Melina
 NIAID
 NLL
 Nadu
+Nishan
 OSF
 Orientia
 PRs
@@ -30,9 +35,12 @@ Rtools
 SeroEpidemiology
 Seroincidence
 Serological
+Shrestha
 TW
+Thapa
 UC
 Unif
+Vaidya
 Vellore
 Volterra
 al
@@ -67,6 +75,10 @@ isos
 isotype
 isotypes
 kDa
+kda
+kdaIgG
+kdaIgM
+kilodalton
 le
 leq
 linter
@@ -99,6 +111,7 @@ qmd
 qquad
 recombinant
 renewcommand
+responsed
 sectionally
 sera
 seroconversion

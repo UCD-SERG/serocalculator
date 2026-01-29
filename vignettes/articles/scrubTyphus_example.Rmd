@@ -1,6 +1,7 @@
 ---
 title: "Scrub Typhus Seroincidence Vignette"
 author: "UC Davis Seroepidemiology Research Group (SERG)"
+date: "First Published: 2024-AUG-01 | Updated: 2026-JAN-28"
 output: 
   bookdown::html_document2:
     base_format: rmarkdown::html_vignette
@@ -14,7 +15,9 @@ bibliography: ../references.bib
 ---
 ## Introduction
 
-This vignette reproduces the analysis for: [**Estimating the seroincidence of scrub typhus using antibody dynamics following infection**](https://www.medrxiv.org/content/10.1101/2022.11.07.22282017v2) (@Aiemjoy_2024_scrub). 
+This vignette reproduces the analysis for: [**Estimating the Seroincidence of Scrub Typhus using Antibody Dynamics after Infection**](https://www.ajtmh.org/view/journals/tpmd/111/2/article-p267.xml) (@Aiemjoy_2024_scrub).
+
+**Citation:** Aiemjoy, Kristen, Nishan Katuwal, Krista Vaidya, Sony Shrestha, Melina Thapa, Peter Teunis, Isaac I. Bogoch et al. "Estimating the Seroincidence of Scrub Typhus using Antibody Dynamics after Infection." The American Journal of Tropical Medicine and Hygiene 111, no. 2 (2024): 267. https://doi.org/10.4269/ajtmh.23-0475 
 
 ## Methods
 
@@ -38,7 +41,7 @@ Given the seroresponse, this marginal distribution of antibody concentrations ca
 
 ## Scrub Typhus Seroincidence
 
-Scrub typhus, a vector-borne bacterial infection, is an important but neglected disease globally. Accurately characterizing burden is challenging due to non-specific symptoms and limited diagnostics. Prior seroepidemiology studies have struggled to find consensus cutoffs that permit comparing estimates across contexts and time. In this study, we present a novel approach that does not require a cutoff and instead uses information about antibody kinetics after infection to estimate seroincidence. We use data from three cohorts of scrub typhus patients in Chiang Rai, Thailand, and Vellore, India to characterize antibody kinetics after infection and two population serosurveys in the Kathmandu valley, Nepal, and Tamil Nadu, India to estimate seroincidence. The samples were tested for IgM and IgG responses to Orientia tsutsugamushi-derived recombinant 56-kDa antigen using commercial ELISA kits. We used Bayesian hierarchical models to characterize antibody responses after scrub typhus infection and used the joint distributions of the peak antibody titers and decay rates to estimate population-level incidence rates in the cross-sectional serosurveys. 
+Scrub typhus, a vector-borne bacterial infection, is an important but neglected disease globally. Accurately characterizing burden is challenging due to non-specific symptoms and limited diagnostics. Prior seroepidemiology studies have struggled to find consensus cutoffs that permit comparing estimates across contexts and time. In this study, we present a novel approach that does not require a cutoff and instead uses information about antibody kinetics after infection to estimate seroincidence. We use data from three cohorts of scrub typhus patients in Chiang Rai, Thailand, and Vellore, India to characterize antibody kinetics after infection and two population serosurveys in the Kathmandu valley, Nepal, and Tamil Nadu, India to estimate seroincidence. The samples were tested for IgM and IgG responses to Orientia tsutsugamushi-derived recombinant 56-kDa antigen using commercial ELISA kits. These antigens (OT56kdaIgG and OT56kdaIgM) represent IgG and IgM responses to a 56 kilodalton antigen on the membrane of *Orientia tsutsugamushi* (OT) that have been found to be specific to this organism and are used in diagnosis. We used with-host Bayesian hierarchical models to characterize antibody responses after scrub typhus infection and used the joint distributions of the peak antibody titers and decay rates to estimate population-level incidence rates in the cross-sectional serosurveys. 
  
 
 ```{r, include = FALSE}
@@ -94,7 +97,8 @@ curves <-
 We can graph the decay curves with an `autoplot()` method:
 
 ```{r}
-curves |> autoplot()
+# Visualize curve parameters with custom colors
+curves |> autoplot() 
 ```
 
 
@@ -135,9 +139,12 @@ xs_data |> summary(strata = "country")
 Let's also take a look at how antibody responses change by age.
 
 ```{r plot-age}
-# Plot antibody responses by age
-autoplot(object = xs_data, type = "age-scatter", strata = "country")
+# Plot antibody responses by age with custom colors
+autoplot(object = xs_data, type = "age-scatter", strata = "country") +
+  scale_color_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF")) 
 ```
+
+As is clear from these data, the study in Nepal was performed in children, while the study in India was performed in adults, yet we can see that the values were higher on average and with less variation in Nepal.
 
 
 
@@ -160,45 +167,73 @@ Column Name | Description
 *Note that variable names are case-sensitive.*
 
 ```{r message=FALSE, warning=FALSE}
-# biologic noise
+# Biologic noise calculation
+# Note: There was an error in the SD calculation in the original paper.
+# The correct approach is to use the sigma value directly from the mixture model,
+# not sqrt(sigma). This vignette uses the corrected calculation.
+
+set.seed(1234)
+
+
 b_noise <- xs_data |>
-  group_by(antigen_iso) |>
   filter(!is.na(value)) |>
-  filter(age < 40) |> # restrict to young ages to capture recent exposures
-  do({
-    set.seed(54321)
-    # Fit the mixture model
-    mixmod <- normalmixEM(.$value, k = 2, maxit = 1000)
-    # k is the number of components, adjust as necessary
-    # Assuming the first component is the lower distribution:
-    lower_mu <- mixmod$mu[1]
-    lower_sigma <- sqrt(mixmod$sigma[1])
-    # Calculate the 90th percentile of the lower distribution
-    percentile75 <- qnorm(
-      0.75,
-      lower_mu,
-      lower_sigma
+  group_by(antigen_iso) |>
+  group_modify(~{
+    mixmod <- mixtools::normalmixEM(.x$value, k = 2, maxit = 1000)
+    
+    lower_k <- which.min(mixmod$mu)   # pick the lower-mean component
+    lower_mu <- mixmod$mu[lower_k]
+    lower_sd <- mixmod$sigma[lower_k] 
+    
+    tibble::tibble(
+      percentile95 = qnorm(0.95, mean = lower_mu, sd = lower_sd)
     )
-    # Return the results
-    data.frame(antigen_iso = .$antigen_iso[1],
-               percentile75 = percentile75)
-  })
+  }) |>
+  ungroup()
+
+# Biologic noise calculation (using children age <2 with lower liklihood of prior exposure)
+b_noise_u5 <- xs_data |>
+  filter(!is.na(value), age <5) |>
+  group_by(antigen_iso) |>
+  group_modify(~{
+    mixmod <- mixtools::normalmixEM(.x$value, k = 2, maxit = 1000)
+    
+    lower_k <- which.min(mixmod$mu)   # pick the lower-mean component
+    lower_mu <- mixmod$mu[lower_k]
+    lower_sd <- mixmod$sigma[lower_k] 
+    
+    tibble::tibble(
+      percentile95 = qnorm(0.95, mean = lower_mu, sd = lower_sd)
+    )
+  }) |>
+  ungroup()
 
 
-
-# define conditional parameters
+# Define conditional parameters
 noise <- data.frame(
   antigen_iso = c("OT56kda_IgG", "OT56kda_IgM"),
   nu = as.numeric(c(b_noise[2, 2], b_noise[1, 2])), # Biologic noise (nu)
+  nu_u5 = as.numeric(c(b_noise_u5[1, 2], b_noise_u5[2, 2])), # Biologic noise (nu)
   eps = c(0.2, 0.2), # M noise (eps)
   y.low = c(0.2, 0.2), # low cutoff (llod)
-  y.high = c(200, 200)
+  y.high = c(4, 4)
 ) |> # high cutoff (y.high)
   mutate(across(where(is.numeric), round, digits = 2))
+
+```
+
+The table below shows the noise parameters that will be used in the serocalculator function:
+
+```{r}
+# Display noise parameters table
+knitr::kable(noise, 
+             caption = "Noise parameters for scrub typhus seroincidence estimation",
+             col.names = c("Antigen-Isotype", "Biological Noise (ν)", "Biological Noise (ν), children < 5",
+                          "Measurement Noise (ε)", "Lower Limit", "Upper Limit"))
 ```
 
 ## Estimate Seroincidence by study site
-Now we are ready to begin estimating seroincidence. We will use `est.incidence.by` to calculate stratified seroincidence rates.
+Now we are ready to begin estimating seroincidence using IgG responsed to 56kda. We will use `est.incidence.by` to calculate stratified seroincidence rates.
 
 
 ```{r estby}
@@ -215,6 +250,21 @@ est <- est_seroincidence_by(
 
 summary(est)
 ```
+
+### Compare seroincidence rates between countries
+
+We can use the `compare_seroincidence()` function to perform statistical comparisons between countries and generate a nicely formatted table with p-values:
+
+```{r}
+# Compare seroincidence rates between countries
+comparison <- compare_seroincidence(est)
+
+# Display comparison table
+knitr::kable(comparison,
+             digits = 4,
+             caption = "Statistical comparison of seroincidence rates between countries")
+```
+
 
 
 ## Estimate Seroincidence by study site and age strata
@@ -236,13 +286,25 @@ est2 <- est_seroincidence_by(
 summary(est2)
 ```
 
+### Compare seroincidence rates between age groups and countries
+
+```{r}
+# Compare all pairs of strata
+comparison2 <- compare_seroincidence(est2)
+
+# Display comparison table
+knitr::kable(comparison2,
+             digits = 4,
+             caption = "Statistical comparisons of seroincidence rates between strata")
+```
 
 
 
 
 
 
-Let's visualize our seroincidence estimates by strata.
+
+Finally, let's summarize and visualize seroincidence rates by strata.
 
 
 ```{r}
@@ -258,6 +320,21 @@ est2df <- summary(est2)
 
 est_comb <- rbind(estdf, est2df)
 
+### Summary table with seroincidence rates and 95% CIs
+summary_table <- est_comb |>
+  mutate(
+    `Seroincidence Rate` = sprintf("%.1f", incidence.rate*1000),
+    `95% CI` = sprintf("[%.1f, %.1f]", CI.lwr*1000, CI.upr*1000),
+    `Age Group` = ageQ
+    #`Standard Error` = sprintf("%.4f", SE)
+  ) %>%
+  arrange(ageQ) %>%
+  select(country, `Age Group`, `Seroincidence Rate`, `95% CI`)
+
+knitr::kable(summary_table,
+             caption = "Scrub typhus seroincidence rates by country, per 1000 person-years")
+
+
 # Create barplot (rescale incidence rate and CIs)
 ggplot(est_comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
   geom_bar(
@@ -266,14 +343,14 @@ ggplot(est_comb, aes(y = ageQ, x = incidence.rate * 1000, fill = country)) +
   ) +
   geom_linerange(aes(xmin = CI.lwr * 1000, xmax = CI.upr * 1000),
                  position = position_dodge2(width = 0.8, preserve = "single")) +
-  labs(title = "Enteric Fever Seroincidence by Catchment Area",
-       x = "Seroincience rate per 1000 person-years",
-       y = "Catchment") +
+  labs(title = "Scrub Typhus Seroincidence by Country",
+       x = "Seroincidence rate per 1000 person-years",
+       y = "Age Group") +
   theme_bw() +
   facet_wrap(~ country) +
   theme(axis.text.y = element_text(size = 11),
         axis.text.x = element_text(size = 11)) +
-  scale_fill_manual(values = c("orange2", "#39558CFF", "red"))
+  scale_fill_manual(values = c("India" = "orange2", "Nepal" = "#39558CFF"))
 ```
 
 

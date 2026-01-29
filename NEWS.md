@@ -1,5 +1,9 @@
 # serocalculator (development version)
 
+## Documentation improvements
+
+* Updated scrub typhus vignette with final AJTMH publication details and corrected biological noise calculation
+
 # serocalculator 1.4.0
 
 ## New features

@@ -51,6 +51,11 @@ reference:
 - title: Compare seroconversion incidence rates
   contents:
   - compare_seroincidence
+- title: Calculate ICC for clustered sampling designs
+  contents:
+  - compute_icc
+  - print.icc_seroincidence
+  - print.icc_seroincidence.by
 - title: Example data sets
   contents:
   - sees_pop_data_100

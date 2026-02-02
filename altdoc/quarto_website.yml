@@ -22,7 +22,7 @@ website:
     right:
       - icon: github
         href: $ALTDOC_PACKAGE_URL_GITHUB
-        aria-label: $ALTDOC_PACKAGE_NAME GitHub
+        aria-label: View $ALTDOC_PACKAGE_NAME on GitHub
     left:
       - text: Documentation
         file: man/serocalculator-package.qmd

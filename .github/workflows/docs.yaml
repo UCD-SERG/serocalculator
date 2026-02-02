@@ -45,7 +45,7 @@ jobs:
     timeout-minutes: 30
     # Only restrict concurrency for non-PR jobs
     concurrency:
-      group: docs-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: docs-${{ github.event_name == 'pull_request' && github.run_id || github.ref }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     permissions:
@@ -164,12 +164,12 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         if: steps.preview-step.outputs.deployment-action == 'remove'
         with:
-            header: pr-preview
-            message: |
-                [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
-                :---:
-                Preview removed because the pull request was closed.
-                ${{ steps.preview-step.outputs.action-start-time }}
+          header: pr-preview
+          message: |
+            [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
+            :---:
+            Preview removed because the pull request was closed.
+            ${{ steps.preview-step.outputs.action-start-time }}
 
   cleanup-pr-preview:
     name: Clean up PR preview 🧹

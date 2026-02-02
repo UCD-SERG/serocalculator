@@ -7,12 +7,11 @@ name: Docs 📚
 # PRs are deployed to /preview/pr<number>/
 # Tags are deployed to /<tag>/
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - closed
+  push:
+    branches:
+      - main
+    tags:
+      - 'v[0-9]+\.[0-9]+\.[0-9]+'  # build on version tags like v1.2.3
     paths:
       - 'man/**'
       - 'altdoc/**'
@@ -20,13 +19,24 @@ on:
       - '.github/workflows/docs.yaml'
       - 'README.md'
       - 'index.qmd'
-  push:
-    tags:
-      - 'v[0-9]+\.[0-9]+\.[0-9]+'  # build on version tags like v1.2.3
-    branches:
-      - main
   release:
     types: [published]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - closed
+    branches:
+      - main
+    paths:
+      - 'man/**'
+      - 'altdoc/**'
+      - 'vignettes/**'
+      - '.github/workflows/docs.yaml'
+      - 'README.md'
+      - 'index.qmd'
   workflow_dispatch:
     inputs:
       tag:
@@ -34,7 +44,9 @@ on:
         required: false
         default: ''
 
-name: docs
+concurrency:
+  group: docs-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 env:
     PREVIEW_BRANCH: gh-pages

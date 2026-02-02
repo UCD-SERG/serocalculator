@@ -97,7 +97,7 @@ jobs:
       - name: Build site
         # uncomment the next two lines to get full debugging output
         # env:
-          # QUARTO_LOG_LEVEL: DEBUG
+        #   QUARTO_LOG_LEVEL: DEBUG
         timeout-minutes: 20
         run: |
           # If parallel = TRUE in render_docs()

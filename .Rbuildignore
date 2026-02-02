@@ -2,9 +2,8 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
-^_pkgdown\.yml$
 ^docs$
-^pkgdown$
+^altdoc$
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$

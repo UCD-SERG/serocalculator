@@ -66,6 +66,8 @@ website:
         file: NEWS.md
       - text: Code of conduct
         file: CODE_OF_CONDUCT.md
+      - text: Contributing
+        file: CONTRIBUTING.md
 
 format:
   html:

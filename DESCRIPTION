@@ -46,7 +46,9 @@ Imports:
     parallel,
     labelled
 Suggests:
+    altdoc,
     bookdown,
+    bslib,
     DT,
     fs,
     ggbeeswarm,
@@ -71,7 +73,7 @@ LinkingTo:
 Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto, lewinfox/foodwebr
+Config/Needs/website: quarto, lewinfox/foodwebr, d-morrison/altdoc@recursive-qmd-search
 Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US
@@ -80,4 +82,5 @@ NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
 RoxygenNote: 7.3.3
 Remotes: 
-    d-morrison/snapr
+    d-morrison/snapr,
+    d-morrison/altdoc@recursive-qmd-search

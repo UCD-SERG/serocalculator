@@ -6,7 +6,7 @@ project:
     - "*.md"       # Also render plain markdown files
     - "!README.md" # Except README which is used in index
     - "!index.md"  # Except index which is replaced by index.qmd
-    - "!data-raw/" # Exclude anything in the data-raw directory
+    - "!data-raw/**" # Exclude anything in the data-raw directory
 
 # Note: freeze functionality can be set at a project level or for individual .qmd files
 # execute:
@@ -14,7 +14,7 @@ project:
 bibliography: vignettes/references.bib
 website:
   title: "$ALTDOC_PACKAGE_NAME"
-  repo-url: https://github.com/UCD-SERG/serocalculator
+  repo-url: $ALTDOC_PACKAGE_URL_GITHUB
   repo-actions: [edit, source, issue]
   navbar:
     search: true

@@ -29,7 +29,7 @@ website:
       - text: Articles
         menu:
           - text: "Get started"
-            file: vignettes/articles/serocalculator.qmd
+            file: vignettes/articles/serocalculator.Rmd
           - text: "---"
           - text: "Methodology"
             file: vignettes/methodology.qmd
@@ -37,9 +37,9 @@ website:
             file: vignettes/articles/simulate_xsectionalData.qmd
           - text: "---"
           - text: "Enteric fever example"
-            file: vignettes/articles/enteric_fever_example.qmd
+            file: vignettes/articles/enteric_fever_example.Rmd
           - text: "Scrub typhus example"
-            file: vignettes/articles/scrubTyphus_example.qmd
+            file: vignettes/articles/scrubTyphus_example.Rmd
   sidebar:
     collapse-level: 1
     contents:
@@ -51,15 +51,15 @@ website:
         contents:
           - section: Get started
             contents:
-              - vignettes/articles/serocalculator.qmd
+              - vignettes/articles/serocalculator.Rmd
           - section: Methodology
             contents:
               - vignettes/methodology.qmd
               - vignettes/articles/simulate_xsectionalData.qmd
           - section: Examples
             contents:
-              - vignettes/articles/enteric_fever_example.qmd
-              - vignettes/articles/scrubTyphus_example.qmd
+              - vignettes/articles/enteric_fever_example.Rmd
+              - vignettes/articles/scrubTyphus_example.Rmd
       - section: $ALTDOC_MAN_BLOCK
         style: floating
       - text: News

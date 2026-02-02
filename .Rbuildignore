@@ -2,9 +2,7 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
-^_pkgdown\.yml$
 ^docs$
-^pkgdown$
 ^altdoc$
 ^\.github$
 ^cran-comments\.md$

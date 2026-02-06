@@ -493,20 +493,20 @@ rate_ratio_bangla_nepal <- round(rate_bangla_5_15 / rate_nepal_5_15)
 # Extract cluster-robust results for Bangladesh
 bangla_summary <- summary(est_bangladesh_clustered)
 bangla_rate <- round(bangla_summary$incidence.rate * 1000, 1)
-bangla_ci_lower <- round(bangla_summary$`CI.lower (Exact)` * 1000, 1)
-bangla_ci_upper <- round(bangla_summary$`CI.upper (Exact)` * 1000, 1)
+bangla_ci_lower <- round(bangla_summary$CI.lwr * 1000, 1)
+bangla_ci_upper <- round(bangla_summary$CI.upr * 1000, 1)
 
 # Extract cluster-robust results for Nepal
 nepal_summary <- summary(est_nepal_clustered)
 nepal_rate <- round(nepal_summary$incidence.rate * 1000, 1)
-nepal_ci_lower <- round(nepal_summary$`CI.lower (Exact)` * 1000, 1)
-nepal_ci_upper <- round(nepal_summary$`CI.upper (Exact)` * 1000, 1)
+nepal_ci_lower <- round(nepal_summary$CI.lwr * 1000, 1)
+nepal_ci_upper <- round(nepal_summary$CI.upr * 1000, 1)
 
 # Extract cluster-robust results for Pakistan
 pakistan_summary <- summary(est_pakistan_clustered)
 pakistan_rate <- round(pakistan_summary$incidence.rate * 1000, 1)
-pakistan_ci_lower <- round(pakistan_summary$`CI.lower (Exact)` * 1000, 1)
-pakistan_ci_upper <- round(pakistan_summary$`CI.upper (Exact)` * 1000, 1)
+pakistan_ci_lower <- round(pakistan_summary$CI.lwr * 1000, 1)
+pakistan_ci_upper <- round(pakistan_summary$CI.upr * 1000, 1)
 
 # Extract comparison p-values
 pval_bangla_nepal <- comparison_bangla_nepal$p.value

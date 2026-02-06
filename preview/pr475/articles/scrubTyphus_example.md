@@ -146,7 +146,7 @@ xs_data |> summary(strata = "country")
 #> Warning: There were 2 warnings in `dplyr::summarize()`.
 #> The first warning was:
 #> ℹ In argument: `across(...)`.
-#> ℹ In group 4: `antigen_iso = OT56kda_IgM` `country = Nepal`.
+#> ℹ In group 4: `antigen_iso = OT56kda_IgM`, `country = Nepal`.
 #> Caused by warning in `min()`:
 #> ! no non-missing arguments to min; returning Inf
 #> ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.

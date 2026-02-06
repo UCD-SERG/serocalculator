@@ -732,20 +732,79 @@ column indicating “cluster-robust” vs “standard”</li>
 effective sample size</li>
 </ul>
 </div>
+<div class="section level3">
+<h3 id="cluster-robust-country-comparisons">Cluster-Robust Country Comparisons<a class="anchor" aria-label="anchor" href="#cluster-robust-country-comparisons"></a>
+</h3>
+<p>For our main findings comparing Bangladesh and Nepal, we should use
+cluster-robust standard errors to properly account for the geographic
+clustering in the SEES study:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Estimate seroincidence for Bangladesh with cluster adjustment</span></span>
+<span><span class="va">est_bangladesh_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Bangladesh"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Bangladesh"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estimate seroincidence for Nepal with cluster adjustment</span></span>
+<span><span class="va">est_nepal_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Nepal"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Nepal"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compare the two estimates with cluster-robust SEs</span></span>
+<span><span class="va">comparison_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_bangladesh_clustered</span>, </span>
+<span>  <span class="va">est_nepal_clustered</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comparison_clustered</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = 14.99, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  0.3496836 0.4548783</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;       0.45050113       0.04822018       0.40228095</span></span></code></pre></div>
+<p>The cluster-robust comparison provides more accurate inference by
+accounting for within-cluster correlation in the study design.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
 </h2>
-<p>We estimate that Bangladesh has the highest enteric fever
-seroconversion rates across all age groups, with the highest rates
-observed among 5- to 15-year-olds (477 per 1000 person-years). In this
-age group, the seroconversion rate in Bangladesh is 14 times higher than
-in Nepal, where the rate is 35 per 1000 person-years. These findings
-highlight substantial geographic variation in enteric fever
-transmission, emphasizing the need for targeted prevention strategies.
-<strong>serocalculator</strong> offers an efficient and reproducible
-approach to estimating seroconversion rates, enabling data-driven
-insights for disease surveillance and public health decision-making.</p>
+<p>Using cluster-robust standard errors to account for geographic
+clustering in the SEES study, we estimate that Bangladesh has
+significantly higher enteric fever seroconversion rates than Nepal (p
+&lt; 0.001). The overall seroconversion rate in Bangladesh is 450.5 per
+1000 person-years (95% CI: -), compared to 48.2 per 1000 person-years
+(95% CI: -) in Nepal. Across age groups, the highest rates are observed
+among 5- to 15-year-olds in Bangladesh (477 per 1000 person-years),
+which is 14 times higher than Nepal in the same age group (35 per 1000
+person-years). These findings highlight substantial geographic variation
+in enteric fever transmission, emphasizing the need for targeted
+prevention strategies.</p>
+<p>The cluster-robust approach properly accounts for within-cluster
+correlation arising from the geographic sampling design. While point
+estimates remain unchanged, the cluster-robust standard errors and
+confidence intervals provide more accurate uncertainty quantification,
+ensuring valid statistical inference. This adjustment is particularly
+important for survey designs where observations within clusters (e.g.,
+households, schools, or geographic areas) are correlated, as failing to
+account for clustering can lead to underestimated standard errors and
+overly narrow confidence intervals.</p>
+<p><strong>serocalculator</strong> offers an efficient and reproducible
+approach to estimating seroconversion rates with proper accounting for
+complex survey designs, enabling data-driven insights for disease
+surveillance and public health decision-making.</p>
 </div>
 <div class="section level2">
 <h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>

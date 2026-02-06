@@ -635,18 +635,81 @@ When cluster-robust standard errors are used:
 - Confidence intervals appropriately widen to account for reduced
   effective sample size
 
+### Cluster-Robust Country Comparisons
+
+For our main findings comparing Bangladesh and Nepal, we should use
+cluster-robust standard errors to properly account for the geographic
+clustering in the SEES study:
+
+``` r
+# Estimate seroincidence for Bangladesh with cluster adjustment
+est_bangladesh_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Bangladesh"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Bangladesh"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Estimate seroincidence for Nepal with cluster adjustment
+est_nepal_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Nepal"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Nepal"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Compare the two estimates with cluster-robust SEs
+comparison_clustered <- compare_seroincidence(
+  est_bangladesh_clustered, 
+  est_nepal_clustered
+)
+print(comparison_clustered)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = 14.99, p-value < 2.2e-16
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  0.3496836 0.4548783
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>       0.45050113       0.04822018       0.40228095
+```
+
+The cluster-robust comparison provides more accurate inference by
+accounting for within-cluster correlation in the study design.
+
 ## Conclusions
 
-We estimate that Bangladesh has the highest enteric fever seroconversion
-rates across all age groups, with the highest rates observed among 5- to
-15-year-olds (477 per 1000 person-years). In this age group, the
-seroconversion rate in Bangladesh is 14 times higher than in Nepal,
-where the rate is 35 per 1000 person-years. These findings highlight
-substantial geographic variation in enteric fever transmission,
-emphasizing the need for targeted prevention strategies.
+Using cluster-robust standard errors to account for geographic
+clustering in the SEES study, we estimate that Bangladesh has
+significantly higher enteric fever seroconversion rates than Nepal (p \<
+0.001). The overall seroconversion rate in Bangladesh is 450.5 per 1000
+person-years (95% CI: -), compared to 48.2 per 1000 person-years (95%
+CI: -) in Nepal. Across age groups, the highest rates are observed among
+5- to 15-year-olds in Bangladesh (477 per 1000 person-years), which is
+14 times higher than Nepal in the same age group (35 per 1000
+person-years). These findings highlight substantial geographic variation
+in enteric fever transmission, emphasizing the need for targeted
+prevention strategies.
+
+The cluster-robust approach properly accounts for within-cluster
+correlation arising from the geographic sampling design. While point
+estimates remain unchanged, the cluster-robust standard errors and
+confidence intervals provide more accurate uncertainty quantification,
+ensuring valid statistical inference. This adjustment is particularly
+important for survey designs where observations within clusters (e.g.,
+households, schools, or geographic areas) are correlated, as failing to
+account for clustering can lead to underestimated standard errors and
+overly narrow confidence intervals.
+
 **serocalculator** offers an efficient and reproducible approach to
-estimating seroconversion rates, enabling data-driven insights for
-disease surveillance and public health decision-making.
+estimating seroconversion rates with proper accounting for complex
+survey designs, enabling data-driven insights for disease surveillance
+and public health decision-making.
 
 ## Acknowledgments
 

@@ -415,7 +415,7 @@ When cluster-robust standard errors are used:
 
 ### Cluster-Robust Country Comparisons
 
-For our main findings comparing Bangladesh and Nepal, we should use cluster-robust standard errors to properly account for the geographic clustering in the SEES study:
+For our main findings comparing all three countries, we should use cluster-robust standard errors to properly account for the geographic clustering in the SEES study:
 
 ```{r cluster_robust_country_comparison}
 # Estimate seroincidence for Bangladesh with cluster adjustment
@@ -436,15 +436,43 @@ est_nepal_clustered <- est_seroincidence(
   cluster_var = "cluster"
 )
 
-# Compare the two estimates with cluster-robust SEs
-comparison_clustered <- compare_seroincidence(
+# Estimate seroincidence for Pakistan with cluster adjustment
+est_pakistan_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Pairwise comparisons with cluster-robust SEs
+comparison_bangla_nepal <- compare_seroincidence(
   est_bangladesh_clustered, 
   est_nepal_clustered
 )
-print(comparison_clustered)
+
+comparison_bangla_pakistan <- compare_seroincidence(
+  est_bangladesh_clustered,
+  est_pakistan_clustered
+)
+
+comparison_nepal_pakistan <- compare_seroincidence(
+  est_nepal_clustered,
+  est_pakistan_clustered
+)
+
+# Display all comparisons
+print("Bangladesh vs Nepal:")
+print(comparison_bangla_nepal)
+
+print("Bangladesh vs Pakistan:")
+print(comparison_bangla_pakistan)
+
+print("Nepal vs Pakistan:")
+print(comparison_nepal_pakistan)
 ```
 
-The cluster-robust comparison provides more accurate inference by accounting for within-cluster correlation in the study design.
+The cluster-robust comparisons provide more accurate inference by accounting for within-cluster correlation in the study design.
 
 ```{r include=FALSE}
 #Calculate output values for conclusions
@@ -474,17 +502,31 @@ nepal_rate <- round(nepal_summary$incidence.rate * 1000, 1)
 nepal_ci_lower <- round(nepal_summary$`CI.lower (Exact)` * 1000, 1)
 nepal_ci_upper <- round(nepal_summary$`CI.upper (Exact)` * 1000, 1)
 
-# Extract comparison p-value
-comparison_pval <- comparison_clustered$p.value
-comparison_pval_formatted <- if_else(
-  comparison_pval < 0.001, 
-  "< 0.001", 
-  paste0("= ", format(round(comparison_pval, 3), nsmall = 3))
-)
+# Extract cluster-robust results for Pakistan
+pakistan_summary <- summary(est_pakistan_clustered)
+pakistan_rate <- round(pakistan_summary$incidence.rate * 1000, 1)
+pakistan_ci_lower <- round(pakistan_summary$`CI.lower (Exact)` * 1000, 1)
+pakistan_ci_upper <- round(pakistan_summary$`CI.upper (Exact)` * 1000, 1)
+
+# Extract comparison p-values
+pval_bangla_nepal <- comparison_bangla_nepal$p.value
+pval_bangla_pakistan <- comparison_bangla_pakistan$p.value
+pval_nepal_pakistan <- comparison_nepal_pakistan$p.value
+
+# Format p-values
+format_pval <- function(p) {
+  if_else(p < 0.001, "< 0.001", paste0("= ", format(round(p, 3), nsmall = 3)))
+}
+
+pval_bangla_nepal_fmt <- format_pval(pval_bangla_nepal)
+pval_bangla_pakistan_fmt <- format_pval(pval_bangla_pakistan)
+pval_nepal_pakistan_fmt <- format_pval(pval_nepal_pakistan)
 ```
 
 ## Conclusions
-Using cluster-robust standard errors to account for geographic clustering in the SEES study, we estimate that Bangladesh has significantly higher enteric fever seroconversion rates than Nepal (p `r comparison_pval_formatted`). The overall seroconversion rate in Bangladesh is `r bangla_rate` per 1000 person-years (95% CI: `r bangla_ci_lower`-`r bangla_ci_upper`), compared to `r nepal_rate` per 1000 person-years (95% CI: `r nepal_ci_lower`-`r nepal_ci_upper`) in Nepal. Across age groups, the highest rates are observed among 5- to 15-year-olds in Bangladesh (`r rate_bangla_5_15` per 1000 person-years), which is `r rate_ratio_bangla_nepal` times higher than Nepal in the same age group (`r rate_nepal_5_15` per 1000 person-years). These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies.
+Using cluster-robust standard errors to account for geographic clustering in the SEES study, we observe significant variation in enteric fever seroconversion rates across the three countries. Bangladesh has the highest overall seroconversion rate at `r bangla_rate` per 1000 person-years (95% CI: `r bangla_ci_lower`-`r bangla_ci_upper`), followed by Pakistan at `r pakistan_rate` per 1000 person-years (95% CI: `r pakistan_ci_lower`-`r pakistan_ci_upper`), and Nepal at `r nepal_rate` per 1000 person-years (95% CI: `r nepal_ci_lower`-`r nepal_ci_upper`). Pairwise comparisons show Bangladesh has significantly higher rates than both Nepal (p `r pval_bangla_nepal_fmt`) and Pakistan (p `r pval_bangla_pakistan_fmt`), while the difference between Nepal and Pakistan is also significant (p `r pval_nepal_pakistan_fmt`). 
+
+Across age groups, the highest rates are observed among 5- to 15-year-olds in Bangladesh (`r rate_bangla_5_15` per 1000 person-years), which is `r rate_ratio_bangla_nepal` times higher than Nepal in the same age group (`r rate_nepal_5_15` per 1000 person-years). These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies tailored to local epidemiology.
 
 The cluster-robust approach properly accounts for within-cluster correlation arising from the geographic sampling design. While point estimates remain unchanged, the cluster-robust standard errors and confidence intervals provide more accurate uncertainty quantification, ensuring valid statistical inference. This adjustment is particularly important for survey designs where observations within clusters (e.g., households, schools, or geographic areas) are correlated, as failing to account for clustering can lead to underestimated standard errors and overly narrow confidence intervals.
 

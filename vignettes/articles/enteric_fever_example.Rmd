@@ -413,9 +413,41 @@ When cluster-robust standard errors are used:
 - The `summary()` output includes a `se_type` column indicating "cluster-robust" vs "standard"
 - Confidence intervals appropriately widen to account for reduced effective sample size
 
+### Cluster-Robust Country Comparisons
+
+For our main findings comparing Bangladesh and Nepal, we should use cluster-robust standard errors to properly account for the geographic clustering in the SEES study:
+
+```{r cluster_robust_country_comparison}
+# Estimate seroincidence for Bangladesh with cluster adjustment
+est_bangladesh_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Bangladesh"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Bangladesh"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Estimate seroincidence for Nepal with cluster adjustment
+est_nepal_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Nepal"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Nepal"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Compare the two estimates with cluster-robust SEs
+comparison_clustered <- compare_seroincidence(
+  est_bangladesh_clustered, 
+  est_nepal_clustered
+)
+print(comparison_clustered)
+```
+
+The cluster-robust comparison provides more accurate inference by accounting for within-cluster correlation in the study design.
 
 ```{r include=FALSE}
-#Calculate output values
+#Calculate output values for conclusions
 rate_bangla_5_15 <- est_country_agedf |> 
   dplyr::filter(Country == "Bangladesh", ageCat == "5-15") |> 
   pull("incidence.rate") 
@@ -429,12 +461,32 @@ rate_nepal_5_15 <- est_country_agedf |>
 rate_nepal_5_15 <- round(rate_nepal_5_15 * 1000)
 
 rate_ratio_bangla_nepal <- round(rate_bangla_5_15 / rate_nepal_5_15)
+
+# Extract cluster-robust results for Bangladesh
+bangla_summary <- summary(est_bangladesh_clustered)
+bangla_rate <- round(bangla_summary$incidence.rate * 1000, 1)
+bangla_ci_lower <- round(bangla_summary$`CI.lower (Exact)` * 1000, 1)
+bangla_ci_upper <- round(bangla_summary$`CI.upper (Exact)` * 1000, 1)
+
+# Extract cluster-robust results for Nepal
+nepal_summary <- summary(est_nepal_clustered)
+nepal_rate <- round(nepal_summary$incidence.rate * 1000, 1)
+nepal_ci_lower <- round(nepal_summary$`CI.lower (Exact)` * 1000, 1)
+nepal_ci_upper <- round(nepal_summary$`CI.upper (Exact)` * 1000, 1)
+
+# Extract comparison p-value
+comparison_pval <- comparison_clustered$p.value
+comparison_pval_formatted <- if_else(
+  comparison_pval < 0.001, 
+  "< 0.001", 
+  paste0("= ", format(round(comparison_pval, 3), nsmall = 3))
+)
 ```
 
 ## Conclusions
-We estimate that Bangladesh has the highest enteric fever seroconversion rates across all age groups, with the highest rates observed among 5- to 15-year-olds (`r rate_bangla_5_15` per 1000 person-years). In this age group, the seroconversion rate in Bangladesh is `r rate_ratio_bangla_nepal` times higher than in Nepal, where the rate is `r rate_nepal_5_15` per 1000 person-years. These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies.
+Using cluster-robust standard errors to account for geographic clustering in the SEES study, we estimate that Bangladesh has significantly higher enteric fever seroconversion rates than Nepal (p `r comparison_pval_formatted`). The overall seroconversion rate in Bangladesh is `r bangla_rate` per 1000 person-years (95% CI: `r bangla_ci_lower`-`r bangla_ci_upper`), compared to `r nepal_rate` per 1000 person-years (95% CI: `r nepal_ci_lower`-`r nepal_ci_upper`) in Nepal. Across age groups, the highest rates are observed among 5- to 15-year-olds in Bangladesh (`r rate_bangla_5_15` per 1000 person-years), which is `r rate_ratio_bangla_nepal` times higher than Nepal in the same age group (`r rate_nepal_5_15` per 1000 person-years). These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies.
 
-When accounting for the clustered sampling design (geographic clustering within the SEES study), cluster-robust standard errors appropriately reflect within-cluster correlation. While point estimates remain unchanged, the larger cluster-robust standard errors provide more accurate uncertainty quantification for data with geographic clustering, ensuring valid statistical inference. This adjustment is particularly important for survey designs where observations within clusters (e.g., households, schools, or geographic areas) are correlated.
+The cluster-robust approach properly accounts for within-cluster correlation arising from the geographic sampling design. While point estimates remain unchanged, the cluster-robust standard errors and confidence intervals provide more accurate uncertainty quantification, ensuring valid statistical inference. This adjustment is particularly important for survey designs where observations within clusters (e.g., households, schools, or geographic areas) are correlated, as failing to account for clustering can lead to underestimated standard errors and overly narrow confidence intervals.
 
 **serocalculator** offers an efficient and reproducible approach to estimating seroconversion rates with proper accounting for complex survey designs, enabling data-driven insights for disease surveillance and public health decision-making.
 

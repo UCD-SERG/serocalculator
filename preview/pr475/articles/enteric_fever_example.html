@@ -735,7 +735,7 @@ effective sample size</li>
 <div class="section level3">
 <h3 id="cluster-robust-country-comparisons">Cluster-Robust Country Comparisons<a class="anchor" aria-label="anchor" href="#cluster-robust-country-comparisons"></a>
 </h3>
-<p>For our main findings comparing Bangladesh and Nepal, we should use
+<p>For our main findings comparing all three countries, we should use
 cluster-robust standard errors to properly account for the geographic
 clustering in the SEES study:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -757,12 +757,35 @@ clustering in the SEES study:</p>
 <span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Compare the two estimates with cluster-robust SEs</span></span>
-<span><span class="va">comparison_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="co"># Estimate seroincidence for Pakistan with cluster adjustment</span></span>
+<span><span class="va">est_pakistan_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pairwise comparisons with cluster-robust SEs</span></span>
+<span><span class="va">comparison_bangla_nepal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
 <span>  <span class="va">est_bangladesh_clustered</span>, </span>
 <span>  <span class="va">est_nepal_clustered</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comparison_clustered</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison_bangla_pakistan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_bangladesh_clustered</span>,</span>
+<span>  <span class="va">est_pakistan_clustered</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison_nepal_pakistan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_nepal_clustered</span>,</span>
+<span>  <span class="va">est_pakistan_clustered</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display all comparisons</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Bangladesh vs Nepal:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Bangladesh vs Nepal:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comparison_bangla_nepal</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -773,8 +796,38 @@ clustering in the SEES study:</p>
 <span><span class="co">#&gt;  0.3496836 0.4548783</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
-<span><span class="co">#&gt;       0.45050113       0.04822018       0.40228095</span></span></code></pre></div>
-<p>The cluster-robust comparison provides more accurate inference by
+<span><span class="co">#&gt;       0.45050113       0.04822018       0.40228095</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Bangladesh vs Pakistan:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Bangladesh vs Pakistan:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comparison_bangla_pakistan</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = 11.372, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  0.2670811 0.3783145</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;        0.4505011        0.1278034        0.3226978</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Nepal vs Pakistan:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Nepal vs Pakistan:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comparison_nepal_pakistan</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = -6.978, p-value = 2.994e-12</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  -0.10193630 -0.05723007</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;       0.04822018       0.12780336      -0.07958318</span></span></code></pre></div>
+<p>The cluster-robust comparisons provide more accurate inference by
 accounting for within-cluster correlation in the study design.</p>
 </div>
 </div>
@@ -782,16 +835,21 @@ accounting for within-cluster correlation in the study design.</p>
 <h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
 </h2>
 <p>Using cluster-robust standard errors to account for geographic
-clustering in the SEES study, we estimate that Bangladesh has
-significantly higher enteric fever seroconversion rates than Nepal (p
-&lt; 0.001). The overall seroconversion rate in Bangladesh is 450.5 per
-1000 person-years (95% CI: -), compared to 48.2 per 1000 person-years
-(95% CI: -) in Nepal. Across age groups, the highest rates are observed
-among 5- to 15-year-olds in Bangladesh (477 per 1000 person-years),
-which is 14 times higher than Nepal in the same age group (35 per 1000
+clustering in the SEES study, we observe significant variation in
+enteric fever seroconversion rates across the three countries.
+Bangladesh has the highest overall seroconversion rate at 450.5 per 1000
+person-years (95% CI: -), followed by Pakistan at 127.8 per 1000
+person-years (95% CI: -), and Nepal at 48.2 per 1000 person-years (95%
+CI: -). Pairwise comparisons show Bangladesh has significantly higher
+rates than both Nepal (p &lt; 0.001) and Pakistan (p &lt; 0.001), while
+the difference between Nepal and Pakistan is also significant (p &lt;
+0.001).</p>
+<p>Across age groups, the highest rates are observed among 5- to
+15-year-olds in Bangladesh (477 per 1000 person-years), which is 14
+times higher than Nepal in the same age group (35 per 1000
 person-years). These findings highlight substantial geographic variation
 in enteric fever transmission, emphasizing the need for targeted
-prevention strategies.</p>
+prevention strategies tailored to local epidemiology.</p>
 <p>The cluster-robust approach properly accounts for within-cluster
 correlation arising from the geographic sampling design. While point
 estimates remain unchanged, the cluster-robust standard errors and

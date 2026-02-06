@@ -637,7 +637,7 @@ When cluster-robust standard errors are used:
 
 ### Cluster-Robust Country Comparisons
 
-For our main findings comparing Bangladesh and Nepal, we should use
+For our main findings comparing all three countries, we should use
 cluster-robust standard errors to properly account for the geographic
 clustering in the SEES study:
 
@@ -660,12 +660,35 @@ est_nepal_clustered <- est_seroincidence(
   cluster_var = "cluster"
 )
 
-# Compare the two estimates with cluster-robust SEs
-comparison_clustered <- compare_seroincidence(
+# Estimate seroincidence for Pakistan with cluster adjustment
+est_pakistan_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Pairwise comparisons with cluster-robust SEs
+comparison_bangla_nepal <- compare_seroincidence(
   est_bangladesh_clustered, 
   est_nepal_clustered
 )
-print(comparison_clustered)
+
+comparison_bangla_pakistan <- compare_seroincidence(
+  est_bangladesh_clustered,
+  est_pakistan_clustered
+)
+
+comparison_nepal_pakistan <- compare_seroincidence(
+  est_nepal_clustered,
+  est_pakistan_clustered
+)
+
+# Display all comparisons
+print("Bangladesh vs Nepal:")
+#> [1] "Bangladesh vs Nepal:"
+print(comparison_bangla_nepal)
 #> 
 #>  Two-sample z-test for difference in seroincidence rates
 #> 
@@ -677,24 +700,59 @@ print(comparison_clustered)
 #> sample estimates:
 #> incidence rate 1 incidence rate 2       difference 
 #>       0.45050113       0.04822018       0.40228095
+
+print("Bangladesh vs Pakistan:")
+#> [1] "Bangladesh vs Pakistan:"
+print(comparison_bangla_pakistan)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = 11.372, p-value < 2.2e-16
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  0.2670811 0.3783145
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>        0.4505011        0.1278034        0.3226978
+
+print("Nepal vs Pakistan:")
+#> [1] "Nepal vs Pakistan:"
+print(comparison_nepal_pakistan)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = -6.978, p-value = 2.994e-12
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  -0.10193630 -0.05723007
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>       0.04822018       0.12780336      -0.07958318
 ```
 
-The cluster-robust comparison provides more accurate inference by
+The cluster-robust comparisons provide more accurate inference by
 accounting for within-cluster correlation in the study design.
 
 ## Conclusions
 
 Using cluster-robust standard errors to account for geographic
-clustering in the SEES study, we estimate that Bangladesh has
-significantly higher enteric fever seroconversion rates than Nepal (p \<
-0.001). The overall seroconversion rate in Bangladesh is 450.5 per 1000
-person-years (95% CI: -), compared to 48.2 per 1000 person-years (95%
-CI: -) in Nepal. Across age groups, the highest rates are observed among
-5- to 15-year-olds in Bangladesh (477 per 1000 person-years), which is
-14 times higher than Nepal in the same age group (35 per 1000
+clustering in the SEES study, we observe significant variation in
+enteric fever seroconversion rates across the three countries.
+Bangladesh has the highest overall seroconversion rate at 450.5 per 1000
+person-years (95% CI: -), followed by Pakistan at 127.8 per 1000
+person-years (95% CI: -), and Nepal at 48.2 per 1000 person-years (95%
+CI: -). Pairwise comparisons show Bangladesh has significantly higher
+rates than both Nepal (p \< 0.001) and Pakistan (p \< 0.001), while the
+difference between Nepal and Pakistan is also significant (p \< 0.001).
+
+Across age groups, the highest rates are observed among 5- to
+15-year-olds in Bangladesh (477 per 1000 person-years), which is 14
+times higher than Nepal in the same age group (35 per 1000
 person-years). These findings highlight substantial geographic variation
 in enteric fever transmission, emphasizing the need for targeted
-prevention strategies.
+prevention strategies tailored to local epidemiology.
 
 The cluster-robust approach properly accounts for within-cluster
 correlation arising from the geographic sampling design. While point

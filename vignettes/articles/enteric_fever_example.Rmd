@@ -432,7 +432,11 @@ rate_ratio_bangla_nepal <- round(rate_bangla_5_15 / rate_nepal_5_15)
 ```
 
 ## Conclusions
-We estimate that Bangladesh has the highest enteric fever seroconversion rates across all age groups, with the highest rates observed among 5- to 15-year-olds (`r rate_bangla_5_15` per 1000 person-years). In this age group, the seroconversion rate in Bangladesh is `r rate_ratio_bangla_nepal` times higher than in Nepal, where the rate is `r rate_nepal_5_15` per 1000 person-years. These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies. **serocalculator** offers an efficient and reproducible approach to estimating seroconversion rates, enabling data-driven insights for disease surveillance and public health decision-making.
+We estimate that Bangladesh has the highest enteric fever seroconversion rates across all age groups, with the highest rates observed among 5- to 15-year-olds (`r rate_bangla_5_15` per 1000 person-years). In this age group, the seroconversion rate in Bangladesh is `r rate_ratio_bangla_nepal` times higher than in Nepal, where the rate is `r rate_nepal_5_15` per 1000 person-years. These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies.
+
+When accounting for the clustered sampling design (geographic clustering within the SEES study), cluster-robust standard errors appropriately reflect within-cluster correlation. While point estimates remain unchanged, the larger cluster-robust standard errors provide more accurate uncertainty quantification for data with geographic clustering, ensuring valid statistical inference. This adjustment is particularly important for survey designs where observations within clusters (e.g., households, schools, or geographic areas) are correlated.
+
+**serocalculator** offers an efficient and reproducible approach to estimating seroconversion rates with proper accounting for complex survey designs, enabling data-driven insights for disease surveillance and public health decision-making.
 
 
 ## Acknowledgments

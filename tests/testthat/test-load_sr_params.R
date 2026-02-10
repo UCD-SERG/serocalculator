@@ -38,8 +38,11 @@ test_that(
   code = {
     # Test that errors from non-URL paths are properly re-thrown
     expect_error(
-      load_sr_params("nonexistent_file.rds"),
+      suppressWarnings(
+        load_sr_params("nonexistent_file.rds")
+      ),
       class = "rlang_error"
+
     )
   }
 )
@@ -53,13 +56,13 @@ test_that(
       class = "internet_resource_unavailable",
       regexp = "Unable to load seroresponse parameters from internet resource"
     )
-    
+
     # Verify the error contains helpful information
     err <- tryCatch(
       load_sr_params("http://nonexistent.example.com/file.rds"),
       error = function(e) e
     )
-    
+
     expect_match(conditionMessage(err), "not available or has changed")
     expect_match(conditionMessage(err), "check your internet connection")
   }
@@ -76,7 +79,7 @@ test_that(
         serocalculator_example("example_curve_params.rds")
       )
     )
-    
+
     # Verify it returns the same result as load_sr_params
     expect_s3_class(result, "curve_params")
   }

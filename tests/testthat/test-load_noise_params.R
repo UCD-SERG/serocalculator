@@ -11,6 +11,17 @@ test_that(
 )
 
 test_that(
+  desc = "non-URL file error is re-thrown",
+  code = {
+    # Test that errors from non-URL paths are properly re-thrown
+    expect_error(
+      load_noise_params("nonexistent_file.rds"),
+      class = "rlang_error"
+    )
+  }
+)
+
+test_that(
   desc = "unavailable internet resource produces informative error",
   code = {
     # Test with a non-existent URL

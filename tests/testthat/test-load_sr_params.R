@@ -34,6 +34,17 @@ test_that(
 )
 
 test_that(
+  desc = "non-URL file error is re-thrown",
+  code = {
+    # Test that errors from non-URL paths are properly re-thrown
+    expect_error(
+      load_sr_params("nonexistent_file.rds"),
+      class = "rlang_error"
+    )
+  }
+)
+
+test_that(
   desc = "unavailable internet resource produces informative error",
   code = {
     # Test with a non-existent URL
@@ -51,5 +62,22 @@ test_that(
     
     expect_match(conditionMessage(err), "not available or has changed")
     expect_match(conditionMessage(err), "check your internet connection")
+  }
+)
+
+test_that(
+  desc = "deprecated load_curve_params() still works",
+  code = {
+    # Test the deprecated function still works
+    # Note: lifecycle::deprecate_soft() only warns once per session
+    # so we can't always expect a warning
+    result <- suppressWarnings(
+      load_curve_params(
+        serocalculator_example("example_curve_params.rds")
+      )
+    )
+    
+    # Verify it returns the same result as load_sr_params
+    expect_s3_class(result, "curve_params")
   }
 )

@@ -15,14 +15,45 @@
 #' print(noise)
 #'
 load_noise_params <- function(file_path, antigen_isos = NULL) {
-  if (file_path %>% substr(1, 4) == "http") {
+  is_url <- file_path %>% substr(1, 4) == "http"
+  
+  if (is_url) {
     file_path <- url(file_path)
   }
 
-  noise <-
-    file_path %>%
-    readRDS() %>%
-    as_noise_params()
+  noise <- tryCatch(
+    {
+      withCallingHandlers(
+        {
+          file_path %>%
+            readRDS() %>%
+            as_noise_params()
+        },
+        warning = function(w) {
+          if (is_url) {
+            # Suppress warnings for URLs - we'll handle errors instead
+            invokeRestart("muffleWarning")
+          }
+        }
+      )
+    },
+    error = function(e) {
+      if (is_url) {
+        cli::cli_abort(
+          class = "internet_resource_unavailable",
+          message = c(
+            "Unable to load noise parameters from internet resource.",
+            "x" = "The resource at {.url {summary(file_path)$description}} is not available or has changed.",
+            "i" = "Please check your internet connection and verify the URL is correct.",
+            "i" = "Original error: {e$message}"
+          )
+        )
+      } else {
+        # Re-throw the original error for non-URL paths
+        stop(e)
+      }
+    }
+  )
 
   return(noise)
 }

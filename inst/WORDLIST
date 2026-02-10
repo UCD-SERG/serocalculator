@@ -3,6 +3,7 @@ CMD
 Chiang
 CodeFactor
 Codecov
+Deprecations
 Dhulikhel
 FIC
 Fogarty
@@ -69,6 +70,7 @@ isotypes
 kDa
 le
 leq
+lifecycle
 linter
 llik
 logf

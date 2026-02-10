@@ -15,7 +15,7 @@
 #'
 load_sr_params <- function(file_path, antigen_isos = NULL) {
   is_url <- file_path |> substr(1, 4) == "http"
-  
+
   if (is_url) {
     file_path <- url(file_path)
   }
@@ -42,14 +42,23 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
           class = "internet_resource_unavailable",
           message = c(
             "Unable to load seroresponse parameters from internet resource.",
-            "x" = "The resource at {.url {summary(file_path)$description}} is not available or has changed.",
-            "i" = "Please check your internet connection and verify the URL is correct.",
+            "x" = paste(
+              "The resource at {.url {summary(file_path)$description}}",
+              "is not available or has changed."
+            ),
+            "i" = paste(
+              "Please check your internet connection",
+              "and verify the URL is correct."
+            ),
             "i" = "Original error: {e$message}"
           )
         )
       } else {
         # Re-throw the original error for non-URL paths
-        stop(e)
+        cli::cli_abort(
+          conditionMessage(e),
+          parent = e
+        )
       }
     }
   )

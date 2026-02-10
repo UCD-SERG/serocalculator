@@ -2,6 +2,15 @@
 
 ## serocalculator (development version)
 
+### Bug fixes
+
+- [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
+  and
+  [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
+  now fail gracefully with informative messages when internet resources
+  are unavailable, complying with CRAN policy
+  ([\#497](https://github.com/UCD-SERG/serocalculator/issues/497))
+
 ## serocalculator 1.4.0
 
 CRAN release: 2025-12-11

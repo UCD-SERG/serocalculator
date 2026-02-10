@@ -1,17 +1,5 @@
 # serocalculator (development version)
 
-## Deprecations and lifecycle changes
-
-* Existing deprecated functions from version 1.3.1 continue to work with soft deprecation warnings:
-  - `load_curve_params()` → use `load_sr_params()` instead
-  - `as_curve_params()` → use `as_sr_params()` instead
-  - `est.incidence()` → use `est_seroincidence()` instead
-  - `sim.cs()` → use `sim_pop_data()` instead
-  - `sim.cs.multi()` → use `sim_pop_data_multi()` instead
-
-* Existing deprecated function from version 1.4.0 continues to work with soft deprecation warning:
-  - `est.incidence.by()` → use `est_seroincidence_by()` instead
-
 ## Bug fixes
 
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#497)

@@ -9,7 +9,7 @@
   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
   now fail gracefully with informative messages when internet resources
   are unavailable, complying with CRAN policy
-  ([\#497](https://github.com/UCD-SERG/serocalculator/issues/497))
+  ([\#505](https://github.com/UCD-SERG/serocalculator/issues/505))
 
 ## serocalculator 1.4.0
 

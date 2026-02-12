@@ -93,6 +93,8 @@ longitudinal antibody responses among confirmed enteric fever cases.
 curves <-
   "https://osf.io/download/u5gxh/" |> 
   load_sr_params()
+#> Warning: `data` is missing `iter` column
+#> It will be inferred from row ordering.
 ```
 
 #### Visualize curve parameters

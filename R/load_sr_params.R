@@ -22,19 +22,21 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
 
   curve_params <- tryCatch(
     {
-      withCallingHandlers(
-        {
-          file_path |>
-            readRDS() |>
-            as_sr_params()
-        },
-        warning = function(w) {
-          if (is_url) {
+      # Read the RDS file with warning suppression for URLs
+      data <- if (is_url) {
+        withCallingHandlers(
+          readRDS(file_path),
+          warning = function(w) {
             # Suppress warnings for URLs - we'll handle errors instead
             invokeRestart("muffleWarning")
           }
-        }
-      )
+        )
+      } else {
+        readRDS(file_path)
+      }
+      
+      # Convert to sr_params (warnings from validation will be preserved)
+      as_sr_params(data, antigen_isos = antigen_isos)
     },
     error = function(e) {
       if (is_url) {
@@ -54,11 +56,8 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
           )
         )
       } else {
-        # Re-throw the original error for non-URL paths
-        cli::cli_abort(
-          conditionMessage(e),
-          parent = e
-        )
+        # Re-throw the original error for non-URL paths unchanged
+        rlang::cnd_signal(e)
       }
     }
   )

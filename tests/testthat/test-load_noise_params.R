@@ -13,13 +13,24 @@ test_that(
 test_that(
   desc = "non-URL file error is re-thrown",
   code = {
-    # Test that errors from non-URL paths are properly re-thrown
+    # Test that errors from non-URL paths are properly re-thrown unchanged
     expect_error(
       suppressWarnings(
         load_noise_params("nonexistent_file.rds")
-      ),
-      class = "rlang_error"
+      )
     )
+    
+    # Verify original error is preserved
+    err <- tryCatch(
+      suppressWarnings(
+        load_noise_params("nonexistent_file.rds")
+      ),
+      error = function(e) e
+    )
+    
+    # Should be the original error class, not rlang_error
+    expect_true(inherits(err, "error"))
+    expect_true(inherits(err, "condition"))
   }
 )
 

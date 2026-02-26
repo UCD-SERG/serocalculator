@@ -1,9 +1,5 @@
 # serocalculator (development version)
 
-# serocalculator 1.4.0
-
-## New features
-
 * Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
   - Performs two-sample z-tests to compare seroincidence estimates
   - Returns `htest` format when comparing two single estimates
@@ -13,6 +9,11 @@
   - Users can now switch between main, latest-tag, and versioned releases
   - Default landing page shows latest-tag (most recent release)
   - Based on insightsengineering/r-pkgdown-multiversion setup
+
+# serocalculator 1.4.0
+
+## New features
+
 * Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
 * Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
 * Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 

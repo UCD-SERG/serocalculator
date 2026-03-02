@@ -28,16 +28,16 @@ load_noise_params <- function(file_path, antigen_isos = NULL) {
       # Read the RDS file with warning suppression for URLs
       data <- if (is_url) {
         withCallingHandlers(
-          usethis::read_rds(file_path),
+          readr::read_rds(file_path),
           warning = function(w) {
             # Suppress warnings for URLs - we'll handle errors instead
             invokeRestart("muffleWarning")
           }
         )
       } else {
-        usethis::read_rds(file_path)
+        readr::read_rds(file_path)
       }
-      
+
       # Convert to noise_params (warnings from validation will be preserved)
       as_noise_params(data, antigen_isos = antigen_isos)
     },

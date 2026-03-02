@@ -42,7 +42,7 @@ test_that(
         load_sr_params("nonexistent_file.rds")
       )
     )
-    
+
     # Verify original error is preserved
     err <- tryCatch(
       suppressWarnings(
@@ -50,7 +50,7 @@ test_that(
       ),
       error = function(e) e
     )
-    
+
     # Should be the original error class, not rlang_error
     expect_true(inherits(err, "error"))
     expect_true(inherits(err, "condition"))

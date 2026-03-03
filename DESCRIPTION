@@ -45,7 +45,8 @@ Imports:
     glue,
     stringr,
     parallel,
-    labelled
+    labelled,
+    readr
 Suggests:
     bookdown,
     DT,
@@ -54,7 +55,6 @@ Suggests:
     knitr,
     mixtools,
     pak,
-    readr,
     quarto,
     rmarkdown,
     spelling,

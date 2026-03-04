@@ -211,8 +211,9 @@ shown above.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><strong>New code (v1.4.0):</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load seroresponse parameters</span></span>
-<span><span class="va">sr_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="st">"parameters.csv"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Load seroresponse parameters from a CSV file</span></span>
+<span><span class="va">curve_params_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"parameters.csv"</span><span class="op">)</span></span>
+<span><span class="va">sr_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_sr_params.html">as_sr_params</a></span><span class="op">(</span><span class="va">curve_params_df</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Estimate seroincidence</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
@@ -261,14 +262,14 @@ shown above.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simulate cross-sectional data</span></span>
 <span><span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_pop_data.html">sim_pop_data</a></span><span class="op">(</span></span>
-<span>  sr_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
-<span>  n <span class="op">=</span> <span class="fl">100</span></span>
+<span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
+<span>  n_samples <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Simulate multiple datasets</span></span>
 <span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
-<span>  sr_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
-<span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
+<span>  n_samples <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  n_reps <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>

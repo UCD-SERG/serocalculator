@@ -57,8 +57,9 @@ results <- est.incidence(
 **New code (v1.4.0):**
 
 ``` r
-# Load seroresponse parameters
-sr_params <- load_sr_params("parameters.csv")
+# Load seroresponse parameters from a CSV file
+curve_params_df <- read.csv("parameters.csv")
+sr_params <- as_sr_params(curve_params_df)
 
 # Estimate seroincidence
 results <- est_seroincidence(
@@ -115,14 +116,14 @@ multiple_sims <- sim.cs.multi(
 ``` r
 # Simulate cross-sectional data
 simulated_data <- sim_pop_data(
-  sr_params = sr_params,
-  n = 100
+  curve_params = curve_params,
+  n_samples = 100
 )
 
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(
-  sr_params = sr_params,
-  n = 100,
+  curve_params = curve_params,
+  n_samples = 100,
   n_reps = 10
 )
 ```

@@ -1,13 +1,10 @@
 ---
 title: "Version Crosswalk: v1.3.0 to v1.4.0"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Version Crosswalk: v1.3.0 to v1.4.0}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+format: html
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -30,7 +27,9 @@ The main changes are function renamings for improved clarity and consistency.
 | `est.incidence()` | `est_seroincidence()` | Estimate seroincidence for entire dataset |
 | `est.incidence.by()` | `est_seroincidence_by()` | Estimate seroincidence stratified by groups |
 
-**Note:** The intermediate names `estimate_scr()` and `estimate_scr_by()` were used briefly in early v1.4.0 development but replaced with the final names shown above.
+::: {.callout-note}
+The intermediate names `estimate_scr()` and `estimate_scr_by()` were used briefly in early v1.4.0 development but replaced with the final names shown above.
+:::
 
 ### Data Preparation Functions
 
@@ -45,7 +44,7 @@ The main changes are function renamings for improved clarity and consistency.
 
 | v1.3.0 Argument | v1.4.0 Argument | Used in functions |
 |-----------------|-----------------|-------------------|
-| `curve_params` | `sr_params` | `est_seroincidence()`, `est_seroincidence_by()`, and related functions |
+| `curve_params` | `sr_params` | `est_seroincidence()`, `est_seroincidence_by()` |
 
 ## Code Examples
 
@@ -53,8 +52,8 @@ The main changes are function renamings for improved clarity and consistency.
 
 **Old code (v1.3.0):**
 ```r
-# Load curve parameters
-curve_params <- load_curve_params("parameters.csv")
+# Load curve parameters (v1.3.0 - DEPRECATED)
+curve_params <- load_curve_params("parameters.rds")
 
 # Estimate seroincidence
 results <- est.incidence(
@@ -64,23 +63,42 @@ results <- est.incidence(
 ```
 
 **New code (v1.4.0):**
-```r
-# Load seroresponse parameters from a CSV file
-curve_params_df <- read.csv("parameters.csv")
-sr_params <- as_sr_params(curve_params_df)
+```{r}
+#| label: example-1-v1.4.0
+library(serocalculator)
+
+# Load seroresponse parameters from RDS file
+sr_params <- load_sr_params(
+  serocalculator_example("example_curve_params.rds")
+)
+
+# Load example population data from CSV
+pop_data <- readr::read_csv(
+  serocalculator_example("example_pop_data.csv"),
+  show_col_types = FALSE
+) |>
+  as_pop_data()
+
+# Load noise parameters
+noise_params <- load_noise_params(
+  serocalculator_example("example_noise_params.rds")
+)
 
 # Estimate seroincidence
 results <- est_seroincidence(
-  pop_data = my_data,
-  sr_params = sr_params
+  pop_data = pop_data,
+  sr_params = sr_params,
+  noise_params = noise_params
 )
+
+summary(results)
 ```
 
 ### Example 2: Stratified Analysis
 
 **Old code (v1.3.0):**
 ```r
-# Stratified estimation
+# Stratified estimation (v1.3.0 - DEPRECATED)
 results_by_group <- est.incidence.by(
   pop_data = my_data,
   curve_params = curve_params,
@@ -89,20 +107,24 @@ results_by_group <- est.incidence.by(
 ```
 
 **New code (v1.4.0):**
-```r
-# Stratified estimation
+```{r}
+#| label: example-2-v1.4.0
+# Stratified estimation by Country
 results_by_group <- est_seroincidence_by(
-  pop_data = my_data,
+  pop_data = pop_data,
   sr_params = sr_params,
-  strata = c("age_group", "location")
+  noise_params = noise_params,
+  strata = "Country"
 )
+
+summary(results_by_group)
 ```
 
 ### Example 3: Simulating Data
 
 **Old code (v1.3.0):**
 ```r
-# Simulate cross-sectional data
+# Simulate cross-sectional data (v1.3.0 - DEPRECATED)
 simulated_data <- sim.cs(
   curve_params = curve_params,
   n = 100
@@ -117,19 +139,26 @@ multiple_sims <- sim.cs.multi(
 ```
 
 **New code (v1.4.0):**
-```r
+```{r}
+#| label: example-3-v1.4.0
 # Simulate cross-sectional data
 simulated_data <- sim_pop_data(
-  curve_params = curve_params,
+  curve_params = sr_params,
+  noise_limits = noise_params,
   n_samples = 100
 )
 
+head(simulated_data)
+
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(
-  curve_params = curve_params,
+  curve_params = sr_params,
+  noise_limits = noise_params,
   n_samples = 100,
-  n_reps = 10
+  n_reps = 3
 )
+
+length(multiple_sims)
 ```
 
 ## New Features in v1.4.0
@@ -143,9 +172,13 @@ In addition to the renamed functions, v1.4.0 includes several new features:
 
 ## Other Notable Changes
 
-- The package now uses snake_case naming consistently throughout
-- Argument `curve_params` is now `sr_params` (short for "seroresponse parameters") in all functions
+- Main estimation functions (`est_seroincidence()`, `est_seroincidence_by()`) now use `sr_params` argument instead of `curve_params`
+- Function names now use snake_case instead of dots (e.g., `est.incidence()` → `est_seroincidence()`)
 - Many internal improvements to error messages and warnings
+
+::: {.callout-warning}
+**Important**: Not all functions changed their parameter names. Functions like `sim_pop_data()` and `graph_loglik()` still use `curve_params` as the parameter name. Only the main estimation functions use `sr_params`.
+:::
 
 ## Need More Help?
 
@@ -158,10 +191,14 @@ In addition to the renamed functions, v1.4.0 includes several new features:
 The transition from v1.3.0 to v1.4.0 primarily involves:
 
 1. Replace dots in function names with underscores (e.g., `est.incidence()` → `est_seroincidence()`)
-2. Update `curve_params` arguments to `sr_params`
+2. Update `curve_params` arguments to `sr_params` **for estimation functions only**
 3. Use the new `load_sr_params()` and `as_sr_params()` instead of the `_curve_params` versions
+4. Use `.rds` files with `load_sr_params()` (not `.csv` files)
 
 **Quick search-and-replace tips:**
+
+::: {.callout-tip}
+## Function name changes (safe for all code)
 
 - `est.incidence.by(` → `est_seroincidence_by(`
 - `est.incidence(` → `est_seroincidence(`
@@ -169,4 +206,14 @@ The transition from v1.3.0 to v1.4.0 primarily involves:
 - `as_curve_params(` → `as_sr_params(`
 - `sim.cs.multi(` → `sim_pop_data_multi(`
 - `sim.cs(` → `sim_pop_data(`
+:::
+
+::: {.callout-tip}
+## Argument name changes (only for estimation functions)
+
+Within calls to `est_seroincidence()` and `est_seroincidence_by()`:
+
 - `curve_params = ` → `sr_params = `
+
+**Do not** change `curve_params` to `sr_params` in other functions like `sim_pop_data()`.
+:::

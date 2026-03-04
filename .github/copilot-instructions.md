@@ -481,6 +481,8 @@ expect_false(has_missing_values(complete_data))
 - **Seed tests**: Use `withr::local_seed()` for reproducible tests
 - **Avoid code duplication**: Don't copy-paste substantial code chunks. Instead, decompose reusable logic into well-named helper functions
 - **Quarto vignettes**: Use Quarto-style chunk options with `#|` prefix (e.g., `#| label: my-chunk`, `#| eval: false`)
+- **New articles**: Use `.qmd` format for all new vignettes and articles going forward
+- **Quarto callouts**: Use Quarto callout blocks for notes, warnings, and tips (e.g., `::: {.callout-note}`)
 - **Tidyverse replacements**: Use tidyverse/modern replacements for base R functions where available
 - **Write tidy code**: Keep code clean, readable, and well-organized
 

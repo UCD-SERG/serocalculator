@@ -65,8 +65,9 @@ results <- est.incidence(
 
 **New code (v1.4.0):**
 ```r
-# Load seroresponse parameters
-sr_params <- load_sr_params("parameters.csv")
+# Load seroresponse parameters from a CSV file
+curve_params_df <- read.csv("parameters.csv")
+sr_params <- as_sr_params(curve_params_df)
 
 # Estimate seroincidence
 results <- est_seroincidence(

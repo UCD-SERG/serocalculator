@@ -80,15 +80,22 @@ pop_data <- readr::read_csv(
   as_pop_data()
 
 # Load noise parameters
-noise_params <- load_noise_params(
+noise_params_full <- load_noise_params(
   serocalculator_example("example_noise_params.rds")
 )
+
+# Use only the antigen-isotypes present in pop_data
+antigen_isos <- get_biomarker_names(pop_data)
+noise_params <- noise_params_full |>
+  dplyr::filter(antigen_iso %in% antigen_isos) |>
+  dplyr::select(-Country)
 
 # Estimate seroincidence
 results <- est_seroincidence(
   pop_data = pop_data,
   sr_params = sr_params,
-  noise_params = noise_params
+  noise_params = noise_params,
+  antigen_isos = antigen_isos
 )
 
 summary(results)
@@ -114,7 +121,8 @@ results_by_group <- est_seroincidence_by(
   pop_data = pop_data,
   sr_params = sr_params,
   noise_params = noise_params,
-  strata = "Country"
+  strata = "Country",
+  antigen_isos = antigen_isos
 )
 
 summary(results_by_group)

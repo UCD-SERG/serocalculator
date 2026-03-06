@@ -14,14 +14,49 @@
 #' print(curve)
 #'
 load_sr_params <- function(file_path, antigen_isos = NULL) {
-  if (file_path |>  substr(1, 4) == "http") {
+  is_url <- file_path |> substr(1, 4) == "http"
+
+  if (is_url) {
     file_path <- url(file_path)
   }
 
-  curve_params <-
-    file_path |>
-    readRDS() |>
-    as_sr_params()
+  curve_params <- tryCatch(
+    {
+      data <- if (is_url) {
+        withCallingHandlers(
+          readr::read_rds(file_path),
+          warning = function(w) {
+            invokeRestart("muffleWarning")
+          }
+        )
+      } else {
+        readr::read_rds(file_path)
+      }
+
+      as_sr_params(data, antigen_isos = antigen_isos)
+    },
+    error = function(e) {
+      if (is_url) {
+        cli::cli_abort(
+          class = "internet_resource_unavailable",
+          message = c(
+            "Unable to load seroresponse parameters from internet resource.",
+            "x" = paste(
+              "The resource at {.url {summary(file_path)$description}}",
+              "is not available or has changed."
+            ),
+            "i" = paste(
+              "Please check your internet connection",
+              "and verify the URL is correct."
+            ),
+            "i" = "Original error: {e$message}"
+          )
+        )
+      } else {
+        rlang::cnd_signal(e)
+      }
+    }
+  )
 
   return(curve_params)
 }

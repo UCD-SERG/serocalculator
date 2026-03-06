@@ -1,5 +1,11 @@
 # serocalculator (development version)
 
+## Bug fixes
+
+* `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
+
+* Replaced `ggpubr` with `patchwork` for arranging panel plots in `autoplot.seroincidence.by()` and `graph_seroresponse_model_1()`, removing the indirect `ggrepel` dependency that required R >= 4.5.0 (#507)
+
 # serocalculator 1.4.0
 
 ## New features

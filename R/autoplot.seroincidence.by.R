@@ -4,7 +4,7 @@
 #' @param object a '"seroincidence.by"' object (from [est_seroincidence_by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams autoplot.seroincidence
-#' @return a `"ggarrange"` object: a single or [list()] of [ggplot2::ggplot()]s
+#' @return a `"patchwork"` object: a single or [list()] of [ggplot2::ggplot()]s
 #' @export
 #' @examples
 #'\donttest{
@@ -41,14 +41,19 @@ autoplot.seroincidence.by <- function(
     ncol = min(3, length(object)),
     ...) {
   if (length(object) == 0) {
-    stop("The input doesn't contain any fits. Did subsetting go wrong?")
+    cli::cli_abort(
+      "The input doesn't contain any fits. Did subsetting go wrong?"
+    )
   }
 
   if (!attr(object, "graphs_included")) {
-    stop(
-      "Graphs cannot be extracted; ",
-      "`build_graph` was not `TRUE` in the call to `est_seroincidence_by()`"
-    )
+    cli::cli_abort(c(
+      "Graphs cannot be extracted.",
+      "i" = paste0(
+        "`build_graph` was not `TRUE` in the call to",
+        " `est_seroincidence_by()`"
+      )
+    ))
     figure <- NULL
   }
 
@@ -63,7 +68,7 @@ autoplot.seroincidence.by <- function(
   nrow <- ceiling(length(figs) / ncol)
   figure <- do.call(
     what = function(...) {
-      ggpubr::ggarrange(
+      patchwork::wrap_plots(
         ...,
         ncol = ncol,
         nrow = nrow

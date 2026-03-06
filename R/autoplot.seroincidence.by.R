@@ -4,7 +4,7 @@
 #' @param object a '"seroincidence.by"' object (from [est_seroincidence_by()])
 #' @param ncol number of columns to use for panel of plots
 #' @inheritDotParams autoplot.seroincidence
-#' @return a `"ggarrange"` object: a single or [list()] of [ggplot2::ggplot()]s
+#' @return a `"patchwork"` object: a single or [list()] of [ggplot2::ggplot()]s
 #' @export
 #' @examples
 #'\donttest{
@@ -63,7 +63,7 @@ autoplot.seroincidence.by <- function(
   nrow <- ceiling(length(figs) / ncol)
   figure <- do.call(
     what = function(...) {
-      ggpubr::ggarrange(
+      patchwork::wrap_plots(
         ...,
         ncol = ncol,
         nrow = nrow

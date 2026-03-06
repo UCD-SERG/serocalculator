@@ -1,5 +1,10 @@
 # serocalculator (development version)
 
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
+
 # serocalculator 1.4.0
 
 ## New features

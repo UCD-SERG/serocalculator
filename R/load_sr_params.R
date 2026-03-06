@@ -25,7 +25,7 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
       # Read the RDS file with warning suppression for URLs
       data <- if (is_url) {
         withCallingHandlers(
-          readr::read_rds(file_path),
+          readRDS(file_path),
           warning = function(w) {
             # Suppress warnings for URLs - we'll handle errors instead
             invokeRestart("muffleWarning")

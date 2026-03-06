@@ -59,7 +59,7 @@ graph_seroresponse_model_1 <- function(
   nrow <- ceiling(length(figs) / ncol)
   figure <- do.call(
     what = function(...) {
-      ggpubr::ggarrange(
+      patchwork::wrap_plots(
         ...,
         ncol = ncol,
         nrow = nrow

@@ -26,9 +26,43 @@ test_that(
   desc = "non filepath produces error",
   code = {
     expect_error(
-      expect_warning(
-        load_sr_params("non file path")
+      load_sr_params("non file path")
+    )
+  }
+)
+
+test_that(
+  desc = "non-URL file error is re-thrown",
+  code = {
+    err <- tryCatch(
+      load_sr_params("nonexistent_file.rds"),
+      error = function(e) e
+    )
+
+    expect_true(inherits(err, "error"))
+  }
+)
+
+test_that(
+  desc = "unavailable internet resource produces informative error",
+  code = {
+    expect_error(
+      load_sr_params("https://ucdserg.ucdavis.edu/nofile.rds"),
+      class = "internet_resource_unavailable",
+      regexp = "Unable to load seroresponse parameters from internet resource"
+    )
+  }
+)
+
+test_that(
+  desc = "deprecated load_curve_params() still works",
+  code = {
+    result <- suppressWarnings(
+      load_curve_params(
+        serocalculator_example("example_curve_params.rds")
       )
     )
+
+    expect_s3_class(result, "curve_params")
   }
 )

@@ -46,8 +46,7 @@ Imports:
     stringr,
     parallel,
     labelled,
-    readr,
-    ggrepel
+    readr
 Suggests:
     bookdown,
     DT,

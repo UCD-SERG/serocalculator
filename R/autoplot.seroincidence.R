@@ -38,10 +38,10 @@ autoplot.seroincidence <-
     to_return <- attr(object, "ll_graph")
 
     if (is.null(to_return)) {
-      stop(
+      cli::cli_abort(c(
         "Graphs cannot be extracted; ",
         "`build_graph` was not `TRUE` in the call to `est_seroincidence()`"
-      )
+      ))
     }
 
     if (log_x) {

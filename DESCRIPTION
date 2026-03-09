@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9003
+Version: 1.4.0.9004
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -23,6 +23,7 @@ Depends:
     R (>= 4.1.0)
 Imports: 
     cli,
+    config,
     doParallel,
     dplyr,
     foreach,
@@ -34,6 +35,7 @@ Imports:
     rlang,
     rngtools,
     scales,
+    shiny,
     stats,
     tibble,
     tidyr,

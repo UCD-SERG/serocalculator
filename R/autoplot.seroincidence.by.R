@@ -41,14 +41,16 @@ autoplot.seroincidence.by <- function(
     ncol = min(3, length(object)),
     ...) {
   if (length(object) == 0) {
-    stop("The input doesn't contain any fits. Did subsetting go wrong?")
+    cli::cli_abort(
+      "The input doesn't contain any fits. Did subsetting go wrong?"
+    )
   }
 
   if (!attr(object, "graphs_included")) {
-    stop(
+    cli::cli_abort(c(
       "Graphs cannot be extracted; ",
       "`build_graph` was not `TRUE` in the call to `est_seroincidence_by()`"
-    )
+    ))
     figure <- NULL
   }
 

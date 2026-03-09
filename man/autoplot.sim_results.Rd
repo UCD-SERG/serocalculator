@@ -5,12 +5,29 @@
 \title{Plot simulation results
 \code{autoplot()} method for \code{sim_results} objects}
 \usage{
-\method{autoplot}{sim_results}(object, statistic = "Empirical_SE", ...)
+\method{autoplot}{sim_results}(
+  object,
+  statistic = "Empirical_SE",
+  x_var = "sample_size",
+  group_var = "lambda.sim",
+  color_var = group_var,
+  ...
+)
 }
 \arguments{
-\item{object}{a \code{sim_results} object (from \code{\link[=analyze_sims]{analyze_sims()}})}
+\item{object}{a \link{data.frame}
+containing the columns expected
+for a \code{sim_results} object (from \code{\link[=analyze_sims]{analyze_sims()}})}
 
-\item{statistic}{which column of \code{object} should be the y-axis?}
+\item{statistic}{which column of \code{object} should be the y-axis}
+
+\item{x_var}{\link{character}: which column in \code{object} to use for the x-axis}
+
+\item{group_var}{\link{character}: which column in \code{object} to use for the
+\code{group} aesthetic in \code{\link[ggplot2:aes]{ggplot2::aes()}}}
+
+\item{color_var}{\link{character}: which column in \code{object} to use for the
+\code{color} aesthetic in \code{\link[ggplot2:aes]{ggplot2::aes()}}}
 
 \item{...}{unused}
 }

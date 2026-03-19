@@ -383,18 +383,16 @@ The following workflows run on every PR. **All must pass** for merge:
 5.  **check-readme.yaml**: Renders README.Rmd and verifies it matches
     README.md. (~2-3 min)
 
-6.  **R-check-docs.yml**: Runs
-    [`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
-    and checks if `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails
-    if documentation is out of sync. (~2-3 min)
+6.  **R-check-docs.yml**: Runs `roxygen2::roxygenise()` and checks if
+    `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails if
+    documentation is out of sync. (~2-3 min)
 
 7.  **news.yaml**: Ensures NEWS.md is updated for every PR. Can be
     bypassed with `no-changelog` label. (~1 min)
 
 8.  **version-check.yaml**: Verifies DESCRIPTION version number
-    increased vs. main branch. Run
-    [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html)
-    to increment. (~1 min)
+    increased vs. main branch. Run `usethis::use_version()` to
+    increment. (~1 min)
 
 9.  **pkgdown.yaml**: Builds pkgdown website on PR (preview), tags, and
     main branch pushes. Requires Quarto setup. (~5-7 min)
@@ -408,10 +406,8 @@ The following workflows run on every PR. **All must pass** for merge:
 ### PR Commands
 
 Team members can trigger actions by commenting on PRs: - `/document` -
-Runs
-[`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
-and commits changes - `/style` - Runs `styler::style_pkg()` and commits
-changes
+Runs `roxygen2::roxygenise()` and commits changes - `/style` - Runs
+`styler::style_pkg()` and commits changes
 
 ## Repository Structure
 
@@ -480,8 +476,7 @@ changes
 ### Version Not Incremented
 
 **Symptom**: version-check.yaml workflow fails. **Solution**: Run
-[`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html)
-to increment the version in DESCRIPTION.
+`usethis::use_version()` to increment the version in DESCRIPTION.
 
 ### NEWS.md Not Updated
 

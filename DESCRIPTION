@@ -27,7 +27,7 @@ Imports:
     dplyr,
     foreach,
     ggplot2,
-    ggpubr,
+    patchwork,
     lifecycle,
     magrittr,
     Rcpp,

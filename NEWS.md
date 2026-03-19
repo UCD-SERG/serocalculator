@@ -27,6 +27,10 @@
   - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
   - Each function now in its own file for better maintainability and git history
 * Updated copilot-instructions.md with code organization policies
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
 
 # serocalculator 1.4.0
 

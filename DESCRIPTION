@@ -31,7 +31,6 @@ Imports:
     lifecycle,
     magrittr,
     Rcpp,
-    readr,
     rlang,
     rngtools,
     scales,

@@ -4,6 +4,10 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
 
 # serocalculator 1.4.0
 

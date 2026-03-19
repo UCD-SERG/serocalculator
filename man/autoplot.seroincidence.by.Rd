@@ -19,7 +19,7 @@ or linear scale (\code{FALSE}, default)?}
   }}
 }
 \value{
-a \code{"ggarrange"} object: a single or \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s
+a \code{"patchwork"} object: a single or \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s
 }
 \description{
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -276,7 +276,7 @@
 <code class="sourceCode R"><span><span class="co"># Generate documentation from roxygen2 comments</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">document</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># or</span></span>
-<span><span class="fu">roxygen2</span><span class="fu">::</span><span class="fu">roxygenise</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">roxygen2</span><span class="fu">::</span><span class="fu"><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygenise</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Documentation files in <code>man/</code> and <code>NAMESPACE</code> are auto-generated. Do NOT edit them directly.</p>
 </div>
 <div class="section level3">
@@ -372,14 +372,14 @@
 <li><p><strong>test-coverage.yaml</strong>: Runs on macOS, generates code coverage via covr, uploads to Codecov. (~5-10 min)</p></li>
 <li><p><strong>check-spelling.yaml</strong>: Spell checks using spelling package. (~1-2 min)</p></li>
 <li><p><strong>check-readme.yaml</strong>: Renders README.Rmd and verifies it matches README.md. (~2-3 min)</p></li>
-<li><p><strong>R-check-docs.yml</strong>: Runs <code>roxygen2::roxygenise()</code> and checks if <code>man/</code>, <code>NAMESPACE</code>, or <code>DESCRIPTION</code> changed. Fails if documentation is out of sync. (~2-3 min)</p></li>
+<li><p><strong>R-check-docs.yml</strong>: Runs <code><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygen2::roxygenise()</a></code> and checks if <code>man/</code>, <code>NAMESPACE</code>, or <code>DESCRIPTION</code> changed. Fails if documentation is out of sync. (~2-3 min)</p></li>
 <li><p><strong>news.yaml</strong>: Ensures NEWS.md is updated for every PR. Can be bypassed with <code>no-changelog</code> label. (~1 min)</p></li>
 <li><p><strong>version-check.yaml</strong>: Verifies DESCRIPTION version number increased vs. main branch. Run <code>usethis::use_version()</code> to increment. (~1 min)</p></li>
 <li><p><strong>pkgdown.yaml</strong>: Builds pkgdown website on PR (preview), tags, and main branch pushes. Requires Quarto setup. (~5-7 min)</p></li>
 <li><p><strong>copilot-setup-steps.yml</strong>: Configures the GitHub Copilot coding agent’s environment automatically. Runs when Copilot starts work, when the workflow file changes, or via manual dispatch. Not a required check for PR merges. See “Copilot Setup Workflow” section for details. (~5-10 min)</p></li>
 </ol><div class="section level3">
 <h3 id="pr-commands">PR Commands<a class="anchor" aria-label="anchor" href="#pr-commands"></a></h3>
-<p>Team members can trigger actions by commenting on PRs: - <code>/document</code> - Runs <code>roxygen2::roxygenise()</code> and commits changes - <code>/style</code> - Runs <code>styler::style_pkg()</code> and commits changes</p>
+<p>Team members can trigger actions by commenting on PRs: - <code>/document</code> - Runs <code><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygen2::roxygenise()</a></code> and commits changes - <code>/style</code> - Runs <code>styler::style_pkg()</code> and commits changes</p>
 </div>
 </div>
 <div class="section level2">

@@ -286,11 +286,12 @@ We can extract summary statistics with
 
 ``` r
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.279 0.0289  0.228  0.342     0.95   -584.          6
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.279 0.0289  0.228  0.342 standard     0.95   -584.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```
 
 We can plot the log-likelihood curve with
@@ -411,7 +412,7 @@ ests_summary <- ests |> summary() |> print()
 #> b) Strata       : sample_size, lambda.sim, cluster 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 120 × 15
+#> # A tibble: 120 × 16
 #>    Stratum sample_size lambda.sim cluster     n est.start incidence.rate      SE
 #>    <chr>         <dbl>      <dbl>   <int> <int>     <dbl>          <dbl>   <dbl>
 #>  1 Stratu…         100       0.05       1   100       0.1         0.0853 0.0124 
@@ -425,8 +426,8 @@ ests_summary <- ests |> summary() |> print()
 #>  9 Stratu…         100       0.05       9   100       0.1         0.0338 0.00722
 #> 10 Stratu…         100       0.05      10   100       0.1         0.0714 0.0108 
 #> # ℹ 110 more rows
-#> # ℹ 7 more variables: CI.lwr <dbl>, CI.upr <dbl>, coverage <dbl>,
-#> #   log.lik <dbl>, iterations <int>, antigen.isos <chr>,
+#> # ℹ 8 more variables: CI.lwr <dbl>, CI.upr <dbl>, se_type <chr>,
+#> #   coverage <dbl>, log.lik <dbl>, iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 ```
 

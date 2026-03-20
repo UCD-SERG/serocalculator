@@ -164,7 +164,8 @@ simulated_data <- sim_pop_data(
   noise_limits = noise_limits,
   antigen_isos = antigen_isos,
   n_samples = 100,
-  add_noise = TRUE
+  add_noise = TRUE,
+  format = "long"
 )
 
 head(simulated_data)
@@ -174,12 +175,15 @@ multiple_sims <- sim_pop_data_multi(
   curve_params = sr_params,
   noise_limits = noise_limits,
   antigen_isos = antigen_isos,
-  n_samples = 100,
-  n_reps = 3,
-  add_noise = TRUE
+  sample_sizes = 100,
+  nclus = 3,
+  lambdas = 0.1,
+  num_cores = 1,
+  add_noise = TRUE,
+  format = "long"
 )
 
-length(multiple_sims)
+nrow(multiple_sims)
 ```
 
 ## New Features in v1.4.0

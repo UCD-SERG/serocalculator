@@ -40,11 +40,17 @@
 
 - Refactored clustering-related code following package organization
   policies:
+
   - Moved `.compute_cluster_robust_var()` to
     `R/compute_cluster_robust_var.R`
   - Each function now in its own file for better maintainability and git
     history
-- Updated copilot-instructions.md with code organization policies
+
+- Updated copilot-instructions.md with code organization policies \##
+  Dependencies
+
+- Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
 
 ## serocalculator 1.4.0
 
@@ -356,7 +362,7 @@ CRAN release: 2025-01-25
   [\#303](https://github.com/UCD-SERG/serocalculator/issues/303))
 
 - Added template for reporting Issues (from
-  [`usethis::use_tidy_issue_template()`](https://usethis.r-lib.org/reference/tidyverse.html))
+  `usethis::use_tidy_issue_template()`)
   ([\#270](https://github.com/UCD-SERG/serocalculator/issues/270))
 
 - Added template for pull requests (from
@@ -407,8 +413,7 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using
-  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
+- Added `devtag` to package (using `devtag::use_devtag()`)
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

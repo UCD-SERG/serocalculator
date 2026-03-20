@@ -32,7 +32,7 @@ autoplot(object, ncol = min(3, length(object)), ...)
 
 ## Value
 
-a `"ggarrange"` object: a single or
+a `"patchwork"` object: a single or
 [`list()`](https://rdrr.io/r/base/list.html) of
 [`ggplot2::ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html)s
 

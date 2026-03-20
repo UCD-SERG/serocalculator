@@ -85,10 +85,10 @@ noise_params_full <- load_noise_params(
 )
 
 # Use only the antigen-isotypes present in pop_data
-antigen_isos <- get_biomarker_names(pop_data)
+antigen_isos <- unique(get_biomarker_names(pop_data))
 noise_params <- noise_params_full |>
   dplyr::filter(antigen_iso %in% antigen_isos) |>
-  dplyr::select(-Country)
+  dplyr::select(-Country, -X)
 
 # Estimate seroincidence
 results <- est_seroincidence(

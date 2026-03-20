@@ -141,6 +141,14 @@ jobs:
         shell: Rscript {0}
         working-directory: ${{ github.event.repository.name }}
 
+      - name: Check Quarto CLI in R
+        run: |
+          which quarto
+          Rscript -e "system('quarto --version')"
+          Rscript -e "if (!requireNamespace('quarto', quietly=TRUE)) install.packages('quarto'); cat('Quarto R pkg version:', as.character(packageVersion('quarto')), '\\n')"
+          Rscript -e "tryCatch({q <- quarto::quarto_path_cli(); cat('Quarto path (R):', q, '\\n')}, error=function(e) cat('No quarto path found in R\\n'))"
+        working-directory: ${{ github.event.repository.name }}
+
       - name: Build docs 🏗
         if: >
           github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')

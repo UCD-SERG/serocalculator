@@ -244,6 +244,56 @@ To regenerate:
 rmarkdown::render("README.Rmd")
 ```
 
+### Vignette Subfiles
+
+When creating subfiles to be included in vignettes (e.g., using Quarto's `{{< include >}}` directive):
+
+**CRITICAL**: Always keep the main section header in the parent file, not in the subfile.
+
+- ✅ **CORRECT**: In parent file: `## Section Title`, then `{{< include subfile.qmd >}}`
+- ❌ **INCORRECT**: Subfile contains `## Section Title` as its first line
+
+**Naming convention**: Subfiles that are included in other documents should be prefixed with `_` (underscore), e.g., `_cluster-robust-se.qmd`, `_antibody-response-model.qmd`
+
+**Example structure**:
+
+Parent file (`methodology.qmd`):
+```markdown
+## Cluster-robust standard errors
+
+{{< include articles/_cluster-robust-se.qmd >}}
+```
+
+Subfile (`articles/_cluster-robust-se.qmd`):
+```markdown
+In many survey designs, observations are clustered...
+
+### Subsection Title
+...
+```
+
+This ensures proper document structure and makes it clear where each section begins when viewing the parent document.
+
+### Version Management
+
+**CRITICAL**: Always ensure the development version in your PR branch is one version number higher than the main branch.
+
+```r
+# Check current version
+desc::desc_get_version()
+
+# Increment development version (use this for PRs)
+usethis::use_version('dev')
+```
+
+**Version Check Workflow**: The `version-check.yaml` workflow will fail if your PR branch version is not higher than the main branch version. Before requesting PR review, always:
+
+1. Check the current version on the main branch (look at DESCRIPTION on main)
+2. Ensure your PR branch version is at least one development version higher
+3. If main is at 1.4.0.9003, your PR should be at minimum 1.4.0.9004
+
+**Why this matters**: This ensures proper version tracking and prevents conflicts when multiple PRs are merged.
+
 ### Package Checking
 
 Run R CMD check to validate the package:
@@ -468,6 +518,54 @@ expect_false(has_missing_values(complete_data))
 3. **Make changes**: Modify the function implementation
 4. **Run tests**: Validate all tests pass, updating snapshots only when changes are intentional
 5. **Review snapshots**: When snapshots change, review the diff to ensure changes are expected
+
+## Code Organization Policies
+
+**CRITICAL**: Follow these strict code organization policies for all new code and refactoring work:
+
+### File Organization
+
+1. **One function per file**: Each exported function and its associated S3 methods should be in its own file
+   - File name should match the function name (e.g., `summary.seroincidence.R` for `summary.seroincidence()`)
+   - S3 methods for the same generic can be in the same file (e.g., `compare_seroincidence.seroincidence()`, `compare_seroincidence.seroincidence.by()`, and `compare_seroincidence.default()` all in `compare_seroincidence.R`)
+
+2. **Internal helper functions**: Move to separate files
+   - Use descriptive file names (e.g., `compute_cluster_robust_var.R` for `.compute_cluster_robust_var()`)
+   - Keep related internal functions together when logical
+   - Internal functions should use `.function_name()` naming convention
+
+3. **Print methods**: Each print method in its own file
+   - File name: `print.{class_name}.R` (e.g., `print.seroincidence.R`)
+
+4. **Extract anonymous functions**: Convert complex anonymous functions to named helper functions in separate files
+   - If an anonymous function is longer than ~5 lines, extract it
+   - Name should describe its purpose (e.g., `.helper_function_name()`)
+
+### Example Organization
+
+1. **Long examples**: Move to `inst/examples/exm-{function_name}.R`
+   - Use `@example inst/examples/exm-{function_name}.R` in roxygen documentation
+   - Keep inline `@examples` short (1-3 lines) for simple demonstrations
+
+2. **Example file naming**: `exm-{function_name}.R`
+   - Example: `exm-est_seroincidence.R` for `est_seroincidence()` examples
+
+### Benefits
+
+- **Easier navigation**: Find functions quickly by file name
+- **Better git history**: Changes to one function don't pollute history of unrelated functions
+- **Clearer code review**: Reviewers can focus on individual functions
+- **Reduced merge conflicts**: Multiple people can work on different functions simultaneously
+- **Better organization**: Logical structure makes codebase more maintainable
+
+### Migration Strategy
+
+When refactoring existing code:
+1. Extract functions to separate files
+2. Update any internal calls if needed
+3. Run `devtools::document()` to regenerate documentation
+4. Run `devtools::check()` to ensure no breakage
+5. Run tests to verify functionality unchanged
 
 ## Code Style Guidelines
 

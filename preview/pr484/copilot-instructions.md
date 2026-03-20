@@ -299,6 +299,71 @@ To regenerate:
 rmarkdown::render("README.Rmd")
 ```
 
+### Vignette Subfiles
+
+When creating subfiles to be included in vignettes (e.g., using Quarto’s
+`{{< include >}}` directive):
+
+**CRITICAL**: Always keep the main section header in the parent file,
+not in the subfile.
+
+- ✅ **CORRECT**: In parent file: `## Section Title`, then
+  `{{< include subfile.qmd >}}`
+- ❌ **INCORRECT**: Subfile contains `## Section Title` as its first
+  line
+
+**Naming convention**: Subfiles that are included in other documents
+should be prefixed with `_` (underscore), e.g.,
+`_cluster-robust-se.qmd`, `_antibody-response-model.qmd`
+
+**Example structure**:
+
+Parent file (`methodology.qmd`):
+
+``` markdown
+## Cluster-robust standard errors
+
+{{< include articles/_cluster-robust-se.qmd >}}
+```
+
+Subfile (`articles/_cluster-robust-se.qmd`):
+
+``` markdown
+In many survey designs, observations are clustered...
+
+### Subsection Title
+...
+```
+
+This ensures proper document structure and makes it clear where each
+section begins when viewing the parent document.
+
+### Version Management
+
+**CRITICAL**: Always ensure the development version in your PR branch is
+one version number higher than the main branch.
+
+``` r
+# Check current version
+desc::desc_get_version()
+
+# Increment development version (use this for PRs)
+usethis::use_version('dev')
+```
+
+**Version Check Workflow**: The `version-check.yaml` workflow will fail
+if your PR branch version is not higher than the main branch version.
+Before requesting PR review, always:
+
+1.  Check the current version on the main branch (look at DESCRIPTION on
+    main)
+2.  Ensure your PR branch version is at least one development version
+    higher
+3.  If main is at 1.4.0.9003, your PR should be at minimum 1.4.0.9004
+
+**Why this matters**: This ensures proper version tracking and prevents
+conflicts when multiple PRs are merged.
+
 ### Package Checking
 
 Run R CMD check to validate the package:
@@ -383,9 +448,10 @@ The following workflows run on every PR. **All must pass** for merge:
 5.  **check-readme.yaml**: Renders README.Rmd and verifies it matches
     README.md. (~2-3 min)
 
-6.  **R-check-docs.yml**: Runs `roxygen2::roxygenise()` and checks if
-    `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails if
-    documentation is out of sync. (~2-3 min)
+6.  **R-check-docs.yml**: Runs
+    [`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
+    and checks if `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails
+    if documentation is out of sync. (~2-3 min)
 
 7.  **news.yaml**: Ensures NEWS.md is updated for every PR. Can be
     bypassed with `no-changelog` label. (~1 min)
@@ -406,8 +472,10 @@ The following workflows run on every PR. **All must pass** for merge:
 ### PR Commands
 
 Team members can trigger actions by commenting on PRs: - `/document` -
-Runs `roxygen2::roxygenise()` and commits changes - `/style` - Runs
-`styler::style_pkg()` and commits changes
+Runs
+[`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
+and commits changes - `/style` - Runs `styler::style_pkg()` and commits
+changes
 
 ## Repository Structure
 
@@ -577,6 +645,65 @@ expect_false(has_missing_values(complete_data))
 5.  **Review snapshots**: When snapshots change, review the diff to
     ensure changes are expected
 
+## Code Organization Policies
+
+**CRITICAL**: Follow these strict code organization policies for all new
+code and refactoring work:
+
+### File Organization
+
+1.  **One function per file**: Each exported function and its associated
+    S3 methods should be in its own file
+    - File name should match the function name (e.g.,
+      `summary.seroincidence.R` for
+      [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md))
+    - S3 methods for the same generic can be in the same file (e.g.,
+      [`compare_seroincidence.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md),
+      [`compare_seroincidence.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md),
+      and `compare_seroincidence.default()` all in
+      `compare_seroincidence.R`)
+2.  **Internal helper functions**: Move to separate files
+    - Use descriptive file names (e.g., `compute_cluster_robust_var.R`
+      for `.compute_cluster_robust_var()`)
+    - Keep related internal functions together when logical
+    - Internal functions should use `.function_name()` naming convention
+3.  **Print methods**: Each print method in its own file
+    - File name: `print.{class_name}.R` (e.g., `print.seroincidence.R`)
+4.  **Extract anonymous functions**: Convert complex anonymous functions
+    to named helper functions in separate files
+    - If an anonymous function is longer than ~5 lines, extract it
+    - Name should describe its purpose (e.g., `.helper_function_name()`)
+
+### Example Organization
+
+1.  **Long examples**: Move to `inst/examples/exm-{function_name}.R`
+    - Use `@example inst/examples/exm-{function_name}.R` in roxygen
+      documentation
+    - Keep inline `@examples` short (1-3 lines) for simple
+      demonstrations
+2.  **Example file naming**: `exm-{function_name}.R`
+    - Example: `exm-est_seroincidence.R` for
+      [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+      examples
+
+### Benefits
+
+- **Easier navigation**: Find functions quickly by file name
+- **Better git history**: Changes to one function don’t pollute history
+  of unrelated functions
+- **Clearer code review**: Reviewers can focus on individual functions
+- **Reduced merge conflicts**: Multiple people can work on different
+  functions simultaneously
+- **Better organization**: Logical structure makes codebase more
+  maintainable
+
+### Migration Strategy
+
+When refactoring existing code: 1. Extract functions to separate files
+2. Update any internal calls if needed 3. Run `devtools::document()` to
+regenerate documentation 4. Run `devtools::check()` to ensure no
+breakage 5. Run tests to verify functionality unchanged
+
 ## Code Style Guidelines
 
 - **Follow tidyverse style guide**: <https://style.tidyverse.org>
@@ -597,6 +724,10 @@ expect_false(has_missing_values(complete_data))
   Instead, decompose reusable logic into well-named helper functions
 - **Quarto vignettes**: Use Quarto-style chunk options with `#|` prefix
   (e.g., `#| label: my-chunk`, `#| eval: false`)
+- **New articles**: Use `.qmd` format for all new vignettes and articles
+  going forward
+- **Quarto callouts**: Use Quarto callout blocks for notes, warnings,
+  and tips (e.g., `::: {.callout-note}`)
 - **Tidyverse replacements**: Use tidyverse/modern replacements for base
   R functions where available
 - **Write tidy code**: Keep code clean, readable, and well-organized

@@ -1,7 +1,11 @@
 # Summarizing fitted seroincidence models
 
 This function is a [`summary()`](https://rdrr.io/r/base/summary.html)
-method for `seroincidence` objects.
+method for `seroincidence` objects. When the model was fit with
+clustered data (using the `cluster_var` parameter in
+[`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)),
+this function automatically computes cluster-robust standard errors to
+account for within-cluster correlation.
 
 ## Usage
 
@@ -42,9 +46,14 @@ containing the following:
 
 - `incidence.rate`: the estimated incidence rate, per person year
 
+- `SE`: standard error of the incidence rate estimate
+
 - `CI.lwr`: lower limit of confidence interval for incidence rate
 
 - `CI.upr`: upper limit of confidence interval for incidence rate
+
+- `se_type`: type of standard error used ("standard" or
+  "cluster-robust")
 
 - `coverage`: coverage probability
 
@@ -106,9 +115,10 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate     SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.166 0.0178  0.135  0.205     0.95   -524.          5
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.166 0.0178  0.135  0.205 standard     0.95   -524.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```

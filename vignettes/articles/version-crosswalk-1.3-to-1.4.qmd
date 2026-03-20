@@ -149,11 +149,22 @@ multiple_sims <- sim.cs.multi(
 **New code (v1.4.0):**
 ```{r}
 #| label: example-3-v1.4.0
+# Biologic noise distribution for simulation
+noise_limits <- matrix(
+  c(0, 0.5),
+  nrow = length(antigen_isos),
+  ncol = 2,
+  byrow = TRUE,
+  dimnames = list(antigen_isos, c("min", "max"))
+)
+
 # Simulate cross-sectional data
 simulated_data <- sim_pop_data(
   curve_params = sr_params,
-  noise_limits = noise_params,
-  n_samples = 100
+  noise_limits = noise_limits,
+  antigen_isos = antigen_isos,
+  n_samples = 100,
+  add_noise = TRUE
 )
 
 head(simulated_data)
@@ -161,9 +172,11 @@ head(simulated_data)
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(
   curve_params = sr_params,
-  noise_limits = noise_params,
+  noise_limits = noise_limits,
+  antigen_isos = antigen_isos,
   n_samples = 100,
-  n_reps = 3
+  n_reps = 3,
+  add_noise = TRUE
 )
 
 length(multiple_sims)

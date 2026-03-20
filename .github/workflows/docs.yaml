@@ -92,14 +92,6 @@ jobs:
           ref: ${{ steps.current-branch-or-tag.outputs.ref-name }}
           path: ${{ github.event.repository.name }}
 
-      - name: Install Quarto CLI
-        run: |
-          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.551/quarto-1.4.551-linux-amd64.deb
-          sudo dpkg -i quarto-1.4.551-linux-amd64.deb
-
-      - name: Check Quarto installation
-        run: quarto --version
-
       - name: Check commit message 💬
         run: |
           git config --global --add safe.directory $(pwd)
@@ -115,7 +107,7 @@ jobs:
           SKIP_INSTRUCTION: "[skip docs]"
 
       - uses: r-lib/actions/setup-pandoc@v2
-
+      
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         env:
@@ -139,14 +131,6 @@ jobs:
           if (file.exists("renv.lock")) renv::restore()
           install.packages(".", repos=NULL, type="source")
         shell: Rscript {0}
-        working-directory: ${{ github.event.repository.name }}
-
-      - name: Check Quarto CLI in R
-        run: |
-          which quarto
-          Rscript -e "system('quarto --version')"
-          Rscript -e "if (!requireNamespace('quarto', quietly=TRUE)) install.packages('quarto'); cat('Quarto R pkg version:', as.character(packageVersion('quarto')), '\\n')"
-          Rscript -e "tryCatch({q <- quarto::quarto_path_cli(); cat('Quarto path (R):', q, '\\n')}, error=function(e) cat('No quarto path found in R\\n'))"
         working-directory: ${{ github.event.repository.name }}
 
       - name: Build docs 🏗
@@ -178,7 +162,7 @@ jobs:
           mkdir -p $GH_PAGES_DIR
           echo "Current contents of $GH_PAGES_DIR:"
           ls -l $GH_PAGES_DIR || echo "Directory is empty or doesn't exist yet"
-
+          
           # Remove any existing documentation for this version, but retain coverage and test reports
           directories_to_retain="coverage-report,unit-test-report"
           IFS=',' read -ra DIRECTORIES_TO_RETAIN <<< "$directories_to_retain"
@@ -186,7 +170,7 @@ jobs:
           for dir in "${DIRECTORIES_TO_RETAIN[@]}"; do
             echo "$dir"
           done
-
+          
           # Remove all files from GH_PAGES_DIR, except any DIRECTORIES_TO_RETAIN
           find $GH_PAGES_DIR -mindepth 1 -maxdepth 1 -print0 2>/dev/null | while IFS= read -r -d '' file; do
             file_to_be_removed="true"
@@ -202,20 +186,20 @@ jobs:
               rm -rf "$file"
             fi
           done
-
+          
           echo "::group::gh-pages contents"
           echo "Current contents of $GH_PAGES_DIR:"
           ls -l $GH_PAGES_DIR || echo "Directory is empty"
           echo "::endgroup::"
-
+          
           # Copy generated pkgdown documentation to gh-pages branch
           cp -a ${{ github.event.repository.name }}/docs/. $GH_PAGES_DIR
-
+          
           echo "::group::gh-pages contents after copy"
           echo "Current contents of $GH_PAGES_DIR:"
           ls -l $GH_PAGES_DIR
           echo "::endgroup::"
-
+          
           cd gh-pages
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
@@ -260,19 +244,19 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git config pull.rebase false
-
+          
           # Create preview directory
           PREVIEW_DIR="preview/pr${{ github.event.pull_request.number }}"
           mkdir -p $PREVIEW_DIR
-
+          
           # Copy built docs to preview directory
           cp -a ../${{ github.event.repository.name }}/docs/. $PREVIEW_DIR/
-
+          
           git add -f .
           git commit -m "Update PR #${{ github.event.pull_request.number }} preview" || true
           git pull origin gh-pages || true
           git push origin gh-pages
-
+          
           # Set output URL
           REPO_NAME="${{ github.event.repository.name }}"
           REPO_OWNER="${{ github.repository_owner }}"
@@ -357,7 +341,7 @@ jobs:
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-
+          
           preview_dir="preview/pr${{ github.event.pull_request.number }}"
           if [ -d "$preview_dir" ]; then
             git rm -r $preview_dir

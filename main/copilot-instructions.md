@@ -721,6 +721,10 @@ breakage 5. Run tests to verify functionality unchanged
   Instead, decompose reusable logic into well-named helper functions
 - **Quarto vignettes**: Use Quarto-style chunk options with `#|` prefix
   (e.g., `#| label: my-chunk`, `#| eval: false`)
+- **New articles**: Use `.qmd` format for all new vignettes and articles
+  going forward
+- **Quarto callouts**: Use Quarto callout blocks for notes, warnings,
+  and tips (e.g., `::: {.callout-note}`)
 - **Tidyverse replacements**: Use tidyverse/modern replacements for base
   R functions where available
 - **Write tidy code**: Keep code clean, readable, and well-organized

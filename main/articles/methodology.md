@@ -105,12 +105,12 @@ Under those assumptions:
 
 - $T$ has an **exponential distribution**:
 
-$${\mathbb{p}}(T = t) = \lambda\exp\left\{ -\lambda t \right\}$$
+$${\mathbb{p}}(T = t) = \lambda{\exp}\left\{ -\lambda t \right\}$$
 
 - More precisely, the distribution is exponential **truncated by age**
   at observation ($a$):
 
-$${\mathbb{p}}\left( T = t|A = a \right) = 1_{t \in {\lbrack 0,a\rbrack}}\lambda\exp\left\{ -\lambda t \right\} + 1_{t = \text{NA}}\exp\left\{ -\lambda a \right\}$$
+$${\mathbb{p}}(T = t|A = a) = 1_{t \in \lbrack 0,a\rbrack}\lambda{\exp}\left\{ -\lambda t \right\} + 1_{t = \text{NA}}{\exp}\left\{ -\lambda a \right\}$$
 
 - the rate parameter $\lambda$ is the incidence rate
 
@@ -121,12 +121,12 @@ The probability that an individual was **last** infected $t$ days ago,
 $p(T = t)$, is equal to the probability of being infected at time $t$
 (i.e., the incidence rate at time $t$, $\lambda$) times the probability
 of not being infected after time $t$, which turns out to be
-$\exp(-\lambda t)$.
+${\exp}(-\lambda t)$.
 
 The distribution of $T$ is truncated by the patient’s birth date; the
 probability that they have never been infected is
-$\exp\left\{ -\lambda a \right\}$, where $a$ is the patient’s age at the
-time of the survey.
+${\exp}\left\{ -\lambda a \right\}$, where $a$ is the patient’s age at
+the time of the survey.
 
 ### Likelihood of latent infection times
 
@@ -139,11 +139,11 @@ Setting the score function equal to 0 to find the score equation, and
 solving the score equation for $\lambda$ to find the maximum likelihood
 estimate:
 
-- $$\mathcal{L}^{*}(\lambda) = \prod\limits_{i = 1}^{n}{\mathbb{p}}\left( T = t_{i} \right) = \prod\limits_{i = 1}^{n}\lambda\exp\left( -\lambda t_{i} \right)$$
+- $$\mathcal{L}^{*}(\lambda) = \prod\limits_{i = 1}^{n}{\mathbb{p}}(T = t_{i}) = \prod\limits_{i = 1}^{n}\lambda{\exp}(-\lambda t_{i})$$
 
-- $$\ell^{*}(\lambda) = \log\left\{ \mathcal{L}^{*}(\lambda) \right\} = \sum\limits_{i = 1}^{n}\log\left\{ \lambda \right\} - \lambda t_{i}$$
+- $$\ell^{*}(\lambda) = {\log}\left\{ \mathcal{L}^{*}(\lambda) \right\} = \sum\limits_{i = 1}^{n}{\log}\left\{ \lambda \right\} - \lambda t_{i}$$
 
-- $$\ell^{*\prime}(\lambda) = \sum\limits_{i = 1}^{n}\lambda^{-1} - t_{i}$$
+- $$\ell^{*^{\prime}}(\lambda) = \sum\limits_{i = 1}^{n}\lambda^{-1} - t_{i}$$
 
 - $${\widehat{\lambda}}_{\text{ML}} = \frac{n}{\sum\limits_{i = 1}^{n}t_{i}} = \frac{1}{\bar{t}}$$
 
@@ -249,41 +249,40 @@ can be expressed as an integral over the joint likelihood of $Y$ and $T$
 - $${\mathbb{p}}(Y = y) = \int_{t}{\mathbb{p}}(Y = y,T = t)dt$$
 
 Further, we can express the joint probability $p(Y = y,T = t)$ as the
-product of $p(T = t)$ and $p\left( Y = y|T = t \right)$ the “antibody
-response curve after infection”. That is:
+product of $p(T = t)$ and $p(Y = y|T = t)$ the “antibody response curve
+after infection”. That is:
 
-- $${\mathbb{p}}(Y = y,T = t) = {\mathbb{p}}\left( Y = y|T = t \right){\mathbb{p}}(T = t)$$
+- $${\mathbb{p}}(Y = y,T = t) = {\mathbb{p}}(Y = y|T = t){\mathbb{p}}(T = t)$$
 
 ### Antibody response curves
 
 ![](fig/fig1a-1.svg)
 
-Figure 2: Antibody response curves, $p\left( Y = y|T = t \right)$, for
-typhoid
+Figure 2: Antibody response curves, $p(Y = y|T = t)$, for typhoid
 
 ### Putting it all together
 
-Substituting $p(Y = y,T = t) = p\left( Y = y|T = t \right)P(T = t)$ into
-the previous expression for $p(Y = y)$:
+Substituting $p(Y = y,T = t) = p(Y = y|T = t)P(T = t)$ into the previous
+expression for $p(Y = y)$:
 
 $$\begin{aligned}
-{p(Y = y)} & {= \int_{t}p\left( Y = y|T = t \right)P(T = t)dt}
+{p(Y = y)} & {= \int_{t}p(Y = y|T = t)P(T = t)dt}
 \end{aligned}$$
 
 ### Composing the likelihood
 
 Now, the likelihood of the observed data
-$\mathbf{y} = \left( y_{1},y_{2},...,y_{n} \right)$ is:
+$\mathbf{y} = (y_{1},y_{2},...,y_{n})$ is:
 
 $$\begin{aligned}
-{\mathcal{L}(\lambda)} & {= \prod\limits_{i = 1}^{n}p\left( Y = y_{i} \right)} \\
- & {= \prod\limits_{i = 1}^{n}\int_{t}p\left( Y = y_{i}|T = t \right)p_{\lambda}(T = t)dt} \\
+{\mathcal{L}(\lambda)} & {= \prod\limits_{i = 1}^{n}p(Y = y_{i})} \\
+ & {= \prod\limits_{i = 1}^{n}\int_{t}p(Y = y_{i}|T = t)p_{\lambda}(T = t)dt} \\
  & 
 \end{aligned}$$
 
-If we know $p\left( Y = y|T = t \right)$, then we can maximize
-$\mathcal{L}(\lambda)$ over $\lambda$ to find the “maximum likelihood
-estimate” (MLE) of $\lambda$, denoted $\widehat{\lambda}$.
+If we know $p(Y = y|T = t)$, then we can maximize $\mathcal{L}(\lambda)$
+over $\lambda$ to find the “maximum likelihood estimate” (MLE) of
+$\lambda$, denoted $\widehat{\lambda}$.
 
 ### Finding the MLE numerically
 
@@ -291,8 +290,8 @@ The likelihood of $Y$ involves the product of integrals, so the
 log-likelihood involves the sum of the logs of integrals:
 
 $$\begin{aligned}
-{\log\mathcal{L}(\lambda)} & {= \log\prod\limits_{i = 1}^{n}\int_{t}p\left( Y = y_{i}|T = t \right)p_{\lambda}(T = t)dt} \\
- & {= \sum\limits_{i = 1}^{n}\log\left\{ \int_{t}p\left( Y = y_{i}|T = t \right)p_{\lambda}(T = t)dt \right\}} \\
+{{\log}\mathcal{L}(\lambda)} & {= {\log}\prod\limits_{i = 1}^{n}\int_{t}p(Y = y_{i}|T = t)p_{\lambda}(T = t)dt} \\
+ & {= \sum\limits_{i = 1}^{n}{\log}\left\{ \int_{t}p(Y = y_{i}|T = t)p_{\lambda}(T = t)dt \right\}} \\
  & 
 \end{aligned}$$
 
@@ -343,8 +342,8 @@ $$B = \sum\limits_{c = 1}^{C}U_{c}U_{c}^{T}$$
 where:
 
 - $C$ is the total number of clusters in the sample
-- $U_{c} = \sum_{i \in c}\nabla_{\lambda}\log p\left( Y_{i}|\lambda \right)$
-  is the score contribution (gradient of log-likelihood with respect to
+- $U_{c} = \sum_{i \in c}\nabla_{\lambda}{\log}p(Y_{i}|\lambda)$ is the
+  score contribution (gradient of log-likelihood with respect to
   $\lambda$) from all observations in cluster $c$
 - $\nabla_{\lambda}$ denotes the gradient operator (vector of partial
   derivatives with respect to the parameter $\lambda$)
@@ -384,7 +383,7 @@ with `se_type = "cluster-robust"`.
 ## Modeling the seroresponse kinetics curve
 
 Now, we need a model for the antibody response to infection,
-${\mathbb{p}}\left( Y = y|T = t \right)$. The current version of the
+${\mathbb{p}}(Y = y|T = t)$. The current version of the
 [serocalculator](https://ucd-serg.github.io/serocalculator/) package
 uses a two-phase model for the shape of the seroresponse ([Teunis et al.
 2016](#ref-Teunis_2016)).
@@ -403,8 +402,8 @@ Notation:
 
 Model:
 
-- $$x\prime(t) = \alpha x(t) - \beta y(t)$$
-- $$y\prime(t) = \delta y(t)$$
+- $$x^{\prime}(t) = \alpha x(t) - \beta y(t)$$
+- $$y^{\prime}(t) = \delta y(t)$$
 
 With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen
 concentration $x(0) = x_{0}$.
@@ -450,15 +449,15 @@ $$y(t) = y_{+}(t) + y_{-}(t)$$
 where
 
 $$\begin{aligned}
-{y_{+}(t)} & {= y_{0}\text{e}^{\mu t}\left\lbrack 0 \leq t < t_{1} \right\rbrack} \\
-{y_{-}(t)} & {= y_{1}\left( 1 + (r - 1)y_{1}^{r - 1}\alpha\left( t - t_{1} \right) \right)^{-\frac{1}{r - 1}}\left\lbrack t_{1} \leq t < \infty \right\rbrack}
+{y_{+}(t)} & {= y_{0}\text{e}^{\mu t}\lbrack 0 \leq t < t_{1}\rbrack} \\
+{y_{-}(t)} & {= y_{1}\left( 1 + (r - 1)y_{1}^{r - 1}\alpha(t - t_{1}) \right)^{-\frac{1}{r - 1}}\lbrack t_{1} \leq t < \infty\rbrack}
 \end{aligned}$$
 
 ------------------------------------------------------------------------
 
 Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the growth
 rate $\mu$ can be written as
-$$\mu = \frac{1}{t_{1}}\log\left( \frac{y_{1}}{y_{0}} \right)$$
+$$\mu = \frac{1}{t_{1}}{\log}\left( \frac{y_{1}}{y_{0}} \right)$$
 
 ------------------------------------------------------------------------
 
@@ -535,8 +534,7 @@ Figure 3: An example kinetics curve for HlyE IgG
 
 The antibody level at $t = 0$ is $y_{0}$; the rising branch ends at
 $t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any
-antibody level $y(t) \in \left( y_{0},y_{1} \right)$ eventually occurs
-twice.
+antibody level $y(t) \in (y_{0},y_{1})$ eventually occurs twice.
 
 ------------------------------------------------------------------------
 
@@ -562,7 +560,7 @@ cross-reactivity).
 We are more concerned about overcount (cross-reactivity) than
 undercount. For a given antibody, we can do some analytical work
 beforehand to estimate the distribution of overcounts, and add that to
-our model $p\left( Y = y|T = t \right)$.
+our model $p(Y = y|T = t)$.
 
 Notation:
 
@@ -584,8 +582,7 @@ antigen-isotype in a population with no exposure.
 There are also some other sources of noise in our bioassays; user
 differences in pipetting technique, random ELISA plate effects, etc.
 This noise can cause both overcount and undercount. We can also estimate
-the magnitude of this noise source and include it in
-$p\left( Y = y|T = t \right)$.
+the magnitude of this noise source and include it in $p(Y = y|T = t)$.
 
 Measurement noise, $\varepsilon$ (“epsilon”), represents measurement
 error from the laboratory testing process. It is defined by a CV

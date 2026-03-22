@@ -1,5 +1,9 @@
 # serocalculator (development version)
 
+* Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
+  - Provides clear tables comparing old and new function names
+  - Includes code examples showing how to update existing code
+  - Accessible as a prominent tab in the website navigation
 ## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 

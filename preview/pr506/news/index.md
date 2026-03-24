@@ -9,7 +9,56 @@
   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
   now fail gracefully with informative messages when internet resources
   are unavailable, complying with CRAN policy
-  ([\#505](https://github.com/UCD-SERG/serocalculator/issues/505)) \##
+  ([\#505](https://github.com/UCD-SERG/serocalculator/issues/505))
+- Added Version Crosswalk article to pkgdown website to help users
+  migrate code from v1.3.0 to v1.4.0
+  - Provides clear tables comparing old and new function names
+  - Includes code examples showing how to update existing code
+  - Accessible as a prominent tab in the website navigation \## New
+    features
+- Added `cluster_var` and `stratum_var` parameters to
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+  and
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+  to support cluster-robust standard error estimation. When
+  `cluster_var` is specified,
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  automatically computes cluster-robust (sandwich) variance estimates to
+  account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
+- `cluster_var` parameter now accepts multiple variables (e.g.,
+  `c("school", "classroom")`) for multi-level clustered sampling
+  designs. Cluster-robust standard errors will account for all specified
+  clustering levels.
+
+### Bug fixes
+
+- Fixed column naming issue in
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  where cluster-robust standard errors caused `[]` notation in column
+  names (`SE[,1]` instead of `SE`).
+- Added `se_type` column to
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  output to clearly indicate whether “standard” or “cluster-robust”
+  standard errors are being used.
+- Fixed
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+  to properly pass cluster and stratum variables through to stratified
+  analyses. Previously, these variables were dropped during data
+  stratification, causing errors when trying to use clustering with
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
+
+### Code organization
+
+- Refactored clustering-related code following package organization
+  policies:
+
+  - Moved `.compute_cluster_robust_var()` to
+    `R/compute_cluster_robust_var.R`
+  - Each function now in its own file for better maintainability and git
+    history
+
+- Updated copilot-instructions.md with code organization policies \##
   Dependencies
 
 - Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
@@ -20,6 +69,15 @@
 CRAN release: 2025-12-11
 
 ### New features
+
+- Added support for cluster-robust standard errors in
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+  through new `cluster_var` and `stratum_var` parameters. When
+  `cluster_var` is specified,
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  automatically computes cluster-robust (sandwich) variance estimates to
+  account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
 
 - Added
   [`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)

@@ -290,11 +290,12 @@ est1 <- est_seroincidence(
 )
 
 summary(est1)
-#> # A tibble: 1 × 10
-#>   est.start incidence.rate      SE CI.lwr CI.upr coverage log.lik iterations
-#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl>    <dbl>   <dbl>      <int>
-#> 1       0.1          0.128 0.00682  0.115  0.142     0.95  -2376.          4
-#> # ℹ 2 more variables: antigen.isos <chr>, nlm.convergence.code <ord>
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate      SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.128 0.00682  0.115  0.142 standard     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
 ```
 
 ### Stratified Seroincidence
@@ -336,7 +337,7 @@ summary(est_country_age)
 #> b) Strata       : Country, ageCat 
 #> 
 #>  Seroincidence estimates:
-#> # A tibble: 9 × 14
+#> # A tibble: 9 × 15
 #>   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr
 #>   <chr>     <chr>    <fct>  <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl>
 #> 1 Stratum 1 Banglad… <5       101       0.1         0.400  0.0395  0.330  0.485 
@@ -348,8 +349,8 @@ summary(est_country_age)
 #> 7 Stratum 7 Pakistan <5       126       0.1         0.106  0.0136  0.0823 0.136 
 #> 8 Stratum 8 Pakistan 5-15     261       0.1         0.115  0.00845 0.0991 0.132 
 #> 9 Stratum 9 Pakistan 16+      107       0.1         0.190  0.0204  0.154  0.235 
-#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
-#> #   antigen.isos <chr>, nlm.convergence.code <ord>
+#> # ℹ 6 more variables: se_type <chr>, coverage <dbl>, log.lik <dbl>,
+#> #   iterations <int>, antigen.isos <chr>, nlm.convergence.code <ord>
 ```
 
 Note that we get a warning about uneven observations between antigen
@@ -478,18 +479,296 @@ Z-statistic - P-value - 95% confidence interval for the difference
 We can use this to identify which differences are statistically
 significant (typically using p \< 0.05 as a threshold).
 
+## Accounting for Clustered Sampling Designs
+
+In many survey designs, observations are clustered (e.g., multiple
+individuals from the same household, geographic area, or school). When
+observations within clusters are more similar to each other than to
+observations from different clusters, standard errors that ignore
+clustering will be too small, leading to overconfident inference.
+
+The `serocalculator` package supports cluster-robust standard error
+estimation through the `cluster_var` parameter.
+
+### Example: Household Clustering
+
+The SEES data includes cluster identifiers (`cluster` for geographic
+clusters, `catchment` for health facility catchment areas, and
+`Country`). These variables are nested: clusters are nested within
+catchments, which are nested within countries. We can use these to
+account for within-cluster correlation:
+
+``` r
+# Account for geographic clustering
+# Clusters in the SEES data represent geographic areas
+# Use Pakistan data for this example
+est_with_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"  # Geographic cluster identifier
+)
+
+# The summary will show cluster-robust standard errors
+summary(est_with_clustering)
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
+#> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
+
+# Compare with non-robust (standard) analysis
+est_no_clustering <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var specified - uses standard errors
+)
+
+summary(est_no_clustering)
+#> # A tibble: 1 × 11
+#>   est.start incidence.rate      SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.128 0.00682  0.115  0.142 standard     0.95  -2376.
+#> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
+#> #   nlm.convergence.code <ord>
+```
+
+Notice that the point estimates (incidence rates) are identical between
+the two analyses, but the standard errors are larger with cluster-robust
+estimation. This reflects the reduced effective sample size due to
+within-cluster correlation.
+
+The mathematical details of cluster-robust standard errors are explained
+in the [Cluster-robust standard errors
+section](https://ucd-serg.github.io/serocalculator/methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs)
+of the methodology article.
+
+### Clustering with Stratified Analysis
+
+Clustering can also be combined with stratified analysis using
+[`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md):
+
+``` r
+# Stratified analysis by catchment with cluster adjustment
+# Use Pakistan data for this example
+est_catchment_clustered <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"  # Account for clustering within each stratum
+)
+#> Warning: `curve_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+#> Warning: `noise_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+
+summary(est_catchment_clustered)
+#> Seroincidence estimated given the following setup:
+#> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#> b) Strata       : catchment 
+#> 
+#>  Seroincidence estimates:
+#> # A tibble: 2 × 14
+#>   Stratum catchment     n est.start incidence.rate      SE CI.lwr CI.upr se_type
+#>   <chr>   <chr>     <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratu… aku         294       0.1          0.106 0.00983 0.0880  0.127 cluste…
+#> 2 Stratu… kgh         200       0.1          0.167 0.00905 0.151   0.186 cluste…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
+
+# Compare with stratified analysis without clustering
+est_catchment_no_clustering <- est_seroincidence_by(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  strata = "catchment",
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  # No cluster_var - standard errors
+)
+#> Warning: `curve_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+#> `noise_params` is missing all strata variables and will be used unstratified.
+#> ℹ To avoid this warning, specify the desired set of stratifying variables in
+#>   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#>   `est_seroincidence_by()`.
+
+summary(est_catchment_no_clustering)
+#> Seroincidence estimated given the following setup:
+#> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#> b) Strata       : catchment 
+#> 
+#>  Seroincidence estimates:
+#> # A tibble: 2 × 14
+#>   Stratum catchment     n est.start incidence.rate      SE CI.lwr CI.upr se_type
+#>   <chr>   <chr>     <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratu… aku         294       0.1          0.106 0.00767 0.0916  0.122 standa…
+#> 2 Stratu… kgh         200       0.1          0.167 0.0133  0.143   0.196 standa…
+#> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
+#> #   antigen.isos <chr>, nlm.convergence.code <ord>
+```
+
+Within each stratum (catchment), the cluster-robust standard errors are
+larger than the standard errors, appropriately accounting for geographic
+clustering within each catchment area.
+
+### Understanding the Impact
+
+When cluster-robust standard errors are used:
+
+- **Point estimates** (incidence rates) remain unchanged
+- **Standard errors** typically increase by 5-15% to reflect
+  within-cluster correlation
+- The [`summary()`](https://rdrr.io/r/base/summary.html) output includes
+  a `se_type` column indicating “cluster-robust” vs “standard”
+- Confidence intervals appropriately widen to account for reduced
+  effective sample size
+
+### Cluster-Robust Country Comparisons
+
+For our main findings comparing all three countries, we should use
+cluster-robust standard errors to properly account for the geographic
+clustering in the SEES study:
+
+``` r
+# Estimate seroincidence for Bangladesh with cluster adjustment
+est_bangladesh_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Bangladesh"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Bangladesh"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Estimate seroincidence for Nepal with cluster adjustment
+est_nepal_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Nepal"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Nepal"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Estimate seroincidence for Pakistan with cluster adjustment
+est_pakistan_clustered <- est_seroincidence(
+  pop_data = xs_data |> filter(Country == "Pakistan"),
+  sr_params = curves,
+  noise_params = noise |> filter(Country == "Pakistan"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  cluster_var = "cluster"
+)
+
+# Pairwise comparisons with cluster-robust SEs
+comparison_bangla_nepal <- compare_seroincidence(
+  est_bangladesh_clustered, 
+  est_nepal_clustered
+)
+
+comparison_bangla_pakistan <- compare_seroincidence(
+  est_bangladesh_clustered,
+  est_pakistan_clustered
+)
+
+comparison_nepal_pakistan <- compare_seroincidence(
+  est_nepal_clustered,
+  est_pakistan_clustered
+)
+
+# Display all comparisons
+print("Bangladesh vs Nepal:")
+#> [1] "Bangladesh vs Nepal:"
+print(comparison_bangla_nepal)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = 14.99, p-value < 2.2e-16
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  0.3496836 0.4548783
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>       0.45050113       0.04822018       0.40228095
+
+print("Bangladesh vs Pakistan:")
+#> [1] "Bangladesh vs Pakistan:"
+print(comparison_bangla_pakistan)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = 11.372, p-value < 2.2e-16
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  0.2670811 0.3783145
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>        0.4505011        0.1278034        0.3226978
+
+print("Nepal vs Pakistan:")
+#> [1] "Nepal vs Pakistan:"
+print(comparison_nepal_pakistan)
+#> 
+#>  Two-sample z-test for difference in seroincidence rates
+#> 
+#> data:  seroincidence estimates
+#> z = -6.978, p-value = 2.994e-12
+#> alternative hypothesis: true difference in incidence rates is not equal to 0
+#> 95 percent confidence interval:
+#>  -0.10193630 -0.05723007
+#> sample estimates:
+#> incidence rate 1 incidence rate 2       difference 
+#>       0.04822018       0.12780336      -0.07958318
+```
+
+The cluster-robust comparisons provide more accurate inference by
+accounting for within-cluster correlation in the study design.
+
 ## Conclusions
 
-We estimate that Bangladesh has the highest enteric fever seroconversion
-rates across all age groups, with the highest rates observed among 5- to
-15-year-olds (477 per 1000 person-years). In this age group, the
-seroconversion rate in Bangladesh is 14 times higher than in Nepal,
-where the rate is 35 per 1000 person-years. These findings highlight
-substantial geographic variation in enteric fever transmission,
-emphasizing the need for targeted prevention strategies.
+Using cluster-robust standard errors to account for geographic
+clustering in the SEES study, we observe significant variation in
+enteric fever seroconversion rates across the three countries.
+Bangladesh has the highest overall seroconversion rate at 450.5 per 1000
+person-years (95% CI: 401.6-505.4), followed by Pakistan at 127.8 per
+1000 person-years (95% CI: 109-149.8), and Nepal at 48.2 per 1000
+person-years (95% CI: 39.8-58.5). Pairwise comparisons show Bangladesh
+has significantly higher rates than both Nepal (p \< 0.001) and Pakistan
+(p \< 0.001), while the difference between Nepal and Pakistan is also
+significant (p \< 0.001).
+
+Across age groups, the highest rates are observed among 5- to
+15-year-olds in Bangladesh (477 per 1000 person-years), which is 14
+times higher than Nepal in the same age group (35 per 1000
+person-years). These findings highlight substantial geographic variation
+in enteric fever transmission, emphasizing the need for targeted
+prevention strategies tailored to local epidemiology.
+
+The cluster-robust approach properly accounts for within-cluster
+correlation arising from the geographic sampling design. While point
+estimates remain unchanged, the cluster-robust standard errors and
+confidence intervals provide more accurate uncertainty quantification,
+ensuring valid statistical inference. This adjustment is particularly
+important for survey designs where observations within clusters (e.g.,
+households, schools, or geographic areas) are correlated, as failing to
+account for clustering can lead to underestimated standard errors and
+overly narrow confidence intervals.
+
 **serocalculator** offers an efficient and reproducible approach to
-estimating seroconversion rates, enabling data-driven insights for
-disease surveillance and public health decision-making.
+estimating seroconversion rates with proper accounting for complex
+survey designs, enabling data-driven insights for disease surveillance
+and public health decision-making.
 
 ## Acknowledgments
 

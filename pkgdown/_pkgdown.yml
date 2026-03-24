@@ -73,6 +73,11 @@ articles:
   contents:
   - articles/serocalculator
 
+- title: Version Crosswalk
+  navbar: Version Crosswalk
+  contents:
+  - articles/version-crosswalk-1.3-to-1.4
+
 - title: Methodology
   navbar: Methodology
   contents:

@@ -8,5 +8,9 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+* There are some words flagged by checks as missspelled, but they are in Wordlist and are correctly spelled. 
+* 1 note regarding package archived on 2026-01-16 due to issues were not addressed
+    in time. We have addressed these issues in this release. 
 

@@ -334,7 +334,7 @@ lambdas <- c(.05, .1, .15, .2, .5, .8)
 
 sim_df <-
   sim_pop_data_multi(
-    n_cores = n_cores,
+    num_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
     sample_sizes = nrep,
@@ -598,7 +598,7 @@ high incidence rates, there may be bias:
 ``` r
 sim_df_renew <-
   sim_pop_data_multi(
-    n_cores = n_cores,
+    num_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
     sample_sizes = nrep,

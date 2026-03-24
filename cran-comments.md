@@ -1,8 +1,7 @@
 ## Resubmission 
 
-* Package was flagged for errors on 11-14-2025 due to errors in `expect_snapshot_data()` and an out of date URL
-* In response, we copied `expect_snapshot_data()` into an internal function (with permission from creators)
-  and replaced the out of date URL
+* Package was archived on 2026-01-16 as issues related to uninformative messages for URLs were not addressed in time.
+* In response, we have updated internet resource handling to include graceful failure messages. 
 * Includes additional developments consistent with a minor version increase. 
 * Full updates are described in NEWS.md.
 * There are currently no downstream dependencies for this package

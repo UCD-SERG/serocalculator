@@ -2,6 +2,14 @@
 
 ## serocalculator 1.4.1
 
+### Bug fixes
+
+- [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
+  and
+  [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
+  now fail gracefully with informative messages when internet resources
+  are unavailable, complying with CRAN policy
+  ([\#505](https://github.com/UCD-SERG/serocalculator/issues/505))
 - Added Version Crosswalk article to pkgdown website to help users
   migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names

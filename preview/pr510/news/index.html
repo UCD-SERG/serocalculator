@@ -58,19 +58,24 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.1" id="serocalculator-141">serocalculator 1.4.1<a class="anchor" aria-label="anchor" href="#serocalculator-141"></a></h2>
-<ul><li>Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
+<div class="section level3">
+<h3 id="bug-fixes-1-4-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-1"></a></h3>
+<ul><li>
+<code><a href="../reference/load_noise_params.html">load_noise_params()</a></code> and <code><a href="../reference/load_sr_params.html">load_sr_params()</a></code> now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (<a href="https://github.com/UCD-SERG/serocalculator/issues/505" class="external-link">#505</a>)</li>
+<li>Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
 <ul><li>Provides clear tables comparing old and new function names</li>
 <li>Includes code examples showing how to update existing code</li>
 <li>Accessible as a prominent tab in the website navigation</li>
 </ul></li>
-</ul><div class="section level3">
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-1-4-1">New features<a class="anchor" aria-label="anchor" href="#new-features-1-4-1"></a></h3>
 <ul><li>Added <code>cluster_var</code> and <code>stratum_var</code> parameters to <code><a href="../reference/est_seroincidence.html">est_seroincidence()</a></code> and <code><a href="../reference/est_seroincidence_by.html">est_seroincidence_by()</a></code> to support cluster-robust standard error estimation. When <code>cluster_var</code> is specified, <code><a href="../reference/summary.seroincidence.html">summary.seroincidence()</a></code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</li>
 <li>
 <code>cluster_var</code> parameter now accepts multiple variables (e.g., <code>c("school", "classroom")</code>) for multi-level clustered sampling designs. Cluster-robust standard errors will account for all specified clustering levels.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-1-4-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-1"></a></h3>
+<h3 id="bug-fixes-1-4-1-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-4-1-1"></a></h3>
 <ul><li>Fixed column naming issue in <code><a href="../reference/summary.seroincidence.html">summary.seroincidence()</a></code> where cluster-robust standard errors caused <code>[]</code> notation in column names (<code>SE[,1]</code> instead of <code>SE</code>).</li>
 <li>Added <code>se_type</code> column to <code><a href="../reference/summary.seroincidence.html">summary.seroincidence()</a></code> output to clearly indicate whether “standard” or “cluster-robust” standard errors are being used.</li>
 <li>Fixed <code><a href="../reference/est_seroincidence_by.html">est_seroincidence_by()</a></code> to properly pass cluster and stratum variables through to stratified analyses. Previously, these variables were dropped during data stratification, causing errors when trying to use clustering with <code><a href="../reference/est_seroincidence_by.html">est_seroincidence_by()</a></code>.</li>

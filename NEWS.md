@@ -1,4 +1,4 @@
-# serocalculator (development version)
+# serocalculator (v1.4.1)
 
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names

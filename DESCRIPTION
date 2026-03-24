@@ -63,7 +63,6 @@ Suggests:
     vdiffr,
     withr,
     forcats,
-    snapr (>= 0.0.0.9000),
     rex,
     readr
 LinkingTo: 
@@ -79,5 +78,4 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 RoxygenNote: 7.3.3
-Remotes: 
-    d-morrison/snapr
+

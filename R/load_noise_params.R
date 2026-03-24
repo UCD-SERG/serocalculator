@@ -11,18 +11,59 @@
 #' with extra attribute `antigen_isos`)
 #' @export
 #' @examples
-#' noise <- load_noise_params(serocalculator_example("example_noise_params.rds"))
+#' noise <- load_noise_params(
+#'   serocalculator_example("example_noise_params.rds")
+#' )
 #' print(noise)
 #'
 load_noise_params <- function(file_path, antigen_isos = NULL) {
-  if (file_path %>% substr(1, 4) == "http") {
+  is_url <- file_path |> substr(1, 4) == "http"
+
+  if (is_url) {
     file_path <- url(file_path)
   }
 
-  noise <-
-    file_path %>%
-    readRDS() %>%
-    as_noise_params()
+  noise <- tryCatch(
+    {
+      # Read the RDS file with warning suppression for URLs
+      data <- if (is_url) {
+        withCallingHandlers(
+          readr::read_rds(file_path),
+          warning = function(w) {
+            # Suppress warnings for URLs - we'll handle errors instead
+            invokeRestart("muffleWarning")
+          }
+        )
+      } else {
+        readr::read_rds(file_path)
+      }
+
+      # Convert to noise_params (warnings from validation will be preserved)
+      as_noise_params(data, antigen_isos = antigen_isos)
+    },
+    error = function(e) {
+      if (is_url) {
+        cli::cli_abort(
+          class = "internet_resource_unavailable",
+          message = c(
+            "Unable to load noise parameters from internet resource.",
+            "x" = paste(
+              "The resource at {.url {summary(file_path)$description}}",
+              "is not available or has changed."
+            ),
+            "i" = paste(
+              "Please check your internet connection",
+              "and verify the URL is correct."
+            ),
+            "i" = "Original error: {e$message}"
+          )
+        )
+      } else {
+        # Re-throw the original error for non-URL paths unchanged
+        rlang::cnd_signal(e)
+      }
+    }
+  )
 
   return(noise)
 }

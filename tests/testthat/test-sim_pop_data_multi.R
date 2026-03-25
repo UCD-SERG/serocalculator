@@ -2,7 +2,7 @@ test_that("`sim_pop_data_multi()` works consistently", {
   skip_on_cran()
   skip_on_os("linux")
   # Load curve parameters
-  dmcmc <- typhoid_curves_nostrat_100
+  dmcmc <- serocalculator::typhoid_curves_nostrat_100
 
   # Specify the antibody-isotype responses to include in analyses
   antibodies <- c("HlyE_IgA", "HlyE_IgG")
@@ -44,9 +44,13 @@ test_that("`sim_pop_data_multi()` works consistently", {
 
 test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   skip_on_cran()
-  skip_on_os("linux")
-  dmcmc <- typhoid_curves_nostrat_100
+  dmcmc <- serocalculator::typhoid_curves_nostrat_100
   antibodies <- c("HlyE_IgA", "HlyE_IgG")
+  dlims <- rbind(
+    "HlyE_IgA" = c(min = 0, max = 0.5),
+    "HlyE_IgG" = c(min = 0, max = 0.5)
+  )
+  num_cores <- 2L
   base_args <- list(
     curve_params = dmcmc,
     lambdas = 0.05,
@@ -55,10 +59,11 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     antigen_isos = antibodies,
     n_mcmc_samples = 0,
     renew_params = TRUE,
-    add_noise = FALSE,
+    add_noise = TRUE,
+    noise_limits = dlims,
     format = "long",
     nclus = 1,
-    num_cores = 2L
+    num_cores = num_cores
   )
 
   run_sim <- function(env_value, verbose = FALSE) {
@@ -67,17 +72,27 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     do.call(sim_pop_data_multi, c(base_args, list(verbose = verbose)))
   }
 
-  expect_message(
-    run_sim("TRUE", verbose = TRUE),
-    "Set up parallel processing"
+  calls <- list()
+  testthat::local_mocked_bindings(
+    check_parallel_cores = function(x) {
+      calls[[length(calls) + 1L]] <<- x
+      x
+    },
+    .package = "serocalculator"
   )
 
+  run_sim("TRUE", verbose = TRUE)
   sim_data_false <- run_sim("FALSE")
+  run_sim("1")
+  run_sim("bogus")
+
   expect_s3_class(sim_data_false, "tbl_df")
   expect_true(
     all(c("lambda.sim", "sample_size", "cluster") %in% names(sim_data_false))
   )
 
-  expect_s3_class(run_sim("2"), "tbl_df")
-  expect_s3_class(run_sim("bogus"), "tbl_df")
+  expect_identical(
+    unlist(calls),
+    c(min(num_cores, 2L), num_cores, min(num_cores, 1L), min(num_cores, 2L))
+  )
 })

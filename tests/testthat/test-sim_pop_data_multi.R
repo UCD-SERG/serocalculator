@@ -110,7 +110,6 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     expect_s3_class(sim_data, "tbl_df")
     expect_contains(names(sim_data), expected_cols)
   }
-
   expected_calls <- list(
     # TRUE: cap at 2 cores.
     cran_cap = min(num_cores, 2L),
@@ -121,8 +120,12 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     # Unrecognized value: conservative cap at 2 cores.
     invalid_cap = min(num_cores, 2L)
   )
-  names(calls) <- names(expected_calls)
-  names(register_calls) <- names(expected_calls)
-  expect_identical(calls, expected_calls)
-  expect_identical(register_calls, expected_calls)
+  expect_identical(calls[[1]], expected_calls$cran_cap)
+  expect_identical(calls[[2]], expected_calls$no_limit)
+  expect_identical(calls[[3]], expected_calls$numeric_cap)
+  expect_identical(calls[[4]], expected_calls$invalid_cap)
+  expect_identical(register_calls[[1]], expected_calls$cran_cap)
+  expect_identical(register_calls[[2]], expected_calls$no_limit)
+  expect_identical(register_calls[[3]], expected_calls$numeric_cap)
+  expect_identical(register_calls[[4]], expected_calls$invalid_cap)
 })

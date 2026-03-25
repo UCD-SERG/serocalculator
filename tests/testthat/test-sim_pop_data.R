@@ -8,8 +8,13 @@ test_that("`sim_pop_data()` produces consistent results", {
   # Specify the antibody-isotype responses to include in analyses
   antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
-  # Set seed to reproduce results
-  set.seed(54321)
+  # Set seed and RNG kind to reproduce results
+  withr::local_seed(
+    54321,
+    .rng_kind = "Mersenne-Twister",
+    .rng_normal_kind = "Inversion",
+    .rng_sample_kind = "Rejection"
+  )
 
   # Simulated incidence rate per person-year
   lambda <- 0.2

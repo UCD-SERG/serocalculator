@@ -40,5 +40,5 @@ test_that("`sim_pop_data()` produces consistent results", {
     format = "long"
   )
 
-  expect_snapshot_data(csdata, name = "sim_pop_data")
+  csdata |> expect_snapshot_data(name = "sim_pop_data")
 })

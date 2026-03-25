@@ -74,7 +74,7 @@ sim_pop_data_multi <- function(
     )
 
   dims1 <-
-    vapply(FUN = length, dimnames1)
+    vapply(FUN = length, dimnames1, FUN.VALUE = integer(1))
 
   rng <- rng |>
     array(

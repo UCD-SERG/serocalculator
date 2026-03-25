@@ -105,11 +105,11 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     invalid_cap = sim_unknown
   )
   expected_cols <- c("lambda.sim", "sample_size", "cluster")
-  lapply(names(sims), function(name) {
+  for (name in names(sims)) {
     sim_data <- sims[[name]]
-    expect_true(inherits(sim_data, "tbl_df"), info = name)
-    expect_true(all(expected_cols %in% names(sim_data)), info = name)
-  })
+    expect_s3_class(sim_data, "tbl_df")
+    expect_contains(names(sim_data), expected_cols)
+  }
 
   expected_calls <- list(
     # TRUE: cap at 2 cores.

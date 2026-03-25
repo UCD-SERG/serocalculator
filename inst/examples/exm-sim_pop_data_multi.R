@@ -34,7 +34,8 @@ sim_data <- sim_pop_data_multi(
   add_noise = TRUE,
   noise_limits = dlims,
   format = "long",
-  nclus = 10)
+  nclus = 10,
+  num_cores = 2)
 
 sim_data
 

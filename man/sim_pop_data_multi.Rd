@@ -8,7 +8,7 @@ sim_pop_data_multi(
   nclus = 10,
   sample_sizes = 100,
   lambdas = c(0.05, 0.1, 0.15, 0.2, 0.3),
-  num_cores = max(1, parallel::detectCores() - 1),
+  num_cores = 2L,
   rng_seed = 1234,
   verbose = FALSE,
   ...
@@ -118,7 +118,8 @@ sim_data <- sim_pop_data_multi(
   add_noise = TRUE,
   noise_limits = dlims,
   format = "long",
-  nclus = 10)
+  nclus = 10,
+  num_cores = 2)
 
 sim_data
 

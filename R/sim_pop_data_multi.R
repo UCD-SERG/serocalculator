@@ -16,12 +16,12 @@ sim_pop_data_multi <- function(
     nclus = 10,
     sample_sizes = 100,
     lambdas = c(.05, .1, .15, .2, .3),
-    num_cores = max(1, parallel::detectCores() - 1),
+    num_cores = 2L,
     rng_seed = 1234,
     verbose = FALSE,
     ...) {
   if (verbose) {
-    message("inputs to `sim_pop_data_multi()`:")
+    cli::cli_inform("inputs to `sim_pop_data_multi()`:")
     print(environment() |> as.list())
   }
 
@@ -29,19 +29,33 @@ sim_pop_data_multi <- function(
 
     chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
 
-    if (nzchar(chk) && chk == "TRUE") {
-      # use 2 cores in CRAN/Travis/AppVeyor
-      num_cores <- 2L
-    } else {
-      # use all cores in devtools::test()
-      num_cores <- num_cores |> check_parallel_cores()
+    if (nzchar(chk)) {
+      chk_u <- toupper(chk)
+
+      if (chk_u %in% c("TRUE", "T", "YES", "Y")) {
+        # In check environments, be polite: cap at 2
+        num_cores <- min(num_cores, 2L)
+
+      } else if (chk_u %in% c("FALSE", "F", "NO", "N")) {
+        # No cap requested
+
+      } else {
+        # Often this is a numeric string like "2"
+        chk_n <- suppressWarnings(as.integer(chk))
+        if (!is.na(chk_n) && chk_n >= 1L) {
+          num_cores <- min(num_cores, chk_n)
+        } else {
+          # Unrecognized value: be conservative
+          num_cores <- min(num_cores, 2L)
+        }
+      }
     }
 
-
+    # Apply your existing safety checker after any cap
+    num_cores <- num_cores |> check_parallel_cores()
 
     if (verbose) {
-      cli::cli_inform("Setting up parallel processing with
-                      `num_cores` = {num_cores}.")
+      cli::cli_inform("Set up parallel processing with `num_cores`={num_cores}")
     }
   }
 
@@ -60,7 +74,7 @@ sim_pop_data_multi <- function(
     )
 
   dims1 <-
-    sapply(FUN = length, dimnames1)
+    vapply(FUN = length, dimnames1)
 
   rng <- rng |>
     array(

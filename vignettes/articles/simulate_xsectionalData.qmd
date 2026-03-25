@@ -293,7 +293,7 @@ autoplot(est1, log_x = TRUE)
 
 ```{r "init-parallel"}
 library(parallel)
-n_cores <- max(1, parallel::detectCores() - 1)
+n_cores <- n_cores <- min(2, parallel::detectCores())
 print(n_cores)
 ```
 

@@ -41,3 +41,43 @@ test_that("`sim_pop_data_multi()` works consistently", {
   pop_data_multi |>
     expect_snapshot_data(name = "pop_data_multi")
 })
+
+test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
+  skip_on_cran()
+  skip_on_os("linux")
+  dmcmc <- typhoid_curves_nostrat_100
+  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+  base_args <- list(
+    curve_params = dmcmc,
+    lambdas = 0.05,
+    sample_sizes = 2,
+    age_range = c(0, 1),
+    antigen_isos = antibodies,
+    n_mcmc_samples = 0,
+    renew_params = TRUE,
+    add_noise = FALSE,
+    format = "long",
+    nclus = 1,
+    num_cores = 2L
+  )
+
+  run_sim <- function(env_value, verbose = FALSE) {
+    withr::local_seed(123)
+    withr::local_envvar(c("_R_CHECK_LIMIT_CORES_" = env_value))
+    do.call(sim_pop_data_multi, c(base_args, list(verbose = verbose)))
+  }
+
+  expect_message(
+    run_sim("TRUE", verbose = TRUE),
+    "Set up parallel processing"
+  )
+
+  sim_data_false <- run_sim("FALSE")
+  expect_s3_class(sim_data_false, "tbl_df")
+  expect_true(
+    all(c("lambda.sim", "sample_size", "cluster") %in% names(sim_data_false))
+  )
+
+  expect_s3_class(run_sim("2"), "tbl_df")
+  expect_s3_class(run_sim("bogus"), "tbl_df")
+})

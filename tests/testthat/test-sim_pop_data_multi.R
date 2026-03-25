@@ -84,6 +84,7 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   testthat::local_mocked_bindings(
     registerDoParallel = function(cores) {
       register_calls[[length(register_calls) + 1L]] <<- cores
+      # Use a sequential backend during tests to avoid spinning up clusters.
       foreach::registerDoSEQ()
       NULL
     },
@@ -102,9 +103,9 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     expect_true(all(expected_cols %in% names(sim_data)))
   }
 
-  expect_identical(
-    unlist(calls),
-    c(min(num_cores, 2L), num_cores, min(num_cores, 1L), min(num_cores, 2L))
-  )
-  expect_identical(unlist(register_calls), unlist(calls))
+  expect_identical(calls[[1]], min(num_cores, 2L))
+  expect_identical(calls[[2]], num_cores)
+  expect_identical(calls[[3]], min(num_cores, 1L))
+  expect_identical(calls[[4]], min(num_cores, 2L))
+  expect_identical(register_calls, calls)
 })

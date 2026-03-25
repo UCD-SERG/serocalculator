@@ -105,19 +105,24 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     invalid_cap = sim_unknown
   )
   expected_cols <- c("lambda.sim", "sample_size", "cluster")
-  for (name in names(sims)) {
+  lapply(names(sims), function(name) {
     sim_data <- sims[[name]]
     expect_true(inherits(sim_data, "tbl_df"), info = name)
     expect_true(all(expected_cols %in% names(sim_data)), info = name)
-  }
+  })
 
-  # TRUE: cap at 2 cores.
-  expect_identical(calls[[1]], min(num_cores, 2L))
-  # FALSE: no cap.
-  expect_identical(calls[[2]], num_cores)
-  # Numeric value: cap at 1 core.
-  expect_identical(calls[[3]], min(num_cores, 1L))
-  # Unrecognized value: conservative cap at 2 cores.
-  expect_identical(calls[[4]], min(num_cores, 2L))
-  expect_identical(register_calls, calls)
+  expected_calls <- list(
+    # TRUE: cap at 2 cores.
+    cran_cap = min(num_cores, 2L),
+    # FALSE: no cap.
+    no_limit = num_cores,
+    # Numeric value: cap at 1 core.
+    numeric_cap = min(num_cores, 1L),
+    # Unrecognized value: conservative cap at 2 cores.
+    invalid_cap = min(num_cores, 2L)
+  )
+  names(calls) <- names(expected_calls)
+  names(register_calls) <- names(expected_calls)
+  expect_identical(calls, expected_calls)
+  expect_identical(register_calls, expected_calls)
 })

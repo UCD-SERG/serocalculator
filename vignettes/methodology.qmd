@@ -189,17 +189,50 @@ Here's what that would look like:
 library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
-curves <-
-  "https://osf.io/download/rtw5k/" %>%
-  load_sr_params() %>%
-  filter(iter < 50)
+curves <- tryCatch(
+  {
+    "https://osf.io/download/rtw5k/" %>%
+      load_sr_params() %>%
+      filter(iter < 50)
+  },
+  error = function(e) {
+    cli::cli_warn(c(
+      "Unable to load longitudinal parameters from OSF for the vignette.",
+      "i" = "Using packaged example data instead."
+    ))
+    typhoid_curves_nostrat_100 %>%
+      filter(iter < 50)
+  }
+)
 
 # Import cross-sectional data from OSF and rename required variables:
-xs_data <-
-  "https://osf.io/download//n6cp3/" %>%
-  load_pop_data()
+xs_data <- tryCatch(
+  {
+    "https://osf.io/download//n6cp3/" %>%
+      load_pop_data()
+  },
+  error = function(e) {
+    cli::cli_warn(c(
+      "Unable to load cross-sectional data from OSF for the vignette.",
+      "i" = "Using packaged example data instead."
+    ))
+    sees_pop_data_100
+  }
+)
 
-noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
+noise <- tryCatch(
+  {
+    url("https://osf.io/download//hqy4v/") %>%
+      readRDS()
+  },
+  error = function(e) {
+    cli::cli_warn(c(
+      "Unable to load noise parameters from OSF for the vignette.",
+      "i" = "Using packaged example data instead."
+    ))
+    example_noise_params_sees
+  }
+)
 ```
 
 ```{r}

@@ -194,14 +194,14 @@ simulated_data <- sim_pop_data(
 
 head(simulated_data)
 #> # A tibble: 6 × 4
-#>     age id    antigen_iso   value
-#>   <dbl> <chr> <chr>         <dbl>
-#> 1   0.2 1     HlyE_IgA      0.190
-#> 2   0.2 1     HlyE_IgG      0.245
-#> 3  13.9 2     HlyE_IgA      4.39 
-#> 4  13.9 2     HlyE_IgG    556.   
-#> 5  10.2 3     HlyE_IgA      1.87 
-#> 6  10.2 3     HlyE_IgG    733.
+#>     age id    antigen_iso value
+#>   <dbl> <chr> <chr>       <dbl>
+#> 1  7.45 1     HlyE_IgA    1.09 
+#> 2  7.45 1     HlyE_IgG    3.47 
+#> 3  2.48 2     HlyE_IgA    0.835
+#> 4  2.48 2     HlyE_IgG    0.375
+#> 5 14.7  3     HlyE_IgA    1.02 
+#> 6 14.7  3     HlyE_IgG    0.783
 
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(
@@ -305,12 +305,24 @@ The transition from v1.3.0 to v1.4.0 primarily involves:
 
 > **Function name changes (safe for all code)**
 >
-> - `est.incidence.by(` → `est_seroincidence_by(`
-> - `est.incidence(` → `est_seroincidence(`
-> - `load_curve_params(` → `load_sr_params(`
-> - `as_curve_params(` → `as_sr_params(`
-> - `sim.cs.multi(` → `sim_pop_data_multi(`
-> - `sim.cs(` → `sim_pop_data(`
+> - [`est.incidence.by()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.md)
+>   →
+>   [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+> - [`est.incidence()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.md)
+>   →
+>   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+> - [`load_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/load_curve_params.md)
+>   →
+>   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
+> - [`as_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/as_curve_params.md)
+>   →
+>   [`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md)
+> - [`sim.cs.multi()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.multi.md)
+>   →
+>   [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
+> - [`sim.cs()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.md)
+>   →
+>   [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
 
 > **Argument name changes (only for estimation functions)**
 >

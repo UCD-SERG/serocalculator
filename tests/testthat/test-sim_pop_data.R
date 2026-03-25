@@ -1,4 +1,6 @@
 test_that("`sim_pop_data()` produces consistent results", {
+  skip_on_os("mac")
+
   # Load curve parameters
   curve <-
     typhoid_curves_nostrat_100

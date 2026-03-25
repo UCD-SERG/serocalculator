@@ -76,14 +76,14 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   register_calls <- list()
   testthat::local_mocked_bindings(
     check_parallel_cores = function(x) {
-      calls[[length(calls) + 1L]] <<- x
+      calls <<- c(calls, list(x))
       x
     },
     .package = "serocalculator"
   )
   testthat::local_mocked_bindings(
     registerDoParallel = function(cores) {
-      register_calls[[length(register_calls) + 1L]] <<- cores
+      register_calls <<- c(register_calls, list(cores))
       # Use a sequential backend during tests to avoid spinning up clusters.
       foreach::registerDoSEQ()
       NULL
@@ -103,9 +103,13 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     expect_true(all(expected_cols %in% names(sim_data)))
   }
 
+  # TRUE: cap at 2 cores.
   expect_identical(calls[[1]], min(num_cores, 2L))
+  # FALSE: no cap.
   expect_identical(calls[[2]], num_cores)
+  # Numeric value: cap at 1 core.
   expect_identical(calls[[3]], min(num_cores, 1L))
+  # Unrecognized value: conservative cap at 2 cores.
   expect_identical(calls[[4]], min(num_cores, 2L))
   expect_identical(register_calls, calls)
 })

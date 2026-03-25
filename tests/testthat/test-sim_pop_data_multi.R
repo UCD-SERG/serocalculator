@@ -73,6 +73,7 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   }
 
   calls <- list()
+  register_calls <- list()
   testthat::local_mocked_bindings(
     check_parallel_cores = function(x) {
       calls[[length(calls) + 1L]] <<- x
@@ -80,19 +81,30 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     },
     .package = "serocalculator"
   )
-
-  run_sim("TRUE", verbose = TRUE)
-  sim_data_false <- run_sim("FALSE")
-  run_sim("1")
-  run_sim("bogus")
-
-  expect_s3_class(sim_data_false, "tbl_df")
-  expect_true(
-    all(c("lambda.sim", "sample_size", "cluster") %in% names(sim_data_false))
+  testthat::local_mocked_bindings(
+    registerDoParallel = function(cores) {
+      register_calls[[length(register_calls) + 1L]] <<- cores
+      foreach::registerDoSEQ()
+      NULL
+    },
+    stopImplicitCluster = function(...) NULL,
+    .package = "doParallel"
   )
+
+  sim_true <- run_sim("TRUE", verbose = TRUE)
+  sim_false <- run_sim("FALSE")
+  sim_numeric <- run_sim("1")
+  sim_unknown <- run_sim("bogus")
+
+  expected_cols <- c("lambda.sim", "sample_size", "cluster")
+  for (sim_data in list(sim_true, sim_false, sim_numeric, sim_unknown)) {
+    expect_s3_class(sim_data, "tbl_df")
+    expect_true(all(expected_cols %in% names(sim_data)))
+  }
 
   expect_identical(
     unlist(calls),
     c(min(num_cores, 2L), num_cores, min(num_cores, 1L), min(num_cores, 2L))
   )
+  expect_identical(unlist(register_calls), unlist(calls))
 })

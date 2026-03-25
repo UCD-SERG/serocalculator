@@ -72,6 +72,7 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     do.call(sim_pop_data_multi, c(base_args, list(verbose = verbose)))
   }
 
+  # Track core selections across scenarios.
   calls <- list()
   register_calls <- list()
   testthat::local_mocked_bindings(
@@ -97,10 +98,17 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   sim_numeric <- run_sim("1")
   sim_unknown <- run_sim("bogus")
 
+  sims <- list(
+    cran_cap = sim_true,
+    no_limit = sim_false,
+    numeric_cap = sim_numeric,
+    invalid_cap = sim_unknown
+  )
   expected_cols <- c("lambda.sim", "sample_size", "cluster")
-  for (sim_data in list(sim_true, sim_false, sim_numeric, sim_unknown)) {
-    expect_s3_class(sim_data, "tbl_df")
-    expect_true(all(expected_cols %in% names(sim_data)))
+  for (name in names(sims)) {
+    sim_data <- sims[[name]]
+    expect_true(inherits(sim_data, "tbl_df"), info = name)
+    expect_true(all(expected_cols %in% names(sim_data)), info = name)
   }
 
   # TRUE: cap at 2 cores.

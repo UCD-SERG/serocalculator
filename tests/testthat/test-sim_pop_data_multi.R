@@ -75,6 +75,7 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   # Track core selections across scenarios.
   calls <- list()
   register_calls <- list()
+  register_parallel <- doParallel::registerDoParallel
   testthat::local_mocked_bindings(
     check_parallel_cores = function(x) {
       calls <<- c(calls, list(x))
@@ -85,11 +86,8 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
   testthat::local_mocked_bindings(
     registerDoParallel = function(cores) {
       register_calls <<- c(register_calls, list(cores))
-      # Use a sequential backend during tests to avoid spinning up clusters.
-      foreach::registerDoSEQ()
-      NULL
+      register_parallel(cores = cores)
     },
-    stopImplicitCluster = function(...) NULL,
     .package = "doParallel"
   )
 
@@ -109,6 +107,9 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     sim_data <- sims[[name]]
     expect_s3_class(sim_data, "tbl_df")
     expect_contains(names(sim_data), expected_cols)
+    expect_true(all(sim_data$sample_size == 2))
+    expect_true(all(sim_data$lambda.sim == 0.05))
+    expect_true(all(sim_data$cluster == 1))
   }
   expected_calls <- list(
     # TRUE: cap at 2 cores.

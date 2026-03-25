@@ -315,12 +315,12 @@ autoplot(est1, log_x = TRUE)
 
 ``` r
 library(parallel)
-n_cores <- max(1, parallel::detectCores() - 1)
+n_cores <- n_cores <- min(2, parallel::detectCores())
 print(n_cores)
-#> [1] 3
+#> [1] 2
 ```
 
-In the preceding code chunk, we have determined that we can use 3 CPU
+In the preceding code chunk, we have determined that we can use 2 CPU
 cores to run computations in parallel.
 
 ``` r

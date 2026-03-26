@@ -108,21 +108,10 @@ cur_ai <- "HlyE_IgG"
 library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
-curves <- tryCatch(
-  {
-    "https://osf.io/download/rtw5k/" %>%
-      load_sr_params() %>%
-      filter(iter < 50)
-  },
-  error = function(e) {
-    cli::cli_warn(c(
-      "Unable to load longitudinal parameters from OSF for the vignette.",
-      "i" = "Using packaged example data instead."
-    ))
-    typhoid_curves_nostrat_100 %>%
-      filter(iter < 50)
-  }
-)
+curves <-
+  "https://osf.io/download/rtw5k/" %>%
+  load_sr_params() %>%
+  filter(iter < 50)
 
 curve1 <-
   curves %>%

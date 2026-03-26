@@ -293,7 +293,7 @@ autoplot(est1, log_x = TRUE)
 
 ```{r "init-parallel"}
 library(parallel)
-n_cores <- max(1, parallel::detectCores() - 1)
+n_cores <- n_cores <- min(2, parallel::detectCores())
 print(n_cores)
 ```
 
@@ -310,7 +310,7 @@ lambdas <- c(.05, .1, .15, .2, .5, .8)
 
 sim_df <-
   sim_pop_data_multi(
-    n_cores = n_cores,
+    num_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
     sample_sizes = nrep,
@@ -492,7 +492,7 @@ there may be bias:
 ```{r}
 sim_df_renew <-
   sim_pop_data_multi(
-    n_cores = n_cores,
+    num_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
     sample_sizes = nrep,

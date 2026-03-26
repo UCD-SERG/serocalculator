@@ -3,10 +3,13 @@
 ## Bug fixes
 
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
-* Updated the methodology vignette to plot curve parameters via the `autoplot()` method.
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
+
+## Documentation
+
+* Updated the methodology vignette to plot curve parameters via the `autoplot()` method.
   - Accessible as a prominent tab in the website navigation
 ## New features
 

@@ -125,8 +125,7 @@ curve1 |>
   autoplot(
     quantiles = NULL,
     log_y = FALSE,
-    n_curves = 1,
-    iters_to_graph = curve1$iter
+    n_curves = 1
   ) +
   xlim(0, 100) +
   theme_minimal() +

@@ -122,8 +122,11 @@ curve1 <-
 library(ggplot2)
 
 curve1 |>
-  serocalculator:::plot_curve_params_one_ab(
-    log_y = FALSE
+  autoplot(
+    quantiles = NULL,
+    log_y = FALSE,
+    n_curves = 1,
+    iters_to_graph = curve1$iter
   ) +
   xlim(0, 100) +
   theme_minimal() +

@@ -483,8 +483,10 @@ curve1 <-
 library(ggplot2)
 
 curve1 |>
-  serocalculator:::plot_curve_params_one_ab(
-    log_y = FALSE
+  autoplot(
+    quantiles = NULL,
+    log_y = FALSE,
+    n_curves = 1
   ) +
   xlim(0, 100) +
   theme_minimal() +
@@ -521,8 +523,8 @@ curve1 |>
   labs(col = "")
 ```
 
-    Scale for x is already present.
-    Adding another scale for x, which will replace the existing scale.
+    Warning: Removed 44 rows containing missing values or values outside the scale range
+    (`geom_line()`).
 
 ![](methodology_files/figure-html/fig-response-graph-1.png)
 

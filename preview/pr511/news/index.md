@@ -14,8 +14,14 @@
   migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
-  - Accessible as a prominent tab in the website navigation \## New
-    features
+  - Accessible as a prominent tab in the website navigation
+
+### Documentation
+
+- Updated the methodology vignette to plot curve parameters via the
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  method. \## New features
+
 - Added `cluster_var` and `stratum_var` parameters to
   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
   and
@@ -26,6 +32,7 @@
   automatically computes cluster-robust (sandwich) variance estimates to
   account for within-cluster correlation in clustered sampling designs
   such as household or school-based surveys.
+
 - `cluster_var` parameter now accepts multiple variables (e.g.,
   `c("school", "classroom")`) for multi-level clustered sampling
   designs. Cluster-robust standard errors will account for all specified

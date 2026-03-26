@@ -7,6 +7,10 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+
+## Documentation
+
+* Updated the methodology vignette to plot curve parameters via the `autoplot()` method.
 ## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 

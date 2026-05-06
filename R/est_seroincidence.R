@@ -28,6 +28,19 @@
 #' - `alpha`: antibody decay rate
 #' (1/days for the current longitudinal parameter sets)
 #' - `r`: shape factor of antibody decay
+#' @param cluster_var optional name(s) of the variable(s) in `pop_data`
+#' containing cluster identifiers for clustered sampling designs
+#' (e.g., households, schools).
+#' Can be a single variable name (character string) or a vector of
+#' variable names for multi-level clustering (e.g., `c("school",
+#' "classroom")`). When provided, standard errors will be adjusted for
+#' within-cluster correlation using cluster-robust variance estimation.
+#' @param stratum_var optional name of the variable in `pop_data` containing
+#' stratum identifiers. Used in combination with `cluster_var` for
+#' stratified cluster sampling designs.
+#' @param sampling_weights optional [data.frame] containing sampling
+#' weights with columns for cluster/stratum identifiers and their sampling
+#' probabilities. Currently not implemented; reserved for future use.
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object
@@ -47,6 +60,7 @@
 #' noise <-
 #'   example_noise_params_pk
 #'
+#' # Basic usage without clustering
 #' est1 <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = sr_curve,
@@ -55,6 +69,30 @@
 #' )
 #'
 #' summary(est1)
+#'
+#' # Usage with clustered sampling design
+#' # Standard errors will be adjusted for within-cluster correlation
+#' est2 <- est_seroincidence(
+#'   pop_data = xs_data,
+#'   sr_params = sr_curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   cluster_var = "cluster"
+#' )
+#'
+#' summary(est2)
+#'
+#' # With both cluster and stratum variables
+#' est3 <- est_seroincidence(
+#'   pop_data = xs_data,
+#'   sr_params = sr_curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   cluster_var = "cluster",
+#'   stratum_var = "catchment"
+#' )
+#'
+#' summary(est3)
 est_seroincidence <- function(
     pop_data,
     sr_params,
@@ -66,11 +104,22 @@ est_seroincidence <- function(
     verbose = FALSE,
     build_graph = FALSE,
     print_graph = build_graph & verbose,
+    cluster_var = NULL,
+    stratum_var = NULL,
+    sampling_weights = NULL,
     ...) {
   if (verbose > 1) {
-    message("inputs to `est_seroincidence()`:")
+    cli::cli_inform("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
   }
+
+  # Validate cluster/stratum parameters
+  .validate_cluster_params(
+    pop_data = pop_data,
+    cluster_var = cluster_var,
+    stratum_var = stratum_var,
+    sampling_weights = sampling_weights
+  )
 
   .error_check(
     data = pop_data,
@@ -78,13 +127,24 @@ est_seroincidence <- function(
     curve_params = sr_params
   )
 
+  # Prepare columns to keep
+  cols_to_keep <- c(
+    pop_data |> get_values_var(),
+    pop_data |> get_age_var(),
+    "antigen_iso"
+  )
+
+  # Add cluster/stratum variables if specified
+  if (!is.null(cluster_var)) {
+    cols_to_keep <- c(cols_to_keep, cluster_var)
+  }
+  if (!is.null(stratum_var)) {
+    cols_to_keep <- c(cols_to_keep, stratum_var)
+  }
+
   pop_data <- pop_data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select(
-      pop_data |> get_values_var(),
-      pop_data |> get_age_var(),
-      "antigen_iso"
-    ) |>
+    dplyr::select(dplyr::all_of(cols_to_keep)) |>
     filter(if_all(everything(), ~!is.na(.x)))
 
   sr_params <- sr_params |>
@@ -103,7 +163,7 @@ est_seroincidence <- function(
 
   # incidence can not be calculated if there are zero observations.
   if (nrow(pop_data) == 0) {
-    stop("No data provided.")
+    cli::cli_abort("No data provided.")
   }
 
   if (verbose) {
@@ -111,7 +171,7 @@ est_seroincidence <- function(
   }
 
   if (nrow(noise_params) != length(antigen_isos)) {
-    stop("too many rows of noise parameters.")
+    cli::cli_abort("too many rows of noise parameters.")
   }
 
   pop_data <- pop_data |> split(~antigen_iso)
@@ -130,16 +190,18 @@ est_seroincidence <- function(
   )
 
   if (is.na(res)) {
-    warning("Could not calculate log-likelihood with starting parameter value.")
+    cli::cli_warn(
+      "Could not calculate log-likelihood with starting parameter value."
+    )
     return(NULL)
   }
 
   if (verbose) {
-    message("Initial negative log-likelihood: ", res)
+    cli::cli_inform("Initial negative log-likelihood: {res}")
   }
 
   if (build_graph) {
-    if (verbose) message("building likelihood graph")
+    if (verbose) cli::cli_inform("building likelihood graph")
     graph <- graph_loglik(
       highlight_points = lambda_start,
       highlight_point_names = "lambda_start",
@@ -166,7 +228,7 @@ est_seroincidence <- function(
   # but [.nll()] is vectorized via its subfunction [f_dev()].
   # The vectorization doesn't appear to cause a problem for [nlm()].
 
-  if (verbose) message("about to call `nlm()`")
+  if (verbose) cli::cli_inform("about to call `nlm()`")
   # Estimate lambda
   time <- system.time(
     {
@@ -190,15 +252,17 @@ est_seroincidence <- function(
   code_text <- nlm_exit_codes[fit$code]
   message1 <- "\n`nlm()` completed with the following convergence code:\n"
   if (fit$code %in% 3:5) {
-    warning(
-      "`nlm()` may not have reached the maximum likelihood estimate.",
-      message1,
-      code_text
+    cli::cli_warn(
+      c(
+        "`nlm()` may not have reached the maximum likelihood estimate.",
+        message1,
+        code_text
+      )
     )
   }
 
   if (verbose >= 2) {
-    message("\nElapsed time: ")
+    cli::cli_inform("\nElapsed time: ")
     print(time)
   }
 
@@ -223,13 +287,29 @@ est_seroincidence <- function(
     }
   }
 
-  fit <- fit |>
-    structure(
-      class = union("seroincidence", class(fit)),
-      lambda_start = lambda_start,
-      antigen_isos = antigen_isos,
-      ll_graph = graph
-    )
+  # Store clustering-related attributes only if clustering is being used
+  if (!is.null(cluster_var)) {
+    fit <- fit |>
+      structure(
+        class = union("seroincidence", class(fit)),
+        lambda_start = lambda_start,
+        antigen_isos = antigen_isos,
+        ll_graph = graph,
+        cluster_var = cluster_var,
+        stratum_var = stratum_var,
+        pop_data = pop_data,
+        sr_params = sr_params,
+        noise_params = noise_params
+      )
+  } else {
+    fit <- fit |>
+      structure(
+        class = union("seroincidence", class(fit)),
+        lambda_start = lambda_start,
+        antigen_isos = antigen_isos,
+        ll_graph = graph
+      )
+  }
 
   return(fit)
 }
@@ -244,7 +324,7 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-  ...) {
+    ...) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

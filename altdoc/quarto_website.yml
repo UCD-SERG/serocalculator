@@ -1,17 +1,11 @@
 project:
   type: website
   output-dir: ../docs/
-  render:
-    - "*.qmd"      # Render all Quarto markdown files
-    - "*.md"       # Also render plain markdown files
-    - "!README.md" # Except README which is used in index
-    - "!index.md"  # Except index which is replaced by index.qmd
-    - "!data-raw/**" # Exclude anything in the data-raw directory
 
 # Note: freeze functionality can be set at a project level or for individual .qmd files
 # execute:
 #   freeze: false
-bibliography: vignettes/references.bib
+bibliography: ../vignettes/references.bib
 website:
   title: "$ALTDOC_PACKAGE_NAME"
   repo-url: $ALTDOC_PACKAGE_URL_GITHUB
@@ -25,20 +19,20 @@ website:
         aria-label: View $ALTDOC_PACKAGE_NAME on GitHub
     left:
       - text: Documentation
-        file: man/serocalculator-package.qmd
+        file: ../man/serocalculator-package.qmd
       - text: Articles
         menu:
           - section: "Get started"
             contents:
-              - vignettes/articles/serocalculator.Rmd
+              - ../vignettes/articles/serocalculator.Rmd
           - section: "Methodology"
             contents:
-              - vignettes/methodology.qmd
-              - vignettes/articles/simulate_xsectionalData.qmd
+              - ../vignettes/methodology.qmd
+              - ../vignettes/articles/simulate_xsectionalData.qmd
           - section: "Examples"
             contents:
-              - vignettes/articles/enteric_fever_example.Rmd
-              - vignettes/articles/scrubTyphus_example.Rmd
+              - ../vignettes/articles/enteric_fever_example.Rmd
+              - ../vignettes/articles/scrubTyphus_example.Rmd
   sidebar:
     collapse-level: 1
     contents:
@@ -50,21 +44,21 @@ website:
         contents:
           - section: Get started
             contents:
-              - vignettes/articles/serocalculator.Rmd
+              - ../vignettes/articles/serocalculator.Rmd
           - section: Methodology
             contents:
-              - vignettes/methodology.qmd
-              - vignettes/articles/simulate_xsectionalData.qmd
+              - ../vignettes/methodology.qmd
+              - ../vignettes/articles/simulate_xsectionalData.qmd
           - section: Examples
             contents:
-              - vignettes/articles/enteric_fever_example.Rmd
-              - vignettes/articles/scrubTyphus_example.Rmd
+              - ../vignettes/articles/enteric_fever_example.Rmd
+              - ../vignettes/articles/scrubTyphus_example.Rmd
       - section: $ALTDOC_MAN_BLOCK
         style: floating
       - text: News
-        file: NEWS.md
+        file: ../NEWS.md
       - text: Code of conduct
-        file: CODE_OF_CONDUCT.md
+        file: ../CODE_OF_CONDUCT.md
       - text: Contributing
         file: CONTRIBUTING.md
 

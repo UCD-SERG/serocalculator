@@ -150,7 +150,7 @@ jobs:
           clean-exclude: pr-preview
           branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
           folder: docs
-          # target-folder: $subdir # figure out later
+          target-folder: ${{ env.subdir }}
 
       - name: Deploy PR Preview
         id: preview-step

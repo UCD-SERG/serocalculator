@@ -22,17 +22,19 @@ website:
         file: ../man/serocalculator-package.qmd
       - text: Articles
         menu:
-          - section: "Get started"
-            contents:
-              - ../vignettes/articles/serocalculator.Rmd
-          - section: "Methodology"
-            contents:
-              - ../vignettes/methodology.qmd
-              - ../vignettes/articles/simulate_xsectionalData.qmd
-          - section: "Examples"
-            contents:
-              - ../vignettes/articles/enteric_fever_example.Rmd
-              - ../vignettes/articles/scrubTyphus_example.Rmd
+          - text: "---Get started---"
+          - text: "Get started with serocalculator"
+            file: ../vignettes/articles/serocalculator.Rmd
+          - text: "---Methodology---"
+          - text: "Methodology"
+            file: ../vignettes/methodology.qmd
+          - text: "Simulate cross-sectional data"
+            file: ../vignettes/articles/simulate_xsectionalData.qmd
+          - text: "---Examples---"
+          - text: "Enteric fever example"
+            file: ../vignettes/articles/enteric_fever_example.Rmd
+          - text: "Scrub typhus example"
+            file: ../vignettes/articles/scrubTyphus_example.Rmd
   sidebar:
     collapse-level: 1
     contents:

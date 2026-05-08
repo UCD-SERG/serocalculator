@@ -49,7 +49,7 @@ df_to_array <- function(
   stopifnot(all(dim_var_names %in% names(df)))
   stopifnot(value_var_name %>% length() == 1)
   stopifnot(value_var_name %in% names(df))
-  if (is.grouped_df(df)) {
+  if (is_grouped_df(df)) {
     stop("ungroup the data frame first before running")
   }
 

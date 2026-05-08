@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -381,6 +381,10 @@
 <li><p><strong>pkgdown.yaml</strong>: Builds pkgdown website on PR (preview), tags, and main branch pushes. Requires Quarto setup. (~5-7 min)</p></li>
 <li><p><strong>copilot-setup-steps.yml</strong>: Configures the GitHub Copilot coding agent’s environment automatically. Runs when Copilot starts work, when the workflow file changes, or via manual dispatch. Not a required check for PR merges. See “Copilot Setup Workflow” section for details. (~5-10 min)</p></li>
 </ol><div class="section level3">
+<h3 id="copilot-pr-review-policy">Copilot PR review policy<a class="anchor" aria-label="anchor" href="#copilot-pr-review-policy"></a></h3>
+<p><strong>Do not request PR review until all failing workflows are fixed and the corresponding checks have been run successfully locally.</strong></p>
+</div>
+<div class="section level3">
 <h3 id="pr-commands">PR Commands<a class="anchor" aria-label="anchor" href="#pr-commands"></a></h3>
 <p>Team members can trigger actions by commenting on PRs: - <code>/document</code> - Runs <code>roxygen2::roxygenise()</code> and commits changes - <code>/style</code> - Runs <code>styler::style_pkg()</code> and commits changes</p>
 </div>

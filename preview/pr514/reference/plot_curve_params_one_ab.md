@@ -173,6 +173,42 @@ plot_curve_params_one_ab(
       from the default plot specification, e.g.
       [`annotation_borders()`](https://ggplot2.tidyverse.org/reference/annotation_borders.html).
 
+  `geom`
+
+  :   The geometric object to use to display the data for this layer.
+      When using a `stat_*()` function to construct a layer, the `geom`
+      argument can be used to override the default coupling between
+      stats and geoms. The `geom` argument accepts the following:
+
+      - A `Geom` ggproto subclass, for example `GeomPoint`.
+
+      - A string naming the geom. To give the geom as a string, strip
+        the function name of the `geom_` prefix. For example, to use
+        [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html),
+        give the geom as `"point"`.
+
+      - For more information and other ways to specify the geom, see the
+        [layer
+        geom](https://ggplot2.tidyverse.org/reference/layer_geoms.html)
+        documentation.
+
+  `fun`
+
+  :   Function to use. Either 1) an anonymous function in the base or
+      rlang formula syntax (see
+      [`rlang::as_function()`](https://rlang.r-lib.org/reference/as_function.html))
+      or 2) a quoted or character name referencing a function; see
+      examples. Must be vectorised.
+
+  `n`
+
+  :   Number of points to interpolate along the x axis.
+
+  `args`
+
+  :   List of additional arguments passed on to the function defined by
+      `fun`.
+
 ## Value
 
 a

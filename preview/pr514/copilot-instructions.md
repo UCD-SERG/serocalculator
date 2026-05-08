@@ -480,6 +480,11 @@ The following workflows run on every PR. **All must pass** for merge:
     required check for PR merges. See “Copilot Setup Workflow” section
     for details. (~5-10 min)
 
+### Copilot PR review policy
+
+**Do not request PR review until all failing workflows are fixed and the
+corresponding checks have been run successfully locally.**
+
 ### PR Commands
 
 Team members can trigger actions by commenting on PRs: - `/document` -

@@ -53,6 +53,8 @@ but updates baseline y0
 }}
     \item{\code{add_noise}}{a \code{\link[=logical]{logical()}} indicating
 whether to add biological and measurement noise}
+    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} of MCMC samples of antibody decay curve
+parameters, with one row per MCMC sample, and columns for each parameter}
     \item{\code{noise_limits}}{biologic noise distribution parameters}
     \item{\code{format}}{a \code{\link[=character]{character()}} variable, containing either:
 \itemize{

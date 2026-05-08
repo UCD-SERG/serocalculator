@@ -51,6 +51,9 @@ but updates baseline y0
 \item{add_noise}{a \code{\link[=logical]{logical()}} indicating
 whether to add biological and measurement noise}
 
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} of MCMC samples of antibody decay curve
+parameters, with one row per MCMC sample, and columns for each parameter}
+
 \item{noise_limits}{biologic noise distribution parameters}
 
 \item{format}{a \code{\link[=character]{character()}} variable, containing either:
@@ -58,6 +61,8 @@ whether to add biological and measurement noise}
 \item \code{"long"} (one measurement per row) or
 \item \code{"wide"} (one serum sample per row)
 }}
+
+\item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
   Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}

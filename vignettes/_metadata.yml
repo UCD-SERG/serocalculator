@@ -22,4 +22,5 @@ format:
     number-sections: false
     slide-level: 2
     reference-location: document
+    prefer-html: true
     # reference-doc: vignettes/articles/templates/Gates_template.pptx

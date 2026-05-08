@@ -22,8 +22,8 @@
 #' but updates baseline y0
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
-#' @inheritParams log_likelihood
-
+#' @param curve_params a [data.frame()] of MCMC samples of antibody decay curve
+#' parameters, with one row per MCMC sample, and columns for each parameter
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
@@ -32,7 +32,7 @@
 #' @inheritDotParams ldpar
 #' @inheritDotParams ab
 #' @inheritDotParams mk_baseline
-#' @inheritParams log_likelihood # verbose
+#' @inheritParams log_likelihood
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
 #' data, with columns:
 #'

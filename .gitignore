@@ -17,6 +17,7 @@ rsconnect
 README.html
 README_files
 /.quarto/
+_quarto/
 NEWS.html
 NEWS_files
 **/.quarto/

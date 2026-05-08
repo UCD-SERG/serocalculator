@@ -3,11 +3,15 @@
 ## Bug fixes
 
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
-* Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+
+## Compatibility
+
+* Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
+
 ## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 

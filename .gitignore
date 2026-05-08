@@ -26,3 +26,7 @@ junit.xml
 **/*.quarto_ipynb
 *.knit.md
 tests/vdiffr.Rout.fail
+
+# Quarto freeze cache for faster builds
+_freeze/
+**/_freeze/

@@ -111,12 +111,11 @@ jobs:
         # uncomment the next two lines to get full debugging output
         # env:
         #   QUARTO_LOG_LEVEL: DEBUG
-        timeout-minutes: 20
+        timeout-minutes: 30
         run: |
-          # If parallel = TRUE in render_docs()
-          # future::plan(future::multicore)
-          # sessioninfo::session_info() # already done in Install R dependencies
-          altdoc::render_docs(verbose = TRUE, parallel = FALSE, freeze = FALSE)
+          # Enable freeze to cache expensive computations
+          # This significantly speeds up builds by only re-executing changed code
+          altdoc::render_docs(verbose = TRUE, parallel = FALSE, freeze = TRUE)
         shell: Rscript {0}
 
       # If event is a tag, set subdir to '<tag_name>'

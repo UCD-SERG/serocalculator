@@ -2,9 +2,11 @@ project:
   type: website
   output-dir: ../docs/
 
-# Note: freeze functionality can be set at a project level or for individual .qmd files
-# execute:
-#   freeze: false
+# Enable freeze to cache expensive computations and speed up builds
+# This is especially important for vignettes with long-running code
+execute:
+  freeze: auto  # re-execute only when source changes
+
 bibliography: vignettes/references.bib
 website:
   title: "$ALTDOC_PACKAGE_NAME"

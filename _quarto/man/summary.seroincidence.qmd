@@ -1,0 +1,148 @@
+## Summarizing fitted seroincidence models {.unnumbered}
+
+
+### Description
+
+This function is a <code>summary()</code> method for <code>seroincidence</code> objects.
+When the model was fit with clustered data (using the <code>cluster_var</code>
+parameter in <code>est_seroincidence()</code>), this function automatically computes
+cluster-robust standard errors to account for within-cluster correlation.
+
+
+
+### Usage
+
+<pre><code class='language-R'>## S3 method for class 'seroincidence'
+summary(object, coverage = 0.95, verbose = TRUE, ...)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="object">object</code></td>
+<td>
+a <code>list()</code> outputted by <code>stats::nlm()</code> or <code>est_seroincidence()</code>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="coverage">coverage</code></td>
+<td>
+desired confidence interval coverage probability
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="verbose">verbose</code></td>
+<td>
+whether to produce verbose messaging
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="...">...</code></td>
+<td>
+unused
+</td></tr>
+</table>
+
+
+### Value
+
+a <code>tibble::tibble()</code> containing the following:
+
+
+<ul>
+<li> <code>est.start</code>: the starting guess for incidence rate
+
+</li>
+<li> <code>ageCat</code>: the age category we are analyzing
+
+</li>
+<li> <code>incidence.rate</code>: the estimated incidence rate, per person year
+
+</li>
+<li> <code>SE</code>: standard error of the incidence rate estimate
+
+</li>
+<li> <code>CI.lwr</code>: lower limit of confidence interval for incidence rate
+
+</li>
+<li> <code>CI.upr</code>: upper limit of confidence interval for incidence rate
+
+</li>
+<li> <code>se_type</code>: type of standard error used (&quot;standard&quot; or &quot;cluster-robust&quot;)
+
+</li>
+<li> <code>coverage</code>: coverage probability
+
+</li>
+<li> <code>log.lik</code>:
+log-likelihood of the data used in the call to <code>est_seroincidence()</code>,
+evaluated at the maximum-likelihood estimate of lambda
+(i.e., at <code>incidence.rate</code>)
+
+</li>
+<li> <code>iterations</code>: the number of iterations used
+
+</li>
+<li> <code>antigen_isos</code>: a list of antigen isotypes used in the analysis
+
+</li>
+<li> <code>nlm.convergence.code</code>:
+information about convergence of the likelihood maximization procedure
+performed by <code>nlm()</code>
+(see &quot;Value&quot; section of <code>stats::nlm()</code>, component <code>code</code>);
+codes 3-5 indicate issues:
+
+
+<ul>
+<li> 1: relative gradient is close to zero,
+current iterate is probably solution.
+
+</li>
+<li> 2: successive iterates within tolerance,
+current iterate is probably solution.
+
+</li>
+<li> 3: Last global step failed to locate a point lower than x.
+Either x is an approximate local minimum of the function,
+the function is too non-linear for this algorithm,
+or <code>stepmin</code> in <code>est_seroincidence()</code>
+(a.k.a., <code>steptol</code> in <code>stats::nlm()</code>) is too large.
+
+</li>
+<li> 4: iteration limit exceeded; increase <code>iterlim</code>.
+
+</li>
+<li> 5: maximum step size <code>stepmax</code> exceeded five consecutive times.
+Either the function is unbounded below,
+becomes asymptotic to a finite value from above in some direction,
+or <code>stepmax</code> is too small.
+
+</li></ul>
+
+</li></ul>
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+
+library(dplyr)
+
+xs_data <-
+  sees_pop_data_pk_100
+
+curve <-
+  typhoid_curves_nostrat_100 |>
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+est1 <- est_seroincidence(
+  pop_data = xs_data,
+  sr_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+summary(est1)
+
+
+```

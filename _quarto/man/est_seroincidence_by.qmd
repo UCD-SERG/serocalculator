@@ -1,0 +1,269 @@
+## Estimate Seroincidence {.unnumbered}
+
+
+### Description
+
+Function to estimate seroincidences based on cross-sectional
+serology data and longitudinal
+response model.
+
+
+
+### Usage
+
+<pre><code class='language-R'>est_seroincidence_by(
+  pop_data,
+  sr_params,
+  noise_params,
+  strata,
+  curve_strata_varnames = strata,
+  noise_strata_varnames = strata,
+  antigen_isos = unique(pull(pop_data, "antigen_iso")),
+  lambda_start = 0.1,
+  build_graph = FALSE,
+  num_cores = 1L,
+  verbose = FALSE,
+  print_graph = FALSE,
+  cluster_var = NULL,
+  stratum_var = NULL,
+  ...
+)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="pop_data">pop_data</code></td>
+<td>
+a data.frame with cross-sectional serology data per
+antibody and age, and additional columns corresponding to
+each element of the <code>strata</code> input
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="sr_params">sr_params</code></td>
+<td>
+a <code>data.frame()</code> containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:
+
+
+<ul>
+<li> <code>antigen_iso</code>: a <code>character()</code> vector indicating antigen-isotype
+combinations
+
+</li>
+<li> <code>iter</code>: an <code>integer()</code> vector indicating MCMC sampling iterations
+
+</li>
+<li> <code>y0</code>: baseline antibody level at \$t=0\$ (\$y(t=0)\$)
+
+</li>
+<li> <code>y1</code>: antibody peak level (ELISA units)
+
+</li>
+<li> <code>t1</code>: duration of infection
+
+</li>
+<li> <code>alpha</code>: antibody decay rate
+(1/days for the current longitudinal parameter sets)
+
+</li>
+<li> <code>r</code>: shape factor of antibody decay
+
+</li></ul>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="noise_params">noise_params</code></td>
+<td>
+a <code>data.frame()</code> (or <code>tibble::tibble()</code>)
+containing the following variables,
+specifying noise parameters for each antigen isotype:
+
+
+<ul>
+<li> <code>antigen_iso</code>: antigen isotype whose noise parameters are being specified
+on each row
+
+</li>
+<li> <code>nu</code>: biological noise
+
+</li>
+<li> <code>eps</code>: measurement noise
+
+</li>
+<li> <code>y.low</code>: lower limit of detection for the current antigen isotype
+
+</li>
+<li> <code>y.high</code>: upper limit of detection for the current antigen isotype
+
+</li></ul>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="strata">strata</code></td>
+<td>
+a character vector of stratum-defining variables.
+Values must be variable names in <code>pop_data</code>.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="curve_strata_varnames">curve_strata_varnames</code></td>
+<td>
+A subset of <code>strata</code>.
+Values must be variable names in <code>curve_params</code>. Default = &quot;&quot;.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="noise_strata_varnames">noise_strata_varnames</code></td>
+<td>
+A subset of <code>strata</code>.
+Values must be variable names in <code>noise_params</code>. Default = &quot;&quot;.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="antigen_isos">antigen_isos</code></td>
+<td>
+Character vector with one or more antibody names.
+Must match <code>pop_data</code>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="lambda_start">lambda_start</code></td>
+<td>
+starting guess for incidence rate, in events/year.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="build_graph">build_graph</code></td>
+<td>
+whether to graph the log-likelihood function across
+a range of incidence rates (lambda values)
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="num_cores">num_cores</code></td>
+<td>
+Number of processor cores to use for
+calculations when computing by strata. If set to
+more than 1 and package <span class="pkg">parallel</span> is available,
+then the computations are executed in parallel. Default = 1L.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="verbose">verbose</code></td>
+<td>
+logical: if TRUE, print verbose log information to console
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="print_graph">print_graph</code></td>
+<td>
+whether to display the log-likelihood curve graph
+in the course of running <code>est_seroincidence()</code>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="cluster_var">cluster_var</code></td>
+<td>
+optional name(s) of the variable(s) in <code>pop_data</code>
+containing cluster identifiers for clustered sampling designs
+(e.g., households, schools).
+Can be a single variable name (character string) or a vector of
+variable names for multi-level clustering (e.g., <code>c("school", "classroom")</code>). When provided, standard errors will be adjusted for
+within-cluster correlation using cluster-robust variance estimation.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="stratum_var">stratum_var</code></td>
+<td>
+optional name of the variable in <code>pop_data</code> containing
+stratum identifiers. Used in combination with <code>cluster_var</code> for
+stratified cluster sampling designs.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="...">...</code></td>
+<td>
+
+Arguments passed on to <code>est_seroincidence</code>, <code>stats::nlm</code>
+
+
+<dl>
+<dt><code>stepmin</code></dt><dd>A positive scalar providing the minimum allowable
+relative step length.
+</dd>
+<dt><code>sampling_weights</code></dt><dd>optional data.frame containing sampling
+weights with columns for cluster/stratum identifiers and their sampling
+probabilities. Currently not implemented; reserved for future use.
+</dd>
+<dt><code>stepmax</code></dt><dd>a positive scalar which gives the maximum allowable
+scaled step length.  <code>stepmax</code> is used to prevent steps which
+would cause the optimization function to overflow, to prevent the
+algorithm from leaving the area of interest in parameter space, or to
+detect divergence in the algorithm. <code>stepmax</code> would be chosen
+small enough to prevent the first two of these occurrences, but should
+be larger than any anticipated reasonable step.
+</dd>
+<dt><code>typsize</code></dt><dd>an estimate of the size of each parameter
+at the minimum.
+</dd>
+<dt><code>fscale</code></dt><dd>an estimate of the size of <code>f</code> at the minimum.
+</dd>
+<dt><code>ndigit</code></dt><dd>the number of significant digits in the function <code>f</code>.
+</dd>
+<dt><code>gradtol</code></dt><dd>a positive scalar giving the tolerance at which the
+scaled gradient is considered close enough to zero to
+terminate the algorithm.  The scaled gradient is a
+measure of the relative change in <code>f</code> in each direction
+<code>p[i]</code> divided by the relative change in <code>p[i]</code>.
+</dd>
+<dt><code>iterlim</code></dt><dd>a positive integer specifying the maximum number of
+iterations to be performed before the program is terminated.
+</dd>
+<dt><code>check.analyticals</code></dt><dd>a logical scalar specifying whether the
+analytic gradients and Hessians, if they are supplied, should be
+checked against numerical derivatives at the initial parameter
+values. This can help detect incorrectly formulated gradients or
+Hessians.
+</dd>
+</dl>
+</td></tr>
+</table>
+
+
+### Details
+
+If <code>strata</code> is left empty, a warning will be produced,
+recommending that you use <code>est_seroincidence()</code> for unstratified analyses,
+and then the data will be passed to <code>est_seroincidence()</code>.
+If for some reason you want to use <code>est_seroincidence_by()</code>
+with no strata instead of calling <code>est_seroincidence()</code>,
+you may use <code>NA</code>, <code>NULL</code>, or <code>""</code> as the <code>strata</code>
+argument to avoid that warning.
+
+
+
+### Value
+
+
+<ul>
+<li> if <code>strata</code> has meaningful inputs:
+An object of class <code>"seroincidence.by"</code>; i.e., a list of
+<code>"seroincidence"</code> objects from <code>est_seroincidence()</code>, one for each stratum,
+with some meta-data attributes.
+
+</li>
+<li> if <code>strata</code> is missing, <code>NULL</code>, <code>NA</code>, or <code>""</code>:
+An object of class <code>"seroincidence"</code>.
+
+</li></ul>
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+
+library(dplyr)
+
+xs_data <-
+  sees_pop_data_pk_100
+
+curve <-
+  typhoid_curves_nostrat_100 |>
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+est2 <- est_seroincidence_by(
+  strata = "catchment",
+  pop_data = xs_data,
+  sr_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  # num_cores = 8 # Allow for parallel processing to decrease run time
+  iterlim = 5 # limit iterations for the purpose of this example
+)
+print(est2)
+summary(est2)
+
+
+
+```

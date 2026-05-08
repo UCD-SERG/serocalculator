@@ -1,0 +1,173 @@
+## Simulate multiple data sets {.unnumbered}
+
+
+### Description
+
+Simulate multiple data sets
+
+
+
+### Usage
+
+<pre><code class='language-R'>sim_pop_data_multi(
+  nclus = 10,
+  sample_sizes = 100,
+  lambdas = c(0.05, 0.1, 0.15, 0.2, 0.3),
+  num_cores = max(1, parallel::detectCores() - 1),
+  rng_seed = 1234,
+  verbose = FALSE,
+  ...
+)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="nclus">nclus</code></td>
+<td>
+number of clusters
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="sample_sizes">sample_sizes</code></td>
+<td>
+sample sizes to simulate
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="lambdas">lambdas</code></td>
+<td>
+incidence rate, in events/person*year
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="num_cores">num_cores</code></td>
+<td>
+number of cores to use for parallel computations
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="rng_seed">rng_seed</code></td>
+<td>
+starting seed for random number generator,
+passed to <code>rngtools::RNGseq()</code>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="verbose">verbose</code></td>
+<td>
+whether to report verbose information
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="...">...</code></td>
+<td>
+
+Arguments passed on to <code>sim_pop_data</code>
+
+
+<dl>
+<dt><code>lambda</code></dt><dd>a <code>numeric()</code> scalar indicating the incidence rate
+(in events per person-years)
+</dd>
+<dt><code>n_samples</code></dt><dd>number of samples to simulate
+</dd>
+<dt><code>age_range</code></dt><dd>age range of sampled individuals, in years
+</dd>
+<dt><code>age_fixed</code></dt><dd>specify the curve parameters to use by age
+(does nothing at present?)
+</dd>
+<dt><code>antigen_isos</code></dt><dd>Character vector with one or more antibody names.
+Values must match <code>curve_params</code>.
+</dd>
+<dt><code>n_mcmc_samples</code></dt><dd>how many MCMC samples to use:
+
+
+<ul>
+<li> when <code>n_mcmc_samples</code> is in <code>1:4000</code> a fixed posterior sample is used
+
+</li>
+<li> when <code>n_mcmc_samples</code> = <code>0</code>, a random sample is chosen
+
+</li></ul>
+</dd>
+<dt><code>renew_params</code></dt><dd>whether to generate a new parameter set for each
+infection
+
+
+<ul>
+<li> <code>renew_params = TRUE</code> generates a new parameter set for each infection
+
+</li>
+<li> <code>renew_params = FALSE</code> keeps the one selected at birth,
+but updates baseline y0
+
+</li></ul>
+</dd>
+<dt><code>add_noise</code></dt><dd>a <code>logical()</code> indicating
+whether to add biological and measurement noise
+</dd>
+<dt><code>curve_params</code></dt><dd>a <code>data.frame()</code> of MCMC samples of antibody decay curve
+parameters, with one row per MCMC sample, and columns for each parameter
+</dd>
+<dt><code>noise_limits</code></dt><dd>biologic noise distribution parameters
+</dd>
+<dt><code>format</code></dt><dd>a <code>character()</code> variable, containing either:
+
+
+<ul>
+<li> <code>"long"</code> (one measurement per row) or
+
+</li>
+<li> <code>"wide"</code> (one serum sample per row)
+
+</li></ul>
+</dd>
+</dl>
+</td></tr>
+</table>
+
+
+### Value
+
+a <code>tibble::tibble()</code>
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+
+# Load curve parameters
+dmcmc <- typhoid_curves_nostrat_100
+
+# Specify the antibody-isotype responses to include in analyses
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
+# Set seed to reproduce results
+set.seed(54321)
+
+# Simulated incidence rate per person-year
+lambdas = c(.05, .1, .15, .2, .3)
+
+# Range covered in simulations
+lifespan <- c(0, 10);
+
+# Cross-sectional sample size
+nrep <- 100
+
+# Biologic noise distribution
+dlims <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5)
+)
+
+sim_data <- sim_pop_data_multi(
+  curve_params = dmcmc,
+  lambdas = lambdas,
+  sample_sizes = nrep,
+  age_range = lifespan,
+  antigen_isos = antibodies,
+  n_mcmc_samples = 0,
+  renew_params = TRUE,
+  add_noise = TRUE,
+  noise_limits = dlims,
+  format = "long",
+  nclus = 10)
+
+sim_data
+
+
+
+
+```

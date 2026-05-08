@@ -1,0 +1,73 @@
+## Plot the log-likelihood curve for the incidence rate estimate {.unnumbered}
+
+
+### Description
+
+Plot the log-likelihood curve for the incidence rate estimate
+
+
+
+### Usage
+
+<pre><code class='language-R'>## S3 method for class 'seroincidence'
+autoplot(object, log_x = FALSE, ...)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="object">object</code></td>
+<td>
+a <code>seroincidence</code> object (from <code>est_seroincidence()</code>)
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="log_x">log_x</code></td>
+<td>
+should the x-axis be on a logarithmic scale (<code>TRUE</code>)
+or linear scale (<code>FALSE</code>, default)?
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="...">...</code></td>
+<td>
+unused
+</td></tr>
+</table>
+
+
+### Value
+
+a <code>ggplot2::ggplot()</code>
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+
+library(dplyr)
+library(ggplot2)
+
+xs_data <-
+  sees_pop_data_pk_100
+
+curve <-
+  typhoid_curves_nostrat_100 %>%
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+est1 <- est_seroincidence(
+  pop_data = xs_data,
+  sr_param = curve,
+  noise_param = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  build_graph = TRUE
+)
+
+# Plot the log-likelihood curve
+autoplot(est1)
+
+
+
+```

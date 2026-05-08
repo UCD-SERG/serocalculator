@@ -4,6 +4,7 @@
 ^Meta$
 ^docs$
 ^altdoc$
+^_quarto$
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$

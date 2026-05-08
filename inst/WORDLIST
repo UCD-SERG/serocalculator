@@ -49,6 +49,7 @@ colour
 csv
 dev
 devtools
+dplyr
 displaystyle
 dropdown
 dt
@@ -104,6 +105,7 @@ recombinant
 remotes
 renamings
 renewcommand
+rlang
 se
 sectionally
 sera

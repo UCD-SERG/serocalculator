@@ -19,7 +19,7 @@ The implemented options are:
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link[=strat_ests_scatterplot]{strat_ests_scatterplot}}, \code{\link[=strat_ests_barplot]{strat_ests_barplot}}
+  Arguments passed on to \code{\link{strat_ests_scatterplot}}, \code{\link{strat_ests_barplot}}
   \describe{
     \item{\code{xvar}}{the name of a stratifying variable in \code{object}}
     \item{\code{alpha}}{transparency for the points in the graph

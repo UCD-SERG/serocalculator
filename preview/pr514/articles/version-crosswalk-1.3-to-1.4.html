@@ -321,20 +321,20 @@
 <span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"long"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; Check results using `dimnames()`</span></span>
+<span><span class="co">#&gt; Warning: Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">simulated_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;     age id    antigen_iso  value</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 17.1  1     HlyE_IgA     0.281</span></span>
-<span><span class="co">#&gt; 2 17.1  1     HlyE_IgG     0.591</span></span>
-<span><span class="co">#&gt; 3  1.91 2     HlyE_IgA     0.758</span></span>
-<span><span class="co">#&gt; 4  1.91 2     HlyE_IgG     0.345</span></span>
-<span><span class="co">#&gt; 5 15.4  3     HlyE_IgA     2.21 </span></span>
-<span><span class="co">#&gt; 6 15.4  3     HlyE_IgG    22.1</span></span>
+<span><span class="co">#&gt; 1  1.76 1     HlyE_IgA     0.518</span></span>
+<span><span class="co">#&gt; 2  1.76 1     HlyE_IgG     0.287</span></span>
+<span><span class="co">#&gt; 3  6.32 2     HlyE_IgA     2.74 </span></span>
+<span><span class="co">#&gt; 4  6.32 2     HlyE_IgG    36.6  </span></span>
+<span><span class="co">#&gt; 5  7.67 3     HlyE_IgA     0.592</span></span>
+<span><span class="co">#&gt; 6  7.67 3     HlyE_IgG     0.893</span></span>
 <span></span>
 <span><span class="co"># Simulate multiple datasets</span></span>
 <span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
@@ -348,15 +348,15 @@
 <span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  format <span class="op">=</span> <span class="st">"long"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; Check results using `dimnames()`</span></span>
-<span><span class="co">#&gt; Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; Check results using `dimnames()`</span></span>
-<span><span class="co">#&gt; Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; Check results using `dimnames()`</span></span>
+<span><span class="co">#&gt; Warning: Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
+<span><span class="co">#&gt; Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
+<span><span class="co">#&gt; Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">multiple_sims</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 600</span></span></code></pre></div>

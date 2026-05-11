@@ -71,6 +71,12 @@ sim_pop_data(
   a [`logical()`](https://rdrr.io/r/base/logical.html) indicating
   whether to add biological and measurement noise
 
+- curve_params:
+
+  a [`data.frame()`](https://rdrr.io/r/base/data.frame.html) containing
+  MCMC samples of parameters from the Bayesian posterior distribution of
+  a longitudinal decay curve model.
+
 - noise_limits:
 
   biologic noise distribution parameters
@@ -83,6 +89,17 @@ sim_pop_data(
   - `"long"` (one measurement per row) or
 
   - `"wide"` (one serum sample per row)
+
+- verbose:
+
+  verbosity level for console logging. Accepts logical or numeric scalar
+  values:
+
+  - `FALSE`/`0`: no log messages
+
+  - `TRUE`/`1`: basic progress messages
+
+  - `>= 2`: basic progress messages plus detailed input logging
 
 - ...:
 

@@ -194,20 +194,20 @@ simulated_data <- sim_pop_data(
   add_noise = TRUE,
   format = "long"
 )
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
+#> Warning: Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
 
 head(simulated_data)
 #> # A tibble: 6 × 4
 #>     age id    antigen_iso  value
 #>   <dbl> <chr> <chr>        <dbl>
-#> 1 17.1  1     HlyE_IgA     0.281
-#> 2 17.1  1     HlyE_IgG     0.591
-#> 3  1.91 2     HlyE_IgA     0.758
-#> 4  1.91 2     HlyE_IgG     0.345
-#> 5 15.4  3     HlyE_IgA     2.21 
-#> 6 15.4  3     HlyE_IgG    22.1
+#> 1  1.76 1     HlyE_IgA     0.518
+#> 2  1.76 1     HlyE_IgG     0.287
+#> 3  6.32 2     HlyE_IgA     2.74 
+#> 4  6.32 2     HlyE_IgG    36.6  
+#> 5  7.67 3     HlyE_IgA     0.592
+#> 6  7.67 3     HlyE_IgG     0.893
 
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(
@@ -221,15 +221,15 @@ multiple_sims <- sim_pop_data_multi(
   add_noise = TRUE,
   format = "long"
 )
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
+#> Warning: Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
+#> Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
+#> Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
 
 nrow(multiple_sims)
 #> [1] 600

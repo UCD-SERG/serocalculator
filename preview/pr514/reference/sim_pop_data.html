@@ -129,6 +129,11 @@ but updates baseline y0</p></li>
 whether to add biological and measurement noise</p></dd>
 
 
+<dt id="arg-curve-params">curve_params<a class="anchor" aria-label="anchor" href="#arg-curve-params"></a></dt>
+<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.</p></dd>
+
+
 <dt id="arg-noise-limits">noise_limits<a class="anchor" aria-label="anchor" href="#arg-noise-limits"></a></dt>
 <dd><p>biologic noise distribution parameters</p></dd>
 
@@ -136,6 +141,14 @@ whether to add biological and measurement noise</p></dd>
 <dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
 <dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> variable, containing either:</p><ul><li><p><code>"long"</code> (one measurement per row) or</p></li>
 <li><p><code>"wide"</code> (one serum sample per row)</p></li>
+</ul></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>verbosity level for console logging.
+Accepts logical or numeric scalar values:</p><ul><li><p><code>FALSE</code>/<code>0</code>: no log messages</p></li>
+<li><p><code>TRUE</code>/<code>1</code>: basic progress messages</p></li>
+<li><p><code>&gt;= 2</code>: basic progress messages plus detailed input logging</p></li>
 </ul></dd>
 
 

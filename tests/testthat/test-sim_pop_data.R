@@ -62,7 +62,28 @@ test_that("`sim_pop_data()` accepts numeric verbose levels", {
     format = "wide"
   )
 
-  expect_no_error(do.call(sim_pop_data, c(base_args, list(verbose = 0))))
-  expect_no_error(do.call(sim_pop_data, c(base_args, list(verbose = 1))))
-  expect_no_error(do.call(sim_pop_data, c(base_args, list(verbose = 2))))
+  messages_0 <- capture_messages(
+    do.call(sim_pop_data, c(base_args, list(verbose = 0)))
+  )
+  expect_length(messages_0, 0)
+
+  messages_1 <- capture_messages(
+    do.call(sim_pop_data, c(base_args, list(verbose = 1)))
+  )
+  expect_true(
+    any(grepl("outputting wide format data", messages_1, fixed = TRUE))
+  )
+  expect_false(
+    any(grepl("inputs to `sim_pop_data()`:", messages_1, fixed = TRUE))
+  )
+
+  messages_2 <- capture_messages(
+    do.call(sim_pop_data, c(base_args, list(verbose = 2)))
+  )
+  expect_true(
+    any(grepl("inputs to `sim_pop_data()`:", messages_2, fixed = TRUE))
+  )
+  expect_true(
+    any(grepl("outputting wide format data", messages_2, fixed = TRUE))
+  )
 })

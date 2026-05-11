@@ -98,7 +98,15 @@ sim_pop_data <- function(
     format = "wide",
     verbose = FALSE,
     ...) {
-  if (verbose > 1) {
+  verbose_level <- if (is.logical(verbose)) as.integer(verbose) else verbose
+  stopifnot(
+    is.numeric(verbose_level),
+    length(verbose_level) == 1,
+    !is.na(verbose_level),
+    verbose_level >= 0
+  )
+
+  if (verbose_level >= 2) {
     cli::cli_inform("inputs to `sim_pop_data()`:")
     print(environment() |> as.list())
   }
@@ -164,7 +172,7 @@ sim_pop_data <- function(
     )
 
   if (format == "long") {
-    if (verbose) cli::cli_inform("outputting long format data")
+    if (verbose_level >= 1) cli::cli_inform("outputting long format data")
     to_return <-
       to_return |>
       pivot_longer(
@@ -182,7 +190,7 @@ sim_pop_data <- function(
       )
 
   } else {
-    if (verbose) cli::cli_inform("outputting wide format data")
+    if (verbose_level >= 1) cli::cli_inform("outputting wide format data")
     to_return <-
       to_return |>
       structure(

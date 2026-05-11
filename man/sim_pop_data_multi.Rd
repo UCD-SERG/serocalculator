@@ -53,6 +53,8 @@ but updates baseline y0
 }}
     \item{\code{add_noise}}{a \code{\link[=logical]{logical()}} indicating
 whether to add biological and measurement noise}
+    \item{\code{curve_params}}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.}
     \item{\code{noise_limits}}{biologic noise distribution parameters}
     \item{\code{format}}{a \code{\link[=character]{character()}} variable, containing either:
 \itemize{

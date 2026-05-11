@@ -22,17 +22,17 @@
 #' but updates baseline y0
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
-#' @inheritParams log_likelihood
-
+#' @param curve_params a [data.frame()] containing MCMC samples of parameters
+#' from the Bayesian posterior distribution of a longitudinal decay curve model.
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
+#' @param verbose logical: if `TRUE`, print verbose log information to console
 #' @inheritDotParams simcs.tinf
 #' @inheritDotParams ldpar
 #' @inheritDotParams ab
 #' @inheritDotParams mk_baseline
-#' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
 #' data, with columns:
 #'
@@ -95,7 +95,7 @@ sim_pop_data <- function(
     verbose = FALSE,
     ...) {
   if (verbose > 1) {
-    message("inputs to `sim_pop_data()`:")
+    cli::cli_inform("inputs to `sim_pop_data()`:")
     print(environment() |> as.list())
   }
 
@@ -116,9 +116,9 @@ sim_pop_data <- function(
 
   stopifnot(length(lambda) == 1)
 
-  day2yr <- 365.25
-  lambda <- lambda / day2yr
-  age_range <- age_range * day2yr
+  day_to_year <- 365.25
+  lambda <- lambda / day_to_year
+  age_range <- age_range * day_to_year
   npar <- dimnames(predpar)$parameter |> length()
 
 
@@ -156,11 +156,11 @@ sim_pop_data <- function(
     as_tibble() |>
     mutate(
       id = as.character(row_number()),
-      age = round(.data$age / day2yr, 2)
+      age = round(.data$age / day_to_year, 2)
     )
 
   if (format == "long") {
-    if (verbose) message("outputting long format data")
+    if (verbose) cli::cli_inform("outputting long format data")
     to_return <-
       to_return |>
       pivot_longer(
@@ -178,7 +178,7 @@ sim_pop_data <- function(
       )
 
   } else {
-    if (verbose) message("outputting wide format data")
+    if (verbose) cli::cli_inform("outputting wide format data")
     to_return <-
       to_return |>
       structure(

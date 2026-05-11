@@ -47,27 +47,27 @@ df_to_array <- function(
     dim_var_names,
     value_var_name = "value") {
   stopifnot(all(dim_var_names %in% names(df)))
-  stopifnot(value_var_name %>% length() == 1) # nolint: pipe_consistency_linter
+  stopifnot(length(value_var_name) == 1)
   stopifnot(value_var_name %in% names(df))
   if (is_grouped_df(df)) {
-    stop("ungroup the data frame first before running") # nolint: undesirable_function_linter
+    cli::cli_abort("ungroup the data frame first before running")
   }
 
   all_factors <-
-    df %>% # nolint: pipe_consistency_linter
-    select(all_of(dim_var_names)) %>% # nolint: pipe_consistency_linter
-    sapply(FUN = is.factor) %>% # nolint: undesirable_function_linter, pipe_consistency_linter
+    df |>
+    select(all_of(dim_var_names)) |>
+    vapply(FUN = is.factor, FUN.VALUE = logical(1)) |>
     all()
 
   if (!all_factors) {
-    warning( # nolint: undesirable_function_linter
+    cli::cli_warn(
       "Some dimension variables are not factors.",
       "\nThese dimensions will be ordered by first appearance.",
       "\nCheck results using `dimnames()`"
     )
   }
 
-  df <- df %>% # nolint: pipe_consistency_linter
+  df <- df |>
     mutate(
       across(
         all_of(dim_var_names),
@@ -82,7 +82,8 @@ df_to_array <- function(
       paste(c(dim_var_names, "obs"), collapse = " + ")
     )
 
-  df %>% # nolint: pipe_consistency_linter
-    mutate(.by = all_of(dim_var_names), obs = row_number()) %>% # nolint: pipe_consistency_linter
-    xtabs(formula = formula(xtabs_formula))
+  df <- df |>
+    mutate(.by = all_of(dim_var_names), obs = row_number())
+
+  xtabs(formula = formula(xtabs_formula), data = df)
 }

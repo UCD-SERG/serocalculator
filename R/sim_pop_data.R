@@ -28,7 +28,11 @@
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
-#' @param verbose logical: if `TRUE`, print verbose log information to console
+#' @param verbose verbosity level for console logging.
+#' Accepts logical or numeric scalar values:
+#' * `FALSE`/`0`: no log messages
+#' * `TRUE`/`1`: basic progress messages
+#' * `>= 2`: basic progress messages plus detailed input logging
 #' @inheritDotParams simcs.tinf
 #' @inheritDotParams ldpar
 #' @inheritDotParams ab

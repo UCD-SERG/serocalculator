@@ -62,7 +62,13 @@ from the Bayesian posterior distribution of a longitudinal decay curve model.}
 \item \code{"wide"} (one serum sample per row)
 }}
 
-\item{verbose}{logical: if \code{TRUE}, print verbose log information to console}
+\item{verbose}{verbosity level for console logging.
+Accepts logical or numeric scalar values:
+\itemize{
+\item \code{FALSE}/\code{0}: no log messages
+\item \code{TRUE}/\code{1}: basic progress messages
+\item \verb{>= 2}: basic progress messages plus detailed input logging
+}}
 
 \item{...}{
   Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}

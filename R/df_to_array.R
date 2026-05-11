@@ -60,11 +60,11 @@ df_to_array <- function(
     all()
 
   if (!all_factors) {
-    cli::cli_warn(
+    cli::cli_warn(c(
       "Some dimension variables are not factors.",
-      "\nThese dimensions will be ordered by first appearance.",
-      "\nCheck results using `dimnames()`"
-    )
+      "i" = "These dimensions will be ordered by first appearance.",
+      "i" = "Check results using {.code dimnames()}."
+    ))
   }
 
   df <- df |>

@@ -92,8 +92,8 @@ sim_pop_data(
 
 - verbose:
 
-  verbosity level for console logging. Accepts logical or numeric scalar
-  values:
+  verbosity level for console logging. Accepts a logical scalar or a
+  non-negative whole number:
 
   - `FALSE`/`0`: no log messages
 

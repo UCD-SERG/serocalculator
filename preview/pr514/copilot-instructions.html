@@ -620,6 +620,8 @@
 <li>
 <strong>Avoid code duplication</strong>: Don’t copy-paste substantial code chunks. Instead, decompose reusable logic into well-named helper functions</li>
 <li>
+<strong>Validation functions</strong>: Extract complex argument validation logic into internal helper functions (e.g., <code>.validate_verbose()</code>, <code>.validate_input()</code>). This improves readability, testability, and code reuse.</li>
+<li>
 <strong>Quarto vignettes</strong>: Use Quarto-style chunk options with <code>#|</code> prefix (e.g., <code>#| label: my-chunk</code>, <code>#| eval: false</code>)</li>
 <li>
 <strong>New articles</strong>: Use <code>.qmd</code> format for all new vignettes and articles going forward</li>

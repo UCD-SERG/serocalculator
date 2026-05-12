@@ -70,10 +70,127 @@ plot_curve_params_one_ab(
 
 - ...:
 
-  Additional arguments passed to
-  [`ggplot2::geom_function()`](https://ggplot2.tidyverse.org/reference/geom_function.html).
-  Arguments `fun`, `n`, and `args` are fixed by this helper and should
-  not be supplied.
+  Arguments passed on to
+  [`ggplot2::geom_function`](https://ggplot2.tidyverse.org/reference/geom_function.html)
+
+  `mapping`
+
+  :   Set of aesthetic mappings created by
+      [`aes()`](https://ggplot2.tidyverse.org/reference/aes.html). If
+      specified and `inherit.aes = TRUE` (the default), it is combined
+      with the default mapping at the top level of the plot. You must
+      supply `mapping` if there is no plot mapping.
+
+  `data`
+
+  :   Ignored by
+      [`stat_function()`](https://ggplot2.tidyverse.org/reference/geom_function.html),
+      do not use.
+
+  `stat`
+
+  :   The statistical transformation to use on the data for this layer.
+      When using a `geom_*()` function to construct a layer, the `stat`
+      argument can be used to override the default coupling between
+      geoms and stats. The `stat` argument accepts the following:
+
+      - A `Stat` ggproto subclass, for example `StatCount`.
+
+      - A string naming the stat. To give the stat as a string, strip
+        the function name of the `stat_` prefix. For example, to use
+        [`stat_count()`](https://ggplot2.tidyverse.org/reference/geom_bar.html),
+        give the stat as `"count"`.
+
+      - For more information and other ways to specify the stat, see the
+        [layer
+        stat](https://ggplot2.tidyverse.org/reference/layer_stats.html)
+        documentation.
+
+  `position`
+
+  :   A position adjustment to use on the data for this layer. This can
+      be used in various ways, including to prevent overplotting and
+      improving the display. The `position` argument accepts the
+      following:
+
+      - The result of calling a position function, such as
+        [`position_jitter()`](https://ggplot2.tidyverse.org/reference/position_jitter.html).
+        This method allows for passing extra arguments to the position.
+
+      - A string naming the position adjustment. To give the position as
+        a string, strip the function name of the `position_` prefix. For
+        example, to use
+        [`position_jitter()`](https://ggplot2.tidyverse.org/reference/position_jitter.html),
+        give the position as `"jitter"`.
+
+      - For more information and other ways to specify the position, see
+        the [layer
+        position](https://ggplot2.tidyverse.org/reference/layer_positions.html)
+        documentation.
+
+  `arrow`
+
+  :   Arrow specification, as created by
+      [`grid::arrow()`](https://rdrr.io/r/grid/arrow.html).
+
+  `arrow.fill`
+
+  :   fill colour to use for the arrow head (if closed). `NULL` means
+      use `colour` aesthetic.
+
+  `lineend`
+
+  :   Line end style (round, butt, square).
+
+  `linejoin`
+
+  :   Line join style (round, mitre, bevel).
+
+  `linemitre`
+
+  :   Line mitre limit (number greater than 1).
+
+  `na.rm`
+
+  :   If `FALSE`, the default, missing values are removed with a
+      warning. If `TRUE`, missing values are silently removed.
+
+  `show.legend`
+
+  :   logical. Should this layer be included in the legends? `NA`, the
+      default, includes if any aesthetics are mapped. `FALSE` never
+      includes, and `TRUE` always includes. It can also be a named
+      logical vector to finely select the aesthetics to display. To
+      include legend keys for all levels, even when no data exists, use
+      `TRUE`. If `NA`, all levels are shown in legend, but unobserved
+      levels are omitted.
+
+  `inherit.aes`
+
+  :   If `FALSE`, overrides the default aesthetics, rather than
+      combining with them. This is most useful for helper functions that
+      define both data and aesthetics and shouldn't inherit behaviour
+      from the default plot specification, e.g.
+      [`annotation_borders()`](https://ggplot2.tidyverse.org/reference/annotation_borders.html).
+
+  `geom`
+
+  :   The geometric object to use to display the data for this layer.
+      When using a `stat_*()` function to construct a layer, the `geom`
+      argument can be used to override the default coupling between
+      stats and geoms. The `geom` argument accepts the following:
+
+      - A `Geom` ggproto subclass, for example `GeomPoint`.
+
+      - A string naming the geom. To give the geom as a string, strip
+        the function name of the `geom_` prefix. For example, to use
+        [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html),
+        give the geom as `"point"`.
+
+      - For more information and other ways to specify the geom, see the
+        [layer
+        geom](https://ggplot2.tidyverse.org/reference/layer_geoms.html)
+        documentation.
 
 ## Value
 

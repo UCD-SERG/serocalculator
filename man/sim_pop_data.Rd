@@ -63,7 +63,7 @@ from the Bayesian posterior distribution of a longitudinal decay curve model.}
 }}
 
 \item{verbose}{verbosity level for console logging.
-Accepts logical or numeric scalar values:
+Accepts a logical scalar or a non-negative whole number:
 \itemize{
 \item \code{FALSE}/\code{0}: no log messages
 \item \code{TRUE}/\code{1}: basic progress messages

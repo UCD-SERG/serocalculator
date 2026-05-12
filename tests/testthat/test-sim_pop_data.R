@@ -118,17 +118,17 @@ test_that("`sim_pop_data()` validates verbose levels", {
 
   expect_error(
     do.call(sim_pop_data, c(base_args, list(verbose = -1))),
-    "`verbose` must be a single logical or numeric value.",
+    "`verbose` must be a single logical or non-negative whole number.",
     fixed = TRUE
   )
   expect_error(
     do.call(sim_pop_data, c(base_args, list(verbose = c(1, 2)))),
-    "`verbose` must be a single logical or numeric value.",
+    "`verbose` must be a single logical or non-negative whole number.",
     fixed = TRUE
   )
   expect_error(
     do.call(sim_pop_data, c(base_args, list(verbose = "loud"))),
-    "`verbose` must be a single logical or numeric value.",
+    "`verbose` must be a single logical or non-negative whole number.",
     fixed = TRUE
   )
 })

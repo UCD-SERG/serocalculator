@@ -29,7 +29,7 @@
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
 #' @param verbose verbosity level for console logging.
-#' Accepts logical or numeric scalar values:
+#' Accepts a logical scalar or a non-negative whole number:
 #' * `FALSE`/`0`: no log messages
 #' * `TRUE`/`1`: basic progress messages
 #' * `>= 2`: basic progress messages plus detailed input logging

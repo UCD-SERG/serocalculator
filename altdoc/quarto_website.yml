@@ -24,9 +24,6 @@ website:
         file: man/serocalculator-package.qmd
       - text: Articles
         menu:
-          - text: "---Get started---"
-          - text: "Get started with serocalculator"
-            file: vignettes/articles/serocalculator.Rmd
           - text: "---Methodology---"
           - text: "Methodology"
             file: vignettes/methodology.qmd
@@ -46,9 +43,6 @@ website:
       - section: Articles
         style: floating
         contents:
-          - section: Get started
-            contents:
-              - vignettes/articles/serocalculator.Rmd
           - section: Methodology
             contents:
               - vignettes/methodology.qmd

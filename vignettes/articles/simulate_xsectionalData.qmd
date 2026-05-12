@@ -3,6 +3,9 @@ title: "Simulation studies"
 description: "A demonstration of the accuracy of the estimation approach"
 bibliography: ../references.bib
 prefer-html: true
+format:
+  pptx:
+    prefer-html: true
 ---
 
 ```{r, include = FALSE}
@@ -12,6 +15,7 @@ knitr::opts_chunk$set(
   fig.width = 7,
   fig.height = 5
 )
+knitr::opts_knit$set(rmarkdown.html_dependency.prefer = TRUE)
 ```
 
 This vignette shows how to simulate a cross-sectional sample of 

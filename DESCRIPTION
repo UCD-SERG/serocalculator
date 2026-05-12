@@ -63,6 +63,7 @@ Suggests:
     tidyverse,
     qrcode,
     vdiffr,
+    webshot2,
     withr,
     forcats,
     snapr (>= 0.0.0.9000),

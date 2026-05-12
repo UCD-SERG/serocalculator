@@ -23,8 +23,6 @@
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @inheritParams log_likelihood
-#' @param curve_params a [data.frame()] containing MCMC samples of parameters
-#' from the Bayesian posterior distribution of a longitudinal decay curve model.
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
@@ -123,9 +121,9 @@ sim_pop_data <- function(
 
   stopifnot(length(lambda) == 1)
 
-  day_to_year <- 365.25
-  lambda <- lambda / day_to_year
-  age_range <- age_range * day_to_year
+  days_per_year <- 365.25
+  lambda <- lambda / days_per_year
+  age_range <- age_range * days_per_year
   npar <- dimnames(predpar)$parameter |> length()
 
 
@@ -163,7 +161,7 @@ sim_pop_data <- function(
     as_tibble() |>
     mutate(
       id = as.character(row_number()),
-      age = round(.data$age / day_to_year, 2)
+      age = round(.data$age / days_per_year, 2)
     )
 
   if (format == "long") {

@@ -103,7 +103,7 @@ Accepts a logical scalar or a non-negative whole number:
 a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey
 data, with columns:
 \itemize{
-\item \code{age}: age (in days)
+\item \code{age}: age (in years)
 \item one column for each element in the \code{antigen_iso} input argument
 }
 }

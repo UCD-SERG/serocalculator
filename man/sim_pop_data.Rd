@@ -52,7 +52,9 @@ but updates baseline y0
 whether to add biological and measurement noise}
 
 \item{curve_params}{a \code{\link[=data.frame]{data.frame()}} of MCMC samples of antibody decay curve
-parameters, with one row per MCMC sample, and columns for each parameter}
+parameters, with one row per MCMC sample.
+Required columns: \code{antigen_iso}, \code{y0}, \code{y1}, \code{t1}, \code{alpha}, \code{r}.
+See \code{\link[=load_sr_params]{load_sr_params()}} for details.}
 
 \item{noise_limits}{biologic noise distribution parameters}
 

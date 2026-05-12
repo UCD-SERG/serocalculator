@@ -18,7 +18,6 @@ on:
       - 'vignettes/**'
       - '.github/workflows/docs.yaml'
       - 'README.md'
-      - 'index.qmd'
   release:
     types: [published]
   pull_request:
@@ -36,7 +35,6 @@ on:
       - 'vignettes/**'
       - '.github/workflows/docs.yaml'
       - 'README.md'
-      - 'index.qmd'
   workflow_dispatch:
     inputs:
       tag:
@@ -136,11 +134,11 @@ jobs:
         run: |
           echo "subdir=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
 
-      # If event is a push to main (not a tag), set subdir to 'docs'
+      # If event is a push to main (not a tag), deploy to root (empty subdir)
       - name: "[main] Set documentation subdirectory"
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          echo "subdir=docs" >> $GITHUB_ENV
+          echo "subdir=" >> $GITHUB_ENV
 
       - name: Debug subdir
         run: |
@@ -150,7 +148,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          clean-exclude: pr-preview
+          clean-exclude: preview
           branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
           folder: docs
           target-folder: ${{ env.subdir }}

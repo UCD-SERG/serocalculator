@@ -23,7 +23,9 @@
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @param curve_params a [data.frame()] of MCMC samples of antibody decay curve
-#' parameters, with one row per MCMC sample, and columns for each parameter
+#' parameters, with one row per MCMC sample.
+#' Required columns: `antigen_iso`, `y0`, `y1`, `t1`, `alpha`, `r`.
+#' See [load_sr_params()] for details.
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or

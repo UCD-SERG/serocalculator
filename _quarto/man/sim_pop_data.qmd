@@ -90,7 +90,9 @@ whether to add biological and measurement noise
 <tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="curve_params">curve_params</code></td>
 <td>
 a <code>data.frame()</code> of MCMC samples of antibody decay curve
-parameters, with one row per MCMC sample, and columns for each parameter
+parameters, with one row per MCMC sample.
+Required columns: <code>antigen_iso</code>, <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, <code>r</code>.
+See <code>load_sr_params()</code> for details.
 </td></tr>
 <tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="noise_limits">noise_limits</code></td>
 <td>

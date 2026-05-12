@@ -101,20 +101,23 @@ sim_pop_data <- function(
   is_valid_numeric_verbose <- is.numeric(verbose) &&
     length(verbose) == 1 &&
     !is.na(verbose) &&
-    verbose >= 0
+    is.finite(verbose) &&
+    verbose >= 0 &&
+    verbose == floor(verbose)
 
   if (is.logical(verbose) && length(verbose) == 1 && !is.na(verbose)) {
     # Coerce logical verbosity to documented level semantics:
     # FALSE -> 0 and TRUE -> 1.
     verbose_level <- as.integer(verbose)
   } else if (is_valid_numeric_verbose) {
-    verbose_level <- verbose
+    verbose_level <- as.integer(verbose)
   } else {
     cli::cli_abort(c(
-      "{.arg verbose} must be a single logical or numeric value.",
+      "{.arg verbose} must be a single logical or non-negative whole number.",
       "i" = paste(
         "Use `FALSE`/`0` for no messages, `TRUE`/`1` for",
-        "basic messages, and `>= 2` for detailed input logging."
+        "basic messages, and `2` or larger integers for",
+        "detailed input logging."
       )
     ))
   }

@@ -173,7 +173,7 @@ a
 [tibble::tbl_df](https://tibble.tidyverse.org/reference/tbl_df-class.html)
 containing simulated cross-sectional serosurvey data, with columns:
 
-- `age`: age (in days)
+- `age`: age (in years)
 
 - one column for each element in the `antigen_iso` input argument
 

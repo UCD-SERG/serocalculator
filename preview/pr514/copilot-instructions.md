@@ -460,10 +460,9 @@ The following workflows run on every PR. **All must pass** for merge:
 5.  **check-readme.yaml**: Renders README.Rmd and verifies it matches
     README.md. (~2-3 min)
 
-6.  **R-check-docs.yml**: Runs
-    [`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
-    and checks if `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails
-    if documentation is out of sync. (~2-3 min)
+6.  **R-check-docs.yml**: Runs `roxygen2::roxygenise()` and checks if
+    `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails if
+    documentation is out of sync. (~2-3 min)
 
 7.  **news.yaml**: Ensures NEWS.md is updated for every PR. Can be
     bypassed with `no-changelog` label. (~1 min)
@@ -489,10 +488,8 @@ corresponding checks have been run successfully locally.**
 ### PR Commands
 
 Team members can trigger actions by commenting on PRs: - `/document` -
-Runs
-[`roxygen2::roxygenise()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
-and commits changes - `/style` - Runs `styler::style_pkg()` and commits
-changes
+Runs `roxygen2::roxygenise()` and commits changes - `/style` - Runs
+`styler::style_pkg()` and commits changes
 
 ## Repository Structure
 

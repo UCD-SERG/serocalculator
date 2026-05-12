@@ -1,0 +1,132 @@
+## Summary Method for <code>"seroincidence.by"</code> Objects {.unnumbered}
+
+
+### Description
+
+Calculate seroincidence from output of the seroincidence calculator
+<code>est_seroincidence_by()</code>.
+
+
+
+### Usage
+
+<pre><code class='language-R'>## S3 method for class 'seroincidence.by'
+summary(
+  object,
+  confidence_level = 0.95,
+  show_deviance = TRUE,
+  show_convergence = TRUE,
+  verbose = FALSE,
+  ...
+)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="object">object</code></td>
+<td>
+A dataframe containing output of <code>est_seroincidence_by()</code>.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="confidence_level">confidence_level</code></td>
+<td>
+desired confidence interval coverage probability
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="show_deviance">show_deviance</code></td>
+<td>
+Logical flag (<code>FALSE</code>/<code>TRUE</code>) for reporting deviance
+(-2*log(likelihood) at estimated seroincidence.
+Default = <code>TRUE</code>.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="show_convergence">show_convergence</code></td>
+<td>
+Logical flag (<code>FALSE</code>/<code>TRUE</code>) for reporting convergence
+(see help for <code>optim()</code> for details).
+Default = <code>FALSE</code>.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="verbose">verbose</code></td>
+<td>
+a logical
+scalar indicating whether to print verbose messages to the console
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="...">...</code></td>
+<td>
+Additional arguments affecting the summary produced.
+</td></tr>
+</table>
+
+
+### Value
+
+A <code>summary.seroincidence.by</code> object, which is a tibble::tibble,
+with the following columns:
+
+
+<ul>
+<li> <code>incidence.rate</code> maximum likelihood estimate of <code>lambda</code> (seroincidence)
+
+</li>
+<li> <code>CI.lwr</code> lower confidence bound for lambda
+
+</li>
+<li> <code>CI.upr</code> upper confidence bound for lambda
+
+</li>
+<li> <code>Deviance</code> (included if <code>show_deviance = TRUE</code>)
+Negative log likelihood (NLL) at estimated (maximum likelihood) <code>lambda</code>)
+
+</li>
+<li> <code>nlm.convergence.code</code> (included if <code>show_convergence = TRUE</code>)
+Convergence information returned by <code>stats::nlm()</code>
+
+</li></ul>
+
+The object also has the following metadata
+(accessible through <code>base::attr()</code>):
+
+
+<ul>
+<li> <code>antigen_isos</code>
+Character vector with names of input antigen isotypes
+used in <code>est_seroincidence_by()</code>
+
+</li>
+<li> <code>Strata</code> Character with names of strata used in <code>est_seroincidence_by()</code>
+
+</li></ul>
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+library(dplyr)
+
+xs_data <-
+  sees_pop_data_pk_100
+
+curve <-
+  typhoid_curves_nostrat_100 |>
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+
+noise <-
+  example_noise_params_pk
+
+# estimate seroincidence
+est2 <- est_seroincidence_by(
+  strata = c("catchment"),
+  pop_data = xs_data,
+  sr_params = curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  # num_cores = 8 # Allow for parallel processing to decrease run time
+)
+
+# calculate summary statistics for the seroincidence object
+summary(est2)
+
+
+
+```

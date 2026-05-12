@@ -1,0 +1,52 @@
+## Get path to an example file {.unnumbered}
+
+
+### Description
+
+The serocalculator package comes bundled with a number of sample files
+in its <code>inst/extdata</code> directory.
+This <code>serocalculator_example()</code> function make those sample files
+easy to access.
+
+
+
+### Usage
+
+<pre><code class='language-R'>serocalculator_example(file = NULL)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="file">file</code></td>
+<td>
+Name of file. If <code>NULL</code>, the example files will be listed.
+</td></tr>
+</table>
+
+
+### Details
+
+Adapted from <code>readr::readr_example()</code> following the guidance in
+<a href="https://r-pkgs.org/data.html#sec-data-example-path-helper">https://r-pkgs.org/data.html#sec-data-example-path-helper</a>.
+
+
+
+### Value
+
+a character string providing
+the path to the file specified by <code>file</code>,
+or a vector or available files if <code>file = NULL</code>.
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+serocalculator_example()
+serocalculator_example("example_pop_data.csv")
+
+
+```

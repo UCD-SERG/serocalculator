@@ -1,0 +1,13 @@
+*.html
+*.R
+methodology.log
+methodology_files
+~$*.pptx
+~$*.docx
+*_files/
+*.pptx
+*.docx
+/.quarto/
+*.rmarkdown
+
+**/*.quarto_ipynb

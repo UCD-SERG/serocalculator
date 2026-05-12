@@ -1,0 +1,52 @@
+## Load noise parameters {.unnumbered}
+
+
+### Description
+
+Load noise parameters
+
+
+
+### Usage
+
+<pre><code class='language-R'>load_noise_params(file_path, antigen_isos = NULL)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="file_path">file_path</code></td>
+<td>
+path to an RDS file containing biologic
+and measurement noise of antibody decay curve parameters
+<code>y.low</code>, <code>eps</code>, <code>nu</code>, and <code>y.high</code>,
+stored as a <code>data.frame()</code> or tibble::tbl_df
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="antigen_isos">antigen_isos</code></td>
+<td>
+<code>character()</code> vector
+of antigen isotypes to be used in analyses
+</td></tr>
+</table>
+
+
+### Value
+
+a <code>noise</code> object (a tibble::tbl_df
+with extra attribute <code>antigen_isos</code>)
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+noise <- load_noise_params(
+  serocalculator_example("example_noise_params.rds")
+)
+print(noise)
+
+
+
+```

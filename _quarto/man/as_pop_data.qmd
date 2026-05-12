@@ -1,0 +1,74 @@
+## Load a cross-sectional antibody survey data set {.unnumbered}
+
+
+### Description
+
+Load a cross-sectional antibody survey data set
+
+
+
+### Usage
+
+<pre><code class='language-R'>as_pop_data(
+  data,
+  antigen_isos = NULL,
+  age = "Age",
+  value = "result",
+  id = "index_id",
+  standardize = TRUE
+)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="data">data</code></td>
+<td>
+a <code>data.frame()</code> or tibble::tbl_df
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="antigen_isos">antigen_isos</code></td>
+<td>
+<code>character()</code>
+vector of antigen isotypes to be used in analyses
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="age">age</code></td>
+<td>
+a <code>character()</code> identifying the age column
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="value">value</code></td>
+<td>
+a <code>character()</code> identifying the value column
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="id">id</code></td>
+<td>
+a <code>character()</code> identifying the id column
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="standardize">standardize</code></td>
+<td>
+a <code>logical()</code> to determine standardization of columns
+</td></tr>
+</table>
+
+
+### Value
+
+a <code>pop_data</code> object (a tibble::tbl_df
+with extra attribute <code>antigen_isos</code>)
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+library(magrittr)
+xs_data <-
+  serocalculator_example("example_pop_data.csv") |>
+  read.csv() |>
+  as_pop_data()
+
+print(xs_data)
+
+
+```

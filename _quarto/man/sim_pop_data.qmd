@@ -1,0 +1,211 @@
+## Simulate a cross-sectional serosurvey with noise {.unnumbered}
+
+
+### Description
+
+Makes a cross-sectional data set (age, y(t) set)
+and adds noise, if desired.
+
+
+
+### Usage
+
+<pre><code class='language-R'>sim_pop_data(
+  lambda = 0.1,
+  n_samples = 100,
+  age_range = c(0, 20),
+  age_fixed = NA,
+  antigen_isos = intersect(get_biomarker_levels(curve_params), rownames(noise_limits)),
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
+  add_noise = FALSE,
+  curve_params,
+  noise_limits,
+  format = "wide",
+  verbose = FALSE,
+  ...
+)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="lambda">lambda</code></td>
+<td>
+a <code>numeric()</code> scalar indicating the incidence rate
+(in events per person-years)
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="n_samples">n_samples</code></td>
+<td>
+number of samples to simulate
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="age_range">age_range</code></td>
+<td>
+age range of sampled individuals, in years
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="age_fixed">age_fixed</code></td>
+<td>
+specify the curve parameters to use by age
+(does nothing at present?)
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="antigen_isos">antigen_isos</code></td>
+<td>
+Character vector with one or more antibody names.
+Values must match <code>curve_params</code>.
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="n_mcmc_samples">n_mcmc_samples</code></td>
+<td>
+how many MCMC samples to use:
+
+
+<ul>
+<li> when <code>n_mcmc_samples</code> is in <code>1:4000</code> a fixed posterior sample is used
+
+</li>
+<li> when <code>n_mcmc_samples</code> = <code>0</code>, a random sample is chosen
+
+</li></ul>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="renew_params">renew_params</code></td>
+<td>
+whether to generate a new parameter set for each
+infection
+
+
+<ul>
+<li> <code>renew_params = TRUE</code> generates a new parameter set for each infection
+
+</li>
+<li> <code>renew_params = FALSE</code> keeps the one selected at birth,
+but updates baseline y0
+
+</li></ul>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="add_noise">add_noise</code></td>
+<td>
+a <code>logical()</code> indicating
+whether to add biological and measurement noise
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="curve_params">curve_params</code></td>
+<td>
+a <code>data.frame()</code> of MCMC samples of antibody decay curve
+parameters, with one row per MCMC sample, and columns for each parameter
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="noise_limits">noise_limits</code></td>
+<td>
+biologic noise distribution parameters
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="format">format</code></td>
+<td>
+a <code>character()</code> variable, containing either:
+
+
+<ul>
+<li> <code>"long"</code> (one measurement per row) or
+
+</li>
+<li> <code>"wide"</code> (one serum sample per row)
+
+</li></ul>
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="verbose">verbose</code></td>
+<td>
+logical: if TRUE, print verbose log information to console
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="...">...</code></td>
+<td>
+
+Arguments passed on to <code>simcs.tinf</code>, <code>ldpar</code>, <code>ab</code>, <code>mk_baseline</code>
+
+
+<dl>
+<dt><code>age</code></dt><dd>age at infection
+</dd>
+<dt><code>nmc</code></dt><dd>mcmc sample to use
+</dd>
+<dt><code>npar</code></dt><dd>number of parameters
+</dd>
+<dt><code>t</code></dt><dd>numeric vector of elapsed times since start of infection
+</dd>
+<dt><code>par</code></dt><dd>numeric matrix of model parameters:
+
+
+<ul>
+<li> rows are parameters
+
+</li>
+<li> columns are biomarkers
+
+</li></ul>
+</dd>
+<dt><code>kab</code></dt><dd>integer indicating which row to read from <code>blims</code>
+</dd>
+<dt><code>n</code></dt><dd>number of observations
+</dd>
+<dt><code>blims</code></dt><dd>range of possible baseline antibody levels
+</dd>
+</dl>
+</td></tr>
+</table>
+
+
+### Value
+
+a tibble::tbl_df containing simulated cross-sectional serosurvey
+data, with columns:
+
+
+<ul>
+<li> <code>age</code>: age (in days)
+
+</li>
+<li> one column for each element in the <code>antigen_iso</code> input argument
+
+</li></ul>
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+# Load curve parameters
+dmcmc <- typhoid_curves_nostrat_100
+
+# Specify the antibody-isotype responses to include in analyses
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
+# Set seed to reproduce results
+set.seed(54321)
+
+# Simulated incidence rate per person-year
+lambda <- 0.2
+# Range covered in simulations
+lifespan <- c(0, 10)
+# Cross-sectional sample size
+nrep <- 100
+
+# Biologic noise distribution
+dlims <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5)
+)
+
+# Generate cross-sectional data
+csdata <- sim_pop_data(
+  curve_params = dmcmc,
+  lambda = lambda,
+  n_samples = nrep,
+  age_range = lifespan,
+  antigen_isos = antibodies,
+  n_mcmc_samples = 0,
+  renew_params = TRUE,
+  add_noise = TRUE,
+  noise_limits = dlims,
+  format = "long"
+)
+
+
+
+```

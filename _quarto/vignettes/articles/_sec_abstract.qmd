@@ -1,0 +1,30 @@
+---
+title: Estimating incidence rates with cross-sectional biomarker data
+format: 
+  docx: default
+  html: default
+---
+
+Incidence rates are important epidemiological estimands.
+The incidence rate of a disease in a population is the rate of new infections per person over time.
+<!-- It is typically equivalent to the marginal hazard rate across all individuals in that population. -->
+<!-- From a susceptible individual’s perspective, the incidence rate is the hazard rate of disease onset. -->
+Incidence rates can be estimated from longitudinal cohort studies,
+but cohort studies are costly to conduct, 
+slow to produce results, 
+and vulnerable to selection and censoring biases.
+Incidence rates can also be estimated from clinical case rates,
+but clinical case rates undercount asymptomatic cases
+and cases in individuals lacking access to clinical care.
+Alternatively, incidence rates can be estimated from biomarker data
+collected through a single cross-sectional survey, 
+combined with a longitudinal model of 
+how those biomarkers respond to infection over time.
+Compared with cohort studies and clinical case rates,
+cross-sectional incidence estimation can 
+provide more accurate, timely, and cost-efficient estimates.
+
+This talk will review statistical frameworks for 
+modeling longitudinal biomarker responses to infection
+and estimating incidence from cross-sectional biomarker surveys,
+and it will discuss ongoing work at UC Davis to implement and extend these methods.

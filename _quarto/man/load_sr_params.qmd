@@ -1,0 +1,49 @@
+## Load longitudinal seroresponse parameter samples {.unnumbered}
+
+
+### Description
+
+Load longitudinal seroresponse parameter samples
+
+
+
+### Usage
+
+<pre><code class='language-R'>load_sr_params(file_path, antigen_isos = NULL)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="file_path">file_path</code></td>
+<td>
+path to an RDS file containing MCMC samples of antibody
+seroresponse parameters <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, and <code>r</code>,
+stored as a <code>data.frame()</code> or tibble::tbl_df
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="antigen_isos">antigen_isos</code></td>
+<td>
+<code>character()</code> vector of antigen isotypes used in analyses
+</td></tr>
+</table>
+
+
+### Value
+
+a <code>curve_params</code> object (a tibble::tbl_df
+with extra attribute <code>antigen_isos</code>)
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+curve <- load_sr_params(serocalculator_example("example_curve_params.rds"))
+
+print(curve)
+
+
+
+```

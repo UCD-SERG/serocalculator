@@ -1,0 +1,31 @@
+## Extract <code>Strata</code> metadata from an object {.unnumbered}
+
+
+### Description
+
+Generic method for extracting strata metadata from objects.
+See <code>strata.default()</code>
+
+
+
+### Usage
+
+<pre><code class='language-R'>strata(x)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="x">x</code></td>
+<td>
+an object
+</td></tr>
+</table>
+
+
+### Value
+
+the strata metadata of <code>x</code>
+
+

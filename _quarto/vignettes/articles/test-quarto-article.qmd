@@ -1,0 +1,12 @@
+---
+title: "test-quarto-article"
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r}
+#| label: setup
+library(serocalculator)
+```

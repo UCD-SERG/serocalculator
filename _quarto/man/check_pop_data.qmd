@@ -1,0 +1,51 @@
+## Check the formatting of a cross-sectional antibody survey dataset. {.unnumbered}
+
+
+### Description
+
+Check the formatting of a cross-sectional antibody survey dataset.
+
+
+
+### Usage
+
+<pre><code class='language-R'>check_pop_data(pop_data, verbose = FALSE)
+</code></pre>
+
+
+### Arguments
+
+<table role = "presentation">
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="pop_data">pop_data</code></td>
+<td>
+dataset to check
+</td></tr>
+<tr><td style = "white-space: collapse; font-family: monospace; vertical-align: top"><code id="verbose">verbose</code></td>
+<td>
+whether to print an &quot;OK&quot; message when all checks pass
+</td></tr>
+</table>
+
+
+### Value
+
+NULL (invisibly)
+
+
+
+### Examples
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+library("serocalculator")
+
+library(magrittr)
+
+xs_data <-
+  serocalculator_example("example_pop_data.csv") |>
+  read.csv() |>
+  as_pop_data()
+
+check_pop_data(xs_data, verbose = TRUE)
+
+
+
+```

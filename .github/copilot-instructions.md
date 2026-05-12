@@ -582,6 +582,7 @@ When refactoring existing code:
 - **Test snapshot changes**: Use appropriate snapshot testing approaches
 - **Seed tests**: Use `withr::local_seed()` for reproducible tests
 - **Avoid code duplication**: Don't copy-paste substantial code chunks. Instead, decompose reusable logic into well-named helper functions
+- **Validation functions**: Extract complex argument validation logic into internal helper functions (e.g., `.validate_verbose()`, `.validate_input()`). This improves readability, testability, and code reuse.
 - **Quarto vignettes**: Use Quarto-style chunk options with `#|` prefix (e.g., `#| label: my-chunk`, `#| eval: false`)
 - **New articles**: Use `.qmd` format for all new vignettes and articles going forward
 - **Quarto callouts**: Use Quarto callout blocks for notes, warnings, and tips (e.g., `::: {.callout-note}`)

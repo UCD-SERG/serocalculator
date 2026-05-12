@@ -78,7 +78,9 @@ test_that("`sim_pop_data()` accepts numeric verbose levels", {
   )
 
   messages_2 <- capture_messages(
-    do.call(sim_pop_data, c(base_args, list(verbose = 2)))
+    capture_output(
+      do.call(sim_pop_data, c(base_args, list(verbose = 2)))
+    )
   )
   expect_true(
     any(grepl("inputs to", messages_2, fixed = TRUE))

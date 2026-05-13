@@ -56,9 +56,8 @@ plot_curve_params_one_ab <- function(
     iters_to_graph = seq_len(min(n_curves, nrow(object))),
     xlim = c(10 ^ -1, 10 ^ 3.1),
     ...) {
-  dots <- list(...)
   fixed_args <- c("fun", "n", "args")
-  bad_args <- intersect(names(dots), fixed_args)
+  bad_args <- intersect(...names(), fixed_args)
   if (length(bad_args) > 0) {
     cli::cli_abort(
       c(

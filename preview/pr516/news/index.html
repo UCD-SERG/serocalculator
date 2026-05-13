@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,11 +65,14 @@
 <li>Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
 <ul><li>Provides clear tables comparing old and new function names</li>
 <li>Includes code examples showing how to update existing code</li>
-<li>Accessible as a prominent tab in the website navigation ## New features</li>
+<li>Accessible as a prominent tab in the website navigation</li>
 </ul></li>
-<li>Added <code>cluster_var</code> and <code>stratum_var</code> parameters to <code><a href="../reference/est_seroincidence.html">est_seroincidence()</a></code> and <code><a href="../reference/est_seroincidence_by.html">est_seroincidence_by()</a></code> to support cluster-robust standard error estimation. When <code>cluster_var</code> is specified, <code><a href="../reference/summary.seroincidence.html">summary.seroincidence()</a></code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</li>
-<li>
-<code>cluster_var</code> parameter now accepts multiple variables (e.g., <code>c("school", "classroom")</code>) for multi-level clustered sampling designs. Cluster-robust standard errors will account for all specified clustering levels.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="internal-changes-development-version">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-development-version"></a></h3>
+<ul><li><p>Docs workflow now saves the R package cache immediately after installation (before the long <code>Build docs</code> step), so cancellations no longer result in a cold cache on the next run (<a href="https://github.com/UCD-SERG/serocalculator/issues/516" class="external-link">#516</a>) ## New features</p></li>
+<li><p>Added <code>cluster_var</code> and <code>stratum_var</code> parameters to <code><a href="../reference/est_seroincidence.html">est_seroincidence()</a></code> and <code><a href="../reference/est_seroincidence_by.html">est_seroincidence_by()</a></code> to support cluster-robust standard error estimation. When <code>cluster_var</code> is specified, <code><a href="../reference/summary.seroincidence.html">summary.seroincidence()</a></code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</p></li>
+<li><p><code>cluster_var</code> parameter now accepts multiple variables (e.g., <code>c("school", "classroom")</code>) for multi-level clustered sampling designs. Cluster-robust standard errors will account for all specified clustering levels.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-1"></a></h3>

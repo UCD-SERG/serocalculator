@@ -7,6 +7,10 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+
+## Internal changes
+
+- Docs workflow now saves the R package cache immediately after installation (before the long `Build docs` step), so cancellations no longer result in a cold cache on the next run (#516)
 ## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 

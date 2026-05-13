@@ -104,7 +104,7 @@ a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional sero
 data, with columns:
 \itemize{
 \item \code{age}: age (in years)
-\item one column for each element in the \code{antigen_iso} input argument
+\item one column for each element in the \code{antigen_isos} input argument
 }
 }
 \description{

@@ -117,6 +117,12 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Graph an antibody decay curve model
 }
 \details{
+\subsection{Fixed \code{...} arguments}{
+
+The arguments \code{fun}, \code{n}, and \code{args} are set internally and cannot be
+overridden via \code{...}. Passing them will trigger an informative error.
+}
+
 \subsection{\code{n_curves} and \code{iters_to_graph}}{
 
 In most cases, \code{object} will contain too many rows of MCMC

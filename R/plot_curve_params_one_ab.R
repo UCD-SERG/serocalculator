@@ -19,6 +19,10 @@
 #' @inheritDotParams ggplot2::geom_function -fun -n -args
 #' @returns a [ggplot2::ggplot()] object
 #' @details
+#' ## Fixed `...` arguments
+#' The arguments `fun`, `n`, and `args` are set internally and cannot be
+#' overridden via `...`. Passing them will trigger an informative error.
+#'
 #' ## `n_curves` and `iters_to_graph`
 #' In most cases, `object` will contain too many rows of MCMC
 #' samples for all of these samples to be plotted at once.
@@ -52,6 +56,20 @@ plot_curve_params_one_ab <- function(
     iters_to_graph = seq_len(min(n_curves, nrow(object))),
     xlim = c(10 ^ -1, 10 ^ 3.1),
     ...) {
+  dots <- list(...)
+  fixed_args <- c("fun", "n", "args")
+  bad_args <- intersect(names(dots), fixed_args)
+  if (length(bad_args) > 0) {
+    cli::cli_abort(
+      c(
+        "{.arg {bad_args}} {?is/are} fixed internally and cannot be passed
+        via {.arg ...}.",
+        "i" = "These arguments are set by {.fn plot_curve_params_one_ab}:
+        {.code fun}, {.code n}, {.code args}."
+      )
+    )
+  }
+
   plot1 <-
     ggplot2::ggplot() +
     # ggplot2::scale_x_log10() +

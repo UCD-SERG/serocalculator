@@ -22,7 +22,17 @@
   installation (before the long `Build docs` step), so cancellations no
   longer result in a cold cache on the next run
   ([\#516](https://github.com/UCD-SERG/serocalculator/issues/516)) \##
-  New features
+  Compatibility
+
+- Replaced deprecated
+  [`dplyr::is.grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  usage with
+  [`dplyr::is_grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  in
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
+  for compatibility with newer dplyr releases.
+
+### New features
 
 - Added `cluster_var` and `stratum_var` parameters to
   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
@@ -34,7 +44,6 @@
   automatically computes cluster-robust (sandwich) variance estimates to
   account for within-cluster correlation in clustered sampling designs
   such as household or school-based surveys.
-
 - `cluster_var` parameter now accepts multiple variables (e.g.,
   `c("school", "classroom")`) for multi-level clustered sampling
   designs. Cluster-robust standard errors will account for all specified

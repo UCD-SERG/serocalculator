@@ -192,23 +192,6 @@ plot_curve_params_one_ab(
         geom](https://ggplot2.tidyverse.org/reference/layer_geoms.html)
         documentation.
 
-  `fun`
-
-  :   Function to use. Either 1) an anonymous function in the base or
-      rlang formula syntax (see
-      [`rlang::as_function()`](https://rlang.r-lib.org/reference/as_function.html))
-      or 2) a quoted or character name referencing a function; see
-      examples. Must be vectorised.
-
-  `n`
-
-  :   Number of points to interpolate along the x axis.
-
-  `args`
-
-  :   List of additional arguments passed on to the function defined by
-      `fun`.
-
 ## Value
 
 a
@@ -216,6 +199,11 @@ a
 object
 
 ## Details
+
+### Fixed `...` arguments
+
+The arguments `fun`, `n`, and `args` are set internally and cannot be
+overridden via `...`. Passing them will trigger an informative error.
 
 ### `n_curves` and `iters_to_graph`
 

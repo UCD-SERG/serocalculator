@@ -62,10 +62,15 @@ plot_curve_params_one_ab <- function(
   if (length(bad_args) > 0) {
     cli::cli_abort(
       c(
-        "{.arg {bad_args}} {?is/are} fixed internally and cannot be passed
-        via {.arg ...}.",
-        "i" = "These arguments are set by {.fn plot_curve_params_one_ab}:
-        {.code fun}, {.code n}, {.code args}."
+        paste0(
+          "{.arg {bad_args}} {?is/are} fixed internally ",
+          "and cannot be passed via {.arg ...}."
+        ),
+        "i" = paste0(
+          "These arguments are set by ",
+          "{.fn plot_curve_params_one_ab}: ",
+          "{.code fun}, {.code n}, {.code args}."
+        )
       )
     )
   }

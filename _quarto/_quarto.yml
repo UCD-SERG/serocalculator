@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: ../docs/
+  render:
+    - '*.qmd'
+    - '*.md'
+    - '!README.md'
+    - '!index.md'
 execute:
   freeze: auto
 bibliography: vignettes/references.bib
@@ -36,6 +41,9 @@ website:
             file: vignettes/articles/enteric_fever_example.Rmd
           - text: Scrub typhus example
             file: vignettes/articles/scrubTyphus_example.Rmd
+          - text: '---Other---'
+          - text: Version crosswalk (1.3 to 1.4)
+            file: vignettes/articles/version-crosswalk-1.3-to-1.4.qmd
   sidebar:
     collapse-level: 1
     contents:
@@ -56,6 +64,9 @@ website:
             contents:
               - vignettes/articles/enteric_fever_example.Rmd
               - vignettes/articles/scrubTyphus_example.Rmd
+          - section: Other
+            contents:
+              - vignettes/articles/version-crosswalk-1.3-to-1.4.qmd
       - section: Reference
         contents:
           - text: analyze_sims

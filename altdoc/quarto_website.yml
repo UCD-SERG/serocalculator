@@ -1,6 +1,13 @@
 project:
   type: website
   output-dir: ../docs/
+  render:
+    - "*.qmd"              # Render all Quarto markdown files
+    - "*.Rmd"              # Also render R markdown files
+    - "*.md"               # Also render plain markdown files
+    - "!README.md"         # Except README which is used in index
+    - "!index.md"          # Except index which is replaced by index.qmd
+    - "!vignettes/articles/_*.qmd"  # Exclude include-only files (prefixed with _)
 
 # Enable freeze to cache expensive computations and speed up builds
 # This is especially important for vignettes with long-running code

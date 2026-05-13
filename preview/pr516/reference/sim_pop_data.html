@@ -129,21 +129,6 @@ but updates baseline y0</p></li>
 whether to add biological and measurement noise</p></dd>
 
 
-<dt id="arg-curve-params">curve_params<a class="anchor" aria-label="anchor" href="#arg-curve-params"></a></dt>
-<dd><p>a <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> containing MCMC samples of parameters
-from the Bayesian posterior distribution of a longitudinal decay curve model.
-The parameter columns must be named:</p><ul><li><p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> vector indicating antigen-isotype
-combinations</p></li>
-<li><p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> vector indicating MCMC sampling iterations</p></li>
-<li><p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p></li>
-<li><p><code>y1</code>: antibody peak level (ELISA units)</p></li>
-<li><p><code>t1</code>: duration of infection</p></li>
-<li><p><code>alpha</code>: antibody decay rate
-(1/days for the current longitudinal parameter sets)</p></li>
-<li><p><code>r</code>: shape factor of antibody decay</p></li>
-</ul></dd>
-
-
 <dt id="arg-noise-limits">noise_limits<a class="anchor" aria-label="anchor" href="#arg-noise-limits"></a></dt>
 <dd><p>biologic noise distribution parameters</p></dd>
 
@@ -152,10 +137,6 @@ combinations</p></li>
 <dd><p>a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> variable, containing either:</p><ul><li><p><code>"long"</code> (one measurement per row) or</p></li>
 <li><p><code>"wide"</code> (one serum sample per row)</p></li>
 </ul></dd>
-
-
-<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>logical: if TRUE, print verbose log information to console</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

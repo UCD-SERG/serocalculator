@@ -108,31 +108,6 @@ sim_pop_data_multi(
 
       - `"wide"` (one serum sample per row)
 
-  `curve_params`
-
-  :   a [`data.frame()`](https://rdrr.io/r/base/data.frame.html)
-      containing MCMC samples of parameters from the Bayesian posterior
-      distribution of a longitudinal decay curve model. The parameter
-      columns must be named:
-
-      - `antigen_iso`: a
-        [`character()`](https://rdrr.io/r/base/character.html) vector
-        indicating antigen-isotype combinations
-
-      - `iter`: an [`integer()`](https://rdrr.io/r/base/integer.html)
-        vector indicating MCMC sampling iterations
-
-      - `y0`: baseline antibody level at \$t=0\$ (\$y(t=0)\$)
-
-      - `y1`: antibody peak level (ELISA units)
-
-      - `t1`: duration of infection
-
-      - `alpha`: antibody decay rate (1/days for the current
-        longitudinal parameter sets)
-
-      - `r`: shape factor of antibody decay
-
 ## Value
 
 a

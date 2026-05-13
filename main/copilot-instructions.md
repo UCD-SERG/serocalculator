@@ -189,6 +189,7 @@ platform:
   Verify installation by opening R console and checking version:
 
   ``` r
+
   R.version.string
   ```
 
@@ -197,6 +198,7 @@ platform:
 After installing R, install all required development dependencies:
 
 ``` r
+
 # Install devtools (required for package development)
 install.packages("devtools", repos = "https://cloud.r-project.org")
 
@@ -208,6 +210,7 @@ devtools::install_dev_deps(dependencies = TRUE)
 **Alternative approach** using pak (faster parallel installation):
 
 ``` r
+
 install.packages("pak", repos = "https://cloud.r-project.org")
 pak::local_install_dev_deps(dependencies = TRUE)
 ```
@@ -218,6 +221,7 @@ After installation, verify your development environment is properly
 configured:
 
 ``` r
+
 # Load devtools
 library(devtools)
 
@@ -266,6 +270,7 @@ system libraries, install the following system dependencies first:
 ### Initial Setup
 
 ``` r
+
 # Install development dependencies
 devtools::install_dev_deps()
 
@@ -279,6 +284,7 @@ install.packages("devtools")
 `.R` files.**
 
 ``` r
+
 # Generate documentation from roxygen2 comments
 devtools::document()
 # or
@@ -296,6 +302,7 @@ README.md directly.**
 To regenerate:
 
 ``` r
+
 rmarkdown::render("README.Rmd")
 ```
 
@@ -344,6 +351,7 @@ section begins when viewing the parent document.
 one version number higher than the main branch.
 
 ``` r
+
 # Check current version
 desc::desc_get_version()
 
@@ -369,6 +377,7 @@ conflicts when multiple PRs are merged.
 Run R CMD check to validate the package:
 
 ``` r
+
 # Full package check (takes several minutes)
 devtools::check()
 # or
@@ -381,6 +390,7 @@ and documentation checks. Allow 5-10 minutes for completion.
 ### Testing
 
 ``` r
+
 # Run all tests
 devtools::test()
 # or
@@ -396,6 +406,7 @@ The package uses a custom lintr configuration (`.lintr`) with specific
 requirements:
 
 ``` r
+
 # ALWAYS load the package first before linting
 devtools::load_all()
 
@@ -421,6 +432,7 @@ Exclusions: Some vignettes may be exempt from specific linters (see
 ### Spelling Check
 
 ``` r
+
 # Check spelling
 spelling::spell_check_package()
 ```
@@ -467,6 +479,11 @@ The following workflows run on every PR. **All must pass** for merge:
     when the workflow file changes, or via manual dispatch. Not a
     required check for PR merges. See “Copilot Setup Workflow” section
     for details. (~5-10 min)
+
+### Copilot PR review policy
+
+**Do not request PR review until all failing workflows are fixed and the
+corresponding checks have been run successfully locally.**
 
 ### PR Commands
 
@@ -585,6 +602,7 @@ consistency
 **Examples:**
 
 ``` r
+
 # For data frames with numeric precision control
 dataset |> expect_snapshot_data(name = "test-data")
 
@@ -606,6 +624,7 @@ outputs - Exact values are critical for correctness
 **Examples:**
 
 ``` r
+
 # Testing exact numeric values
 expect_equal(calculate_mean(c(1, 2, 3)), 2)
 
@@ -719,6 +738,10 @@ breakage 5. Run tests to verify functionality unchanged
   for reproducible tests
 - **Avoid code duplication**: Don’t copy-paste substantial code chunks.
   Instead, decompose reusable logic into well-named helper functions
+- **Validation functions**: Extract complex argument validation logic
+  into internal helper functions (e.g., `.validate_verbose()`,
+  `.validate_input()`). This improves readability, testability, and code
+  reuse.
 - **Quarto vignettes**: Use Quarto-style chunk options with `#|` prefix
   (e.g., `#| label: my-chunk`, `#| eval: false`)
 - **New articles**: Use `.qmd` format for all new vignettes and articles
@@ -732,6 +755,7 @@ breakage 5. Run tests to verify functionality unchanged
 ## Package Development Commands Summary
 
 ``` r
+
 # Complete development workflow
 devtools::load_all()           # Load package for interactive testing
 devtools::document()           # Update documentation

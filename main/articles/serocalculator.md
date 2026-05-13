@@ -53,6 +53,10 @@ The **serocalculator app** is a web based tool that takes the 5 curve
 parameters (y0, y1, t1, alpha, and r) to draw a single curve on antibody
 concentration.
 
+### Please Wait
+
+![loading](/__static__/frontend/images/spinner.gif?v=ce6bcde20b2f6c562913c06be83f9e7c8a19b008017407a3094b76fa82bbd6b7f4048e032e07e534d4ab5442b9105294d612863735077ab13a47653a14c5866e)
+
 ## Further reading
 
 ### Methods for estimating seroincidence
@@ -62,10 +66,10 @@ concentration.
 
 ### Applications
 
-- Aiemjoy et al. (2022)
-- Aiemjoy, Rumunu, and Juma John Hassen (2022)
+- Aiemjoy, C., et al. (2022)
+- Aiemjoy, Rumunu, et al. (2022)
 - Monge et al. (2018)
-- Kretzschmar, Teunis, and Pebody (2010)
+- Kretzschmar et al. (2010)
 - Simonsen et al. (2007)
 - Simonsen et al. (2010)
 - Falkenhorst et al. (2012)
@@ -107,21 +111,18 @@ Demelker, H, F Versteegh, J Schellekens, P Teunis, and M Kretzschmar.
 Population from a Combination of Serological Surveys.” *Journal of
 Infection* 53 (2): 106–13. <https://doi.org/10.1016/j.jinf.2005.10.020>.
 
-Falkenhorst, Gerhard, Jacob Simonsen, Tina H Ceper, Wilfrid van Pelt,
-Henriette de Valk, Malgorzata Sadkowska-Todys, Lavinia Zota, et al.
-2012. “Serological Cross-Sectional Studies on Salmonella Incidence in
-Eight European Countries: No Correlation with Incidence of Reported
-Cases.” *BMC Public Health* 12 (1).
-<https://doi.org/10.1186/1471-2458-12-523>.
+Falkenhorst, Gerhard, Jacob Simonsen, Tina H Ceper, et al. 2012.
+“Serological Cross-Sectional Studies on Salmonella Incidence in Eight
+European Countries: No Correlation with Incidence of Reported Cases.”
+*BMC Public Health* 12 (1). <https://doi.org/10.1186/1471-2458-12-523>.
 
 Kretzschmar, Mirjam, Peter F. M. Teunis, and Richard G. Pebody. 2010.
 “Incidence and Reproduction Numbers of Pertussis: Estimates from
-Serological and Social Contact Data in Five European Countries.” Edited
-by Megan Murray. *PLoS Medicine* 7 (6): e1000291.
+Serological and Social Contact Data in Five European Countries.” *PLoS
+Medicine* 7 (6): e1000291.
 <https://doi.org/10.1371/journal.pmed.1000291>.
 
-Monge, Susana, Peter Teunis, Ingrid Friesema, Eelco Franz, Wim Ang,
-Wilfrid van Pelt, and Lapo Mughini-Gras. 2018. “Immune
+Monge, Susana, Peter Teunis, Ingrid Friesema, et al. 2018. “Immune
 Response-Eliciting Exposure to Campylobacter Vastly Exceeds the
 Incidence of Clinically Overt Campylobacteriosis but Is Associated with
 Similar Risk Factors: A Nationwide Serosurvey in the Netherlands.”
@@ -138,15 +139,14 @@ P. Teunis. 2007. “Sero-Epidemiology as a Tool to Study the Incidence of
 Salmonella Infections in Humans.” *Epidemiology and Infection* 136 (7):
 895–902. <https://doi.org/10.1017/s0950268807009314>.
 
-Simonsen, J., P. Teunis, W. van Pelt, Y. Van Duynhoven, K. A. Krogfelt,
-M. Sadkowska-Todys, and K. Mølbak. 2010. “Usefulness of Seroconversion
-Rates for Comparing Infection Pressures Between Countries.”
-*Epidemiology and Infection* 139 (4): 636–43.
+Simonsen, J., P. Teunis, W. van Pelt, et al. 2010. “Usefulness of
+Seroconversion Rates for Comparing Infection Pressures Between
+Countries.” *Epidemiology and Infection* 139 (4): 636–43.
 <https://doi.org/10.1017/s0950268810000750>.
 
 Teunis, P. F. M., and J. C. H. van Eijkeren. 2020. “Estimation of
 Seroconversion Rates for Infectious Diseases: Effects of Age and Noise.”
-*Statistics in Medicine* 39 (21): 2799–2814.
+*Statistics in Medicine* 39 (21): 2799–814.
 <https://doi.org/10.1002/sim.8578>.
 
 Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić
@@ -155,15 +155,13 @@ Infection to Within-Host Heterogeneity in Antibody Production.”
 *Epidemics* 16 (September): 33–39.
 <https://doi.org/10.1016/j.epidem.2016.04.001>.
 
-Teunis, P. F. M., JCH van Eijkeren, CW Ang, YTHP van Duynhoven, JB
-Simonsen, MA Strid, and W van Pelt. 2012. “Biomarker Dynamics:
-Estimating Infection Rates from Serological Data.” *Statistics in
-Medicine* 31 (20): 2240–48. <https://doi.org/10.1002/sim.5322>.
+Teunis, P. F. M., JCH van Eijkeren, CW Ang, et al. 2012. “Biomarker
+Dynamics: Estimating Infection Rates from Serological Data.” *Statistics
+in Medicine* 31 (20): 2240–48. <https://doi.org/10.1002/sim.5322>.
 
-Teunis, P. F. M., G. Falkenhorst, C. W. Ang, M. A. Strid, H. de Valk, M.
-Sadkowksa-Todys, L. Zota, et al. 2012. “Campylobacterseroconversion
-Rates in Selected Countries in the European Union.” *Epidemiology and
-Infection* 141 (10): 2051–57.
+Teunis, P. F. M., G. Falkenhorst, C. W. Ang, et al. 2012.
+“Campylobacterseroconversion Rates in Selected Countries in the European
+Union.” *Epidemiology and Infection* 141 (10): 2051–57.
 <https://doi.org/10.1017/s0950268812002774>.
 
 Teunis, P. F. M., O. G. van der Heijden, H. E. de Melker, J. F. P.

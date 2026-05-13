@@ -99,5 +99,6 @@ example, to see the subfunctions of
 you can call:
 
 ``` r
+
 plot(foodwebr::foodweb(serocalculator::sim_pop_data))
 ```

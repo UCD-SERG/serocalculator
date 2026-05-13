@@ -30,6 +30,7 @@ parameter set is chosen at birth and kept, but:
 For our initial simulations, we will set `renew_params = FALSE`:
 
 ``` r
+
 renew_params <- FALSE
 ```
 
@@ -46,14 +47,15 @@ Here we load in longitudinal parameters; these are modeled from all SEES
 cases across all ages and countries:
 
 ``` r
+
 library(serocalculator)
 library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.2.0     ✔ readr     2.2.0
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
 #> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 #> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-#> ✔ purrr     1.2.1     
+#> ✔ purrr     1.2.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
@@ -76,6 +78,7 @@ method for the
 function:
 
 ``` r
+
 dmcmc |> autoplot(show_quantiles = FALSE, n_curves = 100)
 ```
 
@@ -84,6 +87,7 @@ dmcmc |> autoplot(show_quantiles = FALSE, n_curves = 100)
 We can use a logarithmic scale for the x-axis if desired:
 
 ``` r
+
 dmcmc |> autoplot(show_quantiles = FALSE, log_x = TRUE, n_curves = 100)
 ```
 
@@ -92,6 +96,7 @@ dmcmc |> autoplot(show_quantiles = FALSE, log_x = TRUE, n_curves = 100)
 We can add the median, 10%, and 90% quantiles of the model:
 
 ``` r
+
 # Specify the antibody-isotype responses to include in analyses
 antibodies <- c("HlyE_IgA", "HlyE_IgG")
 
@@ -104,6 +109,7 @@ dmcmc |>
 ### Simulate cross-sectional data
 
 ``` r
+
 # set seed to reproduce results
 set.seed(54321)
 
@@ -122,6 +128,7 @@ dlims <- rbind(
 ```
 
 ``` r
+
 
 verbose <- FALSE # whether to print verbose updates as the function runs
 
@@ -146,6 +153,7 @@ We need to provide noise parameters for the analysis; here, we define
 them directly in our code:
 
 ``` r
+
 library(tibble)
 cond <- tibble(
   antigen_iso = c("HlyE_IgG", "HlyE_IgA"),
@@ -162,6 +170,7 @@ We can plot the distribution of the antibody responses in the simulated
 data.
 
 ``` r
+
 csdata |>
   ggplot() +
   aes(x = as.factor(antigen_iso),
@@ -186,6 +195,7 @@ We can calculate the log-likelihood of the data as a function of the
 incidence rate directly:
 
 ``` r
+
 ll_a <-
   log_likelihood(
     pop_data = csdata,
@@ -230,6 +240,7 @@ using
 [`graph_loglik()`](https://ucd-serg.github.io/serocalculator/reference/graph_loglik.md):
 
 ``` r
+
 lik_HlyE_IgA <-
   graph_loglik(
     pop_data = csdata,
@@ -268,6 +279,7 @@ We can estimate incidence with
 [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md):
 
 ``` r
+
 est1 <- est_seroincidence(
   pop_data = csdata,
   sr_params = dmcmc,
@@ -285,6 +297,7 @@ We can extract summary statistics with
 [`summary()`](https://rdrr.io/r/base/summary.html):
 
 ``` r
+
 summary(est1)
 #> # A tibble: 1 × 11
 #>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
@@ -298,6 +311,7 @@ We can plot the log-likelihood curve with
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html):
 
 ``` r
+
 autoplot(est1)
 ```
 
@@ -306,6 +320,7 @@ autoplot(est1)
 We can set the x-axis to a logarithmic scale:
 
 ``` r
+
 autoplot(est1, log_x = TRUE)
 ```
 
@@ -314,6 +329,7 @@ autoplot(est1, log_x = TRUE)
 ## Simulate multiple clusters with different lambdas
 
 ``` r
+
 library(parallel)
 n_cores <- max(1, parallel::detectCores() - 1)
 print(n_cores)
@@ -324,6 +340,7 @@ In the preceding code chunk, we have determined that we can use 3 CPU
 cores to run computations in parallel.
 
 ``` r
+
 # number of clusters
 nclus <- 20
 # cross-sectional sample size
@@ -367,6 +384,7 @@ print(sim_df)
 We can plot the distributions of the simulated responses:
 
 ``` r
+
 sim_df |>
   ggplot() +
   aes(
@@ -386,6 +404,7 @@ sim_df |>
 ### Estimate incidence in each cluster
 
 ``` r
+
 ests <-
   est_seroincidence_by(
     pop_data = sim_df,
@@ -406,6 +425,7 @@ ests <-
 some extra meta-data:
 
 ``` r
+
 ests_summary <- ests |> summary() |> print()
 #> Seroincidence estimated given the following setup:
 #> a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
@@ -435,6 +455,7 @@ We can explore the summary table interactively using
 [`DT::datatable()`](https://rdrr.io/pkg/DT/man/datatable.html)
 
 ``` r
+
 library(DT)
 ests_summary |>
   DT::datatable(options = list(scrollX = TRUE)) |>
@@ -454,6 +475,7 @@ that simulation in `ests` and calling
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html):
 
 ``` r
+
 autoplot(ests[1])
 ```
 
@@ -463,6 +485,7 @@ We can also plot log-likelihood curves for several clusters at once
 (your computer might struggle to plot many at once):
 
 ``` r
+
 autoplot(ests[1:5])
 ```
 
@@ -471,6 +494,7 @@ autoplot(ests[1:5])
 The `log_x` argument also works here:
 
 ``` r
+
 autoplot(ests[1:5], log_x = TRUE)
 ```
 
@@ -482,6 +506,7 @@ Make sure to check the [`nlm()`](https://rdrr.io/r/stats/nlm.html) exit
 codes (codes 3-5 indicate possible non-convergence):
 
 ``` r
+
 ests_summary |>
   as_tibble() |> # removes extra meta-data
   select(Stratum, nlm.convergence.code) |>
@@ -511,6 +536,7 @@ Solutions to [`nlm()`](https://rdrr.io/r/stats/nlm.html) exit codes 3-5:
 We can extract the indices of problematic strata, if there are any:
 
 ``` r
+
 problem_strata <-
   which(ests_summary$nlm.convergence.code > 2) |>
   print()
@@ -520,6 +546,7 @@ problem_strata <-
 If any clusters had problems, we can take a look:
 
 ``` r
+
 if (length(problem_strata) > 0) {
   autoplot(ests[problem_strata], log_x = TRUE)
 }
@@ -537,6 +564,7 @@ be sure.
 Finally, we can look at our simulation results:
 
 ``` r
+
 
 library(ggplot2)
 ests_summary |>
@@ -561,6 +589,7 @@ We can analyze the simulation results with
 [`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md):
 
 ``` r
+
 ests_summary |> analyze_sims()
 #> # A tibble: 6 × 8
 #>   lambda.sim sample_size     Bias Mean_Est_SE Empirical_SE   RMSE Mean_CI_Width
@@ -582,6 +611,7 @@ method:
 
 ``` r
 
+
 ests_summary |> analyze_sims() |> autoplot(statistic = "Empirical_SE")
 #> `geom_line()`: Each group consists of only one observation.
 #> ℹ Do you need to adjust the group aesthetic?
@@ -596,6 +626,7 @@ for by the current method; for population samples from populations with
 high incidence rates, there may be bias:
 
 ``` r
+
 sim_df_renew <-
   sim_pop_data_multi(
     n_cores = n_cores,
@@ -629,6 +660,7 @@ ests_renew_summary <-
 ```
 
 ``` r
+
 
 ests_renew_summary |>
   autoplot(type = "scatter",

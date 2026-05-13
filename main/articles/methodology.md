@@ -21,11 +21,13 @@ More mathematically, the incidence rate *at a given time point* is the
 expected cumulative count of infections per person at risk, at that
 time:
 
-$$\frac{d}{dt}{\mathbb{E}}\left\lbrack \frac{C(t)}{n} \mid N(t) = n \right\rbrack$$
+``` math
+\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]
+```
 
-where $C(t)$ is the cumulative total number of infections in the
-population of interest, and $N(t)$ is the number of individuals at risk
-at time $t$.
+where $`C(t)`$ is the cumulative total number of infections in the
+population of interest, and $`N(t)`$ is the number of individuals at
+risk at time $`t`$.
 
 ### Scale of incidence rates
 
@@ -42,15 +44,15 @@ day”, etc.
 
 From the perspective of an individual in the population:
 
-- the **incidence rate** (at a given time point ($t$) is the
+- the **incidence rate** (at a given time point ($`t`$) is the
   instantaneous **probability** (density) of **becoming infected** at
   that time point, **given** that they are **at risk** at that time
   point.
 
 - That is, the incidence rate is a **hazard** rate.
 
-- Notation: let’s use **$\lambda_{t}$** to denote the incidence rate at
-  time $t$.
+- Notation: let’s use **$`\lambda_{t}`$** to denote the incidence rate
+  at time $`t`$.
 
 ## Estimating incidence from cross-sectional antibody surveys
 
@@ -65,19 +67,19 @@ We will need two pieces of notation to formalize this process.
 
 - We recruit participants from the population of interest.
 
-- For each survey participant, we measure antibody levels $(Y)$ for the
-  disease of interest
+- For each survey participant, we measure antibody levels $`(Y)`$ for
+  the disease of interest
 
 - Each participant was **most recently infected** at some time
-  $(T)$**prior** to when we measured their antibodies.
+  $`(T)`$**prior** to when we measured their antibodies.
 
-- If a participant has never been infected since birth, then $T$ is
+- If a participant has never been infected since birth, then $`T`$ is
   undefined.
 
-- $T$ is a **latent, unobserved variable**.
+- $`T`$ is a **latent, unobserved variable**.
 
-- We **don’t directly observe $T$**; we **only observe $Y$**, which we
-  hope tells us something about $T$ and $\lambda$.
+- We **don’t directly observe $`T`$**; we **only observe $`Y`$**, which
+  we hope tells us something about $`T`$ and $`\lambda`$.
 
 ### Modeling assumptions
 
@@ -86,7 +88,10 @@ We **assume** that:
 - The incidence rate is approximately **constant** **over time** and
   **across the population** (“**constant and homogenous incidence**”)
 
-- that is: $$\lambda_{i,t} = \lambda,\forall i,t$$
+- that is:
+  ``` math
+  \lambda_{i,t} = \lambda, \forall i,t
+  ```
 
 (We can analyze subpopulations separately to make homogeneity more
 plausible.)
@@ -103,49 +108,65 @@ list](https://github.com/UCD-SERG/dcm/issues/11)).
 
 Under those assumptions:
 
-- $T$ has an **exponential distribution**:
+- $`T`$ has an **exponential distribution**:
 
-$${\mathbb{p}}(T = t) = \lambda{\exp}\left\{ -\lambda t \right\}$$
+``` math
+\mathbb{p}(T=t) = \lambda \exp{\left\{-\lambda t\right\}}
+```
 
 - More precisely, the distribution is exponential **truncated by age**
-  at observation ($a$):
+  at observation ($`a`$):
 
-$${\mathbb{p}}(T = t|A = a) = 1_{t \in \lbrack 0,a\rbrack}\lambda{\exp}\left\{ -\lambda t \right\} + 1_{t = \text{NA}}{\exp}\left\{ -\lambda a \right\}$$
+``` math
+\mathbb{p}(T=t|A=a) = 1_{t \in[0,a]}\lambda \exp{\left\{-\lambda t\right\}} + 1_{t = \text{NA}} \exp{\left\{-\lambda a\right\}}
+```
 
-- the rate parameter $\lambda$ is the incidence rate
+- the rate parameter $`\lambda`$ is the incidence rate
 
 This is a time-to-event model, looking **backwards in time** from the
 survey date (when the blood sample was collected).
 
-The probability that an individual was **last** infected $t$ days ago,
-$p(T = t)$, is equal to the probability of being infected at time $t$
-(i.e., the incidence rate at time $t$, $\lambda$) times the probability
-of not being infected after time $t$, which turns out to be
-${\exp}(-\lambda t)$.
+The probability that an individual was **last** infected $`t`$ days ago,
+$`p(T=t)`$, is equal to the probability of being infected at time $`t`$
+(i.e., the incidence rate at time $`t`$, $`\lambda`$) times the
+probability of not being infected after time $`t`$, which turns out to
+be $`\exp(-\lambda t)`$.
 
-The distribution of $T$ is truncated by the patient’s birth date; the
+The distribution of $`T`$ is truncated by the patient’s birth date; the
 probability that they have never been infected is
-${\exp}\left\{ -\lambda a \right\}$, where $a$ is the patient’s age at
+$`\exp{\left\{-\lambda a\right\}}`$, where $`a`$ is the patient’s age at
 the time of the survey.
 
 ### Likelihood of latent infection times
 
-If we could observe $T$, then we could estimate $\lambda$ using a
+If we could observe $`T`$, then we could estimate $`\lambda`$ using a
 typical maximum likelihood approach.
 
 Starting with the likelihood: Taking the logarithm of the likelihood:
 Taking the derivative of that log-likelihood to find the score function:
 Setting the score function equal to 0 to find the score equation, and
-solving the score equation for $\lambda$ to find the maximum likelihood
-estimate:
+solving the score equation for $`\lambda`$ to find the maximum
+likelihood estimate:
 
-- $$\mathcal{L}^{*}(\lambda) = \prod\limits_{i = 1}^{n}{\mathbb{p}}(T = t_{i}) = \prod\limits_{i = 1}^{n}\lambda{\exp}(-\lambda t_{i})$$
+- 
+  ``` math
+  \mathcal{L}^*(\lambda) = \prod_{i=1}^n \mathbb{p}(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)
+  ```
 
-- $$\ell^{*}(\lambda) = {\log}\left\{ \mathcal{L}^{*}(\lambda) \right\} = \sum\limits_{i = 1}^{n}{\log}\left\{ \lambda \right\} - \lambda t_{i}$$
+- 
+  ``` math
+  \ell^*(\lambda) = \log{\left\{\mathcal{L}^*(\lambda)\right\}} = \sum_{i=1}^n \log{\left\{\lambda\right\}} -\lambda t_i
+  ```
 
-- $$\ell^{*^{\prime}}(\lambda) = \sum\limits_{i = 1}^{n}\lambda^{-1} - t_{i}$$
+- 
+  ``` math
+  \ell^{*'}(\lambda) = \sum_{i=1}^n \lambda^{-1} - t_i
+  ```
 
-- $${\widehat{\lambda}}_{\text{ML}} = \frac{n}{\sum\limits_{i = 1}^{n}t_{i}} = \frac{1}{\bar{t}}$$
+- 
+  ``` math
+  \hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}
+  ```
 
 The MLE turns out to be the inverse of the mean.
 
@@ -154,9 +175,11 @@ The MLE turns out to be the inverse of the mean.
 Here’s what that would look like:
 
 ``` r
+
 library(serocalculator)
 library(dplyr)
 ```
+
 
     Attaching package: 'dplyr'
 
@@ -169,6 +192,7 @@ library(dplyr)
         intersect, setdiff, setequal, union
 
 ``` r
+
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" %>%
@@ -184,6 +208,7 @@ noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
 ```
 
 ``` r
+
 lik_HlyE_IgA <- graph_loglik(
   pop_data = xs_data,
   curve_params = curves,
@@ -228,72 +253,85 @@ errors
 
 ### Likelihood of observed data
 
-Unfortunately, we don’t observe infection times $T$; we only observe
-antibody levels $Y$. So things get a little more complicated.
+Unfortunately, we don’t observe infection times $`T`$; we only observe
+antibody levels $`{Y}`$. So things get a little more complicated.
 
-In short, we are hoping that we can estimate $T$ (time since last
-infection) from $Y$ (current antibody levels). If we could do that, then
-we could plug in our estimates ${\widehat{t}}_{i}$ into that likelihood
-above, and estimate $\lambda$ as previously.
+In short, we are hoping that we can estimate $`T`$ (time since last
+infection) from $`Y`$ (current antibody levels). If we could do that,
+then we could plug in our estimates $`\hat t_i`$ into that likelihood
+above, and estimate $`\lambda`$ as previously.
 
 We’re actually going to do something a little more nuanced; instead of
-just using one value for $\widehat{t}$, we are going to consider all
-possible values of $t$ for each individual.
+just using one value for $`\hat t`$, we are going to consider all
+possible values of $`t`$ for each individual.
 
 We need to link the data we actually observed to the incidence rate.
 
-The likelihood of an individual’s observed data, ${\mathbb{p}}(Y = y)$,
-can be expressed as an integral over the joint likelihood of $Y$ and $T$
-(using the Law of Total Probability):
+The likelihood of an individual’s observed data, $`\mathbb{p}(Y=y)`$,
+can be expressed as an integral over the joint likelihood of $`Y`$ and
+$`T`$ (using the Law of Total Probability):
 
-- $${\mathbb{p}}(Y = y) = \int_{t}{\mathbb{p}}(Y = y,T = t)dt$$
+- 
+  ``` math
+  \mathbb{p}(Y=y) = \int_t \mathbb{p}(Y=y,T=t)dt
+  ```
 
-Further, we can express the joint probability $p(Y = y,T = t)$ as the
-product of $p(T = t)$ and $p(Y = y|T = t)$ the “antibody response curve
+Further, we can express the joint probability $`p(Y=y,T=t)`$ as the
+product of $`p(T=t)`$ and $`p(Y=y|T=t)`$ the “antibody response curve
 after infection”. That is:
 
-- $${\mathbb{p}}(Y = y,T = t) = {\mathbb{p}}(Y = y|T = t){\mathbb{p}}(T = t)$$
+- 
+  ``` math
+  \mathbb{p}(Y=y,T=t) = \mathbb{p}(Y=y|T=t) \mathbb{p}(T=t)
+  ```
 
 ### Antibody response curves
 
 ![](fig/fig1a-1.svg)
 
-Figure 2: Antibody response curves, $p(Y = y|T = t)$, for typhoid
+Figure 2: Antibody response curves, $`p(Y=y|T=t)`$, for typhoid
 
 ### Putting it all together
 
-Substituting $p(Y = y,T = t) = p(Y = y|T = t)P(T = t)$ into the previous
-expression for $p(Y = y)$:
+Substituting $`p(Y=y,T=t) = p(Y=y|T=t)P(T=t)`$ into the previous
+expression for $`p(Y=y)`$:
 
-$$\begin{aligned}
-{p(Y = y)} & {= \int_{t}p(Y = y|T = t)P(T = t)dt}
-\end{aligned}$$
+``` math
+\begin{aligned}
+p(Y=y)
+&= \int_t p(Y=y|T=t)P(T=t) dt
+\end{aligned}
+```
 
 ### Composing the likelihood
 
 Now, the likelihood of the observed data
-$\mathbf{y} = (y_{1},y_{2},...,y_{n})$ is:
+$`\mathbf{y} = (y_1, y_2, ..., y_n)`$ is:
 
-$$\begin{aligned}
-{\mathcal{L}(\lambda)} & {= \prod\limits_{i = 1}^{n}p(Y = y_{i})} \\
- & {= \prod\limits_{i = 1}^{n}\int_{t}p(Y = y_{i}|T = t)p_{\lambda}(T = t)dt} \\
- & 
-\end{aligned}$$
+``` math
+\begin{aligned}
+\mathcal{L}(\lambda)
+&= \prod_{i=1}^n p(Y=y_i)
+\\&= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+\end{aligned}
+```
 
-If we know $p(Y = y|T = t)$, then we can maximize $\mathcal{L}(\lambda)$
-over $\lambda$ to find the “maximum likelihood estimate” (MLE) of
-$\lambda$, denoted $\widehat{\lambda}$.
+If we know $`p(Y=y|T=t)`$, then we can maximize $`\mathcal{L}(\lambda)`$
+over $`\lambda`$ to find the “maximum likelihood estimate” (MLE) of
+$`\lambda`$, denoted $`\hat\lambda`$.
 
 ### Finding the MLE numerically
 
-The likelihood of $Y$ involves the product of integrals, so the
+The likelihood of $`Y`$ involves the product of integrals, so the
 log-likelihood involves the sum of the logs of integrals:
 
-$$\begin{aligned}
-{{\log}\mathcal{L}(\lambda)} & {= {\log}\prod\limits_{i = 1}^{n}\int_{t}p(Y = y_{i}|T = t)p_{\lambda}(T = t)dt} \\
- & {= \sum\limits_{i = 1}^{n}{\log}\left\{ \int_{t}p(Y = y_{i}|T = t)p_{\lambda}(T = t)dt \right\}} \\
- & 
-\end{aligned}$$
+``` math
+\begin{aligned}
+\log \mathcal{L} (\lambda)
+&= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+&= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
+\end{aligned}
+```
 
 The derivative of this expression doesn’t come out cleanly, so we will
 use a *numerical method* (specifically, a Newton-type algorithm,
@@ -325,34 +363,39 @@ To account for within-cluster correlation, `serocalculator` implements
 the **sandwich estimator** (also known as the Huber-White robust
 variance estimator):
 
-$$V_{\text{robust}} = H^{-1}BH^{-1}$$
+``` math
+V_{\text{robust}} = H^{-1} B H^{-1}
+```
 
 where:
 
-- $V_{\text{robust}}$ is the cluster-robust variance-covariance matrix
+- $`V_{\text{robust}}`$ is the cluster-robust variance-covariance matrix
   for the parameter estimates
-- $H$ is the Hessian matrix (matrix of second partial derivatives of the
-  log-likelihood with respect to the parameters, evaluated at the MLE
-  $\widehat{\lambda}$)
-- $B$ is the “meat” of the sandwich, calculated from cluster-level score
-  contributions:
+- $`H`$ is the Hessian matrix (matrix of second partial derivatives of
+  the log-likelihood with respect to the parameters, evaluated at the
+  MLE $`\hat{\lambda}`$)
+- $`B`$ is the “meat” of the sandwich, calculated from cluster-level
+  score contributions:
 
-$$B = \sum\limits_{c = 1}^{C}U_{c}U_{c}^{T}$$
+``` math
+B = \sum_{c=1}^C U_c U_c^T
+```
 
 where:
 
-- $C$ is the total number of clusters in the sample
-- $U_{c} = \sum_{i \in c}\nabla_{\lambda}{\log}p(Y_{i}|\lambda)$ is the
+- $`C`$ is the total number of clusters in the sample
+- $`U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)`$ is the
   score contribution (gradient of log-likelihood with respect to
-  $\lambda$) from all observations in cluster $c$
-- $\nabla_{\lambda}$ denotes the gradient operator (vector of partial
-  derivatives with respect to the parameter $\lambda$)
+  $`\lambda`$) from all observations in cluster $`c`$
+- $`\nabla_\lambda`$ denotes the gradient operator (vector of partial
+  derivatives with respect to the parameter $`\lambda`$)
 
 #### Implementation in serocalculator
 
 Users can specify clustering using the `cluster_var` parameter:
 
 ``` r
+
 # Single-level clustering (e.g., by household)
 est <- est_seroincidence(
   pop_data = data,
@@ -383,7 +426,7 @@ with `se_type = "cluster-robust"`.
 ## Modeling the seroresponse kinetics curve
 
 Now, we need a model for the antibody response to infection,
-${\mathbb{p}}(Y = y|T = t)$. The current version of the
+$`\mathbb{p}(Y=y|T=t)`$. The current version of the
 [serocalculator](https://ucd-serg.github.io/serocalculator/) package
 uses a two-phase model for the shape of the seroresponse ([Teunis et al.
 2016](#ref-Teunis_2016)).
@@ -397,30 +440,36 @@ the antibodies are the predator:
 
 Notation:
 
-- $x(t)$: Pathogen concentration at time $t$
-- $y(t)$: Antibody concentration at time $t$
+- $`x(t)`$: Pathogen concentration at time $`t`$
+- $`y(t)`$: Antibody concentration at time $`t`$
 
 Model:
 
-- $$x^{\prime}(t) = \alpha x(t) - \beta y(t)$$
-- $$y^{\prime}(t) = \delta y(t)$$
+- 
+  ``` math
+  x'(t) = \alpha x(t) - \beta y(t)
+  ```
+- 
+  ``` math
+  y'(t) = \delta y(t)
+  ```
 
-With baseline antibody concentration $y(0) = y_{0}$ and initial pathogen
-concentration $x(0) = x_{0}$.
+With baseline antibody concentration $`y(0) = y_{0}`$ and initial
+pathogen concentration $`x(0) = x_{0}`$.
 
 Compared to the standard LV model:
 
-- the predation term with the $\beta$ coefficient is missing the prey
-  concentration $x(t)$ factor; we assume that the efficiency of
+- the predation term with the $`\beta`$ coefficient is missing the prey
+  concentration $`x(t)`$ factor; we assume that the efficiency of
   predation doesn’t depend on pathogen concentration.
 
 - the differential equation for predator density is missing the predator
-  death rate term $-\gamma y(t)$; we assume that as long as there are
+  death rate term $`-\gamma y(t)`$; we assume that as long as there are
   any pathogens present, the antibody decay rate is negligible compared
   to the growth rate.
 
-- the predator growth rate term $\delta y(t)$ is missing the prey
-  density factor $x(t)$ we assume that as long as there are any
+- the predator growth rate term $`\delta y(t)`$ is missing the prey
+  density factor $`x(t)`$ we assume that as long as there are any
   pathogens present, the antibody concentration grows at the same
   exponential rate.
 
@@ -430,42 +479,56 @@ model.
 
 ### Model for post-infection antibody decay
 
-- $$b(t) = 0$$
+- 
+  ``` math
+  b(t) = 0
+  ```
 
-- $$y^{\prime}(t) = -\alpha y(t)^{r}$$
+- 
+  ``` math
+  y^{\prime}(t) = -\alpha y(t)^r
+  ```
 
 Antibody decay is different from exponential (log–linear) decay. When
-the shape parameter $r > 1$, log concentrations decrease rapidly after
+the shape parameter $`r > 1`$, log concentrations decrease rapidly after
 infection has terminated, but decay then slows down and low antibody
-concentrations are maintained for a long period. If $r = 1$, this model
-reduces to exponential decay with decay rate $\alpha$.
+concentrations are maintained for a long period. If $`r = 1`$, this
+model reduces to exponential decay with decay rate $`\alpha`$.
 
 ### Putting it all together
 
-The serum antibody response $y(t)$ can be written as
+The serum antibody response $`y(t)`$ can be written as
 
-$$y(t) = y_{+}(t) + y_{-}(t)$$
+``` math
+y(t) = y_{+}(t) + y_{-}(t)
+```
 
 where
 
-$$\begin{aligned}
-{y_{+}(t)} & {= y_{0}\text{e}^{\mu t}\lbrack 0 \leq t < t_{1}\rbrack} \\
-{y_{-}(t)} & {= y_{1}\left( 1 + (r - 1)y_{1}^{r - 1}\alpha(t - t_{1}) \right)^{-\frac{1}{r - 1}}\lbrack t_{1} \leq t < \infty\rbrack}
-\end{aligned}$$
+``` math
+\begin{align}
+y_{+}(t) & = y_{0}\text{e}^{\mu t}[0\leq t <t_{1}]\\
+y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t < \infty]
+\end{align}
+```
 
 ------------------------------------------------------------------------
 
-Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$ the growth
-rate $\mu$ can be written as
-$$\mu = \frac{1}{t_{1}}{\log}\left( \frac{y_{1}}{y_{0}} \right)$$
+Since the peak level is $`y_{1} = y_{0}\text{e}^{\mu t_{1}}`$ the growth
+rate $`\mu`$ can be written as
+``` math
+\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)
+```
 
 ------------------------------------------------------------------------
 
 ``` r
+
 cur_ai <- "HlyE_IgG"
 ```
 
 ``` r
+
 library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
@@ -532,9 +595,9 @@ curve1 |>
 
 Figure 3: An example kinetics curve for HlyE IgG
 
-The antibody level at $t = 0$ is $y_{0}$; the rising branch ends at
-$t = t_{1}$ where the peak antibody level $y_{1}$ is reached. Any
-antibody level $y(t) \in (y_{0},y_{1})$ eventually occurs twice.
+The antibody level at $`t=0`$ is $`y_{0}`$; the rising branch ends at
+$`t = t_{1}`$ where the peak antibody level $`y_{1}`$ is reached. Any
+antibody level $`y(t) \in (y_{0}, y_{1})`$ eventually occurs twice.
 
 ------------------------------------------------------------------------
 
@@ -560,31 +623,31 @@ cross-reactivity).
 We are more concerned about overcount (cross-reactivity) than
 undercount. For a given antibody, we can do some analytical work
 beforehand to estimate the distribution of overcounts, and add that to
-our model $p(Y = y|T = t)$.
+our model $`p(Y=y|T=t)`$.
 
 Notation:
 
-- $y_{\text{obs}}$: measured serum antibody concentration
-- $y_{\text{true}}$: “true” serum antibody concentration
-- $\epsilon_{b}$: noise due to probe cross-reactivity
+- $`y_\text{obs}`$: measured serum antibody concentration
+- $`y_\text{true}`$: “true” serum antibody concentration
+- $`\epsilon_b`$: noise due to probe cross-reactivity
 
 Model:
 
-- $y_{\text{obs}} = y_{\text{true}} + \epsilon_{b}$
-- $\epsilon_{b} \sim \text{Unif}(0,\nu)$
+- $`y_\text{obs} = y_\text{true} + \epsilon_b`$
+- $`\epsilon_b \sim \text{Unif}(0, \nu)`$
 
-$\nu$ needs to be pre-estimated using negative controls, typically using
-the 95th percentile of the distribution of antibody responses to the
-antigen-isotype in a population with no exposure.
+$`\nu`$ needs to be pre-estimated using negative controls, typically
+using the 95th percentile of the distribution of antibody responses to
+the antigen-isotype in a population with no exposure.
 
 ### Measurement noise
 
 There are also some other sources of noise in our bioassays; user
 differences in pipetting technique, random ELISA plate effects, etc.
 This noise can cause both overcount and undercount. We can also estimate
-the magnitude of this noise source and include it in $p(Y = y|T = t)$.
+the magnitude of this noise source and include it in $`p(Y=y|T=t)`$.
 
-Measurement noise, $\varepsilon$ (“epsilon”), represents measurement
+Measurement noise, $`\varepsilon`$ (“epsilon”), represents measurement
 error from the laboratory testing process. It is defined by a CV
 (coefficient of variation) as the ratio of the standard deviation to the
 mean for replicates. Note that the CV should ideally be measured across

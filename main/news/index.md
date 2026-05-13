@@ -2,12 +2,32 @@
 
 ## serocalculator (development version)
 
+### Bug fixes
+
+- [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
+  and
+  [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
+  now fail gracefully with informative messages when internet resources
+  are unavailable, complying with CRAN policy
+  ([\#505](https://github.com/UCD-SERG/serocalculator/issues/505))
 - Added Version Crosswalk article to pkgdown website to help users
   migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
-  - Accessible as a prominent tab in the website navigation \## New
-    features
+  - Accessible as a prominent tab in the website navigation
+
+### Compatibility
+
+- Replaced deprecated
+  [`dplyr::is.grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  usage with
+  [`dplyr::is_grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  in
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
+  for compatibility with newer dplyr releases.
+
+### New features
+
 - Added `cluster_var` and `stratum_var` parameters to
   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
   and
@@ -332,7 +352,7 @@ CRAN release: 2025-01-25
   function to help locate example data files
   ([\#329](https://github.com/UCD-SERG/serocalculator/issues/329))
 
-- Fixed a bug in computing the antibody response curve when $r = 1$
+- Fixed a bug in computing the antibody response curve when $`r=1`$
   ([\#323](https://github.com/UCD-SERG/serocalculator/issues/323))
 
 - Added example datasets with documentation for examples and testing

@@ -29,6 +29,7 @@ packages. **If you haven’t installed already, you will need to do so
 before loading:**
 
 ``` r
+
 install.packages("serocalculator")
 ```
 
@@ -42,6 +43,7 @@ along with any other packages you may need for data management; For this
 example, we will load `tidyverse` and `forcats`:
 
 ``` r
+
 library(serocalculator)
 library(tidyverse)
 library(forcats)
@@ -81,6 +83,7 @@ names must *exactly* match follow the naming conventions:
 *Note that variable names are case-sensitive*
 
 ``` r
+
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" |>
@@ -94,6 +97,7 @@ We can graph the decay curves with an
 method:
 
 ``` r
+
 # Visualize curve parameters
 curves |>
   filter(
@@ -132,6 +136,7 @@ are required:
 *Note that variable names are case sensitive*
 
 ``` r
+
 #Import cross-sectional data from OSF and rename required variables
 xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
   as_pop_data()
@@ -144,6 +149,7 @@ with a [`summary()`](https://rdrr.io/r/base/summary.html) method for
 `pop_data` objects:
 
 ``` r
+
 xs_data |> summary()
 #> 
 #> n = 3336 
@@ -173,6 +179,7 @@ HlyE IgG, across participating countries.
 
 ``` r
 
+
 #color palette
 country_pal <- c("#EA6552", "#8F4B86", "#0099B4FF")
 
@@ -188,6 +195,7 @@ Let’s get a better look at the distribution by log transforming our
 antibody response value.
 
 ``` r
+
 # Create log transformed plots
 
 xs_data |>
@@ -211,6 +219,7 @@ Let’s also take a look at how antibody responses change by age.
 
 ``` r
 
+
 #Plot antibody responses by age
 xs_data |>
   autoplot(
@@ -233,12 +242,12 @@ Next, we must set conditions based on some assumptions about the data
 and errors that may need to be accounted for. This will differ based on
 background knowledge of the data.
 
-The biological noise, $\nu$ (“nu”), represents error from
+The biological noise, $`\nu`$ (“nu”), represents error from
 cross-reactivity to other antibodies. It is defined as the 95th
 percentile of the distribution of antibody responses to the
 antigen-isotype in a population with no exposure.
 
-Measurement noise, $\varepsilon$ (“epsilon”), represents measurement
+Measurement noise, $`\varepsilon`$ (“epsilon”), represents measurement
 error from the laboratory testing process. It is defined by a CV
 (coefficient of variation) as the ratio of the standard deviation to the
 mean for replicates. Note that the CV should ideally be measured across
@@ -258,6 +267,7 @@ parameter below.
 *Note that variable names are case-sensitive.*
 
 ``` r
+
 # Import noise parameters from OSF
 
 noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
@@ -280,6 +290,7 @@ in the estimate (antigen_isos). Here, we have chosen to use two antigen
 isotypes, but users can add additional pairs if available.
 
 ``` r
+
 # Using est.incidence (no strata)
 
 est1 <- est_seroincidence(
@@ -305,6 +316,7 @@ one or more stratification variables in their cross-sectional population
 dataset. Let’s compare estimates across all countries and by age group.
 
 ``` r
+
 #Using est.incidence.by (strata)
 
 est_country_age <- est_seroincidence_by(
@@ -374,6 +386,7 @@ category using
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html):
 
 ``` r
+
 # Save summary(est_country_age)
 est_country_agedf <- summary(est_country_age)
 
@@ -405,6 +418,7 @@ We’ll estimate seroincidence for Bangladesh and Nepal separately, then
 compare them:
 
 ``` r
+
 # Estimate seroincidence for Bangladesh
 est_bangladesh <- est_seroincidence(
   pop_data = xs_data |> filter(Country == "Bangladesh"),
@@ -448,6 +462,7 @@ This is particularly useful when we have multiple groups and want a
 comprehensive view of all pairwise differences:
 
 ``` r
+
 # Compare all pairs of country-age combinations
 comparisons_table <- compare_seroincidence(est_country_age)
 
@@ -499,6 +514,7 @@ catchments, which are nested within countries. We can use these to
 account for within-cluster correlation:
 
 ``` r
+
 # Account for geographic clustering
 # Clusters in the SEES data represent geographic areas
 # Use Pakistan data for this example
@@ -553,6 +569,7 @@ Clustering can also be combined with stratified analysis using
 [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md):
 
 ``` r
+
 # Stratified analysis by catchment with cluster adjustment
 # Use Pakistan data for this example
 est_catchment_clustered <- est_seroincidence_by(
@@ -642,6 +659,7 @@ cluster-robust standard errors to properly account for the geographic
 clustering in the SEES study:
 
 ``` r
+
 # Estimate seroincidence for Bangladesh with cluster adjustment
 est_bangladesh_clustered <- est_seroincidence(
   pop_data = xs_data |> filter(Country == "Bangladesh"),

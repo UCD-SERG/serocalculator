@@ -161,7 +161,7 @@ jobs:
           source-dir: docs
           preview-branch: ${{ env.PREVIEW_BRANCH }}
           comment: "false"
-          wait-for-pages-deployment: true
+          wait-for-pages-deployment: false
 
       # following https://github.com/rossjrw/pr-preview-action?tab=readme-ov-file#customise-the-sticky-comment:
       - uses: marocchino/sticky-pull-request-comment@v2

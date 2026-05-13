@@ -23,11 +23,15 @@
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @inheritParams log_likelihood
-
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
+#' @param verbose verbosity level for console logging.
+#' Accepts a logical scalar or a non-negative whole number:
+#' * `FALSE`/`0`: no log messages
+#' * `TRUE`/`1`: basic progress messages
+#' * `>= 2`: basic progress messages plus detailed input logging
 #' @inheritDotParams simcs.tinf
 #' @inheritDotParams ldpar
 #' @inheritDotParams ab
@@ -35,8 +39,8 @@
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
 #' data, with columns:
 #'
-#' * `age`: age (in days)
-#' * one column for each element in the `antigen_iso` input argument
+#' * `age`: age (in years)
+#' * one column for each element in the `antigen_isos` input argument
 #'
 #' @export
 #' @examples
@@ -93,8 +97,10 @@ sim_pop_data <- function(
     format = "wide",
     verbose = FALSE,
     ...) {
-  if (verbose > 1) {
-    message("inputs to `sim_pop_data()`:")
+  verbose_level <- .validate_verbose(verbose)
+
+  if (verbose_level >= 2) {
+    cli::cli_inform("inputs to `sim_pop_data()`:")
     print(environment() |> as.list())
   }
 
@@ -115,9 +121,9 @@ sim_pop_data <- function(
 
   stopifnot(length(lambda) == 1)
 
-  day2yr <- 365.25
-  lambda <- lambda / day2yr
-  age_range <- age_range * day2yr
+  days_per_year <- 365.25
+  lambda <- lambda / days_per_year
+  age_range <- age_range * days_per_year
   npar <- dimnames(predpar)$parameter |> length()
 
 
@@ -155,11 +161,11 @@ sim_pop_data <- function(
     as_tibble() |>
     mutate(
       id = as.character(row_number()),
-      age = round(.data$age / day2yr, 2)
+      age = round(.data$age / days_per_year, 2)
     )
 
   if (format == "long") {
-    if (verbose) message("outputting long format data")
+    if (verbose_level >= 1) cli::cli_inform("outputting long format data")
     to_return <-
       to_return |>
       pivot_longer(
@@ -177,7 +183,7 @@ sim_pop_data <- function(
       )
 
   } else {
-    if (verbose) message("outputting wide format data")
+    if (verbose_level >= 1) cli::cli_inform("outputting wide format data")
     to_return <-
       to_return |>
       structure(

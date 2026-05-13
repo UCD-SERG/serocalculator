@@ -74,7 +74,13 @@ combinations
 \item \code{"wide"} (one serum sample per row)
 }}
 
-\item{verbose}{logical: if TRUE, print verbose log information to console}
+\item{verbose}{verbosity level for console logging.
+Accepts a logical scalar or a non-negative whole number:
+\itemize{
+\item \code{FALSE}/\code{0}: no log messages
+\item \code{TRUE}/\code{1}: basic progress messages
+\item \verb{>= 2}: basic progress messages plus detailed input logging
+}}
 
 \item{...}{
   Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}
@@ -97,8 +103,8 @@ combinations
 a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey
 data, with columns:
 \itemize{
-\item \code{age}: age (in days)
-\item one column for each element in the \code{antigen_iso} input argument
+\item \code{age}: age (in years)
+\item one column for each element in the \code{antigen_isos} input argument
 }
 }
 \description{

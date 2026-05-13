@@ -108,12 +108,7 @@ give the geom as \code{"point"}.
 \item For more information and other ways to specify the geom, see the
 \link[ggplot2:layer_geoms]{layer geom} documentation.
 }}
-    \item{\code{fun}}{Function to use. Either 1) an anonymous function in the base or
-rlang formula syntax (see \code{\link[rlang:as_function]{rlang::as_function()}})
-or 2) a quoted or character name referencing a function; see examples. Must
-be vectorised.}
-    \item{\code{n}}{Number of points to interpolate along the x axis.}
-    \item{\code{args}}{List of additional arguments passed on to the function defined by \code{fun}.}
+
   }}
 }
 \value{
@@ -123,6 +118,12 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Graph an antibody decay curve model
 }
 \details{
+\subsection{Fixed \code{...} arguments}{
+
+The arguments \code{fun}, \code{n}, and \code{args} are set internally and cannot be
+overridden via \code{...}. Passing them will trigger an informative error.
+}
+
 \subsection{\code{n_curves} and \code{iters_to_graph}}{
 
 In most cases, \code{object} will contain too many rows of MCMC

@@ -175,7 +175,7 @@ containing simulated cross-sectional serosurvey data, with columns:
 
 - `age`: age (in years)
 
-- one column for each element in the `antigen_iso` input argument
+- one column for each element in the `antigen_isos` input argument
 
 ## Examples
 

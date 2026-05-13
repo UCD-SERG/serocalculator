@@ -14,7 +14,7 @@ as_pop_data(
 )
 }
 \arguments{
-\item{data}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df]{tibble::tbl_df}}
+\item{data}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
 \item{antigen_isos}{\code{\link[=character]{character()}}
 vector of antigen isotypes to be used in analyses}
@@ -28,7 +28,7 @@ vector of antigen isotypes to be used in analyses}
 \item{standardize}{a \code{\link[=logical]{logical()}} to determine standardization of columns}
 }
 \value{
-a \code{pop_data} object (a \link[tibble:tbl_df]{tibble::tbl_df}
+a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df}
 with extra attribute \code{antigen_isos})
 }
 \description{

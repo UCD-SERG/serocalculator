@@ -302,15 +302,15 @@ test_that("clustering works with est_seroincidence_by", {
     cluster_var = "cluster",
     num_cores = 1
   )
-  
+
   # Should be seroincidence.by object
   expect_s3_class(est_cluster, "seroincidence.by")
-  
+
   # Each stratum should have cluster_var attribute
   for (stratum_name in names(est_cluster)) {
     expect_equal(attr(est_cluster[[stratum_name]], "cluster_var"), "cluster")
   }
-  
+
   # Summary should work and have se_type
   sum_cluster <- summary(est_cluster)
   expect_true("se_type" %in% names(sum_cluster))
@@ -332,13 +332,13 @@ test_that("clustering with stratum works with est_seroincidence_by", {
     stratum_var = "catchment",
     num_cores = 1
   )
-  
+
   # Each stratum should have both attributes
   for (stratum_name in names(est_both)) {
     expect_equal(attr(est_both[[stratum_name]], "cluster_var"), "cluster")
     expect_equal(attr(est_both[[stratum_name]], "stratum_var"), "catchment")
   }
-  
+
   # Verify functional impact: clustering should affect standard errors
   # Compare with non-clustered version
   est_no_cluster <- est_seroincidence_by(
@@ -351,17 +351,17 @@ test_that("clustering with stratum works with est_seroincidence_by", {
     noise_strata_varnames = NULL,
     num_cores = 1
   )
-  
+
   sum_both <- summary(est_both)
   sum_no_cluster <- summary(est_no_cluster)
-  
+
   # Point estimates should be identical across all strata
   expect_equal(sum_both$incidence.rate, sum_no_cluster$incidence.rate)
-  
+
   # Standard errors should differ when clustering is applied
   # (may be larger or smaller depending on within-cluster correlation)
   expect_false(isTRUE(all.equal(sum_both$SE, sum_no_cluster$SE)))
-  
+
   # Verify se_type is correctly set
   expect_true(all(sum_both$se_type == "cluster-robust"))
   expect_true(all(sum_no_cluster$se_type == "standard"))
@@ -370,7 +370,7 @@ test_that("clustering with stratum works with est_seroincidence_by", {
 test_that("clustering works with parallel processing", {
   skip_on_cran()
   skip("Parallel processing with clustering needs investigation")
-  
+
   # Test with cluster_var and parallel processing
   est_cluster_parallel <- est_seroincidence_by(
     strata = "catchment",
@@ -383,10 +383,10 @@ test_that("clustering works with parallel processing", {
     cluster_var = "cluster",
     num_cores = 2
   )
-  
+
   # Should work without errors
   expect_s3_class(est_cluster_parallel, "seroincidence.by")
-  
+
   # Each stratum should have cluster_var attribute
   for (stratum_name in names(est_cluster_parallel)) {
     expect_equal(

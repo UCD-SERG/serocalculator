@@ -15,7 +15,7 @@ dlims <- rbind(
 )
 sim_df <-
   sim_pop_data_multi(
-    n_cores = n_cores,
+    num_cores = n_cores,
     lambdas = lambdas,
     nclus = nclus,
     sample_sizes = nrep,

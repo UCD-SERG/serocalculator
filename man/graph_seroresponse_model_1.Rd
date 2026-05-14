@@ -19,7 +19,7 @@ graph_seroresponse_model_1(
 \item{ncol}{how many columns of subfigures to use in panel plot}
 
 \item{...}{
-  Arguments passed on to \code{\link{plot_curve_params_one_ab}}
+  Arguments passed on to \code{\link[=plot_curve_params_one_ab]{plot_curve_params_one_ab}}
   \describe{
     \item{\code{verbose}}{verbose output}
     \item{\code{xlim}}{range of x values to graph}

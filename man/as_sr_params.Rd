@@ -7,14 +7,14 @@
 as_sr_params(data, antigen_isos = NULL)
 }
 \arguments{
-\item{data}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df]{tibble::tbl_df}}
+\item{data}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
 \item{antigen_isos}{a \code{\link[=character]{character()}} vector of antigen isotypes
 to be used in analyses}
 }
 \value{
 a \code{curve_data} object
-(a \link[tibble:tbl_df]{tibble::tbl_df} with extra attribute \code{antigen_isos})
+(a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attribute \code{antigen_isos})
 }
 \description{
 Load longitudinal seroresponse parameters

@@ -16,7 +16,7 @@ ab(t, par, ...)
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link{baseline}}
+  Arguments passed on to \code{\link[=baseline]{baseline}}
   \describe{
     \item{\code{yvec}}{a \link{numeric} \link{vector} of predicted biomarker values,
 for one biomarker}

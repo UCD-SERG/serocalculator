@@ -29,7 +29,7 @@ passed to \code{\link[rngtools:RNGseq]{rngtools::RNGseq()}}}
 \item{verbose}{whether to report verbose information}
 
 \item{...}{
-  Arguments passed on to \code{\link{sim_pop_data}}
+  Arguments passed on to \code{\link[=sim_pop_data]{sim_pop_data}}
   \describe{
     \item{\code{lambda}}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
 (in events per person-years)}

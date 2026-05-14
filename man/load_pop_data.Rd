@@ -8,12 +8,12 @@ load_pop_data(file_path, ...)
 }
 \arguments{
 \item{file_path}{path to an RDS file containing a cross-sectional antibody
-survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df]{tibble::tbl_df}}
+survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
 
 \item{...}{
-  Arguments passed on to \code{\link{as_pop_data}}
+  Arguments passed on to \code{\link[=as_pop_data]{as_pop_data}}
   \describe{
-    \item{\code{data}}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df]{tibble::tbl_df}}
+    \item{\code{data}}{a \code{\link[=data.frame]{data.frame()}} or \link[tibble:tbl_df-class]{tibble::tbl_df}}
     \item{\code{antigen_isos}}{\code{\link[=character]{character()}}
 vector of antigen isotypes to be used in analyses}
     \item{\code{age}}{a \code{\link[=character]{character()}} identifying the age column}
@@ -23,7 +23,7 @@ vector of antigen isotypes to be used in analyses}
   }}
 }
 \value{
-a \code{pop_data} object (a \link[tibble:tbl_df]{tibble::tbl_df} with extra attributes)
+a \code{pop_data} object (a \link[tibble:tbl_df-class]{tibble::tbl_df} with extra attributes)
 }
 \description{
 Load a cross-sectional antibody survey data set

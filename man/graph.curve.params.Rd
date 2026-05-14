@@ -30,7 +30,7 @@ graph.curve.params(
 quantiles to plot (e.g., 10\%, 50\%, and 90\% = \code{c(0.1, 0.5, 0.9)}).
 If \code{NULL}, no quantile lines are shown.}
 
-\item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_line]{ggplot2::geom_line}
+\item{alpha_samples}{\code{alpha} parameter passed to \link[ggplot2:geom_path]{ggplot2::geom_line}
 (has no effect if \code{iters_to_graph} is empty)}
 
 \item{chain_color}{\link{logical}: if \link{TRUE} (default), MCMC chain lines

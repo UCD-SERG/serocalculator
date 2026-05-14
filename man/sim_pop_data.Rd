@@ -83,7 +83,7 @@ Accepts a logical scalar or a non-negative whole number:
 }}
 
 \item{...}{
-  Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}
+  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}, \code{\link[=ldpar]{ldpar}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
   \describe{
     \item{\code{age}}{age at infection}
     \item{\code{nmc}}{mcmc sample to use}
@@ -100,7 +100,7 @@ Accepts a logical scalar or a non-negative whole number:
   }}
 }
 \value{
-a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey
+a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey
 data, with columns:
 \itemize{
 \item \code{age}: age (in years)

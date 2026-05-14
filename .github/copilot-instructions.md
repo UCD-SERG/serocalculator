@@ -376,6 +376,10 @@ The following workflows run on every PR. **All must pass** for merge:
 
 10. **copilot-setup-steps.yml**: Configures the GitHub Copilot coding agent's environment automatically. Runs when Copilot starts work, when the workflow file changes, or via manual dispatch. Not a required check for PR merges. See "Copilot Setup Workflow" section for details. (~5-10 min)
 
+### Copilot PR review policy
+
+**Do not request PR review until all failing workflows are fixed and the corresponding checks have been run successfully locally.**
+
 ### PR Commands
 
 Team members can trigger actions by commenting on PRs:
@@ -578,6 +582,7 @@ When refactoring existing code:
 - **Test snapshot changes**: Use appropriate snapshot testing approaches
 - **Seed tests**: Use `withr::local_seed()` for reproducible tests
 - **Avoid code duplication**: Don't copy-paste substantial code chunks. Instead, decompose reusable logic into well-named helper functions
+- **Validation functions**: Extract complex argument validation logic into internal helper functions (e.g., `.validate_verbose()`, `.validate_input()`). This improves readability, testability, and code reuse.
 - **Quarto vignettes**: Use Quarto-style chunk options with `#|` prefix (e.g., `#| label: my-chunk`, `#| eval: false`)
 - **New articles**: Use `.qmd` format for all new vignettes and articles going forward
 - **Quarto callouts**: Use Quarto callout blocks for notes, warnings, and tips (e.g., `::: {.callout-note}`)

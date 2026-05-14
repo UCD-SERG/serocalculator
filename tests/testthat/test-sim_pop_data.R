@@ -47,3 +47,97 @@ test_that("`sim_pop_data()` produces consistent results", {
 
   csdata |> expect_snapshot_data(name = "sim_pop_data")
 })
+
+test_that("`sim_pop_data()` accepts numeric verbose levels", {
+  curve <- typhoid_curves_nostrat_100
+  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+  dlims <- rbind(
+    "HlyE_IgA" = c(min = 0, max = 0.5),
+    "HlyE_IgG" = c(min = 0, max = 0.5)
+  )
+
+  base_args <- list(
+    curve_params = curve,
+    lambda = 0.2,
+    n_samples = 8,
+    age_range = c(0, 2),
+    antigen_isos = antibodies,
+    n_mcmc_samples = 10,
+    renew_params = TRUE,
+    add_noise = FALSE,
+    noise_limits = dlims,
+    format = "wide"
+  )
+
+  messages_0 <- capture_messages(
+    do.call(sim_pop_data, c(base_args, list(verbose = 0)))
+  )
+  expect_length(messages_0, 0)
+
+  messages_1 <- capture_messages(
+    do.call(sim_pop_data, c(base_args, list(verbose = 1)))
+  )
+  expect_true(
+    any(grepl("outputting", messages_1, fixed = TRUE))
+  )
+  expect_false(
+    any(grepl("inputs to", messages_1, fixed = TRUE))
+  )
+
+  messages_2 <- capture_messages(
+    capture_output(
+      do.call(sim_pop_data, c(base_args, list(verbose = 2)))
+    )
+  )
+  expect_true(
+    any(grepl("inputs to", messages_2, fixed = TRUE))
+  )
+  expect_true(
+    any(grepl("outputting", messages_2, fixed = TRUE))
+  )
+})
+
+test_that("`sim_pop_data()` validates verbose levels", {
+  curve <- typhoid_curves_nostrat_100
+  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+  dlims <- rbind(
+    "HlyE_IgA" = c(min = 0, max = 0.5),
+    "HlyE_IgG" = c(min = 0, max = 0.5)
+  )
+
+  base_args <- list(
+    curve_params = curve,
+    lambda = 0.2,
+    n_samples = 8,
+    age_range = c(0, 2),
+    antigen_isos = antibodies,
+    n_mcmc_samples = 10,
+    renew_params = TRUE,
+    add_noise = FALSE,
+    noise_limits = dlims,
+    format = "wide"
+  )
+
+  messages_true <- capture_messages(
+    do.call(sim_pop_data, c(base_args, list(verbose = TRUE)))
+  )
+  expect_true(
+    any(grepl("outputting", messages_true, fixed = TRUE))
+  )
+
+  expect_error(
+    do.call(sim_pop_data, c(base_args, list(verbose = -1))),
+    "`verbose` must be a single logical or non-negative whole number.",
+    fixed = TRUE
+  )
+  expect_error(
+    do.call(sim_pop_data, c(base_args, list(verbose = c(1, 2)))),
+    "`verbose` must be a single logical or non-negative whole number.",
+    fixed = TRUE
+  )
+  expect_error(
+    do.call(sim_pop_data, c(base_args, list(verbose = "loud"))),
+    "`verbose` must be a single logical or non-negative whole number.",
+    fixed = TRUE
+  )
+})

@@ -8,6 +8,11 @@
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
   
+
+## Compatibility
+
+* Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
+
 ## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 

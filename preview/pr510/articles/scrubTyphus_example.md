@@ -68,6 +68,7 @@ Once all three of those packages are installed, we can load them into
 our active R session environment:
 
 ``` r
+
 library(serocalculator)
 library(tidyverse)
 library(mixtools)
@@ -88,6 +89,7 @@ hierarchical models to fit two-phase power-function decay models to the
 longitudinal antibody responses among confirmed enteric fever cases.
 
 ``` r
+
 # Import longitudinal antibody parameters from OSF
 
 curves <-
@@ -104,6 +106,7 @@ We can graph the decay curves with an
 method:
 
 ``` r
+
 curves |> autoplot()
 ```
 
@@ -114,6 +117,7 @@ curves |> autoplot()
 Next, we load our sample cross-sectional data.
 
 ``` r
+
 # Import cross-sectional data from OSF and rename required variables
 xs_data <- load_pop_data(
   file_path = "https://osf.io/download/h5js4/",
@@ -131,6 +135,7 @@ We can check that `xs_data` has the correct formatting using the
 function:
 
 ``` r
+
 xs_data |> check_pop_data(verbose = TRUE)
 #> data format is as expected.
 ```
@@ -142,6 +147,7 @@ with a [`summary()`](https://rdrr.io/r/base/summary.html) method for
 `pop_data` objects:
 
 ``` r
+
 xs_data |> summary(strata = "country")
 #> Warning: There were 2 warnings in `dplyr::summarize()`.
 #> The first warning was:
@@ -177,6 +183,7 @@ xs_data |> summary(strata = "country")
 Let’s also take a look at how antibody responses change by age.
 
 ``` r
+
 # Plot antibody responses by age
 autoplot(object = xs_data, type = "age-scatter", strata = "country")
 #> Warning: Removed 1105 rows containing missing values or values outside the scale range
@@ -191,8 +198,8 @@ Next, we must set conditions based on some assumptions about the data
 and errors that may need to be accounted for. This will differ based on
 background knowledge of the data.
 
-The biological noise, $\nu$ (“nu”), represents error from
-cross-reactivity to other antibodies. Measurement noise, $\varepsilon$
+The biological noise, $`\nu`$ (“nu”), represents error from
+cross-reactivity to other antibodies. Measurement noise, $`\varepsilon`$
 (“epsilon”), represents error from the laboratory testing process.
 
 *Formatting Specifications*: Noise parameter data should be a dataframe
@@ -209,6 +216,7 @@ parameter below.
 *Note that variable names are case-sensitive.*
 
 ``` r
+
 # biologic noise
 b_noise <- xs_data |>
   group_by(antigen_iso) |>
@@ -254,6 +262,7 @@ Now we are ready to begin estimating seroincidence. We will use
 `est.incidence.by` to calculate stratified seroincidence rates.
 
 ``` r
+
 # Using est.incidence.by (strata)
 
 est <- est_seroincidence_by(
@@ -294,6 +303,7 @@ Now we are ready to begin estimating seroincidence. We will use
 `est.incidence.by` to calculate stratified seroincidence rates.
 
 ``` r
+
 # Using est.incidence.by (strata)
 
 est2 <- est_seroincidence_by(
@@ -348,6 +358,7 @@ summary(est2)
 Let’s visualize our seroincidence estimates by strata.
 
 ``` r
+
 # Plot seroincidence estimates
 
 # Save summary(est) as a dataframe
@@ -393,11 +404,10 @@ Institute of Allergy and Infectious Diseases (NIAID) \[R21 1AI176416\]
 
 ## References
 
-Aiemjoy, Kristen, Nishan Katuwal, Krista Vaidya, Sony Shrestha, Melina
-Thapa, Peter Teunis, Isaac I Bogoch, et al. Accepted Feb 2024.
-“Estimating the Seroincidence of Scrub Typhus Using Antibody Dynamics
-Following Infection.” *American Journal of Tropical Medicine and
-Hygiene*, Accepted Feb 2024.
+Aiemjoy, Kristen, Nishan Katuwal, Krista Vaidya, et al. Accepted Feb
+2024. “Estimating the Seroincidence of Scrub Typhus Using Antibody
+Dynamics Following Infection.” *American Journal of Tropical Medicine
+and Hygiene*, Accepted Feb 2024.
 
 deGraaf, W. F., M. E. E. Kretzschmar, P. F. M. Teunis, and O. Diekmann.
 2014. “A Two-Phase Within-Host Model for Immune Response and Its
@@ -411,7 +421,7 @@ Diseases Based on Antibody Measurements.” *Statistics in Medicine* 28
 
 Teunis, P. F. M., and J. C. H. van Eijkeren. 2020. “Estimation of
 Seroconversion Rates for Infectious Diseases: Effects of Age and Noise.”
-*Statistics in Medicine* 39 (21): 2799–2814.
+*Statistics in Medicine* 39 (21): 2799–814.
 <https://doi.org/10.1002/sim.8578>.
 
 Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić
@@ -420,7 +430,6 @@ Infection to Within-Host Heterogeneity in Antibody Production.”
 *Epidemics* 16 (September): 33–39.
 <https://doi.org/10.1016/j.epidem.2016.04.001>.
 
-Teunis, P. F. M., JCH van Eijkeren, CW Ang, YTHP van Duynhoven, JB
-Simonsen, MA Strid, and W van Pelt. 2012. “Biomarker Dynamics:
-Estimating Infection Rates from Serological Data.” *Statistics in
-Medicine* 31 (20): 2240–48. <https://doi.org/10.1002/sim.5322>.
+Teunis, P. F. M., JCH van Eijkeren, CW Ang, et al. 2012. “Biomarker
+Dynamics: Estimating Infection Rates from Serological Data.” *Statistics
+in Medicine* 31 (20): 2240–48. <https://doi.org/10.1002/sim.5322>.

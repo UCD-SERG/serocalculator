@@ -88,6 +88,11 @@ combinations, with optional posterior distribution quantile curves.
 
 ## Details
 
+### Fixed `...` arguments
+
+The arguments `fun`, `n`, and `args` are set internally and cannot be
+overridden via `...`. Passing them will trigger an informative error.
+
 ### `n_curves` and `iters_to_graph`
 
 In most cases, `object` will contain too many rows of MCMC samples for

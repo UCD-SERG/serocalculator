@@ -95,6 +95,7 @@ containing the following:
 ## Examples
 
 ``` r
+
 library(dplyr)
 
 xs_data <-

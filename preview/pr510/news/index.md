@@ -2,6 +2,8 @@
 
 ## serocalculator 1.4.1
 
+CRAN release: 2026-03-25
+
 ### Bug fixes
 
 - [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
@@ -15,6 +17,16 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+
+### Compatibility
+
+- Replaced deprecated
+  [`dplyr::is.grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  usage with
+  [`dplyr::is_grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  in
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
+  for compatibility with newer dplyr releases.
 
 ### New features
 
@@ -343,7 +355,7 @@ CRAN release: 2025-01-25
   function to help locate example data files
   ([\#329](https://github.com/UCD-SERG/serocalculator/issues/329))
 
-- Fixed a bug in computing the antibody response curve when $r = 1$
+- Fixed a bug in computing the antibody response curve when $`r=1`$
   ([\#323](https://github.com/UCD-SERG/serocalculator/issues/323))
 
 - Added example datasets with documentation for examples and testing
@@ -428,8 +440,7 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using
-  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
+- Added `devtag` to package (using `devtag::use_devtag()`)
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

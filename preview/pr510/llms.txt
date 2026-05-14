@@ -39,6 +39,7 @@ The [serocalculator](https://ucd-serg.github.io/serocalculator/) package
 must be installed in R before first use.
 
 ``` r
+
 # Install package
 install.packages("serocalculator")
 ```
@@ -52,6 +53,7 @@ To install the latest development version, you must install the
 to install both packages.
 
 ``` r
+
 # Install the devtools package and the development version of serocalculator
 install.packages("devtools")
 devtools::install_github(
@@ -107,6 +109,7 @@ your R workspace and exploring help files and manuals distributed with
 the package:
 
 ``` r
+
 # Load package "seroincidence".
 library(serocalculator)
 
@@ -118,6 +121,7 @@ Additionally, most package details can be found when executing the
 following commands:
 
 ``` r
+
 # Show description.
 packageDescription("serocalculator")
 

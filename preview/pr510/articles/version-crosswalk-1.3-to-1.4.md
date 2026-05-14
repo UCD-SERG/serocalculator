@@ -13,9 +13,9 @@ function calls.**
 
 ### Main Estimation Functions
 
-| v1.3.0 Function                                                                                 | v1.4.0 Function                                                                                         | What it does                                |
-|-------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|---------------------------------------------|
-| [`est.incidence()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.md)       | [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)       | Estimate seroincidence for entire dataset   |
+| v1.3.0 Function | v1.4.0 Function | What it does |
+|----|----|----|
+| [`est.incidence()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.md) | [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md) | Estimate seroincidence for entire dataset |
 | [`est.incidence.by()`](https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.md) | [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md) | Estimate seroincidence stratified by groups |
 
 > **Note**
@@ -26,18 +26,18 @@ function calls.**
 
 ### Data Preparation Functions
 
-| v1.3.0 Function                                                                                   | v1.4.0 Function                                                                                     | What it does                               |
-|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------|
-| [`load_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/load_curve_params.md) | [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)         | Load seroresponse curve parameters         |
-| [`as_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/as_curve_params.md)     | [`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md)             | Convert data to seroresponse parameters    |
-| [`sim.cs()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.md)                       | [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)             | Simulate cross-sectional population data   |
-| [`sim.cs.multi()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.multi.md)           | [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md) | Simulate multiple cross-sectional datasets |
+| v1.3.0 Function | v1.4.0 Function | What it does |
+|----|----|----|
+| [`load_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/load_curve_params.md) | [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md) | Load seroresponse curve parameters |
+| [`as_curve_params()`](https://ucd-serg.github.io/serocalculator/reference/as_curve_params.md) | [`as_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/as_sr_params.md) | Convert data to seroresponse parameters |
+| [`sim.cs()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.md) | [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md) | Simulate cross-sectional population data |
+| [`sim.cs.multi()`](https://ucd-serg.github.io/serocalculator/reference/sim.cs.multi.md) | [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md) | Simulate multiple cross-sectional datasets |
 
 ### Function Arguments
 
-| v1.3.0 Argument | v1.4.0 Argument | Used in functions                                                                                                                                                                                          |
-|-----------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `curve_params`  | `sr_params`     | [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md), [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md) |
+| v1.3.0 Argument | v1.4.0 Argument | Used in functions |
+|----|----|----|
+| `curve_params` | `sr_params` | [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md), [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md) |
 
 ## Code Examples
 
@@ -46,6 +46,7 @@ function calls.**
 **Old code (v1.3.0):**
 
 ``` r
+
 # Load curve parameters (v1.3.0 - DEPRECATED)
 curve_params <- load_curve_params("parameters.rds")
 
@@ -59,6 +60,7 @@ results <- est.incidence(
 **New code (v1.4.0):**
 
 ``` r
+
 library(serocalculator)
 
 # Load seroresponse parameters from RDS file
@@ -106,6 +108,7 @@ summary(results)
 **Old code (v1.3.0):**
 
 ``` r
+
 # Stratified estimation (v1.3.0 - DEPRECATED)
 results_by_group <- est.incidence.by(
   pop_data = my_data,
@@ -117,6 +120,7 @@ results_by_group <- est.incidence.by(
 **New code (v1.4.0):**
 
 ``` r
+
 # Stratified estimation by Country
 results_by_group <- est_seroincidence_by(
   pop_data = pop_data,
@@ -153,6 +157,7 @@ summary(results_by_group)
 **Old code (v1.3.0):**
 
 ``` r
+
 # Simulate cross-sectional data (v1.3.0 - DEPRECATED)
 simulated_data <- sim.cs(
   curve_params = curve_params,
@@ -170,6 +175,7 @@ multiple_sims <- sim.cs.multi(
 **New code (v1.4.0):**
 
 ``` r
+
 # Biologic noise distribution for simulation
 noise_limits <- matrix(
   c(0, 0.5),
@@ -188,20 +194,20 @@ simulated_data <- sim_pop_data(
   add_noise = TRUE,
   format = "long"
 )
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
+#> Warning: Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
 
 head(simulated_data)
 #> # A tibble: 6 × 4
-#>     age id    antigen_iso value
-#>   <dbl> <chr> <chr>       <dbl>
-#> 1  7.45 1     HlyE_IgA    1.09 
-#> 2  7.45 1     HlyE_IgG    3.47 
-#> 3  2.48 2     HlyE_IgA    0.835
-#> 4  2.48 2     HlyE_IgG    0.375
-#> 5 14.7  3     HlyE_IgA    1.02 
-#> 6 14.7  3     HlyE_IgG    0.783
+#>     age id    antigen_iso   value
+#>   <dbl> <chr> <chr>         <dbl>
+#> 1  6.73 1     HlyE_IgA      36.0 
+#> 2  6.73 1     HlyE_IgG    2432.  
+#> 3 15.8  2     HlyE_IgA      18.1 
+#> 4 15.8  2     HlyE_IgG       2.62
+#> 5  1.87 3     HlyE_IgA    3791.  
+#> 6  1.87 3     HlyE_IgG      43.6
 
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(
@@ -215,15 +221,15 @@ multiple_sims <- sim_pop_data_multi(
   add_noise = TRUE,
   format = "long"
 )
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
-#> Warning in df_to_array(prep_curve_params_for_array(droplevels(dplyr::filter(curve_params, : Some dimension variables are not factors.
-#> These dimensions will be ordered by first appearance.
-#> Check results using `dimnames()`
+#> Warning: Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
+#> Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
+#> Some dimension variables are not factors.
+#> ℹ These dimensions will be ordered by first appearance.
+#> ℹ Check results using `dimnames()`.
 
 nrow(multiple_sims)
 #> [1] 600

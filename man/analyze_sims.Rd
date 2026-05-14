@@ -7,7 +7,7 @@
 analyze_sims(data)
 }
 \arguments{
-\item{data}{a \link[tibble:tbl_df-class]{tibble::tbl_df} with columns:
+\item{data}{a \link[tibble:tbl_df]{tibble::tbl_df} with columns:
 \itemize{
 \item \code{lambda.sim},
 \item \code{incidence.rate},
@@ -19,7 +19,7 @@ for example, as produced by \code{\link[=summary.seroincidence.by]{summary.seroi
 }}
 }
 \value{
-a \code{sim_results} object (extends \link[tibble:tbl_df-class]{tibble::tbl_df})
+a \code{sim_results} object (extends \link[tibble:tbl_df]{tibble::tbl_df})
 }
 \description{
 Analyze simulation results

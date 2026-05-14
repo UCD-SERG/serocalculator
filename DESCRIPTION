@@ -77,5 +77,4 @@ Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
-RoxygenNote: 7.3.3
-
+Config/roxygen2/version: 8.0.0

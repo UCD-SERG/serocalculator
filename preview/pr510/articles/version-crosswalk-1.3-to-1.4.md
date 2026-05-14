@@ -200,14 +200,14 @@ simulated_data <- sim_pop_data(
 
 head(simulated_data)
 #> # A tibble: 6 × 4
-#>     age id    antigen_iso  value
-#>   <dbl> <chr> <chr>        <dbl>
-#> 1 17.2  1     HlyE_IgA     0.656
-#> 2 17.2  1     HlyE_IgG    32.3  
-#> 3  1.71 2     HlyE_IgA     0.404
-#> 4  1.71 2     HlyE_IgG     0.316
-#> 5 14.8  3     HlyE_IgA     0.369
-#> 6 14.8  3     HlyE_IgG     3.00
+#>     age id    antigen_iso   value
+#>   <dbl> <chr> <chr>         <dbl>
+#> 1  5.59 1     HlyE_IgA      3.69 
+#> 2  5.59 1     HlyE_IgG    105.   
+#> 3 10.5  2     HlyE_IgA      5.27 
+#> 4 10.5  2     HlyE_IgG     52.5  
+#> 5 15.5  3     HlyE_IgA      0.766
+#> 6 15.5  3     HlyE_IgG      4.73
 
 # Simulate multiple datasets
 multiple_sims <- sim_pop_data_multi(

@@ -70,10 +70,9 @@ plot_curve_params_one_ab(
 
 - ...:
 
-  Arguments passed on to
-  [`ggplot2::geom_function`](https://ggplot2.tidyverse.org/reference/geom_function.html)
-
-  :   
+  Additional arguments passed to
+  [`ggplot2::geom_function()`](https://ggplot2.tidyverse.org/reference/geom_function.html).
+  `fun`, `n`, and `args` are set internally and cannot be passed.
 
 ## Value
 

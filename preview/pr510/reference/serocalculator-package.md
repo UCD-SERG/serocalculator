@@ -21,6 +21,8 @@ Useful links:
 
 Authors:
 
+- Kristina Lai <kwlai@ucdavis.edu>
+
 - Chris Orwa
 
 - Peter Teunis <p.teunis@emory.edu> (Author of the method and original

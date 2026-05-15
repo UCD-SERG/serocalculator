@@ -2,7 +2,9 @@
 title: "Introduction to serocalculator"
 description: >
   A summary of the methods behind serocalculator.
-output: rmarkdown::html_vignette
+output:
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to serocalculator}
   %\VignetteEngine{knitr::rmarkdown}
@@ -56,11 +58,7 @@ The **serocalculator** package was designed to calculate the incidence of seroco
 The **serocalculator app** is a web based tool that takes the 5 curve parameters (y0, y1, t1, alpha, and r) to draw a single curve on antibody concentration.
 
 ::: {.content-visible when-format="html"}
-```{r,echo=FALSE,eval=knitr::pandoc_to("html")}
-knitr::include_app("https://ucdserg.shinyapps.io/shiny_decay_curve/",
-  height = "600px"
-)
-```
+<iframe src="https://ucdserg.shinyapps.io/shiny_decay_curve/" height="600px" width="100%" style="border:none;"></iframe>
 :::
 
 ::: {.content-hidden when-format="html"}

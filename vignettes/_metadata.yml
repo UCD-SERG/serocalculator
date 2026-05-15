@@ -1,7 +1,3 @@
-project:
-  render:
-    - "*.qmd"      # Render all Quarto markdown files
-    - "!data-raw/" # Exclude anything in the data-raw directory
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
 date: '`r Sys.Date()`'
 format:
@@ -26,5 +22,5 @@ format:
     number-sections: false
     slide-level: 2
     reference-location: document
+    prefer-html: true
     # reference-doc: vignettes/articles/templates/Gates_template.pptx
-bibliography: vignettes/references.bib

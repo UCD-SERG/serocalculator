@@ -11,6 +11,7 @@
 ## Internal changes
 
 - Docs workflow now saves the R package cache immediately after installation (before the long `Build docs` step), so cancellations no longer result in a cold cache on the next run (#516)
+
 ## Compatibility
 
 * Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.

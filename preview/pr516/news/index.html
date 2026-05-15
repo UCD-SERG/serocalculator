@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,8 +70,11 @@
 </ul></div>
 <div class="section level3">
 <h3 id="internal-changes-development-version">Internal changes<a class="anchor" aria-label="anchor" href="#internal-changes-development-version"></a></h3>
-<ul><li><p>Docs workflow now saves the R package cache immediately after installation (before the long <code>Build docs</code> step), so cancellations no longer result in a cold cache on the next run (<a href="https://github.com/UCD-SERG/serocalculator/issues/516" class="external-link">#516</a>) ## Compatibility</p></li>
-<li><p>Replaced deprecated <code><a href="https://dplyr.tidyverse.org/reference/grouped_df.html" class="external-link">dplyr::is.grouped_df()</a></code> usage with <code><a href="https://dplyr.tidyverse.org/reference/grouped_df.html" class="external-link">dplyr::is_grouped_df()</a></code> in <code><a href="../reference/df_to_array.html">df_to_array()</a></code> for compatibility with newer dplyr releases.</p></li>
+<ul><li>Docs workflow now saves the R package cache immediately after installation (before the long <code>Build docs</code> step), so cancellations no longer result in a cold cache on the next run (<a href="https://github.com/UCD-SERG/serocalculator/issues/516" class="external-link">#516</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="compatibility-development-version">Compatibility<a class="anchor" aria-label="anchor" href="#compatibility-development-version"></a></h3>
+<ul><li>Replaced deprecated <code><a href="https://dplyr.tidyverse.org/reference/grouped_df.html" class="external-link">dplyr::is.grouped_df()</a></code> usage with <code><a href="https://dplyr.tidyverse.org/reference/grouped_df.html" class="external-link">dplyr::is_grouped_df()</a></code> in <code><a href="../reference/df_to_array.html">df_to_array()</a></code> for compatibility with newer dplyr releases.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>

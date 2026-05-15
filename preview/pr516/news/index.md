@@ -21,8 +21,9 @@
 - Docs workflow now saves the R package cache immediately after
   installation (before the long `Build docs` step), so cancellations no
   longer result in a cold cache on the next run
-  ([\#516](https://github.com/UCD-SERG/serocalculator/issues/516)) \##
-  Compatibility
+  ([\#516](https://github.com/UCD-SERG/serocalculator/issues/516))
+
+### Compatibility
 
 - Replaced deprecated
   [`dplyr::is.grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)

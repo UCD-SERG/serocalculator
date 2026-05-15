@@ -1,6 +1,0 @@
-_site/
-.quarto/
-pkgdown.yml
-
-/.quarto/
-**/*.quarto_ipynb

@@ -1,3 +1,4 @@
 _site/
 .quarto/
 pkgdown.yml
+freeze.rds

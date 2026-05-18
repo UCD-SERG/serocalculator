@@ -1,3 +1,12 @@
+#' Fetch and aggregate CRAN download counts
+#'
+#' @param unit Character string passed to [cut.Date()] for
+#'   time aggregation (e.g. `"month"`, `"week"`).
+#'
+#' @returns A tibble with columns `date`, `provider`, `new`,
+#'   and `cumulative`.
+#'
+#' @noRd
 .fetch_cran_downloads <- function(unit) {
   cran_raw <- cranlogs::cran_downloads(
     packages = "serocalculator",

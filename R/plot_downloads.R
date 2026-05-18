@@ -1,3 +1,15 @@
+#' Build a ggplot of download data with adaptive faceting
+#'
+#' @param download_data Long-format tibble from
+#'   [.prepare_download_data()].
+#' @param github Logical; whether GitHub data is included.
+#' @param multi_metric Logical; whether both new and
+#'   cumulative metrics are shown.
+#' @param title Plot title, or `NULL` to omit.
+#'
+#' @returns A [ggplot2::ggplot()] object.
+#'
+#' @noRd
 .plot_downloads <- function(
   download_data, github, multi_metric, title
 ) {

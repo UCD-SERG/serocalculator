@@ -1,3 +1,18 @@
+#' Combine, filter, and pivot download data for plotting
+#'
+#' @param cran_data Tibble of CRAN download data from
+#'   [.fetch_cran_downloads()].
+#' @param github_data Tibble of GitHub download data from
+#'   [.fetch_github_downloads()], or `NULL`.
+#' @param start Start date for filtering, or `NULL` for no
+#'   filtering.
+#' @param metrics Character vector of metric columns to
+#'   include (subset of `c("new", "cumulative")`).
+#'
+#' @returns A long-format tibble with columns `date`,
+#'   `provider`, `metric`, and `downloads`.
+#'
+#' @noRd
 .prepare_download_data <- function(
   cran_data, github_data, start, metrics
 ) {

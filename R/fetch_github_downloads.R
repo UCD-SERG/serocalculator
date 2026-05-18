@@ -1,3 +1,16 @@
+#' Fetch and aggregate GitHub release download counts
+#'
+#' Queries the GitHub API for all releases of the
+#' `serocalculator` package, computes daily new and cumulative
+#' downloads, then aggregates by `unit`.
+#'
+#' @param unit Character string passed to [cut.Date()] for
+#'   time aggregation (e.g. `"month"`, `"week"`).
+#'
+#' @returns A tibble with columns `date`, `provider`, `new`,
+#'   and `cumulative`.
+#'
+#' @noRd
 .fetch_github_downloads <- function(unit) {
   releases <- gh::gh(
     "/repos/{owner}/{repo}/releases",

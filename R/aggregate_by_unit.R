@@ -1,3 +1,17 @@
+#' Aggregate download data by a calendar unit
+#'
+#' Sums new downloads and takes the last cumulative value
+#' within each time period.
+#'
+#' @param data A tibble with columns `date`, `provider`,
+#'   `new`, and `cumulative`.
+#' @param unit Character string passed to [cut.Date()] for
+#'   time aggregation (e.g. `"month"`, `"week"`).
+#'
+#' @returns A tibble with columns `date`, `provider`, `new`,
+#'   and `cumulative`, aggregated by `unit`.
+#'
+#' @noRd
 .aggregate_by_unit <- function(data, unit) {
   data |>
     dplyr::mutate(

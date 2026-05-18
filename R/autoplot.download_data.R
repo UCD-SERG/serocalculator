@@ -9,7 +9,7 @@
 #' @export
 #' @keywords internal
 autoplot.download_data <- function(object, ...) {
-  title <- attr(object, "default_title")
+  title <- attr(object, "title")
   github <- attr(object, "github")
   multi_metric <- attr(object, "multi_metric")
   mapping <- ggplot2::aes(

@@ -22,7 +22,7 @@
 #'
 #' @returns A `download_data` tibble (subclass of
 #'   `tbl_df`) with columns `date`, `provider`, `metric`,
-#'   and `downloads`, plus attributes `default_title`,
+#'   and `downloads`, plus attributes `title`,
 #'   `github`, and `multi_metric`.
 #'
 #' @keywords internal
@@ -58,16 +58,19 @@
   resolved_unit <- unit |> match.arg(
     choices = c("month", "day", "week", "quarter", "year")
   )
-  default_title <- paste0(
+  auto_title <- paste0(
     "Downloads of serocalculator package from CRAN, by ",
     resolved_unit
   )
   if (!missing(title)) {
-    default_title <- title
+    auto_title <- title
   }
-  attr(result, "default_title") <- default_title
-  attr(result, "github") <- github
-  attr(result, "multi_metric") <- new && cumulative
 
-  result |> structure(class = c("download_data", class(result)))
+  result |>
+    structure(
+      title = auto_title,
+      github = github,
+      multi_metric = new && cumulative
+    ) |>
+    .subclass("download_data")
 }

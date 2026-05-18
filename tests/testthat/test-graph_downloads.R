@@ -91,7 +91,7 @@ test_that(
       )
     attr(download_data, "github") <- FALSE
     attr(download_data, "multi_metric") <- TRUE
-    attr(download_data, "default_title") <- "Test"
+    attr(download_data, "title") <- "Test"
     class(download_data) <- c("download_data", class(download_data))
 
     p <- download_data |>
@@ -115,7 +115,7 @@ test_that(
       )
     attr(download_data, "github") <- TRUE
     attr(download_data, "multi_metric") <- TRUE
-    attr(download_data, "default_title") <- "Test"
+    attr(download_data, "title") <- "Test"
     class(download_data) <- c("download_data", class(download_data))
 
     p <- download_data |>
@@ -138,7 +138,7 @@ test_that(
       )
     attr(download_data, "github") <- FALSE
     attr(download_data, "multi_metric") <- FALSE
-    attr(download_data, "default_title") <- NULL
+    attr(download_data, "title") <- NULL
     class(download_data) <- c("download_data", class(download_data))
 
     p <- download_data |>

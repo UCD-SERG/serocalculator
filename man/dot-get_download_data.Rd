@@ -56,7 +56,7 @@ If this is given, then \code{from} and \code{to} are ignored.}
 \value{
 A \code{download_data} tibble (subclass of
 \code{tbl_df}) with columns \code{date}, \code{provider}, \code{metric},
-and \code{downloads}, plus attributes \code{default_title},
+and \code{downloads}, plus attributes \code{title},
 \code{github}, and \code{multi_metric}.
 }
 \description{

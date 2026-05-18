@@ -55,13 +55,9 @@
     cran_data, github_data, start, metrics
   )
 
-  unit_choices <- c("month", "day", "week", "quarter", "year")
-  resolved_unit <- unit |> rlang::arg_match(
-    values = unit_choices
-  )
   auto_title <- paste0(
     "Downloads of serocalculator package from CRAN, by ",
-    resolved_unit
+    unit[1]
   )
   if (!missing(title)) {
     auto_title <- title

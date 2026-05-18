@@ -47,19 +47,11 @@
   all_dates <- seq(start_date, today, by = "day")
 
   github_releases |>
-    dplyr::mutate(
-      new = .data$downloads,
-      cumulative = cumsum(.data$downloads)
-    ) |>
-    dplyr::select("date", "new", "cumulative") |>
+    dplyr::mutate(cumulative = cumsum(.data$downloads)) |>
+    dplyr::rename(new = "downloads") |>
     tidyr::complete(date = all_dates) |>
     tidyr::fill("cumulative", .direction = "down") |>
-    dplyr::mutate(
-      cumulative = .data$cumulative |>
-        tidyr::replace_na(0L),
-      new = .data$new |>
-        tidyr::replace_na(0L),
-      provider = "GitHub"
-    ) |>
+    tidyr::replace_na(list(cumulative = 0L, new = 0L)) |>
+    dplyr::mutate(provider = "GitHub") |>
     .aggregate_by_unit(unit)
 }

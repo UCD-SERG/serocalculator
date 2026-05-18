@@ -587,6 +587,7 @@ When refactoring existing code:
 - **New articles**: Use `.qmd` format for all new vignettes and articles going forward
 - **Quarto callouts**: Use Quarto callout blocks for notes, warnings, and tips (e.g., `::: {.callout-note}`)
 - **Tidyverse replacements**: Use tidyverse/modern replacements for base R functions where available
+- **No nested function calls**: Use pipes (`|>`) instead of nesting function calls. Write `x |> f() |> g()` instead of `g(f(x))`. This applies to both package code and tests.
 - **Write tidy code**: Keep code clean, readable, and well-organized
 
 ## Package Development Commands Summary

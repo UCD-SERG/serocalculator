@@ -20,14 +20,13 @@
   unit <- unit |> rlang::arg_match()
   data |>
     dplyr::mutate(
-      period = .data$date |>
+      date = .data$date |>
         cut(breaks = unit) |>
         as.Date()
     ) |>
     dplyr::summarise(
       new = sum(.data$new),
       cumulative = dplyr::last(.data$cumulative),
-      .by = c("period", "provider")
-    ) |>
-    dplyr::rename(date = "period")
+      .by = c("date", "provider")
+    )
 }

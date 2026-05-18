@@ -8,22 +8,21 @@
 #'
 #' @noRd
 .check_suggests <- function(github) {
+
   if (!requireNamespace("packageRank", quietly = TRUE)) {
-    cli::cli_abort(
-      paste(
-        "Package {.pkg packageRank} is required.",
-        "Install with",
-        "{.code install.packages('packageRank')}."
-      )
+    msg <- paste(
+      "Package {.pkg packageRank} is required.",
+      "Install with",
+      "{.code install.packages('packageRank')}."
     )
+    cli::cli_abort(msg)
   }
   if (github && !requireNamespace("gh", quietly = TRUE)) {
-    cli::cli_abort(
-      paste(
-        "Package {.pkg gh} is required.",
-        "Install with",
-        "{.code install.packages('gh')}."
-      )
+    msg <- paste(
+      "Package {.pkg gh} is required.",
+      "Install with",
+      "{.code install.packages('gh')}."
     )
+    cli::cli_abort(msg)
   }
 }

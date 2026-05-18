@@ -13,10 +13,10 @@
 .plot_downloads <- function(
   download_data, github, multi_metric, title
 ) {
-  p <- ggplot2::ggplot(
-    download_data,
-    ggplot2::aes(x = .data$date, y = .data$downloads)
-  ) +
+  mapping <- ggplot2::aes(
+    x = .data$date, y = .data$downloads
+  )
+  p <- ggplot2::ggplot(download_data, mapping) +
     ggplot2::geom_line(linewidth = 0.4)
 
   if (github && multi_metric) {
@@ -44,10 +44,10 @@
       )
   }
 
+  comma_labels <- scales::label_comma()
+
   p +
-    ggplot2::scale_y_continuous(
-      labels = scales::label_comma()
-    ) +
+    ggplot2::scale_y_continuous(labels = comma_labels) +
     ggplot2::labs(
       title = title,
       x = NULL,

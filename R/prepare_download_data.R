@@ -29,20 +29,18 @@
       dplyr::filter(.data$date >= start_date)
   }
 
+  metric_cols <- dplyr::all_of(metrics)
+  labels <- metric_labels[metrics]
+
   combined |>
-    dplyr::select(
-      "date", "provider", dplyr::all_of(metrics)
-    ) |>
+    dplyr::select("date", "provider", metric_cols) |>
     tidyr::pivot_longer(
-      cols = dplyr::all_of(metrics),
+      cols = metric_cols,
       names_to = "metric",
       values_to = "downloads"
     ) |>
     dplyr::mutate(
-      metric = factor(
-        .data$metric,
-        levels = metrics,
-        labels = metric_labels[metrics]
-      )
+      metric = .data$metric |>
+        factor(levels = metrics, labels = labels)
     )
 }

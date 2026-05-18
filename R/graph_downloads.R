@@ -45,12 +45,11 @@ graph_downloads <- function(
     )
   }
   if (!new && !cumulative) {
-    cli::cli_abort(
-      paste(
-        "At least one of {.arg new} or",
-        "{.arg cumulative} must be {.val TRUE}."
-      )
+    msg <- paste(
+      "At least one of {.arg new} or",
+      "{.arg cumulative} must be {.val TRUE}."
     )
+    cli::cli_abort(msg)
   }
   .check_suggests(github)
 

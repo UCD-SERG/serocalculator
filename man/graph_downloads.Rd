@@ -4,12 +4,9 @@
 \alias{graph_downloads}
 \title{Plot package download counts over time by source}
 \usage{
-graph_downloads(title, ...)
+graph_downloads(...)
 }
 \arguments{
-\item{title}{Character string for the plot title. Defaults to
-a description including the time unit. Set to \code{NULL} to omit.}
-
 \item{...}{
   Arguments passed on to \code{\link{.get_download_data}}
   \describe{
@@ -25,6 +22,9 @@ data).}
     \item{\code{unit}}{Character string specifying the time unit to
 aggregate by. One of \code{"day"}, \code{"week"}, \code{"month"},
 \code{"quarter"}, or \code{"year"}. Defaults to \code{"month"}.}
+    \item{\code{title}}{Character string for the plot title. Defaults
+to a description including the time unit. Set to \code{NULL}
+to omit.}
   }}
 }
 \value{

@@ -15,7 +15,10 @@
 #' @param unit Character string specifying the time unit to
 #'   aggregate by. One of `"day"`, `"week"`, `"month"`,
 #'   `"quarter"`, or `"year"`. Defaults to `"month"`.
-#' @inheritDotParams .fetch_cran_downloads
+#' @param title Character string for the plot title. Defaults
+#'   to a description including the time unit. Set to `NULL`
+#'   to omit.
+#' @inheritDotParams packageRank::cranDownloads
 #'
 #' @returns A long-format tibble with columns `date`,
 #'   `provider`, `metric`, and `downloads`, plus attributes
@@ -28,6 +31,7 @@
   cumulative = TRUE,
   start = NULL,
   unit = c("month", "day", "week", "quarter", "year"),
+  title,
   ...
 ) {
   if (!new && !cumulative) {
@@ -57,6 +61,9 @@
     "Downloads of serocalculator package from CRAN, by ",
     resolved_unit
   )
+  if (!missing(title)) {
+    default_title <- title
+  }
   attr(result, "default_title") <- default_title
   attr(result, "github") <- github
   attr(result, "multi_metric") <- new && cumulative

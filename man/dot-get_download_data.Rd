@@ -10,6 +10,7 @@
   cumulative = TRUE,
   start = NULL,
   unit = c("month", "day", "week", "quarter", "year"),
+  title,
   ...
 )
 }
@@ -30,6 +31,27 @@ data).}
 \item{unit}{Character string specifying the time unit to
 aggregate by. One of \code{"day"}, \code{"week"}, \code{"month"},
 \code{"quarter"}, or \code{"year"}. Defaults to \code{"month"}.}
+
+\item{title}{Character string for the plot title. Defaults
+to a description including the time unit. Set to \code{NULL}
+to omit.}
+
+\item{...}{
+  Arguments passed on to \code{\link[packageRank:cranDownloads]{packageRank::cranDownloads}}
+  \describe{
+    \item{\code{package}}{A character vector, the packages to query,
+or \code{NULL} for a sum of downloads for all packages.
+Alternatively, it can also be \code{"R"}, to query downloads
+of R itself. \code{"R"} cannot be mixed with package.}
+    \item{\code{when}}{\code{last-day}, \code{last-week} or \code{last-month}.
+If this is given, then \code{from} and \code{to} are ignored.}
+    \item{\code{from}}{Start date as \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}.}
+    \item{\code{to}}{End date as \code{yyyy-mm-dd}, \code{yyyy-mm} or \code{yyyy}.}
+    \item{\code{check.package}}{Logical. Validate and "spell check" package.}
+    \item{\code{dev.mode}}{Logical. Use validatePackage0() to scrape CRAN.}
+    \item{\code{fix.cranlogs}}{Logical. Use RStudio logs to fix 8 dates with duplicated data in 'cranlogs' results.}
+    \item{\code{pro.mode}}{Logical. Faster but fewer checks/features. Closer to cranlogs::cran_downloads() but with cranDownloads()'s plot method.}
+  }}
 }
 \value{
 A long-format tibble with columns \code{date},

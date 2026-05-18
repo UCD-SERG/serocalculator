@@ -6,45 +6,44 @@ Releases (via `gh`), then plots new and cumulative downloads.
 ## Usage
 
 ``` r
-graph_downloads(
-  github = FALSE,
-  new = TRUE,
-  cumulative = TRUE,
-  start = NULL,
-  unit = c("month", "day", "week", "quarter", "year"),
-  title
-)
+graph_downloads(...)
 ```
 
 ## Arguments
 
-- github:
+- ...:
 
-  Logical; include GitHub release downloads? Defaults to `FALSE`.
+  Arguments passed on to
+  [`.get_download_data`](https://ucd-serg.github.io/serocalculator/reference/dot-get_download_data.md)
 
-- new:
+  `github`
 
-  Logical; include new (daily) downloads? Defaults to `TRUE`.
+  :   Logical; include GitHub release downloads? Defaults to `FALSE`.
 
-- cumulative:
+  `new`
 
-  Logical; include cumulative downloads? Defaults to `TRUE`.
+  :   Logical; include new (daily) downloads? Defaults to `TRUE`.
 
-- start:
+  `cumulative`
 
-  Start date for the plot (a [Date](https://rdrr.io/r/base/Dates.html)
-  or string coercible to one). Defaults to `NULL` (all available data).
+  :   Logical; include cumulative downloads? Defaults to `TRUE`.
 
-- unit:
+  `start`
 
-  Character string specifying the time unit to aggregate by. One of
-  `"day"`, `"week"`, `"month"`, `"quarter"`, or `"year"`. Defaults to
-  `"month"`.
+  :   Start date for the plot (a
+      [Date](https://rdrr.io/r/base/Dates.html) or string coercible to
+      one). Defaults to `NULL` (all available data).
 
-- title:
+  `unit`
 
-  Character string for the plot title. Defaults to a description
-  including the time unit. Set to `NULL` to omit.
+  :   Character string specifying the time unit to aggregate by. One of
+      `"day"`, `"week"`, `"month"`, `"quarter"`, or `"year"`. Defaults
+      to `"month"`.
+
+  `title`
+
+  :   Character string for the plot title. Defaults to a description
+      including the time unit. Set to `NULL` to omit.
 
 ## Value
 

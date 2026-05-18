@@ -753,6 +753,46 @@ breakage 5. Run tests to verify functionality unchanged
   and tips (e.g., `::: {.callout-note}`)
 - **Tidyverse replacements**: Use tidyverse/modern replacements for base
   R functions where available
+- **No nested function calls**: Use pipes (`|>`) instead of nesting
+  function calls. Write `x |> f() |> g()` instead of `g(f(x))`. Also
+  avoid function calls in function arguments — extract them into named
+  variables first. This applies to both package code and tests.
+- **Pass-through over interception**: Don’t name parameters in a wrapper
+  just to relay them to a subfunction. Use `...` to forward arguments. A
+  pure wrapper should be a one-liner:
+  `f <- function(...) .g(...) |> .h()`.
+- **Validate where consumed**: Check/validate arguments in the function
+  that actually uses them, not in a caller that just passes them
+  through.
+- **Use attributes for metadata**: When a data-producing function needs
+  to communicate context (e.g., default title, faceting options) to a
+  downstream function, store it as attributes on the data object rather
+  than threading extra parameters through intermediaries.
+- **`@inheritParams` / `@inheritDotParams`**: Use these instead of
+  duplicating `@param` docs. Use `@keywords internal` (not `@noRd`) for
+  internal functions so roxygen inheritance works.
+- **Leverage existing packages**: Before writing data-fetching or
+  plotting utilities, check if CRAN packages already provide the
+  functionality. Wrap existing packages rather than reimplementing.
+- **S3 autoplot methods for plotting**: When a function produces data
+  that gets plotted, give the data a custom S3 class and implement an
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  method rather than a standalone plotting function. This lets users
+  call
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  directly on the data object.
+- **Keep it simple**: Prefer the simplest solution. Don’t add redundant
+  validation, unnecessary intermediate steps, or complexity that doesn’t
+  earn its keep. If upstream already validates, don’t re-validate. If
+  `x[1]` works, don’t call `match.arg(x)`. Use `rename()` instead of
+  `mutate()` + `select()`. Use `replace_na(list(...))` instead of
+  multiple `replace_na()` calls.
+- **Snapshot tests over manual assertions**: Use
+  `expect_snapshot_value(style = "json2")` for data results and
+  [`vdiffr::expect_doppelganger()`](https://vdiffr.r-lib.org/reference/expect_doppelganger.html)
+  for plots instead of field-by-field `expect_equal()` calls. Don’t add
+  redundant checks (e.g., `expect_s3_class()` before
+  `expect_doppelganger()`).
 - **Write tidy code**: Keep code clean, readable, and well-organized
 
 ## Package Development Commands Summary

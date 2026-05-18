@@ -630,6 +630,24 @@
 <li>
 <strong>Tidyverse replacements</strong>: Use tidyverse/modern replacements for base R functions where available</li>
 <li>
+<strong>No nested function calls</strong>: Use pipes (<code>|&gt;</code>) instead of nesting function calls. Write <code>x |&gt; f() |&gt; g()</code> instead of <code>g(f(x))</code>. Also avoid function calls in function arguments — extract them into named variables first. This applies to both package code and tests.</li>
+<li>
+<strong>Pass-through over interception</strong>: Don’t name parameters in a wrapper just to relay them to a subfunction. Use <code>...</code> to forward arguments. A pure wrapper should be a one-liner: <code>f &lt;- function(...) .g(...) |&gt; .h()</code>.</li>
+<li>
+<strong>Validate where consumed</strong>: Check/validate arguments in the function that actually uses them, not in a caller that just passes them through.</li>
+<li>
+<strong>Use attributes for metadata</strong>: When a data-producing function needs to communicate context (e.g., default title, faceting options) to a downstream function, store it as attributes on the data object rather than threading extra parameters through intermediaries.</li>
+<li>
+<strong><code>@inheritParams</code> / <code>@inheritDotParams</code></strong>: Use these instead of duplicating <code>@param</code> docs. Use <code>@keywords internal</code> (not <code>@noRd</code>) for internal functions so roxygen inheritance works.</li>
+<li>
+<strong>Leverage existing packages</strong>: Before writing data-fetching or plotting utilities, check if CRAN packages already provide the functionality. Wrap existing packages rather than reimplementing.</li>
+<li>
+<strong>S3 autoplot methods for plotting</strong>: When a function produces data that gets plotted, give the data a custom S3 class and implement an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> method rather than a standalone plotting function. This lets users call <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> directly on the data object.</li>
+<li>
+<strong>Keep it simple</strong>: Prefer the simplest solution. Don’t add redundant validation, unnecessary intermediate steps, or complexity that doesn’t earn its keep. If upstream already validates, don’t re-validate. If <code>x[1]</code> works, don’t call <code>match.arg(x)</code>. Use <code>rename()</code> instead of <code>mutate()</code> + <code>select()</code>. Use <code>replace_na(list(...))</code> instead of multiple <code>replace_na()</code> calls.</li>
+<li>
+<strong>Snapshot tests over manual assertions</strong>: Use <code>expect_snapshot_value(style = "json2")</code> for data results and <code><a href="https://vdiffr.r-lib.org/reference/expect_doppelganger.html" class="external-link">vdiffr::expect_doppelganger()</a></code> for plots instead of field-by-field <code>expect_equal()</code> calls. Don’t add redundant checks (e.g., <code>expect_s3_class()</code> before <code>expect_doppelganger()</code>).</li>
+<li>
 <strong>Write tidy code</strong>: Keep code clean, readable, and well-organized</li>
 </ul></div>
 <div class="section level2">

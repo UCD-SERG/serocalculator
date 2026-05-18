@@ -594,6 +594,7 @@ When refactoring existing code:
 - **`@inheritParams` / `@inheritDotParams`**: Use these instead of duplicating `@param` docs. Use `@keywords internal` (not `@noRd`) for internal functions so roxygen inheritance works.
 - **Leverage existing packages**: Before writing data-fetching or plotting utilities, check if CRAN packages already provide the functionality. Wrap existing packages rather than reimplementing.
 - **S3 autoplot methods for plotting**: When a function produces data that gets plotted, give the data a custom S3 class and implement an `autoplot()` method rather than a standalone plotting function. This lets users call `autoplot()` directly on the data object.
+- **Keep it simple**: Prefer the simplest solution. Don't add redundant validation, unnecessary intermediate steps, or complexity that doesn't earn its keep. If upstream already validates, don't re-validate. If `x[1]` works, don't call `match.arg(x)`. Use `rename()` instead of `mutate()` + `select()`. Use `replace_na(list(...))` instead of multiple `replace_na()` calls.
 - **Write tidy code**: Keep code clean, readable, and well-organized
 
 ## Package Development Commands Summary

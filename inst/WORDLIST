@@ -30,6 +30,7 @@ Rtools
 SeroEpidemiology
 Seroincidence
 Serological
+Serological
 TW
 UC
 Unif
@@ -46,11 +47,14 @@ callout
 cdot
 codecov
 colour
+cran
+cranDownloads
+cranlogs
 csv
 dev
 devtools
-dplyr
 displaystyle
+dplyr
 dropdown
 dt
 eps
@@ -116,7 +120,6 @@ seroepidemiology
 seroincidence
 seroincidences
 serologic
-Serological
 seronegative
 seroresponse
 seroresponses
@@ -130,6 +133,7 @@ titers
 tsutsugamushi
 undercount
 unstratified
+validatePackage
 varepsilon
 vec
 vee

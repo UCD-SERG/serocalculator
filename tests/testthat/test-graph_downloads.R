@@ -1,12 +1,14 @@
 test_that(
   desc = ".aggregate_by_unit() aggregates correctly",
   code = {
+    dates <- c(
+      "2024-01-01", "2024-01-02", "2024-01-03",
+      "2024-02-01", "2024-02-02"
+    ) |>
+      as.Date()
+
     daily <- dplyr::tibble(
-      date = c(
-        "2024-01-01", "2024-01-02", "2024-01-03",
-        "2024-02-01", "2024-02-02"
-      ) |>
-        as.Date(),
+      date = dates,
       provider = "CRAN",
       new = c(10L, 20L, 30L, 5L, 15L),
       cumulative = c(10L, 30L, 60L, 65L, 80L)

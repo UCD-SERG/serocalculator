@@ -1,7 +1,7 @@
 # Plot package download counts over time by source
 
-Fetches download data from CRAN (via `cranlogs`) and optionally GitHub
-Releases (via `gh`), then plots new and cumulative downloads.
+Fetches download data from CRAN (via `packageRank`) and optionally
+GitHub Releases (via `gh`), then plots new and cumulative downloads.
 
 ## Usage
 

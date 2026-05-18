@@ -24,8 +24,9 @@
   combined <- dplyr::bind_rows(cran_data, github_data)
 
   if (!is.null(start)) {
+    start_date <- start |> as.Date()
     combined <- combined |>
-      dplyr::filter(.data$date >= as.Date(start))
+      dplyr::filter(.data$date >= start_date)
   }
 
   combined |>

@@ -22,8 +22,9 @@ test_that(
       expect_equal(c(60L, 20L))
     result$cumulative |>
       expect_equal(c(60L, 80L))
+    expected_dates <- c("2024-01-01", "2024-02-01") |> as.Date()
     result$date |>
-      expect_equal(c("2024-01-01", "2024-02-01") |> as.Date())
+      expect_equal(expected_dates)
   }
 )
 
@@ -36,9 +37,10 @@ test_that(
         NULL, NULL, c("new", "cumulative")
       )
 
-    "metric" %in% names(result) |>
+    col_names <- result |> names()
+    "metric" %in% col_names |>
       expect_true()
-    "downloads" %in% names(result) |>
+    "downloads" %in% col_names |>
       expect_true()
     result$metric |>
       levels() |>
@@ -55,9 +57,10 @@ test_that(
         NULL, "2026-01-01", c("new")
       )
 
+    cutoff <- "2026-01-01" |> as.Date()
     result$date |>
       min() |>
-      expect_gte("2026-01-01" |> as.Date())
+      expect_gte(cutoff)
   }
 )
 

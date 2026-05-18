@@ -33,21 +33,23 @@
     purrr::list_rbind() |>
     dplyr::arrange(.data$date)
 
+  today <- Sys.Date()
+  start_date <- github_releases$date |> min()
+  all_dates <- seq(start_date, today, by = "day")
+
   github_releases |>
     dplyr::mutate(
       new = .data$downloads,
       cumulative = cumsum(.data$downloads)
     ) |>
     dplyr::select("date", "new", "cumulative") |>
-    tidyr::complete(
-      date = seq(min(.data$date), Sys.Date(), by = "day")
-    ) |>
+    tidyr::complete(date = all_dates) |>
     tidyr::fill("cumulative", .direction = "down") |>
     dplyr::mutate(
-      cumulative = tidyr::replace_na(
-        .data$cumulative, 0L
-      ),
-      new = tidyr::replace_na(.data$new, 0L),
+      cumulative = .data$cumulative |>
+        tidyr::replace_na(0L),
+      new = .data$new |>
+        tidyr::replace_na(0L),
       provider = "GitHub"
     ) |>
     .aggregate_by_unit(unit)

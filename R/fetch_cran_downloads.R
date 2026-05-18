@@ -12,10 +12,11 @@
 #'
 #' @noRd
 .fetch_cran_downloads <- function(unit) {
+  today <- Sys.Date()
   dl <- packageRank::cranDownloads(
     "serocalculator",
     from = "2022-03-30",
-    to = Sys.Date()
+    to = today
   )
 
   dplyr::tibble(

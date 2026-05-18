@@ -43,6 +43,8 @@
     cli::cli_abort(msg)
   }
 
+  unit <- unit |> rlang::arg_match()
+
   cran_data <- .fetch_cran_downloads(unit, ...)
   github_data <- if (github) .fetch_github_downloads(unit)
 
@@ -55,17 +57,16 @@
     cran_data, github_data, start, metrics
   )
 
-  auto_title <- paste0(
-    "Downloads of serocalculator package from CRAN, by ",
-    unit[1]
-  )
-  if (!missing(title)) {
-    auto_title <- title
+  if (missing(title)) {
+    title <- paste0(
+      "Downloads of serocalculator package from CRAN, by ",
+      unit
+    )
   }
 
   result |>
     structure(
-      title = auto_title,
+      title = title,
       github = github,
       multi_metric = new && cumulative
     ) |>

@@ -31,7 +31,7 @@ to omit.}
 A \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object with faceted panels.
 }
 \description{
-Fetches download data from CRAN (via \code{cranlogs}) and optionally GitHub
+Fetches download data from CRAN (via \code{packageRank}) and optionally GitHub
 Releases (via \code{gh}), then plots new and cumulative downloads.
 }
 \details{

@@ -24,7 +24,7 @@ Depends:
 Imports: 
     cli,
     doParallel,
-    dplyr,
+    dplyr (>= 1.1.0),
     foreach,
     ggplot2,
     patchwork,

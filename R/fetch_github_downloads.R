@@ -32,7 +32,7 @@
     releases,
     function(release) {
       tibble::tibble(
-        date = release$published_at |> as.Date(),
+        date = release$published_at |> substr(1, 10) |> as.Date(),
         downloads = release$assets |>
           purrr::map_int("download_count") |>
           sum()
@@ -41,6 +41,15 @@
   ) |>
     purrr::list_rbind() |>
     dplyr::arrange(.data$date)
+
+  if (nrow(github_releases) == 0L) {
+    return(tibble::tibble(
+      date = as.Date(character()),
+      provider = character(),
+      new = integer(),
+      cumulative = integer()
+    ))
+  }
 
   today <- Sys.Date()
   start_date <- github_releases$date |> min()

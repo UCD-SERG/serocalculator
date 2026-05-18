@@ -588,6 +588,11 @@ When refactoring existing code:
 - **Quarto callouts**: Use Quarto callout blocks for notes, warnings, and tips (e.g., `::: {.callout-note}`)
 - **Tidyverse replacements**: Use tidyverse/modern replacements for base R functions where available
 - **No nested function calls**: Use pipes (`|>`) instead of nesting function calls. Write `x |> f() |> g()` instead of `g(f(x))`. Also avoid function calls in function arguments — extract them into named variables first. This applies to both package code and tests.
+- **Pass-through over interception**: Don't name parameters in a wrapper just to relay them to a subfunction. Use `...` to forward arguments. A pure wrapper should be a one-liner: `f <- function(...) .g(...) |> .h()`.
+- **Validate where consumed**: Check/validate arguments in the function that actually uses them, not in a caller that just passes them through.
+- **Use attributes for metadata**: When a data-producing function needs to communicate context (e.g., default title, faceting options) to a downstream function, store it as attributes on the data object rather than threading extra parameters through intermediaries.
+- **`@inheritParams` / `@inheritDotParams`**: Use these instead of duplicating `@param` docs. Use `@keywords internal` (not `@noRd`) for internal functions so roxygen inheritance works.
+- **Leverage existing packages**: Before writing data-fetching or plotting utilities, check if CRAN packages already provide the functionality. Wrap existing packages rather than reimplementing.
 - **Write tidy code**: Keep code clean, readable, and well-organized
 
 ## Package Development Commands Summary

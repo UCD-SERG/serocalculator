@@ -5,7 +5,9 @@
 #' @param github Logical; whether GitHub data is included.
 #' @param multi_metric Logical; whether both new and
 #'   cumulative metrics are shown.
-#' @param title Plot title, or `NULL` to omit.
+#' @param title Plot title. If missing, uses the
+#'   `default_title` attribute from `download_data`.
+#'   Set to `NULL` to omit.
 #'
 #' @returns A [ggplot2::ggplot()] object.
 #'
@@ -13,6 +15,9 @@
 .plot_downloads <- function(
   download_data, github, multi_metric, title
 ) {
+  if (missing(title)) {
+    title <- attr(download_data, "default_title")
+  }
   mapping <- ggplot2::aes(
     x = .data$date, y = .data$downloads
   )

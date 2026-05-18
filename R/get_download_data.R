@@ -29,7 +29,18 @@
     if (cumulative) "cumulative"
   )
 
-  .prepare_download_data(
+  result <- .prepare_download_data(
     cran_data, github_data, start, metrics
   )
+
+  resolved_unit <- unit |> match.arg(
+    choices = c("month", "day", "week", "quarter", "year")
+  )
+  default_title <- paste0(
+    "Downloads of serocalculator package from CRAN, by ",
+    resolved_unit
+  )
+  attr(result, "default_title") <- default_title
+
+  result
 }

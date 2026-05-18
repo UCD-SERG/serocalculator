@@ -5,7 +5,7 @@
 #'   `multi_metric`, and `default_title`.
 #' @returns A [ggplot2::ggplot()] object.
 #'
-#' @noRd
+#' @keywords internal
 .plot_downloads <- function(download_data) {
   title <- attr(download_data, "default_title")
   github <- attr(download_data, "github")

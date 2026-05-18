@@ -3,15 +3,32 @@
 #' Fetches CRAN (and optionally GitHub) download data,
 #' then combines, filters, and pivots into long format.
 #'
-#' @inheritParams graph_downloads
+#' @param github Logical; include GitHub release downloads?
+#'   Defaults to `FALSE`.
+#' @param new Logical; include new (daily) downloads?
+#'   Defaults to `TRUE`.
+#' @param cumulative Logical; include cumulative downloads?
+#'   Defaults to `TRUE`.
+#' @param start Start date for the plot (a [Date] or string
+#'   coercible to one). Defaults to `NULL` (all available
+#'   data).
+#' @param unit Character string specifying the time unit to
+#'   aggregate by. One of `"day"`, `"week"`, `"month"`,
+#'   `"quarter"`, or `"year"`. Defaults to `"month"`.
 #' @inheritDotParams .fetch_cran_downloads
 #'
 #' @returns A long-format tibble with columns `date`,
-#'   `provider`, `metric`, and `downloads`.
+#'   `provider`, `metric`, and `downloads`, plus attributes
+#'   `default_title`, `github`, and `multi_metric`.
 #'
-#' @noRd
+#' @keywords internal
 .get_download_data <- function(
-  github, new, cumulative, start, unit, ...
+  github = FALSE,
+  new = TRUE,
+  cumulative = TRUE,
+  start = NULL,
+  unit = c("month", "day", "week", "quarter", "year"),
+  ...
 ) {
   if (!new && !cumulative) {
     msg <- paste(

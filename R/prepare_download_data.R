@@ -12,7 +12,7 @@
 #' @returns A long-format tibble with columns `date`,
 #'   `provider`, `metric`, and `downloads`.
 #'
-#' @noRd
+#' @keywords internal
 .prepare_download_data <- function(
   cran_data, github_data, start, metrics
 ) {

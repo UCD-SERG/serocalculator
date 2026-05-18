@@ -10,7 +10,7 @@
 #' @returns A tibble with columns `date`, `provider`, `new`,
 #'   and `cumulative`.
 #'
-#' @noRd
+#' @keywords internal
 .fetch_github_downloads <- function(unit) {
   if (!requireNamespace("gh", quietly = TRUE)) {
     msg <- paste(

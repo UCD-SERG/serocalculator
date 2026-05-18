@@ -12,7 +12,7 @@
 #' @returns A tibble with columns `date`, `provider`, `new`,
 #'   and `cumulative`, aggregated by `unit`.
 #'
-#' @noRd
+#' @keywords internal
 .aggregate_by_unit <- function(
   data,
   unit = c("month", "day", "week", "quarter", "year")

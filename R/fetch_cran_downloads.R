@@ -12,7 +12,7 @@
 #' @returns A tibble with columns `date`, `provider`, `new`,
 #'   and `cumulative`.
 #'
-#' @noRd
+#' @keywords internal
 .fetch_cran_downloads <- function(unit, ...) {
   if (!requireNamespace("packageRank", quietly = TRUE)) {
     msg <- paste(

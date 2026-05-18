@@ -17,7 +17,7 @@
   data,
   unit = c("month", "day", "week", "quarter", "year")
 ) {
-  unit <- match.arg(unit)
+  unit <- unit |> rlang::arg_match()
   data |>
     dplyr::mutate(
       period = .data$date |>

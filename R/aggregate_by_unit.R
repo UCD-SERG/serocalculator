@@ -6,13 +6,18 @@
 #' @param data A tibble with columns `date`, `provider`,
 #'   `new`, and `cumulative`.
 #' @param unit Character string passed to [cut.Date()] for
-#'   time aggregation (e.g. `"month"`, `"week"`).
+#'   time aggregation. One of `"month"`, `"day"`, `"week"`,
+#'   `"quarter"`, or `"year"`.
 #'
 #' @returns A tibble with columns `date`, `provider`, `new`,
 #'   and `cumulative`, aggregated by `unit`.
 #'
 #' @noRd
-.aggregate_by_unit <- function(data, unit) {
+.aggregate_by_unit <- function(
+  data,
+  unit = c("month", "day", "week", "quarter", "year")
+) {
+  unit <- match.arg(unit)
   data |>
     dplyr::mutate(
       period = .data$date |>

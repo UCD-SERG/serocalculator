@@ -39,11 +39,11 @@ graph_downloads <- function(
   title,
   ...
 ) {
-  unit <- match.arg(unit)
   if (missing(title)) {
+    unit_label <- unit |> match.arg()
     title <- paste0(
       "Downloads of serocalculator package from CRAN, by ",
-      unit
+      unit_label
     )
   }
   download_data <- .get_download_data(

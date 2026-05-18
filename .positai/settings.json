@@ -1,0 +1,10 @@
+{
+  "permission": {
+    "bash": {
+      "grep *": "allow"
+    },
+    "edit": {
+      "*.R": "allow"
+    }
+  }
+}

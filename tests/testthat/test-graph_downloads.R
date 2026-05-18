@@ -89,13 +89,11 @@ test_that(
       serocalculator:::.prepare_download_data(
         NULL, NULL, c("new", "cumulative")
       )
+    attr(download_data, "github") <- FALSE
+    attr(download_data, "multi_metric") <- TRUE
 
     p <- download_data |>
-      serocalculator:::.plot_downloads(
-        github = FALSE,
-        multi_metric = TRUE,
-        title = "Test"
-      )
+      serocalculator:::.plot_downloads(title = "Test")
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(
@@ -113,13 +111,11 @@ test_that(
       serocalculator:::.prepare_download_data(
         gh, NULL, c("new", "cumulative")
       )
+    attr(download_data, "github") <- TRUE
+    attr(download_data, "multi_metric") <- TRUE
 
     p <- download_data |>
-      serocalculator:::.plot_downloads(
-        github = TRUE,
-        multi_metric = TRUE,
-        title = "Test"
-      )
+      serocalculator:::.plot_downloads(title = "Test")
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(
@@ -136,13 +132,11 @@ test_that(
       serocalculator:::.prepare_download_data(
         NULL, NULL, "cumulative"
       )
+    attr(download_data, "github") <- FALSE
+    attr(download_data, "multi_metric") <- FALSE
 
     p <- download_data |>
-      serocalculator:::.plot_downloads(
-        github = FALSE,
-        multi_metric = FALSE,
-        title = NULL
-      )
+      serocalculator:::.plot_downloads(title = NULL)
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(

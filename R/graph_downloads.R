@@ -44,17 +44,8 @@ graph_downloads <- function(
   )
 
   if (missing(title)) {
-    .plot_downloads(
-      download_data,
-      github = github,
-      multi_metric = new && cumulative
-    )
+    download_data |> .plot_downloads()
   } else {
-    .plot_downloads(
-      download_data,
-      github = github,
-      multi_metric = new && cumulative,
-      title = title
-    )
+    download_data |> .plot_downloads(title = title)
   }
 }

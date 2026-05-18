@@ -41,6 +41,8 @@
     resolved_unit
   )
   attr(result, "default_title") <- default_title
+  attr(result, "github") <- github
+  attr(result, "multi_metric") <- new && cumulative
 
   result
 }

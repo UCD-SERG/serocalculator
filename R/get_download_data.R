@@ -3,14 +3,8 @@
 #' Fetches CRAN (and optionally GitHub) download data,
 #' then combines, filters, and pivots into long format.
 #'
-#' @param github Logical; whether to include GitHub data.
-#' @param new Logical; whether to include new downloads.
-#' @param cumulative Logical; whether to include cumulative
-#'   downloads.
-#' @param start Start date for filtering, or `NULL`.
-#' @param unit Character string for time aggregation.
-#' @param ... Additional arguments passed to
-#'   [packageRank::cranDownloads()].
+#' @inheritParams graph_downloads
+#' @inheritDotParams .fetch_cran_downloads
 #'
 #' @returns A long-format tibble with columns `date`,
 #'   `provider`, `metric`, and `downloads`.

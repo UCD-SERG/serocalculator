@@ -5,6 +5,8 @@
 #'
 #' @param github Logical; include GitHub release downloads? Defaults to
 #'   `FALSE`.
+#' @param new Logical; include new (daily) downloads? Defaults to `TRUE`.
+#' @param cumulative Logical; include cumulative downloads? Defaults to `TRUE`.
 #'
 #' @return A [ggplot2::ggplot()] object with faceted panels.
 #'
@@ -18,7 +20,10 @@
 #'
 #' @export
 #' @keywords internal
-graph_downloads <- function(github = FALSE) {
+graph_downloads <- function(github = FALSE, new = TRUE, cumulative = TRUE) {
+  if (!new && !cumulative) {
+    cli::cli_abort("At least one of {.arg new} or {.arg cumulative} must be {.val TRUE}.")
+  }
   if (!requireNamespace("cranlogs", quietly = TRUE)) {
     cli::cli_abort("Package {.pkg cranlogs} is required. Install with {.code install.packages('cranlogs')}.")
   }
@@ -72,31 +77,38 @@ graph_downloads <- function(github = FALSE) {
   }
 
   # Combine and pivot to long format for faceting
+  metrics <- c(if (new) "new", if (cumulative) "cumulative")
+  metric_labels <- c(new = "New downloads", cumulative = "Cumulative downloads")
+
   download_data <- dplyr::bind_rows(cran_data, if (github) github_data) |>
-    dplyr::select(date, source, new, cumulative) |>
+    dplyr::select(date, source, dplyr::all_of(metrics)) |>
     tidyr::pivot_longer(
-      cols = c(new, cumulative),
+      cols = dplyr::all_of(metrics),
       names_to = "metric",
       values_to = "downloads"
     ) |>
     dplyr::mutate(
-      metric = factor(
-        metric,
-        levels = c("new", "cumulative"),
-        labels = c("New downloads", "Cumulative downloads")
-      )
+      metric = factor(metric, levels = metrics, labels = metric_labels[metrics])
     )
 
   p <- ggplot2::ggplot(download_data, ggplot2::aes(x = date, y = downloads)) +
     ggplot2::geom_line(linewidth = 0.4)
 
-  if (github) {
+  multi_metric <- new && cumulative
+  if (github && multi_metric) {
     p <- p + ggplot2::facet_grid(
       metric ~ source,
       scales = "free_y",
       switch = "y"
     )
-  } else {
+  } else if (github) {
+    p <- p + ggplot2::facet_wrap(
+      ~source,
+      ncol = 2,
+      scales = "free_y",
+      strip.position = "left"
+    )
+  } else if (multi_metric) {
     p <- p + ggplot2::facet_wrap(
       ~metric,
       ncol = 1,

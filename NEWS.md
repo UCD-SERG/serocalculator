@@ -14,6 +14,8 @@
 
 ## New features
 
+* Added `graph_downloads()` to plot new and cumulative package download counts from CRAN, with optional GitHub release download tracking.
+
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
   `est_seroincidence_by()` to support cluster-robust standard error estimation. 
   When `cluster_var` is specified, `summary.seroincidence()` automatically computes 

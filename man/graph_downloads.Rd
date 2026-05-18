@@ -19,10 +19,11 @@ graph_downloads(
 
 \item{new}{Logical; include new (daily) downloads? Defaults to \code{TRUE}.}
 
-\item{cumulative}{Logical; include cumulative downloads? Defaults to \code{TRUE}.}
+\item{cumulative}{Logical; include cumulative downloads? Defaults to
+\code{TRUE}.}
 
-\item{start}{Start date for the plot (a \link{Date} or string coercible to one).
-Defaults to \code{NULL} (all available data).}
+\item{start}{Start date for the plot (a \link{Date} or string coercible to
+one). Defaults to \code{NULL} (all available data).}
 
 \item{unit}{Character string specifying the time unit to aggregate by.
 One of \code{"day"}, \code{"week"}, \code{"month"}, \code{"quarter"}, or \code{"year"}.
@@ -39,11 +40,12 @@ Fetches download data from CRAN (via \code{cranlogs}) and optionally GitHub
 Releases (via \code{gh}), then plots new and cumulative downloads.
 }
 \details{
-GitHub release downloads are cumulative counts per release asset from the
-GitHub API. New GitHub downloads are derived as the contribution of each
-release. CRAN downloads reflect daily counts from the \code{cranlogs} API.
+GitHub release downloads are cumulative counts per release asset
+from the GitHub API. New GitHub downloads are derived as the
+contribution of each release. CRAN downloads reflect daily counts
+from the \code{cranlogs} API.
 
-Requires the \code{cranlogs} package (and \code{gh} if \code{github = TRUE}), listed
-under \code{Suggests}.
+Requires the \code{cranlogs} package (and \code{gh} if \code{github = TRUE}),
+listed under \code{Suggests}.
 }
 \keyword{internal}

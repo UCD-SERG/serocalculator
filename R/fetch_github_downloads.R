@@ -12,6 +12,15 @@
 #'
 #' @noRd
 .fetch_github_downloads <- function(unit) {
+  if (!requireNamespace("gh", quietly = TRUE)) {
+    msg <- paste(
+      "Package {.pkg gh} is required.",
+      "Install with",
+      "{.code install.packages('gh')}."
+    )
+    cli::cli_abort(msg)
+  }
+
   releases <- gh::gh(
     "/repos/{owner}/{repo}/releases",
     owner = "UCD-SERG",

@@ -150,14 +150,6 @@ test_that(
 )
 
 test_that(
-  desc = ".check_suggests() passes when packages are available",
-  code = {
-    serocalculator:::.check_suggests(github = FALSE) |>
-      expect_no_error()
-  }
-)
-
-test_that(
   desc = "graph_downloads() errors when both metrics are FALSE",
   code = {
     graph_downloads(new = FALSE, cumulative = FALSE) |>

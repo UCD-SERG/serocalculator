@@ -14,6 +14,15 @@
 #'
 #' @noRd
 .fetch_cran_downloads <- function(unit, ...) {
+  if (!requireNamespace("packageRank", quietly = TRUE)) {
+    msg <- paste(
+      "Package {.pkg packageRank} is required.",
+      "Install with",
+      "{.code install.packages('packageRank')}."
+    )
+    cli::cli_abort(msg)
+  }
+
   today <- Sys.Date()
   dl <- packageRank::cranDownloads(
     "serocalculator",

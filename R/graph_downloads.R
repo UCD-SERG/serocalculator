@@ -46,15 +46,6 @@ graph_downloads <- function(
       unit
     )
   }
-  if (!new && !cumulative) {
-    msg <- paste(
-      "At least one of {.arg new} or",
-      "{.arg cumulative} must be {.val TRUE}."
-    )
-    cli::cli_abort(msg)
-  }
-  .check_suggests(github)
-
   download_data <- .get_download_data(
     github, new, cumulative, start, unit, ...
   )

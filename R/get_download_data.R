@@ -13,6 +13,14 @@
 .get_download_data <- function(
   github, new, cumulative, start, unit, ...
 ) {
+  if (!new && !cumulative) {
+    msg <- paste(
+      "At least one of {.arg new} or",
+      "{.arg cumulative} must be {.val TRUE}."
+    )
+    cli::cli_abort(msg)
+  }
+
   cran_data <- .fetch_cran_downloads(unit, ...)
   github_data <- if (github) .fetch_github_downloads(unit)
 

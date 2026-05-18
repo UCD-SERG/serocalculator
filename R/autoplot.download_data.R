@@ -1,19 +1,21 @@
-#' Build a ggplot of download data with adaptive faceting
+#' Plot download data with adaptive faceting
 #'
-#' @param download_data Long-format tibble from
-#'   [.get_download_data()], with attributes `github`,
-#'   `multi_metric`, and `default_title`.
+#' @param object A `download_data` object from
+#'   [.get_download_data()].
+#' @param ... Not currently used.
+#'
 #' @returns A [ggplot2::ggplot()] object.
 #'
+#' @export
 #' @keywords internal
-.plot_downloads <- function(download_data) {
-  title <- attr(download_data, "default_title")
-  github <- attr(download_data, "github")
-  multi_metric <- attr(download_data, "multi_metric")
+autoplot.download_data <- function(object, ...) {
+  title <- attr(object, "default_title")
+  github <- attr(object, "github")
+  multi_metric <- attr(object, "multi_metric")
   mapping <- ggplot2::aes(
     x = .data$date, y = .data$downloads
   )
-  p <- ggplot2::ggplot(download_data, mapping) +
+  p <- ggplot2::ggplot(object, mapping) +
     ggplot2::geom_line(linewidth = 0.4)
 
   if (github && multi_metric) {

@@ -82,7 +82,7 @@ test_that(
 )
 
 test_that(
-  desc = ".plot_downloads() returns ggplot for CRAN only",
+  desc = "autoplot.download_data() returns ggplot for CRAN only",
   code = {
     cran <- cran_downloads_fixture()
     download_data <- cran |>
@@ -92,9 +92,10 @@ test_that(
     attr(download_data, "github") <- FALSE
     attr(download_data, "multi_metric") <- TRUE
     attr(download_data, "default_title") <- "Test"
+    class(download_data) <- c("download_data", class(download_data))
 
     p <- download_data |>
-      serocalculator:::.plot_downloads()
+      ggplot2::autoplot()
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(
@@ -104,7 +105,7 @@ test_that(
 )
 
 test_that(
-  desc = ".plot_downloads() returns ggplot for CRAN + GitHub",
+  desc = "autoplot.download_data() returns ggplot for CRAN + GitHub",
   code = {
     cran <- cran_downloads_fixture()
     gh <- mock_github_data()
@@ -115,9 +116,10 @@ test_that(
     attr(download_data, "github") <- TRUE
     attr(download_data, "multi_metric") <- TRUE
     attr(download_data, "default_title") <- "Test"
+    class(download_data) <- c("download_data", class(download_data))
 
     p <- download_data |>
-      serocalculator:::.plot_downloads()
+      ggplot2::autoplot()
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(
@@ -127,7 +129,7 @@ test_that(
 )
 
 test_that(
-  desc = ".plot_downloads() handles single metric",
+  desc = "autoplot.download_data() handles single metric",
   code = {
     cran <- cran_downloads_fixture()
     download_data <- cran |>
@@ -137,9 +139,10 @@ test_that(
     attr(download_data, "github") <- FALSE
     attr(download_data, "multi_metric") <- FALSE
     attr(download_data, "default_title") <- NULL
+    class(download_data) <- c("download_data", class(download_data))
 
     p <- download_data |>
-      serocalculator:::.plot_downloads()
+      ggplot2::autoplot()
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(

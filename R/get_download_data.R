@@ -20,9 +20,10 @@
 #'   to omit.
 #' @inheritDotParams packageRank::cranDownloads
 #'
-#' @returns A long-format tibble with columns `date`,
-#'   `provider`, `metric`, and `downloads`, plus attributes
-#'   `default_title`, `github`, and `multi_metric`.
+#' @returns A `download_data` tibble (subclass of
+#'   `tbl_df`) with columns `date`, `provider`, `metric`,
+#'   and `downloads`, plus attributes `default_title`,
+#'   `github`, and `multi_metric`.
 #'
 #' @keywords internal
 .get_download_data <- function(
@@ -68,5 +69,5 @@
   attr(result, "github") <- github
   attr(result, "multi_metric") <- new && cumulative
 
-  result
+  result |> structure(class = c("download_data", class(result)))
 }

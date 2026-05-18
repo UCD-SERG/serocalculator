@@ -20,5 +20,5 @@
 #' @export
 #' @keywords internal
 graph_downloads <- function(...) {
-  .get_download_data(...) |> .plot_downloads()
+  .get_download_data(...) |> ggplot2::autoplot()
 }

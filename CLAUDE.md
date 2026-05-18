@@ -22,6 +22,7 @@ See `.github/copilot-instructions.md` for full project conventions. Key points b
 - **Use attributes for metadata**: When a data-producing function needs to communicate context (e.g., default title, faceting options) to a plotting function, store it as attributes on the data object rather than threading extra parameters through intermediaries.
 - **`@inheritParams` / `@inheritDotParams`**: Use these instead of duplicating `@param` docs across functions. Use `@keywords internal` (not `@noRd`) for internal functions so roxygen inheritance works.
 - **Leverage existing packages**: Before writing data-fetching or plotting utilities, check if CRAN packages already provide the functionality. Wrap existing packages rather than reimplementing.
+- **S3 autoplot methods for plotting**: When a function produces data that gets plotted, give the data a custom S3 class and implement an `autoplot()` method rather than a standalone plotting function. This lets users call `autoplot()` directly on the data object.
 
 ## Workflow
 

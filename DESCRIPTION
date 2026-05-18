@@ -66,7 +66,7 @@ Suggests:
     snapr (>= 0.0.0.9000),
     rex,
     readr,
-    cranlogs,
+    packageRank,
     gh
 LinkingTo: 
     Rcpp

@@ -1,5 +1,9 @@
 #' Fetch and aggregate CRAN download counts
 #'
+#' Uses [packageRank::cranDownloads()] to fetch daily CRAN
+#' download data with cumulative counts, then aggregates by
+#' `unit`.
+#'
 #' @param unit Character string passed to [cut.Date()] for
 #'   time aggregation (e.g. `"month"`, `"week"`).
 #'
@@ -8,17 +12,17 @@
 #'
 #' @noRd
 .fetch_cran_downloads <- function(unit) {
-  cran_raw <- cranlogs::cran_downloads(
-    packages = "serocalculator",
+  dl <- packageRank::cranDownloads(
+    "serocalculator",
     from = "2022-03-30",
     to = Sys.Date()
   )
 
   dplyr::tibble(
-    date = cran_raw$date,
+    date = dl$cranlogs.data$date,
     provider = "CRAN",
-    new = cran_raw$count,
-    cumulative = cumsum(cran_raw$count)
+    new = dl$cranlogs.data$count,
+    cumulative = dl$cranlogs.data$cumulative
   ) |>
     .aggregate_by_unit(unit)
 }

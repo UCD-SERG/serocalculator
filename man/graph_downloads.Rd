@@ -42,10 +42,10 @@ Releases (via \code{gh}), then plots new and cumulative downloads.
 \details{
 GitHub release downloads are cumulative counts per release asset
 from the GitHub API. New GitHub downloads are derived as the
-contribution of each release. CRAN downloads reflect daily counts
-from the \code{cranlogs} API.
+contribution of each release. CRAN downloads are fetched via
+\code{\link[packageRank:cranDownloads]{packageRank::cranDownloads()}}.
 
-Requires the \code{cranlogs} package (and \code{gh} if \code{github = TRUE}),
-listed under \code{Suggests}.
+Requires the \code{packageRank} package (and \code{gh} if
+\code{github = TRUE}), listed under \code{Suggests}.
 }
 \keyword{internal}

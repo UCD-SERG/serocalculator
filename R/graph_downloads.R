@@ -21,11 +21,11 @@
 #' @details
 #' GitHub release downloads are cumulative counts per release asset
 #' from the GitHub API. New GitHub downloads are derived as the
-#' contribution of each release. CRAN downloads reflect daily counts
-#' from the `cranlogs` API.
+#' contribution of each release. CRAN downloads are fetched via
+#' [packageRank::cranDownloads()].
 #'
-#' Requires the `cranlogs` package (and `gh` if `github = TRUE`),
-#' listed under `Suggests`.
+#' Requires the `packageRank` package (and `gh` if
+#' `github = TRUE`), listed under `Suggests`.
 #'
 #' @export
 #' @keywords internal

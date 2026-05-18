@@ -8,12 +8,12 @@
 #'
 #' @noRd
 .check_suggests <- function(github) {
-  if (!requireNamespace("cranlogs", quietly = TRUE)) {
+  if (!requireNamespace("packageRank", quietly = TRUE)) {
     cli::cli_abort(
       paste(
-        "Package {.pkg cranlogs} is required.",
+        "Package {.pkg packageRank} is required.",
         "Install with",
-        "{.code install.packages('cranlogs')}."
+        "{.code install.packages('packageRank')}."
       )
     )
   }

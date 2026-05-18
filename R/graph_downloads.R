@@ -56,12 +56,8 @@ graph_downloads <- function(
   }
   .check_suggests(github)
 
-  cran_data <- .fetch_cran_downloads(unit, ...)
-  github_data <- if (github) .fetch_github_downloads(unit)
-
-  metrics <- c(if (new) "new", if (cumulative) "cumulative")
-  download_data <- .prepare_download_data(
-    cran_data, github_data, start, metrics
+  download_data <- .get_download_data(
+    github, new, cumulative, start, unit, ...
   )
 
   .plot_downloads(

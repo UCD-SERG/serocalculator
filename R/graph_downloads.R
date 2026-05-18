@@ -70,13 +70,13 @@ graph_downloads <- function(
     new = cran_raw$count,
     cumulative = cumsum(cran_raw$count)
   ) |>
-    dplyr::mutate(period = as.Date(cut(date, breaks = unit))) |>
+    dplyr::mutate(period = as.Date(cut(.data$date, breaks = unit))) |>
     dplyr::summarise(
-      new = sum(new),
-      cumulative = dplyr::last(cumulative),
-      .by = c(period, source)
+      new = sum(.data$new),
+      cumulative = dplyr::last(.data$cumulative),
+      .by = c("period", "source")
     ) |>
-    dplyr::rename(date = period)
+    dplyr::rename(date = "period")
 
   if (github) {
     # GitHub data: per-release download totals -> cumulative + new
@@ -94,24 +94,28 @@ graph_downloads <- function(
       )
     }) |>
       purrr::list_rbind() |>
-      dplyr::arrange(date)
+      dplyr::arrange(.data$date)
 
     github_data <- github_releases |>
-      dplyr::mutate(cumulative = cumsum(downloads)) |>
-      tidyr::complete(date = seq(min(date), Sys.Date(), by = "day")) |>
-      tidyr::fill(cumulative, .direction = "down") |>
       dplyr::mutate(
-        cumulative = tidyr::replace_na(cumulative, 0L),
-        new = c(0, pmax(diff(cumulative), 0)),
+        new = .data$downloads,
+        cumulative = cumsum(.data$downloads)
+      ) |>
+      dplyr::select("date", "new", "cumulative") |>
+      tidyr::complete(date = seq(min(.data$date), Sys.Date(), by = "day")) |>
+      tidyr::fill("cumulative", .direction = "down") |>
+      dplyr::mutate(
+        cumulative = tidyr::replace_na(.data$cumulative, 0L),
+        new = tidyr::replace_na(.data$new, 0L),
         source = "GitHub"
       ) |>
-      dplyr::mutate(period = as.Date(cut(date, breaks = unit))) |>
+      dplyr::mutate(period = as.Date(cut(.data$date, breaks = unit))) |>
       dplyr::summarise(
-        new = sum(new),
-        cumulative = dplyr::last(cumulative),
-        .by = c(period, source)
+        new = sum(.data$new),
+        cumulative = dplyr::last(.data$cumulative),
+        .by = c("period", "source")
       ) |>
-      dplyr::rename(date = period)
+      dplyr::rename(date = "period")
   }
 
   # Combine and pivot to long format for faceting
@@ -119,18 +123,21 @@ graph_downloads <- function(
   metric_labels <- c(new = "New downloads", cumulative = "Cumulative downloads")
 
   download_data <- dplyr::bind_rows(cran_data, if (github) github_data) |>
-    dplyr::filter(if (is.null(start)) TRUE else date >= as.Date(start)) |>
-    dplyr::select(date, source, dplyr::all_of(metrics)) |>
+    dplyr::filter(is.null(start) | .data$date >= as.Date(start)) |>
+    dplyr::select("date", "source", dplyr::all_of(metrics)) |>
     tidyr::pivot_longer(
       cols = dplyr::all_of(metrics),
       names_to = "metric",
       values_to = "downloads"
     ) |>
     dplyr::mutate(
-      metric = factor(metric, levels = metrics, labels = metric_labels[metrics])
+      metric = factor(.data$metric, levels = metrics, labels = metric_labels[metrics])
     )
 
-  p <- ggplot2::ggplot(download_data, ggplot2::aes(x = date, y = downloads)) +
+  p <- ggplot2::ggplot(
+    download_data,
+    ggplot2::aes(x = .data$date, y = .data$downloads)
+  ) +
     ggplot2::geom_line(linewidth = 0.4)
 
   multi_metric <- new && cumulative

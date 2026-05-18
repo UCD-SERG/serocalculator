@@ -39,7 +39,7 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    purrr,
+    purrr (>= 1.0.0),
     and,
     glue,
     stringr,
@@ -65,7 +65,9 @@ Suggests:
     forcats,
     snapr (>= 0.0.0.9000),
     rex,
-    readr
+    readr,
+    cranlogs,
+    gh
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3

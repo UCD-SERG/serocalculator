@@ -14,19 +14,9 @@ test_that(
       cumulative = c(10L, 30L, 60L, 65L, 80L)
     )
 
-    result <- daily |>
-      serocalculator:::.aggregate_by_unit("month")
-
-    result |>
-      nrow() |>
-      expect_equal(2)
-    result$new |>
-      expect_equal(c(60L, 20L))
-    result$cumulative |>
-      expect_equal(c(60L, 80L))
-    expected_dates <- c("2024-01-01", "2024-02-01") |> as.Date()
-    result$date |>
-      expect_equal(expected_dates)
+    daily |>
+      serocalculator:::.aggregate_by_unit("month") |>
+      expect_snapshot_value(style = "json2")
   }
 )
 
@@ -34,19 +24,11 @@ test_that(
   desc = ".prepare_download_data() pivots correctly",
   code = {
     cran <- cran_downloads_fixture()
-    result <- cran |>
+    cran |>
       serocalculator:::.prepare_download_data(
         NULL, NULL, c("new", "cumulative")
-      )
-
-    col_names <- result |> names()
-    "metric" %in% col_names |>
-      expect_true()
-    "downloads" %in% col_names |>
-      expect_true()
-    result$metric |>
-      levels() |>
-      expect_equal(c("New downloads", "Cumulative downloads"))
+      ) |>
+      expect_snapshot_value(style = "json2")
   }
 )
 
@@ -54,15 +36,11 @@ test_that(
   desc = ".prepare_download_data() filters by start date",
   code = {
     cran <- cran_downloads_fixture()
-    result <- cran |>
+    cran |>
       serocalculator:::.prepare_download_data(
         NULL, "2026-01-01", c("new")
-      )
-
-    cutoff <- "2026-01-01" |> as.Date()
-    result$date |>
-      min() |>
-      expect_gte(cutoff)
+      ) |>
+      expect_snapshot_value(style = "json2")
   }
 )
 
@@ -70,14 +48,11 @@ test_that(
   desc = ".prepare_download_data() includes only requested metrics",
   code = {
     cran <- cran_downloads_fixture()
-    result <- cran |>
+    cran |>
       serocalculator:::.prepare_download_data(
         NULL, NULL, "new"
-      )
-
-    result$metric |>
-      levels() |>
-      expect_equal("New downloads")
+      ) |>
+      expect_snapshot_value(style = "json2")
   }
 )
 
@@ -94,13 +69,11 @@ test_that(
     attr(download_data, "title") <- "Test"
     class(download_data) <- c("download_data", class(download_data))
 
-    p <- download_data |>
-      ggplot2::autoplot()
-
-    p |> expect_s3_class("ggplot")
-    p |> vdiffr::expect_doppelganger(
-      title = "downloads-cran-only"
-    )
+    download_data |>
+      ggplot2::autoplot() |>
+      vdiffr::expect_doppelganger(
+        title = "downloads-cran-only"
+      )
   }
 )
 
@@ -118,13 +91,11 @@ test_that(
     attr(download_data, "title") <- "Test"
     class(download_data) <- c("download_data", class(download_data))
 
-    p <- download_data |>
-      ggplot2::autoplot()
-
-    p |> expect_s3_class("ggplot")
-    p |> vdiffr::expect_doppelganger(
-      title = "downloads-cran-github"
-    )
+    download_data |>
+      ggplot2::autoplot() |>
+      vdiffr::expect_doppelganger(
+        title = "downloads-cran-github"
+      )
   }
 )
 
@@ -141,13 +112,11 @@ test_that(
     attr(download_data, "title") <- NULL
     class(download_data) <- c("download_data", class(download_data))
 
-    p <- download_data |>
-      ggplot2::autoplot()
-
-    p |> expect_s3_class("ggplot")
-    p |> vdiffr::expect_doppelganger(
-      title = "downloads-cumulative-only"
-    )
+    download_data |>
+      ggplot2::autoplot() |>
+      vdiffr::expect_doppelganger(
+        title = "downloads-cumulative-only"
+      )
   }
 )
 

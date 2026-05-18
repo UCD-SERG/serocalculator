@@ -40,7 +40,8 @@ graph_downloads <- function(
   unit <- match.arg(unit)
   if (missing(title)) {
     title <- paste0(
-      "Downloads of serocalculator package from CRAN, by ", unit
+      "Downloads of serocalculator package from CRAN, by ",
+      unit
     )
   }
   if (!new && !cumulative) {
@@ -51,11 +52,31 @@ graph_downloads <- function(
       )
     )
   }
+  .check_suggests(github)
+
+  cran_data <- .fetch_cran_downloads(unit)
+  github_data <- if (github) .fetch_github_downloads(unit)
+
+  metrics <- c(if (new) "new", if (cumulative) "cumulative")
+  download_data <- .prepare_download_data(
+    cran_data, github_data, start, metrics
+  )
+
+  .plot_downloads(
+    download_data,
+    github = github,
+    multi_metric = new && cumulative,
+    title = title
+  )
+}
+
+.check_suggests <- function(github) {
   if (!requireNamespace("cranlogs", quietly = TRUE)) {
     cli::cli_abort(
       paste(
         "Package {.pkg cranlogs} is required.",
-        "Install with {.code install.packages('cranlogs')}."
+        "Install with",
+        "{.code install.packages('cranlogs')}."
       )
     )
   }
@@ -63,26 +84,75 @@ graph_downloads <- function(
     cli::cli_abort(
       paste(
         "Package {.pkg gh} is required.",
-        "Install with {.code install.packages('gh')}."
+        "Install with",
+        "{.code install.packages('gh')}."
       )
     )
   }
+}
 
-  pkg <- "serocalculator"
-
-  # CRAN data: daily counts + cumulative
+.fetch_cran_downloads <- function(unit) {
   cran_raw <- cranlogs::cran_downloads(
-    packages = pkg,
+    packages = "serocalculator",
     from = "2022-03-30",
     to = Sys.Date()
   )
 
-  cran_data <- dplyr::tibble(
+  dplyr::tibble(
     date = cran_raw$date,
     provider = "CRAN",
     new = cran_raw$count,
     cumulative = cumsum(cran_raw$count)
   ) |>
+    .aggregate_by_unit(unit)
+}
+
+.fetch_github_downloads <- function(unit) {
+  releases <- gh::gh(
+    "/repos/{owner}/{repo}/releases",
+    owner = "UCD-SERG",
+    repo = "serocalculator",
+    .limit = Inf
+  )
+
+  github_releases <- purrr::map(
+    releases,
+    function(release) {
+      tibble::tibble(
+        date = as.Date(release$published_at),
+        downloads = sum(
+          purrr::map_int(
+            release$assets, "download_count"
+          )
+        )
+      )
+    }
+  ) |>
+    purrr::list_rbind() |>
+    dplyr::arrange(.data$date)
+
+  github_releases |>
+    dplyr::mutate(
+      new = .data$downloads,
+      cumulative = cumsum(.data$downloads)
+    ) |>
+    dplyr::select("date", "new", "cumulative") |>
+    tidyr::complete(
+      date = seq(min(.data$date), Sys.Date(), by = "day")
+    ) |>
+    tidyr::fill("cumulative", .direction = "down") |>
+    dplyr::mutate(
+      cumulative = tidyr::replace_na(
+        .data$cumulative, 0L
+      ),
+      new = tidyr::replace_na(.data$new, 0L),
+      provider = "GitHub"
+    ) |>
+    .aggregate_by_unit(unit)
+}
+
+.aggregate_by_unit <- function(data, unit) {
+  data |>
     dplyr::mutate(
       period = as.Date(cut(.data$date, breaks = unit))
     ) |>
@@ -92,69 +162,23 @@ graph_downloads <- function(
       .by = c("period", "provider")
     ) |>
     dplyr::rename(date = "period")
+}
 
-  if (github) {
-    # GitHub data: per-release download totals
-    releases <- gh::gh(
-      "/repos/{owner}/{repo}/releases",
-      owner = "UCD-SERG",
-      repo = pkg,
-      .limit = Inf
-    )
-
-    github_releases <- purrr::map(
-      releases,
-      function(release) {
-        tibble::tibble(
-          date = as.Date(release$published_at),
-          downloads = sum(
-            purrr::map_int(release$assets, "download_count")
-          )
-        )
-      }
-    ) |>
-      purrr::list_rbind() |>
-      dplyr::arrange(.data$date)
-
-    github_data <- github_releases |>
-      dplyr::mutate(
-        new = .data$downloads,
-        cumulative = cumsum(.data$downloads)
-      ) |>
-      dplyr::select("date", "new", "cumulative") |>
-      tidyr::complete(
-        date = seq(min(.data$date), Sys.Date(), by = "day")
-      ) |>
-      tidyr::fill("cumulative", .direction = "down") |>
-      dplyr::mutate(
-        cumulative = tidyr::replace_na(.data$cumulative, 0L),
-        new = tidyr::replace_na(.data$new, 0L),
-        provider = "GitHub"
-      ) |>
-      dplyr::mutate(
-        period = as.Date(cut(.data$date, breaks = unit))
-      ) |>
-      dplyr::summarise(
-        new = sum(.data$new),
-        cumulative = dplyr::last(.data$cumulative),
-        .by = c("period", "provider")
-      ) |>
-      dplyr::rename(date = "period")
-  }
-
-  # Combine and pivot to long format for faceting
-  metrics <- c(if (new) "new", if (cumulative) "cumulative")
+.prepare_download_data <- function(
+  cran_data, github_data, start, metrics
+) {
   metric_labels <- c(
     new = "New downloads",
     cumulative = "Cumulative downloads"
   )
 
-  download_data <-
-    dplyr::bind_rows(cran_data, if (github) github_data) |>
+  dplyr::bind_rows(cran_data, github_data) |>
     dplyr::filter(
       is.null(start) | .data$date >= as.Date(start)
     ) |>
-    dplyr::select("date", "provider", dplyr::all_of(metrics)) |>
+    dplyr::select(
+      "date", "provider", dplyr::all_of(metrics)
+    ) |>
     tidyr::pivot_longer(
       cols = dplyr::all_of(metrics),
       names_to = "metric",
@@ -167,14 +191,17 @@ graph_downloads <- function(
         labels = metric_labels[metrics]
       )
     )
+}
 
+.plot_downloads <- function(
+  download_data, github, multi_metric, title
+) {
   p <- ggplot2::ggplot(
     download_data,
     ggplot2::aes(x = .data$date, y = .data$downloads)
   ) +
     ggplot2::geom_line(linewidth = 0.4)
 
-  multi_metric <- new && cumulative
   if (github && multi_metric) {
     p <- p +
       ggplot2::facet_grid(

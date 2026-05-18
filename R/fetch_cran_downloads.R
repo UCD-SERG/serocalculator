@@ -6,17 +6,20 @@
 #'
 #' @param unit Character string passed to [cut.Date()] for
 #'   time aggregation (e.g. `"month"`, `"week"`).
+#' @param ... Additional arguments passed to
+#'   [packageRank::cranDownloads()].
 #'
 #' @returns A tibble with columns `date`, `provider`, `new`,
 #'   and `cumulative`.
 #'
 #' @noRd
-.fetch_cran_downloads <- function(unit) {
+.fetch_cran_downloads <- function(unit, ...) {
   today <- Sys.Date()
   dl <- packageRank::cranDownloads(
     "serocalculator",
     from = "2022-03-30",
-    to = today
+    to = today,
+    ...
   )
 
   dl$cranlogs.data |>

@@ -15,6 +15,8 @@
 #'   Defaults to `"month"`.
 #' @param title Character string for the plot title. Defaults to
 #'   a description including the time unit. Set to `NULL` to omit.
+#' @param ... Additional arguments passed to
+#'   [packageRank::cranDownloads()].
 #'
 #' @return A [ggplot2::ggplot()] object with faceted panels.
 #'
@@ -35,7 +37,8 @@ graph_downloads <- function(
   cumulative = TRUE,
   start = NULL,
   unit = c("month", "day", "week", "quarter", "year"),
-  title
+  title,
+  ...
 ) {
   unit <- match.arg(unit)
   if (missing(title)) {
@@ -53,7 +56,7 @@ graph_downloads <- function(
   }
   .check_suggests(github)
 
-  cran_data <- .fetch_cran_downloads(unit)
+  cran_data <- .fetch_cran_downloads(unit, ...)
   github_data <- if (github) .fetch_github_downloads(unit)
 
   metrics <- c(if (new) "new", if (cumulative) "cumulative")

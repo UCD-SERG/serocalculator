@@ -10,7 +10,8 @@ graph_downloads(
   cumulative = TRUE,
   start = NULL,
   unit = c("month", "day", "week", "quarter", "year"),
-  title
+  title,
+  ...
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ Defaults to \code{"month"}.}
 
 \item{title}{Character string for the plot title. Defaults to
 a description including the time unit. Set to \code{NULL} to omit.}
+
+\item{...}{Additional arguments passed to
+\code{\link[packageRank:cranDownloads]{packageRank::cranDownloads()}}.}
 }
 \value{
 A \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object with faceted panels.

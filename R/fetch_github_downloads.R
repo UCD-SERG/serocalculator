@@ -10,12 +10,10 @@
     releases,
     function(release) {
       tibble::tibble(
-        date = as.Date(release$published_at),
-        downloads = sum(
-          purrr::map_int(
-            release$assets, "download_count"
-          )
-        )
+        date = release$published_at |> as.Date(),
+        downloads = release$assets |>
+          purrr::map_int("download_count") |>
+          sum()
       )
     }
   ) |>

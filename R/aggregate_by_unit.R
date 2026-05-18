@@ -1,7 +1,9 @@
 .aggregate_by_unit <- function(data, unit) {
   data |>
     dplyr::mutate(
-      period = as.Date(cut(.data$date, breaks = unit))
+      period = .data$date |>
+        cut(breaks = unit) |>
+        as.Date()
     ) |>
     dplyr::summarise(
       new = sum(.data$new),

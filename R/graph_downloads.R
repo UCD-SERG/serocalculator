@@ -15,8 +15,7 @@
 #'   Defaults to `"month"`.
 #' @param title Character string for the plot title. Defaults to
 #'   a description including the time unit. Set to `NULL` to omit.
-#' @param ... Additional arguments passed to
-#'   [packageRank::cranDownloads()].
+#' @inheritDotParams packageRank::cranDownloads
 #'
 #' @return A [ggplot2::ggplot()] object with faceted panels.
 #'

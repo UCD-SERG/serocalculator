@@ -19,11 +19,9 @@
     to = today
   )
 
-  dplyr::tibble(
-    date = dl$cranlogs.data$date,
-    provider = "CRAN",
-    new = dl$cranlogs.data$count,
-    cumulative = dl$cranlogs.data$cumulative
-  ) |>
+  dl$cranlogs.data |>
+    dplyr::rename(new = "count") |>
+    dplyr::mutate(provider = "CRAN") |>
+    dplyr::select("date", "provider", "new", "cumulative") |>
     .aggregate_by_unit(unit)
 }

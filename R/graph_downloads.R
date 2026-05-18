@@ -43,9 +43,9 @@ graph_downloads <- function(
     github, new, cumulative, start, unit, ...
   )
 
-  if (missing(title)) {
-    download_data |> .plot_downloads()
-  } else {
-    download_data |> .plot_downloads(title = title)
+  if (!missing(title)) {
+    attr(download_data, "default_title") <- title
   }
+
+  download_data |> .plot_downloads()
 }

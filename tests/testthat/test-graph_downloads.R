@@ -91,9 +91,10 @@ test_that(
       )
     attr(download_data, "github") <- FALSE
     attr(download_data, "multi_metric") <- TRUE
+    attr(download_data, "default_title") <- "Test"
 
     p <- download_data |>
-      serocalculator:::.plot_downloads(title = "Test")
+      serocalculator:::.plot_downloads()
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(
@@ -113,9 +114,10 @@ test_that(
       )
     attr(download_data, "github") <- TRUE
     attr(download_data, "multi_metric") <- TRUE
+    attr(download_data, "default_title") <- "Test"
 
     p <- download_data |>
-      serocalculator:::.plot_downloads(title = "Test")
+      serocalculator:::.plot_downloads()
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(
@@ -134,9 +136,10 @@ test_that(
       )
     attr(download_data, "github") <- FALSE
     attr(download_data, "multi_metric") <- FALSE
+    attr(download_data, "default_title") <- NULL
 
     p <- download_data |>
-      serocalculator:::.plot_downloads(title = NULL)
+      serocalculator:::.plot_downloads()
 
     p |> expect_s3_class("ggplot")
     p |> vdiffr::expect_doppelganger(

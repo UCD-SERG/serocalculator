@@ -1,36 +1,20 @@
-mock_cran_data <- function(unit = "month") {
-  dates <- seq(
-    as.Date("2024-01-01"),
-    as.Date("2024-06-30"),
-    by = "day"
-  )
-  daily <- dplyr::tibble(
-    date = dates,
-    provider = "CRAN",
-    new = rep(c(5L, 10L, 3L, 8L, 2L, 0L, 1L), length.out = length(dates)),
-    cumulative = cumsum(
-      rep(c(5L, 10L, 3L, 8L, 2L, 0L, 1L), length.out = length(dates))
-    )
-  )
-  serocalculator:::.aggregate_by_unit(daily, unit)
+cran_downloads_fixture <- function() {
+  readRDS(testthat::test_path("fixtures", "cran_downloads.rds"))
 }
 
-mock_github_data <- function(unit = "month") {
-  dates <- seq(
-    as.Date("2024-01-01"),
-    as.Date("2024-06-30"),
-    by = "day"
-  )
-  daily <- dplyr::tibble(
-    date = dates,
-    provider = "GitHub",
-    new = rep(0L, length(dates)),
-    cumulative = rep(50L, length(dates))
-  )
-  # simulate two releases
-  daily$new[1] <- 30L
-  daily$new[91] <- 20L
-  daily$cumulative <- cumsum(daily$new)
+mock_github_data <- function() {
+  # Real GitHub data has zero downloads (no release assets),
 
-  serocalculator:::.aggregate_by_unit(daily, unit)
+  # so we use synthetic data for meaningful plot tests.
+  dplyr::tibble(
+    date = as.Date(c(
+      "2025-01-01", "2025-02-01", "2025-03-01",
+      "2025-04-01", "2025-05-01", "2025-06-01"
+    )),
+    provider = "GitHub",
+    new = c(30L, 0L, 20L, 0L, 10L, 0L),
+    cumulative = cumsum(
+      c(30L, 0L, 20L, 0L, 10L, 0L)
+    )
+  )
 }

@@ -28,7 +28,7 @@ test_that(
 test_that(
   desc = ".prepare_download_data() pivots correctly",
   code = {
-    cran <- mock_cran_data()
+    cran <- cran_downloads_fixture()
     result <- serocalculator:::.prepare_download_data(
       cran, NULL, NULL, c("new", "cumulative")
     )
@@ -45,19 +45,19 @@ test_that(
 test_that(
   desc = ".prepare_download_data() filters by start date",
   code = {
-    cran <- mock_cran_data()
+    cran <- cran_downloads_fixture()
     result <- serocalculator:::.prepare_download_data(
-      cran, NULL, "2024-04-01", c("new")
+      cran, NULL, "2026-01-01", c("new")
     )
 
-    expect_true(all(result$date >= as.Date("2024-04-01")))
+    expect_true(all(result$date >= as.Date("2026-01-01")))
   }
 )
 
 test_that(
   desc = ".prepare_download_data() includes only requested metrics",
   code = {
-    cran <- mock_cran_data()
+    cran <- cran_downloads_fixture()
     result <- serocalculator:::.prepare_download_data(
       cran, NULL, NULL, "new"
     )
@@ -72,7 +72,7 @@ test_that(
 test_that(
   desc = ".plot_downloads() returns ggplot for CRAN only",
   code = {
-    cran <- mock_cran_data()
+    cran <- cran_downloads_fixture()
     download_data <- serocalculator:::.prepare_download_data(
       cran, NULL, NULL, c("new", "cumulative")
     )
@@ -94,7 +94,7 @@ test_that(
 test_that(
   desc = ".plot_downloads() returns ggplot for CRAN + GitHub",
   code = {
-    cran <- mock_cran_data()
+    cran <- cran_downloads_fixture()
     gh <- mock_github_data()
     download_data <- serocalculator:::.prepare_download_data(
       cran, gh, NULL, c("new", "cumulative")
@@ -117,7 +117,7 @@ test_that(
 test_that(
   desc = ".plot_downloads() handles single metric",
   code = {
-    cran <- mock_cran_data()
+    cran <- cran_downloads_fixture()
     download_data <- serocalculator:::.prepare_download_data(
       cran, NULL, NULL, "cumulative"
     )

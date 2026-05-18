@@ -6,7 +6,9 @@ See `.github/copilot-instructions.md` for full project conventions. Key points b
 
 ## Code Style
 
-- Use native pipe `|>` instead of nesting function calls. Write `x |> f() |> g()` not `g(f(x))`. This applies to all R code including tests.
+- Use native pipe `|>` instead of nesting function calls. Write `x |> f() |> g()` not `g(f(x))`.
+- Avoid function calls in function arguments. Extract into named variables first. Write `y <- f(x); g(y)` not `g(f(x))`.
+- Both rules apply to all R code including tests.
 - One function per file.
 - Keep functions under 100 lines; decompose into helpers.
 - Internal helper functions use `.function_name()` convention.

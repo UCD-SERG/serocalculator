@@ -28,8 +28,10 @@
 
 ### New features
 
-- Added `graph_downloads()` to plot new and cumulative package download
-  counts from CRAN, with optional GitHub release download tracking.
+- Added
+  [`graph_downloads()`](https://ucd-serg.github.io/serocalculator/reference/graph_downloads.md)
+  to plot new and cumulative package download counts from CRAN, with
+  optional GitHub release download tracking.
 
 - Added `cluster_var` and `stratum_var` parameters to
   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
@@ -441,7 +443,8 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using `devtag::use_devtag()`)
+- Added `devtag` to package (using
+  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

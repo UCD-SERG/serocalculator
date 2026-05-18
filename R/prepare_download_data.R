@@ -21,10 +21,14 @@
     cumulative = "Cumulative downloads"
   )
 
-  dplyr::bind_rows(cran_data, github_data) |>
-    dplyr::filter(
-      is.null(start) | .data$date >= as.Date(start)
-    ) |>
+  combined <- dplyr::bind_rows(cran_data, github_data)
+
+  if (!is.null(start)) {
+    combined <- combined |>
+      dplyr::filter(.data$date >= as.Date(start))
+  }
+
+  combined |>
     dplyr::select(
       "date", "provider", dplyr::all_of(metrics)
     ) |>

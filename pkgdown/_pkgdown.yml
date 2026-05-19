@@ -33,6 +33,7 @@ reference:
   - autoplot.pop_data
   - autoplot.curve_params
   - graph.curve.params
+  - graph_downloads
   - graph_loglik
   - log_likelihood
 - title: Estimate seroconversion incidence rates

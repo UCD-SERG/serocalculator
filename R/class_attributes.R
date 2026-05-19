@@ -4,61 +4,68 @@ get_age_var <- function(object, ...) {
 }
 
 get_age <- function(object, ...) {
-  age_var <- object %>% get_age_var()
-  age_data <- object %>% pull(age_var)
+  age_var <- object |> get_age_var()
+  age_data <- object |> pull(age_var)
   return(age_data)
 }
 
-get_value_var <- function(object, ...) {
+#' Extract antibody measurement values
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns the name of the column in `object` specified as containing
+#' antibody abundance measurements
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_values_var()
+get_values_var <- function(object, ...) {
   value_var <- attributes(object)$value_var
   return(value_var)
 }
 
-get_value <- function(object, ...) {
-  value_var_name <- object %>% get_value_var()
-  value_data <- object %>% pull(value_var_name)
+get_value_var <- get_values_var
+
+#' Get antibody measurement values
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns a [numeric] [vector] of antibody measurement values
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_values()
+get_values <- function(object, ...) {
+  value_var_name <- object |> get_values_var()
+  value_data <- object |> pull(value_var_name)
   return(value_data)
 }
 
-get_id_var <- function(object, ...) {
-  id_var <- attributes(object)$id_var
-  return(id_var)
-}
+# old name: unexported
+get_value <- get_values
 
-get_id <- function(object, ...) {
-  id_var_name <- object %>% get_id_var()
-  id_data <- object %>% pull(id_var_name)
-  return(id_data)
-}
-
+#' Extract biomarker levels
+#'
+#' @param object a `pop_data` object
+#' @param ... unused
+#'
+#' @returns the biomarker levels in `object`
+#' @export
+#'
+#' @examples
+#' sees_pop_data_100 |> get_biomarker_levels()
 get_biomarker_levels <- function(object, ...) {
   metadata <- attributes(object)
-  if("antigen_isos" %in% names(metadata)) {
+  if ("antigen_isos" %in% names(metadata)) {
     return(metadata[["antigen_isos"]])
-  }
-  else if (is.data.frame(object) && "antigen_isos" %in% names(object)) {
+  } else if (is.data.frame(object) && "antigen_isos" %in% names(object)) {
     return(unique(object[["antigen_isos"]]))
-  } else
-  {
+  } else {
     cli::cli_abort("biomarkers not found in `object`")
   }
 }
-
-get_biomarker_names_var <- function(object, ...) {
-  # get value attribute
-  biomarker_var <- attributes(object)[["biomarker_var"]]
-
-  return(biomarker_var)
-}
-
-get_biomarker_names <- function(object, ...) {
-  # get biomarker name data
-  biomarker_names_var <- get_biomarker_names_var(object)
-  biomarker_data <- object %>% pull(biomarker_names_var)
-
-  return(biomarker_data)
-}
-
 
 set_age <- function(object,
                     age = "Age",
@@ -97,7 +104,7 @@ set_age <- function(object,
   }
 
   if (standardize) {
-    object <- object %>%
+    object <- object |>
       rename(c("age" = attr(object, "age_var")))
 
     # set age attribute
@@ -144,56 +151,11 @@ set_value <- function(object,
   }
 
   if (standardize) {
-    object <- object %>%
+    object <- object |>
       rename(c("value" = attr(object, "value_var")))
 
     # set id attribute
     attr(object, "value_var") <- "value"
-  }
-
-  return(object)
-}
-
-set_id <- function(object,
-                   id = "index_id",
-                   standardize = TRUE,
-                   ...) {
-  # check if id column exists
-  if (id %in% colnames(object)) {
-    attr(object, "id_var") <- id
-  } else {
-    cli::cli_warn("The specified {.var id} column {.val {id}} does not exist.")
-
-    # search id variable from object
-    id_var <-
-      grep(
-        x = colnames(object),
-        value = TRUE,
-        pattern = id,
-        ignore.case = TRUE
-      )
-
-    if (length(id_var) == 1) {
-      attr(object, "id_var") <- id_var
-
-      # create warning when using searched id instead of provided id
-      cli::cli_inform('Proceeding to use "{id_var}"')
-    } else if (length(id_var) == 0) {
-      cli::cli_abort("No similar column name was detected.")
-    } else {
-      # if (length(id_var) > 1)
-      cli::cli_warn("Multiple potential matches found: {.var {id_var}}")
-      cli::cli_inform("Using first match: {.var {id_var[1]}}")
-      attr(object, "id_var") <- id_var[1]
-    }
-  }
-
-  if (standardize) {
-    object <- object %>%
-      rename(c("id" = attr(object, "id_var")))
-
-    # set id attribute
-    attr(object, "id_var") <- "id"
   }
 
   return(object)

@@ -1,12 +1,13 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.3.0.9020
+Version: 1.4.0.9011
 Authors@R: c(
-    person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
-           comment = "Author of the method and original code."),
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
+    person("Kwan Ho", "Lee", , "ksjlee@ucdavis.edu", role = "ctb"),
+    person("Peter", "Teunis", , "p.teunis@emory.edu", role = c("aut", "cph"),
+           comment = "Author of the method and original code."),
     person("Kristen", "Aiemjoy", , "kaiemjoy@ucdavis.edu", role = "aut"),
     person("Douglas Ezra", "Morrison", , "demorrison@ucdavis.edu", role = "aut")
   )
@@ -26,10 +27,9 @@ Imports:
     dplyr,
     foreach,
     ggplot2,
-    ggpubr,
+    patchwork,
     lifecycle,
     magrittr,
-    mixtools,
     Rcpp,
     rlang,
     rngtools,
@@ -43,7 +43,8 @@ Imports:
     and,
     glue,
     stringr,
-    parallel
+    parallel,
+    labelled
 Suggests:
     bookdown,
     DT,
@@ -51,8 +52,8 @@ Suggests:
     furrr,
     ggbeeswarm,
     knitr,
+    mixtools,
     pak,
-    readr,
     quarto,
     rmarkdown,
     spelling,
@@ -62,16 +63,23 @@ Suggests:
     qrcode,
     svglite,
     vdiffr,
-    withr
+    withr,
+    forcats,
+    snapr (>= 0.0.0.9000),
+    rex,
+    readr
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
-Config/Needs/build: moodymudskipper/devtag
+Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
+Config/Needs/website: quarto, lewinfox/foodwebr
+Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
-Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-RoxygenNote: 7.3.2
-Config/Needs/website: quarto
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
+Remotes: 
+    d-morrison/snapr
+Config/roxygen2/version: 8.0.0

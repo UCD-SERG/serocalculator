@@ -1,0 +1,56 @@
+test_that(
+  desc = "`load_noise_params()` produces expected results",
+  code = {
+    expect_no_error(
+      noise_params_true <-
+        load_noise_params(
+          serocalculator_example("example_noise_params.rds")
+        )
+    )
+  }
+)
+
+test_that(
+  desc = "non-URL file error is re-thrown",
+  code = {
+    # Test that errors from non-URL paths are properly re-thrown unchanged
+    expect_error(
+      suppressWarnings(
+        load_noise_params("nonexistent_file.rds")
+      )
+    )
+    
+    # Verify original error is preserved
+    err <- tryCatch(
+      suppressWarnings(
+        load_noise_params("nonexistent_file.rds")
+      ),
+      error = function(e) e
+    )
+    
+    # Should be the original error class, not rlang_error
+    expect_true(inherits(err, "error"))
+    expect_true(inherits(err, "condition"))
+  }
+)
+
+test_that(
+  desc = "unavailable internet resource produces informative error",
+  code = {
+    # Test with a non-existent URL
+    expect_error(
+      load_noise_params("https://ucdserg.ucdavis.edu/nofile"),
+      class = "internet_resource_unavailable",
+      regexp = "Unable to load noise parameters from internet resource"
+    )
+
+    # Verify the error contains helpful information
+    err <- tryCatch(
+      load_noise_params("https://ucdserg.ucdavis.edu/file.rds"),
+      error = function(e) e
+    )
+
+    expect_match(conditionMessage(err), "not available or has changed")
+    expect_match(conditionMessage(err), "check your internet connection")
+  }
+)

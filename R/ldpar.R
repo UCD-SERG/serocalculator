@@ -1,13 +1,13 @@
 #' @title extract a row from longitudinal parameter set
 #' @description
 #' take a random sample from longitudinal parameter set
-#' given age at infection, for a  list of antibodies
+#' given age at infection, for a list of antibodies
 #' @param age age at infection
 #' @param antigen_isos antigen isotypes
 #' @param nmc mcmc sample to use
 #' @param ... passed to `simpar()`
 #' @param npar number of parameters
-#' @returns an array of parameters:
+#' @returns an array of 7 parameters and initial conditions:
 #'  c(y0,b0,mu0,mu1,c1,alpha,shape)
 #' @keywords internal
 ldpar <- function(age, antigen_isos, nmc, npar, ...) {

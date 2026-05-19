@@ -40,7 +40,9 @@ stratify_data <- function(data,
                           strata_varnames = "",
                           curve_strata_varnames = NULL,
                           noise_strata_varnames = NULL,
-                          antigen_isos = get_biomarker_levels(data)) {
+                          antigen_isos = get_biomarker_levels(data),
+                          cluster_var = NULL,
+                          stratum_var = NULL) {
   curve_params <-
     curve_params |>
     filter(.data[["antigen_iso"]] %in% antigen_isos)
@@ -53,25 +55,34 @@ stratify_data <- function(data,
     all(strata_varnames == "")
 
   if (no_strata) {
+    # Determine which columns to keep
+    cols_to_keep <- c(
+      data |> get_values_var(),
+      data |> get_age_var(),
+      data |> get_biomarker_names_var()
+    )
+    
+    # Add cluster/stratum variables if specified
+    if (!is.null(cluster_var)) {
+      cols_to_keep <- c(cols_to_keep, cluster_var)
+    }
+    if (!is.null(stratum_var)) {
+      cols_to_keep <- c(cols_to_keep, stratum_var)
+    }
+    
     pop_data <-
-      data |> select(all_of(
-        c(
-          data |> get_value_var(),
-          data |> get_age_var(),
-          data |> get_biomarker_names_var()
-        )
-      ))
+      data |> select(all_of(cols_to_keep))
 
     all_data <-
       list(
         pop_data = pop_data,
-        curve_params = curve_params |> select(all_of(curve_param_names)),
+        sr_params = curve_params |> select(all_of(curve_param_names)),
         noise_params = noise_params |> select(all_of(noise_param_names)),
         antigen_isos = antigen_isos |> intersect(data |> get_biomarker_names())
       ) |>
       structure(class = union("biomarker_data_and_params", "list"))
 
-    # est.incidence.by() expects a list:
+    # est_seroincidence_by() expects a list:
     stratum_data_list <-
       list(`all data` = all_data) |>
       structure(antigen_isos = antigen_isos, # might be able to remove
@@ -105,14 +116,25 @@ stratify_data <- function(data,
     cur_stratum_vals <-
       strata |> dplyr::filter(.data$Stratum == cur_stratum)
 
+    # Determine which columns to keep
+    cols_to_keep <- c(
+      data |> get_values_var(),
+      data |> get_age_var(),
+      data |> get_biomarker_names_var()
+    )
+    
+    # Add cluster/stratum variables if specified
+    if (!is.null(cluster_var)) {
+      cols_to_keep <- c(cols_to_keep, cluster_var)
+    }
+    if (!is.null(stratum_var)) {
+      cols_to_keep <- c(cols_to_keep, stratum_var)
+    }
+    
     pop_data_cur_stratum <-
       data |>
       semi_join(cur_stratum_vals, by = strata_varnames) |>
-      select(
-        data |> get_value_var(),
-        data |> get_age_var(),
-        data |> get_biomarker_names_var()
-      )
+      select(all_of(cols_to_keep))
 
     antigen_isos_cur_stratum <-
       intersect(antigen_isos,
@@ -123,10 +145,10 @@ stratify_data <- function(data,
            antigen_isos = antigen_isos_cur_stratum)
 
     if (length(strata_vars_curve_params) == 0) {
-      data_and_params_cur_stratum$curve_params <-
+      data_and_params_cur_stratum$sr_params <-
         curve_params |> select(all_of(curve_param_names))
     } else {
-      data_and_params_cur_stratum$curve_params <-
+      data_and_params_cur_stratum$sr_params <-
         curve_params |>
         semi_join(cur_stratum_vals, by = strata_vars_curve_params) |>
         select(all_of(curve_param_names))

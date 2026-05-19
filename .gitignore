@@ -21,3 +21,8 @@ NEWS.html
 NEWS_files
 **/.quarto/
 *.pdf
+junit.xml
+
+**/*.quarto_ipynb
+*.knit.md
+tests/vdiffr.Rout.fail

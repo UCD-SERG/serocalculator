@@ -110,7 +110,7 @@ library(dplyr)
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" %>%
-  load_curve_params() %>%
+  load_sr_params() %>%
   filter(iter < 50)
 
 curve1 <-

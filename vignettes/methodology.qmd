@@ -191,7 +191,7 @@ library(dplyr)
 # Import longitudinal antibody parameters from OSF
 curves <-
   "https://osf.io/download/rtw5k/" %>%
-  load_curve_params() %>%
+  load_sr_params() %>%
   filter(iter < 50)
 
 # Import cross-sectional data from OSF and rename required variables:
@@ -346,6 +346,10 @@ so we will use a *numerical method*
 to find the MLE and corresponding standard error.
 
 :::
+
+## Cluster-robust standard errors for clustered sampling designs
+
+{{< include articles/_cluster-robust-se.qmd >}}
 
 {{< include articles/_antibody-response-model.qmd >}}
 

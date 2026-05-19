@@ -17,15 +17,27 @@ test_that("`check_strata()` throws an error when `strata` is not a `character`",
 
 test_that(
   desc =
-  "`check_strata()` warns when some strata of `pop_data`
+    "`check_strata()` warns when some strata of `pop_data`
   entirely lack some biomarkers",
   code = {
     sees_pop_data_100 |>
       dplyr::filter(Country == "Nepal",
                     catchment == "kavre" | antigen_iso == "HlyE_IgA") |>
-    check_strata(
-      strata = "catchment"
-    ) |>
+      check_strata(
+        strata = "catchment"
+      ) |>
       expect_warning(class = "strata missing some biomarkers")
+  }
+)
+
+test_that(
+  desc =
+    "`check_strata()` can handle when there are no partial matches",
+  code = {
+    sees_pop_data_100 |>
+      check_strata(
+        strata = "Country2"
+      ) |>
+      expect_error(class = "missing_var")
   }
 )

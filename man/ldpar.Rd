@@ -18,11 +18,11 @@ ldpar(age, antigen_isos, nmc, npar, ...)
 \item{...}{passed to \code{simpar()}}
 }
 \value{
-an array of parameters:
+an array of 7 parameters and initial conditions:
 c(y0,b0,mu0,mu1,c1,alpha,shape)
 }
 \description{
 take a random sample from longitudinal parameter set
-given age at infection, for a  list of antibodies
+given age at infection, for a list of antibodies
 }
 \keyword{internal}

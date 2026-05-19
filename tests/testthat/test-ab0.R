@@ -6,9 +6,10 @@ test_that("`ab0()` produces consistent results", {
       t1 = 9.5,
       alpha = 0.01,
       r = 1,
+      iter = 1,
       antigen_iso = "test"
     ) |>
-    as_curve_params()
+    as_sr_params()
 
   calc1 <-
     ab0(curve_params = params1, t = 9.4)
@@ -27,9 +28,10 @@ test_that("`ab0()` produces consistent results", {
       t1 = 9.5,
       alpha = 0.01,
       r = 2,
+      iter = 1,
       antigen_iso = "test"
     ) |>
-    as_curve_params()
+    as_sr_params()
 
   calc3 <-
     ab0(curve_params = params2, t = 9.4)

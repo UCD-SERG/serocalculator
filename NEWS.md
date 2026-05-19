@@ -1,10 +1,97 @@
 # serocalculator (development version)
 
+## Internal
+
+* Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+
+## Bug fixes
+
+* `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
+* Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
+  - Provides clear tables comparing old and new function names
+  - Includes code examples showing how to update existing code
+  - Accessible as a prominent tab in the website navigation
+
+## Compatibility
+
+* Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
+
 ## New features
 
+* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
+  `est_seroincidence_by()` to support cluster-robust standard error estimation. 
+  When `cluster_var` is specified, `summary.seroincidence()` automatically computes 
+  cluster-robust (sandwich) variance estimates to account for within-cluster 
+  correlation in clustered sampling designs such as household or school-based surveys.
+* `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
+  for multi-level clustered sampling designs. Cluster-robust standard errors will account
+  for all specified clustering levels.
+
+## Bug fixes
+
+* Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
+  errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
+* Added `se_type` column to `summary.seroincidence()` output to clearly indicate whether
+  "standard" or "cluster-robust" standard errors are being used.
+* Fixed `est_seroincidence_by()` to properly pass cluster and stratum variables through
+  to stratified analyses. Previously, these variables were dropped during data stratification,
+  causing errors when trying to use clustering with `est_seroincidence_by()`.
+
+## Code organization
+
+* Refactored clustering-related code following package organization policies:
+  - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
+  - Each function now in its own file for better maintainability and git history
+* Updated copilot-instructions.md with code organization policies
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
+
+# serocalculator 1.4.0
+
+## New features
+
+* Added support for cluster-robust standard errors in `est_seroincidence()` through
+  new `cluster_var` and `stratum_var` parameters. When `cluster_var` is specified,
+  `summary.seroincidence()` automatically computes cluster-robust (sandwich) variance
+  estimates to account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
+* Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
+  - Performs two-sample z-tests to compare seroincidence estimates
+  - Returns `htest` format when comparing two single estimates
+  - Returns formatted table with all pairwise comparisons for stratified estimates
+  - Added examples to tutorial vignette and comprehensive unit tests
+* Implemented multi-version pkgdown documentation with version dropdown menu
+  - Users can now switch between main, latest-tag, and versioned releases
+  - Default landing page shows latest-tag (most recent release)
+  - Based on insightsengineering/r-pkgdown-multiversion setup
+* Added `chain_color` option to `graph.curve.params()` to control MCMC line color (#455)
+* Made `graph.curve.params()` the default sub-method for `autoplot.curve_params()` (#450)
+* Added `log_x` and `log_y` options to `graph.curve.params()` sub-method for 
+`autoplot.curve_params()` (#453)
+* Extended `sim_pop_data_multi()` to loop over multiple sample sizes (#444)
+* Added new functions `analyze_sims()` and `autoplot.sim_results()` (#444)
+* Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
+* Rename `estimate_scr()` to `est_seroincidence()` (#432)
+* Rename argument `curve_params` to `sr_params` for estimation functions (#424)
+* added documentation for `count_strata()` (#431)
+* Rename  `as_curve_params()` to `as_sr_params()` (#421)
+* Rename `load_curve_params()` to `load_sr_params()` (#421)
+* added default for `xvar` in `"scatter"` option for `autoplot.seroincidence.by()` (#417)
+* Extended `autoplot.summary.seroincidence.by()` to include types for either scatter or bar plots of stratified results (#397)
+* added option to add lines using `group_var` input to `autoplot.summary.seroincidence.by()` (#410)
+* `autoplot.pop_data(type = "age-scatter")` now shows legend at bottom (#407)
+* `autoplot.pop_data(type = "age-scatter")` now facets by antigen isotype (#406)
+* Rename `est.incidence.by()` to `estimate_scr_by()` (#389)
+* Rename `est.incidence()` to `estimate_scr()` (#389)
+* Improved warning messages for `get_biomarker_names_var()`
+* Added `get_*()` extractor functions to API (#380)
 * Added optional CI error bars to `autoplot.summary.seroincidence.by()` (#372)
 * Improved y-limit calculation in `graph.curve.params()` (#368)
 * Added option for `graph.curve.params()` to show all curves (#368)
+* Added color-coding for `graph.curve.params()` (#383)
+* Added `quantiles` parameter to `graph.curve.params()` and corresponding test in `test-graph.curve.params.R` (#434)
 * Removed `warn.missing.strata()` from API (#366)
 
 * Added more details about contributing PRs in `Contributing.md` (#280)
@@ -29,8 +116,21 @@
   - `sim.cs()` -> `sim_pop_data()` 
   - `sim.cs.multi()` -> `sim_pop_data_multi()`
 
+## Bug fixes
+
+* Fixed CRAN errors (#464)
+* Fixed stratification issue in enteric fever vignette (#418)
+* Fixed issue in `graph.curve.params()` where MCMC samples 
+with the same iteration number from different MCMC chains
+would get merged by `ggplot2::aes(group = iter)` (#382)
+
 ## Internal changes
 
+* switched `expect_snapshot_data()` to an internal function due to CRAN errors (#464)
+* generalized `ab1()`
+* added codecov/test-results-action to test-coverage.yaml workflow
+* added test for censored data in f_dev() (#399)
+* added test for `autoplot.curve_params()`
 * added test for `graph.curve.params()` (#368)
 * reverted Readme source file from qmd to Rmd.
 * switched pkgdown GHA from `any::pkgdown` to `r-lib/pkgdown` (i.e., dev version) (#359)
@@ -155,13 +255,13 @@ to avoid printing an OK message.
 
   - `set_age()`
   - `set_value()`
-  - `set_id()`
+  - `set_id_var()`
   - `get_age()`
-  - `get_value()`
-  - `get_id()`
+  - `get_values()`
+  - `ids()`
   - `get_age_var()`
-  - `get_value_var()`
-  - `get_id_var()`
+  - `get_values_var()`
+  - `ids_varname()`
   
 * Added additional warnings to `load_pop_data()`
 

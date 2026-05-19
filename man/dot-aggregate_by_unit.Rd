@@ -4,7 +4,7 @@
 \alias{.aggregate_by_unit}
 \title{Aggregate download data by a calendar unit}
 \usage{
-.aggregate_by_unit(data, unit = c("month", "day", "week", "quarter", "year"))
+.aggregate_by_unit(data, unit)
 }
 \arguments{
 \item{data}{A tibble with columns \code{date}, \code{provider},

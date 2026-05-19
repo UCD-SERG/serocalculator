@@ -18,7 +18,11 @@ Defaults to \code{TRUE}.}
 Defaults to \code{TRUE}.}
     \item{\code{start}}{Start date for the plot (a \link{Date} or string
 coercible to one). Defaults to \code{NULL} (all available
-data).}
+data). Compared against the period start after
+aggregation, so e.g. \code{start = "2025-06-15"} with
+\code{unit = "month"} drops June 2025 (its label is
+\code{2025-06-01}); pass period boundaries for predictable
+filtering.}
     \item{\code{unit}}{Character string specifying the time unit to
 aggregate by. One of \code{"day"}, \code{"week"}, \code{"month"},
 \code{"quarter"}, or \code{"year"}. Defaults to \code{"month"}.}
@@ -43,4 +47,3 @@ contribution of each release. CRAN downloads are fetched via
 Requires the \code{packageRank} package (and \code{gh} if
 \code{github = TRUE}), listed under \code{Suggests}.
 }
-\keyword{internal}

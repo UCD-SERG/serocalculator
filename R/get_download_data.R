@@ -11,7 +11,11 @@
 #'   Defaults to `TRUE`.
 #' @param start Start date for the plot (a [Date] or string
 #'   coercible to one). Defaults to `NULL` (all available
-#'   data).
+#'   data). Compared against the period start after
+#'   aggregation, so e.g. `start = "2025-06-15"` with
+#'   `unit = "month"` drops June 2025 (its label is
+#'   `2025-06-01`); pass period boundaries for predictable
+#'   filtering.
 #' @param unit Character string specifying the time unit to
 #'   aggregate by. One of `"day"`, `"week"`, `"month"`,
 #'   `"quarter"`, or `"year"`. Defaults to `"month"`.
@@ -64,11 +68,12 @@
     )
   }
 
-  result |>
-    structure(
-      title = title,
-      github = github,
-      multi_metric = new && cumulative
-    ) |>
-    .subclass("download_data")
+  result <- structure(
+    result,
+    title = title,
+    github = github,
+    multi_metric = new && cumulative,
+    class = c("download_data", class(result))
+  )
+  result
 }

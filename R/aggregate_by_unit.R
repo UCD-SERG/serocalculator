@@ -13,11 +13,7 @@
 #'   and `cumulative`, aggregated by `unit`.
 #'
 #' @keywords internal
-.aggregate_by_unit <- function(
-  data,
-  unit = c("month", "day", "week", "quarter", "year")
-) {
-  unit <- unit |> rlang::arg_match()
+.aggregate_by_unit <- function(data, unit) {
   data |>
     dplyr::mutate(
       date = .data$date |>

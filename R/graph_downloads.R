@@ -18,7 +18,6 @@
 #' `github = TRUE`), listed under `Suggests`.
 #'
 #' @export
-#' @keywords internal
 graph_downloads <- function(...) {
   .get_download_data(...) |> ggplot2::autoplot()
 }

@@ -23,11 +23,12 @@
     cli::cli_abort(msg)
   }
 
-  today <- Sys.Date()
+  # 2022-03-30 = serocalculator's first CRAN release; cranlogs has no
+  # data before then for this package.
   dl <- packageRank::cranDownloads(
     "serocalculator",
     from = "2022-03-30",
-    to = today,
+    to = Sys.Date(),
     ...
   )
 

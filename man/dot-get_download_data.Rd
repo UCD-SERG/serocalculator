@@ -26,7 +26,11 @@ Defaults to \code{TRUE}.}
 
 \item{start}{Start date for the plot (a \link{Date} or string
 coercible to one). Defaults to \code{NULL} (all available
-data).}
+data). Compared against the period start after
+aggregation, so e.g. \code{start = "2025-06-15"} with
+\code{unit = "month"} drops June 2025 (its label is
+\code{2025-06-01}); pass period boundaries for predictable
+filtering.}
 
 \item{unit}{Character string specifying the time unit to
 aggregate by. One of \code{"day"}, \code{"week"}, \code{"month"},

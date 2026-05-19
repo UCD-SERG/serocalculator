@@ -116,8 +116,17 @@ jobs:
           tinytex: true
 
       - uses: r-lib/actions/setup-r@v2
+        id: setup-r
         with:
           use-public-rspm: true
+
+      - name: Restore R dependency cache 📦
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ steps.setup-r.outputs.installed-r-version }}-${{ hashFiles('**/DESCRIPTION') }}
+          restore-keys: |
+            ${{ runner.os }}-r-${{ steps.setup-r.outputs.installed-r-version }}-
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -125,6 +134,7 @@ jobs:
           needs: website
           extra-packages: |
             any::pkgdown
+          cache: false
 
       - name: Install R package 🚧
         run: |
@@ -132,6 +142,12 @@ jobs:
           install.packages(".", repos=NULL, type="source")
         shell: Rscript {0}
         working-directory: ${{ github.event.repository.name }}
+
+      - name: Save R dependency cache 💾
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ steps.setup-r.outputs.installed-r-version }}-${{ hashFiles('**/DESCRIPTION') }}
 
       - name: Build docs 🏗
         if: >

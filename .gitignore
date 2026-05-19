@@ -26,3 +26,5 @@ junit.xml
 **/*.quarto_ipynb
 *.knit.md
 tests/vdiffr.Rout.fail
+.positai
+.claude

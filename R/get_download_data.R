@@ -69,12 +69,11 @@
     )
   }
 
-  result <- structure(
-    result,
-    title = title,
-    github = github,
-    multi_metric = new && cumulative,
-    class = c("download_data", class(result))
-  )
-  result
+  result |>
+    structure(
+      title = title,
+      github = github,
+      multi_metric = new && cumulative
+    ) |>
+    .subclass("download_data")
 }

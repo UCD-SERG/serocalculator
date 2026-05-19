@@ -62,9 +62,10 @@
   )
 
   if (missing(title)) {
+    sources <- if (github) "CRAN and GitHub" else "CRAN"
     title <- paste0(
-      "Downloads of serocalculator package from CRAN, by ",
-      unit
+      "Downloads of serocalculator package from ",
+      sources, ", by ", unit
     )
   }
 

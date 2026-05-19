@@ -6,7 +6,7 @@ period.
 ## Usage
 
 ``` r
-.aggregate_by_unit(data, unit = c("month", "day", "week", "quarter", "year"))
+.aggregate_by_unit(data, unit)
 ```
 
 ## Arguments

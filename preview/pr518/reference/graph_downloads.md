@@ -32,7 +32,10 @@ graph_downloads(...)
 
   :   Start date for the plot (a
       [Date](https://rdrr.io/r/base/Dates.html) or string coercible to
-      one). Defaults to `NULL` (all available data).
+      one). Defaults to `NULL` (all available data). Compared against
+      the period start after aggregation, so e.g. `start = "2025-06-15"`
+      with `unit = "month"` drops June 2025 (its label is `2025-06-01`);
+      pass period boundaries for predictable filtering.
 
   `unit`
 

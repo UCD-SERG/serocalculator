@@ -53,6 +53,8 @@
   : Graph antibody decay curves by antigen isotype
 - [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   : Graph estimated antibody decay curves
+- [`graph_downloads()`](https://ucd-serg.github.io/serocalculator/reference/graph_downloads.md)
+  : Plot package download counts over time by source
 - [`graph_loglik()`](https://ucd-serg.github.io/serocalculator/reference/graph_loglik.md)
   : Graph log-likelihood of data
 - [`log_likelihood()`](https://ucd-serg.github.io/serocalculator/reference/log_likelihood.md)

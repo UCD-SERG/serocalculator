@@ -32,7 +32,9 @@ with extra attribute `antigen_isos`)
 ## Examples
 
 ``` r
-noise <- load_noise_params(serocalculator_example("example_noise_params.rds"))
+noise <- load_noise_params(
+  serocalculator_example("example_noise_params.rds")
+)
 print(noise)
 #> # A tibble: 4 × 8
 #>       X antigen_iso Country  y.low   eps    nu  y.high Lab  

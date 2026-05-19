@@ -117,6 +117,7 @@ a
 ## Examples
 
 ``` r
+
 library(dplyr)
 library(tibble)
 

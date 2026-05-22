@@ -1,5 +1,9 @@
 # serocalculator 1.4.1
 
+## Internal
+
+* Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+
 ## Bug fixes
 
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)

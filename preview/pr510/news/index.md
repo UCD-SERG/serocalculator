@@ -4,6 +4,12 @@
 
 CRAN release: 2026-03-25
 
+### Internal
+
+- Claude PR review workflow now skips (rather than hard-failing) when
+  triggered by a bot (e.g. `claude[bot]` pushing a commit).
+  ([\#519](https://github.com/UCD-SERG/serocalculator/issues/519))
+
 ### Bug fixes
 
 - [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)

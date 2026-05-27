@@ -38,6 +38,7 @@ Unif
 Vellore
 Volterra
 al
+altdoc
 ast
 behaviour
 bioassays
@@ -53,6 +54,7 @@ dev
 devtools
 dplyr
 displaystyle
+docx
 dropdown
 dt
 eps
@@ -63,6 +65,7 @@ forall
 frac
 geoms
 ggproto
+gh
 hemolysin
 infty
 insightsengineering
@@ -104,9 +107,9 @@ providecommand
 qmd
 qquad
 recombinant
-remotes
 renamings
 renewcommand
+revealjs
 rlang
 se
 sectionally
@@ -118,7 +121,6 @@ seroepidemiology
 seroincidence
 seroincidences
 serologic
-Serological
 seronegative
 seroresponse
 seroresponses

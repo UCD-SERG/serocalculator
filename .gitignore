@@ -17,6 +17,8 @@ rsconnect
 README.html
 README_files
 /.quarto/
+_quarto/
+altdoc/pkgdown.yml
 NEWS.html
 NEWS_files
 **/.quarto/
@@ -26,3 +28,8 @@ junit.xml
 **/*.quarto_ipynb
 *.knit.md
 tests/vdiffr.Rout.fail
+
+# Quarto freeze cache for faster builds
+_freeze/
+**/_freeze/
+.positai

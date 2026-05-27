@@ -46,7 +46,9 @@ Imports:
     parallel,
     labelled
 Suggests:
+    altdoc,
     bookdown,
+    bslib,
     DT,
     fs,
     ggbeeswarm,
@@ -61,6 +63,7 @@ Suggests:
     tidyverse,
     qrcode,
     vdiffr,
+    webshot2,
     withr,
     forcats,
     snapr (>= 0.0.0.9000),
@@ -71,7 +74,7 @@ LinkingTo:
 Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto, lewinfox/foodwebr
+Config/Needs/website: quarto, lewinfox/foodwebr, d-morrison/altdoc@recursive-qmd-search
 Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US
@@ -79,5 +82,6 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 Remotes: 
-    d-morrison/snapr
+    d-morrison/snapr,
+    d-morrison/altdoc@recursive-qmd-search
 Config/roxygen2/version: 8.0.0

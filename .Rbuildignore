@@ -2,9 +2,9 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
-^_pkgdown\.yml$
 ^docs$
-^pkgdown$
+^altdoc$
+^_quarto$
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$
@@ -37,5 +37,6 @@ allpopsamples_hlye.csv$
 ^vignettes/articles/*_files$
 ^man/check_strata\.Rd$
 ^\.lintr\.R$
+^\.positai$
 ^CLAUDE\.md$
 ^\.claude$

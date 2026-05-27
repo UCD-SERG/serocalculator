@@ -7,3 +7,8 @@ format:
     html-math-method: mathjax
     fig-cap-location: top
     echo: false
+    format-links: [docx]
+  docx:
+    number-sections: true
+    reference-location: document
+    echo: false

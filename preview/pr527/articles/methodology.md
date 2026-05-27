@@ -5,8 +5,12 @@
 ### *Salmonella* enterica (“typhoid fever”)
 
 - ~21.7 million symptomatic cases/year
-- ~217,000 deaths/year
-- mostly 5-19 years old
+- ~217,000 deaths/year (~1% case fatality with treatment; up to 20%
+  untreated)
+- Highest burden: ages 5–19
+- **Symptoms:** sustained high fever, severe headache, abdominal pain,
+  malaise; rose-spot rash (~30% of patients); constipation (early) or
+  diarrhea (later)
 
 ![Photomicrograph of \*Salmonella\* Typhi bacteria with a flagellar
 stain](../reference/figures/SalmonellaTyphiFlagellarStain.jpg)![Historical
@@ -16,10 +20,12 @@ fever](../reference/figures/Fievre_typhoide.png)
 ### *Shigella* (“dysentery”)
 
 - ~100 million infections annually
-- ~100,000 deaths annually.
-- Most cases and deaths: children under the age of five in low- and
-  middle-income countries (LMICs), where health systems are
-  resource-constrained.
+- ~100,000 deaths annually (~1% case fatality; higher in malnourished
+  children)
+- Most cases and deaths: children under 5 in low- and middle-income
+  countries (LMICs)
+- **Symptoms:** bloody diarrhea (dysentery), abdominal cramps, fever,
+  tenesmus (painful urge to defecate)
 
 ![Microscopy of a stool sample containing \*Shigella\*
 bacteria](../reference/figures/Shigella_stool.jpg)![Published figure on
@@ -29,9 +35,11 @@ enteric pathogen epidemiology from Nature Reviews Microbiology
 ### *Orientia tsutsugamushi* (“scrub typhus”)
 
 - ~1,000,000 infections/year
-- ~10,000 deaths/year
-- fever, headache, muscle pain, cough, gastrointestinal symptoms,
-  hemorrhaging
+- ~10,000 deaths/year (~1% case fatality with treatment; up to 30%
+  untreated)
+- **Symptoms:** high fever, severe headache, myalgia; eschar
+  (pathognomonic black scab at mite-bite site); macular rash; cough;
+  gastrointestinal symptoms; hemorrhage in severe cases
 
 ![Microscopy of a \*Trombicula\* mite larva with its stylostome feeding
 tube](../reference/figures/Trombicula-larva-stylostome.jpg)![Published

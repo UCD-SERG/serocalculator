@@ -9,6 +9,17 @@
 
 ### Internal
 
+- `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]`
+  so the review still runs (and posts feedback) when `claude.yml`
+  re-dispatches it on an `@claude review` comment; previously the
+  bot-initiated dispatch aborted with “Workflow initiated by non-human
+  actor”.
+- `claude.yml` now grants the `@claude` agent the file tools
+  (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`;
+  previously the agent could run checks/git/gh but not edit files, so it
+  fell back to posting diffs for manual application.
+- Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for
+  driving a PR to a clean review verdict.
 - Ported the `@claude` agent and PR-review GitHub Actions workflows
   (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and
   slash commands, and path-scoped `.github/instructions/`) from the

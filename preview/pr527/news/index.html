@@ -64,7 +64,12 @@
 </ul></div>
 <div class="section level3">
 <h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
-<ul><li>Ported the <code>@claude</code> agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: <code>CLAUDE.md</code>, <code>.claude/</code> settings and slash commands, and path-scoped <code>.github/instructions/</code>) from the UCD-SERG <code>qwt</code> template, adapted to this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/523" class="external-link">#523</a>)</li>
+<ul><li>
+<code>claude-code-review.yml</code> now sets <code>allowed_bots: github-actions[bot]</code> so the review still runs (and posts feedback) when <code>claude.yml</code> re-dispatches it on an <code>@claude review</code> comment; previously the bot-initiated dispatch aborted with “Workflow initiated by non-human actor”.</li>
+<li>
+<code>claude.yml</code> now grants the <code>@claude</code> agent the file tools (<code>Read</code>/<code>Glob</code>/<code>Grep</code>/<code>Edit</code>/<code>MultiEdit</code>/<code>Write</code>) in <code>--allowedTools</code>; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.</li>
+<li>Added the <code>iterate</code> Claude Code skill (<code>.claude/skills/iterate/</code>) for driving a PR to a clean review verdict.</li>
+<li>Ported the <code>@claude</code> agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: <code>CLAUDE.md</code>, <code>.claude/</code> settings and slash commands, and path-scoped <code>.github/instructions/</code>) from the UCD-SERG <code>qwt</code> template, adapted to this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/523" class="external-link">#523</a>)</li>
 <li>Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. <code>claude[bot]</code> pushing a commit). (<a href="https://github.com/UCD-SERG/serocalculator/issues/519" class="external-link">#519</a>)</li>
 </ul></div>
 <div class="section level3">

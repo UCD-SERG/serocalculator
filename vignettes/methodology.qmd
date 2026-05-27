@@ -350,10 +350,10 @@ curves <-
 
 # Import cross-sectional data from OSF and rename required variables:
 xs_data <-
-  "https://osf.io/download//n6cp3/" %>%
+  "https://osf.io/download/n6cp3/" %>%
   load_pop_data()
 
-noise <- url("https://osf.io/download//hqy4v/") %>% readRDS()
+noise <- url("https://osf.io/download/hqy4v/") %>% readRDS()
 ```
 
 ## standard error
@@ -428,7 +428,6 @@ Antibody response curves, $p(Y=y|T=t)$, for typhoid
 ::: {#fig-decay}
 
 ```{r}
-library(serodynamics)
 case_data <-
     serodynamics_example(
       "SEES_Case_Nepal_ForSeroKinetics_02-13-2025.csv"

@@ -71,6 +71,31 @@ jobs:
                             # "App token exchange failed: 401 Unauthorized")
 
     steps:
+      # The job `if:` lets every workflow_dispatch through so a dispatched
+      # review can run on the draft PR claude.yml opens for an issue. But
+      # `workflow_dispatch` bypasses ALL of the pull_request gate — not just
+      # the intended draft exception — so re-apply the fork and Dependabot
+      # checks here for dispatched runs. Fork PRs are the security-relevant
+      # case: this job carries CLAUDE_CODE_OAUTH_TOKEN, which a fork's code
+      # must never see. (The draft exception is intentionally NOT re-applied.)
+      - name: Guard dispatched reviews against fork / Dependabot PRs
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          META=$(gh api "repos/${{ github.repository }}/pulls/${PR_NUMBER}" --jq '.head.repo.full_name + "\t" + .user.login')
+          HEAD_REPO="${META%%$'\t'*}"
+          PR_USER="${META##*$'\t'}"
+          if [ "$HEAD_REPO" != "${{ github.repository }}" ]; then
+            echo "::error::Refusing dispatched review of fork PR #${PR_NUMBER} (head repo: ${HEAD_REPO}) — would expose secrets to fork code."
+            exit 1
+          fi
+          if [ "$PR_USER" = "dependabot[bot]" ]; then
+            echo "::error::Refusing dispatched review of Dependabot PR #${PR_NUMBER}."
+            exit 1
+          fi
+          echo "PR #${PR_NUMBER} is a same-repo, non-Dependabot PR; proceeding."
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -128,8 +153,9 @@ jobs:
             Use inline comments for line-specific feedback. Skip generic
             praise — be concrete. If the PR looks clean, say so briefly.
 
-          # `gh pr comment` is narrowed to `create` so the reviewer can post
-          # a top-level summary but can't edit or delete prior review
-          # comments (each run leaves a fresh comment; history stays).
+          # `gh pr comment` (no subcommand — `gh pr comment <pr> --body ...`)
+          # lets the reviewer post a fresh top-level summary. It can't edit or
+          # delete prior comments (no `--edit-last`/delete here), so each run
+          # leaves a new comment and history stays intact.
           claude_args: |
-            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment create:*)"
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*)"

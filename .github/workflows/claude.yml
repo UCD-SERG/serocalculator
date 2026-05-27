@@ -123,6 +123,24 @@ jobs:
           SHA=$(gh api "repos/${{ github.repository }}/pulls/$PR_NUMBER" --jq '.head.sha')
           echo "sha=$SHA" >> "$GITHUB_OUTPUT"
 
+      # Check out the PR's head branch for PR-context triggers. None of the
+      # events this workflow listens on are `pull_request` events, so the
+      # `actions/checkout` step above landed on the default branch — any
+      # commit Claude makes would otherwise be stranded there and lost at
+      # runner cleanup. `gh pr checkout` switches to the PR branch (creating a
+      # tracking branch for same-repo PRs) so commits land where they belong
+      # and the "Push PR branch" post-step can push them back.
+      - name: Checkout PR branch
+        id: pr_checkout
+        if: github.event.pull_request.number || github.event.issue.pull_request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
+          gh pr checkout "$PR_NUMBER"
+          echo "branch=$(git rev-parse --abbrev-ref HEAD)" >> "$GITHUB_OUTPUT"
+          echo "starting_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       # Create a feature branch for issue triggers so Claude's commits land
       # somewhere durable. Agent mode skips the action's built-in
       # setup-branch step, so without this an @claude mention on an issue
@@ -182,9 +200,10 @@ jobs:
               your edits and `git commit` them. Do NOT create another branch
               and do NOT run `gh pr create` — a post-step pushes this branch
               and opens a draft PR linking back to the issue.
-            - **PR triggers**: commit your changes; they belong on the PR's
-              branch. A post-step dispatches a code review when the head SHA
-              moves.
+            - **PR triggers**: the PR's head branch is already checked out
+              for you. Make your edits and `git commit` them. Do NOT push —
+              a post-step pushes your commits to the PR branch and dispatches
+              a code review when the head SHA moves.
 
             If your reply is **prose** (answering a question, a
             recommendation, a review) rather than a code change, write your
@@ -195,15 +214,43 @@ jobs:
             review; a post-step dispatches the dedicated code-review
             workflow instead.
 
-          # Allowed git/gh/Rscript commands. `git push` is narrowed to
-          # `origin` and destructive flag/refspec variants are denied so the
-          # write-scoped token can't rewrite or delete refs. `Rscript -e` is
-          # restricted to the specific namespaces used by the pre-commit
-          # checklist — accepting that devtools::check/document runs project
-          # R code that can `system()`; the real containment is the
-          # trusted-author gate in the job `if:` above.
+          # Allowed git/gh/Rscript commands. The agent is deliberately NOT
+          # granted `git push` in any form — workflow post-steps do all
+          # pushing (issue branch, PR branch), so the agent only needs to
+          # stage and commit. This sidesteps the whole class of destructive
+          # push variants (origin-prefixed --delete / --force / `:ref`
+          # refspec deletes) rather than trying to enumerate deny patterns
+          # for them. The `git push` denials are kept as defense-in-depth in
+          # case a push tool is ever re-added to the allow list. `Rscript -e`
+          # is restricted to the namespaces used by the pre-commit checklist —
+          # accepting that devtools::check/document runs project R code that
+          # can `system()`; the real containment is the trusted-author gate
+          # in the job `if:` above.
           claude_args: |
-            --allowedTools "Bash(Rscript -e 'lintr::lint*'),Bash(Rscript -e 'devtools::check*'),Bash(Rscript -e 'devtools::document*'),Bash(Rscript -e 'devtools::test*'),Bash(Rscript -e 'spelling::spell_check*'),Bash(Rscript -e 'roxygen2::roxygenise*'),Bash(git diff:*),Bash(git log:*),Bash(git status:*),Bash(git show:*),Bash(git checkout:*),Bash(git switch:*),Bash(git branch:*),Bash(git add:*),Bash(git commit:*),Bash(git push origin:*),Bash(git push -u origin:*),Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh issue view:*)" --disallowedTools "Bash(git push --force:*),Bash(git push -f:*),Bash(git push --delete:*),Bash(git push -d:*),Bash(git push --mirror:*),Bash(git push --tags:*),Bash(git push --all:*),Bash(git push origin +*),Bash(git push -u origin +*)"
+            --allowedTools "Bash(Rscript -e 'lintr::lint*'),Bash(Rscript -e 'devtools::check*'),Bash(Rscript -e 'devtools::document*'),Bash(Rscript -e 'devtools::test*'),Bash(Rscript -e 'spelling::spell_check*'),Bash(Rscript -e 'roxygen2::roxygenise*'),Bash(git diff:*),Bash(git log:*),Bash(git status:*),Bash(git show:*),Bash(git checkout:*),Bash(git switch:*),Bash(git branch:*),Bash(git add:*),Bash(git commit:*),Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh issue view:*)" --disallowedTools "Bash(git push:*),Bash(git push --force:*),Bash(git push -f:*),Bash(git push --delete:*),Bash(git push -d:*),Bash(git push --mirror:*),Bash(git push --tags:*),Bash(git push --all:*),Bash(git push origin:*),Bash(git push -u origin:*)"
+
+      # Push the commits Claude made on the PR branch. The agent isn't granted
+      # `git push`, so this post-step does it — mirroring how the issue-branch
+      # flow is pushed by "Push branch and open draft PR". Runs before the
+      # after-SHA capture so the remote head reflects the push and the review
+      # dispatch fires. `HEAD:$BRANCH` pushes the detached/tracking checkout
+      # to the PR's branch name. (For a fork PR the branch lives on the fork,
+      # not origin, so this warns rather than failing the run.)
+      - name: Push PR branch if Claude committed
+        if: always() && steps.pr_checkout.outputs.branch != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.pr_checkout.outputs.branch }}
+          STARTING_SHA: ${{ steps.pr_checkout.outputs.starting_sha }}
+        run: |
+          CURRENT_SHA=$(git rev-parse HEAD)
+          if [ "$CURRENT_SHA" = "$STARTING_SHA" ]; then
+            echo "No new commits on the PR branch; nothing to push."
+            exit 0
+          fi
+          echo "Pushing PR branch commits ($STARTING_SHA -> $CURRENT_SHA) to $BRANCH"
+          git push origin "HEAD:$BRANCH" \
+            || echo "::warning::Could not push to $BRANCH (fork PR, or branch protection). Commits remain on the runner only."
 
       # Fetch the PR's head SHA once, post-Claude, for the two steps that
       # both need it (the prose-post COMMITTED check and the re-request

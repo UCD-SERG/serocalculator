@@ -39,3 +39,4 @@ allpopsamples_hlye.csv$
 ^\.lintr\.R$
 ^CLAUDE\.md$
 ^\.claude$
+^_extensions$

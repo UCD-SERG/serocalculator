@@ -25,8 +25,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 :::
 
 ::: {.column width="40%"}
-![*Salmonella* Typhi, flagellar stain. Source: CDC PHIL (public domain), via Wikimedia Commons.](../man/figures/SalmonellaTyphiFlagellarStain.jpg)
-![Historic typhoid fever illustration. Source: Wikimedia Commons (license to verify).](../man/figures/Fievre_typhoide.png)
+![*Salmonella* Typhi, flagellar stain. Source: CDC PHIL (public domain), via Wikimedia Commons.](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"}
+![Historic typhoid fever illustration. Source: Wikimedia Commons (license to verify).](../man/figures/Fievre_typhoide.png){fig-alt="Historical illustration depicting typhoid fever"}
 
 :::
 
@@ -48,8 +48,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![*Shigella* in a stool sample. Source: Wikimedia Commons (license to verify).](../man/figures/Shigella_stool.jpg)
-![From Nature Reviews Microbiology (2024). © Springer Nature — reuse permission required.](../man/figures/41579_2024_1126_Fig1_HTML.png)
+![*Shigella* in a stool sample. Source: Wikimedia Commons (license to verify).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing *Shigella* bacteria"}
+![From Nature Reviews Microbiology (2024). © Springer Nature — reuse permission required.](../man/figures/41579_2024_1126_Fig1_HTML.png){fig-alt="Published figure on enteric pathogen epidemiology from Nature Reviews Microbiology (2024)"}
 ::::
 
 :::
@@ -70,8 +70,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![*Trombicula* mite larva with stylostome. Source: Wikimedia Commons (license to verify).](../man/figures/Trombicula-larva-stylostome.jpg)
-![From a Springer book chapter. © Springer Nature — reuse permission required.](../man/figures/340149_1_En_16_Fig6_HTML.webp)
+![*Trombicula* mite larva with stylostome. Source: Wikimedia Commons (license to verify).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"}
+![From a Springer book chapter. © Springer Nature — reuse permission required.](../man/figures/340149_1_En_16_Fig6_HTML.webp){fig-alt="Published figure on scrub typhus from a Springer book chapter"}
 ::::
 
 :::
@@ -87,7 +87,7 @@ the rate at which individuals in a population are *acquiring* the disease
 during that time period [@Noordzij2010diseasemeasures].
 :::
 
----
+{{< slidebreak >}}
 
 ::: {#exm-incidence-rate}
 
@@ -423,7 +423,7 @@ Antibody response curves, $p(Y=y|T=t)$, for typhoid
 
 :::
 
----
+{{< slidebreak >}}
 
 ::: {#fig-decay}
 
@@ -560,7 +560,9 @@ print(lik_both)
 
 ## In-progress work
 
-* Implementing these methods in user-friendly software + GUIs (R, Shiny)
+* Extending and improving existing Shiny apps for these methods
+  (e.g., the [serocalculator Shiny app](http://ucdserg.ucdavis.edu/shiny_serocalculator),
+  [source](https://github.com/UCD-SERG/shiny_serocalculator))
 
 * Multivariate modeling of biomarkers
 

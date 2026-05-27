@@ -2,6 +2,7 @@
 
 ## Internal
 
+* Render documentation vignettes as HTML only for the altdoc website (removed leftover `revealjs`/`pptx` output formats from `vignettes/_metadata.yml` and `simulate_xsectionalData.qmd`), fixing a quarto output-filename collision that broke the docs build. (#503)
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
 

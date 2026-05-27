@@ -2,10 +2,6 @@
 title: "Simulation studies"
 description: "A demonstration of the accuracy of the estimation approach"
 bibliography: ../references.bib
-prefer-html: true
-format:
-  pptx:
-    prefer-html: true
 ---
 
 ```{r, include = FALSE}

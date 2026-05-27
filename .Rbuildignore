@@ -38,4 +38,5 @@ allpopsamples_hlye.csv$
 ^man/check_strata\.Rd$
 ^\.lintr\.R$
 ^\.positai$
+^CLAUDE\.md$
 ^\.claude$

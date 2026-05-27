@@ -105,6 +105,14 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # When claude.yml routes an `@claude review` comment here, it
+          # dispatches this workflow via `gh workflow run`, so the run's
+          # actor is github-actions[bot]. Without allowing that bot the
+          # action aborts with "Workflow initiated by non-human actor"
+          # and posts no review. The job `if:` already restricts dispatched
+          # runs to same-repo, non-Dependabot PRs, so accepting the bot
+          # dispatcher here is safe.
+          allowed_bots: "github-actions[bot]"
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           # `claude-code-plugins` is a branch name, not a version tag.
           # Intentionally unpinned so we pick up future improvements to the

@@ -225,9 +225,13 @@ jobs:
           # is restricted to the namespaces used by the pre-commit checklist —
           # accepting that devtools::check/document runs project R code that
           # can `system()`; the real containment is the trusted-author gate
-          # in the job `if:` above.
+          # in the job `if:` above. The file tools (Read/Glob/Grep/Edit/
+          # MultiEdit/Write) are included so the agent can actually make code
+          # changes — the action runs non-interactively, auto-approving only
+          # tools listed here, so without them the agent can read/run but not
+          # edit files and falls back to posting a diff for manual application.
           claude_args: |
-            --allowedTools "Bash(Rscript -e 'lintr::lint*'),Bash(Rscript -e 'devtools::check*'),Bash(Rscript -e 'devtools::document*'),Bash(Rscript -e 'devtools::test*'),Bash(Rscript -e 'spelling::spell_check*'),Bash(Rscript -e 'roxygen2::roxygenise*'),Bash(git diff:*),Bash(git log:*),Bash(git status:*),Bash(git show:*),Bash(git checkout:*),Bash(git switch:*),Bash(git branch:*),Bash(git add:*),Bash(git commit:*),Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh issue view:*)" --disallowedTools "Bash(git push:*),Bash(git push --force:*),Bash(git push -f:*),Bash(git push --delete:*),Bash(git push -d:*),Bash(git push --mirror:*),Bash(git push --tags:*),Bash(git push --all:*),Bash(git push origin:*),Bash(git push -u origin:*)"
+            --allowedTools "Bash(Rscript -e 'lintr::lint*'),Bash(Rscript -e 'devtools::check*'),Bash(Rscript -e 'devtools::document*'),Bash(Rscript -e 'devtools::test*'),Bash(Rscript -e 'spelling::spell_check*'),Bash(Rscript -e 'roxygen2::roxygenise*'),Bash(git diff:*),Bash(git log:*),Bash(git status:*),Bash(git show:*),Bash(git checkout:*),Bash(git switch:*),Bash(git branch:*),Bash(git add:*),Bash(git commit:*),Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(gh issue view:*),Read,Glob,Grep,Edit,MultiEdit,Write" --disallowedTools "Bash(git push:*),Bash(git push --force:*),Bash(git push -f:*),Bash(git push --delete:*),Bash(git push -d:*),Bash(git push --mirror:*),Bash(git push --tags:*),Bash(git push --all:*),Bash(git push origin:*),Bash(git push -u origin:*)"
 
       # Push the commits Claude made on the PR branch. The agent isn't granted
       # `git push`, so this post-step does it — mirroring how the issue-branch
@@ -260,9 +264,14 @@ jobs:
             exit 0
           fi
           echo "Pushing PR branch commits ($STARTING_SHA -> $CURRENT_SHA) to $BRANCH"
+          # Push with an explicit token URL rather than relying on
+          # actions/checkout's persisted credentials: after `gh pr checkout`
+          # (and the agent step's own git activity) the persisted extraheader
+          # isn't applied, so `git push origin` falls back to unsupported
+          # password auth and fails. The x-access-token URL always works.
           # No `|| warn`: a failed push on a same-repo PR means lost commits,
           # which must surface as a red run rather than a green one.
-          git push origin "HEAD:$BRANCH"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "HEAD:$BRANCH"
 
       # Fetch the PR's head SHA once, post-Claude, for the two steps that
       # both need it (the prose-post COMMITTED check and the re-request
@@ -410,8 +419,10 @@ jobs:
 
       # Pair to "Set up branch for issue trigger": push the branch Claude
       # committed to and open a draft PR. Runs on always() so partial work
-      # is preserved even if the Claude step failed. The checkout uses the
-      # persisted GITHUB_TOKEN, so a plain `git push origin` authenticates.
+      # is preserved even if the Claude step failed. Pushes with an explicit
+      # x-access-token URL (same reason as the PR-branch push above: the
+      # persisted checkout credential isn't reliably applied after the agent
+      # step runs).
       - name: Push branch and open draft PR for issue trigger
         if: |
           always() &&
@@ -430,7 +441,7 @@ jobs:
             exit 0
           fi
           echo "Pushing $BRANCH ($STARTING_SHA -> $CURRENT_SHA)"
-          git push origin "$BRANCH"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BRANCH"
           EXISTING=$(gh pr list --head "$BRANCH" --state open --json url --jq '.[0].url // empty')
           if [ -n "$EXISTING" ]; then
             echo "PR already exists for $BRANCH: $EXISTING"

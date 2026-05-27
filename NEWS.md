@@ -1,5 +1,10 @@
 # serocalculator (development version)
 
+## Documentation
+
+* Added introductory lecture slides to the `methodology` vignette
+  ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+
 ## Internal
 
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)

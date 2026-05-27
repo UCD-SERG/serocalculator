@@ -233,9 +233,14 @@ jobs:
       # `git push`, so this post-step does it — mirroring how the issue-branch
       # flow is pushed by "Push branch and open draft PR". Runs before the
       # after-SHA capture so the remote head reflects the push and the review
-      # dispatch fires. `HEAD:$BRANCH` pushes the detached/tracking checkout
-      # to the PR's branch name. (For a fork PR the branch lives on the fork,
-      # not origin, so this warns rather than failing the run.)
+      # dispatch fires. `HEAD:$BRANCH` pushes the tracking checkout to the PR's
+      # branch name.
+      #
+      # Fork vs same-repo is handled differently on purpose: a fork's branch
+      # lives on the fork (this token can't push to it), so that's an expected
+      # warning. For a same-repo PR a push failure (e.g. non-fast-forward
+      # because the branch advanced concurrently) would silently DROP Claude's
+      # commits, so we let it fail the run loudly instead of swallowing it.
       - name: Push PR branch if Claude committed
         if: always() && steps.pr_checkout.outputs.branch != ''
         env:
@@ -248,9 +253,16 @@ jobs:
             echo "No new commits on the PR branch; nothing to push."
             exit 0
           fi
+          PR_NUMBER="${{ github.event.pull_request.number || github.event.issue.number }}"
+          HEAD_REPO=$(gh api "repos/${{ github.repository }}/pulls/$PR_NUMBER" --jq '.head.repo.full_name')
+          if [ "$HEAD_REPO" != "${{ github.repository }}" ]; then
+            echo "::warning::PR #$PR_NUMBER is from fork '$HEAD_REPO'; cannot push Claude's commits there. Commits remain on the runner only."
+            exit 0
+          fi
           echo "Pushing PR branch commits ($STARTING_SHA -> $CURRENT_SHA) to $BRANCH"
-          git push origin "HEAD:$BRANCH" \
-            || echo "::warning::Could not push to $BRANCH (fork PR, or branch protection). Commits remain on the runner only."
+          # No `|| warn`: a failed push on a same-repo PR means lost commits,
+          # which must surface as a red run rather than a green one.
+          git push origin "HEAD:$BRANCH"
 
       # Fetch the PR's head SHA once, post-Claude, for the two steps that
       # both need it (the prose-post COMMITTED check and the re-request

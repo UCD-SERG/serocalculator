@@ -46,9 +46,15 @@ For each round:
 3. **Request the review.**
    - `@claude` bot reviewer: post `@claude review` on the PR (or the repo's
      equivalent trigger).
-   - Human reviewer: use [[request-pr-review]] (request `d-morrison`). Note a
-     self-authored PR can't request its own author — surface the 422, don't
-     swallow it.
+   - Human reviewer: request one directly —
+     ```bash
+     gh api -X POST repos/<owner>/<repo>/pulls/<N>/requested_reviewers \
+       -f "reviewers[]=<login>"
+     ```
+     The login is **repo-specific** (default `d-morrison`; change it if you
+     use this skill elsewhere). A self-authored PR can't request its own
+     author — GitHub returns 422; surface that, don't swallow it. (If your
+     config ships a `request-pr-review` skill, use it — it does the same.)
 
 4. **Wait for the review to land, then read the LATEST one.** Don't trust an
    earlier cached verdict — a newer review may have landed since (bot, human,
@@ -56,19 +62,28 @@ For each round:
    complete, then read the most recent reviewer comment in full:
    ```bash
    gh pr view <N> --json comments \
-     --jq '[.comments[] | select(.author.login=="claude")] | last | .body'
+     --jq '[.comments[] | select(.author.login | startswith("claude"))] | last | .body'
    ```
-   `gh pr checks` going green is about CI state, **not** the review verdict —
-   always parse the latest review body for findings.
+   The reviewer's bot login varies by API and setup: `gh pr view` reports it
+   as `claude`, the REST API (`gh api .../comments`) as `claude[bot]`, and
+   some setups post reviews as `github-actions[bot]`. `startswith("claude")`
+   matches the @claude bot across both `gh pr view` and `gh api` — broaden it
+   if your reviewer posts under a different login, or you'll silently read
+   `null` and false-pass. `gh pr checks` going green is about CI state, **not**
+   the review verdict — always parse the latest review body for findings.
+   (If `gh` JSON parsing gets fragile, structured MCP GitHub CI tools like
+   `mcp__github_ci__get_ci_status` are an alternative where available.)
 
 5. **Address every flagged item — regardless of severity label.** "Not a
    blocker", "minor", "nit", "optional", "consider", "if you want" are for the
    user's prioritization, not a pass for the implementer. For each item,
    exactly one of:
    - **Fix it in this PR** (the default — most nits are 1–3 lines), or
-   - **Defer to a tracked issue** via [[defer-issue]] — only when the fix
-     genuinely expands scope (new feature, broader refactor, separate
-     concern), then reference the issue in a PR comment so it isn't lost.
+   - **Defer to a tracked issue** — only when the fix genuinely expands scope
+     (new feature, broader refactor, separate concern). Open one with
+     `gh issue create --title "…" --body "…"` and post its URL back as a PR
+     comment so the item isn't lost. (If your config ships a `defer-issue`
+     skill, use it — it formats the issue and cross-links the PR.)
 
 6. **Push the fixes** (sync main again first if it moved). Post a short
    comment summarizing what you addressed and how (fixed vs. deferred + issue
@@ -101,7 +116,7 @@ accept the current state. Don't loop forever.
 
 ## Driving many PRs at once
 
-When iterating a batch, give each PR its own [[loop]]-style cadence or process
-them in series, but keep the per-PR rules above intact (claim, sync, address
-*every* item, re-request, latest-review-only). Report a per-PR status table at
-the end; link each PR number to its URL.
+When iterating a batch, process the PRs in series (or on a recurring interval
+if your tooling supports it), keeping the per-PR rules above intact (claim,
+sync, address *every* item, re-request, latest-review-only). Report a per-PR
+status table at the end; link each PR number to its URL.

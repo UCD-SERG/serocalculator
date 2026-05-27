@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
+<title>Methodology – serocalculator</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-23063a2ee913c99e939777d405b9c457.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-02da43bb2c35d8eb1545a06609d290ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-23063a2ee913c99e939777d405b9c457.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../styles.css">
+</head>
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">serocalculator</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../man/serocalculator-package.qmd"> 
+<span class="menu-text">Documentation</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-articles" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Articles</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-articles">
+<li class="dropdown-header">—Get started—</li>
+        <li>
+    <a class="dropdown-item" href="../vignettes/articles/serocalculator.html">
+ <span class="dropdown-text">Get started with serocalculator</span></a>
+  </li>  
+        <li class="dropdown-header">—Methodology—</li>
+        <li>
+    <a class="dropdown-item" href="../vignettes/methodology.html">
+ <span class="dropdown-text">Methodology</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vignettes/articles/simulate_xsectionalData.html">
+ <span class="dropdown-text">Simulate cross-sectional data</span></a>
+  </li>  
+        <li class="dropdown-header">—Examples—</li>
+        <li>
+    <a class="dropdown-item" href="../vignettes/articles/enteric_fever_example.html">
+ <span class="dropdown-text">Enteric fever example</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../vignettes/articles/scrubTyphus_example.html">
+ <span class="dropdown-text">Scrub typhus example</span></a>
+  </li>  
+        <li class="dropdown-header">—Other—</li>
+        <li>
+    <a class="dropdown-item" href="../vignettes/articles/version-crosswalk-1.3-to-1.4.html">
+ <span class="dropdown-text">Version crosswalk (1.3 to 1.4)</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/UCD-SERG/serocalculator"> <i class="bi bi-github" role="img" aria-label="View serocalculator on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Get started</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/articles/serocalculator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to serocalculator</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Methodology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/methodology.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Methodology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/articles/simulate_xsectionalData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simulation studies</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/articles/enteric_fever_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Enteric Fever Seroincidence Vignette</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/articles/scrubTyphus_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scrub Typhus Seroincidence Vignette</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/articles/version-crosswalk-1.3-to-1.4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Version Crosswalk: v1.3.0 to v1.4.0</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/analyze_sims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">analyze_sims</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/as_noise_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">as_noise_params</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/as_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">as_pop_data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/as_sr_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">as_sr_params</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/autoplot.curve_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">autoplot.curve_params</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/autoplot.pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">autoplot.pop_data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/autoplot.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">autoplot.seroincidence.by</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/autoplot.seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">autoplot.seroincidence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">autoplot.sim_results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/autoplot.summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">autoplot.summary.seroincidence.by</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/check_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">check_pop_data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/compare_seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">compare_seroincidence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/est_seroincidence_by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">est_seroincidence_by</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/est_seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">est_seroincidence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/example_noise_params_pk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">example_noise_params_pk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/example_noise_params_sees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">example_noise_params_sees</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/get_biomarker_levels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">get_biomarker_levels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/get_biomarker_names_var.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">get_biomarker_names_var</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/get_values_var.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">get_values_var</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/get_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">get_values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/graph_loglik.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">graph_loglik</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/graph.curve.params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">graph.curve.params</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/load_noise_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">load_noise_params</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/load_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">load_pop_data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/load_sr_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">load_sr_params</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/log_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">log_likelihood</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/sees_pop_data_100.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sees_pop_data_100</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/sees_pop_data_pk_100.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sees_pop_data_pk_100</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/sees_typhoid_ests_strat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sees_typhoid_ests_strat</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/serocalculator_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">serocalculator_example</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/sim_pop_data_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sim_pop_data_multi</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sim_pop_data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">strata</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">summary.seroincidence.by</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/summary.seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">summary.seroincidence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/typhoid_curves_nostrat_100.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">typhoid_curves_nostrat_100</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../NEWS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">News</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../CODE_OF_CONDUCT.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Code of conduct</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../CONTRIBUTING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contributing</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a>
+  <ul class="collapse">
+<li><a href="#defining-incidence" id="toc-defining-incidence" class="nav-link" data-scroll-target="#defining-incidence"><span class="header-section-number">1.1</span> Defining incidence</a></li>
+  <li><a href="#mathematical-definition-of-incidence" id="toc-mathematical-definition-of-incidence" class="nav-link" data-scroll-target="#mathematical-definition-of-incidence"><span class="header-section-number">1.2</span> Mathematical definition of incidence</a></li>
+  <li><a href="#scale-of-incidence-rates" id="toc-scale-of-incidence-rates" class="nav-link" data-scroll-target="#scale-of-incidence-rates"><span class="header-section-number">1.3</span> Scale of incidence rates</a></li>
+  <li><a href="#incidence-from-an-individuals-perspective" id="toc-incidence-from-an-individuals-perspective" class="nav-link" data-scroll-target="#incidence-from-an-individuals-perspective"><span class="header-section-number">1.4</span> Incidence from an individual’s perspective</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#estimating-incidence-from-cross-sectional-antibody-surveys" id="toc-estimating-incidence-from-cross-sectional-antibody-surveys" class="nav-link" data-scroll-target="#estimating-incidence-from-cross-sectional-antibody-surveys"><span class="header-section-number">2</span> Estimating incidence from cross-sectional antibody surveys</a>
+  <ul class="collapse">
+<li><a href="#cross-sectional-antibody-surveys" id="toc-cross-sectional-antibody-surveys" class="nav-link" data-scroll-target="#cross-sectional-antibody-surveys"><span class="header-section-number">2.1</span> Cross-sectional antibody surveys</a></li>
+  <li><a href="#modeling-assumptions" id="toc-modeling-assumptions" class="nav-link" data-scroll-target="#modeling-assumptions"><span class="header-section-number">2.2</span> Modeling assumptions</a></li>
+  <li><a href="#time-since-infection-and-incidence" id="toc-time-since-infection-and-incidence" class="nav-link" data-scroll-target="#time-since-infection-and-incidence"><span class="header-section-number">2.3</span> Time since infection and incidence</a></li>
+  <li><a href="#likelihood-of-latent-infection-times" id="toc-likelihood-of-latent-infection-times" class="nav-link" data-scroll-target="#likelihood-of-latent-infection-times"><span class="header-section-number">2.4</span> Likelihood of latent infection times</a></li>
+  <li><a href="#example-log-likelihood-curves" id="toc-example-log-likelihood-curves" class="nav-link" data-scroll-target="#example-log-likelihood-curves"><span class="header-section-number">2.5</span> Example log-likelihood curves</a></li>
+  <li><a href="#standard-error" id="toc-standard-error" class="nav-link" data-scroll-target="#standard-error"><span class="header-section-number">2.6</span> standard error</a></li>
+  <li><a href="#likelihood-of-observed-data" id="toc-likelihood-of-observed-data" class="nav-link" data-scroll-target="#likelihood-of-observed-data"><span class="header-section-number">2.7</span> Likelihood of observed data</a></li>
+  <li><a href="#antibody-response-curves" id="toc-antibody-response-curves" class="nav-link" data-scroll-target="#antibody-response-curves"><span class="header-section-number">2.8</span> Antibody response curves</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">2.9</span> Putting it all together</a></li>
+  <li><a href="#composing-the-likelihood" id="toc-composing-the-likelihood" class="nav-link" data-scroll-target="#composing-the-likelihood"><span class="header-section-number">2.10</span> Composing the likelihood</a></li>
+  <li><a href="#finding-the-mle-numerically" id="toc-finding-the-mle-numerically" class="nav-link" data-scroll-target="#finding-the-mle-numerically"><span class="header-section-number">2.11</span> Finding the MLE numerically</a></li>
+  <li>
+<a href="#cluster-robust-standard-errors-for-clustered-sampling-designs" id="toc-cluster-robust-standard-errors-for-clustered-sampling-designs" class="nav-link" data-scroll-target="#cluster-robust-standard-errors-for-clustered-sampling-designs"><span class="header-section-number">2.12</span> Cluster-robust standard errors for clustered sampling designs</a>
+  <ul class="collapse">
+<li><a href="#why-clustering-matters" id="toc-why-clustering-matters" class="nav-link" data-scroll-target="#why-clustering-matters"><span class="header-section-number">2.12.1</span> Why clustering matters</a></li>
+  <li><a href="#cluster-robust-variance-estimation" id="toc-cluster-robust-variance-estimation" class="nav-link" data-scroll-target="#cluster-robust-variance-estimation"><span class="header-section-number">2.12.2</span> Cluster-robust variance estimation</a></li>
+  <li><a href="#implementation-in-serocalculator" id="toc-implementation-in-serocalculator" class="nav-link" data-scroll-target="#implementation-in-serocalculator"><span class="header-section-number">2.12.3</span> Implementation in serocalculator</a></li>
+  <li><a href="#effect-on-results" id="toc-effect-on-results" class="nav-link" data-scroll-target="#effect-on-results"><span class="header-section-number">2.12.4</span> Effect on results</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#modeling-the-seroresponse-kinetics-curve" id="toc-modeling-the-seroresponse-kinetics-curve" class="nav-link" data-scroll-target="#modeling-the-seroresponse-kinetics-curve"><span class="header-section-number">3</span> Modeling the seroresponse kinetics curve</a>
+  <ul class="collapse">
+<li><a href="#model-for-active-infection-period" id="toc-model-for-active-infection-period" class="nav-link" data-scroll-target="#model-for-active-infection-period"><span class="header-section-number">3.1</span> Model for active infection period</a></li>
+  <li><a href="#model-for-post-infection-antibody-decay" id="toc-model-for-post-infection-antibody-decay" class="nav-link" data-scroll-target="#model-for-post-infection-antibody-decay"><span class="header-section-number">3.2</span> Model for post-infection antibody decay</a></li>
+  <li><a href="#putting-it-all-together-1" id="toc-putting-it-all-together-1" class="nav-link" data-scroll-target="#putting-it-all-together-1"><span class="header-section-number">3.3</span> Putting it all together</a></li>
+  <li><a href="#biological-noise" id="toc-biological-noise" class="nav-link" data-scroll-target="#biological-noise"><span class="header-section-number">3.4</span> Biological noise</a></li>
+  <li><a href="#measurement-noise" id="toc-measurement-noise" class="nav-link" data-scroll-target="#measurement-noise"><span class="header-section-number">3.5</span> Measurement noise</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/methodology.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/methodology.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li></ol></nav><h1 class="title display-7">Methodology</h1></header><header id="title-block-header">
+<p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
+
+<p class="date">Invalid Date</p>
+</header><section id="overview" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Overview</h1>
+<section id="defining-incidence" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="defining-incidence">
+<span class="header-section-number">1.1</span> Defining incidence</h2>
+<p>The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">(<a href="#ref-Noordzij2010diseasemeasures" role="doc-biblioref">Noordzij et al. 2010</a>)</span>.</p>
+<p><strong>Example:</strong> if there are <strong>10 new cases</strong> of typhoid in a population of <strong>1000 persons</strong> during a <strong>one month</strong> time period, then the incidence rate for that time period is <strong>10 new cases per 1000 persons per month</strong>.</p>
+</section><section id="mathematical-definition-of-incidence" class="level2" data-visibility="hidden" data-number="1.2"><h2 data-visibility="hidden" data-number="1.2" class="anchored" data-anchor-id="mathematical-definition-of-incidence">
+<span class="header-section-number">1.2</span> Mathematical definition of incidence</h2>
+<p>More mathematically, the incidence rate <em>at a given time point</em> is the <em>derivative</em> (i.e., the current rate of change over time) of the expected cumulative count of infections per person at risk, at that time:</p>
+<p><span class="math display">\[\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]\]</span></p>
+<p>where <span class="math inline">\(C(t)\)</span> is the cumulative total number of infections in the population of interest, and <span class="math inline">\(N(t)\)</span> is the number of individuals at risk at time <span class="math inline">\(t\)</span>.</p>
+</section><section id="scale-of-incidence-rates" class="level2" data-visibility="hidden" data-number="1.3"><h2 data-visibility="hidden" data-number="1.3" class="anchored" data-anchor-id="scale-of-incidence-rates">
+<span class="header-section-number">1.3</span> Scale of incidence rates</h2>
+<p>In both definitions, the units for an incidence rate are “# new infections per # persons at risk per time duration”; for example, “new infections per 1000 persons per year”.</p>
+<p>For convenience, we can rescale the incidence rate to make it easier to understand; for example, we might express incidence as “# new infections per 1000 persons per year” or “# new infections per 100,000 persons per day”, etc.</p>
+</section><section id="incidence-from-an-individuals-perspective" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="incidence-from-an-individuals-perspective">
+<span class="header-section-number">1.4</span> Incidence from an individual’s perspective</h2>
+<p>From the perspective of an individual in the population:</p>
+<ul>
+<li><p>the <strong>incidence rate</strong> (at a given time point (<span class="math inline">\(t\)</span>) is the instantaneous <strong>probability</strong> (density) of <strong>becoming infected</strong> at that time point, <strong>given</strong> that they are <strong>at risk</strong> at that time point.</p></li>
+<li><p>That is, the incidence rate is a <strong>hazard</strong> rate.</p></li>
+<li><p>Notation: let’s use <strong><span class="math inline">\(\lambda_{t}\)</span></strong> to denote the incidence rate at time <span class="math inline">\(t\)</span>.</p></li>
+</ul></section></section><section id="estimating-incidence-from-cross-sectional-antibody-surveys" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Estimating incidence from cross-sectional antibody surveys</h1>
+<section id="cross-sectional-antibody-surveys" class="level2 incremental" data-number="2.1"><h2 class="incremental anchored" data-number="2.1" data-anchor-id="cross-sectional-antibody-surveys">
+<span class="header-section-number">2.1</span> Cross-sectional antibody surveys</h2>
+<div class="notes">
+<p>Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so. In particular, if we assume that the incidence rate is constant over time, then we can estimate incidence from a single cross-sectional survey.</p>
+<p>We will need two pieces of notation to formalize this process.</p>
+</div>
+<div class="incremental">
+<ul class="incremental">
+<li><p>We recruit participants from the population of interest.</p></li>
+<li><p>For each survey participant, we measure antibody levels <span class="math inline">\((Y)\)</span> for the disease of interest</p></li>
+<li><p>Each participant was <strong>most recently infected</strong> at some time <span class="math inline">\((T)\)</span> <strong>prior</strong> to when we measured their antibodies.</p></li>
+</ul>
+<div class="notes">
+<ul>
+<li>If a participant has never been infected since birth, then <span class="math inline">\(T\)</span> is undefined.</li>
+</ul>
+</div>
+<ul class="incremental">
+<li>
+<span class="math inline">\(T\)</span> is a <strong>latent, unobserved variable</strong>.</li>
+</ul>
+<div class="notes">
+<ul>
+<li>We <strong>don’t directly observe <span class="math inline">\(T\)</span></strong>; we <strong>only observe <span class="math inline">\(Y\)</span></strong>, which we hope tells us something about <span class="math inline">\(T\)</span> and <span class="math inline">\(\lambda\)</span>.</li>
+</ul>
+</div>
+</div>
+</section><section id="modeling-assumptions" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="modeling-assumptions">
+<span class="header-section-number">2.2</span> Modeling assumptions</h2>
+<p>We <strong>assume</strong> that:</p>
+<div class="incremental">
+<ul class="incremental">
+<li>The incidence rate is approximately <strong>constant</strong> <strong>over time</strong> and <strong>across the population</strong> (“<strong>constant and homogenous incidence</strong>”)</li>
+</ul>
+<div class="notes">
+<ul>
+<li>that is: <span class="math display">\[\lambda_{i,t} = \lambda, \forall i,t\]</span>
+</li>
+</ul>
+<p>(We can analyze subpopulations separately to make homogeneity more plausible.)</p>
+</div>
+<ul class="incremental">
+<li>Participants are always at risk of a new infection, regardless of how recently they have been infected (“<strong>no lasting immunity</strong>”).</li>
+</ul>
+</div>
+<div class="notes">
+<p>(For diseases like typhoid, the no-immunity assumption may not hold exactly, but hopefully approximately; modeling the effects of re-exposure during an active infection is <a href="https://github.com/UCD-SERG/dcm/issues/11">on our to-do list</a>).</p>
+</div>
+</section><section id="time-since-infection-and-incidence" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="time-since-infection-and-incidence">
+<span class="header-section-number">2.3</span> Time since infection and incidence</h2>
+<p>Under those assumptions:</p>
+<div class="incremental">
+<ul class="incremental">
+<li>
+<span class="math inline">\(T\)</span> has an <strong>exponential distribution</strong>:</li>
+</ul>
+<p><span class="math display">\[\mathbb{p}(T=t) = \lambda \exp{\left\{-\lambda t\right\}}\]</span></p>
+<ul class="incremental">
+<li>More precisely, the distribution is exponential <strong>truncated by age</strong> at observation (<span class="math inline">\(a\)</span>):</li>
+</ul>
+<p><span class="math display">\[\mathbb{p}(T=t|A=a) = 1_{t \in[0,a]}\lambda \exp{\left\{-\lambda t\right\}} + 1_{t = \text{NA}} \exp{\left\{-\lambda a\right\}}\]</span></p>
+<ul class="incremental">
+<li>the rate parameter <span class="math inline">\(\lambda\)</span> is the incidence rate</li>
+</ul>
+</div>
+<div class="notes">
+<p>This is a time-to-event model, looking <strong>backwards in time</strong> from the survey date (when the blood sample was collected).</p>
+<p>The probability that an individual was <strong>last</strong> infected <span class="math inline">\(t\)</span> days ago, <span class="math inline">\(p(T=t)\)</span>, is equal to the probability of being infected at time <span class="math inline">\(t\)</span> (i.e., the incidence rate at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\lambda\)</span>) times the probability of not being infected after time <span class="math inline">\(t\)</span>, which turns out to be <span class="math inline">\(\exp(-\lambda t)\)</span>.</p>
+<p>The distribution of <span class="math inline">\(T\)</span> is truncated by the patient’s birth date; the probability that they have never been infected is <span class="math inline">\(\exp{\left\{-\lambda a\right\}}\)</span>, where <span class="math inline">\(a\)</span> is the patient’s age at the time of the survey.</p>
+</div>
+</section><section id="likelihood-of-latent-infection-times" class="level2 smaller" data-number="2.4"><h2 class="smaller anchored" data-number="2.4" data-anchor-id="likelihood-of-latent-infection-times">
+<span class="header-section-number">2.4</span> Likelihood of latent infection times</h2>
+<div class="notes">
+<p>If we could observe <span class="math inline">\(T\)</span>, then we could estimate <span class="math inline">\(\lambda\)</span> using a typical maximum likelihood approach.</p>
+</div>
+<div class="notes">
+<p>Starting with the likelihood: Taking the logarithm of the likelihood: Taking the derivative of that log-likelihood to find the score function: Setting the score function equal to 0 to find the score equation, and solving the score equation for <span class="math inline">\(\lambda\)</span> to find the maximum likelihood estimate:</p>
+</div>
+<div class="incremental">
+<ul class="incremental">
+<li><p><span class="math display">\[\mathcal{L}^*(\lambda) = \prod_{i=1}^n \mathbb{p}(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)\]</span></p></li>
+<li><p><span class="math display">\[\ell^*(\lambda) = \log{\left\{\mathcal{L}^*(\lambda)\right\}} = \sum_{i=1}^n \log{\left\{\lambda\right\}} -\lambda t_i\]</span></p></li>
+<li><p><span class="math display">\[\ell^{*'}(\lambda) = \sum_{i=1}^n \lambda^{-1} - t_i\]</span></p></li>
+<li><p><span class="math display">\[\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}\]</span></p></li>
+</ul>
+</div>
+<div class="notes">
+<p>The MLE turns out to be the inverse of the mean.</p>
+</div>
+</section><section id="example-log-likelihood-curves" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="example-log-likelihood-curves">
+<span class="header-section-number">2.5</span> Example log-likelihood curves</h2>
+<div class="notes">
+<p>Here’s what that would look like:</p>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-loglik" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Example log(likelihood) curves
+</figcaption><div aria-describedby="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="methodology_files/figure-html/fig-loglik-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="standard-error" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="standard-error">
+<span class="header-section-number">2.6</span> standard error</h2>
+<p>The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:</p>
+<p>more curvature -&gt; likelihood peak is clearer -&gt; smaller standard errors</p>
+</section><section id="likelihood-of-observed-data" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="likelihood-of-observed-data">
+<span class="header-section-number">2.7</span> Likelihood of observed data</h2>
+<div class="notes">
+<p>Unfortunately, we don’t observe infection times <span class="math inline">\(T\)</span>; we only observe antibody levels <span class="math inline">\({Y}\)</span>. So things get a little more complicated.</p>
+<p>In short, we are hoping that we can estimate <span class="math inline">\(T\)</span> (time since last infection) from <span class="math inline">\(Y\)</span> (current antibody levels). If we could do that, then we could plug in our estimates <span class="math inline">\(\hat t_i\)</span> into that likelihood above, and estimate <span class="math inline">\(\lambda\)</span> as previously.</p>
+<p>We’re actually going to do something a little more nuanced; instead of just using one value for <span class="math inline">\(\hat t\)</span>, we are going to consider all possible values of <span class="math inline">\(t\)</span> for each individual.</p>
+<p>We need to link the data we actually observed to the incidence rate.</p>
+<p>The likelihood of an individual’s observed data, <span class="math inline">\(\mathbb{p}(Y=y)\)</span>, can be expressed as an integral over the joint likelihood of <span class="math inline">\(Y\)</span> and <span class="math inline">\(T\)</span> (using the Law of Total Probability):</p>
+</div>
+<div class="incremental">
+<ul class="incremental">
+<li><span class="math display">\[\mathbb{p}(Y=y) = \int_t \mathbb{p}(Y=y,T=t)dt\]</span></li>
+</ul>
+<div class="notes">
+<p>Further, we can express the joint probability <span class="math inline">\(p(Y=y,T=t)\)</span> as the product of <span class="math inline">\(p(T=t)\)</span> and <span class="math inline">\(p(Y=y|T=t)\)</span> the “antibody response curve after infection”. That is:</p>
+</div>
+<ul class="incremental">
+<li><span class="math display">\[\mathbb{p}(Y=y,T=t) = \mathbb{p}(Y=y|T=t) \mathbb{p}(T=t)\]</span></li>
+</ul>
+</div>
+</section><section id="antibody-response-curves" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="antibody-response-curves">
+<span class="header-section-number">2.8</span> Antibody response curves</h2>
+<div id="fig-decay" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\)</span>, for typhoid
+</figcaption><div aria-describedby="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="fig/fig1a-1.svg" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+</section><section id="putting-it-all-together" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="putting-it-all-together">
+<span class="header-section-number">2.9</span> Putting it all together</h2>
+<p>Substituting <span class="math inline">\(p(Y=y,T=t) = p(Y=y|T=t)P(T=t)\)</span> into the previous expression for <span class="math inline">\(p(Y=y)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+p(Y=y)
+&amp;= \int_t p(Y=y|T=t)P(T=t) dt
+\end{aligned}
+\]</span></p>
+</section><section id="composing-the-likelihood" class="level2 smaller" data-number="2.10"><h2 class="smaller anchored" data-number="2.10" data-anchor-id="composing-the-likelihood">
+<span class="header-section-number">2.10</span> Composing the likelihood</h2>
+<div class="notes">
+<p>Now, the likelihood of the observed data <span class="math inline">\(\mathbf{y} = (y_1, y_2, ..., y_n)\)</span> is:</p>
+</div>
+<p><span class="math display">\[
+\begin{aligned}
+\mathcal{L}(\lambda)
+&amp;= \prod_{i=1}^n p(Y=y_i)
+\\&amp;= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+\end{aligned}
+\]</span></p>
+<div class="notes">
+<p>If we know <span class="math inline">\(p(Y=y|T=t)\)</span>, then we can maximize <span class="math inline">\(\mathcal{L}(\lambda)\)</span> over <span class="math inline">\(\lambda\)</span> to find the “maximum likelihood estimate” (MLE) of <span class="math inline">\(\lambda\)</span>, denoted <span class="math inline">\(\hat\lambda\)</span>.</p>
+</div>
+</section><section id="finding-the-mle-numerically" class="level2" data-number="2.11"><h2 data-number="2.11" class="anchored" data-anchor-id="finding-the-mle-numerically">
+<span class="header-section-number">2.11</span> Finding the MLE numerically</h2>
+<div class="notes">
+<p>The likelihood of <span class="math inline">\(Y\)</span> involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:</p>
+</div>
+<p><span class="math display">\[
+\begin{aligned}
+\log \mathcal{L} (\lambda)
+&amp;= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+&amp;= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
+\end{aligned}
+\]</span></p>
+<div class="notes">
+<p>The derivative of this expression doesn’t come out cleanly, so we will use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) to find the MLE and corresponding standard error.</p>
+</div>
+</section><section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="level2" data-number="2.12"><h2 data-number="2.12" class="anchored" data-anchor-id="cluster-robust-standard-errors-for-clustered-sampling-designs">
+<span class="header-section-number">2.12</span> Cluster-robust standard errors for clustered sampling designs</h2>
+<p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.</p>
+<section id="why-clustering-matters" class="level3" data-number="2.12.1"><h3 data-number="2.12.1" class="anchored" data-anchor-id="why-clustering-matters">
+<span class="header-section-number">2.12.1</span> Why clustering matters</h3>
+<p>When observations are clustered:</p>
+<ul>
+<li>Individuals within the same cluster share common exposures or characteristics</li>
+<li>Standard errors that ignore clustering will be <strong>too small</strong> (anti-conservative)</li>
+<li>Confidence intervals will be <strong>too narrow</strong>
+</li>
+<li>p-values will be <strong>too optimistic</strong>
+</li>
+</ul></section><section id="cluster-robust-variance-estimation" class="level3" data-number="2.12.2"><h3 data-number="2.12.2" class="anchored" data-anchor-id="cluster-robust-variance-estimation">
+<span class="header-section-number">2.12.2</span> Cluster-robust variance estimation</h3>
+<p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> (also known as the Huber-White robust variance estimator):</p>
+<p><span class="math display">\[V_{\text{robust}} = H^{-1} B H^{-1}\]</span></p>
+<p>where:</p>
+<ul>
+<li>
+<span class="math inline">\(V_{\text{robust}}\)</span> is the cluster-robust variance-covariance matrix for the parameter estimates</li>
+<li>
+<span class="math inline">\(H\)</span> is the Hessian matrix (matrix of second partial derivatives of the log-likelihood with respect to the parameters, evaluated at the MLE <span class="math inline">\(\hat{\lambda}\)</span>)</li>
+<li>
+<span class="math inline">\(B\)</span> is the “meat” of the sandwich, calculated from cluster-level score contributions:</li>
+</ul>
+<p><span class="math display">\[B = \sum_{c=1}^C U_c U_c^T\]</span></p>
+<p>where:</p>
+<ul>
+<li>
+<span class="math inline">\(C\)</span> is the total number of clusters in the sample</li>
+<li>
+<span class="math inline">\(U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)\)</span> is the score contribution (gradient of log-likelihood with respect to <span class="math inline">\(\lambda\)</span>) from all observations in cluster <span class="math inline">\(c\)</span>
+</li>
+<li>
+<span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient operator (vector of partial derivatives with respect to the parameter <span class="math inline">\(\lambda\)</span>)</li>
+</ul></section><section id="implementation-in-serocalculator" class="level3" data-number="2.12.3"><h3 data-number="2.12.3" class="anchored" data-anchor-id="implementation-in-serocalculator">
+<span class="header-section-number">2.12.3</span> Implementation in serocalculator</h3>
+<p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
+<p>When cluster-robust standard errors are used, the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> output indicates this with <code>se_type = "cluster-robust"</code>.</p>
+</section><section id="effect-on-results" class="level3" data-number="2.12.4"><h3 data-number="2.12.4" class="anchored" data-anchor-id="effect-on-results">
+<span class="header-section-number">2.12.4</span> Effect on results</h3>
+<ul>
+<li>
+<strong>Point estimates</strong> (incidence rates) remain unchanged</li>
+<li>
+<strong>Standard errors</strong> typically increase by 5-15% to reflect within-cluster correlation</li>
+<li>
+<strong>Confidence intervals</strong> appropriately widen to account for reduced effective sample size</li>
+</ul></section></section></section><section id="modeling-the-seroresponse-kinetics-curve" class="level1" data-number="3"><h1 data-number="3">
+<span class="header-section-number">3</span> Modeling the seroresponse kinetics curve</h1>
+<div class="notes">
+<p>Now, we need a model for the antibody response to infection, <span class="math inline">\(\mathbb{p}(Y=y|T=t)\)</span>. The current version of the <a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a> package uses a two-phase model for the shape of the seroresponse <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>.</p>
+</div>
+<section id="model-for-active-infection-period" class="level2 smaller" data-number="3.1"><h2 class="smaller anchored" data-number="3.1" data-anchor-id="model-for-active-infection-period">
+<span class="header-section-number">3.1</span> Model for active infection period</h2>
+<div class="notes">
+<p>The first phase of the model represents the <strong>active infection period</strong>, and uses a simplified Lotka-Volterra predator-prey model <span class="citation" data-cites="volterra1928variations">(<a href="#ref-volterra1928variations" role="doc-biblioref">Volterra 1928</a>)</span> where the pathogen is the prey and the antibodies are the predator:</p>
+</div>
+<p>Notation:</p>
+<ul>
+<li>
+<span class="math inline">\(x(t)\)</span>: Pathogen concentration at time <span class="math inline">\(t\)</span>
+</li>
+<li>
+<span class="math inline">\(y(t)\)</span>: Antibody concentration at time <span class="math inline">\(t\)</span>
+</li>
+</ul>
+<p>Model:</p>
+<ul>
+<li><span class="math display">\[x'(t) = \alpha x(t) - \beta y(t)\]</span></li>
+<li><span class="math display">\[y'(t) = \delta y(t)\]</span></li>
+</ul>
+<div class="notes">
+<p>With baseline antibody concentration <span class="math inline">\(y(0) = y_{0}\)</span> and initial pathogen concentration <span class="math inline">\(x(0) = x_{0}\)</span>.</p>
+</div>
+<div class="notes">
+<p>Compared to the standard LV model:</p>
+<ul>
+<li><p>the predation term with the <span class="math inline">\(\beta\)</span> coefficient is missing the prey concentration <span class="math inline">\(x(t)\)</span> factor; we assume that the efficiency of predation doesn’t depend on pathogen concentration.</p></li>
+<li><p>the differential equation for predator density is missing the predator death rate term <span class="math inline">\(-\gamma y(t)\)</span>; we assume that as long as there are any pathogens present, the antibody decay rate is negligible compared to the growth rate.</p></li>
+<li><p>the predator growth rate term <span class="math inline">\(\delta y(t)\)</span> is missing the prey density factor <span class="math inline">\(x(t)\)</span> we assume that as long as there are any pathogens present, the antibody concentration grows at the same exponential rate.</p></li>
+</ul>
+<p>These omissions were made to simplify the estimation process, under the assumption that they are negligible compared to the other terms in the model.</p>
+</div>
+</section><section id="model-for-post-infection-antibody-decay" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="model-for-post-infection-antibody-decay">
+<span class="header-section-number">3.2</span> Model for post-infection antibody decay</h2>
+<ul>
+<li><p><span class="math display">\[b(t) = 0\]</span></p></li>
+<li><p><span class="math display">\[y^{\prime}(t) = -\alpha y(t)^r\]</span></p></li>
+</ul>
+<div class="notes">
+<p>Antibody decay is different from exponential (log–linear) decay. When the shape parameter <span class="math inline">\(r &gt; 1\)</span>, log concentrations decrease rapidly after infection has terminated, but decay then slows down and low antibody concentrations are maintained for a long period. If <span class="math inline">\(r = 1\)</span>, this model reduces to exponential decay with decay rate <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</section><section id="putting-it-all-together-1" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="putting-it-all-together-1">
+<span class="header-section-number">3.3</span> Putting it all together</h2>
+<p>The serum antibody response <span class="math inline">\(y(t)\)</span> can be written as</p>
+<p><span class="math display">\[
+y(t) = y_{+}(t) + y_{-}(t)
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\begin{align}
+y_{+}(t) &amp; = y_{0}\text{e}^{\mu t}[0\leq t &lt;t_{1}]\\
+y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t &lt; \infty]
+\end{align}
+\]</span></p>
+<hr>
+<p>Since the peak level is <span class="math inline">\(y_{1} = y_{0}\text{e}^{\mu t_{1}}\)</span> the growth rate <span class="math inline">\(\mu\)</span> can be written as <span class="math display">\[\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)\]</span></p>
+<hr>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Computation failed in `stat_function()`.
+Caused by error in `if (r == 1) ...`:
+! argument is of length zero</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-response-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: An example kinetics curve for HlyE IgG
+</figcaption><div aria-describedby="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="methodology_files/figure-html/fig-response-graph-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="notes">
+<p>The antibody level at <span class="math inline">\(t=0\)</span> is <span class="math inline">\(y_{0}\)</span>; the rising branch ends at <span class="math inline">\(t = t_{1}\)</span> where the peak antibody level <span class="math inline">\(y_{1}\)</span> is reached. Any antibody level <span class="math inline">\(y(t) \in (y_{0}, y_{1})\)</span> eventually occurs twice.</p>
+</div>
+<hr>
+<div class="notes">
+<p>An interactive Shiny app that allows the user to manipulate the model parameters is available at:</p>
+<p><a href="https://ucdserg.shinyapps.io/antibody-kinetics-model-2/" class="uri">https://ucdserg.shinyapps.io/antibody-kinetics-model-2/</a></p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>QR code for shiny app</figcaption><p><img src="../man/figures/qr_akm2.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section><section id="biological-noise" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="biological-noise">
+<span class="header-section-number">3.4</span> Biological noise</h2>
+<div class="notes">
+<p>When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).</p>
+<p>We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren’t actually the ones we are looking for (overcount, false positives, cross-reactivity).</p>
+<p>We are more concerned about overcount (cross-reactivity) than undercount. For a given antibody, we can do some analytical work beforehand to estimate the distribution of overcounts, and add that to our model <span class="math inline">\(p(Y=y|T=t)\)</span>.</p>
+</div>
+<p>Notation:</p>
+<ul>
+<li>
+<span class="math inline">\(y_\text{obs}\)</span>: measured serum antibody concentration</li>
+<li>
+<span class="math inline">\(y_\text{true}\)</span>: “true” serum antibody concentration</li>
+<li>
+<span class="math inline">\(\epsilon_b\)</span>: noise due to probe cross-reactivity</li>
+</ul>
+<p>Model:</p>
+<ul>
+<li><span class="math inline">\(y_\text{obs} = y_\text{true} + \epsilon_b\)</span></li>
+<li><span class="math inline">\(\epsilon_b \sim \text{Unif}(0, \nu)\)</span></li>
+</ul>
+<p><span class="math inline">\(\nu\)</span> needs to be pre-estimated using negative controls, typically using the 95th percentile of the distribution of antibody responses to the antigen-isotype in a population with no exposure.</p>
+</section><section id="measurement-noise" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="measurement-noise">
+<span class="header-section-number">3.5</span> Measurement noise</h2>
+<p>There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source and include it in <span class="math inline">\(p(Y=y|T=t)\)</span>.</p>
+<p>Measurement noise, <span class="math inline">\(\varepsilon\)</span> (“epsilon”), represents measurement error from the laboratory testing process. It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. Note that the CV should ideally be measured across plates rather than within the same plate.</p>
+<!-- {{< include articles/_methods-continued.qmd >}} -->
+</section><section id="references" class="level2 smaller unnumbered"><h2 class="smaller unnumbered anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Noordzij2010diseasemeasures" class="csl-entry" role="listitem">
+Noordzij, Marlies, Friedo W. Dekker, Carmine Zoccali, and Kitty J. Jager. 2010. <span>“<span class="nocase">Measures of Disease Frequency: Prevalence and Incidence</span>.”</span> <em>Nephron Clinical Practice</em> 115 (1): c17–20. <a href="https://doi.org/10.1159/000286345">https://doi.org/10.1159/000286345</a>.
+</div>
+<div id="ref-Teunis_2016" class="csl-entry" role="listitem">
+Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić Marinović, and M. E. E. Kretzschmar. 2016. <span>“Linking the Seroresponse to Infection to Within-Host Heterogeneity in Antibody Production.”</span> <em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001">https://doi.org/10.1016/j.epidem.2016.04.001</a>.
+</div>
+<div id="ref-volterra1928variations" class="csl-entry" role="listitem">
+Volterra, Vito. 1928. <span>“Variations and Fluctuations of the Number of Individuals in Animal Species Living Together.”</span> <em>ICES Journal of Marine Science</em> 3 (1): 3–51.
+</div>
+</div>
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/methodology.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/methodology.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

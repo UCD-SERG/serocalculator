@@ -25,8 +25,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 :::
 
 ::: {.column width="40%"}
-![](../man/figures/SalmonellaTyphiFlagellarStain.jpg)
-![](../man/figures/Fievre_typhoide.png)
+![*Salmonella* Typhi, flagellar stain. Source: CDC PHIL (public domain), via Wikimedia Commons.](../man/figures/SalmonellaTyphiFlagellarStain.jpg)
+![Historic typhoid fever illustration. Source: Wikimedia Commons (license to verify).](../man/figures/Fievre_typhoide.png)
 
 :::
 
@@ -48,8 +48,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![](../man/figures/Shigella_stool.jpg)
-![](../man/figures/41579_2024_1126_Fig1_HTML.png)
+![*Shigella* in a stool sample. Source: Wikimedia Commons (license to verify).](../man/figures/Shigella_stool.jpg)
+![From Nature Reviews Microbiology (2024). © Springer Nature — reuse permission required.](../man/figures/41579_2024_1126_Fig1_HTML.png)
 ::::
 
 :::
@@ -70,8 +70,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![Trombicula mite](../man/figures/Trombicula-larva-stylostome.jpg)
-![](../man/figures/340149_1_En_16_Fig6_HTML.webp)
+![*Trombicula* mite larva with stylostome. Source: Wikimedia Commons (license to verify).](../man/figures/Trombicula-larva-stylostome.jpg)
+![From a Springer book chapter. © Springer Nature — reuse permission required.](../man/figures/340149_1_En_16_Fig6_HTML.webp)
 ::::
 
 :::
@@ -320,13 +320,13 @@ sim_case_data <-
                 antigen_isos = antibodies,
                 max_n_obs = 20, followup_interval = 14)
 
-t1 = sim_case_data$timeindays
-loglik0 = function(lambda) {
+t1 <- sim_case_data$timeindays
+loglik0 <- function(lambda) {
   sum(
     dexp(t1, rate = lambda, log = TRUE)
   )
 }
-loglik1 = Vectorize(loglik0, vectorize.args = "lambda")
+loglik1 <- Vectorize(loglik0, vectorize.args = "lambda")
 
 library(ggplot2)
 
@@ -343,17 +343,17 @@ ggplot() +
 #| include: false
 # Import longitudinal antibody parameters from OSF
 curves <-
-  "https://osf.io/download/rtw5k/" %>%
-  load_curve_params() %>%
-  filter(iter < 50) |> 
+  "https://osf.io/download/rtw5k/" |>
+  load_sr_params() |>
+  filter(iter < 50) |>
   filter(antigen_iso %in% antibodies)
 
 # Import cross-sectional data from OSF and rename required variables:
 xs_data <-
-  "https://osf.io/download/n6cp3/" %>%
+  "https://osf.io/download/n6cp3/" |>
   load_pop_data()
 
-noise <- url("https://osf.io/download/hqy4v/") %>% readRDS()
+noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
 ```
 
 ## standard error
@@ -444,8 +444,8 @@ case_data <-
       time_in_days = "dayssincefeveronset"
     )
 
-most_obs = 
-  case_data |> 
+most_obs <-
+  case_data |>
   count(id) |> 
   arrange(desc(n)) |> 
   head(10)
@@ -515,6 +515,10 @@ implemented by `stats::nlm()`)
 to find the MLE and corresponding standard error.
 
 :::
+
+## Cluster-robust standard errors for clustered sampling designs
+
+{{< include articles/_cluster-robust-se.qmd >}}
 
 {{< include articles/_antibody-response-model.qmd >}}
 

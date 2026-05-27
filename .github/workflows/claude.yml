@@ -260,9 +260,14 @@ jobs:
             exit 0
           fi
           echo "Pushing PR branch commits ($STARTING_SHA -> $CURRENT_SHA) to $BRANCH"
+          # Push with an explicit token URL rather than relying on
+          # actions/checkout's persisted credentials: after `gh pr checkout`
+          # (and the agent step's own git activity) the persisted extraheader
+          # isn't applied, so `git push origin` falls back to unsupported
+          # password auth and fails. The x-access-token URL always works.
           # No `|| warn`: a failed push on a same-repo PR means lost commits,
           # which must surface as a red run rather than a green one.
-          git push origin "HEAD:$BRANCH"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "HEAD:$BRANCH"
 
       # Fetch the PR's head SHA once, post-Claude, for the two steps that
       # both need it (the prose-post COMMITTED check and the re-request
@@ -410,8 +415,10 @@ jobs:
 
       # Pair to "Set up branch for issue trigger": push the branch Claude
       # committed to and open a draft PR. Runs on always() so partial work
-      # is preserved even if the Claude step failed. The checkout uses the
-      # persisted GITHUB_TOKEN, so a plain `git push origin` authenticates.
+      # is preserved even if the Claude step failed. Pushes with an explicit
+      # x-access-token URL (same reason as the PR-branch push above: the
+      # persisted checkout credential isn't reliably applied after the agent
+      # step runs).
       - name: Push branch and open draft PR for issue trigger
         if: |
           always() &&
@@ -430,7 +437,7 @@ jobs:
             exit 0
           fi
           echo "Pushing $BRANCH ($STARTING_SHA -> $CURRENT_SHA)"
-          git push origin "$BRANCH"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BRANCH"
           EXISTING=$(gh pr list --head "$BRANCH" --state open --json url --jq '.[0].url // empty')
           if [ -n "$EXISTING" ]; then
             echo "PR already exists for $BRANCH: $EXISTING"

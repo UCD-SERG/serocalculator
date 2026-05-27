@@ -1,5 +1,5 @@
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
-date: '`r Sys.Date()`'
+date: "!expr Sys.Date()"
 format:
   html:
     number-sections: true

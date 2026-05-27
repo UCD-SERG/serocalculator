@@ -8,11 +8,10 @@
 - ~217,000 deaths/year
 - mostly 5-19 years old
 
-![Salmonella Typhi, flagellar stain. Source: CDC PHIL (public domain),
-via Wikimedia
-Commons.](../reference/figures/SalmonellaTyphiFlagellarStain.jpg)![Historic
-typhoid fever illustration. Source: Wikimedia Commons (license to
-verify).](../reference/figures/Fievre_typhoide.png)
+![Photomicrograph of \*Salmonella\* Typhi bacteria with a flagellar
+stain](../reference/figures/SalmonellaTyphiFlagellarStain.jpg)![Historical
+illustration depicting typhoid
+fever](../reference/figures/Fievre_typhoide.png)
 
 ### *Shigella* (“dysentery”)
 
@@ -22,10 +21,10 @@ verify).](../reference/figures/Fievre_typhoide.png)
   middle-income countries (LMICs), where health systems are
   resource-constrained.
 
-![Shigella in a stool sample. Source: Wikimedia Commons (license to
-verify).](../reference/figures/Shigella_stool.jpg)![From Nature Reviews
-Microbiology (2024). © Springer Nature — reuse permission
-required.](../reference/figures/41579_2024_1126_Fig1_HTML.png)
+![Microscopy of a stool sample containing \*Shigella\*
+bacteria](../reference/figures/Shigella_stool.jpg)![Published figure on
+enteric pathogen epidemiology from Nature Reviews Microbiology
+(2024)](../reference/figures/41579_2024_1126_Fig1_HTML.png)
 
 ### *Orientia tsutsugamushi* (“scrub typhus”)
 
@@ -34,11 +33,10 @@ required.](../reference/figures/41579_2024_1126_Fig1_HTML.png)
 - fever, headache, muscle pain, cough, gastrointestinal symptoms,
   hemorrhaging
 
-![Trombicula mite larva with stylostome. Source: Wikimedia Commons
-(license to
-verify).](../reference/figures/Trombicula-larva-stylostome.jpg)![From a
-Springer book chapter. © Springer Nature — reuse permission
-required.](../reference/figures/340149_1_En_16_Fig6_HTML.webp)
+![Microscopy of a \*Trombicula\* mite larva with its stylostome feeding
+tube](../reference/figures/Trombicula-larva-stylostome.jpg)![Published
+figure on scrub typhus from a Springer book
+chapter](../reference/figures/340149_1_En_16_Fig6_HTML.webp)
 
 ### Defining incidence
 
@@ -47,7 +45,7 @@ disease over a **specific time period** is the rate at which individuals
 in a population are *acquiring* the disease during that time period
 ([Noordzij et al. 2010](#ref-Noordzij2010diseasemeasures)).
 
-------------------------------------------------------------------------
+{{\< slidebreak \>}}
 
 **Example 1 (Population incidence rate)** If there are **10 new cases**
 of typhoid in a population of **1000 persons** during a **one month**
@@ -372,7 +370,7 @@ sim_case_data |>
 
 Figure 2: Antibody response curves, $`p(Y=y|T=t)`$, for typhoid
 
-------------------------------------------------------------------------
+{{\< slidebreak \>}}
 
 ``` r
 
@@ -820,7 +818,10 @@ Figure 5: Example log(likelihood) curves
 
 ### In-progress work
 
-- Implementing these methods in user-friendly software + GUIs (R, Shiny)
+- Extending and improving existing Shiny apps for these methods (e.g.,
+  the [serocalculator Shiny
+  app](http://ucdserg.ucdavis.edu/shiny_serocalculator),
+  [source](https://github.com/UCD-SERG/shiny_serocalculator))
 
 - Multivariate modeling of biomarkers
 

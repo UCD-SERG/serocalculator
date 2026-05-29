@@ -93,7 +93,7 @@ stratum identifiers. Used in combination with \code{cluster_var} for
 stratified cluster sampling designs.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=est_seroincidence]{est_seroincidence}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link{est_seroincidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
     \item{\code{stepmin}}{A positive scalar providing the minimum allowable
 relative step length.}

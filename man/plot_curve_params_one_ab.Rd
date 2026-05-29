@@ -45,11 +45,8 @@ or linear scale (\code{FALSE}, default)?}
 
 \item{xlim}{range of x values to graph}
 
-\item{...}{
-  Arguments passed on to \code{\link[ggplot2:geom_function]{ggplot2::geom_function}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{Additional arguments passed to \code{\link[ggplot2:geom_function]{ggplot2::geom_function()}}.
+\code{fun}, \code{n}, and \code{args} are set internally and cannot be passed.}
 }
 \value{
 a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object

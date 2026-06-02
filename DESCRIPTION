@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9013
+Version: 1.4.0.9014
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -81,3 +81,4 @@ Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 Remotes: 
     d-morrison/snapr
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.3

@@ -1,70 +1,80 @@
-# Claude Code Instructions for serocalculator
+# Claude Code Instructions
 
-## General
+Project guidance for Claude Code (CLI, IDE, and the GitHub Action). The
+same conventions apply to GitHub Copilot — see
+[`.github/copilot-instructions.md`](https://ucd-serg.github.io/serocalculator/copilot-instructions.md),
+which is the **source of truth** for repository-specific style and
+workflow. This file is a short orientation; defer to
+copilot-instructions.md for details.
 
-See `.github/copilot-instructions.md` for full project conventions. Key
-points below.
+## Project context
 
-## Code Style
+`serocalculator` is an R package for estimating infection rates
+(seroincidence) from cross-sectional serological data. It is maintained
+by the UCD-SERG lab and replaces the older `seroincidence` package.
 
-- Use native pipe `|>` instead of nesting function calls. Write
-  `x |> f() |> g()` not `g(f(x))`.
-- Avoid function calls in function arguments. Extract into named
-  variables first. Write `y <- f(x); g(y)` not `g(f(x))`.
-- Both rules apply to all R code including tests.
-- One function per file.
-- Keep functions under 100 lines; decompose into helpers.
-- Internal helper functions use `.function_name()` convention.
-- Use
-  [`cli::cli_abort()`](https://cli.r-lib.org/reference/cli_abort.html) /
-  [`cli::cli_warn()`](https://cli.r-lib.org/reference/cli_abort.html) /
-  [`cli::cli_inform()`](https://cli.r-lib.org/reference/cli_abort.html)
-  for messaging.
-- Use `.data$column` for tidy evaluation in dplyr/tidyr/ggplot2
-  pipelines.
+Authoritative style guide: [UCD-SERG Lab
+Manual](https://ucd-serg.github.io/lab-manual/) (source:
+<https://github.com/UCD-SERG/lab-manual>).
 
-## Function Design
+## Repository layout
 
-- **Pass-through over interception**: Don’t name parameters in a wrapper
-  just to relay them. Use `...` to forward arguments to subfunctions. A
-  wrapper that adds no logic should be a one-liner:
-  `f <- function(...) .g(...) |> .h()`.
-- **Validate where consumed**: Check arguments in the function that
-  actually uses them, not in a caller that just passes them through.
-- **Use attributes for metadata**: When a data-producing function needs
-  to communicate context (e.g., default title, faceting options) to a
-  plotting function, store it as attributes on the data object rather
-  than threading extra parameters through intermediaries.
-- **`@inheritParams` / `@inheritDotParams`**: Use these instead of
-  duplicating `@param` docs across functions. Use `@keywords internal`
-  (not `@noRd`) for internal functions so roxygen inheritance works.
-- **Leverage existing packages**: Before writing data-fetching or
-  plotting utilities, check if CRAN packages already provide the
-  functionality. Wrap existing packages rather than reimplementing.
-- **S3 autoplot methods for plotting**: When a function produces data
-  that gets plotted, give the data a custom S3 class and implement an
-  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
-  method rather than a standalone plotting function. This lets users
-  call
-  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
-  directly on the data object.
-- **Keep it simple**: Prefer the simplest solution. Don’t add redundant
-  validation, unnecessary intermediate steps, or complexity that doesn’t
-  earn its keep. If upstream already validates, don’t re-validate. If
-  `x[1]` works, don’t call `match.arg(x)`.
-- **Snapshot tests over manual assertions**: Use
-  `expect_snapshot_value(style = "json2")` for data results and
-  [`vdiffr::expect_doppelganger()`](https://vdiffr.r-lib.org/reference/expect_doppelganger.html)
-  for plots instead of field-by-field `expect_equal()` calls. Don’t add
-  redundant checks (e.g., `expect_s3_class()` before
-  `expect_doppelganger()`).
+- `R/`, `man/`, `NAMESPACE`, `DESCRIPTION` — R package source and
+  generated docs
+- `src/` — compiled (Rcpp) code
+- `tests/testthat/` — testthat suite, including snapshot tests
+- `vignettes/` — package vignettes and `.qmd` articles
+- `pkgdown/_pkgdown.yml` — pkgdown site config
+- `data-raw/` — scripts that generate package data
+- `inst/WORDLIST` — accepted spell-check terms
+- `.github/workflows/` — CI workflow definitions
 
-## Workflow
+## Pre-commit checklist
 
-- Run `devtools::document()` after modifying roxygen2 comments.
-- Run `devtools::test()` before committing.
-- Run
+Run the relevant checks before committing (see copilot-instructions.md
+for the full list). Slash commands are available for the common ones:
+
+- `/document` —
+  [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+  after editing roxygen2 comments (keeps `man/`, `NAMESPACE`,
+  `DESCRIPTION` in sync; `R-check-docs.yml` enforces this).
+- `/lint` —
   [`lintr::lint_package()`](https://lintr.r-lib.org/reference/lint.html)
-  to check style.
-- Increment version with `usethis::use_version("dev")` and update
-  NEWS.md.
+  against `.lintr.R`; fix issues in changed files.
+- `/spell` —
+  [`spelling::spell_check_package()`](https://docs.ropensci.org/spelling//reference/spell_check_package.html);
+  add genuine terms to `inst/WORDLIST`.
+- `/test` —
+  [`devtools::test()`](https://devtools.r-lib.org/reference/test.html)
+  for affected tests.
+- `/check` —
+  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
+  for the full R CMD check (slow).
+- Add a `NEWS.md` bullet for any user-facing change (`news.yaml`
+  enforces this unless the PR carries the `no-changelog` label).
+
+## Working in this repo
+
+- **Don’t edit generated files**: `README.md` is built from
+  `README.Rmd`; `man/` and `NAMESPACE` are generated by
+  [`devtools::document()`](https://devtools.r-lib.org/reference/document.html).
+- **Style**: respect `.lintr.R` (snake_case, line length, etc.). Extract
+  complex argument validation into internal helpers
+  (e.g. `.validate_*()`).
+- **Tests**: cover new/changed behavior with testthat; set seeds where
+  randomness is involved so snapshots are deterministic.
+
+## Pull request expectations
+
+- Keep PRs scoped — bug fixes shouldn’t smuggle in refactors.
+- Write commit messages and PR descriptions explaining the *why*, not
+  the *what*.
+- Don’t bypass CI failures (spell check, lint, docs sync) — fix the
+  underlying issue.
+
+## Things to avoid
+
+- Adding new package dependencies without a clear reason; declare them
+  in `DESCRIPTION` (Imports/Suggests) rather than loading ad hoc.
+- Reformatting unrelated files.
+- Inventing URLs or citations — only use sources explicitly provided.

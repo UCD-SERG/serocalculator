@@ -84,6 +84,7 @@ jobs:
           ref: ${{ steps.branch-name.outputs.head_ref_branch }}
           path: ${{ github.event.repository.name }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          submodules: true
 
       - name: Checkout repo 🛎
         uses: actions/checkout@v4.3.1
@@ -91,6 +92,7 @@ jobs:
         with:
           ref: ${{ steps.current-branch-or-tag.outputs.ref-name }}
           path: ${{ github.event.repository.name }}
+          submodules: true
 
       - name: Check commit message 💬
         run: |

@@ -18,13 +18,14 @@ where the pathogen is the prey and the antibodies are the predator:
 
 Notation:
 
-* $x(t)$: Pathogen concentration at time $t$ 
-* $y(t)$: Antibody concentration at time $t$ 
+* $x(t)$: pathogen concentration at time $t$
+* $y(t)$: antibody concentration at time $t$
+* $\mu_0$: pathogen growth rate; $\beta$: pathogen-inactivation strength; $\mu$: antibody growth rate
 
-Model: 
+Model:
 
-* $$x'(t) = \alpha x(t) - \beta y(t)$$
-* $$y'(t) = \delta y(t)$$
+* $$x'(t) = \mu_0\, x(t) - \beta y(t)$$
+* $$y'(t) = \mu\, y(t)$$
 
 ::: notes
 With baseline antibody concentration $y(0) = y_{0}$ and
@@ -45,8 +46,8 @@ the predator death rate term
 $-\gamma y(t)$; we assume that as long as there are any pathogens present,
 the antibody decay rate is negligible compared to the growth rate.
 
-* the predator growth rate term $\delta y(t)$ is missing
-the prey density factor $x(t)$
+* the predator growth rate term $\mu\, y(t)$ is missing
+the prey density factor $x(t)$;
 we assume that as long as there are any pathogens present,
 the antibody concentration grows at the same exponential rate.
 
@@ -58,7 +59,13 @@ compared to the other terms in the model.
 
 ## Model for post-infection antibody decay
 
-* $$b(t) = 0$$
+::: notes
+Once the immune response clears the infection, the pathogen concentration
+reaches zero, so antibody production is no longer stimulated and the
+antibody concentration decays.
+:::
+
+Once the pathogen is cleared ($x(t) = 0$), the antibody concentration decays:
 
 * $$y^{\prime}(t) = -\alpha y(t)^r$$
 
@@ -72,7 +79,7 @@ If $r = 1$,
 this model reduces to exponential decay with decay rate $\alpha$.
 :::
 
-## Putting it all together
+## Assembling the full response curve
 
 The serum antibody response $y(t)$ can be written as
 
@@ -89,11 +96,37 @@ y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}
 \end{align}
 $$
 
----
+## Growth rate from peak and baseline {visibility="hidden"}
 
 Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$
 the growth rate $\mu$ can be written as
 $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
+
+## From the full model to the observed curve {.smaller}
+
+::: notes
+The antibody curve $y(t)$ that we observe and plot falls out of the
+two-phase system as follows:
+:::
+
+* **During infection** ($t < t_1$): the antibody equation
+$y'(t) = \mu\, y(t)$ gives exponential growth, $y(t) = y_0\, e^{\mu t}$.
+
+* The **pathogen equation sets the peak time** $t_1$: circulating
+antibodies inactivate the pathogen (the $-\beta y(t)$ term), driving $x(t)$
+to zero at $t_1$. Once the pathogen is cleared, stimulation stops and decay
+begins, so the peak antibody level is $y_1 = y_0\, e^{\mu t_1}$.
+
+* **After the peak** ($t \ge t_1$): power-law decay,
+$y'(t) = -\alpha y(t)^r$.
+
+::: notes
+So the pathogen trajectory $x(t)$ never appears in the final antibody curve
+--- it enters only through the peak time $t_1$. From antibody data alone
+the pathogen-side quantities ($\mu_0$, $\beta$, and the inoculum $x_0$) are
+not separately identifiable [@Teunis_2016], so the curve is summarized by
+five parameters: $y_0,\ y_1,\ t_1,\ \alpha,\ r$.
+:::
 
 ---
 
@@ -109,12 +142,12 @@ library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
 curves <-
-  "https://osf.io/download/rtw5k/" %>%
-  load_sr_params() %>%
+  "https://osf.io/download/rtw5k/" |>
+  load_sr_params() |>
   filter(iter < 50)
 
 curve1 <-
-  curves %>%
+  curves |>
   filter(
     iter == 5,
     antigen_iso == cur_ai
@@ -122,6 +155,9 @@ curve1 <-
 library(ggplot2)
 
 curve1 |>
+  # plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a
+  # single pre-filtered curve must be relabelled iter 1 or no curve is drawn.
+  mutate(iter = 1) |>
   serocalculator:::plot_curve_params_one_ab(
     log_y = FALSE
   ) +
@@ -171,11 +207,11 @@ Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
 ---
 
 ::: notes
-An interactive Shiny app that allows the user to manipulate the model parameters is available at:
-
-<https://ucdserg.shinyapps.io/antibody-kinetics-model-2/>
-
+An interactive Shiny app lets you manipulate the model parameters:
 :::
+
+Interactive Shiny app:
+<https://ucdserg.shinyapps.io/antibody-kinetics-model-2/>
 
 ```{r}
 #| echo: false
@@ -186,7 +222,7 @@ code <- qr_code("https://ucdserg.shinyapps.io/antibody-kinetics-model-2/")
 generate_svg(code, filename = "man/figures/qr_akm2.svg")
 ```
 
-![QR code for shiny app](../man/figures/qr_akm2.svg)
+![QR code for the antibody-kinetics Shiny app](../man/figures/qr_akm2.svg){width="280"}
 
 ## Biological noise
 

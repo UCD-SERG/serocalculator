@@ -75,6 +75,61 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::
 
+# Why estimate incidence from serosurveys?
+
+## The burden-data gap {.smaller}
+
+::: {.columns}
+
+:::: {.column width="55%"}
+
+* Typhoid conjugate vaccines (TCVs) are **80-90% effective** and
+WHO-recommended since 2018, but **few countries** have adopted them into
+routine immunization.
+
+* A major barrier is the **lack of burden data**: most low- and
+middle-income countries lack robust typhoid surveillance and have little
+or no incidence data.
+
+* These gaps block applications for vaccine funding,
+widening **equity gaps** in access to effective vaccines.
+
+::::
+
+:::: {.column width="45%"}
+
+![Global typhoid burden and the limited adoption of typhoid conjugate vaccines. Reuse permission required.](../man/figures/burden-typhoid-vaccines.png){fig-alt="Figure summarizing global typhoid burden and the limited adoption of typhoid conjugate vaccines"}
+
+::::
+
+:::
+
+::: notes
+Three large randomized trials showed that a Vi tetanus-toxoid typhoid
+conjugate vaccine is 80-90% effective at preventing symptomatic typhoid,
+and the WHO has recommended these vaccines since 2018. Yet as of 2023 only
+a handful of countries had introduced them into routine immunization. The
+binding constraint is data: without incidence estimates, countries cannot
+make the case for vaccine funding.
+
+"Data inequality is our biggest challenge moving forward" --- Kathy Neuzil, 2023
+:::
+
+{{< slidebreak >}}
+
+## Seroepidemiology can fill the gap
+
+The Seroepidemiology and Environmental Surveillance for Enteric Fever
+(SEES) study collected cross-sectional serosurveys across multiple
+countries to estimate typhoid incidence from antibody data
+[@Aiemjoy_2022_Lancet].
+
+::: notes
+This lecture describes the methodology behind that kind of estimate: how a
+single cross-sectional serosurvey, combined with a model of antibody
+dynamics, can recover an incidence rate.
+:::
+
 ## Defining incidence
 
 ::: {#def-incidence}
@@ -99,21 +154,17 @@ then the **incidence rate** for that time period is
 **10 new cases per 1000 persons per month**.
 :::
 
-## Mathematical definition of incidence {visibility="hidden"}
+## Mathematical definition of incidence
 
-More mathematically, 
-the incidence rate *at a given time point* is 
-the *derivative* (i.e., the current rate of change over time) 
-of the expected cumulative count of infections per person at risk, 
-at that time:
+More precisely, the incidence rate at time $t$ is the **rate of new
+infections per person at risk**:
 
-$$\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]$$
+$$\lambda_t = \frac{1}{N(t)}\,\frac{d}{dt}\,\mathbb{E}[C(t)]$$
 
-where $C(t)$ is the cumulative total number of infections in 
-the population of interest,
-and $N(t)$ is the number of individuals at risk at time $t$.
+where $C(t)$ is the cumulative number of infections and $N(t)$ the number of
+individuals at risk at time $t$.
 
-## Scale of incidence rates {visibility="hidden"}
+## Scale of incidence rates
 
 In both definitions, 
 the units for an incidence rate are 
@@ -130,8 +181,8 @@ or "# new infections per 100,000 persons per day", etc.
 
 From the perspective of an individual in the population:
 
-* the **incidence rate** (at a given time point ($t$)
-is the instantaneous **probability** (density) of 
+* the **incidence rate** (at a given time point $t$)
+is the instantaneous **probability density** of
 **becoming infected** at that time point,
 **given** that they are **at risk** at that time point.
 
@@ -178,6 +229,34 @@ produce estimates that are:
 See @HAY2024100806 for overview
 
 # Estimating incidence from cross-sectional serosurveys
+
+## Goal
+
+> Easily and reproducibly translate **quantitative antibody responses**
+> at the population level into meaningful and accurate **epidemiological
+> measures of infection burden**.
+
+## Antibody responses are complicated {.incremental}
+
+Using antibody levels to recover infection times is hard, because antibody
+responses:
+
+::: incremental
+
+* **decay over time** after infection
+* **vary from individual to individual** (age, immune function, prior
+infections, vaccination)
+* **vary from measurement to measurement** (assay noise)
+* can **cross-react** with antibodies from other exposures
+
+:::
+
+::: notes
+Each of these complications has to be handled somewhere in the model:
+waning, between-person heterogeneity, measurement error, and
+cross-reactivity. The rest of this section builds that model up piece by
+piece.
+:::
 
 ## Cross-sectional antibody surveys {.incremental}
 
@@ -245,7 +324,7 @@ regardless of how recently they have been infected
 the no-immunity assumption may not hold exactly,
 but hopefully approximately; 
 modeling the effects of re-exposure during an active infection is 
-[on our to-do list](https://github.com/UCD-SERG/dcm/issues/11)).
+[on our to-do list](https://github.com/UCD-SERG/serodynamics/issues/11)).
 :::
 
 ## Time since infection and incidence {.smaller}
@@ -355,15 +434,48 @@ xs_data <-
 noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
 ```
 
-## standard error
+## Standard errors
 
-The standard error of the estimate is approximately equal to 
-the inverse of the rate of curvature (2nd derivative, aka Hessian) 
-in the log-likelihood function, at the maximum:
+The standard error of the estimate is approximately equal to
+the inverse of the curvature (2nd derivative, aka Hessian)
+of the log-likelihood function, at the maximum:
 
-more curvature -> 
-likelihood peak is clearer -> 
+more curvature $\rightarrow$
+a sharper likelihood peak $\rightarrow$
 smaller standard errors
+
+## Hessian for the exponential model {.smaller}
+
+For the latent-time exponential model, the log-likelihood is
+$$\llik^*(\lambda) = n\logf{\lambda} - \lambda\sum_{i=1}^n t_i$$
+
+so the score and the Hessian (here a scalar second derivative) are
+
+$$
+\llik^{*\prime}(\lambda) = \frac{n}{\lambda} - \sum_{i=1}^n t_i,
+\qquad
+\llik^{*\prime\prime}(\lambda) = -\frac{n}{\lambda^2}
+$$
+
+::: notes
+The observed information is
+$\mathcal{I}(\lambda) = -\llik^{*\prime\prime}(\lambda) = n/\lambda^2$.
+:::
+
+Evaluated at the MLE $\hat\lambda = 1/\bar t$, the variance and standard
+error are
+
+$$
+\widehat{\operatorname{Var}}(\hat\lambda) \approx
+\left[-\llik^{*\prime\prime}(\hat\lambda)\right]^{-1} = \frac{\hat\lambda^2}{n},
+\qquad
+\operatorname{SE}(\hat\lambda) \approx \frac{\hat\lambda}{\sqrt{n}}
+$$
+
+::: notes
+So more curvature (larger $n/\lambda^2$) means a sharper peak and a smaller
+standard error, consistent with the previous slide.
+:::
 
 ## Likelihood of observed data
 
@@ -454,25 +566,23 @@ case_data |>
     autoplot(alpha = .5, log_x = FALSE)
 ```
 
-<!-- ![](fig/fig1a-1.svg) -->
-
-Antibody response data, $p(Y=y|T=t)$, for typhoid
+Observed antibody measurements over time since fever onset, for typhoid
 
 :::
 
-## Putting it all together
+## The per-person likelihood
 
-Substituting $p(Y=y,T=t) = p(Y=y|T=t)P(T=t)$ 
+Substituting $p(Y=y,T=t) = p(Y=y|T=t)\,p(T=t)$
 into the previous expression for $p(Y=y)$:
 
 $$
 \begin{aligned}
 p(Y=y)
-&= \int_t p(Y=y|T=t)P(T=t) dt
+&= \int_t p(Y=y|T=t)\,p(T=t)\, dt
 \end{aligned}
 $$
 
-## Composing the likelihood {.smaller}
+## The full-sample likelihood {.smaller}
 
 ::: notes
 Now, the likelihood of the observed data 
@@ -528,7 +638,7 @@ to find the MLE and corresponding standard error.
 ```{r}
 #| fig-cap: "Example log(likelihood) curves"
 #| label: fig-loglik
-lik_HlyE_IgA <- graph_loglik(
+lik_HlyE_IgA <- graph_loglik( # nolint: object_name_linter.
   pop_data = xs_data,
   curve_params = curves,
   noise_params = noise,
@@ -536,7 +646,7 @@ lik_HlyE_IgA <- graph_loglik(
   log_x = TRUE
 )
 
-lik_HlyE_IgG <- graph_loglik(
+lik_HlyE_IgG <- graph_loglik( # nolint: object_name_linter.
   previous_plot = lik_HlyE_IgA,
   pop_data = xs_data,
   curve_params = curves,
@@ -557,13 +667,273 @@ lik_both <- graph_loglik(
 print(lik_both)
 ```
 
+## Variation in antibody kinetics: by country {.smaller}
+
+Antibody-decay kinetics are not identical across populations. Estimated
+seroresponse parameters vary by **country**, **age**, and **serotype**
+(*Typhi* vs *Paratyphi* A).
+
+![Decay curves (A), peak antibody levels (B), and decay rates (C) for HlyE and LPS (IgG/IgA), by country (Bangladesh, Pakistan, Nepal, Ghana). SEES study.](../man/figures/kinetics-variation-1.png){fig-alt="Antibody decay curves and distributions of peak level and decay rate, stratified by country, for four antigen-isotypes"}
+
+## Variation in antibody kinetics: by age and serotype {.smaller}
+
+![Decay curves by age stratum (<5, 5--15, 16+) and serotype (*Typhi* vs *Paratyphi* A), for HlyE and LPS (IgG/IgA). SEES study.](../man/figures/kinetics-variation-2.png){fig-alt="Antibody decay curves stratified by age group and by Typhi versus Paratyphi A serotype, for four antigen-isotypes"}
+
+::: notes
+This heterogeneity is why we stratify the analysis (for example by country
+and age group) and why extending the model to handle covariates directly
+is on the roadmap.
+:::
+
+# Estimating the curves with `serodynamics`
+
+## Where do the curve parameters come from?
+
+The decay curves above are themselves **estimated** from longitudinal
+antibody measurements on **confirmed cases** --- individuals with a known
+infection date who are sampled repeatedly afterward. Fitting the two-phase
+model to those data yields, for each antigen-isotype, the parameters the
+incidence model needs:
+
+* baseline antibody level ($y_0$)
+* peak concentration ($y_1$)
+* time to peak ($t_1$)
+* decay rate ($\alpha$)
+* decay shape ($r$)
+
+## The `serodynamics` package {.smaller}
+
+[`serodynamics`](https://github.com/UCD-SERG/serodynamics) is an
+open-source R package that fits this two-phase within-host kinetics model
+with a **Bayesian hierarchical** model, sampled by MCMC (via JAGS). The
+hierarchical structure stabilizes individual-level estimates by borrowing
+strength across participants --- valuable when longitudinal data are sparse.
+
+::: notes
+The same modeling framework has been applied to pertussis, typhoid, scrub
+typhus, and *Shigella*. Previously each application re-implemented the JAGS
+model specification, data formatting, and post-processing by hand;
+`serodynamics` packages that into a single reusable, validated workflow.
+:::
+
+## A typical `serodynamics` workflow {.smaller}
+
+```{r}
+#| eval: false
+library(serodynamics)
+
+# Longitudinal confirmed-case data (example data ships with the package)
+data("nepal_sees")
+
+# Fit the two-phase model by MCMC (JAGS); slow, so not run here
+fit <- run_mod(data = nepal_sees, with_post = TRUE)
+
+# Check convergence, then export serocalculator-ready curve parameters
+plot_jags_Rhat(fit)
+curve_params <- postprocess_jags_output(fit)
+```
+
+::: notes
+`run_mod()` runs several MCMC chains for tens of thousands of iterations,
+so a real fit takes minutes to hours; the package ships ready-made example
+output (`nepal_sees_jags_output`) for experimentation.
+:::
+
+## What a fitted model looks like {.smaller}
+
+The package ships a cached example fit; `plot_jags_dens()` shows the
+posterior densities of the five kinetic parameters (here HlyE IgG, *Typhi*),
+overlaid by MCMC chain:
+
+::: notes
+The overlapping chains indicate good convergence.
+:::
+
+```{r}
+#| eval: false
+data("nepal_sees_jags_output")
+plot_jags_dens(nepal_sees_jags_output, iso = "HlyE_IgG", strat = "typhi")
+```
+
+![Posterior densities of the five kinetic parameters from the cached `nepal_sees_jags_output` fit (HlyE IgG, *Typhi*), by MCMC chain.](../man/figures/serodynamics-cached-fit.png){fig-alt="Five posterior density panels (alpha, shape, t1, y0, y1) with two overlapping MCMC chains"}
+
+## Two packages, one pipeline
+
+* **`serodynamics`** (upstream): longitudinal **confirmed-case** data
+$\rightarrow$ estimated antibody-decay **curve parameters**
+* **`serocalculator`** (downstream): a **cross-sectional serosurvey** plus
+those curve parameters $\rightarrow$ a **seroincidence** estimate
+
+The output of `serodynamics` feeds directly into `serocalculator`'s
+`est_seroincidence_by()`.
+
+## Propagating uncertainty and heterogeneity {.smaller}
+
+The seroresponse model $\pdf(Y=y|T=t)$ is **not a single fixed curve**.
+`serodynamics` returns a posterior **sample** of curve-parameter sets
+$\theta^{(1)},\dots,\theta^{(M)}$ (each $\theta^{(k)} = (y_0, y_1, t_1, \alpha, r)^{(k)}$),
+which together capture both
+
+::: incremental
+
+* **estimation uncertainty** in the kinetics parameters, and
+* **between-person / between-case heterogeneity** in the seroresponse.
+
+:::
+
+::: notes
+Each draw is one plausible antibody-response curve; together they describe
+the distribution of responses across cases and our uncertainty about it.
+:::
+
+{{< slidebreak >}}
+
+The incidence likelihood **averages over these draws** (Monte Carlo
+integration), so each person's contribution becomes
+
+$$
+\pdf(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}
+\int_t \pdf(Y=y|T=t, \theta^{(k)})\; \pdf_\lambda(T=t)\, dt
+$$
+
+::: notes
+Because the curve-parameter distribution is marginalized into the likelihood
+this way, the resulting $\hat\lambda$ and its standard error reflect the
+seroresponse heterogeneity and the parameter uncertainty --- they are not
+conditional on a single point-estimated curve. In `serocalculator` this is
+the average over the Monte Carlo parameter sets (the `iter` draws) carried in
+the curve-parameter object.
+:::
+
+# Using `serocalculator`
+
+## An open-source R package
+
+The methods in this lecture are implemented in the open-source
+[`serocalculator`](https://github.com/UCD-SERG/serocalculator) R package.
+
+```{r}
+#| eval: false
+library(serocalculator)
+
+# Load antibody-decay curve parameters and cross-sectional population data
+curves <- "https://osf.io/download/rtw5k/" |> load_sr_params()
+xs_data <- "https://osf.io/download/n6cp3/" |> load_pop_data()
+noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
+
+# Visualize the cross-sectional antibody distribution
+xs_data |> autoplot(strata = "Country", type = "density")
+```
+
+## Estimating seroincidence {.smaller}
+
+```{r}
+#| eval: false
+# Estimate incidence, stratified by country and age group
+est <- est_seroincidence_by(
+  pop_data = xs_data,
+  sr_params = curves,
+  noise_params = noise,
+  strata = c("Country", "ageCat"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+summary(est)
+```
+
+## Interactive Shiny app
+
+::: {.columns}
+
+:::: {.column width="60%"}
+
+A point-and-click interface is available at
+<https://ucdserg.shinyapps.io/shiny_serocalculator/>.
+
+::::
+
+:::: {.column width="40%"}
+
+![The serocalculator Shiny app.](../man/figures/shiny-serocalculator.png){fig-alt="Screenshot of the serocalculator Shiny web application"}
+
+::::
+
+:::
+
+# Validation: recovering known incidence rates
+
+## Simulating clusters with known incidence {.smaller}
+
+We can check the method by **simulating** cross-sectional serosurveys with
+**known** incidence rates and seeing whether the estimates recover them.
+`sim_pop_data_multi()` simulates several clusters, each at a specified true
+rate $\lambda$:
+
+```{r}
+#| eval: false
+library(serocalculator)
+
+antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
+# Noise settings follow serocalculator's `simulate_xsectionalData` vignette,
+# where the estimation noise is kept consistent with the simulated noise.
+# Assay-noise parameters for estimation:
+noise_params <- tibble::tibble(
+  antigen_iso = antibodies,
+  nu = 0.5, eps = 0, y.low = 1, y.high = 5e6
+)
+
+# Biologic-noise limits for the simulation (vignette `dlims`):
+noise_limits <- rbind(
+  HlyE_IgA = c(min = 0, max = 0.5),
+  HlyE_IgG = c(min = 0, max = 0.5)
+)
+
+# Simulate clusters at a range of true incidence rates
+sim_df <- sim_pop_data_multi(
+  curve_params = typhoid_curves_nostrat_100,
+  lambdas = c(0.05, 0.1, 0.2, 0.3), # true incidence rates
+  nclus = 3, # clusters per rate
+  sample_sizes = 100,
+  age_range = c(0, 10),
+  antigen_isos = antibodies,
+  add_noise = TRUE,
+  noise_limits = noise_limits,
+  format = "long"
+)
+
+# Estimate incidence separately in each simulated cluster
+ests <- est_seroincidence_by(
+  pop_data = sim_df,
+  sr_params = typhoid_curves_nostrat_100,
+  noise_params = noise_params,
+  strata = c("lambda.sim", "cluster"),
+  antigen_isos = antibodies
+)
+summary(ests)
+```
+
+## Estimates recover the simulated rates {.smaller}
+
+![Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).](../man/figures/sim-recovery.png){fig-alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates"}
+
+::: notes
+Each point is one simulated cluster: the estimated incidence rate (with its
+95% confidence interval) against the true rate used to generate the data.
+The estimates scatter around the identity line, and the intervals are wider
+at higher incidence. Abridged from the serocalculator
+`simulate_xsectionalData` vignette.
+:::
+
 ## In-progress work
 
 * Extending and improving existing Shiny apps for these methods
-  (e.g., the [serocalculator Shiny app](http://ucdserg.ucdavis.edu/shiny_serocalculator),
+  (e.g., the [serocalculator Shiny app](https://ucdserg.shinyapps.io/shiny_serocalculator/),
   [source](https://github.com/UCD-SERG/shiny_serocalculator))
 
-* Multivariate modeling of biomarkers
+* Multivariate modeling of biomarkers (relaxing conditional independence)
+
+* A graphical (Shiny) app for `serodynamics`
 
 * Modeling time-varying incidence rates
 
@@ -572,6 +942,30 @@ print(lik_both)
 * Accounting for latent immunocompromised subpopulations
 
 * Calibrating to population demographics
+
+## Multiple biomarkers: beyond conditional independence {.smaller}
+
+With several biomarkers (e.g. HlyE IgA and IgG), the current method treats
+them as **conditionally independent given the time since infection**, so the
+joint likelihood factors into a product of per-biomarker terms:
+
+$$
+\pdf(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
+\pdf(Y_1 = y_1 \mid T=t)\,\pdf(Y_2 = y_2 \mid T=t)
+$$
+
+::: notes
+This is the same conditional-independence simplification that naive Bayes
+makes (features independent given the class): convenient, but it ignores any
+within-person correlation between biomarkers.
+:::
+
+. . .
+
+Kwan Ho Lee (UCD-SERG) is relaxing this to allow **covariance** among
+biomarkers --- a multivariate seroresponse model with a Kronecker-structured
+covariance, fit in Stan
+([UCD-SERG/shigella#13](https://github.com/UCD-SERG/shigella/pull/13)).
 
 ## References {.smaller .unnumbered}
 

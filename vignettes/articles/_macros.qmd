@@ -7,3 +7,6 @@
 \providecommand{\expf}[1]{\exp{\left\{#1\right\}}}
 \providecommand{\logf}[1]{\log{\left\{#1\right\}}}
 \providecommand{\invf}[1]{#1^{-1}}
+\providecommand{\red}[1]{{\color{red}#1}}
+\providecommand{\blue}[1]{{\color{blue}#1}}
+\providecommand{\green}[1]{{\color{green}#1}}

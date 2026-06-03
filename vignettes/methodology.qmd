@@ -355,6 +355,11 @@ to find the MLE and corresponding standard error.
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->
 
+## Conclusion
+
+By formalizing the relationship between continuous antibody titers, longitudinal decay curves, and population exposure rates, this methodology allows researchers to extract maximum epidemiological utility from cross-sectional surveys. **serocalculator** handles the intensive computational steps of integrating out the unobserved infection times while robustly managing measurement noise and individual heterogeneity. The resulting maximum likelihood framework provides a standardized, high-resolution approach to estimating population-level seroincidence from a single snapshot in time.
+
+
 ## References {.smaller .unnumbered}
 
 ::: {#refs}

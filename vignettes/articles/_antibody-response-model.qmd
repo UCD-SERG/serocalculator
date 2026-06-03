@@ -225,5 +225,5 @@ and include it in $p(Y=y|T=t)$.
 
 Measurement noise, $\varepsilon$ ("epsilon"), 
 represents measurement error from the laboratory testing process. 
-It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. 
+It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. The model accounts for this baseline assay imprecision and technical variation by applying a log-normal error structure to the observed quantitative antibody responses.
 Note that the CV should ideally be measured across plates rather than within the same plate. 

@@ -2,12 +2,13 @@ library(dplyr)
 library(tibble)
 library(serocalculator)
 library(furrr)
+library(future)
 
 ###############################################################################
 ## Load longitudinal parameters
 
 test_sim <- "https://osf.io/download/rtw5k" %>%
-  load_curve_params() %>%
+  load_sr_params() %>%
   dplyr::filter(iter < 500)
 ###############################################################################
 
@@ -38,28 +39,27 @@ simulate_seroincidence <- function(
 
   run_one_sim_iter <- function(i) {
     # Generate cross-sectional data
-    csdata <- sim.cs(
+    csdata <- sim_pop_data(
       curve_params = dmcmc,
       lambda = lambda,
-      n.smpl = nrep,
-      age.rng = lifespan,
+      n_samples = nrep,
+      age_range = lifespan,
       antigen_isos = antibodies,
-      n.mc = 0,
-      renew.params = TRUE,  # Use different parameters for each simulation
-      add.noise = TRUE,
+      n_mcmc_samples = 0,
+      renew_params = TRUE,  # Use different parameters for each simulation
+      add_noise = TRUE,
       noise_limits = dlims,
       format = "long"
     )
 
     # Estimate seroincidence
-    est <- est.incidence(
+    est <- est_seroincidence(
       pop_data = csdata,
-      curve_params = dmcmc,
+      sr_params = dmcmc,
       noise_params = cond,
       lambda_start = 0.1,
       build_graph = FALSE,
       verbose = FALSE,
-      print_graph = FALSE,
       antigen_isos = antibodies
     )
 
@@ -89,7 +89,6 @@ simulate_seroincidence <- function(
 
 ###############################################################################
 ## Run simulation
-library(future)
 future::plan(multisession)  # Use multiple sessions for parallelism (local machine)
 
 # Run the simulations in parallel
@@ -99,9 +98,11 @@ results_50 <- simulate_seroincidence(lambda = 0.2, nrep = 50, n_sim = 300)
 set.seed(129252)
 results_100 <- simulate_seroincidence(lambda = 0.2, nrep = 100, n_sim = 300)
 
-results_100_0.1 <- simulate_seroincidence(lambda = 0.1, nrep = 100, n_sim = 300)
+set.seed(129253)
+results_100_0_1 <- simulate_seroincidence(lambda = 0.1, nrep = 100, n_sim = 300)
 
-results_100_0.01 <- simulate_seroincidence(lambda = 0.1, nrep = 100, n_sim = 300)
+set.seed(129254)
+results_100_0_01 <- simulate_seroincidence(lambda = 0.01, nrep = 100, n_sim = 300)
 
 # Stop parallel processing
 future::plan(sequential)  # Return to sequential processing
@@ -117,7 +118,7 @@ generate_final_table <- function(results_list,
   summary_results <- list()
 
   # Loop through each of the 100 results and extract the required columns
-  for (i in 1:length(results_list)) {
+  for (i in seq_along(results_list)) {
     # Extract the summary for each result
     result_summary <- summary(results_list[[i]]$est1)
 
@@ -149,8 +150,8 @@ generate_final_table <- function(results_list,
 # Store each sample size's summary as table
 final_table_50 <- results_50 |> generate_final_table(sample_size = 50)
 final_table_100 <- results_100 |> generate_final_table(sample_size = 100)
-final_table_100_0.1 <- results_100_0.1 |> generate_final_table(sample_size = 100)
-ft_100_0.01 <- results_100_0.01 |> generate_final_table()
+final_table_100_0_1 <- results_100_0_1 |> generate_final_table(sample_size = 100)
+ft_100_0_01 <- results_100_0_01 |> generate_final_table()
 lambda <- function(results_table)
 {
   results_table |> attr("lambda")
@@ -175,8 +176,8 @@ coverage_count_50 <- final_table_50 %>% compute_coverage() |> print()
 
 coverage_count_100 <- final_table_100 %>% compute_coverage() |> print()
 
-final_table_100_0.1 |> compute_coverage()
-ft_100_0.01 |> compute_coverage()
+final_table_100_0_1 |> compute_coverage()
+ft_100_0_01 |> compute_coverage()
 # Print the result
 print(paste("Number of rows where CI covers true lambda:", coverage_count_50))
 print(paste("Number of rows where CI covers true lambda:", coverage_count_100))

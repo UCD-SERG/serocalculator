@@ -50,6 +50,7 @@ Suggests:
     DT,
     fs,
     furrr,
+    future,
     ggbeeswarm,
     knitr,
     mixtools,

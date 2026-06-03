@@ -14,6 +14,8 @@ on:
       - DESCRIPTION
       - "**.md"
       - "**.Rmd"
+      - "**.qmd"
+      - "macros"
       - "man/**"
       - "LICENSE.*"
       - NAMESPACE
@@ -36,6 +38,8 @@ on:
       - DESCRIPTION
       - "**.md"
       - "**.Rmd"
+      - "**.qmd"
+      - "macros"
       - "man/**"
       - "LICENSE.*"
       - NAMESPACE

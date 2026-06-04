@@ -2,64 +2,66 @@
 
 Fetches download data from CRAN (via `packageRank`) and optionally
 GitHub Releases (via `gh`), then plots new and cumulative downloads.
+Delegates to
+[`gdl::graph_downloads()`](https://rdrr.io/pkg/gdl/man/graph_downloads.html).
 
 ## Usage
 
 ``` r
-graph_downloads(...)
+graph_downloads(
+  package = "serocalculator",
+  github_repo = "UCD-SERG/serocalculator",
+  new = TRUE,
+  cumulative = TRUE,
+  unit = c("month", "day", "week", "quarter", "year"),
+  start = NULL,
+  title,
+  github = FALSE
+)
 ```
 
 ## Arguments
 
-- ...:
+- package:
 
-  Arguments passed on to
-  [`.get_download_data`](https://ucd-serg.github.io/serocalculator/reference/dot-get_download_data.md)
+  Character string; the CRAN package name. Defaults to
+  `"serocalculator"`.
 
-  `github`
+- github_repo:
 
-  :   Logical; include GitHub release downloads? Defaults to `FALSE`.
+  Character string; the GitHub repository in `"owner/repo"` format, used
+  when `github = TRUE`. Defaults to `"UCD-SERG/serocalculator"`.
 
-  `new`
+- new:
 
-  :   Logical; include new (daily) downloads? Defaults to `TRUE`.
+  Logical; include new (period) downloads? Defaults to `TRUE`.
 
-  `cumulative`
+- cumulative:
 
-  :   Logical; include cumulative downloads? Defaults to `TRUE`.
+  Logical; include cumulative downloads? Defaults to `TRUE`.
 
-  `start`
+- unit:
 
-  :   Start date for the plot (a
-      [Date](https://rdrr.io/r/base/Dates.html) or string coercible to
-      one). Defaults to `NULL` (all available data). Compared against
-      the period start after aggregation, so e.g. `start = "2025-06-15"`
-      with `unit = "month"` drops June 2025 (its label is `2025-06-01`);
-      pass period boundaries for predictable filtering.
+  Character string specifying the time unit to aggregate by. One of
+  `"day"`, `"week"`, `"month"`, `"quarter"`, or `"year"`. Defaults to
+  `"month"`.
 
-  `unit`
+- start:
 
-  :   Character string specifying the time unit to aggregate by. One of
-      `"day"`, `"week"`, `"month"`, `"quarter"`, or `"year"`. Defaults
-      to `"month"`.
+  Start date for the plot (a [Date](https://rdrr.io/r/base/Dates.html)
+  or string coercible to one). Defaults to `NULL` (all available data).
 
-  `title`
+- title:
 
-  :   Character string for the plot title. Defaults to a description
-      including the time unit. Set to `NULL` to omit.
+  Character string for the plot title. Defaults to a description
+  including the package name and time unit. Set to `NULL` to omit.
+
+- github:
+
+  Logical; include GitHub release downloads? Defaults to `FALSE`.
 
 ## Value
 
 A
 [`ggplot2::ggplot()`](https://ggplot2.tidyverse.org/reference/ggplot.html)
 object with faceted panels.
-
-## Details
-
-GitHub release downloads are cumulative counts per release asset from
-the GitHub API. New GitHub downloads are derived as the contribution of
-each release. CRAN downloads are fetched via
-[`packageRank::cranDownloads()`](https://rdrr.io/pkg/packageRank/man/cranDownloads.html).
-
-Requires the `packageRank` package (and `gh` if `github = TRUE`), listed
-under `Suggests`.

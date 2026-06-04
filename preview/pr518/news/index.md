@@ -53,7 +53,9 @@
 - Added
   [`graph_downloads()`](https://ucd-serg.github.io/serocalculator/reference/graph_downloads.md)
   to plot new and cumulative package download counts from CRAN, with
-  optional GitHub release download tracking.
+  optional GitHub release download tracking. Delegates to
+  [`gdl::graph_downloads()`](https://rdrr.io/pkg/gdl/man/graph_downloads.html)
+  (added to `Suggests`/`Remotes`).
 
 - Added `cluster_var` and `stratum_var` parameters to
   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)

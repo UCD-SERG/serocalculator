@@ -23,7 +23,6 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/as_pop_data.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/as_sr_params.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.curve_params.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.download_data.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.pop_data.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.by.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.html</loc></url>
@@ -36,13 +35,7 @@
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/count_strata.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/df.to.array.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/df_to_array.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-aggregate_by_unit.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-fetch_cran_downloads.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-fetch_github_downloads.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-get_download_data.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-nll.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-prepare_download_data.html</loc></url>
-<url><loc>https://ucd-serg.github.io/serocalculator/reference/dot-subclass.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.by.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/est.incidence.html</loc></url>
 <url><loc>https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.html</loc></url>

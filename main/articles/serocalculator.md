@@ -53,13 +53,9 @@ The **serocalculator app** is a web based tool that takes the 5 curve
 parameters (y0, y1, t1, alpha, and r) to draw a single curve on antibody
 concentration.
 
-y-axis maximum
+### Please Wait
 
-logarithmic y-axis
-
-logarithmic x-axis
-
-x-axis maximum
+![loading](/__static__/frontend/images/spinner.gif?v=ce6bcde20b2f6c562913c06be83f9e7c8a19b008017407a3094b76fa82bbd6b7f4048e032e07e534d4ab5442b9105294d612863735077ab13a47653a14c5866e)
 
 ## Further reading
 
@@ -179,11 +175,3 @@ J. F. P. Schellekens, and P. F. M. Teunis. 2005. “Age-Specific Long-Term
 Course of IgG Antibodies to Pertussis Toxin After Symptomatic Infection
 with Bordetella Pertussis.” *Epidemiology and Infection* 133 (4):
 737–48. <https://doi.org/10.1017/s0950268805003833>.
-
-y-axis maximum
-
-logarithmic y-axis
-
-logarithmic x-axis
-
-x-axis maximum

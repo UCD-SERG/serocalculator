@@ -4,6 +4,13 @@
 
 ### Internal
 
+- The `methodology` vignette’s LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git
+  submodule (included via `{{< include ../macros/macros.qmd >}}`)
+  instead of a local `vignettes/articles/_macros.qmd`. The deck adopts
+  the shared macro vocabulary (e.g. `\dens` for the density function in
+  place of the local `\pdf`).
+  ([\#534](https://github.com/UCD-SERG/serocalculator/issues/534))
 - `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]`
   so the review still runs (and posts feedback) when `claude.yml`
   re-dispatches it on an `@claude review` comment; previously the
@@ -459,7 +466,8 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using `devtag::use_devtag()`)
+- Added `devtag` to package (using
+  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

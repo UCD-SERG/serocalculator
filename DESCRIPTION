@@ -49,6 +49,7 @@ Suggests:
     bookdown,
     DT,
     fs,
+    gdl,
     ggbeeswarm,
     knitr,
     mixtools,
@@ -80,6 +81,7 @@ Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
-Remotes: 
+Remotes:
+    d-morrison/gdl,
     d-morrison/snapr
 Config/roxygen2/version: 8.0.0

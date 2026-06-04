@@ -4,32 +4,42 @@
 \alias{graph_downloads}
 \title{Plot package download counts over time by source}
 \usage{
-graph_downloads(...)
+graph_downloads(
+  package = "serocalculator",
+  github_repo = "UCD-SERG/serocalculator",
+  new = TRUE,
+  cumulative = TRUE,
+  unit = c("month", "day", "week", "quarter", "year"),
+  start = NULL,
+  title,
+  github = FALSE
+)
 }
 \arguments{
-\item{...}{
-  Arguments passed on to \code{\link{.get_download_data}}
-  \describe{
-    \item{\code{github}}{Logical; include GitHub release downloads?
-Defaults to \code{FALSE}.}
-    \item{\code{new}}{Logical; include new (daily) downloads?
-Defaults to \code{TRUE}.}
-    \item{\code{cumulative}}{Logical; include cumulative downloads?
-Defaults to \code{TRUE}.}
-    \item{\code{start}}{Start date for the plot (a \link{Date} or string
-coercible to one). Defaults to \code{NULL} (all available
-data). Compared against the period start after
-aggregation, so e.g. \code{start = "2025-06-15"} with
-\code{unit = "month"} drops June 2025 (its label is
-\code{2025-06-01}); pass period boundaries for predictable
-filtering.}
-    \item{\code{unit}}{Character string specifying the time unit to
-aggregate by. One of \code{"day"}, \code{"week"}, \code{"month"},
-\code{"quarter"}, or \code{"year"}. Defaults to \code{"month"}.}
-    \item{\code{title}}{Character string for the plot title. Defaults
-to a description including the time unit. Set to \code{NULL}
+\item{package}{Character string; the CRAN package name. Defaults to
+\code{"serocalculator"}.}
+
+\item{github_repo}{Character string; the GitHub repository in
+\code{"owner/repo"} format, used when \code{github = TRUE}. Defaults to
+\code{"UCD-SERG/serocalculator"}.}
+
+\item{new}{Logical; include new (period) downloads? Defaults to \code{TRUE}.}
+
+\item{cumulative}{Logical; include cumulative downloads? Defaults to \code{TRUE}.}
+
+\item{unit}{Character string specifying the time unit to aggregate by.
+One of \code{"day"}, \code{"week"}, \code{"month"}, \code{"quarter"}, or \code{"year"}.
+Defaults to \code{"month"}.}
+
+\item{start}{Start date for the plot (a \link{Date} or string coercible to
+one). Defaults to \code{NULL} (all available data).}
+
+\item{title}{Character string for the plot title. Defaults to a
+description including the package name and time unit. Set to \code{NULL}
 to omit.}
-  }}
+
+\item{github}{Logical; include GitHub release downloads? Defaults to
+\code{FALSE}.}
 }
 \value{
 A \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object with faceted panels.
@@ -37,13 +47,6 @@ A \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object with faceted panels.
 \description{
 Fetches download data from CRAN (via \code{packageRank}) and optionally GitHub
 Releases (via \code{gh}), then plots new and cumulative downloads.
+Delegates to \code{\link[gdl:graph_downloads]{gdl::graph_downloads()}}.
 }
-\details{
-GitHub release downloads are cumulative counts per release asset
-from the GitHub API. New GitHub downloads are derived as the
-contribution of each release. CRAN downloads are fetched via
-\code{\link[packageRank:cranDownloads]{packageRank::cranDownloads()}}.
-
-Requires the \code{packageRank} package (and \code{gh} if
-\code{github = TRUE}), listed under \code{Suggests}.
-}
+\keyword{internal}

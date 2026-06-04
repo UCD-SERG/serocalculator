@@ -39,3 +39,5 @@ allpopsamples_hlye.csv$
 ^[\.]?air\.toml$
 ^\.vscode$
 ^\.lintr\.R$
+^CLAUDE\.md$
+^\.claude$

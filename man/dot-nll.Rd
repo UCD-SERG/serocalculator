@@ -10,7 +10,7 @@
 \item{log.lambda}{natural logarithm of incidence rate}
 
 \item{...}{
-  Arguments passed on to \code{\link[=log_likelihood]{log_likelihood}}
+  Arguments passed on to \code{\link{log_likelihood}}
   \describe{
     \item{\code{pop_data}}{a \code{\link[=data.frame]{data.frame()}} with cross-sectional serology data
 by antibody and age, and additional columns}

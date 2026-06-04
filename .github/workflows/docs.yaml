@@ -271,7 +271,7 @@ jobs:
           repository: ${{ github.repository }}
           number: ${{ github.event.pull_request.number }}
           id: pkgdown-deploy
-          append: false
+          recreate: true
           message: >
             :book: ${{ steps.deploy-pr-preview.outputs.url }}
 

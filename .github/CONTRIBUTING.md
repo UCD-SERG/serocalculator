@@ -73,6 +73,12 @@ More details
   these styles, but please don’t restyle code that has nothing to do
   with your PR.
 
+- This project is set up to use the
+  [Air](https://posit-dev.github.io/air/) formatter (configured via
+  `air.toml`). If you use VS Code or Positron, install the recommended
+  `Posit.air-vscode` extension (see `.vscode/extensions.json`) to enable
+  format-on-save.
+
 - We use [roxygen2](https://cran.r-project.org/package=roxygen2), with
   [Markdown
   syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html),

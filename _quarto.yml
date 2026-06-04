@@ -1,5 +1,7 @@
 project:
-  render: ['*.qmd']
+  render:
+    - "*.qmd"      # Render all Quarto markdown files
+    - "!data-raw/" # Exclude anything in the data-raw directory
 author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
 date: '`r Sys.Date()`'
 format:

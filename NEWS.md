@@ -1,5 +1,11 @@
 # serocalculator (development version)
 
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots in
+  `autoplot.seroincidence.by()` and `graph_seroresponse_model_1()`; these
+  functions now return a `"patchwork"` object instead of a `"ggarrange"` object.
+
 # serocalculator 1.4.0
 
 ## New features

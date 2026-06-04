@@ -80,7 +80,7 @@ then the computations are executed in parallel. Default = 1L.}
 in the course of running \code{est_seroincidence()}}
 
 \item{...}{
-  Arguments passed on to \code{\link[=est_seroincidence]{est_seroincidence}}, \code{\link[stats:nlm]{stats::nlm}}
+  Arguments passed on to \code{\link{est_seroincidence}}, \code{\link[stats:nlm]{stats::nlm}}
   \describe{
     \item{\code{stepmin}}{A positive scalar providing the minimum allowable
 relative step length.}

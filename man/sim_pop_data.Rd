@@ -51,21 +51,6 @@ but updates baseline y0
 \item{add_noise}{a \code{\link[=logical]{logical()}} indicating
 whether to add biological and measurement noise}
 
-\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
-from the Bayesian posterior distribution of a longitudinal decay curve model.
-The parameter columns must be named:
-\itemize{
-\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype
-combinations
-\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
-\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
-\item \code{y1}: antibody peak level (ELISA units)
-\item \code{t1}: duration of infection
-\item \code{alpha}: antibody decay rate
-(1/days for the current longitudinal parameter sets)
-\item \code{r}: shape factor of antibody decay
-}}
-
 \item{noise_limits}{biologic noise distribution parameters}
 
 \item{format}{a \code{\link[=character]{character()}} variable, containing either:
@@ -74,10 +59,8 @@ combinations
 \item \code{"wide"} (one serum sample per row)
 }}
 
-\item{verbose}{logical: if TRUE, print verbose log information to console}
-
 \item{...}{
-  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}, \code{\link[=ldpar]{ldpar}}, \code{\link[=ab]{ab}}, \code{\link[=mk_baseline]{mk_baseline}}
+  Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}
   \describe{
     \item{\code{age}}{age at infection}
     \item{\code{nmc}}{mcmc sample to use}
@@ -94,7 +77,7 @@ combinations
   }}
 }
 \value{
-a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey
+a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey
 data, with columns:
 \itemize{
 \item \code{age}: age (in days)

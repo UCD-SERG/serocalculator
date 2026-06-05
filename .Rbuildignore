@@ -37,6 +37,7 @@ allpopsamples_hlye.csv$
 ^vignettes/articles/*_files$
 ^man/check_strata\.Rd$
 ^\.lintr\.R$
+^\.positai$
 ^CLAUDE\.md$
 ^\.claude$
 ^macros$

@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9014
+Version: 1.4.0.9015
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -24,7 +24,7 @@ Depends:
 Imports: 
     cli,
     doParallel,
-    dplyr,
+    dplyr (>= 1.1.0),
     foreach,
     ggplot2,
     patchwork,
@@ -39,7 +39,7 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    purrr,
+    purrr (>= 1.0.0),
     and,
     glue,
     stringr,
@@ -49,9 +49,11 @@ Suggests:
     bookdown,
     DT,
     fs,
+    gdl,
     ggbeeswarm,
     knitr,
     mixtools,
+    packageRank,
     pak,
     quarto,
     rmarkdown,
@@ -78,6 +80,7 @@ Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
-Remotes: 
+Remotes:
+    d-morrison/gdl,
     d-morrison/snapr
 Config/roxygen2/version: 8.0.0

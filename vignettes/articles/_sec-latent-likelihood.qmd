@@ -10,7 +10,7 @@ using a typical maximum likelihood approach.
 Starting with the likelihood:
 :::::
 
-$$\Lik^*(\lambda) = \prod_{i=1}^n \pdf(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)$$
+$$\Lik^*(\lambda) = \prod_{i=1}^n \dens(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \expf{-\lambda t_i}$$
 
 . . . 
 

@@ -8,7 +8,7 @@ bibliography: references.bib
 author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Public Health Sciences, UC Davis
 ---
 
-{{< include articles/_macros.qmd >}}
+{{< include ../macros/macros.qmd >}}
 
 # Infectious disease epidemiology
 
@@ -335,9 +335,9 @@ Under those assumptions:
 
 * $T$ has an **exponential distribution**:
 
-. . . 
+. . .
 
-$$\pdf(T=t) =  \red{\lambda\expf{-\lambda t}}$$
+$$\dens(T=t) =  \red{\lambda\expf{-\lambda t}}$$
 
 . . .
 
@@ -347,7 +347,7 @@ $$\pdf(T=t) =  \red{\lambda\expf{-\lambda t}}$$
 . . .
 
 $$
-\pdf(T=t|A=a) = 1_{t \in[0,a]} \red{\lambda \expf{-\lambda t}} + 
+\dens(T=t|A=a) = 1_{t \in[0,a]} \red{\lambda \expf{-\lambda t}} +
 1_{t = \NA} \expf{-\lambda a}
 $$
 
@@ -365,7 +365,7 @@ an individual was **last** infected $t$ days ago, $p(T=t)$,
 is equal to the probability of being infected at time $t$ 
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, 
-which turns out to be $\exp(-\lambda t)$.
+which turns out to be $\expf{-\lambda t}$.
 
 The distribution of $T$ is truncated by the patient's birth date;
 the probability that they have never been infected is
@@ -499,7 +499,7 @@ we are going to consider all possible values of $t$ for each individual.
 We need to link the data we actually observed to the incidence rate.
 
 The likelihood of an individual's observed data, 
-$\pdf(Y=y)$, 
+$\dens(Y=y)$, 
 can be expressed as an integral over 
 the joint likelihood of $Y$ and $T$ 
 (using the Law of Total Probability):
@@ -507,7 +507,7 @@ the joint likelihood of $Y$ and $T$
 
 ::: incremental
 
-* $$\pdf(Y=y) = \int_t \pdf(Y=y,T=t)dt$$
+* $$\dens(Y=y) = \int_t \dens(Y=y,T=t)dt$$
 
 :::: notes
 Further, we can express the joint probability $p(Y=y,T=t)$ as the product of 
@@ -516,7 +516,7 @@ $p(Y=y|T=t)$ the "antibody response curve after infection".
 That is:
 ::::
 
-* $$\pdf(Y=y,T=t) = \pdf(Y=y|T=t) \pdf(T=t)$$
+* $$\dens(Y=y,T=t) = \dens(Y=y|T=t) \dens(T=t)$$
 
 :::
 
@@ -769,7 +769,7 @@ The output of `serodynamics` feeds directly into `serocalculator`'s
 
 ## Propagating uncertainty and heterogeneity {.smaller}
 
-The seroresponse model $\pdf(Y=y|T=t)$ is **not a single fixed curve**.
+The seroresponse model $\dens(Y=y|T=t)$ is **not a single fixed curve**.
 `serodynamics` returns a posterior **sample** of curve-parameter sets
 $\theta^{(1)},\dots,\theta^{(M)}$ (each $\theta^{(k)} = (y_0, y_1, t_1, \alpha, r)^{(k)}$),
 which together capture both
@@ -792,8 +792,8 @@ The incidence likelihood **averages over these draws** (Monte Carlo
 integration), so each person's contribution becomes
 
 $$
-\pdf(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}
-\int_t \pdf(Y=y|T=t, \theta^{(k)})\; \pdf_\lambda(T=t)\, dt
+\dens(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}
+\int_t \dens(Y=y|T=t, \theta^{(k)})\; \dens_\lambda(T=t)\, dt
 $$
 
 ::: notes
@@ -950,8 +950,8 @@ them as **conditionally independent given the time since infection**, so the
 joint likelihood factors into a product of per-biomarker terms:
 
 $$
-\pdf(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
-\pdf(Y_1 = y_1 \mid T=t)\,\pdf(Y_2 = y_2 \mid T=t)
+\dens(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
+\dens(Y_1 = y_1 \mid T=t)\,\dens(Y_2 = y_2 \mid T=t)
 $$
 
 ::: notes

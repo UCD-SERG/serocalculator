@@ -40,3 +40,5 @@ allpopsamples_hlye.csv$
 ^CLAUDE\.md$
 ^\.claude$
 ^_extensions$
+^macros$
+^\.gitmodules$

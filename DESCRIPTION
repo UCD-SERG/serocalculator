@@ -53,6 +53,7 @@ Suggests:
     ggbeeswarm,
     knitr,
     mixtools,
+    packageRank,
     pak,
     quarto,
     rmarkdown,

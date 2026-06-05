@@ -36,14 +36,14 @@ graph_downloads <- function(
   title,
   github = FALSE
 ) {
+  unit <- match.arg(unit)
   args <- list(
     package = package,
-    github_repo = github_repo,
+    github_repo = if (github) github_repo else NULL,
     new = new,
     cumulative = cumulative,
     unit = unit,
-    start = start,
-    github = github
+    start = start
   )
   if (!missing(title)) {
     args$title <- title

@@ -256,9 +256,9 @@ Under those assumptions:
 
 . . .
 
-``` math
-\mathbb{p}(T=t) =  {\color{red}\lambda\exp{\left\{-\lambda t\right\}}}
-```
+\$\$\operatorname{p}(T=t) =
+\textcolor{red}{\lambda\operatorname{exp}\mathopen{}\left\\-\lambda
+t\right\\\mathclose{}}\$\$
 
 . . .
 
@@ -267,10 +267,10 @@ Under those assumptions:
 
 . . .
 
-``` math
-\mathbb{p}(T=t|A=a) = 1_{t \in[0,a]} {\color{red}\lambda \exp{\left\{-\lambda t\right\}}} +
-1_{t = \text{NA}} \exp{\left\{-\lambda a\right\}}
-```
+\$\$ \operatorname{p}(T=t\|A=a) = 1\_{t \in\[0,a\]}
+\textcolor{red}{\lambda \operatorname{exp}\mathopen{}\left\\-\lambda
+t\right\\\mathclose{}} + 1\_{t = \text{NA}}
+\operatorname{exp}\mathopen{}\left\\-\lambda a\right\\\mathclose{} \$\$
 
 . . .
 
@@ -283,12 +283,13 @@ The probability that an individual was **last** infected $`t`$ days ago,
 $`p(T=t)`$, is equal to the probability of being infected at time $`t`$
 (i.e., the incidence rate at time $`t`$, $`\lambda`$) times the
 probability of not being infected after time $`t`$, which turns out to
-be $`\exp(-\lambda t)`$.
+be
+$`\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}`$.
 
 The distribution of $`T`$ is truncated by the patient’s birth date; the
 probability that they have never been infected is
-$`\exp{\left\{-\lambda a\right\}}`$, where $`a`$ is the patient’s age at
-the time of the survey.
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$,
+where $`a`$ is the patient’s age at the time of the survey.
 
 ### Likelihood of latent infection times
 
@@ -300,7 +301,7 @@ typical maximum likelihood approach.
 Starting with the likelihood:
 
 ``` math
-\mathcal{L}^*(\lambda) = \prod_{i=1}^n \mathbb{p}(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)
+\mathscr{L}^*(\lambda) = \prod_{i=1}^n \operatorname{p}(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}
 ```
 
 . . .
@@ -308,7 +309,7 @@ Starting with the likelihood:
 Taking the logarithm of the likelihood:
 
 ``` math
-\ell^*(\lambda) = \log{\left\{\mathcal{L}^*(\lambda)\right\}} = \sum_{i=1}^n \log{\left\{\lambda\right\}} -\lambda t_i
+\ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i
 ```
 
 . . .
@@ -316,7 +317,7 @@ Taking the logarithm of the likelihood:
 Taking the derivative of that log-likelihood to find the score function:
 
 ``` math
-\ell^{*'}(\lambda) = \sum_{i=1}^n \lambda^{-1} - t_i
+\ell^{*'}(\lambda) = \sum_{i=1}^n \mathopen{}\left(\lambda\right)^{-1}\mathclose{} - t_i
 ```
 
 . . .
@@ -410,7 +411,7 @@ smaller standard errors
 
 For the latent-time exponential model, the log-likelihood is
 ``` math
-\ell^*(\lambda) = n\log{\left\{\lambda\right\}} - \lambda\sum_{i=1}^n t_i
+\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i
 ```
 
 so the score and the Hessian (here a scalar second derivative) are
@@ -453,13 +454,14 @@ possible values of $`t`$ for each individual.
 
 We need to link the data we actually observed to the incidence rate.
 
-The likelihood of an individual’s observed data, $`\mathbb{p}(Y=y)`$,
-can be expressed as an integral over the joint likelihood of $`Y`$ and
-$`T`$ (using the Law of Total Probability):
+The likelihood of an individual’s observed data,
+$`\operatorname{p}(Y=y)`$, can be expressed as an integral over the
+joint likelihood of $`Y`$ and $`T`$ (using the Law of Total
+Probability):
 
 - 
   ``` math
-  \mathbb{p}(Y=y) = \int_t \mathbb{p}(Y=y,T=t)dt
+  \operatorname{p}(Y=y) = \int_t \operatorname{p}(Y=y,T=t)dt
   ```
 
 Further, we can express the joint probability $`p(Y=y,T=t)`$ as the
@@ -468,7 +470,7 @@ after infection”. That is:
 
 - 
   ``` math
-  \mathbb{p}(Y=y,T=t) = \mathbb{p}(Y=y|T=t) \mathbb{p}(T=t)
+  \operatorname{p}(Y=y,T=t) = \operatorname{p}(Y=y|T=t) \operatorname{p}(T=t)
   ```
 
 ### Antibody response curves
@@ -546,7 +548,7 @@ p(Y=y)
 ### The full-sample likelihood
 
 Now, the likelihood of the observed data
-$`\mathbf{y} = (y_1, y_2, ..., y_n)`$ is:
+$`\tilde{y} = (y_1, y_2, ..., y_n)`$ is:
 
 ``` math
 \begin{aligned}
@@ -666,7 +668,7 @@ with `se_type = "cluster-robust"`.
 ## Modeling the seroresponse kinetics curve
 
 Now, we need a model for the antibody response to infection,
-$`\mathbb{p}(Y=y|T=t)`$. The current version of the
+$`\operatorname{p}(Y=y|T=t)`$. The current version of the
 [serocalculator](https://ucd-serg.github.io/serocalculator/) package
 uses a two-phase model for the shape of the seroresponse ([Teunis et al.
 2016](#ref-Teunis_2016)).
@@ -1073,8 +1075,8 @@ The output of `serodynamics` feeds directly into `serocalculator`’s
 
 ### Propagating uncertainty and heterogeneity
 
-The seroresponse model $`\mathbb{p}(Y=y|T=t)`$ is **not a single fixed
-curve**. `serodynamics` returns a posterior **sample** of
+The seroresponse model $`\operatorname{p}(Y=y|T=t)`$ is **not a single
+fixed curve**. `serodynamics` returns a posterior **sample** of
 curve-parameter sets $`\theta^{(1)},\dots,\theta^{(M)}`$ (each
 $`\theta^{(k)} = (y_0, y_1, t_1, \alpha, r)^{(k)}`$), which together
 capture both
@@ -1092,8 +1094,8 @@ The incidence likelihood **averages over these draws** (Monte Carlo
 integration), so each person’s contribution becomes
 
 ``` math
-\mathbb{p}(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}
-\int_t \mathbb{p}(Y=y|T=t, \theta^{(k)})\; \mathbb{p}_\lambda(T=t)\, dt
+\operatorname{p}(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}
+\int_t \operatorname{p}(Y=y|T=t, \theta^{(k)})\; \operatorname{p}_\lambda(T=t)\, dt
 ```
 
 Because the curve-parameter distribution is marginalized into the
@@ -1247,8 +1249,8 @@ infection**, so the joint likelihood factors into a product of
 per-biomarker terms:
 
 ``` math
-\mathbb{p}(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
-\mathbb{p}(Y_1 = y_1 \mid T=t)\,\mathbb{p}(Y_2 = y_2 \mid T=t)
+\operatorname{p}(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
+\operatorname{p}(Y_1 = y_1 \mid T=t)\,\operatorname{p}(Y_2 = y_2 \mid T=t)
 ```
 
 This is the same conditional-independence simplification that naive

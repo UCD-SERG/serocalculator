@@ -417,10 +417,11 @@ lintr::lint_package()
 lintr::lint("R/filename.R")
 ```
 
-**Important**: Always run `devtools::load_all()` before linting to avoid
-false positives about undefined functions. This loads the package in
-development mode, making internal and package functions available to the
-linter.
+**Important**: Always run
+[`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html)
+before linting to avoid false positives about undefined functions. This
+loads the package in development mode, making internal and package
+functions available to the linter.
 
 **Key linting rules**: - Use native pipe `|>` (configured in .lintr) -
 Follow snake_case naming conventions - Avoid trailing whitespace -
@@ -469,8 +470,9 @@ The following workflows run on every PR. **All must pass** for merge:
     bypassed with `no-changelog` label. (~1 min)
 
 8.  **version-check.yaml**: Verifies DESCRIPTION version number
-    increased vs. main branch. Run `usethis::use_version()` to
-    increment. (~1 min)
+    increased vs. main branch. Run
+    [`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html)
+    to increment. (~1 min)
 
 9.  **pkgdown.yaml**: Builds pkgdown website on PR (preview), tags, and
     main branch pushes. Requires Quarto setup. (~5-7 min)
@@ -555,13 +557,14 @@ changes
 ### Documentation Out of Sync
 
 **Symptom**: R-check-docs.yml workflow fails. **Solution**: Run
-`devtools::document()` locally and commit the updated `man/` and
-`NAMESPACE` files.
+[`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+locally and commit the updated `man/` and `NAMESPACE` files.
 
 ### Version Not Incremented
 
 **Symptom**: version-check.yaml workflow fails. **Solution**: Run
-`usethis::use_version()` to increment the version in DESCRIPTION.
+[`usethis::use_version()`](https://usethis.r-lib.org/reference/use_version.html)
+to increment the version in DESCRIPTION.
 
 ### NEWS.md Not Updated
 
@@ -719,9 +722,11 @@ code and refactoring work:
 ### Migration Strategy
 
 When refactoring existing code: 1. Extract functions to separate files
-2. Update any internal calls if needed 3. Run `devtools::document()` to
-regenerate documentation 4. Run `devtools::check()` to ensure no
-breakage 5. Run tests to verify functionality unchanged
+2. Update any internal calls if needed 3. Run
+[`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+to regenerate documentation 4. Run
+[`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
+to ensure no breakage 5. Run tests to verify functionality unchanged
 
 ## Code Style Guidelines
 
@@ -780,20 +785,26 @@ structure, workflows, and configuration files. When making changes:
 2.  **ALWAYS** establish value-based unit tests (snapshot or explicit
     value tests) BEFORE modifying functions
 3.  **ALWAYS** write tidy, clean, and well-organized code
-4.  **ALWAYS** run `devtools::document()` after modifying roxygen2
-    comments
+4.  **ALWAYS** run
+    [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+    after modifying roxygen2 comments
 5.  **ALWAYS** edit README.Rmd (not README.md) for README changes
 6.  **ALWAYS** increment dev version number to be one ahead of main
     branch before requesting PR review
 7.  **ALWAYS** update NEWS.md for user-facing changes
-8.  **ALWAYS** run tests before committing (`devtools::test()`)
+8.  **ALWAYS** run tests before committing
+    ([`devtools::test()`](https://devtools.r-lib.org/reference/test.html))
 9.  **ALWAYS** check and fix lintr issues in changed files in PRs before
     committing
-10. **ALWAYS** run `devtools::document()` before requesting PR review
-11. **ALWAYS** make sure `devtools::check()` passes before requesting PR
-    review
-12. **ALWAYS** make sure `devtools::spell_check()` passes before
-    requesting PR review
+10. **ALWAYS** run
+    [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
+    before requesting PR review
+11. **ALWAYS** make sure
+    [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
+    passes before requesting PR review
+12. **ALWAYS** make sure
+    [`devtools::spell_check()`](https://devtools.r-lib.org/reference/spell_check.html)
+    passes before requesting PR review
 13. **ALWAYS** run
     [`pkgdown::build_site()`](https://pkgdown.r-lib.org/reference/build_site.html)
     before requesting PR review to ensure the pkgdown site builds

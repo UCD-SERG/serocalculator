@@ -1,5 +1,74 @@
 # serocalculator (development version)
 
+## New features
+
+* Added interactive Shiny app `curve_app()` for visualizing antigen-antibody
+  kinetics models with real-time parameter sliders (#392).
+* Added `antibody_decay_curve()` and `pathogen_decay_curve()` functions for
+  simulating antibody and pathogen decay over time (#392).
+* Added `plot_decay_curve()` for plotting decay functions using ggplot2 (#392).
+* Added helper functions `t1f()` (time to end of active infection) and
+  `y1f()` (peak antibody concentration) (#392).
+
+## Internal
+
+* The `methodology` vignette's LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
+  (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
+  `vignettes/articles/_macros.qmd`. The deck adopts the shared macro
+  vocabulary (e.g. `\dens` for the density function in place of the local
+  `\pdf`). (#534)
+* `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]` so the review still runs (and posts feedback) when `claude.yml` re-dispatches it on an `@claude review` comment; previously the bot-initiated dispatch aborted with "Workflow initiated by non-human actor".
+* `claude.yml` now grants the `@claude` agent the file tools (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.
+* Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
+* Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
+* Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+
+## Bug fixes
+
+* `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
+* Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
+  - Provides clear tables comparing old and new function names
+  - Includes code examples showing how to update existing code
+  - Accessible as a prominent tab in the website navigation
+
+## Compatibility
+
+* Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
+
+## New features (cluster-robust SE)
+
+* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
+  `est_seroincidence_by()` to support cluster-robust standard error estimation. 
+  When `cluster_var` is specified, `summary.seroincidence()` automatically computes 
+  cluster-robust (sandwich) variance estimates to account for within-cluster 
+  correlation in clustered sampling designs such as household or school-based surveys.
+* `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
+  for multi-level clustered sampling designs. Cluster-robust standard errors will account
+  for all specified clustering levels.
+
+## Bug fixes (cluster-robust SE)
+
+* Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
+  errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
+* Added `se_type` column to `summary.seroincidence()` output to clearly indicate whether
+  "standard" or "cluster-robust" standard errors are being used.
+* Fixed `est_seroincidence_by()` to properly pass cluster and stratum variables through
+  to stratified analyses. Previously, these variables were dropped during data stratification,
+  causing errors when trying to use clustering with `est_seroincidence_by()`.
+
+## Code organization
+
+* Refactored clustering-related code following package organization policies:
+  - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
+  - Each function now in its own file for better maintainability and git history
+* Updated copilot-instructions.md with code organization policies
+
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
+
 # serocalculator 1.4.0
 
 ## New features

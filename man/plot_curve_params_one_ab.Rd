@@ -96,6 +96,18 @@ but unobserved levels are omitted.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
+    \item{\code{geom}}{The geometric object to use to display the data for this layer.
+When using a \verb{stat_*()} function to construct a layer, the \code{geom} argument
+can be used to override the default coupling between stats and geoms. The
+\code{geom} argument accepts the following:
+\itemize{
+\item A \code{Geom} ggproto subclass, for example \code{GeomPoint}.
+\item A string naming the geom. To give the geom as a string, strip the
+function name of the \code{geom_} prefix. For example, to use \code{geom_point()},
+give the geom as \code{"point"}.
+\item For more information and other ways to specify the geom, see the
+\link[ggplot2:layer_geoms]{layer geom} documentation.
+}}
   }}
 }
 \value{
@@ -105,6 +117,12 @@ a \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 Graph an antibody decay curve model
 }
 \details{
+\subsection{Fixed \code{...} arguments}{
+
+The arguments \code{fun}, \code{n}, and \code{args} are set internally and cannot be
+overridden via \code{...}. Passing them will trigger an informative error.
+}
+
 \subsection{\code{n_curves} and \code{iters_to_graph}}{
 
 In most cases, \code{object} will contain too many rows of MCMC

@@ -40,5 +40,5 @@ Graph antibody decay function with natural parameters
 }
 \examples{
 library(ggplot2)
-ggplot() + geom_function(fun = antibody_decay_curve) + xlim(1,100)
+ggplot() + geom_function(fun = antibody_decay_curve) + xlim(1, 100)
 }

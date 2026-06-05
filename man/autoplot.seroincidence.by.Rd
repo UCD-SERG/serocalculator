@@ -12,14 +12,14 @@
 \item{ncol}{number of columns to use for panel of plots}
 
 \item{...}{
-  Arguments passed on to \code{\link[=autoplot.seroincidence]{autoplot.seroincidence}}
+  Arguments passed on to \code{\link{autoplot.seroincidence}}
   \describe{
     \item{\code{log_x}}{should the x-axis be on a logarithmic scale (\code{TRUE})
 or linear scale (\code{FALSE}, default)?}
   }}
 }
 \value{
-a \code{"ggarrange"} object: a single or \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s
+a \code{"patchwork"} object: a single or \code{\link[=list]{list()}} of \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}s
 }
 \description{
 Plots log-likelihood curves by stratum, for \code{seroincidence.by} objects

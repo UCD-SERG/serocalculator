@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9004
+Version: 1.4.0.9015
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -21,16 +21,15 @@ URL: https://ucd-serg.github.io/serocalculator/,
 BugReports: https://github.com/UCD-SERG/serocalculator/issues
 Depends: 
     R (>= 4.1.0)
-Imports: 
+Imports:
     cli,
-    config,
     doParallel,
     dplyr,
     foreach,
     ggplot2,
-    ggpubr,
     lifecycle,
     magrittr,
+    patchwork,
     Rcpp,
     rlang,
     rngtools,
@@ -79,7 +78,7 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
-Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace", "devtag::dev_roclet"))
-RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 Remotes: 
     d-morrison/snapr
+Config/roxygen2/version: 8.0.0

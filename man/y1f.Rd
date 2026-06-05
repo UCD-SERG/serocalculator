@@ -17,7 +17,7 @@ y1f(
 \item{mu_y}{antibody reproduction rate}
 
 \item{...}{
-  Arguments passed on to \code{\link[=t1f]{t1f}}
+  Arguments passed on to \code{\link{t1f}}
   \describe{
     \item{\code{b0}}{initial bacteria concentration}
     \item{\code{mu_b}}{pathogen reproduction rate}

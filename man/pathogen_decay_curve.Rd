@@ -33,13 +33,15 @@ a \code{\link[=numeric]{numeric()}}
 Pathogen decay curve
 }
 \examples{
-library(ggplot2);
+library(ggplot2)
 ggplot() + geom_function(
-fun = pathogen_decay_curve,
-args = list(
-  y0 = 0.74916052, # taken from simpar run from vignette
-  b0 = 1,
-  mu_b = 0.18432798,
-  mu_y = 0.36853621,
-  gamma = 0.0013040664)) + xlim(0, 100)
+  fun = pathogen_decay_curve,
+  args = list(
+    y0 = 0.74916052,
+    b0 = 1,
+    mu_b = 0.18432798,
+    mu_y = 0.36853621,
+    gamma = 0.0013040664
+  )
+) + xlim(0, 100)
 }

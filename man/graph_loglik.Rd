@@ -67,7 +67,7 @@ existing graph}
 \item{curve_label}{if not NULL, add a label for the curve}
 
 \item{...}{
-  Arguments passed on to \code{\link[=log_likelihood]{log_likelihood}}
+  Arguments passed on to \code{\link{log_likelihood}}
   \describe{
     \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
   }}

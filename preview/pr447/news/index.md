@@ -4,6 +4,13 @@
 
 ### Internal
 
+- The `methodology` vignette’s LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git
+  submodule (included via `{{< include ../macros/macros.qmd >}}`)
+  instead of a local `vignettes/articles/_macros.qmd`. The deck adopts
+  the shared macro vocabulary (e.g. `\dens` for the density function in
+  place of the local `\pdf`).
+  ([\#534](https://github.com/UCD-SERG/serocalculator/issues/534))
 - `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]`
   so the review still runs (and posts feedback) when `claude.yml`
   re-dispatches it on an `@claude review` comment; previously the

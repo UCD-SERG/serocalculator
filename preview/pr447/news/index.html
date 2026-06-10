@@ -72,6 +72,8 @@
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>
+<code><a href="../reference/sim_pop_data.html">sim_pop_data()</a></code> and <code><a href="../reference/sim_pop_data_multi.html">sim_pop_data_multi()</a></code> now produce identical results across operating systems. Simulated inter-infection times are quantized to whole days, so the number of random draws consumed no longer depends on platform-specific floating-point results of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> (which previously desynchronized the random-number stream and made simulated values, and their snapshots, differ between macOS, Windows, and Linux). Simulated values change slightly as a result of this fix. (<a href="https://github.com/UCD-SERG/serocalculator/issues/447" class="external-link">#447</a>)</li>
+<li>
 <code><a href="../reference/load_noise_params.html">load_noise_params()</a></code> and <code><a href="../reference/load_sr_params.html">load_sr_params()</a></code> now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (<a href="https://github.com/UCD-SERG/serocalculator/issues/505" class="external-link">#505</a>)</li>
 <li>Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
 <ul><li>Provides clear tables comparing old and new function names</li>

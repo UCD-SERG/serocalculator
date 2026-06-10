@@ -42,7 +42,7 @@ simresp.tinf <- function(# nolint: object_name_linter
   mcsize <- dim(predpar)[3]
   nmc <- n_mcmc_samples
 
-  day2yr <- 365.25
+  days_per_year <- 365.25
 
   if (n_mcmc_samples == 0) {
     nmc <- sample.int(n = mcsize, size = 1)
@@ -71,7 +71,7 @@ simresp.tinf <- function(# nolint: object_name_linter
   # identical across platforms. See `quantize_t_next()`.
   t_next <- quantize_t_next(t_next)
 
-  age <- if_else(!is.na(age_fixed), age_fixed, t_next / day2yr)
+  age <- if_else(!is.na(age_fixed), age_fixed, t_next / days_per_year)
 
   mcpar <- ldpar(
     age = age,
@@ -127,7 +127,7 @@ simresp.tinf <- function(# nolint: object_name_linter
 
     if (!renew_params) {
       par_now <- ldpar(
-        if (!is.na(age_fixed)) age_fixed else t0 / day2yr,
+        if (!is.na(age_fixed)) age_fixed else t0 / days_per_year,
         antigen_isos,
         nmc,
         predpar = predpar, ...
@@ -165,7 +165,7 @@ simresp.tinf <- function(# nolint: object_name_linter
     b <- rbind(b, b_now)
     y_mat <- rbind(y_mat, y_now)
 
-    y_end <- y_mat %>% tail(1)
+    y_end <- y_mat |> tail(1)
 
     if (renew_params) {
       if (n_mcmc_samples == 0) {
@@ -178,7 +178,7 @@ simresp.tinf <- function(# nolint: object_name_linter
     age <- if_else(
       !is.na(age_fixed),
       age_fixed,
-      (t0 + t_next) / day2yr
+      (t0 + t_next) / days_per_year
     )
 
     par_now <- ldpar(

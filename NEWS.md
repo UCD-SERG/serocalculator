@@ -16,6 +16,13 @@
 
 ## Bug fixes
 
+* `sim_pop_data()` and `sim_pop_data_multi()` now produce identical results
+  across operating systems. Simulated inter-infection times are quantized to
+  whole days, so the number of random draws consumed no longer depends on
+  platform-specific floating-point results of `log()` (which previously
+  desynchronized the random-number stream and made simulated values, and
+  their snapshots, differ between macOS, Windows, and Linux). Simulated
+  values change slightly as a result of this fix. (#447)
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names

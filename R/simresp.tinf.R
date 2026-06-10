@@ -59,6 +59,17 @@ simresp.tinf <- function(# nolint: object_name_linter
   t_inf <- c()
 
   t_next <- -log(runif(1, 0, 1)) / lambda # time to first infection...
+  # Quantize inter-infection times to whole days. The simulation already
+  # operates on a daily grid (`seq(0, t_next, by = 1)`, and ages are sampled
+  # over integer days), but the `while()` loop boundary and the per-episode
+  # grid lengths otherwise depend on the platform-specific floating-point
+  # result of `log()`. Those ULP-level differences flip the number of loop
+  # iterations on some operating systems, which changes how many random
+  # draws are consumed and desynchronizes the (otherwise platform-independent)
+  # L'Ecuyer-CMRG stream -- making snapshot output irreproducible across
+  # macOS/Windows/Linux. Rounding to whole days keeps RNG consumption
+  # identical across platforms. See `quantize_t_next()`.
+  t_next <- quantize_t_next(t_next)
 
   age <- if_else(!is.na(age_fixed), age_fixed, t_next / day2yr)
 
@@ -129,6 +140,10 @@ simresp.tinf <- function(# nolint: object_name_linter
     # note: the renew_params == TRUE case is handled many lines below
 
     t_next <- -log(runif(1, 0, 1)) / lambda
+    # Quantize to whole days for cross-platform reproducibility (see the
+    # comment on the first-infection draw above). `t_end` and `t0` are whole
+    # days, so the boundary clamp below stays integer-valued too.
+    t_next <- quantize_t_next(t_next)
     if (t0 <= t_end && t0 + t_next > t_end) {
       t_next <- t_end - t0
     }

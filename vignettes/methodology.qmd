@@ -7,7 +7,7 @@ vignette: >
 bibliography: references.bib
 ---
 
-{{< include articles/_macros.qmd >}}
+{{< include ../macros/macros.qmd >}}
 
 # Overview
 
@@ -143,12 +143,12 @@ Under those assumptions:
 
 * $T$ has an **exponential distribution**:
 
-$$\pdf(T=t) = \lambda \expf{-\lambda t}$$
+$$\dens(T=t) = \lambda \expf{-\lambda t}$$
 
   * More precisely, the distribution is exponential 
   **truncated by age** at observation ($a$):
 
-$$\pdf(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
+$$\dens(T=t|A=a) = 1_{t \in[0,a]}\lambda \expf{-\lambda t} + 1_{t = \NA} \expf{-\lambda a}$$
 
 * the rate parameter $\lambda$ is the incidence rate
 
@@ -164,7 +164,7 @@ an individual was **last** infected $t$ days ago, $p(T=t)$,
 is equal to the probability of being infected at time $t$ 
 (i.e., the incidence rate at time $t$, $\lambda$) 
 times the probability of not being infected after time $t$, 
-which turns out to be $\exp(-\lambda t)$.
+which turns out to be $\expf{-\lambda t}$.
 
 The distribution of $T$ is truncated by the patient's birth date;
 the probability that they have never been infected is
@@ -262,7 +262,7 @@ we are going to consider all possible values of $t$ for each individual.
 We need to link the data we actually observed to the incidence rate.
 
 The likelihood of an individual's observed data, 
-$\pdf(Y=y)$, 
+$\dens(Y=y)$, 
 can be expressed as an integral over 
 the joint likelihood of $Y$ and $T$ 
 (using the Law of Total Probability):
@@ -270,7 +270,7 @@ the joint likelihood of $Y$ and $T$
 
 ::: incremental
 
-* $$\pdf(Y=y) = \int_t \pdf(Y=y,T=t)dt$$
+* $$\dens(Y=y) = \int_t \dens(Y=y,T=t)dt$$
 
 :::: notes
 Further, we can express the joint probability $p(Y=y,T=t)$ as the product of 
@@ -279,7 +279,7 @@ $p(Y=y|T=t)$ the "antibody response curve after infection".
 That is:
 ::::
 
-* $$\pdf(Y=y,T=t) = \pdf(Y=y|T=t) \pdf(T=t)$$
+* $$\dens(Y=y,T=t) = \dens(Y=y|T=t) \dens(T=t)$$
 
 :::
 

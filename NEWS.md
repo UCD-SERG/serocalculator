@@ -1,3 +1,7 @@
+#  serocalculator (development version)
+
+(list any changes merged from main since last release here)
+
 # serocalculator 1.4.1
 
 ## Internal

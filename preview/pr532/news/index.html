@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="serocalculator-development-version">serocalculator (development version)<a class="anchor" aria-label="anchor" href="#serocalculator-development-version"></a></h2>
 <div class="section level3">
 <h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
-<ul><li>
+<ul><li>The <code>methodology</code> vignette’s LaTeX macros now come from the shared <a href="https://github.com/d-morrison/macros" class="external-link"><code>d-morrison/macros</code></a> git submodule (included via <code>{{&lt; include ../macros/macros.qmd &gt;}}</code>) instead of a local <code>vignettes/articles/_macros.qmd</code>. The deck adopts the shared macro vocabulary (e.g. <code>\dens</code> for the density function in place of the local <code>\pdf</code>). (<a href="https://github.com/UCD-SERG/serocalculator/issues/534" class="external-link">#534</a>)</li>
+<li>
 <code>claude-code-review.yml</code> now sets <code>allowed_bots: github-actions[bot]</code> so the review still runs (and posts feedback) when <code>claude.yml</code> re-dispatches it on an <code>@claude review</code> comment; previously the bot-initiated dispatch aborted with “Workflow initiated by non-human actor”.</li>
 <li>
 <code>claude.yml</code> now grants the <code>@claude</code> agent the file tools (<code>Read</code>/<code>Glob</code>/<code>Grep</code>/<code>Edit</code>/<code>MultiEdit</code>/<code>Write</code>) in <code>--allowedTools</code>; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.</li>

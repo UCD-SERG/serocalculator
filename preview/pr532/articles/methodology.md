@@ -111,14 +111,14 @@ Under those assumptions:
 - $`T`$ has an **exponential distribution**:
 
 ``` math
-\mathbb{p}(T=t) = \lambda \exp{\left\{-\lambda t\right\}}
+\operatorname{p}(T=t) = \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}
 ```
 
 - More precisely, the distribution is exponential **truncated by age**
   at observation ($`a`$):
 
 ``` math
-\mathbb{p}(T=t|A=a) = 1_{t \in[0,a]}\lambda \exp{\left\{-\lambda t\right\}} + 1_{t = \text{NA}} \exp{\left\{-\lambda a\right\}}
+\operatorname{p}(T=t|A=a) = 1_{t \in[0,a]}\lambda \operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{} + 1_{t = \text{NA}} \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}
 ```
 
 - the rate parameter $`\lambda`$ is the incidence rate
@@ -130,12 +130,13 @@ The probability that an individual was **last** infected $`t`$ days ago,
 $`p(T=t)`$, is equal to the probability of being infected at time $`t`$
 (i.e., the incidence rate at time $`t`$, $`\lambda`$) times the
 probability of not being infected after time $`t`$, which turns out to
-be $`\exp(-\lambda t)`$.
+be
+$`\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}`$.
 
 The distribution of $`T`$ is truncated by the patient’s birth date; the
 probability that they have never been infected is
-$`\exp{\left\{-\lambda a\right\}}`$, where $`a`$ is the patient’s age at
-the time of the survey.
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$,
+where $`a`$ is the patient’s age at the time of the survey.
 
 ### Likelihood of latent infection times
 
@@ -150,17 +151,17 @@ likelihood estimate:
 
 - 
   ``` math
-  \mathcal{L}^*(\lambda) = \prod_{i=1}^n \mathbb{p}(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)
+  \mathscr{L}^*(\lambda) = \prod_{i=1}^n \operatorname{p}(T=t_i) = \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}
   ```
 
 - 
   ``` math
-  \ell^*(\lambda) = \log{\left\{\mathcal{L}^*(\lambda)\right\}} = \sum_{i=1}^n \log{\left\{\lambda\right\}} -\lambda t_i
+  \ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i
   ```
 
 - 
   ``` math
-  \ell^{*'}(\lambda) = \sum_{i=1}^n \lambda^{-1} - t_i
+  \ell^{*'}(\lambda) = \sum_{i=1}^n \mathopen{}\left(\lambda\right)^{-1}\mathclose{} - t_i
   ```
 
 - 
@@ -267,13 +268,14 @@ possible values of $`t`$ for each individual.
 
 We need to link the data we actually observed to the incidence rate.
 
-The likelihood of an individual’s observed data, $`\mathbb{p}(Y=y)`$,
-can be expressed as an integral over the joint likelihood of $`Y`$ and
-$`T`$ (using the Law of Total Probability):
+The likelihood of an individual’s observed data,
+$`\operatorname{p}(Y=y)`$, can be expressed as an integral over the
+joint likelihood of $`Y`$ and $`T`$ (using the Law of Total
+Probability):
 
 - 
   ``` math
-  \mathbb{p}(Y=y) = \int_t \mathbb{p}(Y=y,T=t)dt
+  \operatorname{p}(Y=y) = \int_t \operatorname{p}(Y=y,T=t)dt
   ```
 
 Further, we can express the joint probability $`p(Y=y,T=t)`$ as the
@@ -282,7 +284,7 @@ after infection”. That is:
 
 - 
   ``` math
-  \mathbb{p}(Y=y,T=t) = \mathbb{p}(Y=y|T=t) \mathbb{p}(T=t)
+  \operatorname{p}(Y=y,T=t) = \operatorname{p}(Y=y|T=t) \operatorname{p}(T=t)
   ```
 
 ### Antibody response curves
@@ -306,7 +308,7 @@ p(Y=y)
 ### Composing the likelihood
 
 Now, the likelihood of the observed data
-$`\mathbf{y} = (y_1, y_2, ..., y_n)`$ is:
+$`\tilde{y} = (y_1, y_2, ..., y_n)`$ is:
 
 ``` math
 \begin{aligned}
@@ -426,7 +428,7 @@ with `se_type = "cluster-robust"`.
 ## Modeling the seroresponse kinetics curve
 
 Now, we need a model for the antibody response to infection,
-$`\mathbb{p}(Y=y|T=t)`$. The current version of the
+$`\operatorname{p}(Y=y|T=t)`$. The current version of the
 [serocalculator](https://ucd-serg.github.io/serocalculator/) package
 uses a two-phase model for the shape of the seroresponse ([Teunis et al.
 2016](#ref-Teunis_2016)).

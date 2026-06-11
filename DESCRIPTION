@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.1
+Version: 1.4.1.9000
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -64,7 +64,8 @@ Suggests:
     withr,
     forcats,
     rex,
-    readr
+    readr,
+    snapr
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3

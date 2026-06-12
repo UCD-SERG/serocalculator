@@ -19,6 +19,8 @@ check_parallel_cores <- function(num_cores) {
 
   return(num_cores)
 
+  chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
+
   if (nzchar(chk)) {
     chk_u <- toupper(chk)
 

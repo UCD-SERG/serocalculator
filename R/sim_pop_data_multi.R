@@ -26,9 +26,6 @@ sim_pop_data_multi <- function(
 
   if (num_cores > 1L) {
 
-    chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
-
-
     # Apply existing safety checker after any cap
     num_cores <- num_cores |> check_parallel_cores()
 

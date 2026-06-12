@@ -20,31 +20,4 @@ check_parallel_cores <- function(num_cores) {
 
   return(num_cores)
 
-  chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
-
-  if (nzchar(chk)) {
-    chk_u <- toupper(chk)
-
-    if (chk_u %in% c("TRUE", "T", "YES", "Y")) {
-      # In check environments, be polite: cap at 2
-      num_cores <- min(num_cores, 2L)
-
-    } else if (chk_u %in% c("FALSE", "F", "NO", "N")) {
-      # No cap requested
-
-    } else {
-      # Often this is a numeric string like "2"
-      chk_n <- suppressWarnings(as.integer(chk))
-      if (!is.na(chk_n) && chk_n >= 1L) {
-        num_cores <- min(num_cores, chk_n)
-      } else {
-        # Unrecognized value: be conservative
-        num_cores <- min(num_cores, 2L)
-      }
-    }
-  }
-
-  if (verbose) {
-    cli::cli_inform("Set up parallel processing with `num_cores`={num_cores}")
-  }
 }

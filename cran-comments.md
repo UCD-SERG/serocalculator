@@ -10,7 +10,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 
 * There are some words flagged by checks as misspelled, but they are listed in `inst/WORDLIST` and are correctly spelled. 
 * 1 note regarding package archive on 2026-01-16 due to issues not addressed in time. We have addressed these issues in this release. 

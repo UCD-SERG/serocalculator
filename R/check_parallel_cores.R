@@ -11,8 +11,7 @@ check_parallel_cores <- function(num_cores) {
       c(
         "This computer appears to have
         {parallel::detectCores()} cores available.
-        `est_seroincidence_by()` has reduced its
-        `num_cores` argument to {num_cores}
+        Reducing `num_cores` argument to {num_cores}
         to avoid destabilizing the computer."
       )
     )

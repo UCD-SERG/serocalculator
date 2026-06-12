@@ -331,7 +331,7 @@ autoplot(est1, log_x = TRUE)
 ``` r
 
 library(parallel)
-n_cores <- n_cores <- min(2, parallel::detectCores())
+n_cores <- min(2, parallel::detectCores())
 print(n_cores)
 #> [1] 2
 ```

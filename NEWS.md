@@ -6,6 +6,12 @@
 
 ## Internal
 
+* The `methodology` vignette's LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
+  (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
+  `vignettes/articles/_macros.qmd`. The deck adopts the shared macro
+  vocabulary (e.g. `\dens` for the density function in place of the local
+  `\pdf`). (#534)
 * `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]` so the review still runs (and posts feedback) when `claude.yml` re-dispatches it on an `@claude review` comment; previously the bot-initiated dispatch aborted with "Workflow initiated by non-human actor".
 * `claude.yml` now grants the `@claude` agent the file tools (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.

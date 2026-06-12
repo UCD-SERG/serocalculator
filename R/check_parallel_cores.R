@@ -9,11 +9,9 @@ check_parallel_cores <- function(num_cores) {
     cli::cli_inform(
       class = "reduced num_cores",
       c(
-        "This computer appears to have
-        {parallel::detectCores()} cores available.
-        `est_seroincidence_by()` has reduced its
-        `num_cores` argument to {num_cores}
-        to avoid destabilizing the computer."
+        "Reducing `num_cores` to {num_cores}
+        to avoid destabilizing this computer
+        ({parallel::detectCores()} cores detected)."
       )
     )
   }

@@ -7,7 +7,6 @@
 #' @param lambdas incidence rate, in events/person*year
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
-#' @param ... arguments passed to [sim.cs()]
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export

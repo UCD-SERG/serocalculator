@@ -1,4 +1,4 @@
-#  serocalculator (development version)
+# serocalculator (development version)
 
 (list any changes merged from main since last release here)
 

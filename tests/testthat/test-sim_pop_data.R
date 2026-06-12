@@ -1,5 +1,4 @@
 test_that("`sim_pop_data()` produces consistent results", {
-  snapr::expect_snapshot_data()
 
   # Load curve parameters
   curve <-

@@ -33,6 +33,7 @@
 
 ### Bug fixes
 
+- Removed lingering terminology discrepancies
 - [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
   and
   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)

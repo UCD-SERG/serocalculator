@@ -205,7 +205,7 @@ ll_a <-
     lambda = 0.1
   ) |>
   print()
-#> [1] -292.5068
+#> [1] -225.6862
 
 ll_g <-
   log_likelihood(
@@ -216,7 +216,7 @@ ll_g <-
     lambda = 0.1
   ) |>
   print()
-#> [1] -329.1799
+#> [1] -258.0572
 
 ll_ag <-
   log_likelihood(
@@ -227,10 +227,10 @@ ll_ag <-
     lambda = 0.1
   ) |>
   print()
-#> [1] -621.6867
+#> [1] -483.7434
 
 print(ll_a + ll_g)
-#> [1] -621.6867
+#> [1] -483.7434
 ```
 
 ### graph log-likelihood
@@ -302,7 +302,7 @@ summary(est1)
 #> # A tibble: 1 × 11
 #>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
 #>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
-#> 1       0.1          0.279 0.0289  0.228  0.342 standard     0.95   -584.
+#> 1       0.1          0.194 0.0213  0.157  0.241 standard     0.95   -469.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 ```
@@ -368,16 +368,16 @@ print(sim_df)
 #> # A tibble: 24,000 × 7
 #>      age id    antigen_iso value lambda.sim sample_size cluster
 #>    <dbl> <chr> <chr>       <dbl>      <dbl>       <dbl>   <int>
-#>  1  3.53 1     HlyE_IgA    0.725       0.05         100       1
-#>  2  3.53 1     HlyE_IgG    0.749       0.05         100       1
-#>  3  2.27 2     HlyE_IgA    0.647       0.05         100       1
-#>  4  2.27 2     HlyE_IgG    0.382       0.05         100       1
-#>  5  9.05 3     HlyE_IgA    0.176       0.05         100       1
-#>  6  9.05 3     HlyE_IgG    0.585       0.05         100       1
-#>  7  5.94 4     HlyE_IgA    0.845       0.05         100       1
-#>  8  5.94 4     HlyE_IgG    0.744       0.05         100       1
-#>  9  9.88 5     HlyE_IgA    0.644       0.05         100       1
-#> 10  9.88 5     HlyE_IgG    0.292       0.05         100       1
+#>  1  3.53 1     HlyE_IgA    0.853       0.05         100       1
+#>  2  3.53 1     HlyE_IgG    0.668       0.05         100       1
+#>  3  2.27 2     HlyE_IgA    0.587       0.05         100       1
+#>  4  2.27 2     HlyE_IgG    0.359       0.05         100       1
+#>  5  9.05 3     HlyE_IgA    0.367       0.05         100       1
+#>  6  9.05 3     HlyE_IgG    0.412       0.05         100       1
+#>  7  5.94 4     HlyE_IgA    0.648       0.05         100       1
+#>  8  5.94 4     HlyE_IgG    0.606       0.05         100       1
+#>  9  9.88 5     HlyE_IgA    0.363       0.05         100       1
+#> 10  9.88 5     HlyE_IgG    0.516       0.05         100       1
 #> # ℹ 23,990 more rows
 ```
 
@@ -435,16 +435,16 @@ ests_summary <- ests |> summary() |> print()
 #> # A tibble: 120 × 16
 #>    Stratum sample_size lambda.sim cluster     n est.start incidence.rate      SE
 #>    <chr>         <dbl>      <dbl>   <int> <int>     <dbl>          <dbl>   <dbl>
-#>  1 Stratu…         100       0.05       1   100       0.1         0.0853 0.0124 
-#>  2 Stratu…         100       0.05       2   100       0.1         0.0480 0.00863
-#>  3 Stratu…         100       0.05       3   100       0.1         0.0537 0.00899
-#>  4 Stratu…         100       0.05       4   100       0.1         0.0432 0.00834
-#>  5 Stratu…         100       0.05       5   100       0.1         0.0455 0.00824
-#>  6 Stratu…         100       0.05       6   100       0.1         0.0630 0.0105 
-#>  7 Stratu…         100       0.05       7   100       0.1         0.0622 0.0101 
-#>  8 Stratu…         100       0.05       8   100       0.1         0.0470 0.00844
-#>  9 Stratu…         100       0.05       9   100       0.1         0.0338 0.00722
-#> 10 Stratu…         100       0.05      10   100       0.1         0.0714 0.0108 
+#>  1 Stratu…         100       0.05       1   100       0.1         0.0538 0.00958
+#>  2 Stratu…         100       0.05       2   100       0.1         0.0462 0.00869
+#>  3 Stratu…         100       0.05       3   100       0.1         0.0446 0.00801
+#>  4 Stratu…         100       0.05       4   100       0.1         0.0475 0.00819
+#>  5 Stratu…         100       0.05       5   100       0.1         0.0560 0.00930
+#>  6 Stratu…         100       0.05       6   100       0.1         0.0569 0.00961
+#>  7 Stratu…         100       0.05       7   100       0.1         0.0392 0.00743
+#>  8 Stratu…         100       0.05       8   100       0.1         0.0698 0.0108 
+#>  9 Stratu…         100       0.05       9   100       0.1         0.0557 0.00947
+#> 10 Stratu…         100       0.05      10   100       0.1         0.0416 0.00805
 #> # ℹ 110 more rows
 #> # ℹ 8 more variables: CI.lwr <dbl>, CI.upr <dbl>, se_type <chr>,
 #> #   coverage <dbl>, log.lik <dbl>, iterations <int>, antigen.isos <chr>,
@@ -511,17 +511,19 @@ ests_summary |>
   as_tibble() |> # removes extra meta-data
   select(Stratum, nlm.convergence.code) |>
   filter(nlm.convergence.code > 2)
-#> # A tibble: 8 × 2
-#>   Stratum     nlm.convergence.code
-#>   <chr>       <ord>               
-#> 1 Stratum 10  3                   
-#> 2 Stratum 23  3                   
-#> 3 Stratum 27  3                   
-#> 4 Stratum 44  3                   
-#> 5 Stratum 48  3                   
-#> 6 Stratum 61  3                   
-#> 7 Stratum 95  3                   
-#> 8 Stratum 105 3
+#> # A tibble: 10 × 2
+#>    Stratum     nlm.convergence.code
+#>    <chr>       <ord>               
+#>  1 Stratum 27  3                   
+#>  2 Stratum 41  3                   
+#>  3 Stratum 49  3                   
+#>  4 Stratum 56  3                   
+#>  5 Stratum 75  3                   
+#>  6 Stratum 81  3                   
+#>  7 Stratum 93  3                   
+#>  8 Stratum 97  3                   
+#>  9 Stratum 99  3                   
+#> 10 Stratum 114 3
 ```
 
 Solutions to [`nlm()`](https://rdrr.io/r/stats/nlm.html) exit codes 3-5:
@@ -540,7 +542,7 @@ We can extract the indices of problematic strata, if there are any:
 problem_strata <-
   which(ests_summary$nlm.convergence.code > 2) |>
   print()
-#> [1]  10  23  27  44  48  61  95 105
+#>  [1]  27  41  49  56  75  81  93  97  99 114
 ```
 
 If any clusters had problems, we can take a look:
@@ -592,14 +594,14 @@ We can analyze the simulation results with
 
 ests_summary |> analyze_sims()
 #> # A tibble: 6 × 8
-#>   lambda.sim sample_size     Bias Mean_Est_SE Empirical_SE   RMSE Mean_CI_Width
-#>        <dbl>       <dbl>    <dbl>       <dbl>        <dbl>  <dbl>         <dbl>
-#> 1       0.05         100 0.000864     0.00887       0.0158 0.0155        0.0355
-#> 2       0.1          100 0.00486      0.0141        0.0137 0.0142        0.0559
-#> 3       0.15         100 0.00142      0.0182        0.0240 0.0234        0.0720
-#> 4       0.2          100 0.0228       0.0240        0.0350 0.0411        0.0949
-#> 5       0.5          100 0.0749       0.0556        0.0831 0.110         0.219 
-#> 6       0.8          100 0.166        0.0980        0.132  0.210         0.387 
+#>   lambda.sim sample_size    Bias Mean_Est_SE Empirical_SE   RMSE Mean_CI_Width
+#>        <dbl>       <dbl>   <dbl>       <dbl>        <dbl>  <dbl>         <dbl>
+#> 1       0.05         100 0.00292     0.00906       0.0102 0.0103        0.0362
+#> 2       0.1          100 0.00894     0.0144        0.0204 0.0218        0.0571
+#> 3       0.15         100 0.0222      0.0199        0.0183 0.0285        0.0786
+#> 4       0.2          100 0.0269      0.0243        0.0319 0.0411        0.0958
+#> 5       0.5          100 0.0857      0.0568        0.0758 0.113         0.224 
+#> 6       0.8          100 0.172       0.0989        0.115  0.205         0.390 
 #> # ℹ 1 more variable: CI_Coverage <dbl>
 ```
 

@@ -225,12 +225,12 @@ The transition from v1.3.0 to v1.4.0 primarily involves:
 ::: {.callout-tip}
 ## Function name changes (safe for all code)
 
-- `est.incidence.by(` → `est_seroincidence_by(`
-- `est.incidence(` → `est_seroincidence(`
-- `load_curve_params(` → `load_sr_params(`
-- `as_curve_params(` → `as_sr_params(`
-- `sim.cs.multi(` → `sim_pop_data_multi(`
-- `sim.cs(` → `sim_pop_data(`
+- `est.incidence.by()` → `est_seroincidence_by()`
+- `est.incidence()` → `est_seroincidence()`
+- `load_curve_params()` → `load_sr_params()`
+- `as_curve_params()` → `as_sr_params()`
+- `sim.cs.multi()` → `sim_pop_data_multi()`
+- `sim.cs()` → `sim_pop_data()`
 :::
 
 ::: {.callout-tip}

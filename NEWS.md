@@ -1,5 +1,9 @@
 # serocalculator (development version)
 
+(list any changes merged from main since last release here)
+
+# serocalculator 1.4.1
+
 ## Internal
 
 * The `methodology` vignette's LaTeX macros now come from the shared
@@ -22,6 +26,7 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+  
 
 ## Compatibility
 
@@ -47,6 +52,7 @@
 * Fixed `est_seroincidence_by()` to properly pass cluster and stratum variables through
   to stratified analyses. Previously, these variables were dropped during data stratification,
   causing errors when trying to use clustering with `est_seroincidence_by()`.
+* Fixed errors coming from parallel processing in examples flagged by CRAN checks using `\donttest`
 
 ## Code organization
 
@@ -54,6 +60,7 @@
   - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
   - Each function now in its own file for better maintainability and git history
 * Updated copilot-instructions.md with code organization policies
+
 ## Dependencies
 
 * Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,

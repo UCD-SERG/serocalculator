@@ -16,7 +16,8 @@
 #' or linear scale (`FALSE`, default)?
 #' @param log_y should the Y-axis be on a logarithmic scale
 #' (default, `TRUE`) or linear scale (`FALSE`)?
-#' @inheritDotParams ggplot2::geom_function -fun -n -args
+#' @param ... Additional arguments passed to [ggplot2::geom_function()].
+#' `fun`, `n`, and `args` are set internally and cannot be passed.
 #' @returns a [ggplot2::ggplot()] object
 #' @details
 #' ## Fixed `...` arguments

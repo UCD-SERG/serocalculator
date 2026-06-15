@@ -7,7 +7,6 @@
 #' @param lambdas incidence rate, in events/person*year
 #' @param num_cores number of cores to use for parallel computations
 #' @param verbose whether to report verbose information
-#' @param ... arguments passed to [sim.cs()]
 #' @inheritDotParams sim_pop_data
 #' @return a [tibble::tibble()]
 #' @export
@@ -16,33 +15,20 @@ sim_pop_data_multi <- function(
     nclus = 10,
     sample_sizes = 100,
     lambdas = c(.05, .1, .15, .2, .3),
-    num_cores = max(1, parallel::detectCores() - 1),
+    num_cores = 2L,
     rng_seed = 1234,
     verbose = FALSE,
     ...) {
   if (verbose) {
-    message("inputs to `sim_pop_data_multi()`:")
+    cli::cli_inform("inputs to `sim_pop_data_multi()`:")
     print(environment() |> as.list())
   }
 
   if (num_cores > 1L) {
-
     chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
-
-    if (nzchar(chk) && chk == "TRUE") {
-      # use 2 cores in CRAN/Travis/AppVeyor
-      num_cores <- 2L
-    } else {
-      # use all cores in devtools::test()
-      num_cores <- num_cores |> check_parallel_cores()
-    }
-
-
-
-    if (verbose) {
-      cli::cli_inform("Setting up parallel processing with
-                      `num_cores` = {num_cores}.")
-    }
+    num_cores <- check_parallel_cores(
+      num_cores = num_cores, chk = chk, verbose = verbose
+    )
   }
 
   doParallel::registerDoParallel(cores = num_cores)
@@ -60,7 +46,7 @@ sim_pop_data_multi <- function(
     )
 
   dims1 <-
-    sapply(FUN = length, dimnames1)
+    vapply(FUN = length, dimnames1, FUN.VALUE = integer(1))
 
   rng <- rng |>
     array(

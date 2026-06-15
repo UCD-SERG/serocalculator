@@ -47,13 +47,10 @@ check_parallel_cores <- function(num_cores, chk = "", verbose = FALSE) {
     )
   }
 
-  # 3. Report setup if verbose (Unchanged)
+  # 3. Report setup if verbose
   if (verbose) {
     cli::cli_inform(
       "Setting up parallel processing with `num_cores` = {num_cores}."
-    )
-    cli::cli_inform(
-      "Set up parallel processing with `num_cores`={num_cores}"
     )
   }
 

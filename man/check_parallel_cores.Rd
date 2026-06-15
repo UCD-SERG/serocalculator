@@ -9,7 +9,7 @@ check_parallel_cores(num_cores, chk = "", verbose = FALSE)
 \arguments{
 \item{num_cores}{Integer. The initial number of requested cores.}
 
-\item{chk}{Character. The value of an environment variable like \verb{_R_CHECK_LIMIT_CORES_}. Defaults to \code{""}.}
+\item{chk}{Character. The value of an environment variable like \code{_R_CHECK_LIMIT_CORES_}. Defaults to \code{""}.}
 
 \item{verbose}{Logical. Whether to report parallel setup information. Defaults to \code{FALSE}.}
 }

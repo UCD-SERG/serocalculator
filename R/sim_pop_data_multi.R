@@ -25,9 +25,10 @@ sim_pop_data_multi <- function(
   }
 
   if (num_cores > 1L) {
-    # Fetch env var and run all environment/safety checks inside check_parallel_cores
     chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")
-    num_cores <- check_parallel_cores(num_cores = num_cores, chk = chk, verbose = verbose)
+    num_cores <- check_parallel_cores(
+      num_cores = num_cores, chk = chk, verbose = verbose
+    )
   }
 
   doParallel::registerDoParallel(cores = num_cores)

@@ -72,16 +72,14 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     do.call(sim_pop_data_multi, c(base_args, list(verbose = verbose)))
   }
 
-  # Track core selections across scenarios.
-  calls <- list()
+  # Track the final core count passed to registerDoParallel across scenarios.
+  # We mock detectCores to return a large number so the hardware-limit path
+  # in check_parallel_cores() does not interfere with env-var cap testing.
   register_calls <- list()
   register_parallel <- doParallel::registerDoParallel
   testthat::local_mocked_bindings(
-    check_parallel_cores = function(x) {
-      calls <<- c(calls, list(x))
-      x
-    },
-    .package = "serocalculator"
+    detectCores = function(...) 100L,
+    .package = "parallel"
   )
   testthat::local_mocked_bindings(
     registerDoParallel = function(cores) {
@@ -111,22 +109,15 @@ test_that("`sim_pop_data_multi()` handles _R_CHECK_LIMIT_CORES_ values", {
     expect_true(all(sim_data$lambda.sim == 0.05))
     expect_true(all(sim_data$cluster == 1))
   }
-  expected_calls <- list(
-    # TRUE: cap at 2 cores.
-    cran_cap = min(num_cores, 2L),
-    # FALSE: no cap.
-    no_limit = num_cores,
-    # Numeric value: cap at 1 core.
-    numeric_cap = min(num_cores, 1L),
-    # Unrecognized value: conservative cap at 2 cores.
-    invalid_cap = min(num_cores, 2L)
+  # Expected final core counts after env-var cap applied by check_parallel_cores()
+  expected_register_calls <- list(
+    cran_cap = 2L,    # TRUE caps at 2; min(2L, 2L) = 2L
+    no_limit = 2L,    # FALSE: no cap; original num_cores = 2L
+    numeric_cap = 1L, # "1": cap at 1; min(2L, 1L) = 1L
+    invalid_cap = 2L  # unrecognized: conservative cap at 2; min(2L, 2L) = 2L
   )
-  expect_identical(calls[[1]], expected_calls$cran_cap)
-  expect_identical(calls[[2]], expected_calls$no_limit)
-  expect_identical(calls[[3]], expected_calls$numeric_cap)
-  expect_identical(calls[[4]], expected_calls$invalid_cap)
-  expect_identical(register_calls[[1]], expected_calls$cran_cap)
-  expect_identical(register_calls[[2]], expected_calls$no_limit)
-  expect_identical(register_calls[[3]], expected_calls$numeric_cap)
-  expect_identical(register_calls[[4]], expected_calls$invalid_cap)
+  expect_identical(register_calls[[1]], expected_register_calls$cran_cap)
+  expect_identical(register_calls[[2]], expected_register_calls$no_limit)
+  expect_identical(register_calls[[3]], expected_register_calls$numeric_cap)
+  expect_identical(register_calls[[4]], expected_register_calls$invalid_cap)
 })

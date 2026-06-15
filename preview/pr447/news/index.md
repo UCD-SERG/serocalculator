@@ -45,6 +45,7 @@
   Windows, and Linux). Simulated values change slightly as a result of
   this fix.
   ([\#447](https://github.com/UCD-SERG/serocalculator/issues/447))
+- Removed lingering terminology discrepancies
 - [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
   and
   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)

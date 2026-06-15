@@ -12,7 +12,7 @@ strat_ests_barplot(
   alpha = 0.7,
   CIs = FALSE,
   title = NULL,
-  xlab = "Seroconversion rate per 1000 person-years",
+  xlab = "Seroincidence rate per 1000 person-years",
   ylab = yvar,
   fill_lab = NULL,
   color_palette = NULL,

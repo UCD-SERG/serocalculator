@@ -90,12 +90,14 @@ posterior_predictive_check <- function(
   sr_params <- attr(object, "sr_params")
   noise_params <- attr(object, "noise_params")
 
-  # If parameters not stored as attributes (ungrouped fit), we can't do PPC
+  # If parameters not stored as attributes, we need them to be provided explicitly
   if (is.null(sr_params) || is.null(noise_params)) {
     stop(
-      "Cannot perform posterior predictive check: model parameters not stored. ",
-      "This typically happens when fitting an unstratified model. ",
-      "Consider refitting with clustering or stratification to enable diagnostic checks."
+      "Cannot perform posterior predictive check: model parameters not stored. \n",
+      "This typically happens when fitting an ungrouped model without clustering. \n",
+      "Posterior predictive checks require stored curve and noise parameters.\n",
+      "To enable diagnostic checks, refit the model with clustering (cluster_var) ",
+      "or stratification (est_seroincidence_by with strata)."
     )
   }
 

@@ -86,6 +86,24 @@ calculate_residuals <- function(
     )
   }
 
+  # Check if sr_params is in the expected format
+  # If it's a list split by antigen, we need the full parameter set
+  # For now, we'll skip this for list-format params
+  if (is.list(sr_params) && !is.data.frame(sr_params)) {
+    # Check if the parameters have all needed columns
+    test_params <- sr_params[[1]]
+    needed_cols <- c("y1", "alpha", "d")
+    has_cols <- needed_cols %in% colnames(test_params)
+
+    if (!all(has_cols)) {
+      stop(
+        "Cannot calculate residuals with current parameter format. ",
+        "This typically happens with clustered fits. ",
+        "Refit without cluster_var to enable residual diagnostics."
+      )
+    }
+  }
+
   if (verbose) {
     cli::cli_inform("Computing predicted values for residuals...")
   }
@@ -191,60 +209,156 @@ calculate_residuals <- function(
 
   predicted <- numeric(nrow(data))
 
-  # For each antigen-isotype, compute predictions
-  for (antigen in antigen_isos) {
-    idx <- data$antigen_iso == antigen
-
-    # Get parameters for this antigen
-    ag_params <- sr_params |>
-      dplyr::filter(.data$antigen_iso == antigen)
-
-    if (nrow(ag_params) == 0) {
-      cli::cli_warn("No parameters found for {antigen}")
-      next
+  # Helper function to extract noise limit for an antigen
+  get_ag_noise <- function(ag, np) {
+    if (is.data.frame(np)) {
+      # Single data frame
+      np |> dplyr::filter(.data$antigen_iso == ag)
+    } else if (is.list(np)) {
+      # List split by antigen
+      if (ag %in% names(np)) {
+        np[[ag]]
+      } else {
+        NULL
+      }
     }
+  }
 
-    # Average parameters across MCMC samples for single prediction
-    param_avg <- ag_params |>
-      dplyr::select(
-        -"antigen_iso",
-        -"iter"
-      ) |>
-      colMeans(na.rm = TRUE)
+  # Handle both list and data frame formats of sr_params
+  if (is.list(sr_params) && !is.data.frame(sr_params)) {
+    # sr_params is a list split by antigen (from clustered fit)
+    for (antigen in antigen_isos) {
+      idx <- data$antigen_iso == antigen
 
-    # Create parameter matrix for ab() function
-    param_matrix <- matrix(
-      param_avg,
-      nrow = length(param_avg),
-      ncol = 1,
-      dimnames = list(names(param_avg), antigen)
-    )
+      if (!antigen %in% names(sr_params)) {
+        cli::cli_warn("No parameters found for {antigen}")
+        next
+      }
 
-    # Get noise limits for this antigen
-    ag_noise <- noise_params |>
-      dplyr::filter(.data$antigen_iso == antigen)
+      # Get parameters for this antigen
+      ag_params <- sr_params[[antigen]]
 
-    if (nrow(ag_noise) == 0) {
-      cli::cli_warn("No noise parameters found for {antigen}")
-      next
+      if (is.null(ag_params) || nrow(ag_params) == 0) {
+        cli::cli_warn("No parameters found for {antigen}")
+        next
+      }
+
+      # Average parameters across MCMC samples for single prediction
+      param_cols <- colnames(ag_params)
+      param_cols <- param_cols[!param_cols %in% c("antigen_iso", "iter")]
+
+      param_avg <- ag_params |>
+        dplyr::select(dplyr::all_of(param_cols)) |>
+        colMeans(na.rm = TRUE)
+
+      # Create parameter matrix for ab() function
+      param_matrix <- matrix(
+        param_avg,
+        nrow = length(param_avg),
+        ncol = 1,
+        dimnames = list(names(param_avg), antigen)
+      )
+
+      # Get noise limits for this antigen
+      ag_noise <- get_ag_noise(antigen, noise_params)
+
+      if (is.null(ag_noise) || nrow(ag_noise) == 0) {
+        cli::cli_warn("No noise parameters found for {antigen}")
+        next
+      }
+
+      # Handle both data frame and tibble formats
+      if (is.data.frame(ag_noise)) {
+        y_low <- ag_noise$y.low[1]
+        y_high <- ag_noise$y.high[1]
+      } else {
+        # Assume it's a vector or list
+        y_low <- ag_noise$y.low
+        y_high <- ag_noise$y.high
+      }
+
+      blims <- matrix(
+        c(y_low, y_high),
+        nrow = 1,
+        ncol = 2,
+        dimnames = list(antigen, c("min", "max"))
+      )
+
+      # Compute predictions: age = time since birth
+      ages <- data[idx, age_var, drop = TRUE]
+      predicted_ab <- ab(
+        t = ages * 365.25,
+        par = param_matrix,
+        blims = blims
+      )
+
+      predicted[idx] <- predicted_ab[, 1]
     }
+  } else {
+    # sr_params is a single data frame (from ungrouped fit)
+    for (antigen in antigen_isos) {
+      idx <- data$antigen_iso == antigen
 
-    blims <- matrix(
-      c(ag_noise$y.low, ag_noise$y.high),
-      nrow = 1,
-      ncol = 2,
-      dimnames = list(antigen, c("min", "max"))
-    )
+      # Get parameters for this antigen
+      ag_params <- sr_params |>
+        dplyr::filter(.data$antigen_iso == antigen)
 
-    # Compute predictions: age = time since birth
-    ages <- data[idx, age_var, drop = TRUE]
-    predicted_ab <- ab(
-      t = ages * 365.25,
-      par = param_matrix,
-      blims = blims
-    )
+      if (nrow(ag_params) == 0) {
+        cli::cli_warn("No parameters found for {antigen}")
+        next
+      }
 
-    predicted[idx] <- predicted_ab[, 1]
+      # Average parameters across MCMC samples for single prediction
+      param_avg <- ag_params |>
+        dplyr::select(
+          -"antigen_iso",
+          -"iter"
+        ) |>
+        colMeans(na.rm = TRUE)
+
+      # Create parameter matrix for ab() function
+      param_matrix <- matrix(
+        param_avg,
+        nrow = length(param_avg),
+        ncol = 1,
+        dimnames = list(names(param_avg), antigen)
+      )
+
+      # Get noise limits for this antigen
+      ag_noise <- get_ag_noise(antigen, noise_params)
+
+      if (is.null(ag_noise) || nrow(ag_noise) == 0) {
+        cli::cli_warn("No noise parameters found for {antigen}")
+        next
+      }
+
+      # Handle both data frame and tibble formats
+      if (is.data.frame(ag_noise)) {
+        y_low <- ag_noise$y.low[1]
+        y_high <- ag_noise$y.high[1]
+      } else {
+        # Assume it's a vector or list
+        y_low <- ag_noise$y.low
+        y_high <- ag_noise$y.high
+      }
+
+      blims <- matrix(
+        c(y_low, y_high),
+        nrow = 1,
+        ncol = 2,
+        dimnames = list(antigen, c("min", "max"))
+      )
+
+      # Compute predictions: age = time since birth
+      ages <- data[idx, age_var, drop = TRUE]
+      predicted_ab <- ab(
+        t = ages * 365.25,
+        par = param_matrix,
+        blims = blims
+      )
+
+      predicted[idx] <- predicted_ab[, 1]
+    }
   }
 
   return(predicted)

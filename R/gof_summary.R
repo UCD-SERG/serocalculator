@@ -87,7 +87,9 @@ gof_summary <- function(object, pop_data, verbose = TRUE) {
     },
     error = function(e) {
       if (verbose) {
-        cli::cli_warn("Could not compute residuals: {e$message}")
+        cli::cli_inform(c(
+          "i" = "Residual diagnostics not available: {e$message}"
+        ))
       }
       NULL
     }

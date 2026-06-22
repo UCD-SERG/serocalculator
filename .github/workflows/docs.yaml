@@ -144,9 +144,9 @@ jobs:
         run: |
           # Set devel = FALSE for version tags, TRUE for everything else
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            Rscript -e 'pkgdown::build_site(devel = FALSE)'
+            Rscript -e 'pkgdown::build_site(devel = FALSE, quiet = FALSE)'
           else
-            Rscript -e 'pkgdown::build_site(devel = TRUE)'
+            Rscript -e 'pkgdown::build_site(devel = TRUE, quiet = FALSE)'
           fi
         shell: bash
         working-directory: ${{ github.event.repository.name }}

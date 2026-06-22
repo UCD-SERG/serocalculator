@@ -51,6 +51,7 @@ Suggests:
     fs,
     ggbeeswarm,
     knitr,
+    maps,
     mixtools,
     pak,
     quarto,

@@ -72,7 +72,7 @@ LinkingTo:
 Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto, lewinfox/foodwebr, serodynamics
+Config/Needs/website: quarto, lewinfox/foodwebr, serodynamics, maps
 Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US

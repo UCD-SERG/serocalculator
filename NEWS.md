@@ -28,7 +28,9 @@
   shifted the random-number stream out of sync and made simulated values, and
   their snapshots, differ between macOS, Windows, and Linux). Simulated
   values change slightly as a result of this fix. (#447)
-* Removed lingering terminology discrepancies
+* Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
+  `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
+  "seroconversion"/"incidence".
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names

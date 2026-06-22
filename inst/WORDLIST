@@ -15,12 +15,14 @@ IgG
 IgM
 LV
 Lik
+LogLik
 Lotka
 NIAID
 NLL
 Nadu
 OSF
 Orientia
+PPC
 PRs
 RStudio
 Rai
@@ -37,6 +39,7 @@ UCD
 Unif
 Vellore
 Volterra
+Wilk
 al
 ast
 behaviour
@@ -51,8 +54,8 @@ colour
 csv
 dev
 devtools
-dplyr
 displaystyle
+dplyr
 dropdown
 dt
 eps
@@ -79,7 +82,6 @@ llik
 logf
 magrittr
 mathbb
-mathbf
 mathcal
 mcmc
 md
@@ -98,17 +100,12 @@ param
 params
 pipetting
 pkgdown
-pmf
 pre
 predation
-providecommand
 qmd
 qquad
 recombinant
-remotes
 renamings
-renewcommand
-rlang
 se
 sectionally
 sera
@@ -119,7 +116,7 @@ seroepidemiology
 seroincidence
 seroincidences
 serologic
-Serological
+serological
 seronegative
 seroresponse
 seroresponses

@@ -41,7 +41,7 @@
 #'
 #' noise <- example_noise_params_pk
 #'
-#' # Fit model
+#' # Fit model (works with both grouped and ungrouped fits)
 #' est <- est_seroincidence(
 #'   pop_data = xs_data,
 #'   sr_params = curve,
@@ -50,12 +50,11 @@
 #' )
 #'
 #' # Get goodness of fit summary
-#' \donttest{
 #' gof <- gof_summary(
 #'   object = est,
-#'   pop_data = xs_data
+#'   pop_data = xs_data,
+#'   verbose = FALSE
 #' )
-#' }
 gof_summary <- function(object, pop_data, verbose = TRUE) {
 
   # Validate inputs

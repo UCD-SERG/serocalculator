@@ -1,5 +1,10 @@
 # serocalculator (development version)
 
+## Documentation
+
+* Added introductory lecture slides to the `methodology` vignette
+  ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+
 ## Internal
 
 * The `methodology` vignette's LaTeX macros now come from the shared

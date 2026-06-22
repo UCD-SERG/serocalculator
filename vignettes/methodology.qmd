@@ -49,7 +49,10 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 :::: {.column width="50%"}
 
 ![*Shigella* in a stool sample. Source: Wikimedia Commons (license to verify).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing *Shigella* bacteria"}
-![From Nature Reviews Microbiology (2024). © Springer Nature — reuse permission required.](../man/figures/41579_2024_1126_Fig1_HTML.png){fig-alt="Published figure on enteric pathogen epidemiology from Nature Reviews Microbiology (2024)"}
+
+::: {.callout-note}
+**[Figure placeholder — rights pending]** *Epidemiology of enteric pathogens. Source: Nature Reviews Microbiology (2024). Permission request in progress (tracked in issue #528).*
+:::
 ::::
 
 :::
@@ -70,7 +73,10 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 :::: {.column width="50%"}
 
 ![*Trombicula* mite larva with stylostome. Source: Wikimedia Commons (license to verify).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"}
-![From a Springer book chapter. © Springer Nature — reuse permission required.](../man/figures/340149_1_En_16_Fig6_HTML.webp){fig-alt="Published figure on scrub typhus from a Springer book chapter"}
+
+::: {.callout-note}
+**[Figure placeholder — rights pending]** *Scrub typhus pathophysiology. Source: Springer book chapter. Permission request in progress (tracked in issue #528).*
+:::
 ::::
 
 :::
@@ -98,7 +104,9 @@ widening **equity gaps** in access to effective vaccines.
 
 :::: {.column width="45%"}
 
-![Global typhoid burden and the limited adoption of typhoid conjugate vaccines. Reuse permission required.](../man/figures/burden-typhoid-vaccines.png){fig-alt="Figure summarizing global typhoid burden and the limited adoption of typhoid conjugate vaccines"}
+::: {.callout-note}
+**[Figure placeholder — rights pending]** *Global typhoid burden and the limited adoption of typhoid conjugate vaccines. Permission request in progress (tracked in issue #528).*
+:::
 
 ::::
 

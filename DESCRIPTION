@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9016
+Version: 1.4.1.9000
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -51,6 +51,7 @@ Suggests:
     fs,
     ggbeeswarm,
     knitr,
+    maps,
     mixtools,
     pak,
     quarto,
@@ -65,19 +66,21 @@ Suggests:
     forcats,
     snapr (>= 0.0.0.9000),
     rex,
-    readr
+    readr,
+    serodynamics
 LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto, lewinfox/foodwebr
+Config/Needs/website: quarto, lewinfox/foodwebr, serodynamics, maps
 Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
-Remotes: 
-    d-morrison/snapr
+Remotes:
+    d-morrison/snapr,
+    UCD-SERG/serodynamics
 Config/roxygen2/version: 8.0.0

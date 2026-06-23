@@ -2,6 +2,11 @@
 
 ## serocalculator (development version)
 
+### Documentation
+
+- Added introductory lecture slides to the `methodology` vignette
+  (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).
+
 ### Internal
 
 - The `methodology` vignette’s LaTeX macros now come from the shared
@@ -45,7 +50,12 @@
   Windows, and Linux). Simulated values change slightly as a result of
   this fix.
   ([\#447](https://github.com/UCD-SERG/serocalculator/issues/447))
-- Removed lingering terminology discrepancies
+- Corrected default axis labels in
+  [`strat_ests_barplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_barplot.md)
+  (`xlab`) and
+  [`strat_ests_scatterplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_scatterplot.md)
+  (`ylab`) to say “seroincidence” rather than
+  “seroconversion”/“incidence”.
 - [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
   and
   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)

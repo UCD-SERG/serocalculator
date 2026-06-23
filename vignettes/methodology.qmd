@@ -26,8 +26,8 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 :::
 
 ::: {.column width="40%"}
-![*Salmonella* Typhi, flagellar stain. Source: CDC PHIL (public domain), via Wikimedia Commons.](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"}
-![Historic typhoid fever illustration. Source: Wikimedia Commons (license to verify).](../man/figures/Fievre_typhoide.png){fig-alt="Historical illustration depicting typhoid fever"}
+![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SalmonellaTyphiFlagellarStain.jpg).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"}
+![Global distribution of typhoid fever. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fievre_typhoide.png), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Fievre_typhoide.png){fig-alt="World map showing high (red) and moderate (orange) typhoid-burden countries"}
 
 :::
 
@@ -48,11 +48,7 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![*Shigella* in a stool sample. Source: Wikimedia Commons (license to verify).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing *Shigella* bacteria"}
-
-::: {.callout-note}
-**[Figure placeholder — rights pending]** *Epidemiology of enteric pathogens. Source: Nature Reviews Microbiology (2024). Permission request in progress (tracked in issue #528).*
-:::
+![*Shigella* in a stool sample. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing *Shigella* bacteria"}
 ::::
 
 :::
@@ -72,11 +68,7 @@ author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Publi
 
 :::: {.column width="50%"}
 
-![*Trombicula* mite larva with stylostome. Source: Wikimedia Commons (license to verify).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"}
-
-::: {.callout-note}
-**[Figure placeholder — rights pending]** *Scrub typhus pathophysiology. Source: Springer book chapter. Permission request in progress (tracked in issue #528).*
-:::
+![*Trombicula* mite larva with stylostome. Photo: Alan R Walker / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"}
 ::::
 
 :::
@@ -104,9 +96,46 @@ widening **equity gaps** in access to effective vaccines.
 
 :::: {.column width="45%"}
 
-::: {.callout-note}
-**[Figure placeholder — rights pending]** *Global typhoid burden and the limited adoption of typhoid conjugate vaccines. Permission request in progress (tracked in issue #528).*
-:::
+```{r}
+#| echo: false
+#| fig-cap: >
+#|   Countries with routine TCV introduction as of 2023.
+#|   Source: CDC MMWR 72(7):182–188 (public domain).
+#| fig-alt: >
+#|   World map highlighting countries that have introduced typhoid conjugate
+#|   vaccines (TCV) into routine immunization (green). As of 2023 only a
+#|   handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and
+#|   Samoa — have done so, despite much wider typhoid burden.
+library(ggplot2)
+
+# Countries with routine TCV introduction as of 2023
+# Source: CDC MMWR 72(7):182–188, February 17, 2023 (public domain)
+tcv_countries <- c(
+  "Pakistan", "Nepal",
+  "Liberia", "Zimbabwe", "Malawi",
+  "Samoa"
+)
+world <- map_data("world")
+world$status <- ifelse(
+  world$region %in% tcv_countries,
+  "TCV introduced", "Not yet introduced"
+)
+ggplot(world, aes(long, lat, group = group, fill = status)) +
+  geom_polygon(colour = "white", linewidth = 0.1) +
+  scale_fill_manual(
+    values = c(
+      "TCV introduced"     = "#1B9E77",
+      "Not yet introduced" = "#BBBBBB"
+    ),
+    name = NULL
+  ) +
+  coord_fixed(1.3) +
+  theme_void() +
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  )
+```
 
 ::::
 

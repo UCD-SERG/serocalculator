@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9014
+Version: 1.4.1.9000
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -51,6 +51,7 @@ Suggests:
     fs,
     ggbeeswarm,
     knitr,
+    maps,
     mixtools,
     pak,
     quarto,
@@ -72,7 +73,7 @@ LinkingTo:
 Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto, lewinfox/foodwebr, serodynamics
+Config/Needs/website: quarto, lewinfox/foodwebr, serodynamics, maps
 Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US

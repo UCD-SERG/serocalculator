@@ -13,9 +13,9 @@
   diarrhea (later)
 
 ![Photomicrograph of \*Salmonella\* Typhi bacteria with a flagellar
-stain](../reference/figures/SalmonellaTyphiFlagellarStain.jpg)![Historical
-illustration depicting typhoid
-fever](../reference/figures/Fievre_typhoide.png)
+stain](../reference/figures/SalmonellaTyphiFlagellarStain.jpg)![World
+map showing high (red) and moderate (orange) typhoid-burden
+countries](../reference/figures/Fievre_typhoide.png)
 
 ### *Shigella* (“dysentery”)
 
@@ -28,9 +28,11 @@ fever](../reference/figures/Fievre_typhoide.png)
   tenesmus (painful urge to defecate)
 
 ![Microscopy of a stool sample containing \*Shigella\*
-bacteria](../reference/figures/Shigella_stool.jpg)![Published figure on
-enteric pathogen epidemiology from Nature Reviews Microbiology
-(2024)](../reference/figures/41579_2024_1126_Fig1_HTML.png)
+bacteria](../reference/figures/Shigella_stool.jpg)
+
+*Shigella* in a stool sample. Photo: CDC/PHIL (public domain), via
+[Wikimedia
+Commons](https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg).
 
 ### *Orientia tsutsugamushi* (“scrub typhus”)
 
@@ -42,9 +44,12 @@ enteric pathogen epidemiology from Nature Reviews Microbiology
   gastrointestinal symptoms; hemorrhage in severe cases
 
 ![Microscopy of a \*Trombicula\* mite larva with its stylostome feeding
-tube](../reference/figures/Trombicula-larva-stylostome.jpg)![Published
-figure on scrub typhus from a Springer book
-chapter](../reference/figures/340149_1_En_16_Fig6_HTML.webp)
+tube](../reference/figures/Trombicula-larva-stylostome.jpg)
+
+*Trombicula* mite larva with stylostome. Photo: Alan R Walker /
+[Wikimedia
+Commons](https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg),
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 
 ## Why estimate incidence from serosurveys?
 
@@ -61,12 +66,14 @@ chapter](../reference/figures/340149_1_En_16_Fig6_HTML.webp)
 - These gaps block applications for vaccine funding, widening **equity
   gaps** in access to effective vaccines.
 
-![Figure summarizing global typhoid burden and the limited adoption of
-typhoid conjugate
-vaccines](../reference/figures/burden-typhoid-vaccines.png)
+![World map highlighting countries that have introduced typhoid
+conjugate vaccines (TCV) into routine immunization (green). As of 2023
+only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe,
+Malawi, and Samoa — have done so, despite much wider typhoid
+burden.](methodology_files/figure-html/unnamed-chunk-1-1.png)
 
-Global typhoid burden and the limited adoption of typhoid conjugate
-vaccines. Reuse permission required.
+Countries with routine TCV introduction as of 2023. Source: CDC MMWR
+72(7):182–188 (public domain).
 
 Three large randomized trials showed that a Vi tetanus-toxoid typhoid
 conjugate vaccine is 80-90% effective at preventing symptomatic typhoid,
@@ -481,7 +488,7 @@ sim_case_data |>
   autoplot(alpha = .5)
 ```
 
-![](methodology_files/figure-html/unnamed-chunk-2-1.png)
+![](methodology_files/figure-html/unnamed-chunk-3-1.png)
 
 Figure 2: Antibody response curves, $`p(Y=y|T=t)`$, for typhoid
 
@@ -528,7 +535,7 @@ case_data |>
     autoplot(alpha = .5, log_x = FALSE)
 ```
 
-![](methodology_files/figure-html/unnamed-chunk-3-1.png)
+![](methodology_files/figure-html/unnamed-chunk-4-1.png)
 
 Figure 3: Observed antibody measurements over time since fever onset,
 for typhoid

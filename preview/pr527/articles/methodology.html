@@ -78,7 +78,7 @@
 
       <h1>Estimating Incidence Rates from Cross-Sectional Serosurveys</h1>
 
-      <p class="author">Ezra Morrison, Assistant Professor of Biostatistics, Department of Public Health Sciences, UC Davis</p>
+
 
 
       <small class="dont-index">Source: <a href="https://github.com/UCD-SERG/serocalculator/blob/feat/intro-lecture-slides/vignettes/methodology.qmd" class="external-link"><code>vignettes/methodology.qmd</code></a></small>
@@ -939,7 +939,7 @@ Figure 5: Example log(likelihood) curves
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serodynamics/reference/run_mod.html" class="external-link">run_mod</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">nepal_sees</span>, with_post <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Check convergence, then export serocalculator-ready curve parameters</span></span>
-<span><span class="fu"><a href="https://ucd-serg.github.io/serodynamics/reference/plot_jags_Rhat.html" class="external-link">plot_jags_Rhat</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="fu">plot_jags_Rhat</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span><span class="va">curve_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serodynamics/reference/postprocess_jags_output.html" class="external-link">postprocess_jags_output</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="notes">
@@ -947,14 +947,14 @@ Figure 5: Example log(likelihood) curves
 </div>
 </section><section class="level2 smaller"><h3 class="smaller" id="what-a-fitted-model-looks-like">What a fitted model looks like<a class="anchor" aria-label="anchor" href="#what-a-fitted-model-looks-like"></a>
 </h3>
-<p>The package ships a cached example fit; <code><a href="https://ucd-serg.github.io/serodynamics/reference/plot_jags_dens.html" class="external-link">plot_jags_dens()</a></code> shows the posterior densities of the five kinetic parameters (here HlyE IgG, <em>Typhi</em>), overlaid by MCMC chain:</p>
+<p>The package ships a cached example fit; <code>plot_jags_dens()</code> shows the posterior densities of the five kinetic parameters (here HlyE IgG, <em>Typhi</em>), overlaid by MCMC chain:</p>
 <div class="notes">
 <p>The overlapping chains indicate good convergence.</p>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nepal_sees_jags_output"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ucd-serg.github.io/serodynamics/reference/plot_jags_dens.html" class="external-link">plot_jags_dens</a></span><span class="op">(</span><span class="va">nepal_sees_jags_output</span>, iso <span class="op">=</span> <span class="st">"HlyE_IgG"</span>, strat <span class="op">=</span> <span class="st">"typhi"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">plot_jags_dens</span><span class="op">(</span><span class="va">nepal_sees_jags_output</span>, iso <span class="op">=</span> <span class="st">"HlyE_IgG"</span>, strat <span class="op">=</span> <span class="st">"typhi"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure><p><img src="../reference/figures/serodynamics-cached-fit.png" alt="Five posterior density panels (alpha, shape, t1, y0, y1) with two overlapping MCMC chains"></p>

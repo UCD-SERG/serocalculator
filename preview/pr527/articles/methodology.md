@@ -1049,10 +1049,9 @@ fit takes minutes to hours; the package ships ready-made example output
 
 ### What a fitted model looks like
 
-The package ships a cached example fit;
-[`plot_jags_dens()`](https://ucd-serg.github.io/serodynamics/reference/plot_jags_dens.html)
-shows the posterior densities of the five kinetic parameters (here HlyE
-IgG, *Typhi*), overlaid by MCMC chain:
+The package ships a cached example fit; `plot_jags_dens()` shows the
+posterior densities of the five kinetic parameters (here HlyE IgG,
+*Typhi*), overlaid by MCMC chain:
 
 The overlapping chains indicate good convergence.
 

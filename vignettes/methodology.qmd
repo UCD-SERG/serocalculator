@@ -5,7 +5,6 @@ vignette: >
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
-author: Ezra Morrison, Assistant Professor of Biostatistics, Department of Public Health Sciences, UC Davis
 ---
 
 {{< include ../macros/macros.qmd >}}

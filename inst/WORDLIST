@@ -17,6 +17,7 @@ LMICs
 LPS
 LV
 Lik
+LogLik
 Lotka
 NIAID
 NLL
@@ -24,6 +25,7 @@ Nadu
 Neuzil
 OSF
 Orientia
+PPC
 PRs
 Paratyphi
 Photomicrograph
@@ -47,6 +49,7 @@ UCD
 Unif
 Vellore
 Volterra
+Wilk
 Wikimedia
 al
 ast
@@ -98,7 +101,6 @@ macular
 magrittr
 malaise
 mathbb
-mathbf
 mathcal
 mcmc
 md
@@ -120,14 +122,11 @@ params
 pathognomonic
 pipetting
 pkgdown
-pmf
 pre
 predation
-providecommand
 qmd
 qquad
 recombinant
-remotes
 renamings
 renewcommand
 reproducibly
@@ -144,6 +143,7 @@ seroepidemiology
 seroincidence
 seroincidences
 serologic
+serological
 seronegative
 seroresponse
 seroresponses

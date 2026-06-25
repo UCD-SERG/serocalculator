@@ -141,8 +141,10 @@ simresp.tinf <- function(# nolint: object_name_linter
 
     t_next <- -log(runif(1, 0, 1)) / lambda
     # Quantize to whole days for cross-platform reproducibility (see the
-    # comment on the first-infection draw above). `t_end` and `t0` are whole
-    # days, so the boundary clamp below stays integer-valued too.
+    # comment on the first-infection draw above). `t0` is always a whole number
+    # of days (accumulated quantized steps); `t_end` may be fractional
+    # (e.g. 10 * 365.25 = 3652.5), so the boundary clamp t_end - t0 can also
+    # be fractional, but that doesn't affect the integer-length time grid.
     t_next <- quantize_t_next(t_next)
     if (t0 <= t_end && t0 + t_next > t_end) {
       t_next <- t_end - t0

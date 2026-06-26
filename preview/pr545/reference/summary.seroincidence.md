@@ -11,7 +11,15 @@ account for within-cluster correlation.
 
 ``` r
 # S3 method for class 'seroincidence'
-summary(object, coverage = 0.95, verbose = TRUE, ...)
+summary(
+  object,
+  coverage = 0.95,
+  verbose = TRUE,
+  small_sample = c("none", "CR1"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE,
+  ...
+)
 ```
 
 ## Arguments
@@ -29,6 +37,21 @@ summary(object, coverage = 0.95, verbose = TRUE, ...)
 - verbose:
 
   whether to produce verbose messaging
+
+- small_sample:
+
+  small-sample correction for cluster-robust variance. Use `"CR1"` to
+  apply the one-way CR1 factor to each subset term, or `"none"` to leave
+  the one-way terms unadjusted.
+
+- floor_to_standard:
+
+  whether to floor cluster-robust variance at the model-based variance.
+
+- debug_cluster:
+
+  whether to print the cluster-robust variance decomposition when
+  clustering is used.
 
 - ...:
 

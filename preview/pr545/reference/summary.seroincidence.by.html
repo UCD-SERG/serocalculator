@@ -73,6 +73,9 @@ est_seroincidence_by()."></head><body>
 <span>  show_deviance <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  show_convergence <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  small_sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"CR1"</span><span class="op">)</span>,</span>
+<span>  floor_to_standard <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  debug_cluster <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -104,6 +107,22 @@ Default = <code>FALSE</code>.</p></dd>
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a>
 scalar indicating whether to print verbose messages to the console</p></dd>
+
+
+<dt id="arg-small-sample">small_sample<a class="anchor" aria-label="anchor" href="#arg-small-sample"></a></dt>
+<dd><p>small-sample correction for cluster-robust variance.
+Use <code>"CR1"</code> to apply the one-way CR1 factor to each subset term, or
+<code>"none"</code> to leave the one-way terms unadjusted.</p></dd>
+
+
+<dt id="arg-floor-to-standard">floor_to_standard<a class="anchor" aria-label="anchor" href="#arg-floor-to-standard"></a></dt>
+<dd><p>whether to floor cluster-robust variance at the
+model-based variance.</p></dd>
+
+
+<dt id="arg-debug-cluster">debug_cluster<a class="anchor" aria-label="anchor" href="#arg-debug-cluster"></a></dt>
+<dd><p>whether to print the cluster-robust variance
+decomposition when clustering is used.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

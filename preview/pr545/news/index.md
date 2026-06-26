@@ -52,8 +52,10 @@
   ([\#447](https://github.com/UCD-SERG/serocalculator/issues/447))
 - Cluster-robust standard errors now treat multiple `cluster_var`
   columns as multi-way clustering instead of collapsing them to a single
-  interaction, and they are no longer allowed to be smaller than the
-  corresponding model-based standard errors.
+  interaction. One-way subset terms now use the CR1 small-sample
+  correction by default, the floor to model-based variance is optional,
+  and debug output now exposes the multi-way variance decomposition used
+  in the final standard error.
   ([\#543](https://github.com/UCD-SERG/serocalculator/issues/543))
 - Corrected default axis labels in
   [`strat_ests_barplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_barplot.md)

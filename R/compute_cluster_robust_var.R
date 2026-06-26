@@ -49,7 +49,7 @@
       pop_data_combined = pop_data_combined
     )
     robust_var_log_lambda <- robust_var_log_lambda +
-      (-1)^(n_vars_per_subset[[i]] + 1) * subset_var_log_lambda
+      (-1)^(n_vars_per_subset[i] + 1) * subset_var_log_lambda
   }
 
   # Use a conservative floor so cluster-robust variance does not fall below the

@@ -56,8 +56,8 @@
     cluster_scores[i] <- (ll_cluster_plus - ll_cluster_mle) / epsilon
   }
 
-  b_matrix <- sum(cluster_scores^2) # nolint: object_name_linter
-  h_matrix <- fit$hessian # nolint: object_name_linter
+  score_variance <- sum(cluster_scores^2)
+  hessian <- fit$hessian
 
-  b_matrix / (h_matrix^2)
+  score_variance / (hessian^2)
 }

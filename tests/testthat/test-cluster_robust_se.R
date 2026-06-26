@@ -150,8 +150,9 @@ test_that("singleton cluster IDs do not reduce standard errors", {
   withr::local_seed(20241213)
 
   test_data <- sees_pop_data_pk_100
-  # Unique household IDs create singleton clusters, which should behave like
-  # the unclustered analysis rather than shrinking the standard error.
+  # Unique household IDs create singleton clusters. The naive clustered
+  # implementation shrank the standard error here, but the corrected behavior
+  # should match the unclustered analysis instead.
   test_data$household_id <- seq_len(nrow(test_data))
 
   est_standard <- est_seroincidence(

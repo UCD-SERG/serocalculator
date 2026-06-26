@@ -52,8 +52,10 @@
       (-1)^(cluster_var_terms[[i]] + 1) * subset_var_log_lambda
   }
 
-  # Clustering should not reduce uncertainty relative to the model-based
-  # standard error when the only adjustment is for within-cluster correlation.
+  # Use a conservative floor so cluster-robust variance does not fall below the
+  # model-based variance when clustering adds no effective dependence (for
+  # example, singleton clusters) or finite-sample noise would otherwise shrink
+  # the standard error.
   robust_var_log_lambda <- max(
     standard_var_log_lambda,
     robust_var_log_lambda

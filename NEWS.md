@@ -21,6 +21,11 @@
 
 ## Bug fixes
 
+* Fixed multi-way cluster-robust standard error calculation in
+  `summary.seroincidence()`: `cluster_var = c("commune", "household_id")`
+  now uses a true multi-way sandwich estimator instead of collapsing to a
+  single interaction cluster, resolving incorrect standard errors for nested
+  clustering designs. (#543)
 * `sim_pop_data()` and `sim_pop_data_multi()` now produce identical results
   across operating systems. Simulated inter-infection times are now rounded to
   whole days, so the number of random draws consumed no longer depends on

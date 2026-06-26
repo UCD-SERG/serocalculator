@@ -145,3 +145,62 @@ test_that("multiple cluster variables work correctly", {
   # Standard errors should be positive
   expect_true(sum_multi$SE > 0)
 })
+
+test_that("nested two-way clustering uses multi-way correction", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100 |>
+    dplyr::mutate(
+      commune = .data$cluster,
+      household_id = paste0(
+        .data$cluster,
+        "_",
+        (as.integer(factor(.data$id)) %% 5) + 1
+      )
+    )
+
+  sum_standard <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  ) |>
+    summary(verbose = FALSE)
+
+  sum_commune <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "commune"
+  ) |>
+    summary(verbose = FALSE)
+
+  sum_household <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "household_id"
+  ) |>
+    summary(verbose = FALSE)
+
+  sum_two_way <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("commune", "household_id")
+  ) |>
+    summary(verbose = FALSE)
+
+  expect_equal(sum_standard$se_type, "standard")
+  expect_equal(sum_commune$se_type, "cluster-robust")
+  expect_equal(sum_household$se_type, "cluster-robust")
+  expect_equal(sum_two_way$se_type, "cluster-robust")
+
+  # For nested clustering (households within communes), two-way correction
+  # should reduce to the coarser commune clustering rather than household-only.
+  expect_equal(sum_two_way$SE, sum_commune$SE, tolerance = 1e-6)
+  expect_false(isTRUE(all.equal(sum_two_way$SE, sum_household$SE)))
+})

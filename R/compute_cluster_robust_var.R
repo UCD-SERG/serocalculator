@@ -21,18 +21,18 @@
   pop_data_combined <- do.call(rbind, pop_data_list)
   standard_var_log_lambda <- 1 / fit$hessian |> as.numeric()
 
-  subset_cluster_vars <- unlist(
+  cluster_var_combinations <- unlist(
     lapply(seq_along(cluster_var), function(n_vars) {
       utils::combn(cluster_var, n_vars, simplify = FALSE)
     }),
     recursive = FALSE
   )
 
-  cluster_var_terms <- vapply(subset_cluster_vars, length, integer(1))
+  n_vars_per_subset <- vapply(cluster_var_combinations, length, integer(1))
   robust_var_log_lambda <- 0
 
-  for (i in seq_along(subset_cluster_vars)) {
-    cluster_vars_subset <- subset_cluster_vars[[i]]
+  for (i in seq_along(cluster_var_combinations)) {
+    cluster_vars_subset <- cluster_var_combinations[[i]]
     if (length(cluster_vars_subset) == 1) {
       cluster_ids <- pop_data_combined[[cluster_vars_subset]]
     } else {
@@ -49,7 +49,7 @@
       pop_data_combined = pop_data_combined
     )
     robust_var_log_lambda <- robust_var_log_lambda +
-      (-1)^(cluster_var_terms[[i]] + 1) * subset_var_log_lambda
+      (-1)^(n_vars_per_subset[[i]] + 1) * subset_var_log_lambda
   }
 
   # Use a conservative floor so cluster-robust variance does not fall below the

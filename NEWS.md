@@ -28,6 +28,10 @@
   shifted the random-number stream out of sync and made simulated values, and
   their snapshots, differ between macOS, Windows, and Linux). Simulated
   values change slightly as a result of this fix. (#447)
+* Cluster-robust standard errors now treat multiple `cluster_var` columns as
+  multi-way clustering instead of collapsing them to a single interaction, and
+  they are no longer allowed to be smaller than the corresponding model-based
+  standard errors. (#543)
 * Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
   `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
   "seroconversion"/"incidence".

@@ -145,3 +145,57 @@ test_that("multiple cluster variables work correctly", {
   # Standard errors should be positive
   expect_true(sum_multi$SE > 0)
 })
+
+test_that("singleton cluster IDs do not reduce standard errors", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$household_id <- seq_len(nrow(test_data))
+
+  est_standard <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+  est_household <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "household_id"
+  )
+
+  sum_standard <- summary(est_standard, verbose = FALSE)
+  sum_household <- summary(est_household, verbose = FALSE)
+
+  expect_equal(sum_household$SE, sum_standard$SE)
+})
+
+test_that("nested multi-level clustering uses the broader cluster level", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$household_id <- seq_len(nrow(test_data))
+  test_data$commune <- rep(1:10, length.out = nrow(test_data))
+
+  est_commune <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "commune"
+  )
+  est_nested <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("commune", "household_id")
+  )
+
+  sum_commune <- summary(est_commune, verbose = FALSE)
+  sum_nested <- summary(est_nested, verbose = FALSE)
+
+  expect_equal(sum_nested$SE, sum_commune$SE)
+})

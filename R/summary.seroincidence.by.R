@@ -17,6 +17,7 @@
 #' (see help for [optim()] for details).
 #' Default = `FALSE`.
 #' @param confidence_level desired confidence interval coverage probability
+#' @inheritParams summary.seroincidence
 #' @return
 #' A `summary.seroincidence.by` object, which is a [tibble::tibble],
 #' with the following columns:
@@ -69,7 +70,11 @@ summary.seroincidence.by <- function(
     show_deviance = TRUE,
     show_convergence = TRUE,
     verbose = FALSE,
+    small_sample = c("none", "CR1"),
+    floor_to_standard = FALSE,
+    debug_cluster = FALSE,
     ...) {
+  small_sample <- match.arg(small_sample)
   alpha <- 1 - confidence_level
   quantiles <- c(alpha / 2, 1 - alpha / 2)
 
@@ -87,7 +92,10 @@ summary.seroincidence.by <- function(
     lapply(
       FUN = summary.seroincidence,
       coverage = confidence_level,
-      verbose = verbose
+      verbose = verbose,
+      small_sample = small_sample,
+      floor_to_standard = floor_to_standard,
+      debug_cluster = debug_cluster
     ) |>
     bind_rows(.id = "Stratum")
 

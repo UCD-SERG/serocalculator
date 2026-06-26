@@ -10,7 +10,9 @@
 .compute_cluster_var_oneway <- function(
     fit,
     cluster_ids,
-    pop_data_combined) {
+    pop_data_combined,
+    small_sample = c("none", "CR1")) {
+  small_sample <- match.arg(small_sample)
   pop_data_list <- attr(fit, "pop_data")
   sr_params_list <- attr(fit, "sr_params")
   noise_params_list <- attr(fit, "noise_params")
@@ -19,7 +21,8 @@
   epsilon <- 1e-6
 
   unique_clusters <- unique(cluster_ids)
-  cluster_scores <- numeric(length(unique_clusters))
+  n_clusters <- length(unique_clusters)
+  cluster_scores <- numeric(n_clusters)
 
   for (i in seq_along(unique_clusters)) {
     cluster_id <- unique_clusters[i]
@@ -57,7 +60,17 @@
   }
 
   score_variance <- sum(cluster_scores^2)
-  hessian <- fit$hessian
+  hessian <- as.numeric(fit$hessian)[1]
 
-  score_variance / (hessian^2)
+  if (!is.finite(hessian) || hessian <= 0) {
+    return(NA_real_)
+  }
+
+  var_log_lambda <- score_variance / (hessian^2)
+
+  if (small_sample == "CR1" && n_clusters > 1) {
+    var_log_lambda <- var_log_lambda * (n_clusters / (n_clusters - 1))
+  }
+
+  var_log_lambda
 }

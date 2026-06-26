@@ -43,15 +43,17 @@
       )
     }
 
+    subset_var_log_lambda <- .compute_cluster_var_oneway(
+      fit = fit,
+      cluster_ids = cluster_ids,
+      pop_data_combined = pop_data_combined
+    )
     robust_var_log_lambda <- robust_var_log_lambda +
-      (-1)^(cluster_var_terms[[i]] + 1) *
-      .compute_cluster_var_oneway(
-        fit = fit,
-        cluster_ids = cluster_ids,
-        pop_data_combined = pop_data_combined
-      )
+      (-1)^(cluster_var_terms[[i]] + 1) * subset_var_log_lambda
   }
 
+  # Clustering should not reduce uncertainty relative to the model-based
+  # standard error when the only adjustment is for within-cluster correlation.
   robust_var_log_lambda <- max(
     standard_var_log_lambda,
     robust_var_log_lambda

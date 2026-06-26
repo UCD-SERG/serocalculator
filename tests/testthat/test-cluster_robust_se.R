@@ -150,6 +150,8 @@ test_that("singleton cluster IDs do not reduce standard errors", {
   withr::local_seed(20241213)
 
   test_data <- sees_pop_data_pk_100
+  # Unique household IDs create singleton clusters, which should behave like
+  # the unclustered analysis rather than shrinking the standard error.
   test_data$household_id <- seq_len(nrow(test_data))
 
   est_standard <- est_seroincidence(
@@ -176,6 +178,8 @@ test_that("nested multi-level clustering uses the broader cluster level", {
   withr::local_seed(20241213)
 
   test_data <- sees_pop_data_pk_100
+  # Households are singletons nested within broader communes, so multi-way
+  # clustering should reduce to the commune-level clustering result here.
   test_data$household_id <- seq_len(nrow(test_data))
   test_data$commune <- rep(1:10, length.out = nrow(test_data))
 

@@ -145,3 +145,195 @@ test_that("multiple cluster variables work correctly", {
   # Standard errors should be positive
   expect_true(sum_multi$SE > 0)
 })
+
+test_that("CR1 increases variance when clusters are few", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$cluster_small <- rep(seq_len(4), length.out = nrow(test_data))
+
+  est_cluster <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "cluster_small"
+  )
+  pop_data_combined <- do.call(rbind, attr(est_cluster, "pop_data"))
+  cluster_ids <- pop_data_combined$cluster_small
+
+  var_no_correction <- .compute_cluster_var_oneway(
+    fit = est_cluster,
+    cluster_ids = cluster_ids,
+    pop_data_combined = pop_data_combined,
+    small_sample = "none"
+  )
+  var_cr1 <- .compute_cluster_var_oneway(
+    fit = est_cluster,
+    cluster_ids = cluster_ids,
+    pop_data_combined = pop_data_combined,
+    small_sample = "CR1"
+  )
+
+  expect_gt(var_cr1, var_no_correction)
+  expect_equal(var_cr1, var_no_correction * (4 / 3), tolerance = 1e-10)
+})
+
+test_that("cluster decomposition stores signed multi-way terms", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$school <- rep(1:5, length.out = nrow(test_data))
+  test_data$classroom <- rep(1:10, length.out = nrow(test_data))
+
+  est_multi <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("school", "classroom")
+  )
+  robust_var <- .compute_cluster_robust_var(
+    fit = est_multi,
+    cluster_var = c("school", "classroom"),
+    small_sample = "CR1",
+    floor_to_standard = FALSE
+  )
+  decomp <- attr(robust_var, "cluster_decomp")
+
+  expect_type(decomp, "list")
+  expect_named(
+    decomp,
+    c("standard_var", "robust_raw", "robust_final", "terms", "floor_applied")
+  )
+  expect_equal(nrow(decomp$terms), 3)
+  expect_equal(
+    decomp$robust_raw,
+    sum(decomp$terms$signed_term),
+    tolerance = 1e-10
+  )
+  expect_equal(decomp$robust_final, as.numeric(robust_var), tolerance = 1e-10)
+})
+
+test_that("optional variance floor can be enabled explicitly", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$household <- seq_len(nrow(test_data))
+
+  est_household <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "household"
+  )
+  raw_var <- .compute_cluster_robust_var(
+    fit = est_household,
+    cluster_var = "household",
+    small_sample = "none",
+    floor_to_standard = FALSE
+  )
+  floored_var <- .compute_cluster_robust_var(
+    fit = est_household,
+    cluster_var = "household",
+    small_sample = "none",
+    floor_to_standard = TRUE
+  )
+  raw_decomp <- attr(raw_var, "cluster_decomp")
+  floored_decomp <- attr(floored_var, "cluster_decomp")
+
+  expect_equal(as.numeric(raw_var), raw_decomp$robust_raw, tolerance = 1e-10)
+  expect_lt(raw_var, raw_decomp$standard_var)
+  expect_false(raw_decomp$floor_applied)
+
+  expect_equal(
+    floored_decomp$robust_raw,
+    as.numeric(raw_var),
+    tolerance = 1e-10
+  )
+  expect_true(floored_decomp$floor_applied)
+  expect_gte(floored_var, floored_decomp$standard_var)
+})
+
+test_that("nested multi-way clustering stays consistent within tolerance", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$household <- seq_len(nrow(test_data))
+  test_data$commune <- rep(1:10, length.out = nrow(test_data))
+
+  est_commune <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "commune"
+  )
+  est_nested <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("commune", "household")
+  )
+
+  commune_var <- .compute_cluster_robust_var(
+    fit = est_commune,
+    cluster_var = "commune",
+    small_sample = "CR1",
+    floor_to_standard = FALSE
+  )
+  nested_var <- .compute_cluster_robust_var(
+    fit = est_nested,
+    cluster_var = c("commune", "household"),
+    small_sample = "CR1",
+    floor_to_standard = FALSE
+  )
+  nested_decomp <- attr(nested_var, "cluster_decomp")
+  household_term <- nested_decomp$terms |>
+    dplyr::filter(.data$subset == "household")
+  intersection_term <- nested_decomp$terms |>
+    dplyr::filter(.data$subset == "commune + household")
+
+  expect_equal(
+    household_term$subset_variance,
+    intersection_term$subset_variance,
+    tolerance = 1e-10
+  )
+  expect_equal(
+    nested_decomp$robust_raw,
+    as.numeric(commune_var),
+    tolerance = 1e-10
+  )
+})
+
+test_that("debug output reports two-way variance terms", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$household <- seq_len(nrow(test_data))
+  test_data$commune <- rep(1:10, length.out = nrow(test_data))
+
+  est_nested <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("commune", "household")
+  )
+  debug_output <- testthat::capture_messages(
+    summary(
+      est_nested,
+      verbose = FALSE,
+      debug_cluster = TRUE
+    )
+  )
+  debug_output <- paste(debug_output, collapse = "\n")
+
+  expect_match(debug_output, "V_commune")
+  expect_match(debug_output, "V_household")
+  expect_match(debug_output, "V_intersection")
+  expect_match(debug_output, "V_raw")
+  expect_match(debug_output, "V_final")
+})

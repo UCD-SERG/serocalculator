@@ -10,6 +10,9 @@
   show_deviance = TRUE,
   show_convergence = TRUE,
   verbose = FALSE,
+  small_sample = c("none", "CR1"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE,
   ...
 )
 }
@@ -28,6 +31,16 @@ Default = \code{FALSE}.}
 
 \item{verbose}{a \link{logical}
 scalar indicating whether to print verbose messages to the console}
+
+\item{small_sample}{small-sample correction for cluster-robust variance.
+Use \code{"CR1"} to apply the one-way CR1 factor to each subset term, or
+\code{"none"} to leave the one-way terms unadjusted.}
+
+\item{floor_to_standard}{whether to floor cluster-robust variance at the
+model-based variance.}
+
+\item{debug_cluster}{whether to print the cluster-robust variance
+decomposition when clustering is used.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }

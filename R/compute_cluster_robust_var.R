@@ -16,104 +16,107 @@
 .compute_cluster_robust_var <- function(
     fit,
     cluster_var,
-    stratum_var = NULL) {
-  # Extract stored data (already split by antigen_iso)
+    stratum_var = NULL,
+    small_sample = c("none", "CR1"),
+    floor_to_standard = FALSE,
+    debug_cluster = FALSE) {
+  small_sample <- match.arg(small_sample)
   pop_data_list <- attr(fit, "pop_data")
-  sr_params_list <- attr(fit, "sr_params")
-  noise_params_list <- attr(fit, "noise_params")
-  antigen_isos <- attr(fit, "antigen_isos")
-
-  # Get MLE estimate
-  log_lambda_mle <- fit$estimate
-
-  # Combine pop_data list back into a single data frame
-  # to get cluster info
   pop_data_combined <- do.call(rbind, pop_data_list)
+  standard_var_log_lambda <- as.numeric(1 / fit$hessian)[1]
 
-  # Compute score (gradient) using numerical differentiation
-  # The score is the derivative of log-likelihood w.r.t. log(lambda)
-  epsilon <- 1e-6
+  cluster_var_combinations <- unlist(
+    lapply(seq_along(cluster_var), function(n_vars) {
+      utils::combn(cluster_var, n_vars, simplify = FALSE)
+    }),
+    recursive = FALSE
+  )
 
-  # For each observation, compute the contribution to the score
-  # We need to identify which cluster each observation belongs to
+  n_vars_per_subset <- vapply(cluster_var_combinations, length, integer(1))
+  decomp_rows <- vector("list", length(cluster_var_combinations))
 
-  # Handle multiple clustering levels by creating composite cluster ID
-  if (length(cluster_var) == 1) {
-    cluster_ids <- pop_data_combined[[cluster_var]]
-  } else {
-    # Create composite cluster ID from multiple variables
-    cluster_ids <- interaction(
-      pop_data_combined[, cluster_var, drop = FALSE],
-      drop = TRUE,
-      sep = "_"
-    )
-  }
-
-  # Get unique clusters
-  unique_clusters <- unique(cluster_ids)
-  n_clusters <- length(unique_clusters)
-
-  # Compute cluster-level scores
-  cluster_scores <- numeric(n_clusters)
-
-  for (i in seq_along(unique_clusters)) {
-    cluster_id <- unique_clusters[i]
-
-    # Get observations in this cluster
-    cluster_mask <- cluster_ids == cluster_id
-
-    # Create temporary pop_data with only this cluster
-    pop_data_cluster <- pop_data_combined[cluster_mask, , drop = FALSE]
-
-    # Split by antigen
-    pop_data_cluster_list <- split(
-      pop_data_cluster,
-      pop_data_cluster$antigen_iso
-    )
-
-    # Ensure all antigen_isos are represented
-    # (add empty data frames if missing)
-    for (ag in antigen_isos) {
-      if (!ag %in% names(pop_data_cluster_list)) {
-        # Create empty data frame with correct structure
-        pop_data_cluster_list[[ag]] <- pop_data_list[[ag]][0, , drop = FALSE]
-      }
+  for (i in seq_along(cluster_var_combinations)) {
+    cluster_vars_subset <- cluster_var_combinations[[i]]
+    if (length(cluster_vars_subset) == 1) {
+      cluster_ids <- pop_data_combined[[cluster_vars_subset]]
+    } else {
+      cluster_ids <- interaction(
+        pop_data_combined[, cluster_vars_subset, drop = FALSE],
+        drop = TRUE,
+        sep = "_"
+      )
     }
 
-    # Compute log-likelihood for this cluster at MLE
-    ll_cluster_mle <- -(.nll(
-      log.lambda = log_lambda_mle,
-      pop_data = pop_data_cluster_list,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params_list,
-      noise_params = noise_params_list,
-      verbose = FALSE
-    ))
-
-    # Compute log-likelihood at MLE + epsilon
-    ll_cluster_plus <- -(.nll(
-      log.lambda = log_lambda_mle + epsilon,
-      pop_data = pop_data_cluster_list,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params_list,
-      noise_params = noise_params_list,
-      verbose = FALSE
-    ))
-
-    # Numerical derivative (score for this cluster)
-    cluster_scores[i] <- (ll_cluster_plus - ll_cluster_mle) / epsilon
+    subset_var_log_lambda <- .compute_cluster_var_oneway(
+      fit = fit,
+      cluster_ids = cluster_ids,
+      pop_data_combined = pop_data_combined,
+      small_sample = small_sample
+    )
+    subset_sign <- (-1)^(n_vars_per_subset[i] + 1)
+    decomp_rows[[i]] <- tibble::tibble(
+      subset = paste(cluster_vars_subset, collapse = " + "),
+      order = n_vars_per_subset[i],
+      sign = subset_sign,
+      subset_variance = subset_var_log_lambda,
+      signed_term = subset_sign * subset_var_log_lambda
+    )
   }
 
-  # Compute B matrix (middle of sandwich)
-  # B = sum of outer products of cluster scores
-  b_matrix <- sum(cluster_scores^2) # nolint: object_name_linter
+  decomp_terms <- dplyr::bind_rows(decomp_rows)
+  robust_raw <- sum(decomp_terms$signed_term)
+  floor_applied <- isTRUE(floor_to_standard) &&
+    robust_raw < standard_var_log_lambda
+  robust_final <- if (isTRUE(floor_to_standard)) {
+    max(standard_var_log_lambda, robust_raw)
+  } else {
+    robust_raw
+  }
 
-  # Get Hessian (already computed by nlm)
-  h_matrix <- fit$hessian # nolint: object_name_linter
+  if (debug_cluster) {
+    cli::cli_inform("Cluster-robust variance decomposition:")
 
-  # Sandwich variance: V = H^(-1) * B * H^(-1)
-  # Since we have a scalar parameter, this simplifies to:
-  var_log_lambda_robust <- b_matrix / (h_matrix^2)
+    for (i in seq_len(nrow(decomp_terms))) {
+      term_label <- if (
+        length(cluster_var) == 2 &&
+          decomp_terms$order[i] == 2
+      ) {
+        "V_intersection"
+      } else {
+        paste0(
+          "V_",
+          gsub(" \\+ ", "_", decomp_terms$subset[i])
+        )
+      }
+      term_message <- glue::glue(
+        "{term_label} ({decomp_terms$subset[i]}) = ",
+        "{signif(decomp_terms$subset_variance[i], 6)}"
+      )
 
-  return(var_log_lambda_robust)
+      cli::cli_inform(term_message)
+    }
+
+    cli::cli_inform("V_raw = {signif(robust_raw, 6)}")
+    cli::cli_inform("V_final = {signif(robust_final, 6)}")
+
+    if (isTRUE(floor_to_standard)) {
+      floor_message <- glue::glue(
+        "Variance floor relative to standard variance ",
+        "{signif(standard_var_log_lambda, 6)}: ",
+        "{if (floor_applied) 'applied' else 'not applied'}"
+      )
+      cli::cli_inform(floor_message)
+    }
+  }
+
+  structure(
+    robust_final,
+    cluster_decomp = list(
+      standard_var = standard_var_log_lambda,
+      robust_raw = robust_raw,
+      robust_final = robust_final,
+      terms = decomp_terms,
+      floor_applied = floor_applied
+    )
+  )
 }

@@ -4,7 +4,15 @@
 \alias{summary.seroincidence}
 \title{Summarizing fitted seroincidence models}
 \usage{
-\method{summary}{seroincidence}(object, coverage = 0.95, verbose = TRUE, ...)
+\method{summary}{seroincidence}(
+  object,
+  coverage = 0.95,
+  verbose = TRUE,
+  small_sample = c("none", "CR1"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE,
+  ...
+)
 }
 \arguments{
 \item{object}{a \code{\link[=list]{list()}} outputted by \code{\link[stats:nlm]{stats::nlm()}} or \code{\link[=est_seroincidence]{est_seroincidence()}}}
@@ -12,6 +20,16 @@
 \item{coverage}{desired confidence interval coverage probability}
 
 \item{verbose}{whether to produce verbose messaging}
+
+\item{small_sample}{small-sample correction for cluster-robust variance.
+Use \code{"CR1"} to apply the one-way CR1 factor to each subset term, or
+\code{"none"} to leave the one-way terms unadjusted.}
+
+\item{floor_to_standard}{whether to floor cluster-robust variance at the
+model-based variance.}
+
+\item{debug_cluster}{whether to print the cluster-robust variance
+decomposition when clustering is used.}
 
 \item{...}{unused}
 }

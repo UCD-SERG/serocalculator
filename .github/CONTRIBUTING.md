@@ -68,16 +68,12 @@ More details
 ### Code style
 
 - New code should follow the tidyverse [style
-  guide](https://style.tidyverse.org). You can use the
-  [styler](https://CRAN.R-project.org/package=styler) package to apply
-  these styles, but please don’t restyle code that has nothing to do
-  with your PR.
-
-- This project is set up to use the
-  [Air](https://posit-dev.github.io/air/) formatter (configured via
-  `air.toml`). If you use VS Code or Positron, install the recommended
-  `Posit.air-vscode` extension (see `.vscode/extensions.json`) to enable
-  format-on-save.
+  guide](https://style.tidyverse.org). This project is set up to use
+  the [Air](https://posit-dev.github.io/air/) formatter (configured via
+  `air.toml`) to apply these styles, but please don’t restyle code
+  that has nothing to do with your PR. If you use VS Code or Positron,
+  install the recommended `Posit.air-vscode` extension (see
+  `.vscode/extensions.json`) to enable format-on-save.
 
 - We use [roxygen2](https://cran.r-project.org/package=roxygen2), with
   [Markdown

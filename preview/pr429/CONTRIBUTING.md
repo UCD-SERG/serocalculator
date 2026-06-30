@@ -34,20 +34,17 @@ advice.
   `usethis::create_from_github("UCD-SERG/serocalculator", fork = TRUE)`.
 
 - Install all development dependencies with
-  [`devtools::install_dev_deps()`](https://devtools.r-lib.org/reference/install_deps.html),
-  and then make sure the package passes R CMD check by running
-  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
-  If R CMD check doesn’t pass cleanly, it’s a good idea to ask for help
-  before continuing.
+  `devtools::install_dev_deps()`, and then make sure the package passes
+  R CMD check by running `devtools::check()`. If R CMD check doesn’t
+  pass cleanly, it’s a good idea to ask for help before continuing.
 
 - Create a Git branch for your pull request (PR). We recommend using
   `usethis::pr_init("brief-description-of-change")`.
 
 - Make your changes, commit to git, and then create a PR by running
-  [`usethis::pr_push()`](https://usethis.r-lib.org/reference/pull-requests.html),
-  and following the prompts in your browser. The title of your PR should
-  briefly describe the change. The body of your PR should contain
-  `Fixes #issue-number`.
+  `usethis::pr_push()`, and following the prompts in your browser. The
+  title of your PR should briefly describe the change. The body of your
+  PR should contain `Fixes #issue-number`.
 
 - For user-facing changes, add a bullet to the top of `NEWS.md`
   (i.e. just below the first header). Follow the style described in
@@ -71,16 +68,12 @@ More details
 ### Code style
 
 - New code should follow the tidyverse [style
-  guide](https://style.tidyverse.org). You can use the
-  [styler](https://CRAN.R-project.org/package=styler) package to apply
-  these styles, but please don’t restyle code that has nothing to do
-  with your PR.
-
-- This project is set up to use the
+  guide](https://style.tidyverse.org). This project is set up to use the
   [Air](https://posit-dev.github.io/air/) formatter (configured via
-  `air.toml`). If you use VS Code or Positron, install the recommended
-  `Posit.air-vscode` extension (see `.vscode/extensions.json`) to enable
-  format-on-save.
+  `air.toml`) to apply these styles, but please don’t restyle code that
+  has nothing to do with your PR. If you use VS Code or Positron,
+  install the recommended `Posit.air-vscode` extension (see
+  `.vscode/extensions.json`) to enable format-on-save.
 
 - We use [roxygen2](https://cran.r-project.org/package=roxygen2), with
   [Markdown

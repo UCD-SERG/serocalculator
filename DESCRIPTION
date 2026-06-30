@@ -22,6 +22,7 @@ BugReports: https://github.com/UCD-SERG/serocalculator/issues
 Depends: 
     R (>= 4.1.0)
 Imports:
+    and,
     cli,
     doParallel,
     dplyr,

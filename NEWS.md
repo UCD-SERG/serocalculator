@@ -1,5 +1,17 @@
 # serocalculator (development version)
 
+## New features
+
+* `autoplot.sim_results()` gains `x_var`, `group_var`, and `color_var`
+  arguments, letting users choose which columns map to the x-axis, group,
+  and color aesthetics instead of the previous hardcoded `sample_size` /
+  `lambda.sim` mapping.
+
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots in
+  `autoplot.seroincidence.by()` and `graph_seroresponse_model_1()`; these
+  functions now return a `"patchwork"` object instead of a `"ggarrange"` object.
 ## Documentation
 
 * Added introductory lecture slides to the `methodology` vignette
@@ -97,6 +109,7 @@
 `autoplot.curve_params()` (#453)
 * Extended `sim_pop_data_multi()` to loop over multiple sample sizes (#444)
 * Added new functions `analyze_sims()` and `autoplot.sim_results()` (#444)
+* Extended `autoplot.sim_results()` to allow customization of x-axis, group, and color aesthetics via `x_var`, `group_var`, and `color_var` parameters (#462)
 * Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
 * Rename argument `curve_params` to `sr_params` for estimation functions (#424)

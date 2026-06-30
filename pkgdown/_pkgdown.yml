@@ -35,6 +35,10 @@ reference:
   - graph.curve.params
   - graph_loglik
   - log_likelihood
+  - antibody_decay_curve
+  - pathogen_decay_curve
+  - plot_decay_curve
+  - curve_app
 - title: Estimate seroconversion incidence rates
   contents:
   - est_seroincidence

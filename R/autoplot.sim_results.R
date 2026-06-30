@@ -24,7 +24,12 @@ autoplot.sim_results <- function(
     color_var = group_var,
     ...) {
   object |>
-    dplyr::mutate(lambda.sim = factor(.data$lambda.sim)) |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::any_of(unique(c(group_var, color_var))),
+        factor
+      )
+    ) |>
     ggplot2::ggplot() +
     ggplot2::aes(
       x = .data[[x_var]],

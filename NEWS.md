@@ -1,5 +1,12 @@
 # serocalculator (development version)
 
+## New features
+
+* `autoplot.sim_results()` gains `x_var`, `group_var`, and `color_var`
+  arguments, letting users choose which columns map to the x-axis, group,
+  and color aesthetics instead of the previous hardcoded `sample_size` /
+  `lambda.sim` mapping.
+
 ## Dependencies
 
 * Replaced `ggpubr` with `patchwork` for arranging multi-panel plots in

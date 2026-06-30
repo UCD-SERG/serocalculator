@@ -74,7 +74,7 @@ simulate_seroincidence <- function(
   # Perform simulations in parallel
   results <-
     furrr::future_map(
-      .x = 1:n_sim,
+      .x = seq_len(n_sim),
       .f = run_one_sim_iter,
       .options = furrr_options(seed = TRUE)) |>
     structure(
@@ -172,13 +172,21 @@ compute_coverage <- function(
 }
 
 # Check how many rows have CI covering the true lambda
-coverage_count_50 <- final_table_50 %>% compute_coverage() |> print()
+coverage_count_50 <- final_table_50 %>% compute_coverage()
+coverage_count_100 <- final_table_100 %>% compute_coverage()
+coverage_count_100_0_1 <- final_table_100_0_1 |> compute_coverage()
+coverage_count_100_0_01 <- ft_100_0_01 |> compute_coverage()
 
-coverage_count_100 <- final_table_100 %>% compute_coverage() |> print()
+# Print the results
+cat("Coverage for sample size 50, lambda = 0.2:\n")
+print(coverage_count_50)
 
-final_table_100_0_1 |> compute_coverage()
-ft_100_0_01 |> compute_coverage()
-# Print the result
-print(paste("Number of rows where CI covers true lambda:", coverage_count_50))
-print(paste("Number of rows where CI covers true lambda:", coverage_count_100))
+cat("Coverage for sample size 100, lambda = 0.2:\n")
+print(coverage_count_100)
+
+cat("Coverage for sample size 100, lambda = 0.1:\n")
+print(coverage_count_100_0_1)
+
+cat("Coverage for sample size 100, lambda = 0.01:\n")
+print(coverage_count_100_0_01)
 

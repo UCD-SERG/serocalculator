@@ -41,8 +41,10 @@ autoplot.seroincidence <-
       cli::cli_abort(
         c(
           "x" = "Graphs cannot be extracted.",
-          "i" = "`build_graph` was not `TRUE` in the call to
-                 `est_seroincidence()`."
+          "i" = paste0(
+            "`build_graph` was not `TRUE` in the call to ",
+            "`est_seroincidence()`."
+          )
         )
       )
     }

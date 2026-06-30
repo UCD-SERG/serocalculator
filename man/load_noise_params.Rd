@@ -23,7 +23,9 @@ with extra attribute \code{antigen_isos})
 Load noise parameters
 }
 \examples{
-noise <- load_noise_params(serocalculator_example("example_noise_params.rds"))
+noise <- load_noise_params(
+  serocalculator_example("example_noise_params.rds")
+)
 print(noise)
 
 }

@@ -51,12 +51,35 @@ but updates baseline y0
 \item{add_noise}{a \code{\link[=logical]{logical()}} indicating
 whether to add biological and measurement noise}
 
+\item{curve_params}{a \code{\link[=data.frame]{data.frame()}} containing MCMC samples of parameters
+from the Bayesian posterior distribution of a longitudinal decay curve model.
+The parameter columns must be named:
+\itemize{
+\item \code{antigen_iso}: a \code{\link[=character]{character()}} vector indicating antigen-isotype
+combinations
+\item \code{iter}: an \code{\link[=integer]{integer()}} vector indicating MCMC sampling iterations
+\item \code{y0}: baseline antibody level at $t=0$ ($y(t=0)$)
+\item \code{y1}: antibody peak level (ELISA units)
+\item \code{t1}: duration of infection
+\item \code{alpha}: antibody decay rate
+(1/days for the current longitudinal parameter sets)
+\item \code{r}: shape factor of antibody decay
+}}
+
 \item{noise_limits}{biologic noise distribution parameters}
 
 \item{format}{a \code{\link[=character]{character()}} variable, containing either:
 \itemize{
 \item \code{"long"} (one measurement per row) or
 \item \code{"wide"} (one serum sample per row)
+}}
+
+\item{verbose}{verbosity level for console logging.
+Accepts a logical scalar or a non-negative whole number:
+\itemize{
+\item \code{FALSE}/\code{0}: no log messages
+\item \code{TRUE}/\code{1}: basic progress messages
+\item \verb{>= 2}: basic progress messages plus detailed input logging
 }}
 
 \item{...}{
@@ -80,8 +103,8 @@ whether to add biological and measurement noise}
 a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey
 data, with columns:
 \itemize{
-\item \code{age}: age (in days)
-\item one column for each element in the \code{antigen_iso} input argument
+\item \code{age}: age (in years)
+\item one column for each element in the \code{antigen_isos} input argument
 }
 }
 \description{

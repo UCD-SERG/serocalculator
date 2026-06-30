@@ -1,7 +1,18 @@
 # serocalculator (development version)
 
+## Documentation
+
+* Added introductory lecture slides to the `methodology` vignette
+  ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+
 ## Internal
 
+* The `methodology` vignette's LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
+  (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
+  `vignettes/articles/_macros.qmd`. The deck adopts the shared macro
+  vocabulary (e.g. `\dens` for the density function in place of the local
+  `\pdf`). (#534)
 * `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]` so the review still runs (and posts feedback) when `claude.yml` re-dispatches it on an `@claude review` comment; previously the bot-initiated dispatch aborted with "Workflow initiated by non-human actor".
 * `claude.yml` now grants the `@claude` agent the file tools (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
@@ -10,6 +21,16 @@
 
 ## Bug fixes
 
+* `sim_pop_data()` and `sim_pop_data_multi()` now produce identical results
+  across operating systems. Simulated inter-infection times are now rounded to
+  whole days, so the number of random draws consumed no longer depends on
+  platform-specific floating-point results of `log()` (which previously
+  shifted the random-number stream out of sync and made simulated values, and
+  their snapshots, differ between macOS, Windows, and Linux). Simulated
+  values change slightly as a result of this fix. (#447)
+* Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
+  `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
+  "seroconversion"/"incidence".
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names

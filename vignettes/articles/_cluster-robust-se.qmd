@@ -54,5 +54,5 @@ When cluster-robust standard errors are used, the `summary()` output indicates t
 ### Effect on results
 
 * **Point estimates** (incidence rates) remain unchanged
-* **Standard errors** typically increase by 5-15% to reflect within-cluster correlation
+* **Standard errors** often increase to reflect within-cluster correlation
 * **Confidence intervals** appropriately widen to account for reduced effective sample size

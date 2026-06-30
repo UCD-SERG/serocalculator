@@ -104,6 +104,7 @@ object
 ## Examples
 
 ``` r
+
 library(dplyr)
 library(ggplot2)
 

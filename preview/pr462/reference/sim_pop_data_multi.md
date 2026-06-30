@@ -183,16 +183,16 @@ sim_data
 #> # A tibble: 10,000 × 7
 #>      age id    antigen_iso value lambda.sim sample_size cluster
 #>    <dbl> <chr> <chr>       <dbl>      <dbl>       <dbl>   <int>
-#>  1  3.53 1     HlyE_IgA    0.757       0.05         100       1
-#>  2  3.53 1     HlyE_IgG    0.520       0.05         100       1
-#>  3  2.27 2     HlyE_IgA    0.819       0.05         100       1
-#>  4  2.27 2     HlyE_IgG    0.707       0.05         100       1
-#>  5  9.05 3     HlyE_IgA    0.150       0.05         100       1
-#>  6  9.05 3     HlyE_IgG    0.506       0.05         100       1
-#>  7  5.94 4     HlyE_IgA    0.837       0.05         100       1
-#>  8  5.94 4     HlyE_IgG    0.870       0.05         100       1
-#>  9  9.88 5     HlyE_IgA    0.297       0.05         100       1
-#> 10  9.88 5     HlyE_IgG    0.272       0.05         100       1
+#>  1  3.53 1     HlyE_IgA    0.585       0.05         100       1
+#>  2  3.53 1     HlyE_IgG    0.393       0.05         100       1
+#>  3  2.27 2     HlyE_IgA    0.588       0.05         100       1
+#>  4  2.27 2     HlyE_IgG    0.521       0.05         100       1
+#>  5  9.05 3     HlyE_IgA    0.409       0.05         100       1
+#>  6  9.05 3     HlyE_IgG    0.788       0.05         100       1
+#>  7  5.94 4     HlyE_IgA    0.439       0.05         100       1
+#>  8  5.94 4     HlyE_IgG    0.717       0.05         100       1
+#>  9  9.88 5     HlyE_IgA    0.667       0.05         100       1
+#> 10  9.88 5     HlyE_IgG    0.269       0.05         100       1
 #> # ℹ 9,990 more rows
 
 # }

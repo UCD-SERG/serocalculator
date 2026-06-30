@@ -7,9 +7,15 @@
 
   A summary of the methods behind serocalculator.
 
+### Version Crosswalk
+
+- [Version Crosswalk: v1.3.0 to
+  v1.4.0](https://ucd-serg.github.io/serocalculator/articles/version-crosswalk-1.3-to-1.4.md):
+
 ### Methodology
 
-- [Methodology](https://ucd-serg.github.io/serocalculator/articles/methodology.md):
+- [Estimating Incidence Rates from Cross-Sectional
+  Serosurveys](https://ucd-serg.github.io/serocalculator/articles/methodology.md):
 
 - [Simulation
   studies](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.md):

@@ -2,11 +2,161 @@
 
 ## serocalculator (development version)
 
+### New features
+
+- [`autoplot.sim_results()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.sim_results.md)
+  gains `x_var`, `group_var`, and `color_var` arguments, letting users
+  choose which columns map to the x-axis, group, and color aesthetics
+  instead of the previous hardcoded `sample_size` / `lambda.sim`
+  mapping.
+
+### Dependencies
+
+- Replaced `ggpubr` with `patchwork` for arranging multi-panel plots in
+  [`autoplot.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.by.md)
+  and
+  [`graph_seroresponse_model_1()`](https://ucd-serg.github.io/serocalculator/reference/graph_seroresponse_model_1.md);
+  these functions now return a `"patchwork"` object instead of a
+  `"ggarrange"` object. \## Documentation
+
+- Added introductory lecture slides to the `methodology` vignette
+  (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).
+
+### Internal
+
+- The `methodology` vignette’s LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git
+  submodule (included via `{{< include ../macros/macros.qmd >}}`)
+  instead of a local `vignettes/articles/_macros.qmd`. The deck adopts
+  the shared macro vocabulary (e.g. `\dens` for the density function in
+  place of the local `\pdf`).
+  ([\#534](https://github.com/UCD-SERG/serocalculator/issues/534))
+- `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]`
+  so the review still runs (and posts feedback) when `claude.yml`
+  re-dispatches it on an `@claude review` comment; previously the
+  bot-initiated dispatch aborted with “Workflow initiated by non-human
+  actor”.
+- `claude.yml` now grants the `@claude` agent the file tools
+  (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`;
+  previously the agent could run checks/git/gh but not edit files, so it
+  fell back to posting diffs for manual application.
+- Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for
+  driving a PR to a clean review verdict.
+- Ported the `@claude` agent and PR-review GitHub Actions workflows
+  (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and
+  slash commands, and path-scoped `.github/instructions/`) from the
+  UCD-SERG `qwt` template, adapted to this package.
+  ([\#523](https://github.com/UCD-SERG/serocalculator/issues/523))
+- Claude PR review workflow now skips (rather than hard-failing) when
+  triggered by a bot (e.g. `claude[bot]` pushing a commit).
+  ([\#519](https://github.com/UCD-SERG/serocalculator/issues/519))
+
+### Bug fixes
+
+- [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+  and
+  [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
+  now produce identical results across operating systems. Simulated
+  inter-infection times are now rounded to whole days, so the number of
+  random draws consumed no longer depends on platform-specific
+  floating-point results of [`log()`](https://rdrr.io/r/base/Log.html)
+  (which previously shifted the random-number stream out of sync and
+  made simulated values, and their snapshots, differ between macOS,
+  Windows, and Linux). Simulated values change slightly as a result of
+  this fix.
+  ([\#447](https://github.com/UCD-SERG/serocalculator/issues/447))
+- Corrected default axis labels in
+  [`strat_ests_barplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_barplot.md)
+  (`xlab`) and
+  [`strat_ests_scatterplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_scatterplot.md)
+  (`ylab`) to say “seroincidence” rather than
+  “seroconversion”/“incidence”.
+- [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
+  and
+  [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
+  now fail gracefully with informative messages when internet resources
+  are unavailable, complying with CRAN policy
+  ([\#505](https://github.com/UCD-SERG/serocalculator/issues/505))
+- Added Version Crosswalk article to pkgdown website to help users
+  migrate code from v1.3.0 to v1.4.0
+  - Provides clear tables comparing old and new function names
+  - Includes code examples showing how to update existing code
+  - Accessible as a prominent tab in the website navigation
+
+### Compatibility
+
+- Replaced deprecated
+  [`dplyr::is.grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  usage with
+  [`dplyr::is_grouped_df()`](https://dplyr.tidyverse.org/reference/grouped_df.html)
+  in
+  [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
+  for compatibility with newer dplyr releases.
+
+### New features
+
+- Added `cluster_var` and `stratum_var` parameters to
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+  and
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+  to support cluster-robust standard error estimation. When
+  `cluster_var` is specified,
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  automatically computes cluster-robust (sandwich) variance estimates to
+  account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
+- `cluster_var` parameter now accepts multiple variables (e.g.,
+  `c("school", "classroom")`) for multi-level clustered sampling
+  designs. Cluster-robust standard errors will account for all specified
+  clustering levels.
+
+### Bug fixes
+
+- Fixed column naming issue in
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  where cluster-robust standard errors caused `[]` notation in column
+  names (`SE[,1]` instead of `SE`).
+- Added `se_type` column to
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  output to clearly indicate whether “standard” or “cluster-robust”
+  standard errors are being used.
+- Fixed
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)
+  to properly pass cluster and stratum variables through to stratified
+  analyses. Previously, these variables were dropped during data
+  stratification, causing errors when trying to use clustering with
+  [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md).
+
+### Code organization
+
+- Refactored clustering-related code following package organization
+  policies:
+
+  - Moved `.compute_cluster_robust_var()` to
+    `R/compute_cluster_robust_var.R`
+  - Each function now in its own file for better maintainability and git
+    history
+
+- Updated copilot-instructions.md with code organization policies \##
+  Dependencies
+
+- Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
+
 ## serocalculator 1.4.0
 
 CRAN release: 2025-12-11
 
 ### New features
+
+- Added support for cluster-robust standard errors in
+  [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
+  through new `cluster_var` and `stratum_var` parameters. When
+  `cluster_var` is specified,
+  [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)
+  automatically computes cluster-robust (sandwich) variance estimates to
+  account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
 
 - Added
   [`compare_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/compare_seroincidence.md)
@@ -275,7 +425,7 @@ CRAN release: 2025-01-25
   function to help locate example data files
   ([\#329](https://github.com/UCD-SERG/serocalculator/issues/329))
 
-- Fixed a bug in computing the antibody response curve when $r = 1$
+- Fixed a bug in computing the antibody response curve when $`r=1`$
   ([\#323](https://github.com/UCD-SERG/serocalculator/issues/323))
 
 - Added example datasets with documentation for examples and testing
@@ -309,7 +459,7 @@ CRAN release: 2025-01-25
   [\#303](https://github.com/UCD-SERG/serocalculator/issues/303))
 
 - Added template for reporting Issues (from
-  [`usethis::use_tidy_issue_template()`](https://usethis.r-lib.org/reference/tidyverse.html))
+  `usethis::use_tidy_issue_template()`)
   ([\#270](https://github.com/UCD-SERG/serocalculator/issues/270))
 
 - Added template for pull requests (from

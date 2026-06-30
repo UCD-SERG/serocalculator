@@ -110,7 +110,14 @@ sim_pop_data(
 
 - verbose:
 
-  logical: if TRUE, print verbose log information to console
+  verbosity level for console logging. Accepts a logical scalar or a
+  non-negative whole number:
+
+  - `FALSE`/`0`: no log messages
+
+  - `TRUE`/`1`: basic progress messages
+
+  - `>= 2`: basic progress messages plus detailed input logging
 
 - ...:
 
@@ -166,9 +173,9 @@ a
 [tibble::tbl_df](https://tibble.tidyverse.org/reference/tbl_df-class.html)
 containing simulated cross-sectional serosurvey data, with columns:
 
-- `age`: age (in days)
+- `age`: age (in years)
 
-- one column for each element in the `antigen_iso` input argument
+- one column for each element in the `antigen_isos` input argument
 
 ## Examples
 

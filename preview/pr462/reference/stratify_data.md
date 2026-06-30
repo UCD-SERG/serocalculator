@@ -13,7 +13,9 @@ stratify_data(
   strata_varnames = "",
   curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
-  antigen_isos = get_biomarker_levels(data)
+  antigen_isos = get_biomarker_levels(data),
+  cluster_var = NULL,
+  stratum_var = NULL
 )
 ```
 

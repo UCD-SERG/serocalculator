@@ -3,7 +3,7 @@ test_that("`antibody_decay_curve()` returns `y0` at `t = 0`", {
   expect_equal(antibody_decay_curve(t = 0, y0 = y0), y0)
 })
 
-test_that("`antibody_decay_curve()` follows phase-1 exponential growth before `t1`", {
+test_that("`antibody_decay_curve()` grows exponentially before `t1`", {
   y0 <- 1
   mu_y <- 0.2
   t1 <- t1f(y0 = y0, mu_y = mu_y, b0 = 1, mu_b = 0.1, gamma = 0.01)

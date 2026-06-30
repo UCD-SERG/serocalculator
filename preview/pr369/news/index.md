@@ -2,8 +2,20 @@
 
 ## serocalculator (development version)
 
+### Documentation
+
+- Added introductory lecture slides to the `methodology` vignette
+  (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).
+
 ### Internal
 
+- The `methodology` vignette’s LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git
+  submodule (included via `{{< include ../macros/macros.qmd >}}`)
+  instead of a local `vignettes/articles/_macros.qmd`. The deck adopts
+  the shared macro vocabulary (e.g. `\dens` for the density function in
+  place of the local `\pdf`).
+  ([\#534](https://github.com/UCD-SERG/serocalculator/issues/534))
 - `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]`
   so the review still runs (and posts feedback) when `claude.yml`
   re-dispatches it on an `@claude review` comment; previously the
@@ -26,6 +38,24 @@
 
 ### Bug fixes
 
+- [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+  and
+  [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
+  now produce identical results across operating systems. Simulated
+  inter-infection times are now rounded to whole days, so the number of
+  random draws consumed no longer depends on platform-specific
+  floating-point results of [`log()`](https://rdrr.io/r/base/Log.html)
+  (which previously shifted the random-number stream out of sync and
+  made simulated values, and their snapshots, differ between macOS,
+  Windows, and Linux). Simulated values change slightly as a result of
+  this fix.
+  ([\#447](https://github.com/UCD-SERG/serocalculator/issues/447))
+- Corrected default axis labels in
+  [`strat_ests_barplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_barplot.md)
+  (`xlab`) and
+  [`strat_ests_scatterplot()`](https://ucd-serg.github.io/serocalculator/reference/strat_ests_scatterplot.md)
+  (`ylab`) to say “seroincidence” rather than
+  “seroconversion”/“incidence”.
 - [`load_noise_params()`](https://ucd-serg.github.io/serocalculator/reference/load_noise_params.md)
   and
   [`load_sr_params()`](https://ucd-serg.github.io/serocalculator/reference/load_sr_params.md)
@@ -408,7 +438,7 @@ CRAN release: 2025-01-25
   [\#303](https://github.com/UCD-SERG/serocalculator/issues/303))
 
 - Added template for reporting Issues (from
-  [`usethis::use_tidy_issue_template()`](https://usethis.r-lib.org/reference/tidyverse.html))
+  `usethis::use_tidy_issue_template()`)
   ([\#270](https://github.com/UCD-SERG/serocalculator/issues/270))
 
 - Added template for pull requests (from

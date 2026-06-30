@@ -14,7 +14,8 @@
 
 ### Methodology
 
-- [Methodology](https://ucd-serg.github.io/serocalculator/articles/methodology.md):
+- [Estimating Incidence Rates from Cross-Sectional
+  Serosurveys](https://ucd-serg.github.io/serocalculator/articles/methodology.md):
 
 - [Simulation
   studies](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.md):

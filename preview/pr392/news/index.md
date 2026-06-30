@@ -121,8 +121,6 @@
 
 ### New features (cluster-robust SE)
 
-### New features
-
 - Added `cluster_var` and `stratum_var` parameters to
   [`est_seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence.md)
   and
@@ -139,8 +137,6 @@
   clustering levels.
 
 ### Bug fixes (cluster-robust SE)
-
-### Bug fixes
 
 - Fixed column naming issue in
   [`summary.seroincidence()`](https://ucd-serg.github.io/serocalculator/reference/summary.seroincidence.md)

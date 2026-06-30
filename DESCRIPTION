@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.1.9000
+Version: 1.4.1.9001
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -21,26 +21,27 @@ URL: https://ucd-serg.github.io/serocalculator/,
 BugReports: https://github.com/UCD-SERG/serocalculator/issues
 Depends: 
     R (>= 4.1.0)
-Imports: 
+Imports:
+    and,
     cli,
     doParallel,
     dplyr,
     foreach,
     ggplot2,
-    patchwork,
     lifecycle,
     magrittr,
+    patchwork,
     Rcpp,
     rlang,
     rngtools,
     scales,
+    shiny,
     stats,
     tibble,
     tidyr,
     tidyselect,
     utils,
     purrr,
-    and,
     glue,
     stringr,
     parallel,
@@ -54,6 +55,7 @@ Suggests:
     maps,
     mixtools,
     pak,
+    plotly,
     quarto,
     rmarkdown,
     spelling,

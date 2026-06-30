@@ -85,7 +85,7 @@ stratify_data <- function(data,
     # est_seroincidence_by() expects a list:
     stratum_data_list <-
       list(`all data` = all_data) |>
-      structure(antigen_isos = antigen_isos, # might be able to remove
+      structure(antigen_isos = antigen_isos,
                 strata = tibble(Stratum = NA))
 
     return(stratum_data_list)

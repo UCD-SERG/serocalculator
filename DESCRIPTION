@@ -39,7 +39,7 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    purrr (>= 1.0.0),
+    purrr,
     and,
     glue,
     stringr,

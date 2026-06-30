@@ -1,7 +1,6 @@
 #' Plot package download counts over time by source
 #'
-#' Fetches download data from CRAN (via `packageRank`) and optionally GitHub
-#' Releases (via `gh`), then plots new and cumulative downloads.
+#' Plots new and cumulative download counts for this package.
 #' Delegates to [gdl::graph_downloads()].
 #'
 #' @param package Character string; the CRAN package name. Defaults to
@@ -25,7 +24,6 @@
 #' @return A [ggplot2::ggplot()] object with faceted panels.
 #'
 #' @export
-#' @keywords internal
 graph_downloads <- function(
   package = "serocalculator",
   github_repo = "UCD-SERG/serocalculator",

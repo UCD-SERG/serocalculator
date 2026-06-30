@@ -45,8 +45,6 @@ to omit.}
 A \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object with faceted panels.
 }
 \description{
-Fetches download data from CRAN (via \code{packageRank}) and optionally GitHub
-Releases (via \code{gh}), then plots new and cumulative downloads.
+Plots new and cumulative download counts for this package.
 Delegates to \code{\link[gdl:graph_downloads]{gdl::graph_downloads()}}.
 }
-\keyword{internal}

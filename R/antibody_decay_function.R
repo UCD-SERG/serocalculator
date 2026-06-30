@@ -30,6 +30,9 @@ antibody_decay_curve <- function(
   if (alpha < 0) {
     cli::cli_abort("{.arg alpha} must be non-negative.")
   }
+  if (rho < 1) {
+    cli::cli_abort("{.arg rho} must be >= 1.")
+  }
 
   t1 <- t1f( # nolint: object_usage_linter
     b0 = b0,
@@ -45,9 +48,15 @@ antibody_decay_curve <- function(
     t1 = t1
   )
 
+  # pmax() keeps the base of the fractional power non-negative for t < t1,
+  # where this branch's value is discarded anyway (see ifelse() below) -
+  # avoids spurious "NaNs produced" warnings from raising a negative base
+  # to a non-integer power.
   phase2_rho1 <- y1 * exp(-alpha * (t - t1))
-  phase2_default <-
-    y1 * (1 + (rho - 1) * (y1 ^ (rho - 1)) * alpha * (t - t1))^(-1 / (rho - 1))
+  phase2_exponent <- -1 / (rho - 1)
+  phase2_base <-
+    1 + (rho - 1) * (y1 ^ (rho - 1)) * alpha * pmax(t - t1, 0)
+  phase2_default <- y1 * phase2_base ^ phase2_exponent
   yt <- ifelse(
     t < t1,
     y0 * exp(mu_y * t),

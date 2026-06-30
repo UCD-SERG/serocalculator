@@ -39,6 +39,8 @@ reference:
   - pathogen_decay_curve
   - plot_decay_curve
   - curve_app
+  - t1f
+  - y1f
 - title: Estimate seroconversion incidence rates
   contents:
   - est_seroincidence

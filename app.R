@@ -6,5 +6,4 @@
 #                   helpers = FALSE,
 #                   attach_testthat = FALSE)
 library(serocalculator)
-options("golem.app.prod" = TRUE)
 serocalculator::curve_app() # add parameters here (if any)

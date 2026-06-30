@@ -55,6 +55,7 @@ Suggests:
     maps,
     mixtools,
     pak,
+    plotly,
     quarto,
     rmarkdown,
     spelling,

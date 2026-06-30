@@ -1,4 +1,4 @@
-#' Graph antibody decay function with natural parameters
+#' Antibody decay curve with natural parameters
 #'
 #' @param b0 initial bacteria concentration
 #' @param y0 initial antibody concentration
@@ -24,6 +24,12 @@ antibody_decay_curve <- function(
     gamma = 0.0013040664,
     alpha = 0.00002192627,
     rho = 2) {
+  .validate_decay_params( # nolint: object_usage_linter
+    y0 = y0, b0 = b0, mu_b = mu_b, mu_y = mu_y, gamma = gamma
+  )
+  if (alpha < 0) {
+    cli::cli_abort("{.arg alpha} must be non-negative.")
+  }
 
   t1 <- t1f( # nolint: object_usage_linter
     b0 = b0,

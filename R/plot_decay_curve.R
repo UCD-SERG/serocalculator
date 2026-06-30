@@ -25,7 +25,7 @@ plot_decay_curve <- function(
       fun = function(x) decay_function(t = x, ...),
     ) +
     ggplot2::theme_bw() +
-    ggplot2::xlim(0, 100) +
+    ggplot2::xlim(0, xmax) +
     ggplot2::ylab("concentration") +
     ggplot2::xlab("time since infection (days)") +
     ggplot2::expand_limits(y = 10^-4) +

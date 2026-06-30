@@ -9,6 +9,7 @@
 * Added `plot_decay_curve()` for plotting decay functions using ggplot2 (#392).
 * Added helper functions `t1f()` (time to end of active infection) and
   `y1f()` (peak antibody concentration) (#392).
+
 ## Documentation
 
 * Added introductory lecture slides to the `methodology` vignette
@@ -45,6 +46,14 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+* Removed a spurious `and` entry from `DESCRIPTION`'s `Imports` (not a real
+  CRAN package), which previously broke package installation (#392).
+* `antibody_decay_curve()`, `pathogen_decay_curve()`, `t1f()`, and `y1f()` now
+  validate their parameters (non-negative values, `mu_y != mu_b`) and raise an
+  informative `cli::cli_abort()` error instead of silently returning `NaN` or
+  dividing by zero (#392).
+* `plot_decay_curve()` now respects its `xmax` argument instead of always
+  plotting to `x = 100` (#392).
 
 ## Compatibility
 

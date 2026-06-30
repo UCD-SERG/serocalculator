@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(serocalculator)
 library(dplyr)
-library(ggplot2); 
+library(ggplot2)
 library(plotly)
 ```
 
@@ -29,7 +29,7 @@ fluidRow(
     min = -2, 
     max = 2, 
     step = .1,
-    val =  0) |> column(width = 4), 
+    val = 0) |> column(width = 4), 
   
   
   sliderInput(
@@ -38,7 +38,7 @@ fluidRow(
     min = -2, 
     max = 2, 
     step = .1,
-    val =  0) |> column(width = 4)
+    val = 0) |> column(width = 4)
   
 )
 
@@ -50,14 +50,14 @@ fluidRow(
     min = -2, 
     max = 2, 
     step = .1,
-    val =  log10(0.18432798)) |> column(width = 4),
+    val = log10(0.18432798)) |> column(width = 4),
   sliderInput(
     inputId = "mu_y", 
     label = "log10(mu_y)", 
     min = -2, 
     max = 2, 
     step = .1,
-    val =  log10(0.36853621)) |> column(width = 4), 
+    val = log10(0.36853621)) |> column(width = 4), 
   
   
   sliderInput(
@@ -66,7 +66,7 @@ fluidRow(
     min = -10, 
     max = 10, 
     step = .1,
-    val =  log10(0.0013040664)) |> column(width = 4)
+    val = log10(0.0013040664)) |> column(width = 4)
 )
 
 fluidRow(
@@ -76,7 +76,7 @@ fluidRow(
     min = 1, 
     max = 3, 
     step = .1,
-    val =  2) |> column(width = 4),
+    val = 2) |> column(width = 4),
   
   sliderInput(
     inputId = "alpha", 
@@ -84,7 +84,7 @@ fluidRow(
     min = -8, 
     max = -1, 
     step = .1,
-    val =  log10(0.00002192627)) |> column(width = 4))
+    val = log10(0.00002192627)) |> column(width = 4))
 
 fluidRow(
   sliderInput(
@@ -157,21 +157,17 @@ fluidRow(
   column(
     width = 6, 
          h2("Pathogen"),
-  plot2() |> 
-    # renderPlot() |> 
-    plotly::ggplotly()  |>
-    plotly::layout(legend = list(orientation = 'h')) |>
+  plot2() |>
+    plotly::ggplotly() |>
+    plotly::layout(legend = list(orientation = "h")) |>
     plotly::renderPlotly()),
-  
+
   column(
-    width = 6, 
+    width = 6,
     h2("Antibody"),
-  plot1() |> 
+  plot1() |>
     renderPlot()
-    # plotly::ggplotly()  |>
-    # plotly::layout(legend = list(orientation = 'h')) |>
-    # plotly::renderPlotly() |> 
 )
-    
+
 )
 ```

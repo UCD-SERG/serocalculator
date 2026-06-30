@@ -2,7 +2,7 @@
 % Please edit documentation in R/antibody_decay_function.R
 \name{antibody_decay_curve}
 \alias{antibody_decay_curve}
-\title{Graph antibody decay function with natural parameters}
+\title{Antibody decay curve with natural parameters}
 \usage{
 antibody_decay_curve(
   t,
@@ -36,7 +36,7 @@ antibody_decay_curve(
 a \code{\link[=numeric]{numeric()}} vector
 }
 \description{
-Graph antibody decay function with natural parameters
+Antibody decay curve with natural parameters
 }
 \examples{
 library(ggplot2)

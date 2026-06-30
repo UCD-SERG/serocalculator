@@ -1,6 +1,6 @@
 curve_app_server <- function(input, output, session) {
   exp10 <- function(x) 10^x
-  derived_params <- tibble(
+  derived_params <- tibble::tibble(
     mu_y = input$mu_y |> exp10(),
     mu_b = input$mu_b |> exp10(),
     gamma = input$gamma |> exp10(),
@@ -9,16 +9,16 @@ curve_app_server <- function(input, output, session) {
     alpha = input$alpha |> exp10(),
     rho = input$rho,
     t1 = t1f( # nolint: object_usage_linter
-      mu_y = .data$mu_y,
-      mu_b = .data$mu_b,
-      gamma = .data$gamma,
-      y0 = .data$y0,
-      b0 = .data$b0
+      mu_y = .data$mu_y, # nolint: object_usage_linter
+      mu_b = .data$mu_b, # nolint: object_usage_linter
+      gamma = .data$gamma, # nolint: object_usage_linter
+      y0 = .data$y0, # nolint: object_usage_linter
+      b0 = .data$b0 # nolint: object_usage_linter
     ),
     y1 = y1f( # nolint: object_usage_linter
-      y0 = .data$y0,
-      mu_y = .data$mu_y,
-      t1 = .data$t1
+      y0 = .data$y0, # nolint: object_usage_linter
+      mu_y = .data$mu_y, # nolint: object_usage_linter
+      t1 = .data$t1 # nolint: object_usage_linter
     )
   ) |>
     shiny::reactive()
@@ -29,7 +29,12 @@ curve_app_server <- function(input, output, session) {
 
   plot1 <-
     shiny::eventReactive(
-      eventExpr = derived_params() | input$ymax1 | input$alpha | input$rho,
+      eventExpr = {
+        derived_params()
+        input$ymax1
+        input$alpha
+        input$rho
+      },
       {
         plot_decay_curve( # nolint: object_usage_linter
           decay_function = antibody_decay_curve, # nolint: object_usage_linter
@@ -47,7 +52,10 @@ curve_app_server <- function(input, output, session) {
 
   plot2 <-
     shiny::eventReactive(
-      eventExpr = derived_params() | input$ymax2,
+      eventExpr = {
+        derived_params()
+        input$ymax2
+      },
       {
         plot_decay_curve( # nolint: object_usage_linter
           decay_function = pathogen_decay_curve, # nolint: object_usage_linter

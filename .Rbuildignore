@@ -20,7 +20,6 @@ allpopsamples_hlye.csv$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
 ^app\.R$
-^rsconnect$
 ^CRAN-SUBMISSION$
 ^vignettes/rsconnect$
 ^rsconnect$

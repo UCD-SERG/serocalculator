@@ -60,7 +60,6 @@
 * Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
 
 ## New features (cluster-robust SE)
-## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
   `est_seroincidence_by()` to support cluster-robust standard error estimation. 
@@ -72,7 +71,6 @@
   for all specified clustering levels.
 
 ## Bug fixes (cluster-robust SE)
-## Bug fixes
 
 * Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
   errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).

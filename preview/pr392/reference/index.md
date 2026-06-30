@@ -66,6 +66,10 @@
 - [`curve_app()`](https://ucd-serg.github.io/serocalculator/reference/curve_app.md)
   : Launch the interactive Shiny app for the antigen-antibody kinetics
   model
+- [`t1f()`](https://ucd-serg.github.io/serocalculator/reference/t1f.md)
+  : Calculate time to end of active infection
+- [`y1f()`](https://ucd-serg.github.io/serocalculator/reference/y1f.md)
+  : Calculate peak antibody concentration
 
 ## Estimate seroconversion incidence rates
 

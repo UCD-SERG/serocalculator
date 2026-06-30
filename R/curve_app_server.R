@@ -25,7 +25,7 @@ curve_app_server <- function(input, output, session) {
       ),
       error = function(e) {
         shiny::validate(paste(
-          "Invalid parameter combination — please adjust the sliders:",
+          "Invalid parameter combination - please adjust the sliders:",
           conditionMessage(e)
         ))
       }

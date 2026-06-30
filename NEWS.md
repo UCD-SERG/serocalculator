@@ -9,6 +9,10 @@
 * Added `plot_decay_curve()` for plotting decay functions using ggplot2 (#392).
 * Added helper functions `t1f()` (time to end of active infection) and
   `y1f()` (peak antibody concentration) (#392).
+## Documentation
+
+* Added introductory lecture slides to the `methodology` vignette
+  ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
 
 ## Internal
 
@@ -26,6 +30,16 @@
 
 ## Bug fixes
 
+* `sim_pop_data()` and `sim_pop_data_multi()` now produce identical results
+  across operating systems. Simulated inter-infection times are now rounded to
+  whole days, so the number of random draws consumed no longer depends on
+  platform-specific floating-point results of `log()` (which previously
+  shifted the random-number stream out of sync and made simulated values, and
+  their snapshots, differ between macOS, Windows, and Linux). Simulated
+  values change slightly as a result of this fix. (#447)
+* Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
+  `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
+  "seroconversion"/"incidence".
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names
@@ -37,6 +51,7 @@
 * Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
 
 ## New features (cluster-robust SE)
+## New features
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
   `est_seroincidence_by()` to support cluster-robust standard error estimation. 
@@ -48,6 +63,7 @@
   for all specified clustering levels.
 
 ## Bug fixes (cluster-robust SE)
+## Bug fixes
 
 * Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
   errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
@@ -73,6 +89,11 @@
 
 ## New features
 
+* Added support for cluster-robust standard errors in `est_seroincidence()` through
+  new `cluster_var` and `stratum_var` parameters. When `cluster_var` is specified,
+  `summary.seroincidence()` automatically computes cluster-robust (sandwich) variance
+  estimates to account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
 * Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
   - Performs two-sample z-tests to compare seroincidence estimates
   - Returns `htest` format when comparing two single estimates

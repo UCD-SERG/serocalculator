@@ -25,10 +25,12 @@ load_noise_params <- function(file_path, antigen_isos = NULL) {
 
   noise <- tryCatch(
     {
+      # Read the RDS file with warning suppression for URLs
       data <- if (is_url) {
         withCallingHandlers(
           readr::read_rds(file_path),
           warning = function(w) {
+            # Suppress warnings for URLs - we'll handle errors instead
             invokeRestart("muffleWarning")
           }
         )
@@ -36,6 +38,7 @@ load_noise_params <- function(file_path, antigen_isos = NULL) {
         readr::read_rds(file_path)
       }
 
+      # Convert to noise_params (warnings from validation will be preserved)
       as_noise_params(data, antigen_isos = antigen_isos)
     },
     error = function(e) {
@@ -56,6 +59,7 @@ load_noise_params <- function(file_path, antigen_isos = NULL) {
           )
         )
       } else {
+        # Re-throw the original error for non-URL paths unchanged
         rlang::cnd_signal(e)
       }
     }

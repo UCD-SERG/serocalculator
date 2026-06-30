@@ -61,7 +61,7 @@ stratify_data <- function(data,
       data |> get_age_var(),
       data |> get_biomarker_names_var()
     )
-
+    
     # Add cluster/stratum variables if specified
     if (!is.null(cluster_var)) {
       cols_to_keep <- c(cols_to_keep, cluster_var)
@@ -69,7 +69,7 @@ stratify_data <- function(data,
     if (!is.null(stratum_var)) {
       cols_to_keep <- c(cols_to_keep, stratum_var)
     }
-
+    
     pop_data <-
       data |> select(all_of(cols_to_keep))
 
@@ -122,7 +122,7 @@ stratify_data <- function(data,
       data |> get_age_var(),
       data |> get_biomarker_names_var()
     )
-
+    
     # Add cluster/stratum variables if specified
     if (!is.null(cluster_var)) {
       cols_to_keep <- c(cols_to_keep, cluster_var)
@@ -130,7 +130,7 @@ stratify_data <- function(data,
     if (!is.null(stratum_var)) {
       cols_to_keep <- c(cols_to_keep, stratum_var)
     }
-
+    
     pop_data_cur_stratum <-
       data |>
       semi_join(cur_stratum_vals, by = strata_varnames) |>

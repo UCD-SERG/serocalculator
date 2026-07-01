@@ -5,6 +5,13 @@
 #' parameter estimates when data come from a clustered sampling design.
 #' This adjusts the standard errors to account for within-cluster correlation.
 #'
+#' @details
+#' For multi-way clustering the variance is assembled from all `2^k - 1`
+#' non-empty subsets of the `k` cluster variables, and each subset re-runs the
+#' per-cluster score computation. Cost therefore grows exponentially in the
+#' number of cluster variables; this is intended for the small `k` (2-3)
+#' typical of nested survey designs.
+#'
 #' @param fit a `seroincidence` object from [est_seroincidence()]
 #' @param cluster_var name(s) of the cluster variable(s) in the data.
 #'   Can be a single variable or vector of variables for multi-level clustering.
@@ -64,59 +71,22 @@
   }
 
   decomp_terms <- dplyr::bind_rows(decomp_rows)
-  robust_raw <- sum(decomp_terms$signed_term)
-  floor_applied <- isTRUE(floor_to_standard) &&
-    robust_raw < standard_var_log_lambda
-  robust_final <- if (isTRUE(floor_to_standard)) {
-    max(standard_var_log_lambda, robust_raw)
-  } else {
-    robust_raw
-  }
+  cluster_decomp <- .combine_cluster_decomp(
+    decomp_terms = decomp_terms,
+    standard_var = standard_var_log_lambda,
+    floor_to_standard = floor_to_standard
+  )
 
   if (debug_cluster) {
-    cli::cli_inform("Cluster-robust variance decomposition:")
-
-    for (i in seq_len(nrow(decomp_terms))) {
-      term_label <- if (
-        length(cluster_var) == 2 &&
-          decomp_terms$order[i] == 2
-      ) {
-        "V_intersection"
-      } else {
-        paste0(
-          "V_",
-          gsub(" \\+ ", "_", decomp_terms$subset[i])
-        )
-      }
-      term_message <- glue::glue(
-        "{term_label} ({decomp_terms$subset[i]}) = ",
-        "{signif(decomp_terms$subset_variance[i], 6)}"
-      )
-
-      cli::cli_inform(term_message)
-    }
-
-    cli::cli_inform("V_raw = {signif(robust_raw, 6)}")
-    cli::cli_inform("V_final = {signif(robust_final, 6)}")
-
-    if (isTRUE(floor_to_standard)) {
-      floor_message <- glue::glue(
-        "Variance floor relative to standard variance ",
-        "{signif(standard_var_log_lambda, 6)}: ",
-        "{if (floor_applied) 'applied' else 'not applied'}"
-      )
-      cli::cli_inform(floor_message)
-    }
+    .print_cluster_decomp(
+      cluster_decomp = cluster_decomp,
+      cluster_var = cluster_var,
+      floor_to_standard = floor_to_standard
+    )
   }
 
   structure(
-    robust_final,
-    cluster_decomp = list(
-      standard_var = standard_var_log_lambda,
-      robust_raw = robust_raw,
-      robust_final = robust_final,
-      terms = decomp_terms,
-      floor_applied = floor_applied
-    )
+    cluster_decomp$robust_final,
+    cluster_decomp = cluster_decomp
   )
 }

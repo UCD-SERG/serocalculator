@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.1.9001
+Version: 1.4.1.9002
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -58,7 +58,7 @@ Suggests:
     rmarkdown,
     spelling,
     ssdtools (>= 1.0.6.9016),
-    testthat (>= 3.0.0),
+    testthat (>= 3.2.0),
     tidyverse,
     qrcode,
     vdiffr,

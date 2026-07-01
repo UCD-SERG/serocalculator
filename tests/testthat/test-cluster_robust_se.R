@@ -431,3 +431,84 @@ test_that("degenerate Hessian warns and returns NA for a one-way term", {
   )
   expect_true(is.na(degenerate_var))
 })
+
+test_that("unavailable subset variance is guarded, not silently propagated", {
+  decomp_terms <- tibble::tibble(
+    subset = c("a", "b", "a + b"),
+    order = c(1, 1, 2),
+    sign = c(1, 1, -1),
+    subset_variance = c(NA_real_, 1, 5),
+    signed_term = c(NA_real_, 1, -5)
+  )
+
+  # floor_to_standard = FALSE -> missing (honest), with a warning
+  expect_warning(
+    unfloored <- .combine_cluster_decomp(
+      decomp_terms = decomp_terms,
+      standard_var = 0.2,
+      floor_to_standard = FALSE
+    ),
+    "unavailable"
+  )
+  expect_true(is.na(unfloored$robust_final))
+  expect_false(unfloored$floor_applied)
+
+  # floor_to_standard = TRUE -> fall back to the model-based variance
+  expect_warning(
+    floored <- .combine_cluster_decomp(
+      decomp_terms = decomp_terms,
+      standard_var = 0.2,
+      floor_to_standard = TRUE
+    ),
+    "unavailable"
+  )
+  expect_equal(floored$robust_final, 0.2)
+  expect_true(floored$floor_applied)
+})
+
+test_that("unavailable subset variance yields NA through the full path", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$school <- rep(1:5, length.out = nrow(test_data))
+  test_data$classroom <- rep(1:10, length.out = nrow(test_data))
+
+  est_multi <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("school", "classroom")
+  )
+
+  # a positive model Hessian (so standard_var is well-defined), but every
+  # one-way subset variance comes back unavailable
+  testthat::local_mocked_bindings(
+    .compute_cluster_var_oneway = function(...) NA_real_
+  )
+
+  expect_warning(
+    unfloored <- .compute_cluster_robust_var(
+      fit = est_multi,
+      cluster_var = c("school", "classroom"),
+      small_sample = "none",
+      floor_to_standard = FALSE
+    ),
+    "unavailable"
+  )
+  expect_true(is.na(as.numeric(unfloored)))
+
+  expect_warning(
+    floored <- .compute_cluster_robust_var(
+      fit = est_multi,
+      cluster_var = c("school", "classroom"),
+      small_sample = "none",
+      floor_to_standard = TRUE
+    ),
+    "unavailable"
+  )
+  floored_decomp <- attr(floored, "cluster_decomp")
+  # falls back to the model-based variance rather than producing NaN
+  expect_equal(as.numeric(floored), floored_decomp$standard_var)
+  expect_true(floored_decomp$floor_applied)
+})

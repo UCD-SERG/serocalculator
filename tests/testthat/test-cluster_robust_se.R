@@ -512,3 +512,30 @@ test_that("unavailable subset variance yields NA through the full path", {
   expect_equal(as.numeric(floored), floored_decomp$standard_var)
   expect_true(floored_decomp$floor_applied)
 })
+
+test_that("debug output reports the variance floor when enabled", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$household <- seq_len(nrow(test_data))
+  test_data$commune <- rep(1:10, length.out = nrow(test_data))
+
+  est_nested <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = c("commune", "household")
+  )
+  debug_output <- testthat::capture_messages(
+    summary(
+      est_nested,
+      verbose = FALSE,
+      debug_cluster = TRUE,
+      floor_to_standard = TRUE
+    )
+  )
+  debug_output <- paste(debug_output, collapse = "\n")
+
+  expect_match(debug_output, "Variance floor relative to standard variance")
+})

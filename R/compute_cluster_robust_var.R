@@ -5,6 +5,13 @@
 #' parameter estimates when data come from a clustered sampling design.
 #' This adjusts the standard errors to account for within-cluster correlation.
 #'
+#' @details
+#' For multi-way clustering the variance is assembled from all `2^k - 1`
+#' non-empty subsets of the `k` cluster variables, and each subset re-runs the
+#' per-cluster score computation. Cost therefore grows exponentially in the
+#' number of cluster variables; this is intended for the small `k` (2-3)
+#' typical of nested survey designs.
+#'
 #' @param fit a `seroincidence` object from [est_seroincidence()]
 #' @param cluster_var name(s) of the cluster variable(s) in the data.
 #'   Can be a single variable or vector of variables for multi-level clustering.
@@ -64,14 +71,14 @@
   }
 
   decomp_terms <- dplyr::bind_rows(decomp_rows)
-  robust_raw <- sum(decomp_terms$signed_term)
-  floor_applied <- isTRUE(floor_to_standard) &&
-    robust_raw < standard_var_log_lambda
-  robust_final <- if (isTRUE(floor_to_standard)) {
-    max(standard_var_log_lambda, robust_raw)
-  } else {
-    robust_raw
-  }
+  cluster_decomp <- .combine_cluster_decomp(
+    decomp_terms = decomp_terms,
+    standard_var = standard_var_log_lambda,
+    floor_to_standard = floor_to_standard
+  )
+  robust_raw <- cluster_decomp$robust_raw
+  robust_final <- cluster_decomp$robust_final
+  floor_applied <- cluster_decomp$floor_applied
 
   if (debug_cluster) {
     cli::cli_inform("Cluster-robust variance decomposition:")
@@ -111,12 +118,6 @@
 
   structure(
     robust_final,
-    cluster_decomp = list(
-      standard_var = standard_var_log_lambda,
-      robust_raw = robust_raw,
-      robust_final = robust_final,
-      terms = decomp_terms,
-      floor_applied = floor_applied
-    )
+    cluster_decomp = cluster_decomp
   )
 }

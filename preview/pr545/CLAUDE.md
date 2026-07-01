@@ -37,9 +37,8 @@ for the full list). Slash commands are available for the common ones:
 - `/document` — `devtools::document()` after editing roxygen2 comments
   (keeps `man/`, `NAMESPACE`, `DESCRIPTION` in sync; `R-check-docs.yml`
   enforces this).
-- `/lint` —
-  [`lintr::lint_package()`](https://lintr.r-lib.org/reference/lint.html)
-  against `.lintr.R`; fix issues in changed files.
+- `/lint` — `lintr::lint_package()` against `.lintr.R`; fix issues in
+  changed files.
 - `/spell` —
   [`spelling::spell_check_package()`](https://docs.ropensci.org/spelling//reference/spell_check_package.html);
   add genuine terms to `inst/WORDLIST`.

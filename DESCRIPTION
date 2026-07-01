@@ -58,7 +58,7 @@ Suggests:
     rmarkdown,
     spelling,
     ssdtools (>= 1.0.6.9016),
-    testthat (>= 3.0.0),
+    testthat (>= 3.2.0),
     tidyverse,
     qrcode,
     vdiffr,

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@
     <li><a class="dropdown-item" href="../articles/version-crosswalk-1.3-to-1.4.html">Version Crosswalk: v1.3.0 to v1.4.0</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Methodology</h6></li>
-    <li><a class="dropdown-item" href="../articles/methodology.html">Methodology</a></li>
+    <li><a class="dropdown-item" href="../articles/methodology.html">Estimating Incidence Rates from Cross-Sectional Serosurveys</a></li>
     <li><a class="dropdown-item" href="../articles/simulate_xsectionalData.html">Simulation studies</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
@@ -59,6 +59,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="serocalculator-development-version">serocalculator (development version)<a class="anchor" aria-label="anchor" href="#serocalculator-development-version"></a></h2>
 <div class="section level3">
+<h3 id="documentation-development-version">Documentation<a class="anchor" aria-label="anchor" href="#documentation-development-version"></a></h3>
+<ul><li>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</li>
+</ul></div>
+<div class="section level3">
 <h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
 <ul><li>
 <code>news.yaml</code> now calls the central <a href="https://github.com/d-morrison/gha" class="external-link"><code>d-morrison/gha</code></a> <code>check-news.yml@v1</code> reusable workflow instead of invoking <code>UCD-SERG/changelog-check-action@v2</code> directly. (<a href="https://github.com/UCD-SERG/serocalculator/issues/537" class="external-link">#537</a>)</li>
@@ -73,7 +77,9 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Removed lingering terminology discrepancies</li>
+<ul><li>
+<code><a href="../reference/sim_pop_data.html">sim_pop_data()</a></code> and <code><a href="../reference/sim_pop_data_multi.html">sim_pop_data_multi()</a></code> now produce identical results across operating systems. Simulated inter-infection times are now rounded to whole days, so the number of random draws consumed no longer depends on platform-specific floating-point results of <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> (which previously shifted the random-number stream out of sync and made simulated values, and their snapshots, differ between macOS, Windows, and Linux). Simulated values change slightly as a result of this fix. (<a href="https://github.com/UCD-SERG/serocalculator/issues/447" class="external-link">#447</a>)</li>
+<li>Corrected default axis labels in <code><a href="../reference/strat_ests_barplot.html">strat_ests_barplot()</a></code> (<code>xlab</code>) and <code><a href="../reference/strat_ests_scatterplot.html">strat_ests_scatterplot()</a></code> (<code>ylab</code>) to say “seroincidence” rather than “seroconversion”/“incidence”.</li>
 <li>
 <code><a href="../reference/load_noise_params.html">load_noise_params()</a></code> and <code><a href="../reference/load_sr_params.html">load_sr_params()</a></code> now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (<a href="https://github.com/UCD-SERG/serocalculator/issues/505" class="external-link">#505</a>)</li>
 <li>Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0

@@ -32,11 +32,12 @@
 
   if (!is.finite(robust_raw)) {
     # A subset variance was unavailable (e.g. a degenerate Hessian returned
-    # NA), which poisons the inclusion-exclusion sum. Catch it here so the
+    # NA), which poisons the inclusion-exclusion sum. Handle it here so the
     # non-finite value never reaches sqrt() as a silent NaN standard error --
     # note plain max() would leave max(standard_var, NA) == NA, defeating the
     # floor. Fall back to the model-based variance only when it was requested.
     robust_final <- if (isTRUE(floor_to_standard)) standard_var else NA_real_
+    floor_applied <- isTRUE(floor_to_standard)
     fallback_msg <- if (isTRUE(floor_to_standard)) {
       "Falling back to the model-based variance ({signif(standard_var, 6)})."
     } else {
@@ -48,39 +49,31 @@
         cluster-robust variance could not be computed.",
       "i" = fallback_msg
     ))
-
-    return(list(
-      standard_var = standard_var,
-      robust_raw = robust_raw,
-      robust_final = robust_final,
-      terms = decomp_terms,
-      floor_applied = isTRUE(floor_to_standard)
-    ))
-  }
-
-  if (robust_raw < 0) {
-    cli::cli_warn(c(
-      "!" = "Multi-way cluster-robust variance was negative
-        ({signif(robust_raw, 6)}); flooring it at 0.",
-      "i" = "Negative estimates can arise from the inclusion-exclusion
-        combination of one-way cluster variances
-        (Cameron, Gelbach, and Miller, 2011)."
-    ))
-  }
-  robust_nonneg <- max(0, robust_raw)
-
-  floor_applied <- isTRUE(floor_to_standard) && robust_nonneg < standard_var
-  robust_final <- if (isTRUE(floor_to_standard)) {
-    max(standard_var, robust_nonneg)
   } else {
-    robust_nonneg
+    if (robust_raw < 0) {
+      cli::cli_warn(c(
+        "!" = "Multi-way cluster-robust variance was negative
+          ({signif(robust_raw, 6)}); flooring it at 0.",
+        "i" = "Negative estimates can arise from the inclusion-exclusion
+          combination of one-way cluster variances
+          (Cameron, Gelbach, and Miller, 2011)."
+      ))
+    }
+    robust_nonneg <- max(0, robust_raw)
+    floor_applied <- isTRUE(floor_to_standard) && robust_nonneg < standard_var
+    robust_final <- if (isTRUE(floor_to_standard)) {
+      max(standard_var, robust_nonneg)
+    } else {
+      robust_nonneg
+    }
   }
 
-  list(
+  cluster_decomp <- list(
     standard_var = standard_var,
     robust_raw = robust_raw,
     robust_final = robust_final,
     terms = decomp_terms,
     floor_applied = floor_applied
   )
+  cluster_decomp
 }

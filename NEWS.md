@@ -7,6 +7,10 @@
 
 ## Internal
 
+* `news.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`
+  reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`
+  directly. (#537)
 * The `methodology` vignette's LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
   (included via `{{< include ../macros/macros.qmd >}}`) instead of a local

@@ -9,6 +9,11 @@
 
 ### Internal
 
+- `news.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `check-news.yml@v1` reusable workflow instead of invoking
+  `UCD-SERG/changelog-check-action@v2` directly.
+  ([\#537](https://github.com/UCD-SERG/serocalculator/issues/537))
 - The `methodology` vignette’s LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git
   submodule (included via `{{< include ../macros/macros.qmd >}}`)
@@ -438,7 +443,7 @@ CRAN release: 2025-01-25
   [\#303](https://github.com/UCD-SERG/serocalculator/issues/303))
 
 - Added template for reporting Issues (from
-  [`usethis::use_tidy_issue_template()`](https://usethis.r-lib.org/reference/tidyverse.html))
+  `usethis::use_tidy_issue_template()`)
   ([\#270](https://github.com/UCD-SERG/serocalculator/issues/270))
 
 - Added template for pull requests (from
@@ -489,8 +494,7 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using
-  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
+- Added `devtag` to package (using `devtag::use_devtag()`)
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

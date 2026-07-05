@@ -3,6 +3,9 @@
 #' @param fit a `seroincidence` object from [est_seroincidence()]
 #' @param cluster_ids cluster identifier for each row in `pop_data_combined`
 #' @param pop_data_combined combined population data across antigen isotypes
+#' @param small_sample small-sample correction to apply. `"CR1"` multiplies the
+#'   variance by `G / (G - 1)`, where `G` is the number of clusters; `"none"`
+#'   applies no correction.
 #'
 #' @return one-way cluster-robust variance of log(lambda)
 #' @keywords internal
@@ -63,6 +66,13 @@
   hessian <- as.numeric(fit$hessian)[1]
 
   if (!is.finite(hessian) || hessian <= 0) {
+    cli::cli_warn(c(
+      "!" = "The Hessian for a one-way cluster-robust variance term was
+        non-finite or non-positive ({signif(hessian, 6)}); returning a
+        missing value for this term.",
+      "i" = "This usually means the numerical derivatives did not converge,
+        and the affected cluster-robust standard error will be {.val {NA}}."
+    ))
     return(NA_real_)
   }
 

@@ -32,7 +32,12 @@
   multi-way clustering instead of collapsing them to a single interaction.
   One-way subset terms now use the CR1 small-sample correction by default,
   the floor to model-based variance is optional, and debug output now exposes
-  the multi-way variance decomposition used in the final standard error. (#543)
+  the multi-way variance decomposition used in the final standard error.
+  A negative multi-way variance estimate is now floored at 0 (with a warning)
+  instead of producing `NaN` standard errors, and an unavailable subset
+  variance (for example from a degenerate Hessian) now warns and yields a
+  missing standard error, or the model-based variance when
+  `floor_to_standard = TRUE`, instead of a silent `NaN`. (#543)
 * Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
   `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
   "seroconversion"/"incidence".

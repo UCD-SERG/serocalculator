@@ -14,6 +14,11 @@
   `check-news.yml@v1` reusable workflow instead of invoking
   `UCD-SERG/changelog-check-action@v2` directly.
   ([\#537](https://github.com/UCD-SERG/serocalculator/issues/537))
+- `claude.yml` and `claude-code-review.yml` now call the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2`
+  and `claude-code-review.yml@v2` reusable workflows instead of carrying
+  their own copy of the agent/review machinery.
+  ([\#549](https://github.com/UCD-SERG/serocalculator/issues/549))
 - The `methodology` vignette’s LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git
   submodule (included via `{{< include ../macros/macros.qmd >}}`)

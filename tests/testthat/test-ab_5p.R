@@ -43,6 +43,9 @@ test_that("results are consistent with units", {
   results1 |>
     expect_snapshot_value(style = "serialize")
 
+  # ggplot2's scale_type.units() (registered by {units}) requires {units} to
+  # be attached, not just loaded, to plot a units-classed variable.
+  withr::local_package("units")
   fig2 <-
     results1 |>
     ggplot2::ggplot() +

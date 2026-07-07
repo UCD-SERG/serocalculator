@@ -75,22 +75,8 @@ combinations
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{...}{
-  Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}
-  \describe{
-    \item{\code{age}}{age at infection}
-    \item{\code{nmc}}{mcmc sample to use}
-    \item{\code{npar}}{number of parameters}
-    \item{\code{t}}{\link{numeric} \link{vector} of elapsed times since start of infection}
-    \item{\code{par}}{\link{numeric} \link{matrix} of model parameters:
-\itemize{
-\item rows are parameters
-\item columns are biomarkers
-}}
-    \item{\code{kab}}{\link{integer} indicating which row to read from \code{blims}}
-    \item{\code{n}}{number of observations}
-    \item{\code{blims}}{range of possible baseline antibody levels}
-  }}
+\item{...}{additional arguments passed to other functions
+(not currently used).}
 }
 \value{
 a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey

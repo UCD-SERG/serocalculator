@@ -5,8 +5,7 @@ test_that(
     # Load curve parameters
     dmcmc <- typhoid_curves_nostrat_100
 
-    # d2y <- 365.242198781
-    d2y <- 365.25
+    days_per_year <- 365.25
     withr::with_seed(
       seed = 1,
       code = {
@@ -14,9 +13,9 @@ test_that(
         # Generate cross-sectional data
         csdata <- sim_pop_data_2(
           curve_params = dmcmc,
-          lambda = 0.2 / d2y,
+          lambda = 0.2 / days_per_year,
           n_samples = 100,
-          age_range = c(0, 10) * d2y,
+          age_range = c(0, 10) * days_per_year,
           antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
           n_mcmc_samples = 0,
           renew_params = TRUE,
@@ -27,8 +26,6 @@ test_that(
           ),
           format = "long"
         )
-
-
       }
     )
 
@@ -74,8 +71,5 @@ test_that(
 
     csdata2 |> expect_snapshot_data(name = "sim_cs_data-units")
     csdata2 |> expect_snapshot_value(style = "serialize")
-
-
   }
 )
-

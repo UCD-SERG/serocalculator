@@ -25,7 +25,7 @@ sim_pop_data_multi <- function(
     sim_function = sim_pop_data,
     ...) {
   if (verbose) {
-    message("inputs to `sim_pop_data_multi()`:")
+    cli::cli_inform("inputs to `sim_pop_data_multi()`:")
     print(environment() |> as.list())
   }
 
@@ -64,7 +64,7 @@ sim_pop_data_multi <- function(
     )
 
   dims1 <-
-    sapply(FUN = length, dimnames1)
+    vapply(dimnames1, FUN = length, FUN.VALUE = integer(1))
 
   rng <- rng |>
     array(

@@ -93,7 +93,7 @@ sim_pop_data_2 <- function(
     verbose = FALSE,
     ...) {
   if (verbose > 1) {
-    message("inputs to `sim_pop_data()`:")
+    cli::cli_inform("inputs to `sim_pop_data_2()`:")
     print(environment() |> as.list())
   }
 

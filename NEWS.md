@@ -7,6 +7,13 @@
   the existing `bt()` active-phase helper. CI now installs the system
   `udunits2` library on macOS and Windows so the new `units` dependency can
   compile there. (#393)
+* Added `sim_pop_data_2()`, a `sim_pop_data()` alternative built on `ab_5p()`
+  that simulates each simulated individual's age (`sim_age()`) and time
+  since their last seroconversion (`sim_time_since_last_sc()`) directly,
+  rather than simulating an infection history. Both new helper functions,
+  and `sim_pop_data_2()` itself, accept `units`-aware inputs.
+* `sim_pop_data_multi()` gained a `sim_function` parameter (default
+  `sim_pop_data`) so callers can select `sim_pop_data_2()` instead. (#393)
 
 ## Documentation
 

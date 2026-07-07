@@ -40,3 +40,28 @@ test_that("`sim_pop_data_multi()` works consistently", {
   pop_data_multi |>
     expect_snapshot_data(name = "pop_data_multi", digits = 3)
 })
+
+test_that("`sim_pop_data_multi()` can dispatch to `sim_pop_data_2()`", {
+  skip_on_cran()
+  dmcmc <- typhoid_curves_nostrat_100
+  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
+  set.seed(54321)
+
+  pop_data_multi_2 <- sim_pop_data_multi(
+    sim_function = sim_pop_data_2,
+    curve_params = dmcmc,
+    lambdas = 0.2,
+    sample_sizes = 5,
+    age_range = c(0, 10),
+    antigen_isos = antibodies,
+    n_mcmc_samples = 0,
+    renew_params = TRUE,
+    add_noise = FALSE,
+    format = "long",
+    nclus = 1
+  )
+
+  expect_true(is.data.frame(pop_data_multi_2))
+  expect_equal(nrow(pop_data_multi_2), 10)
+})

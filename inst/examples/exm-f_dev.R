@@ -1,4 +1,4 @@
-# \donttest{
+\donttest{
 library(dplyr)
 library(tibble)
 
@@ -54,4 +54,4 @@ f_dev0(
   lnpars = cur_curve_params,
   cond = cur_noise_params
 )
-# }
+}

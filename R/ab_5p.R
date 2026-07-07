@@ -20,7 +20,7 @@
 #'   t1 = params$t1 |> units::as_units("days"),
 #'   alpha = params$alpha |> units::as_units("1/days"),
 #'   shape = params$r)
-ab_5p <- function(t, y0, y1, t1, alpha, shape) {
+ab_5p <- function(t, y0, y1, t1, alpha, shape) { # nolint: object_name_linter
   beta <- bt(y0, y1, t1)
 
   yt <- if_else(
@@ -31,12 +31,12 @@ ab_5p <- function(t, y0, y1, t1, alpha, shape) {
   return(yt)
 }
 
-ab_5p_active_phase <- function(t, y0, beta) {
+ab_5p_active_phase <- function(t, y0, beta) { # nolint: object_name_linter
   yt <- y0 * exp(units::set_units(beta * t, NULL))
   return(yt)
 }
 
-ab_5p_decay_phase <- function(
+ab_5p_decay_phase <- function( # nolint: object_name_linter
     t,
     t1,
     y1,

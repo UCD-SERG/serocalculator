@@ -34,11 +34,10 @@ sim_pop_data_2(
 \item{antigen_isos}{Character vector with one or more antibody names.
 Values must match \code{curve_params}.}
 
-\item{n_mcmc_samples}{how many MCMC samples to use:
-\itemize{
-\item when \code{n_mcmc_samples} is in \code{1:4000} a fixed posterior sample is used
-\item when \code{n_mcmc_samples} = \code{0}, a random sample is chosen
-}}
+\item{n_mcmc_samples}{not yet implemented for this function
+(MCMC iterations are always sampled at random, unlike \code{\link[=sim_pop_data]{sim_pop_data()}});
+kept for API compatibility with \code{\link[=sim_pop_data_multi]{sim_pop_data_multi()}}'s \code{sim_function}
+argument}
 
 \item{renew_params}{whether to generate a new parameter set for each
 infection
@@ -77,16 +76,27 @@ combinations
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
 \item{...}{
-  Arguments passed on to \code{\link[=simcs.tinf]{simcs.tinf}}
+  Arguments passed on to \code{\link{simcs.tinf}}, \code{\link{ldpar}}, \code{\link{ab}}, \code{\link{mk_baseline}}
   \describe{
-    \item{\code{}}{}
+    \item{\code{age}}{age at infection}
+    \item{\code{nmc}}{mcmc sample to use}
+    \item{\code{npar}}{number of parameters}
+    \item{\code{t}}{\link{numeric} \link{vector} of elapsed times since start of infection}
+    \item{\code{par}}{\link{numeric} \link{matrix} of model parameters:
+\itemize{
+\item rows are parameters
+\item columns are biomarkers
+}}
+    \item{\code{kab}}{\link{integer} indicating which row to read from \code{blims}}
+    \item{\code{n}}{number of observations}
+    \item{\code{blims}}{range of possible baseline antibody levels}
   }}
 }
 \value{
-a \link[tibble:tbl_df-class]{tibble::tbl_df} containing simulated cross-sectional serosurvey
+a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey
 data, with columns:
 \itemize{
-\item \code{age}: age (in days)
+\item \code{age}: age (in years)
 \item one column for each element in the \code{antigen_iso} input argument
 }
 }

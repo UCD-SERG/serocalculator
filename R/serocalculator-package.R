@@ -69,7 +69,6 @@
 #' @importFrom tidyselect ends_with
 #' @importFrom units as_units
 #' @importFrom units set_units
-#' @importFrom units units
 #' @importFrom utils capture.output
 #' @importFrom utils download.file unzip
 #' @importFrom utils head

@@ -32,7 +32,7 @@ test_that(
       }
     )
 
-    csdata |> ssdtools:::expect_snapshot_data(name = "sim_cs_data")
+    csdata |> expect_snapshot_data(name = "sim_cs_data")
     csdata |> expect_snapshot_value(style = "serialize")
 
   }
@@ -42,10 +42,9 @@ test_that(
   desc = "results are consistent with units",
   code = {
 
-    library(dplyr)
     # Load curve parameters
     dmcmc <- typhoid_curves_nostrat_100 |>
-      mutate(
+      dplyr::mutate(
         alpha = alpha |> units::as_units("1/days"),
         t1 = t1 |> units::as_units("days")
       )
@@ -73,7 +72,7 @@ test_that(
       }
     )
 
-    csdata2 |> ssdtools:::expect_snapshot_data(name = "sim_cs_data-units")
+    csdata2 |> expect_snapshot_data(name = "sim_cs_data-units")
     csdata2 |> expect_snapshot_value(style = "serialize")
 
 

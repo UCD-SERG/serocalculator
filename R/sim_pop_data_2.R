@@ -28,7 +28,6 @@
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
-#' @inheritDotParams simcs.tinf
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
 #' data, with columns:
 #'

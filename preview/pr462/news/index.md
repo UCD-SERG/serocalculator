@@ -12,12 +12,11 @@
 
 ### Dependencies
 
-- Replaced `ggpubr` with `patchwork` for arranging multi-panel plots in
-  [`autoplot.seroincidence.by()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.seroincidence.by.md)
-  and
-  [`graph_seroresponse_model_1()`](https://ucd-serg.github.io/serocalculator/reference/graph_seroresponse_model_1.md);
-  these functions now return a `"patchwork"` object instead of a
-  `"ggarrange"` object.
+- [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
+  now uses the 5-parameter
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)
+  antibody response model and supports `units`-aware curve parameters.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 - Added
   [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md),
   a 5-parameter antibody response model that supports {units}-aware
@@ -247,12 +246,6 @@ CRAN release: 2025-12-11
   and
   [`autoplot.sim_results()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.sim_results.md)
   ([\#444](https://github.com/UCD-SERG/serocalculator/issues/444))
-
-- Extended
-  [`autoplot.sim_results()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.sim_results.md)
-  to allow customization of x-axis, group, and color aesthetics via
-  `x_var`, `group_var`, and `color_var` parameters
-  ([\#462](https://github.com/UCD-SERG/serocalculator/issues/462))
 
 - Rename `estimate_scr()` to
   [`est_seroincidence_by()`](https://ucd-serg.github.io/serocalculator/reference/est_seroincidence_by.md)

@@ -42,9 +42,8 @@ graph.curve.params <- function( # nolint: object_name_linter
   ...
 ) {
   if (verbose) {
-    message(
-      "Graphing curves for antigen isotypes: ",
-      paste(antigen_isos, collapse = ", ")
+    cli::cli_inform(
+      "Graphing curves for antigen isotypes: {.val {antigen_isos}}"
     )
   }
 
@@ -83,7 +82,7 @@ graph.curve.params <- function( # nolint: object_name_linter
     ) |>
     dplyr::select(-"name") |>
     dplyr::mutate(
-      res = ab_5p(
+      res = serocalculator::ab_5p(
         .data$t,
         .data$y0,
         .data$y1,

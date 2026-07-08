@@ -2,6 +2,8 @@
 
 ## New features
 
+* `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
+  model and supports `units`-aware curve parameters. (#393)
 * Added `ab_5p()`, a 5-parameter antibody response model that supports
   {units}-aware inputs (e.g. `t = units::as_units(50, "days")`), building on
   the existing `bt()` active-phase helper. CI now installs the system

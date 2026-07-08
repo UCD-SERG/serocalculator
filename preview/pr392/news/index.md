@@ -25,6 +25,11 @@
   [`y1f()`](https://ucd-serg.github.io/serocalculator/reference/y1f.md)
   (peak antibody concentration)
   ([\#392](https://github.com/UCD-SERG/serocalculator/issues/392)).
+- [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
+  now uses the 5-parameter
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)
+  antibody response model and supports `units`-aware curve parameters.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 - Added
   [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md),
   a 5-parameter antibody response model that supports {units}-aware

@@ -6,6 +6,12 @@
 
 - Added introductory lecture slides to the `methodology` vignette
   (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).
+- Moved
+  [`f_dev0()`](https://ucd-serg.github.io/serocalculator/reference/f_dev0.md)’s
+  `@examples` block to a separate example file
+  (`inst/examples/exm-f_dev.R`), following the convention already used
+  by other functions in this package.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 
 ### Internal
 

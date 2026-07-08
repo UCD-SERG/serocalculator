@@ -7,7 +7,7 @@
 \method{print}{seroincidence}(x, ...)
 }
 \arguments{
-\item{x}{A list containing output of function \code{\link[=est.incidence]{est.incidence()}}.}
+\item{x}{A list containing output of function \code{\link[=est_seroincidence]{est_seroincidence()}}.}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
@@ -15,7 +15,7 @@
 an \link{invisible} copy of input parameter \code{x}
 }
 \description{
-Custom \code{\link[=print]{print()}} function for \code{seroincidence} objects from \code{\link[=est.incidence]{est.incidence()}}
+\code{\link[=print]{print()}} function for \code{seroincidence} objects from \code{\link[=est_seroincidence]{est_seroincidence()}}
 }
 \examples{
 library(dplyr)
@@ -30,9 +30,9 @@ curve <-
 noise <-
   example_noise_params_pk
 
-est1 <- est.incidence(
+est1 <- est_seroincidence(
   pop_data = xs_data,
-  curve_params = curve,
+  sr_params = curve,
   noise_params = noise,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
 )

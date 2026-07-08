@@ -4,7 +4,7 @@
 #' for examples and testing, for Pakistan
 #'
 #' @format ## `example_noise_params_pk`
-#' A `curve_params` object (from [as_curve_params()]) with 4 rows and 7 columns:
+#' A `curve_params` object (from [as_sr_params()]) with 4 rows and 7 columns:
 #' \describe{
 #'   \item{antigen_iso}{which antigen and isotype are being measured
 #'   (data is in long format)}
@@ -31,7 +31,7 @@
 #' for examples and testing.
 #'
 #' @format ## `example_noise_params_pk`
-#' A `curve_params` object (from [as_curve_params()]) with 4 rows and 7 columns:
+#' A `curve_params` object (from [as_sr_params()]) with 4 rows and 7 columns:
 #' \describe{
 #'   \item{antigen_iso}{which antigen and isotype are being measured
 #'   (data is in long format)}

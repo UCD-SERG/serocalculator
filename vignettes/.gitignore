@@ -9,3 +9,5 @@ methodology_files
 *.docx
 /.quarto/
 *.rmarkdown
+
+**/*.quarto_ipynb

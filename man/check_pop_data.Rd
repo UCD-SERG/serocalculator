@@ -21,8 +21,8 @@ Check the formatting of a cross-sectional antibody survey dataset.
 library(magrittr)
 
 xs_data <-
-  serocalculator_example("example_pop_data.csv") \%>\%
-  read.csv() \%>\%
+  serocalculator_example("example_pop_data.csv") |>
+  read.csv() |>
   as_pop_data()
 
 check_pop_data(xs_data, verbose = TRUE)

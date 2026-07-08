@@ -12,28 +12,25 @@
 #' (does nothing at present?)
 #' @param antigen_isos Character vector with one or more antibody names.
 #' Values must match `curve_params`.
-#' @param n_mcmc_samples how many MCMC samples to use:
-#' * when `n_mcmc_samples` is in `1:4000` a fixed posterior sample is used
-#' * when `n_mcmc_samples` = `0`, a random sample is chosen
-#' @param renew_params whether to generate a new parameter set for each
-#' infection
-#' * `renew_params = TRUE` generates a new parameter set for each infection
-#' * `renew_params = FALSE` keeps the one selected at birth,
-#' but updates baseline y0
+#' @param n_mcmc_samples not yet implemented for this function
+#' (MCMC iterations are always sampled at random, unlike [sim_pop_data()]);
+#' kept for API compatibility with [sim_pop_data_multi()]'s `sim_function`
+#' argument
+#' @param renew_params not yet implemented for this function
+#' (curve parameters are always resampled independently for each simulated
+#' individual, unlike [sim_pop_data()]); kept for API compatibility with
+#' [sim_pop_data_multi()]'s `sim_function` argument
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @inheritParams log_likelihood
-
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
 #' * `"wide"` (one serum sample per row)
-#' @inheritDotParams simcs.tinf
-#' @inheritParams log_likelihood # verbose
 #' @return a [tibble::tbl_df] containing simulated cross-sectional serosurvey
 #' data, with columns:
 #'
-#' * `age`: age (in days)
+#' * `age`: age (in years)
 #' * one column for each element in the `antigen_iso` input argument
 #'
 #' @export
@@ -92,9 +89,18 @@ sim_pop_data_2 <- function(
     format = "wide",
     verbose = FALSE,
     ...) {
-  if (verbose > 1) {
-    message("inputs to `sim_pop_data()`:")
+  verbose_level <- .validate_verbose(verbose)
+
+  if (verbose_level >= 2) {
+    cli::cli_inform("inputs to `sim_pop_data_2()`:")
     print(environment() |> as.list())
+  }
+
+  converted_to_days <- !inherits(lambda, "units")
+  days_per_year <- 365.25
+  if (converted_to_days) {
+    lambda <- lambda / days_per_year
+    age_range <- age_range * days_per_year
   }
 
   chain_in_curve_params <- "chain" %in% names(curve_params)
@@ -136,7 +142,7 @@ sim_pop_data_2 <- function(
         c(
           "antigen_iso",
           "mcmc_iter" = "iter",
-          if (chain_in_curve_params) "mcmc_chain" = "chain" # nolint: assignment_linter
+          if (chain_in_curve_params) c("mcmc_chain" = "chain")
         )
     ) |>
     mutate(
@@ -164,6 +170,11 @@ sim_pop_data_2 <- function(
   } else {
     pop_data <- pop_data |>
       mutate(Y = .data$`E[Y]`)
+  }
+
+  if (converted_to_days) {
+    pop_data <- pop_data |>
+      mutate(age = .data$age / days_per_year)
   }
 
   pop_data <- pop_data |>

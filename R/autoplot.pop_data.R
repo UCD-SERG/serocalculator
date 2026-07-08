@@ -19,12 +19,12 @@
 #' library(magrittr)
 #'
 #' xs_data <-
-#'   serocalculator_example("example_pop_data.csv") %>%
-#'   read.csv() %>%
+#'   serocalculator_example("example_pop_data.csv") |>
+#'   read.csv() |>
 #'   as_pop_data()
 #'
-#' xs_data %>% autoplot(strata = "catchment", type = "density")
-#' xs_data %>% autoplot(strata = "catchment", type = "age-scatter")
+#' xs_data |> autoplot(strata = "catchment", type = "density")
+#' xs_data |> autoplot(strata = "catchment", type = "age-scatter")
 #' }
 #' @export
 autoplot.pop_data <- function(
@@ -33,7 +33,6 @@ autoplot.pop_data <- function(
     type = "density",
     strata = NULL,
     ...) {
-
   if (!is.null(strata) && !is.element(strata, names(object))) {
     cli::cli_abort(
       class = "unavailable_strata",
@@ -60,128 +59,4 @@ autoplot.pop_data <- function(
       )
     )
   }
-}
-
-age_scatter <- function(
-    object,
-    strata = NULL,
-    age_var = object %>% get_age_var(),
-    value_var = object %>% get_values_var()) {
-  # create default plotting
-
-  if (is.null(strata)) {
-    plot1 <-
-      object %>%
-      ggplot2::ggplot() +
-      ggplot2::aes(
-        x = .data[[age_var]],
-        y = .data[[value_var]]
-      )
-  } else {
-    plot1 <-
-      object %>%
-      ggplot2::ggplot() +
-      ggplot2::aes(
-        col = .data[[strata]],
-        x = .data[[age_var]],
-        y = .data[[value_var]]
-      ) +
-      ggplot2::labs(colour = strata)
-  }
-
-  plot1 <- plot1 +
-    ggplot2::theme_linedraw() +
-    # ggplot2::scale_y_log10() +
-
-    # avoid log 0 (https://bit.ly/4eqDkT4)
-    ggplot2::scale_y_continuous(
-      trans = scales::pseudo_log_trans(sigma = 0.01),
-      breaks = c(-1, -0.1, 0, 0.1, 1, 10),
-      minor_breaks = NULL
-    ) +
-    ggplot2::geom_point(size = .6, alpha = .7) +
-    ggplot2::geom_smooth(
-      method = "lm",
-      se = FALSE,
-      formula = y ~ x,
-      na.rm = TRUE
-    ) +
-    ggplot2::labs(
-      title = "Quantitative Antibody Responses by Age",
-      x = "Age",
-      y = "Antibody Response Value"
-    )
-
-  return(plot1)
-}
-
-# density plotting function
-density_plot <- function(
-    object,
-    strata = NULL,
-    log = FALSE,
-    value_var = object %>% get_values_var()) {
-  plot1 <-
-    object %>%
-    ggplot2::ggplot() +
-    ggplot2::aes(x = .data[[value_var]]) +
-    ggplot2::theme_linedraw() +
-    ggplot2::facet_wrap(~antigen_iso, nrow = 3)
-
-  if (is.null(strata)) {
-    plot1 <- plot1 +
-      ggplot2::geom_density(
-        alpha = .6,
-        color = "black"
-      )
-  } else {
-    plot1 <- plot1 +
-      ggplot2::geom_density(
-        alpha = .6,
-        color = "black",
-        aes(fill = get(strata))
-      ) +
-      ggplot2::labs(fill = strata)
-  }
-  if (log) {
-
-    min_nonzero_val <-
-      object %>%
-      get_values() %>%
-      purrr::keep(~ . > 0) %>%
-      min()
-
-    max_val <-
-      object %>%
-      get_values() %>%
-      max()
-
-    breaks1 <- c(0, 10^seq(
-      min_nonzero_val %>% log10() %>% floor(),
-      max_val %>% log10() %>% ceiling()
-    ))
-
-    plot1 <- plot1 +
-      ggplot2::scale_x_continuous(
-        labels = scales::label_comma(),
-        transform = scales::pseudo_log_trans(
-          sigma = min_nonzero_val / 10,
-          base = 10
-        ),
-        breaks = breaks1
-      ) +
-      ggplot2::labs(
-        title = "Distribution of Cross-sectional Antibody Responses",
-        x = "Quantitative antibody response",
-        y = "Frequency"
-      )
-  } else {
-    plot1 <- plot1 +
-      ggplot2::labs(
-        title = "Distribution of Cross-sectional Antibody Responses",
-        x = "Antibody Response Value",
-        y = "Frequency"
-      )
-  }
-  return(plot1)
 }

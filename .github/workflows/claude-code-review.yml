@@ -1,0 +1,129 @@
+# Automatic Claude Code review of pull requests — caller stub for the
+# central d-morrison/gha reusable workflow.
+#
+# The reusable workflow (d-morrison/gha/.github/workflows/claude-code-review.yml)
+# holds the actual review machinery: the upstream `code-review@claude-code-plugins`
+# plugin, the SERG lab-manual guidance, prior-review-context gathering, stub-review
+# retry, reviewer stash/restore, and comment collapsing — see its own header
+# comment for details. This stub only holds the triggers and
+# serocalculator-specific review guidance.
+#
+# Skips drafts, Dependabot bumps, and fork PRs (fork PRs can't read repo
+# secrets). Project guidance is in .github/copilot-instructions.md.
+# Requires the CLAUDE_CODE_OAUTH_TOKEN repository secret.
+#
+# The workflow_dispatch path lets claude.yml re-dispatch a review after an
+# @claude run pushes commits — keep this file named claude-code-review.yml
+# (matching claude.yml's default review-workflow-file input).
+# The issue_comment path lets a trusted collaborator start a review on demand
+# by commenting `/review` on a PR, without going through claude.yml's @claude
+# agent.
+
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number to review'
+        required: true
+        type: string
+
+jobs:
+  # `/review` at the start of a PR comment (from an OWNER/MEMBER/COLLABORATOR)
+  # dispatches an on-demand review of that PR, independent of claude.yml. This
+  # re-enters the workflow_dispatch path below via `gh workflow run`, so it
+  # needs this file on the default branch first.
+  dispatch-on-comment:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/review') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write        # dispatch this workflow via `gh workflow run`
+      issues: write         # acknowledge the /review comment
+    steps:
+      - name: Parse this workflow's ref
+        id: this-wf
+        uses: d-morrison/gha/.github/actions/parse-workflow-ref@v2
+        with:
+          workflow-ref: ${{ github.workflow_ref }}
+
+      - name: Dispatch a review for the commented PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          WF_PATH: ${{ steps.this-wf.outputs.path }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$COMMENT_BODY" =~ ^/review([[:space:]]|$) ]]; then
+            echo "Comment does not start with a standalone '/review' command; skipping dispatch."
+            exit 0
+          fi
+          WF_FILE=$(basename "$WF_PATH")
+          echo "Dispatching $WF_FILE to review PR #$PR_NUMBER (/review comment)."
+          gh workflow run "$WF_FILE" --repo "$REPO" -f pr_number="$PR_NUMBER"
+          gh issue comment "$PR_NUMBER" --repo "$REPO" \
+            --body ":mag: \`/review\` received — dispatched a Claude review of this PR (see the [dispatch run]($RUN_URL)). The review posts as its own comment when it finishes." \
+            || echo "::warning::Could not acknowledge the /review comment."
+
+  review:
+    # pull_request and workflow_dispatch only; the issue_comment path is
+    # handled by dispatch-on-comment above (which re-enters via workflow_dispatch).
+    if: github.event_name != 'issue_comment'
+    permissions:
+      contents: read
+      pull-requests: write  # post review + inline comments
+      issues: write
+      id-token: write       # required by claude-code-action for the App-token exchange
+      actions: read          # lets the reviewer read CI status
+    uses: d-morrison/gha/.github/workflows/claude-code-review.yml@v2
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    with:
+      # Wires the workflow_dispatch input through so claude.yml can
+      # re-dispatch a review on Claude's commits; empty (and ignored) for
+      # pull_request runs.
+      pr-number: ${{ inputs.pr_number }}
+      # lab-manual and allowed-bots default to values that already match
+      # serocalculator's prior bespoke workflow.
+      prompt-addendum: |
+        In addition to the standard checks above, this is the
+        serocalculator R package (statistical analysis of serological
+        data), so also prioritize:
+
+        1. **R package correctness**
+           - roxygen2 docs match the code: every exported function has
+             @param / @returns / @examples; man/, NAMESPACE, and
+             DESCRIPTION are in sync (run `devtools::document()` if not).
+           - Conforms to `.lintr.R` (snake_case, line length, etc.).
+           - New package dependencies are justified and declared in
+             DESCRIPTION (Imports/Suggests), not loaded ad hoc.
+
+        2. **Tests & reproducibility**
+           - New/changed behavior has testthat coverage; snapshot tests
+             are updated intentionally, not blindly accepted.
+           - Examples and vignettes still run; no nondeterministic
+             output committed (set seeds where randomness is involved).
+
+        3. **Changelog & docs hygiene**
+           - NEWS.md has a bullet for user-facing changes (the news.yaml
+             check enforces this unless the PR has the `no-changelog`
+             label).
+           - Spelling passes `spelling::spell_check_package()`; genuine
+             new terms are added to `inst/WORDLIST` rather than
+             suppressed.
+
+        4. **Build hygiene**
+           - No accidental commits of build artifacts (`docs/`,
+             `*.Rcheck/`, `.Rproj.user/`) or large data blobs.

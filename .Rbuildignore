@@ -36,3 +36,9 @@ allpopsamples_hlye.csv$
 ^vignettes/articles/\.quarto$
 ^vignettes/articles/*_files$
 ^man/check_strata\.Rd$
+^\.lintr\.R$
+^CLAUDE\.md$
+^\.claude$
+^_extensions$
+^macros$
+^\.gitmodules$

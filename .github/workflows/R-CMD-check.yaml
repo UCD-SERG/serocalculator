@@ -42,8 +42,8 @@ jobs:
         if: ${{ runner.os == 'macOS' }}
         run: |
           brew install automake udunits
-          echo "UDUNITS2_INCLUDE=/opt/homebrew/Cellar/udunits/2.2.28/include" >> $GITHUB_ENV
-          echo "UDUNITS2_LIBS=/opt/homebrew/Cellar/udunits/2.2.28/lib" >> $GITHUB_ENV
+          echo "UDUNITS2_INCLUDE=$(brew --prefix udunits)/include" >> $GITHUB_ENV
+          echo "UDUNITS2_LIBS=$(brew --prefix udunits)/lib" >> $GITHUB_ENV
 
       # c.f. https://github.com/orgs/community/discussions/26947
       - name: Install Windows dependencies
@@ -58,5 +58,5 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          error-on: '"warning"'
+          error-on: '"note"'
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'

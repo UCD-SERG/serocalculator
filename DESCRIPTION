@@ -1,7 +1,7 @@
 Type: Package
 Package: serocalculator
 Title: Estimating Infection Rates from Serological Data
-Version: 1.4.0.9011
+Version: 1.4.1.9003
 Authors@R: c(
     person("Kristina", "Lai", , "kwlai@ucdavis.edu", role = c("aut", "cre")),
     person("Chris", "Orwa", role = "aut"),
@@ -19,9 +19,9 @@ License: GPL-3
 URL: https://ucd-serg.github.io/serocalculator/,
     https://github.com/UCD-SERG/serocalculator
 BugReports: https://github.com/UCD-SERG/serocalculator/issues
-Depends:
+Depends: 
     R (>= 4.1.0)
-Imports:
+Imports: 
     cli,
     doParallel,
     dplyr,
@@ -52,6 +52,7 @@ Suggests:
     fs,
     ggbeeswarm,
     knitr,
+    maps,
     mixtools,
     pak,
     quarto,
@@ -66,13 +67,14 @@ Suggests:
     forcats,
     snapr (>= 0.0.0.9000),
     rex,
-    readr
-LinkingTo:
+    readr,
+    serodynamics
+LinkingTo: 
     Rcpp
 Config/testthat/edition: 3
 Config/Needs/roxygen2: roxygen2, moodymudskipper/devtag
 Config/Needs/lint: r-lib/lintr
-Config/Needs/website: quarto, lewinfox/foodwebr
+Config/Needs/website: quarto, lewinfox/foodwebr, serodynamics, maps
 Config/Needs/check: readr
 Encoding: UTF-8
 Language: en-US
@@ -80,5 +82,6 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 Remotes:
-    d-morrison/snapr
+    d-morrison/snapr,
+    UCD-SERG/serodynamics
 Config/roxygen2/version: 8.0.0

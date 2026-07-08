@@ -1,0 +1,133 @@
+---
+# GitHub Copilot Setup Steps for serocalculator
+#
+# This workflow configures the GitHub Copilot coding agent's environment
+# by preinstalling R and all required dependencies.
+#
+# See: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/
+#      coding-agent/customize-the-agent-environment
+# For detailed setup instructions, see .github/copilot-instructions.md
+#
+# This workflow aligns with the setup requirements documented in
+# .github/copilot-instructions.md:
+# - R version >= 4.1.0 (as specified in DESCRIPTION)
+# - All package dependencies (Imports, Suggests, and development needs)
+
+name: "Copilot Setup Steps"
+
+# Automatically run the setup steps when they are changed to allow
+# for easy validation, and allow manual testing through the
+# repository's "Actions" tab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # The job MUST be called `copilot-setup-steps` or it will not be
+  # picked up by Copilot.
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Set the permissions to the lowest permissions possible needed
+    # for your steps. Copilot will be given its own token for its
+    # operations.
+    permissions:
+      contents: read
+
+    # Timeout after 55 minutes (max is 59 for copilot-setup-steps)
+    timeout-minutes: 55
+
+    steps:
+      # Checkout code - Copilot will do this automatically if we don't,
+      # but we need it to install dependencies from DESCRIPTION
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install system dependencies required for R packages
+      # See .github/copilot-instructions.md
+      # "Verify Development Environment" section
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev
+
+      # Set up pandoc for documentation
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      # Set up R using the standard GitHub Actions setup
+      # R version >= 4.1.0 required
+      # (see DESCRIPTION and .github/copilot-instructions.md)
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+
+      # Install R dependencies with caching for faster subsequent runs
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::devtools
+            any::rcmdcheck
+            any::lintr
+            any::spelling
+            any::rmarkdown
+          needs: check
+
+      # Verify R environment is properly configured
+      # See .github/copilot-instructions.md
+      # "Verify Development Environment" section
+      - name: Verify development environment
+        run: |
+          echo "=== R Development Environment Status ==="
+          Rscript -e '
+            cat("R version:", R.version.string, "\n\n")
+
+            # Check R version meets minimum requirement (>= 4.1.0)
+            r_version <- paste(R.version$major, R.version$minor, sep = ".")
+            cat("Checking R version >= 4.1.0... ")
+            if (getRversion() >= "4.1.0") {
+              cat("PASSED (", r_version, ")\n\n", sep = "")
+            } else {
+              cat("FAILED (", r_version, ")\n\n", sep = "")
+              stop("R version must be >= 4.1.0")
+            }
+
+            # Display key installed packages
+            cat("Key installed packages:\n")
+            key_packages <- c(
+              "devtools", "rcmdcheck", "lintr",
+              "spelling", "testthat", "Rcpp"
+            )
+            for (pkg in key_packages) {
+              if (requireNamespace(pkg, quietly = TRUE)) {
+                cat(
+                  "  -", pkg, ":",
+                  as.character(packageVersion(pkg)), "\n"
+                )
+              } else {
+                cat("  -", pkg, ": NOT INSTALLED\n")
+              }
+            }
+
+            cat("\nTotal packages installed:",
+                nrow(installed.packages()), "\n")
+            cat("\nDevelopment environment setup complete!\n")
+          '

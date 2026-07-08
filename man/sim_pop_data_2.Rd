@@ -39,13 +39,10 @@ Values must match \code{curve_params}.}
 kept for API compatibility with \code{\link[=sim_pop_data_multi]{sim_pop_data_multi()}}'s \code{sim_function}
 argument}
 
-\item{renew_params}{whether to generate a new parameter set for each
-infection
-\itemize{
-\item \code{renew_params = TRUE} generates a new parameter set for each infection
-\item \code{renew_params = FALSE} keeps the one selected at birth,
-but updates baseline y0
-}}
+\item{renew_params}{not yet implemented for this function
+(curve parameters are always resampled independently for each simulated
+individual, unlike \code{\link[=sim_pop_data]{sim_pop_data()}}); kept for API compatibility with
+\code{\link[=sim_pop_data_multi]{sim_pop_data_multi()}}'s \code{sim_function} argument}
 
 \item{add_noise}{a \code{\link[=logical]{logical()}} indicating
 whether to add biological and measurement noise}

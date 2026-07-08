@@ -5,7 +5,6 @@ test_that(
     # Load curve parameters
     dmcmc <- typhoid_curves_nostrat_100
 
-    days_per_year <- 365.25
     withr::with_seed(
       seed = 1,
       code = {
@@ -13,9 +12,9 @@ test_that(
         # Generate cross-sectional data
         csdata <- sim_pop_data_2(
           curve_params = dmcmc,
-          lambda = 0.2 / days_per_year,
+          lambda = 0.2,
           n_samples = 100,
-          age_range = c(0, 10) * days_per_year,
+          age_range = c(0, 10),
           antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
           n_mcmc_samples = 0,
           renew_params = TRUE,

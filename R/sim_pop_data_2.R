@@ -16,11 +16,10 @@
 #' (MCMC iterations are always sampled at random, unlike [sim_pop_data()]);
 #' kept for API compatibility with [sim_pop_data_multi()]'s `sim_function`
 #' argument
-#' @param renew_params whether to generate a new parameter set for each
-#' infection
-#' * `renew_params = TRUE` generates a new parameter set for each infection
-#' * `renew_params = FALSE` keeps the one selected at birth,
-#' but updates baseline y0
+#' @param renew_params not yet implemented for this function
+#' (curve parameters are always resampled independently for each simulated
+#' individual, unlike [sim_pop_data()]); kept for API compatibility with
+#' [sim_pop_data_multi()]'s `sim_function` argument
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @inheritParams log_likelihood
@@ -95,6 +94,12 @@ sim_pop_data_2 <- function(
   if (verbose_level >= 2) {
     cli::cli_inform("inputs to `sim_pop_data_2()`:")
     print(environment() |> as.list())
+  }
+
+  if (!inherits(lambda, "units")) {
+    days_per_year <- 365.25
+    lambda <- lambda / days_per_year
+    age_range <- age_range * days_per_year
   }
 
   chain_in_curve_params <- "chain" %in% names(curve_params)

@@ -48,6 +48,13 @@ test_that("`sim_pop_data_multi()` can dispatch to `sim_pop_data_2()`", {
 
   set.seed(54321)
 
+  # nclus = 1 (with a single lambda/sample_size) is avoided here: it makes
+  # `n_sample_sizes * n_lambda * nclus == 1`, which hits a pre-existing
+  # `sim_pop_data_multi()` bug where `rngtools::RNGseq(1, seed)` returns an
+  # unwrapped 7-integer state vector (instead of a list-of-one), silently
+  # truncated to its first element by the subsequent `array()` call -- this
+  # feeds `rngtools::setRNG()` an invalid state and makes results
+  # non-reproducible across runs. Tracked in #554; nclus = 2 sidesteps it.
   pop_data_multi_2 <- sim_pop_data_multi(
     sim_function = sim_pop_data_2,
     curve_params = dmcmc,
@@ -59,9 +66,9 @@ test_that("`sim_pop_data_multi()` can dispatch to `sim_pop_data_2()`", {
     renew_params = TRUE,
     add_noise = FALSE,
     format = "long",
-    nclus = 1
+    nclus = 2
   )
 
-  expect_true(is.data.frame(pop_data_multi_2))
-  expect_equal(nrow(pop_data_multi_2), 10)
+  pop_data_multi_2 |>
+    expect_snapshot_data(name = "pop_data_multi_2", digits = 3)
 })

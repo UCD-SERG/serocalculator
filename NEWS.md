@@ -6,9 +6,6 @@
   arguments, letting users choose which columns map to the x-axis, group,
   and color aesthetics instead of the previous hardcoded `sample_size` /
   `lambda.sim` mapping.
-
-## Dependencies
-
 * `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
   model and supports `units`-aware curve parameters. (#393)
 * Added `ab_5p()`, a 5-parameter antibody response model that supports

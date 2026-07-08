@@ -4,6 +4,9 @@
 
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* Moved `f_dev0()`'s `@examples` block to a separate example file
+  (`inst/examples/exm-f_dev.R`), following the convention already used by
+  other functions in this package. (#393)
 
 ## Internal
 

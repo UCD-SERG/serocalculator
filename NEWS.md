@@ -1,5 +1,13 @@
 # serocalculator (development version)
 
+## New features
+
+* Added `ab_5p()`, a 5-parameter antibody response model that supports
+  {units}-aware inputs (e.g. `t = units::as_units(50, "days")`), building on
+  the existing `bt()` active-phase helper. CI now installs the system
+  `udunits2` library on macOS and Windows so the new `units` dependency can
+  compile there. (#393)
+
 ## Documentation
 
 * Added introductory lecture slides to the `methodology` vignette

@@ -64,6 +64,8 @@
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyselect contains
 #' @importFrom tidyselect ends_with
+#' @importFrom units as_units
+#' @importFrom units set_units
 #' @importFrom utils capture.output
 #' @importFrom utils download.file unzip
 #' @importFrom utils head

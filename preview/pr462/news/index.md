@@ -9,9 +9,6 @@
   choose which columns map to the x-axis, group, and color aesthetics
   instead of the previous hardcoded `sample_size` / `lambda.sim`
   mapping.
-
-### Dependencies
-
 - [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   now uses the 5-parameter
   [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)

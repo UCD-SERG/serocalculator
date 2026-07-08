@@ -62,10 +62,7 @@
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li>
 <code><a href="../reference/autoplot.sim_results.html">autoplot.sim_results()</a></code> gains <code>x_var</code>, <code>group_var</code>, and <code>color_var</code> arguments, letting users choose which columns map to the x-axis, group, and color aesthetics instead of the previous hardcoded <code>sample_size</code> / <code>lambda.sim</code> mapping.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="dependencies-development-version">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-development-version"></a></h3>
-<ul><li>
+<li>
 <code><a href="../reference/graph.curve.params.html">graph.curve.params()</a></code> now uses the 5-parameter <code><a href="../reference/ab_5p.html">ab_5p()</a></code> antibody response model and supports <code>units</code>-aware curve parameters. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393" class="external-link">#393</a>)</li>
 <li>Added <code><a href="../reference/ab_5p.html">ab_5p()</a></code>, a 5-parameter antibody response model that supports {units}-aware inputs (e.g. <code>t = units::as_units(50, "days")</code>), building on the existing <code>bt()</code> active-phase helper. CI now installs the system <code>udunits2</code> library on macOS and Windows so the new <code>units</code> dependency can compile there. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393" class="external-link">#393</a>)</li>
 <li>Added <code><a href="../reference/sim_pop_data_2.html">sim_pop_data_2()</a></code>, a <code><a href="../reference/sim_pop_data.html">sim_pop_data()</a></code> alternative built on <code><a href="../reference/ab_5p.html">ab_5p()</a></code> that simulates each simulated individual’s age (<code>sim_age()</code>) and time since their last seroconversion (<code>sim_time_since_last_sc()</code>) directly, rather than simulating an infection history. Both new helper functions, and <code><a href="../reference/sim_pop_data_2.html">sim_pop_data_2()</a></code> itself, accept <code>units</code>-aware inputs.</li>

@@ -9,9 +9,6 @@
 
 ## Dependencies
 
-* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots in
-  `autoplot.seroincidence.by()` and `graph_seroresponse_model_1()`; these
-  functions now return a `"patchwork"` object instead of a `"ggarrange"` object.
 * `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
   model and supports `units`-aware curve parameters. (#393)
 * Added `ab_5p()`, a 5-parameter antibody response model that supports
@@ -135,7 +132,6 @@
 `autoplot.curve_params()` (#453)
 * Extended `sim_pop_data_multi()` to loop over multiple sample sizes (#444)
 * Added new functions `analyze_sims()` and `autoplot.sim_results()` (#444)
-* Extended `autoplot.sim_results()` to allow customization of x-axis, group, and color aesthetics via `x_var`, `group_var`, and `color_var` parameters (#462)
 * Rename `estimate_scr()` to `est_seroincidence_by()` (#439)
 * Rename `estimate_scr()` to `est_seroincidence()` (#432)
 * Rename argument `curve_params` to `sr_params` for estimation functions (#424)

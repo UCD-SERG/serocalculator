@@ -25,30 +25,8 @@ ab_5p <- function(t, y0, y1, t1, alpha, shape) { # nolint: object_name_linter
 
   yt <- if_else(
     t < t1,
-    ab_5p_active_phase(t, y0, beta),
-    ab_5p_decay_phase(t, t1, y1, alpha, shape)
+    .ab_5p_active_phase(t, y0, beta),
+    .ab_5p_decay_phase(t, t1, y1, alpha, shape)
   )
   return(yt)
-}
-
-ab_5p_active_phase <- function(t, y0, beta) { # nolint: object_name_linter
-  yt <- y0 * exp(units::set_units(beta * t, NULL))
-  return(yt)
-}
-
-ab_5p_decay_phase <- function( # nolint: object_name_linter
-    t,
-    t1,
-    y1,
-    alpha,
-    shape) {
-  base_part_1 <- y1^(1 - shape)
-  base_part_2 <- units::set_units(
-    x = (1 - shape) * alpha * (t - t1),
-    value = NULL
-  )
-  base <- base_part_1 - base_part_2
-  expt <- (1 / (1 - shape))
-  ans <- base^expt
-  return(ans)
 }

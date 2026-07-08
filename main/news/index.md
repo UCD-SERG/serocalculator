@@ -4,6 +4,11 @@
 
 ### New features
 
+- [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
+  now uses the 5-parameter
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)
+  antibody response model and supports `units`-aware curve parameters.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 - Added
   [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md),
   a 5-parameter antibody response model that supports {units}-aware
@@ -534,7 +539,8 @@ CRAN release: 2025-01-25
   [`df_to_array()`](https://ucd-serg.github.io/serocalculator/reference/df_to_array.md)
   ([\#276](https://github.com/UCD-SERG/serocalculator/issues/276))
 
-- Added `devtag` to package (using `devtag::use_devtag()`)
+- Added `devtag` to package (using
+  [`devtag::use_devtag()`](https://rdrr.io/pkg/devtag/man/use_devtag.html))
   ([\#292](https://github.com/UCD-SERG/serocalculator/issues/292))
 
 - Added `@dev` tag to `?df_to_array()`

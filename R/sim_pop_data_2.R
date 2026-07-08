@@ -96,8 +96,9 @@ sim_pop_data_2 <- function(
     print(environment() |> as.list())
   }
 
-  if (!inherits(lambda, "units")) {
-    days_per_year <- 365.25
+  converted_to_days <- !inherits(lambda, "units")
+  days_per_year <- 365.25
+  if (converted_to_days) {
     lambda <- lambda / days_per_year
     age_range <- age_range * days_per_year
   }
@@ -169,6 +170,11 @@ sim_pop_data_2 <- function(
   } else {
     pop_data <- pop_data |>
       mutate(Y = .data$`E[Y]`)
+  }
+
+  if (converted_to_days) {
+    pop_data <- pop_data |>
+      mutate(age = .data$age / days_per_year)
   }
 
   pop_data <- pop_data |>

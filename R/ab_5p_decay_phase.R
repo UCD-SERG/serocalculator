@@ -9,7 +9,7 @@
 #' @return a [numeric()] vector
 #' @keywords internal
 #' @noRd
-.ab_5p_decay_phase <- function(
+.ab_5p_decay_phase <- function( # nolint: object_name_linter
     t,
     t1,
     y1,

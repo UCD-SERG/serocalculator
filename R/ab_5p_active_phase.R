@@ -7,7 +7,7 @@
 #' @return a [numeric()] vector
 #' @keywords internal
 #' @noRd
-.ab_5p_active_phase <- function(t, y0, beta) {
+.ab_5p_active_phase <- function(t, y0, beta) { # nolint: object_name_linter
   yt <- y0 * exp(units::set_units(beta * t, NULL))
   return(yt)
 }

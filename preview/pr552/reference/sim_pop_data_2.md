@@ -58,13 +58,12 @@ sim_pop_data_2(
 
 - renew_params:
 
-  whether to generate a new parameter set for each infection
-
-  - `renew_params = TRUE` generates a new parameter set for each
-    infection
-
-  - `renew_params = FALSE` keeps the one selected at birth, but updates
-    baseline y0
+  not yet implemented for this function (curve parameters are always
+  resampled independently for each simulated individual, unlike
+  [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md));
+  kept for API compatibility with
+  [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)'s
+  `sim_function` argument
 
 - add_noise:
 

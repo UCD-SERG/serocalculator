@@ -25,14 +25,56 @@
   [`y1f()`](https://ucd-serg.github.io/serocalculator/reference/y1f.md)
   (peak antibody concentration)
   ([\#392](https://github.com/UCD-SERG/serocalculator/issues/392)).
+- Added
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md),
+  a 5-parameter antibody response model that supports {units}-aware
+  inputs (e.g. `t = units::as_units(50, "days")`), building on the
+  existing `bt()` active-phase helper. CI now installs the system
+  `udunits2` library on macOS and Windows so the new `units` dependency
+  can compile there.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
+- Added
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md),
+  a
+  [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+  alternative built on
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)
+  that simulates each simulated individual’s age (`sim_age()`) and time
+  since their last seroconversion (`sim_time_since_last_sc()`) directly,
+  rather than simulating an infection history. Both new helper
+  functions, and
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md)
+  itself, accept `units`-aware inputs.
+- [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
+  gained a `sim_function` parameter (default `sim_pop_data`) so callers
+  can select
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md)
+  instead.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 
 ### Documentation
 
 - Added introductory lecture slides to the `methodology` vignette
   (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).
+- Moved
+  [`f_dev0()`](https://ucd-serg.github.io/serocalculator/reference/f_dev0.md)’s
+  `@examples` block to a separate example file
+  (`inst/examples/exm-f_dev.R`), following the convention already used
+  by other functions in this package.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 
 ### Internal
 
+- `news.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `check-news.yml@v1` reusable workflow instead of invoking
+  `UCD-SERG/changelog-check-action@v2` directly.
+  ([\#537](https://github.com/UCD-SERG/serocalculator/issues/537))
+- `claude.yml` and `claude-code-review.yml` now call the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2`
+  and `claude-code-review.yml@v2` reusable workflows instead of carrying
+  their own copy of the agent/review machinery.
+  ([\#549](https://github.com/UCD-SERG/serocalculator/issues/549))
 - The `methodology` vignette’s LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git
   submodule (included via `{{< include ../macros/macros.qmd >}}`)

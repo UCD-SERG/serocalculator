@@ -9,6 +9,8 @@
 * Added `plot_decay_curve()` for plotting decay functions using ggplot2 (#392).
 * Added helper functions `t1f()` (time to end of active infection) and
   `y1f()` (peak antibody concentration) (#392).
+* `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
+  model and supports `units`-aware curve parameters. (#393)
 * Added `ab_5p()`, a 5-parameter antibody response model that supports
   {units}-aware inputs (e.g. `t = units::as_units(50, "days")`), building on
   the existing `bt()` active-phase helper. CI now installs the system

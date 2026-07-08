@@ -2,6 +2,35 @@
 
 ## serocalculator (development version)
 
+### New features
+
+- Added
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md),
+  a 5-parameter antibody response model that supports {units}-aware
+  inputs (e.g. `t = units::as_units(50, "days")`), building on the
+  existing `bt()` active-phase helper. CI now installs the system
+  `udunits2` library on macOS and Windows so the new `units` dependency
+  can compile there.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
+- Added
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md),
+  a
+  [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+  alternative built on
+  [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)
+  that simulates each simulated individual’s age (`sim_age()`) and time
+  since their last seroconversion (`sim_time_since_last_sc()`) directly,
+  rather than simulating an infection history. Both new helper
+  functions, and
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md)
+  itself, accept `units`-aware inputs.
+- [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)
+  gained a `sim_function` parameter (default `sim_pop_data`) so callers
+  can select
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md)
+  instead.
+  ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
+
 ### Documentation
 
 - Added introductory lecture slides to the `methodology` vignette

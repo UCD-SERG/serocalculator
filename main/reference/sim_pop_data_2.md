@@ -6,7 +6,7 @@ desired.
 ## Usage
 
 ``` r
-sim_pop_data(
+sim_pop_data_2(
   lambda = 0.1,
   n_samples = 100,
   age_range = c(0, 20),
@@ -28,7 +28,7 @@ sim_pop_data(
 - lambda:
 
   a [`numeric()`](https://rdrr.io/r/base/numeric.html) scalar indicating
-  the incidence rate (in events per person-*year*s)
+  the incidence rate (in events per person-years)
 
 - n_samples:
 
@@ -36,7 +36,7 @@ sim_pop_data(
 
 - age_range:
 
-  age range of sampled individuals, in *years*
+  age range of sampled individuals, in years
 
 - age_fixed:
 
@@ -49,22 +49,21 @@ sim_pop_data(
 
 - n_mcmc_samples:
 
-  how many MCMC samples to use:
-
-  - when `n_mcmc_samples` is in `1:4000` a fixed posterior sample is
-    used
-
-  - when `n_mcmc_samples` = `0`, a random sample is chosen
+  not yet implemented for this function (MCMC iterations are always
+  sampled at random, unlike
+  [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md));
+  kept for API compatibility with
+  [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)'s
+  `sim_function` argument
 
 - renew_params:
 
-  whether to generate a new parameter set for each infection
-
-  - `renew_params = TRUE` generates a new parameter set for each
-    infection
-
-  - `renew_params = FALSE` keeps the one selected at birth, but updates
-    baseline y0
+  not yet implemented for this function (curve parameters are always
+  resampled independently for each simulated individual, unlike
+  [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md));
+  kept for API compatibility with
+  [`sim_pop_data_multi()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_multi.md)'s
+  `sim_function` argument
 
 - add_noise:
 
@@ -110,62 +109,11 @@ sim_pop_data(
 
 - verbose:
 
-  verbosity level for console logging. Accepts a logical scalar or a
-  non-negative whole number:
-
-  - `FALSE`/`0`: no log messages
-
-  - `TRUE`/`1`: basic progress messages
-
-  - `>= 2`: basic progress messages plus detailed input logging
+  logical: if TRUE, print verbose log information to console
 
 - ...:
 
-  Arguments passed on to
-  [`simcs.tinf`](https://ucd-serg.github.io/serocalculator/reference/simcs.tinf.md),
-  [`ldpar`](https://ucd-serg.github.io/serocalculator/reference/ldpar.md),
-  [`ab`](https://ucd-serg.github.io/serocalculator/reference/ab.md),
-  [`mk_baseline`](https://ucd-serg.github.io/serocalculator/reference/mk_baseline.md)
-
-  `age`
-
-  :   age at infection
-
-  `nmc`
-
-  :   mcmc sample to use
-
-  `npar`
-
-  :   number of parameters
-
-  `t`
-
-  :   [numeric](https://rdrr.io/r/base/numeric.html)
-      [vector](https://rdrr.io/r/base/vector.html) of elapsed times
-      since start of infection
-
-  `par`
-
-  :   [numeric](https://rdrr.io/r/base/numeric.html)
-      [matrix](https://rdrr.io/r/base/matrix.html) of model parameters:
-
-      - rows are parameters
-
-      - columns are biomarkers
-
-  `kab`
-
-  :   [integer](https://rdrr.io/r/base/integer.html) indicating which
-      row to read from `blims`
-
-  `n`
-
-  :   number of observations
-
-  `blims`
-
-  :   range of possible baseline antibody levels
+  additional arguments passed to other functions (not currently used).
 
 ## Value
 
@@ -175,7 +123,7 @@ containing simulated cross-sectional serosurvey data, with columns:
 
 - `age`: age (in years)
 
-- one column for each element in the `antigen_isos` input argument
+- one column for each element in the `antigen_iso` input argument
 
 ## Examples
 
@@ -203,7 +151,7 @@ dlims <- rbind(
 )
 
 # Generate cross-sectional data
-csdata <- sim_pop_data(
+csdata <- sim_pop_data_2(
   curve_params = dmcmc,
   lambda = lambda,
   n_samples = nrep,

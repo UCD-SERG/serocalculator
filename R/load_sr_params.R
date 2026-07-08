@@ -32,9 +32,9 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
           }
         )
       } else {
-        readRDS(file_path)
+        readr::read_rds(file_path)
       }
-      
+
       # Convert to sr_params (warnings from validation will be preserved)
       as_sr_params(data, antigen_isos = antigen_isos)
     },

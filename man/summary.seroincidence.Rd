@@ -21,8 +21,10 @@ a \code{\link[tibble:tibble]{tibble::tibble()}} containing the following:
 \item \code{est.start}: the starting guess for incidence rate
 \item \code{ageCat}: the age category we are analyzing
 \item \code{incidence.rate}: the estimated incidence rate, per person year
+\item \code{SE}: standard error of the incidence rate estimate
 \item \code{CI.lwr}: lower limit of confidence interval for incidence rate
 \item \code{CI.upr}: upper limit of confidence interval for incidence rate
+\item \code{se_type}: type of standard error used ("standard" or "cluster-robust")
 \item \code{coverage}: coverage probability
 \item \code{log.lik}:
 log-likelihood of the data used in the call to \code{est_seroincidence()},
@@ -55,6 +57,9 @@ or \code{stepmax} is too small.
 }
 \description{
 This function is a \code{summary()} method for \code{seroincidence} objects.
+When the model was fit with clustered data (using the \code{cluster_var}
+parameter in \code{\link[=est_seroincidence]{est_seroincidence()}}), this function automatically computes
+cluster-robust standard errors to account for within-cluster correlation.
 }
 \examples{
 

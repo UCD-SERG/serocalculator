@@ -1,13 +1,115 @@
 # serocalculator (development version)
 
+## New features
+
+* `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
+  model and supports `units`-aware curve parameters. (#393)
+* Added `ab_5p()`, a 5-parameter antibody response model that supports
+  {units}-aware inputs (e.g. `t = units::as_units(50, "days")`), building on
+  the existing `bt()` active-phase helper. CI now installs the system
+  `udunits2` library on macOS and Windows so the new `units` dependency can
+  compile there. (#393)
+* Added `sim_pop_data_2()`, a `sim_pop_data()` alternative built on `ab_5p()`
+  that simulates each simulated individual's age (`sim_age()`) and time
+  since their last seroconversion (`sim_time_since_last_sc()`) directly,
+  rather than simulating an infection history. Both new helper functions,
+  and `sim_pop_data_2()` itself, accept `units`-aware inputs.
+* `sim_pop_data_multi()` gained a `sim_function` parameter (default
+  `sim_pop_data`) so callers can select `sim_pop_data_2()` instead. (#393)
+
+## Documentation
+
+* Added introductory lecture slides to the `methodology` vignette
+  ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* Moved `f_dev0()`'s `@examples` block to a separate example file
+  (`inst/examples/exm-f_dev.R`), following the convention already used by
+  other functions in this package. (#393)
+
+## Internal
+
+* `news.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`
+  reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`
+  directly. (#537)
+* `claude.yml` and `claude-code-review.yml` now call the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2` and
+  `claude-code-review.yml@v2` reusable workflows instead of carrying their own
+  copy of the agent/review machinery. (#549)
+* The `methodology` vignette's LaTeX macros now come from the shared
+  [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
+  (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
+  `vignettes/articles/_macros.qmd`. The deck adopts the shared macro
+  vocabulary (e.g. `\dens` for the density function in place of the local
+  `\pdf`). (#534)
+* `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]` so the review still runs (and posts feedback) when `claude.yml` re-dispatches it on an `@claude review` comment; previously the bot-initiated dispatch aborted with "Workflow initiated by non-human actor".
+* `claude.yml` now grants the `@claude` agent the file tools (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.
+* Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
+* Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
+* Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+
 ## Bug fixes
 
+* `sim_pop_data()` and `sim_pop_data_multi()` now produce identical results
+  across operating systems. Simulated inter-infection times are now rounded to
+  whole days, so the number of random draws consumed no longer depends on
+  platform-specific floating-point results of `log()` (which previously
+  shifted the random-number stream out of sync and made simulated values, and
+  their snapshots, differ between macOS, Windows, and Linux). Simulated
+  values change slightly as a result of this fix. (#447)
+* Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
+  `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
+  "seroconversion"/"incidence".
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
+* Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
+  - Provides clear tables comparing old and new function names
+  - Includes code examples showing how to update existing code
+  - Accessible as a prominent tab in the website navigation
+
+## Compatibility
+
+* Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
+
+## New features
+
+* Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
+  `est_seroincidence_by()` to support cluster-robust standard error estimation. 
+  When `cluster_var` is specified, `summary.seroincidence()` automatically computes 
+  cluster-robust (sandwich) variance estimates to account for within-cluster 
+  correlation in clustered sampling designs such as household or school-based surveys.
+* `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
+  for multi-level clustered sampling designs. Cluster-robust standard errors will account
+  for all specified clustering levels.
+
+## Bug fixes
+
+* Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
+  errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
+* Added `se_type` column to `summary.seroincidence()` output to clearly indicate whether
+  "standard" or "cluster-robust" standard errors are being used.
+* Fixed `est_seroincidence_by()` to properly pass cluster and stratum variables through
+  to stratified analyses. Previously, these variables were dropped during data stratification,
+  causing errors when trying to use clustering with `est_seroincidence_by()`.
+
+## Code organization
+
+* Refactored clustering-related code following package organization policies:
+  - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
+  - Each function now in its own file for better maintainability and git history
+* Updated copilot-instructions.md with code organization policies
+## Dependencies
+
+* Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,
+  removing the indirect `ggrepel` transitive dependency.
 
 # serocalculator 1.4.0
 
 ## New features
 
+* Added support for cluster-robust standard errors in `est_seroincidence()` through
+  new `cluster_var` and `stratum_var` parameters. When `cluster_var` is specified,
+  `summary.seroincidence()` automatically computes cluster-robust (sandwich) variance
+  estimates to account for within-cluster correlation in clustered sampling designs
+  such as household or school-based surveys.
 * Added `compare_seroincidence()` function for statistical comparison of seroincidence rates
   - Performs two-sample z-tests to compare seroincidence estimates
   - Returns `htest` format when comparing two single estimates

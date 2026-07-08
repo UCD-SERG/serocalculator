@@ -10,9 +10,28 @@ test_that("Build graphs not TRUE", {
     antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
     build_graph = FALSE
   ) |>
-    autoplot(est2) |>
+    autoplot() |>
 
     expect_error()
+})
+
+test_that("autoplot errors on empty seroincidence.by object", {
+
+  empty_est <- est_seroincidence_by(
+    strata = c("catchment"),
+    pop_data = sees_pop_data_pk_100,
+    sr_params = typhoid_curves_nostrat_100,
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    build_graph = TRUE
+  )[integer(0)]
+
+  expect_error(
+    autoplot(empty_est),
+    "The input doesn't contain any fits"
+  )
 })
 
 test_that("Build graphs works as expected", {

@@ -39,14 +39,14 @@ test_that(
   code = {
     # Test with a non-existent URL
     expect_error(
-      load_noise_params("http://nonexistent.example.com/file.rds"),
+      load_noise_params("https://ucdserg.ucdavis.edu/nofile"),
       class = "internet_resource_unavailable",
       regexp = "Unable to load noise parameters from internet resource"
     )
 
     # Verify the error contains helpful information
     err <- tryCatch(
-      load_noise_params("http://nonexistent.example.com/file.rds"),
+      load_noise_params("https://ucdserg.ucdavis.edu/file.rds"),
       error = function(e) e
     )
 

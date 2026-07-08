@@ -42,7 +42,7 @@ test_that(
         load_sr_params("nonexistent_file.rds")
       )
     )
-    
+
     # Verify original error is preserved
     err <- tryCatch(
       suppressWarnings(
@@ -50,7 +50,7 @@ test_that(
       ),
       error = function(e) e
     )
-    
+
     # Should be the original error class, not rlang_error
     expect_true(inherits(err, "error"))
     expect_true(inherits(err, "condition"))
@@ -62,14 +62,14 @@ test_that(
   code = {
     # Test with a non-existent URL
     expect_error(
-      load_sr_params("http://nonexistent.example.com/file.rds"),
+      load_sr_params("https://ucdserg.ucdavis.edu/nofile"),
       class = "internet_resource_unavailable",
       regexp = "Unable to load seroresponse parameters from internet resource"
     )
 
     # Verify the error contains helpful information
     err <- tryCatch(
-      load_sr_params("http://nonexistent.example.com/file.rds"),
+      load_sr_params("https://ucdserg.ucdavis.edu/file.rds"),
       error = function(e) e
     )
 

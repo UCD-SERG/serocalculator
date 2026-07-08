@@ -73,7 +73,7 @@ test_that("`sim_pop_data_multi()` can dispatch to `sim_pop_data_2()`", {
     expect_snapshot_data(name = "pop_data_multi_2", digits = 3)
 })
 
-test_that("`sim_pop_data_multi()` verbose = TRUE prints inputs without erroring", {
+test_that("`sim_pop_data_multi()` verbose = TRUE prints inputs w/o erroring", {
   dmcmc <- typhoid_curves_nostrat_100
 
   expect_message(

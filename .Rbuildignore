@@ -39,6 +39,7 @@ allpopsamples_hlye.csv$
 ^[\.]?air\.toml$
 ^\.vscode$
 ^\.lintr\.R$
+^\.positai$
 ^CLAUDE\.md$
 ^\.claude$
 ^_extensions$

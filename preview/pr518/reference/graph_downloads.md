@@ -1,8 +1,6 @@
 # Plot package download counts over time by source
 
-Fetches download data from CRAN (via `packageRank`) and optionally
-GitHub Releases (via `gh`), then plots new and cumulative downloads.
-Delegates to
+Plots new and cumulative download counts for this package. Delegates to
 [`gdl::graph_downloads()`](https://rdrr.io/pkg/gdl/man/graph_downloads.html).
 
 ## Usage

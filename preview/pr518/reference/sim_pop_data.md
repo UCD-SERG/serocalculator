@@ -28,7 +28,7 @@ sim_pop_data(
 - lambda:
 
   a [`numeric()`](https://rdrr.io/r/base/numeric.html) scalar indicating
-  the incidence rate (in events per person-years)
+  the incidence rate (in events per person-*year*s)
 
 - n_samples:
 
@@ -36,7 +36,7 @@ sim_pop_data(
 
 - age_range:
 
-  age range of sampled individuals, in years
+  age range of sampled individuals, in *years*
 
 - age_fixed:
 

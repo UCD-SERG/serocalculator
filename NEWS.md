@@ -48,7 +48,8 @@
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
 * Disabled `indentation_linter` in `.lintr.R`. lintr 3.4.0 changed its default
   to reject the package's established 4-space function-argument indentation,
-  which would flag most `R/` files without changing any behavior. (#558)
+  which would flag 39 of the package's ~105 `R/` files without changing any
+  behavior. (#558)
 
 ## Bug fixes
 

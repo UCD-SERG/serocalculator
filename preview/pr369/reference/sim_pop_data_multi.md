@@ -12,6 +12,7 @@ sim_pop_data_multi(
   num_cores = max(1, parallel::detectCores() - 1),
   rng_seed = 1234,
   verbose = FALSE,
+  sim_function = sim_pop_data,
   ...
 )
 ```
@@ -43,6 +44,13 @@ sim_pop_data_multi(
 
   whether to report verbose information
 
+- sim_function:
+
+  which function to use:
+  [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+  or
+  [`sim_pop_data_2()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data_2.md)
+
 - ...:
 
   Arguments passed on to
@@ -51,7 +59,7 @@ sim_pop_data_multi(
   `lambda`
 
   :   a [`numeric()`](https://rdrr.io/r/base/numeric.html) scalar
-      indicating the incidence rate (in events per person-years)
+      indicating the incidence rate (in events per person-*year*s)
 
   `n_samples`
 
@@ -59,7 +67,7 @@ sim_pop_data_multi(
 
   `age_range`
 
-  :   age range of sampled individuals, in years
+  :   age range of sampled individuals, in *years*
 
   `age_fixed`
 

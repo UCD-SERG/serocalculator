@@ -37,7 +37,6 @@ SeroEpidemiology
 Seroepidemiology
 Seroincidence
 Serological
-Serological
 Shigella
 TCVs
 TW
@@ -60,9 +59,6 @@ callout
 cdot
 codecov
 colour
-cran
-cranDownloads
-cranlogs
 csv
 dev
 devtools
@@ -171,7 +167,6 @@ tsutsugamushi
 udunits2
 undercount
 unstratified
-validatePackage
 varepsilon
 vec
 vee

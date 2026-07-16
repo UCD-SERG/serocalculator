@@ -40,3 +40,58 @@ test_that("`sim_pop_data_multi()` works consistently", {
   pop_data_multi |>
     expect_snapshot_data(name = "pop_data_multi", digits = 3)
 })
+
+test_that("`sim_pop_data_multi()` can dispatch to `sim_pop_data_2()`", {
+  skip_on_cran()
+  dmcmc <- typhoid_curves_nostrat_100
+  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+
+  set.seed(54321)
+
+  # nclus = 1 (with a single lambda/sample_size) is avoided here: it makes
+  # `n_sample_sizes * n_lambda * nclus == 1`, which hits a pre-existing
+  # `sim_pop_data_multi()` bug where `rngtools::RNGseq(1, seed)` returns an
+  # unwrapped 7-integer state vector (instead of a list-of-one), silently
+  # truncated to its first element by the subsequent `array()` call -- this
+  # feeds `rngtools::setRNG()` an invalid state and makes results
+  # non-reproducible across runs. Tracked in #554; nclus = 2 sidesteps it.
+  pop_data_multi_2 <- sim_pop_data_multi(
+    sim_function = sim_pop_data_2,
+    curve_params = dmcmc,
+    lambdas = 0.2,
+    sample_sizes = 5,
+    age_range = c(0, 10),
+    antigen_isos = antibodies,
+    n_mcmc_samples = 0,
+    renew_params = TRUE,
+    add_noise = FALSE,
+    format = "long",
+    nclus = 2
+  )
+
+  pop_data_multi_2 |>
+    expect_snapshot_data(name = "pop_data_multi_2", digits = 3)
+})
+
+test_that("`sim_pop_data_multi()` verbose = TRUE prints inputs w/o erroring", {
+  dmcmc <- typhoid_curves_nostrat_100
+
+  expect_message(
+    sim_pop_data_multi(
+      curve_params = dmcmc,
+      lambdas = 0.2,
+      sample_sizes = 5,
+      age_range = c(0, 10),
+      antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
+      n_mcmc_samples = 0,
+      add_noise = FALSE,
+      noise_limits = rbind(
+        "HlyE_IgA" = c(min = 0, max = 0.5),
+        "HlyE_IgG" = c(min = 0, max = 0.5)
+      ),
+      format = "long",
+      nclus = 2,
+      verbose = TRUE
+    )
+  )
+})

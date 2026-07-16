@@ -117,7 +117,7 @@ generate_final_table <- function(results_list,
   # Initialize an empty list to store the results
   summary_results <- list()
 
-  # Loop through each of the 100 results and extract the required columns
+  # Loop through each result and extract the required columns
   for (i in seq_along(results_list)) {
     # Extract the summary for each result
     result_summary <- summary(results_list[[i]]$est1)
@@ -152,14 +152,14 @@ final_table_50 <- results_50 |> generate_final_table(sample_size = 50)
 final_table_100 <- results_100 |> generate_final_table(sample_size = 100)
 final_table_100_0_1 <- results_100_0_1 |> generate_final_table(sample_size = 100)
 ft_100_0_01 <- results_100_0_01 |> generate_final_table()
-lambda <- function(results_table)
+get_lambda <- function(results_table)
 {
   results_table |> attr("lambda")
 }
 
 compute_coverage <- function(
     results_table,
-    true_lambda = results_table |> lambda()) {
+    true_lambda = results_table |> get_lambda()) {
 
   results_table %>%
     dplyr::mutate(

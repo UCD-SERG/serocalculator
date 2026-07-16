@@ -22,11 +22,11 @@ sim_pop_data(
 }
 \arguments{
 \item{lambda}{a \code{\link[=numeric]{numeric()}} scalar indicating the incidence rate
-(in events per person-years)}
+(in events per person-\emph{year}s)}
 
 \item{n_samples}{number of samples to simulate}
 
-\item{age_range}{age range of sampled individuals, in years}
+\item{age_range}{age range of sampled individuals, in \emph{years}}
 
 \item{age_fixed}{specify the curve parameters to use by age
 (does nothing at present?)}

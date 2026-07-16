@@ -42,9 +42,8 @@ graph.curve.params <- function( # nolint: object_name_linter
   ...
 ) {
   if (verbose) {
-    message(
-      "Graphing curves for antigen isotypes: ",
-      paste(antigen_isos, collapse = ", ")
+    cli::cli_inform(
+      "Graphing curves for antigen isotypes: {.val {antigen_isos}}"
     )
   }
 
@@ -52,6 +51,10 @@ graph.curve.params <- function( # nolint: object_name_linter
     dplyr::filter(.data$antigen_iso %in% antigen_isos)
 
   tx2 <- 10^seq(-1, 3.1, 0.025)
+
+  if (inherits(object$alpha, "units")) {
+    tx2 <- tx2 |> units::as_units("days")
+  }
 
   d <- object
 
@@ -79,7 +82,7 @@ graph.curve.params <- function( # nolint: object_name_linter
     ) |>
     dplyr::select(-"name") |>
     dplyr::mutate(
-      res = ab1(
+      res = serocalculator::ab_5p(
         .data$t,
         .data$y0,
         .data$y1,

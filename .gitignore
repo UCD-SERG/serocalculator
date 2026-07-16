@@ -25,5 +25,6 @@ junit.xml
 
 **/*.quarto_ipynb
 *.knit.md
+.positai
 tests/vdiffr.Rout.fail
 .positai/

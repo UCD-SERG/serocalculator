@@ -57,7 +57,7 @@ autoplot.seroincidence.by <- function(
   labels <- names(object)
   figs <- lapply(object, FUN = autoplot.seroincidence, ...)
 
-  for (i in seq_along(figs)){
+  for (i in seq_along(figs)) {
     figs[[i]] <- figs[[i]] + ggplot2::ggtitle(labels[i])
   }
 

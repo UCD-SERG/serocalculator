@@ -120,8 +120,7 @@ summary.seroincidence <- function(
   to_return <- tibble::tibble(
     est.start = start,
     incidence.rate = exp(log_lambda),
-    SE = se_log_lambda * .data$incidence.rate, # delta method:
-    # https://en.wikipedia.org/wiki/Delta_method#Univariate_delta_method
+    SE = se_log_lambda * .data$incidence.rate,
     CI.lwr = exp(log_lambda - qnorm(1 - h_alpha) * se_log_lambda),
     CI.upr = exp(log_lambda + qnorm(1 - h_alpha) * se_log_lambda),
     se_type = if (use_cluster_robust) "cluster-robust" else "standard",
@@ -133,7 +132,6 @@ summary.seroincidence <- function(
       object$code |>
       factor(levels = 1:5, ordered = TRUE) |>
       labelled::set_label_attribute("`nlm()` convergence code")
-    # |> factor(levels = 1:5, labels = nlm_exit_codes)
   )
 
   class(to_return) <-

@@ -76,7 +76,6 @@ plot_curve_params_one_ab <- function(
 
   plot1 <-
     ggplot2::ggplot() +
-    # ggplot2::scale_x_log10() +
     ggplot2::theme_linedraw() +
     ggplot2::theme(axis.line = ggplot2::element_line()) +
     ggplot2::labs(x = "Days since fever onset", y = "Antibody concentration") +

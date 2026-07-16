@@ -46,6 +46,9 @@
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+* Disabled `indentation_linter` in `.lintr.R`. lintr 3.4.0 changed its default
+  to reject the package's established 4-space function-argument indentation,
+  which would flag most `R/` files without changing any behavior. (#558)
 
 ## Bug fixes
 

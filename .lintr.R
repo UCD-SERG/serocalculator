@@ -59,6 +59,11 @@ snake_case_ACROs1 <- rex::rex(
 linters <- lintr::linters_with_defaults(
   return_linter = NULL,
   trailing_whitespace_linter = NULL,
+  # lintr 3.4.0 changed indentation_linter to reject the package's
+  # established 4-space function-argument indentation (double indent) in
+  # favor of a single 2-space indent, which would flag 39 of ~105 R/ files.
+  # Disabled to preserve the existing house style; see issue #558.
+  indentation_linter = NULL,
   lintr::redundant_equals_linter(),
   lintr::pipe_consistency_linter(pipe = "|>"),
   lintr::object_name_linter(

@@ -27,6 +27,7 @@ junit.xml
 
 **/*.quarto_ipynb
 *.knit.md
+.positai
 tests/vdiffr.Rout.fail
 
 # Quarto freeze cache for faster builds

@@ -27,8 +27,6 @@ on:
       - reopened
       - ready_for_review
       - closed
-    branches:
-      - main
     paths:
       - 'man/**'
       - 'altdoc/**'

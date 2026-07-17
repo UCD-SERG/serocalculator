@@ -5,9 +5,9 @@
 #'  and adds noise, if desired.
 
 #' @param lambda a [numeric()] scalar indicating the incidence rate
-#' (in events per person-years)
+#' (in events per person-*year*s)
 #' @param n_samples number of samples to simulate
-#' @param age_range age range of sampled individuals, in years
+#' @param age_range age range of sampled individuals, in *years*
 #' @param age_fixed specify the curve parameters to use by age
 #' (does nothing at present?)
 #' @param antigen_isos Character vector with one or more antibody names.

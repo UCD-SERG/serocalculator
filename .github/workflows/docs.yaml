@@ -4,7 +4,7 @@ name: Docs 📚
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 # Deploys altdoc for Pull Requests, tags, and pushes to main branch
-# PRs are deployed to /preview/pr<number>/
+# PRs are deployed to /pr-preview/pr-<number>/
 # Tags are deployed to /<tag>/
 on:
   push:
@@ -63,6 +63,8 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -146,7 +148,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          clean-exclude: preview
+          clean-exclude: pr-preview
           branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
           folder: docs
           target-folder: ${{ env.subdir }}
@@ -198,7 +200,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           
-          preview_dir="preview/pr${{ github.event.pull_request.number }}"
+          preview_dir="pr-preview/pr-${{ github.event.pull_request.number }}"
           if [ -d "$preview_dir" ]; then
             git rm -r $preview_dir
             git commit -m "Remove $preview_dir (GitHub Actions)" || echo 'No preview to remove'

@@ -84,22 +84,22 @@
 #' )
 #'
 sim_pop_data <- function(
-    lambda = 0.1,
-    n_samples = 100,
-    age_range = c(0, 20),
-    age_fixed = NA,
-    antigen_isos = intersect(
-      get_biomarker_levels(curve_params),
-      rownames(noise_limits)
-    ),
-    n_mcmc_samples = 0,
-    renew_params = FALSE,
-    add_noise = FALSE,
-    curve_params,
-    noise_limits,
-    format = "wide",
-    verbose = FALSE,
-    ...) {
+  lambda = 0.1,
+  n_samples = 100,
+  age_range = c(0, 20),
+  age_fixed = NA,
+  antigen_isos = intersect(
+    get_biomarker_levels(curve_params),
+    rownames(noise_limits)
+  ),
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
+  add_noise = FALSE,
+  curve_params,
+  noise_limits,
+  format = "wide",
+  verbose = FALSE,
+  ...) {
   verbose_level <- .validate_verbose(verbose)
 
   if (verbose_level >= 2) {

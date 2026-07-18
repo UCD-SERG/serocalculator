@@ -8,12 +8,12 @@
 # new and edited code must comply, while untouched legacy code in the same
 # file is not flagged. Exits non-zero if any lint remains on a changed line.
 
-suppressPackageStartupMessages(library(lintr))
-
 repo <- Sys.getenv("GITHUB_REPOSITORY")
 pr <- Sys.getenv("PR_NUMBER")
 if (repo == "" || pr == "") {
-  stop("GITHUB_REPOSITORY and PR_NUMBER must both be set.")
+  cli::cli_abort(
+    "{.envvar GITHUB_REPOSITORY} and {.envvar PR_NUMBER} must both be set."
+  )
 }
 
 # The set of new-file line numbers that a unified-diff patch adds or modifies.
@@ -31,7 +31,8 @@ added_lines <- function(patch) {
       next
     } else if (startsWith(line, "@@")) {
       # Hunk header: @@ -old,n +new,n @@ ; take the new-file start line.
-      new_line <- as.integer(regmatches(line, regexec("\\+([0-9]+)", line))[[1]][2])
+      matched <- regmatches(line, regexec("\\+([0-9]+)", line))[[1]]
+      new_line <- as.integer(matched[2])
     } else if (marker == "+") {
       out <- c(out, new_line)
       new_line <- new_line + 1L
@@ -70,7 +71,7 @@ lints <- list()
 for (path in names(changed)) {
   on_changed <- Filter(
     function(l) l$line_number %in% changed[[path]],
-    lint(path)
+    lintr::lint(path)
   )
   lints <- c(lints, on_changed)
 }

@@ -44,9 +44,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-23063a2ee913c99e939777d405b9c457.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-02da43bb2c35d8eb1545a06609d290ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-23063a2ee913c99e939777d405b9c457.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a28d57623bb1501f2d5adc4c6bd772f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-28eebafa1563988b73446f6e417031f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-a28d57623bb1501f2d5adc4c6bd772f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -401,7 +401,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./vignettes/methodology.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Methodology</span></a>
+ <span class="menu-text">Estimating Incidence Rates from Cross-Sectional Serosurveys</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -711,22 +711,24 @@ window.Quarto = {
   <ul>
   <li><a href="#serocalculator-development-version" id="toc-serocalculator-development-version" class="nav-link active" data-scroll-target="#serocalculator-development-version">serocalculator (development version)</a>
   <ul class="collapse">
+  <li><a href="#new-features" id="toc-new-features" class="nav-link" data-scroll-target="#new-features">New features</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   <li><a href="#internal" id="toc-internal" class="nav-link" data-scroll-target="#internal">Internal</a></li>
   <li><a href="#bug-fixes" id="toc-bug-fixes" class="nav-link" data-scroll-target="#bug-fixes">Bug fixes</a></li>
   <li><a href="#compatibility" id="toc-compatibility" class="nav-link" data-scroll-target="#compatibility">Compatibility</a></li>
-  <li><a href="#new-features" id="toc-new-features" class="nav-link" data-scroll-target="#new-features">New features</a></li>
+  <li><a href="#new-features-1" id="toc-new-features-1" class="nav-link" data-scroll-target="#new-features-1">New features</a></li>
   <li><a href="#bug-fixes-1" id="toc-bug-fixes-1" class="nav-link" data-scroll-target="#bug-fixes-1">Bug fixes</a></li>
   <li><a href="#code-organization" id="toc-code-organization" class="nav-link" data-scroll-target="#code-organization">Code organization</a></li>
   </ul></li>
   <li><a href="#serocalculator-1.4.0" id="toc-serocalculator-1.4.0" class="nav-link" data-scroll-target="#serocalculator-1.4.0">serocalculator 1.4.0</a>
   <ul class="collapse">
-  <li><a href="#new-features-1" id="toc-new-features-1" class="nav-link" data-scroll-target="#new-features-1">New features</a></li>
+  <li><a href="#new-features-2" id="toc-new-features-2" class="nav-link" data-scroll-target="#new-features-2">New features</a></li>
   <li><a href="#bug-fixes-2" id="toc-bug-fixes-2" class="nav-link" data-scroll-target="#bug-fixes-2">Bug fixes</a></li>
   <li><a href="#internal-changes" id="toc-internal-changes" class="nav-link" data-scroll-target="#internal-changes">Internal changes</a></li>
   </ul></li>
   <li><a href="#serocalculator-1.3.0" id="toc-serocalculator-1.3.0" class="nav-link" data-scroll-target="#serocalculator-1.3.0">serocalculator 1.3.0</a>
   <ul class="collapse">
-  <li><a href="#new-features-2" id="toc-new-features-2" class="nav-link" data-scroll-target="#new-features-2">New features</a></li>
+  <li><a href="#new-features-3" id="toc-new-features-3" class="nav-link" data-scroll-target="#new-features-3">New features</a></li>
   <li><a href="#internal-changes-1" id="toc-internal-changes-1" class="nav-link" data-scroll-target="#internal-changes-1">Internal changes</a></li>
   </ul></li>
   <li><a href="#serocalculator-1.2.0" id="toc-serocalculator-1.2.0" class="nav-link" data-scroll-target="#serocalculator-1.2.0">serocalculator 1.2.0</a></li>
@@ -756,10 +758,29 @@ window.Quarto = {
 
 <section id="serocalculator-development-version" class="level1">
 <h1>serocalculator (development version)</h1>
+<section id="new-features" class="level2">
+<h2 class="anchored" data-anchor-id="new-features">New features</h2>
+<ul>
+<li><code>graph.curve.params()</code> now uses the 5-parameter <code>ab_5p()</code> antibody response model and supports <code>units</code>-aware curve parameters. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
+<li>Added <code>ab_5p()</code>, a 5-parameter antibody response model that supports {units}-aware inputs (e.g.&nbsp;<code>t = units::as_units(50, "days")</code>), building on the existing <code>bt()</code> active-phase helper. CI now installs the system <code>udunits2</code> library on macOS and Windows so the new <code>units</code> dependency can compile there. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
+<li>Added <code>sim_pop_data_2()</code>, a <code>sim_pop_data()</code> alternative built on <code>ab_5p()</code> that simulates each simulated individual’s age (<code>sim_age()</code>) and time since their last seroconversion (<code>sim_time_since_last_sc()</code>) directly, rather than simulating an infection history. Both new helper functions, and <code>sim_pop_data_2()</code> itself, accept <code>units</code>-aware inputs.</li>
+<li><code>sim_pop_data_multi()</code> gained a <code>sim_function</code> parameter (default <code>sim_pop_data</code>) so callers can select <code>sim_pop_data_2()</code> instead. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
+</ul>
+</section>
+<section id="documentation" class="level2">
+<h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
+<ul>
+<li>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</li>
+<li>Moved <code>f_dev0()</code>’s <code>@examples</code> block to a separate example file (<code>inst/examples/exm-f_dev.R</code>), following the convention already used by other functions in this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
+</ul>
+</section>
 <section id="internal" class="level2">
 <h2 class="anchored" data-anchor-id="internal">Internal</h2>
 <ul>
-<li>Render documentation vignettes as HTML only for the altdoc website (removed leftover <code>revealjs</code>/<code>pptx</code> output formats from <code>vignettes/_metadata.yml</code> and <code>simulate_xsectionalData.qmd</code>), fixing a quarto output-filename collision that broke the docs build. (<a href="https://github.com/UCD-SERG/serocalculator/issues/503">#503</a>)</li>
+<li>Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for <code>methodology.qmd</code>) formats. Fixed the HTML/revealjs output-filename collision by specifying <code>output-file: methodology-slides.html</code> for revealjs in <code>methodology.qmd</code>’s frontmatter; docx goes in <code>_metadata.yml</code> globally since <code>.docx</code> has no collision risk. (<a href="https://github.com/UCD-SERG/serocalculator/issues/503">#503</a>)</li>
+<li><code>news.yaml</code> now calls the central <a href="https://github.com/d-morrison/gha"><code>d-morrison/gha</code></a> <code>check-news.yml@v1</code> reusable workflow instead of invoking <code>UCD-SERG/changelog-check-action@v2</code> directly. (<a href="https://github.com/UCD-SERG/serocalculator/issues/537">#537</a>)</li>
+<li><code>claude.yml</code> and <code>claude-code-review.yml</code> now call the central <a href="https://github.com/d-morrison/gha"><code>d-morrison/gha</code></a> <code>claude.yml@v2</code> and <code>claude-code-review.yml@v2</code> reusable workflows instead of carrying their own copy of the agent/review machinery. (<a href="https://github.com/UCD-SERG/serocalculator/issues/549">#549</a>)</li>
+<li>The <code>methodology</code> vignette’s LaTeX macros now come from the shared <a href="https://github.com/d-morrison/macros"><code>d-morrison/macros</code></a> git submodule (included via <code>{{&lt; include ../macros/macros.qmd &gt;}}</code>) instead of a local <code>vignettes/articles/_macros.qmd</code>. The deck adopts the shared macro vocabulary (e.g.&nbsp;<code>\dens</code> for the density function in place of the local <code>\pdf</code>). (<a href="https://github.com/UCD-SERG/serocalculator/issues/534">#534</a>)</li>
 <li><code>claude-code-review.yml</code> now sets <code>allowed_bots: github-actions[bot]</code> so the review still runs (and posts feedback) when <code>claude.yml</code> re-dispatches it on an <code>@claude review</code> comment; previously the bot-initiated dispatch aborted with “Workflow initiated by non-human actor”.</li>
 <li><code>claude.yml</code> now grants the <code>@claude</code> agent the file tools (<code>Read</code>/<code>Glob</code>/<code>Grep</code>/<code>Edit</code>/<code>MultiEdit</code>/<code>Write</code>) in <code>--allowedTools</code>; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.</li>
 <li>Added the <code>iterate</code> Claude Code skill (<code>.claude/skills/iterate/</code>) for driving a PR to a clean review verdict.</li>
@@ -770,6 +791,8 @@ window.Quarto = {
 <section id="bug-fixes" class="level2">
 <h2 class="anchored" data-anchor-id="bug-fixes">Bug fixes</h2>
 <ul>
+<li><code>sim_pop_data()</code> and <code>sim_pop_data_multi()</code> now produce identical results across operating systems. Simulated inter-infection times are now rounded to whole days, so the number of random draws consumed no longer depends on platform-specific floating-point results of <code>log()</code> (which previously shifted the random-number stream out of sync and made simulated values, and their snapshots, differ between macOS, Windows, and Linux). Simulated values change slightly as a result of this fix. (<a href="https://github.com/UCD-SERG/serocalculator/issues/447">#447</a>)</li>
+<li>Corrected default axis labels in <code>strat_ests_barplot()</code> (<code>xlab</code>) and <code>strat_ests_scatterplot()</code> (<code>ylab</code>) to say “seroincidence” rather than “seroconversion”/“incidence”.</li>
 <li><code>load_noise_params()</code> and <code>load_sr_params()</code> now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (<a href="https://github.com/UCD-SERG/serocalculator/issues/505">#505</a>)</li>
 <li>Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
 <ul>
@@ -785,8 +808,8 @@ window.Quarto = {
 <li>Replaced deprecated <code>dplyr::is.grouped_df()</code> usage with <code>dplyr::is_grouped_df()</code> in <code>df_to_array()</code> for compatibility with newer dplyr releases.</li>
 </ul>
 </section>
-<section id="new-features" class="level2">
-<h2 class="anchored" data-anchor-id="new-features">New features</h2>
+<section id="new-features-1" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-1">New features</h2>
 <ul>
 <li>Added <code>cluster_var</code> and <code>stratum_var</code> parameters to <code>est_seroincidence()</code> and <code>est_seroincidence_by()</code> to support cluster-robust standard error estimation. When <code>cluster_var</code> is specified, <code>summary.seroincidence()</code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</li>
 <li><code>cluster_var</code> parameter now accepts multiple variables (e.g., <code>c("school", "classroom")</code>) for multi-level clustered sampling designs. Cluster-robust standard errors will account for all specified clustering levels.</li>
@@ -815,8 +838,8 @@ window.Quarto = {
 </section>
 <section id="serocalculator-1.4.0" class="level1">
 <h1>serocalculator 1.4.0</h1>
-<section id="new-features-1" class="level2">
-<h2 class="anchored" data-anchor-id="new-features-1">New features</h2>
+<section id="new-features-2" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-2">New features</h2>
 <ul>
 <li><p>Added support for cluster-robust standard errors in <code>est_seroincidence()</code> through new <code>cluster_var</code> and <code>stratum_var</code> parameters. When <code>cluster_var</code> is specified, <code>summary.seroincidence()</code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</p></li>
 <li><p>Added <code>compare_seroincidence()</code> function for statistical comparison of seroincidence rates</p>
@@ -910,8 +933,8 @@ window.Quarto = {
 </section>
 <section id="serocalculator-1.3.0" class="level1">
 <h1>serocalculator 1.3.0</h1>
-<section id="new-features-2" class="level2">
-<h2 class="anchored" data-anchor-id="new-features-2">New features</h2>
+<section id="new-features-3" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-3">New features</h2>
 <ul>
 <li><p>Removed function ‘get_additional_data()’ (<a href="https://github.com/UCD-SERG/serocalculator/issues/332">#332</a>)</p></li>
 <li><p>Updated documentation examples to include csv files (<a href="https://github.com/UCD-SERG/serocalculator/issues/328">#328</a>)</p></li>

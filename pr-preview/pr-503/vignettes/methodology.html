@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.9.38">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<title>Methodology – serocalculator</title>
+<title>Estimating Incidence Rates from Cross-Sectional Serosurveys – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -60,9 +60,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-23063a2ee913c99e939777d405b9c457.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-02da43bb2c35d8eb1545a06609d290ab.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-23063a2ee913c99e939777d405b9c457.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-a28d57623bb1501f2d5adc4c6bd772f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-28eebafa1563988b73446f6e417031f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-a28d57623bb1501f2d5adc4c6bd772f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -348,7 +348,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Estimating Incidence Rates from Cross-Sectional Serosurveys</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -400,7 +400,7 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../vignettes/methodology.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Methodology</span></a>
+ <span class="menu-text">Estimating Incidence Rates from Cross-Sectional Serosurveys</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -707,83 +707,273 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a>
+<a href="#infectious-disease-epidemiology" id="toc-infectious-disease-epidemiology" class="nav-link active" data-scroll-target="#infectious-disease-epidemiology"><span class="header-section-number">1</span> Infectious disease epidemiology</a>
   <ul class="collapse">
-<li><a href="#defining-incidence" id="toc-defining-incidence" class="nav-link" data-scroll-target="#defining-incidence"><span class="header-section-number">1.1</span> Defining incidence</a></li>
-  <li><a href="#mathematical-definition-of-incidence" id="toc-mathematical-definition-of-incidence" class="nav-link" data-scroll-target="#mathematical-definition-of-incidence"><span class="header-section-number">1.2</span> Mathematical definition of incidence</a></li>
-  <li><a href="#scale-of-incidence-rates" id="toc-scale-of-incidence-rates" class="nav-link" data-scroll-target="#scale-of-incidence-rates"><span class="header-section-number">1.3</span> Scale of incidence rates</a></li>
-  <li><a href="#incidence-from-an-individuals-perspective" id="toc-incidence-from-an-individuals-perspective" class="nav-link" data-scroll-target="#incidence-from-an-individuals-perspective"><span class="header-section-number">1.4</span> Incidence from an individual’s perspective</a></li>
+<li><a href="#salmonella-enterica-typhoid-fever" id="toc-salmonella-enterica-typhoid-fever" class="nav-link" data-scroll-target="#salmonella-enterica-typhoid-fever"><span class="header-section-number">1.1</span> <em>Salmonella</em> enterica (“typhoid fever”)</a></li>
+  <li><a href="#shigella-dysentery" id="toc-shigella-dysentery" class="nav-link" data-scroll-target="#shigella-dysentery"><span class="header-section-number">1.2</span> <em>Shigella</em> (“dysentery”)</a></li>
+  <li><a href="#orientia-tsutsugamushi-scrub-typhus" id="toc-orientia-tsutsugamushi-scrub-typhus" class="nav-link" data-scroll-target="#orientia-tsutsugamushi-scrub-typhus"><span class="header-section-number">1.3</span> <em>Orientia tsutsugamushi</em> (“scrub typhus”)</a></li>
   </ul>
 </li>
   <li>
-<a href="#estimating-incidence-from-cross-sectional-antibody-surveys" id="toc-estimating-incidence-from-cross-sectional-antibody-surveys" class="nav-link" data-scroll-target="#estimating-incidence-from-cross-sectional-antibody-surveys"><span class="header-section-number">2</span> Estimating incidence from cross-sectional antibody surveys</a>
+<a href="#why-estimate-incidence-from-serosurveys" id="toc-why-estimate-incidence-from-serosurveys" class="nav-link" data-scroll-target="#why-estimate-incidence-from-serosurveys"><span class="header-section-number">2</span> Why estimate incidence from serosurveys?</a>
   <ul class="collapse">
-<li><a href="#cross-sectional-antibody-surveys" id="toc-cross-sectional-antibody-surveys" class="nav-link" data-scroll-target="#cross-sectional-antibody-surveys"><span class="header-section-number">2.1</span> Cross-sectional antibody surveys</a></li>
-  <li><a href="#modeling-assumptions" id="toc-modeling-assumptions" class="nav-link" data-scroll-target="#modeling-assumptions"><span class="header-section-number">2.2</span> Modeling assumptions</a></li>
-  <li><a href="#time-since-infection-and-incidence" id="toc-time-since-infection-and-incidence" class="nav-link" data-scroll-target="#time-since-infection-and-incidence"><span class="header-section-number">2.3</span> Time since infection and incidence</a></li>
-  <li><a href="#likelihood-of-latent-infection-times" id="toc-likelihood-of-latent-infection-times" class="nav-link" data-scroll-target="#likelihood-of-latent-infection-times"><span class="header-section-number">2.4</span> Likelihood of latent infection times</a></li>
-  <li><a href="#example-log-likelihood-curves" id="toc-example-log-likelihood-curves" class="nav-link" data-scroll-target="#example-log-likelihood-curves"><span class="header-section-number">2.5</span> Example log-likelihood curves</a></li>
-  <li><a href="#standard-error" id="toc-standard-error" class="nav-link" data-scroll-target="#standard-error"><span class="header-section-number">2.6</span> standard error</a></li>
-  <li><a href="#likelihood-of-observed-data" id="toc-likelihood-of-observed-data" class="nav-link" data-scroll-target="#likelihood-of-observed-data"><span class="header-section-number">2.7</span> Likelihood of observed data</a></li>
-  <li><a href="#antibody-response-curves" id="toc-antibody-response-curves" class="nav-link" data-scroll-target="#antibody-response-curves"><span class="header-section-number">2.8</span> Antibody response curves</a></li>
-  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">2.9</span> Putting it all together</a></li>
-  <li><a href="#composing-the-likelihood" id="toc-composing-the-likelihood" class="nav-link" data-scroll-target="#composing-the-likelihood"><span class="header-section-number">2.10</span> Composing the likelihood</a></li>
-  <li><a href="#finding-the-mle-numerically" id="toc-finding-the-mle-numerically" class="nav-link" data-scroll-target="#finding-the-mle-numerically"><span class="header-section-number">2.11</span> Finding the MLE numerically</a></li>
+<li><a href="#the-burden-data-gap" id="toc-the-burden-data-gap" class="nav-link" data-scroll-target="#the-burden-data-gap"><span class="header-section-number">2.1</span> The burden-data gap</a></li>
+  <li><a href="#seroepidemiology-can-fill-the-gap" id="toc-seroepidemiology-can-fill-the-gap" class="nav-link" data-scroll-target="#seroepidemiology-can-fill-the-gap"><span class="header-section-number">2.2</span> Seroepidemiology can fill the gap</a></li>
+  <li><a href="#defining-incidence" id="toc-defining-incidence" class="nav-link" data-scroll-target="#defining-incidence"><span class="header-section-number">2.3</span> Defining incidence</a></li>
+  <li><a href="#mathematical-definition-of-incidence" id="toc-mathematical-definition-of-incidence" class="nav-link" data-scroll-target="#mathematical-definition-of-incidence"><span class="header-section-number">2.4</span> Mathematical definition of incidence</a></li>
+  <li><a href="#scale-of-incidence-rates" id="toc-scale-of-incidence-rates" class="nav-link" data-scroll-target="#scale-of-incidence-rates"><span class="header-section-number">2.5</span> Scale of incidence rates</a></li>
+  <li><a href="#incidence-from-an-individuals-perspective" id="toc-incidence-from-an-individuals-perspective" class="nav-link" data-scroll-target="#incidence-from-an-individuals-perspective"><span class="header-section-number">2.6</span> Incidence from an individual’s perspective</a></li>
+  </ul>
+</li>
   <li>
-<a href="#cluster-robust-standard-errors-for-clustered-sampling-designs" id="toc-cluster-robust-standard-errors-for-clustered-sampling-designs" class="nav-link" data-scroll-target="#cluster-robust-standard-errors-for-clustered-sampling-designs"><span class="header-section-number">2.12</span> Cluster-robust standard errors for clustered sampling designs</a>
+<a href="#study-designs-for-estimating-incidence-rates" id="toc-study-designs-for-estimating-incidence-rates" class="nav-link" data-scroll-target="#study-designs-for-estimating-incidence-rates"><span class="header-section-number">3</span> Study designs for estimating incidence rates</a>
   <ul class="collapse">
-<li><a href="#why-clustering-matters" id="toc-why-clustering-matters" class="nav-link" data-scroll-target="#why-clustering-matters"><span class="header-section-number">2.12.1</span> Why clustering matters</a></li>
-  <li><a href="#cluster-robust-variance-estimation" id="toc-cluster-robust-variance-estimation" class="nav-link" data-scroll-target="#cluster-robust-variance-estimation"><span class="header-section-number">2.12.2</span> Cluster-robust variance estimation</a></li>
-  <li><a href="#implementation-in-serocalculator" id="toc-implementation-in-serocalculator" class="nav-link" data-scroll-target="#implementation-in-serocalculator"><span class="header-section-number">2.12.3</span> Implementation in serocalculator</a></li>
-  <li><a href="#effect-on-results" id="toc-effect-on-results" class="nav-link" data-scroll-target="#effect-on-results"><span class="header-section-number">2.12.4</span> Effect on results</a></li>
+<li><a href="#longitudinal-cohort-studies" id="toc-longitudinal-cohort-studies" class="nav-link" data-scroll-target="#longitudinal-cohort-studies"><span class="header-section-number">3.1</span> Longitudinal cohort studies</a></li>
+  <li><a href="#clinical-case-data" id="toc-clinical-case-data" class="nav-link" data-scroll-target="#clinical-case-data"><span class="header-section-number">3.2</span> Clinical case data</a></li>
+  <li><a href="#cross-sectional-serosurveys" id="toc-cross-sectional-serosurveys" class="nav-link" data-scroll-target="#cross-sectional-serosurveys"><span class="header-section-number">3.3</span> Cross-sectional serosurveys</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#estimating-incidence-from-cross-sectional-serosurveys" id="toc-estimating-incidence-from-cross-sectional-serosurveys" class="nav-link" data-scroll-target="#estimating-incidence-from-cross-sectional-serosurveys"><span class="header-section-number">4</span> Estimating incidence from cross-sectional serosurveys</a>
+  <ul class="collapse">
+<li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal"><span class="header-section-number">4.1</span> Goal</a></li>
+  <li><a href="#antibody-responses-are-complicated" id="toc-antibody-responses-are-complicated" class="nav-link" data-scroll-target="#antibody-responses-are-complicated"><span class="header-section-number">4.2</span> Antibody responses are complicated</a></li>
+  <li><a href="#cross-sectional-antibody-surveys" id="toc-cross-sectional-antibody-surveys" class="nav-link" data-scroll-target="#cross-sectional-antibody-surveys"><span class="header-section-number">4.3</span> Cross-sectional antibody surveys</a></li>
+  <li><a href="#modeling-assumptions" id="toc-modeling-assumptions" class="nav-link" data-scroll-target="#modeling-assumptions"><span class="header-section-number">4.4</span> Modeling assumptions</a></li>
+  <li><a href="#time-since-infection-and-incidence" id="toc-time-since-infection-and-incidence" class="nav-link" data-scroll-target="#time-since-infection-and-incidence"><span class="header-section-number">4.5</span> Time since infection and incidence</a></li>
+  <li><a href="#likelihood-of-latent-infection-times" id="toc-likelihood-of-latent-infection-times" class="nav-link" data-scroll-target="#likelihood-of-latent-infection-times"><span class="header-section-number">4.6</span> Likelihood of latent infection times</a></li>
+  <li><a href="#example-log-likelihood-curves" id="toc-example-log-likelihood-curves" class="nav-link" data-scroll-target="#example-log-likelihood-curves"><span class="header-section-number">4.7</span> Example log-likelihood curves</a></li>
+  <li><a href="#standard-errors" id="toc-standard-errors" class="nav-link" data-scroll-target="#standard-errors"><span class="header-section-number">4.8</span> Standard errors</a></li>
+  <li><a href="#hessian-for-the-exponential-model" id="toc-hessian-for-the-exponential-model" class="nav-link" data-scroll-target="#hessian-for-the-exponential-model"><span class="header-section-number">4.9</span> Hessian for the exponential model</a></li>
+  <li><a href="#likelihood-of-observed-data" id="toc-likelihood-of-observed-data" class="nav-link" data-scroll-target="#likelihood-of-observed-data"><span class="header-section-number">4.10</span> Likelihood of observed data</a></li>
+  <li><a href="#antibody-response-curves" id="toc-antibody-response-curves" class="nav-link" data-scroll-target="#antibody-response-curves"><span class="header-section-number">4.11</span> Antibody response curves</a></li>
+  <li><a href="#the-per-person-likelihood" id="toc-the-per-person-likelihood" class="nav-link" data-scroll-target="#the-per-person-likelihood"><span class="header-section-number">4.12</span> The per-person likelihood</a></li>
+  <li><a href="#the-full-sample-likelihood" id="toc-the-full-sample-likelihood" class="nav-link" data-scroll-target="#the-full-sample-likelihood"><span class="header-section-number">4.13</span> The full-sample likelihood</a></li>
+  <li><a href="#finding-the-mle-numerically" id="toc-finding-the-mle-numerically" class="nav-link" data-scroll-target="#finding-the-mle-numerically"><span class="header-section-number">4.14</span> Finding the MLE numerically</a></li>
+  <li>
+<a href="#cluster-robust-standard-errors-for-clustered-sampling-designs" id="toc-cluster-robust-standard-errors-for-clustered-sampling-designs" class="nav-link" data-scroll-target="#cluster-robust-standard-errors-for-clustered-sampling-designs"><span class="header-section-number">4.15</span> Cluster-robust standard errors for clustered sampling designs</a>
+  <ul class="collapse">
+<li><a href="#why-clustering-matters" id="toc-why-clustering-matters" class="nav-link" data-scroll-target="#why-clustering-matters"><span class="header-section-number">4.15.1</span> Why clustering matters</a></li>
+  <li><a href="#cluster-robust-variance-estimation" id="toc-cluster-robust-variance-estimation" class="nav-link" data-scroll-target="#cluster-robust-variance-estimation"><span class="header-section-number">4.15.2</span> Cluster-robust variance estimation</a></li>
+  <li><a href="#implementation-in-serocalculator" id="toc-implementation-in-serocalculator" class="nav-link" data-scroll-target="#implementation-in-serocalculator"><span class="header-section-number">4.15.3</span> Implementation in serocalculator</a></li>
+  <li><a href="#effect-on-results" id="toc-effect-on-results" class="nav-link" data-scroll-target="#effect-on-results"><span class="header-section-number">4.15.4</span> Effect on results</a></li>
   </ul>
 </li>
   </ul>
 </li>
   <li>
-<a href="#modeling-the-seroresponse-kinetics-curve" id="toc-modeling-the-seroresponse-kinetics-curve" class="nav-link" data-scroll-target="#modeling-the-seroresponse-kinetics-curve"><span class="header-section-number">3</span> Modeling the seroresponse kinetics curve</a>
+<a href="#modeling-the-seroresponse-kinetics-curve" id="toc-modeling-the-seroresponse-kinetics-curve" class="nav-link" data-scroll-target="#modeling-the-seroresponse-kinetics-curve"><span class="header-section-number">5</span> Modeling the seroresponse kinetics curve</a>
   <ul class="collapse">
-<li><a href="#model-for-active-infection-period" id="toc-model-for-active-infection-period" class="nav-link" data-scroll-target="#model-for-active-infection-period"><span class="header-section-number">3.1</span> Model for active infection period</a></li>
-  <li><a href="#model-for-post-infection-antibody-decay" id="toc-model-for-post-infection-antibody-decay" class="nav-link" data-scroll-target="#model-for-post-infection-antibody-decay"><span class="header-section-number">3.2</span> Model for post-infection antibody decay</a></li>
-  <li><a href="#putting-it-all-together-1" id="toc-putting-it-all-together-1" class="nav-link" data-scroll-target="#putting-it-all-together-1"><span class="header-section-number">3.3</span> Putting it all together</a></li>
-  <li><a href="#biological-noise" id="toc-biological-noise" class="nav-link" data-scroll-target="#biological-noise"><span class="header-section-number">3.4</span> Biological noise</a></li>
-  <li><a href="#measurement-noise" id="toc-measurement-noise" class="nav-link" data-scroll-target="#measurement-noise"><span class="header-section-number">3.5</span> Measurement noise</a></li>
+<li><a href="#model-for-active-infection-period" id="toc-model-for-active-infection-period" class="nav-link" data-scroll-target="#model-for-active-infection-period"><span class="header-section-number">5.1</span> Model for active infection period</a></li>
+  <li><a href="#model-for-post-infection-antibody-decay" id="toc-model-for-post-infection-antibody-decay" class="nav-link" data-scroll-target="#model-for-post-infection-antibody-decay"><span class="header-section-number">5.2</span> Model for post-infection antibody decay</a></li>
+  <li><a href="#assembling-the-full-response-curve" id="toc-assembling-the-full-response-curve" class="nav-link" data-scroll-target="#assembling-the-full-response-curve"><span class="header-section-number">5.3</span> Assembling the full response curve</a></li>
+  <li><a href="#growth-rate-from-peak-and-baseline" id="toc-growth-rate-from-peak-and-baseline" class="nav-link" data-scroll-target="#growth-rate-from-peak-and-baseline"><span class="header-section-number">5.4</span> Growth rate from peak and baseline</a></li>
+  <li><a href="#from-the-full-model-to-the-observed-curve" id="toc-from-the-full-model-to-the-observed-curve" class="nav-link" data-scroll-target="#from-the-full-model-to-the-observed-curve"><span class="header-section-number">5.5</span> From the full model to the observed curve</a></li>
+  <li><a href="#biological-noise" id="toc-biological-noise" class="nav-link" data-scroll-target="#biological-noise"><span class="header-section-number">5.6</span> Biological noise</a></li>
+  <li><a href="#measurement-noise" id="toc-measurement-noise" class="nav-link" data-scroll-target="#measurement-noise"><span class="header-section-number">5.7</span> Measurement noise</a></li>
+  <li><a href="#multiple-biomarkers" id="toc-multiple-biomarkers" class="nav-link" data-scroll-target="#multiple-biomarkers"><span class="header-section-number">5.8</span> Multiple biomarkers</a></li>
+  <li><a href="#variation-in-antibody-kinetics-by-country" id="toc-variation-in-antibody-kinetics-by-country" class="nav-link" data-scroll-target="#variation-in-antibody-kinetics-by-country"><span class="header-section-number">5.9</span> Variation in antibody kinetics: by country</a></li>
+  <li><a href="#variation-in-antibody-kinetics-by-age-and-serotype" id="toc-variation-in-antibody-kinetics-by-age-and-serotype" class="nav-link" data-scroll-target="#variation-in-antibody-kinetics-by-age-and-serotype"><span class="header-section-number">5.10</span> Variation in antibody kinetics: by age and serotype</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#estimating-the-curves-with-serodynamics" id="toc-estimating-the-curves-with-serodynamics" class="nav-link" data-scroll-target="#estimating-the-curves-with-serodynamics"><span class="header-section-number">6</span> Estimating the curves with <code>serodynamics</code></a>
+  <ul class="collapse">
+<li><a href="#where-do-the-curve-parameters-come-from" id="toc-where-do-the-curve-parameters-come-from" class="nav-link" data-scroll-target="#where-do-the-curve-parameters-come-from"><span class="header-section-number">6.1</span> Where do the curve parameters come from?</a></li>
+  <li><a href="#the-serodynamics-package" id="toc-the-serodynamics-package" class="nav-link" data-scroll-target="#the-serodynamics-package"><span class="header-section-number">6.2</span> The <code>serodynamics</code> package</a></li>
+  <li><a href="#a-typical-serodynamics-workflow" id="toc-a-typical-serodynamics-workflow" class="nav-link" data-scroll-target="#a-typical-serodynamics-workflow"><span class="header-section-number">6.3</span> A typical <code>serodynamics</code> workflow</a></li>
+  <li><a href="#what-a-fitted-model-looks-like" id="toc-what-a-fitted-model-looks-like" class="nav-link" data-scroll-target="#what-a-fitted-model-looks-like"><span class="header-section-number">6.4</span> What a fitted model looks like</a></li>
+  <li><a href="#two-packages-one-pipeline" id="toc-two-packages-one-pipeline" class="nav-link" data-scroll-target="#two-packages-one-pipeline"><span class="header-section-number">6.5</span> Two packages, one pipeline</a></li>
+  <li><a href="#propagating-uncertainty-and-heterogeneity" id="toc-propagating-uncertainty-and-heterogeneity" class="nav-link" data-scroll-target="#propagating-uncertainty-and-heterogeneity"><span class="header-section-number">6.6</span> Propagating uncertainty and heterogeneity</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#using-serocalculator" id="toc-using-serocalculator" class="nav-link" data-scroll-target="#using-serocalculator"><span class="header-section-number">7</span> Using <code>serocalculator</code></a>
+  <ul class="collapse">
+<li><a href="#an-open-source-r-package" id="toc-an-open-source-r-package" class="nav-link" data-scroll-target="#an-open-source-r-package"><span class="header-section-number">7.1</span> An open-source R package</a></li>
+  <li><a href="#estimating-seroincidence" id="toc-estimating-seroincidence" class="nav-link" data-scroll-target="#estimating-seroincidence"><span class="header-section-number">7.2</span> Estimating seroincidence</a></li>
+  <li><a href="#interactive-shiny-app" id="toc-interactive-shiny-app" class="nav-link" data-scroll-target="#interactive-shiny-app"><span class="header-section-number">7.3</span> Interactive Shiny app</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#validation-recovering-known-incidence-rates" id="toc-validation-recovering-known-incidence-rates" class="nav-link" data-scroll-target="#validation-recovering-known-incidence-rates"><span class="header-section-number">8</span> Validation: recovering known incidence rates</a>
+  <ul class="collapse">
+<li><a href="#simulating-clusters-with-known-incidence" id="toc-simulating-clusters-with-known-incidence" class="nav-link" data-scroll-target="#simulating-clusters-with-known-incidence"><span class="header-section-number">8.1</span> Simulating clusters with known incidence</a></li>
+  <li><a href="#estimates-recover-the-simulated-rates" id="toc-estimates-recover-the-simulated-rates" class="nav-link" data-scroll-target="#estimates-recover-the-simulated-rates"><span class="header-section-number">8.2</span> Estimates recover the simulated rates</a></li>
+  <li><a href="#in-progress-work" id="toc-in-progress-work" class="nav-link" data-scroll-target="#in-progress-work"><span class="header-section-number">8.3</span> In-progress work</a></li>
+  <li><a href="#multiple-biomarkers-beyond-conditional-independence" id="toc-multiple-biomarkers-beyond-conditional-independence" class="nav-link" data-scroll-target="#multiple-biomarkers-beyond-conditional-independence"><span class="header-section-number">8.4</span> Multiple biomarkers: beyond conditional independence</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/methodology.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/methodology.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/methodology.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/methodology.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="methodology.docx"><i class="bi bi-file-word"></i>MS Word</a></li><li><a href="methodology-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li></ol></nav><h1 class="title display-7">Methodology</h1></header><header id="title-block-header">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Estimating Incidence Rates from Cross-Sectional Serosurveys</a></li></ol></nav><h1 class="title display-7">Estimating Incidence Rates from Cross-Sectional Serosurveys</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
 <p class="date">Invalid Date</p>
-</header><section id="overview" class="level1" data-number="1"><h1 data-number="1">
-<span class="header-section-number">1</span> Overview</h1>
-<section id="defining-incidence" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="defining-incidence">
-<span class="header-section-number">1.1</span> Defining incidence</h2>
-<p>The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">(<a href="#ref-Noordzij2010diseasemeasures" role="doc-biblioref">Noordzij et al. 2010</a>)</span>.</p>
-<p><strong>Example:</strong> if there are <strong>10 new cases</strong> of typhoid in a population of <strong>1000 persons</strong> during a <strong>one month</strong> time period, then the incidence rate for that time period is <strong>10 new cases per 1000 persons per month</strong>.</p>
-</section><section id="mathematical-definition-of-incidence" class="level2" data-visibility="hidden" data-number="1.2"><h2 data-visibility="hidden" data-number="1.2" class="anchored" data-anchor-id="mathematical-definition-of-incidence">
-<span class="header-section-number">1.2</span> Mathematical definition of incidence</h2>
-<p>More mathematically, the incidence rate <em>at a given time point</em> is the <em>derivative</em> (i.e., the current rate of change over time) of the expected cumulative count of infections per person at risk, at that time:</p>
-<p><span class="math display">\[\frac{d}{dt} \mathbb{E}\left[\frac{C(t)}{n} \mid N(t) =n\right]\]</span></p>
-<p>where <span class="math inline">\(C(t)\)</span> is the cumulative total number of infections in the population of interest, and <span class="math inline">\(N(t)\)</span> is the number of individuals at risk at time <span class="math inline">\(t\)</span>.</p>
-</section><section id="scale-of-incidence-rates" class="level2" data-visibility="hidden" data-number="1.3"><h2 data-visibility="hidden" data-number="1.3" class="anchored" data-anchor-id="scale-of-incidence-rates">
-<span class="header-section-number">1.3</span> Scale of incidence rates</h2>
+</header><section id="infectious-disease-epidemiology" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Infectious disease epidemiology</h1>
+<section id="salmonella-enterica-typhoid-fever" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="salmonella-enterica-typhoid-fever">
+<span class="header-section-number">1.1</span> <em>Salmonella</em> enterica (“typhoid fever”)</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>~21.7 million symptomatic cases/year</li>
+<li>~217,000 deaths/year (~1% case fatality with treatment; up to 20% untreated)</li>
+<li>Highest burden: ages 5–19</li>
+<li>
+<strong>Symptoms:</strong> sustained high fever, severe headache, abdominal pain, malaise; rose-spot rash (~30% of patients); constipation (early) or diarrhea (later)</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img src="../man/figures/SalmonellaTyphiFlagellarStain.jpg" class="img-fluid" alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"><img src="../man/figures/Fievre_typhoide.png" class="img-fluid" alt="World map showing high (red) and moderate (orange) typhoid-burden countries"></p>
+</div>
+</div>
+</section><section id="shigella-dysentery" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="shigella-dysentery">
+<span class="header-section-number">1.2</span> <em>Shigella</em> (“dysentery”)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>~100 million infections annually</li>
+<li>~100,000 deaths annually (~1% case fatality; higher in malnourished children)</li>
+<li>Most cases and deaths: children under 5 in low- and middle-income countries (LMICs)</li>
+<li>
+<strong>Symptoms:</strong> bloody diarrhea (dysentery), abdominal cramps, fever, tenesmus (painful urge to defecate)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption><em>Shigella</em> in a stool sample. Photo: CDC/PHIL (public domain), via <a href="https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg">Wikimedia Commons</a>.</figcaption><p><img src="../man/figures/Shigella_stool.jpg" class="img-fluid figure-img" alt="Microscopy of a stool sample containing *Shigella* bacteria"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="orientia-tsutsugamushi-scrub-typhus" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="orientia-tsutsugamushi-scrub-typhus">
+<span class="header-section-number">1.3</span> <em>Orientia tsutsugamushi</em> (“scrub typhus”)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>~1,000,000 infections/year</li>
+<li>~10,000 deaths/year (~1% case fatality with treatment; up to 30% untreated)</li>
+<li>
+<strong>Symptoms:</strong> high fever, severe headache, myalgia; eschar (pathognomonic black scab at mite-bite site); macular rash; cough; gastrointestinal symptoms; hemorrhage in severe cases</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption><em>Trombicula</em> mite larva with stylostome. Photo: Alan R Walker / <a href="https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</figcaption><p><img src="../man/figures/Trombicula-larva-stylostome.jpg" class="img-fluid figure-img" alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="why-estimate-incidence-from-serosurveys" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Why estimate incidence from serosurveys?</h1>
+<section id="the-burden-data-gap" class="level2 smaller" data-number="2.1"><h2 class="smaller anchored" data-number="2.1" data-anchor-id="the-burden-data-gap">
+<span class="header-section-number">2.1</span> The burden-data gap</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li><p>Typhoid conjugate vaccines (TCVs) are <strong>80-90% effective</strong> and WHO-recommended since 2018, but <strong>few countries</strong> have adopted them into routine immunization.</p></li>
+<li><p>A major barrier is the <strong>lack of burden data</strong>: most low- and middle-income countries lack robust typhoid surveillance and have little or no incidence data.</p></li>
+<li><p>These gaps block applications for vaccine funding, widening <strong>equity gaps</strong> in access to effective vaccines.</p></li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>Countries with routine TCV introduction as of 2023. Source: CDC MMWR 72(7):182–188 (public domain).</figcaption><p><img src="methodology_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="notes">
+<p>Three large randomized trials showed that a Vi tetanus-toxoid typhoid conjugate vaccine is 80-90% effective at preventing symptomatic typhoid, and the WHO has recommended these vaccines since 2018. Yet as of 2023 only a handful of countries had introduced them into routine immunization. The binding constraint is data: without incidence estimates, countries cannot make the case for vaccine funding.</p>
+<p>“Data inequality is our biggest challenge moving forward” — Kathy Neuzil, 2023</p>
+</div>
+{{&lt; slidebreak &gt;}}
+</section><section id="seroepidemiology-can-fill-the-gap" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="seroepidemiology-can-fill-the-gap">
+<span class="header-section-number">2.2</span> Seroepidemiology can fill the gap</h2>
+<p>The Seroepidemiology and Environmental Surveillance for Enteric Fever (SEES) study collected cross-sectional serosurveys across multiple countries to estimate typhoid incidence from antibody data <span class="citation" data-cites="Aiemjoy_2022_Lancet">(<a href="#ref-Aiemjoy_2022_Lancet" role="doc-biblioref">Aiemjoy et al. 2022</a>)</span>.</p>
+<div class="notes">
+<p>This lecture describes the methodology behind that kind of estimate: how a single cross-sectional serosurvey, combined with a model of antibody dynamics, can recover an incidence rate.</p>
+</div>
+</section><section id="defining-incidence" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="defining-incidence">
+<span class="header-section-number">2.3</span> Defining incidence</h2>
+<div id="def-incidence" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Population incidence rate)</strong></span> The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">(<a href="#ref-Noordzij2010diseasemeasures" role="doc-biblioref">Noordzij et al. 2010</a>)</span>.</p>
+</div>
+{{&lt; slidebreak &gt;}}
+<div id="exm-incidence-rate" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Population incidence rate)</strong></span> If there are <strong>10 new cases</strong> of typhoid in a population of <strong>1000 persons</strong> during a <strong>one month</strong> time period, then the <strong>incidence rate</strong> for that time period is <strong>10 new cases per 1000 persons per month</strong>.</p>
+</div>
+</section><section id="mathematical-definition-of-incidence" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="mathematical-definition-of-incidence">
+<span class="header-section-number">2.4</span> Mathematical definition of incidence</h2>
+<p>More precisely, the incidence rate at time <span class="math inline">\(t\)</span> is the <strong>rate of new infections per person at risk</strong>:</p>
+<p><span class="math display">\[\lambda_t = \frac{1}{N(t)}\,\frac{d}{dt}\,\mathbb{E}[C(t)]\]</span></p>
+<p>where <span class="math inline">\(C(t)\)</span> is the cumulative number of infections and <span class="math inline">\(N(t)\)</span> the number of individuals at risk at time <span class="math inline">\(t\)</span>.</p>
+</section><section id="scale-of-incidence-rates" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="scale-of-incidence-rates">
+<span class="header-section-number">2.5</span> Scale of incidence rates</h2>
 <p>In both definitions, the units for an incidence rate are “# new infections per # persons at risk per time duration”; for example, “new infections per 1000 persons per year”.</p>
 <p>For convenience, we can rescale the incidence rate to make it easier to understand; for example, we might express incidence as “# new infections per 1000 persons per year” or “# new infections per 100,000 persons per day”, etc.</p>
-</section><section id="incidence-from-an-individuals-perspective" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="incidence-from-an-individuals-perspective">
-<span class="header-section-number">1.4</span> Incidence from an individual’s perspective</h2>
+</section><section id="incidence-from-an-individuals-perspective" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="incidence-from-an-individuals-perspective">
+<span class="header-section-number">2.6</span> Incidence from an individual’s perspective</h2>
 <p>From the perspective of an individual in the population:</p>
 <ul>
-<li><p>the <strong>incidence rate</strong> (at a given time point (<span class="math inline">\(t\)</span>) is the instantaneous <strong>probability</strong> (density) of <strong>becoming infected</strong> at that time point, <strong>given</strong> that they are <strong>at risk</strong> at that time point.</p></li>
+<li><p>the <strong>incidence rate</strong> (at a given time point <span class="math inline">\(t\)</span>) is the instantaneous <strong>probability density</strong> of <strong>becoming infected</strong> at that time point, <strong>given</strong> that they are <strong>at risk</strong> at that time point.</p></li>
 <li><p>That is, the incidence rate is a <strong>hazard</strong> rate.</p></li>
 <li><p>Notation: let’s use <strong><span class="math inline">\(\lambda_{t}\)</span></strong> to denote the incidence rate at time <span class="math inline">\(t\)</span>.</p></li>
-</ul></section></section><section id="estimating-incidence-from-cross-sectional-antibody-surveys" class="level1" data-number="2"><h1 data-number="2">
-<span class="header-section-number">2</span> Estimating incidence from cross-sectional antibody surveys</h1>
-<section id="cross-sectional-antibody-surveys" class="level2 incremental" data-number="2.1"><h2 class="incremental anchored" data-number="2.1" data-anchor-id="cross-sectional-antibody-surveys">
-<span class="header-section-number">2.1</span> Cross-sectional antibody surveys</h2>
+</ul></section></section><section id="study-designs-for-estimating-incidence-rates" class="level1" data-number="3"><h1 data-number="3">
+<span class="header-section-number">3</span> Study designs for estimating incidence rates</h1>
+<section id="longitudinal-cohort-studies" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="longitudinal-cohort-studies">
+<span class="header-section-number">3.1</span> Longitudinal cohort studies</h2>
+<p>Incidence rates can be estimated from longitudinal cohort studies, but cohort studies are:</p>
+<ul>
+<li>costly to conduct</li>
+<li>slow to produce results,</li>
+<li>vulnerable to selection and censoring (drop-out) biases</li>
+</ul></section><section id="clinical-case-data" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="clinical-case-data">
+<span class="header-section-number">3.2</span> Clinical case data</h2>
+<p>Incidence rates can also be estimated from clinical case rates, but clinical case rates undercount:</p>
+<ul>
+<li>asymptomatic cases</li>
+<li>symptomatic cases who don’t receive clinical care.</li>
+</ul></section><section id="cross-sectional-serosurveys" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="cross-sectional-serosurveys">
+<span class="header-section-number">3.3</span> Cross-sectional serosurveys</h2>
+<div class="notes">
+<p>Alternatively, incidence rates can be estimated from biomarker data collected through a single cross-sectional survey, combined with a longitudinal model of how those biomarkers respond to infection over time. Compared with cohort studies and clinical case rates, cross-sectional incidence estimation can produce estimates that are:</p>
+</div>
+<ul>
+<li>accurate</li>
+<li>timely</li>
+<li>cost-efficient</li>
+</ul>
+<p>See <span class="citation" data-cites="HAY2024100806">Hay et al. (<a href="#ref-HAY2024100806" role="doc-biblioref">2024</a>)</span> for overview</p>
+</section></section><section id="estimating-incidence-from-cross-sectional-serosurveys" class="level1" data-number="4"><h1 data-number="4">
+<span class="header-section-number">4</span> Estimating incidence from cross-sectional serosurveys</h1>
+<section id="goal" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="goal">
+<span class="header-section-number">4.1</span> Goal</h2>
+<blockquote class="blockquote">
+<p>Easily and reproducibly translate <strong>quantitative antibody responses</strong> at the population level into meaningful and accurate <strong>epidemiological measures of infection burden</strong>.</p>
+</blockquote>
+</section><section id="antibody-responses-are-complicated" class="level2 incremental" data-number="4.2"><h2 class="incremental anchored" data-number="4.2" data-anchor-id="antibody-responses-are-complicated">
+<span class="header-section-number">4.2</span> Antibody responses are complicated</h2>
+<p>Using antibody levels to recover infection times is hard, because antibody responses:</p>
+<div class="incremental">
+<ul class="incremental">
+<li>
+<strong>decay over time</strong> after infection</li>
+<li>
+<strong>vary from individual to individual</strong> (age, immune function, prior infections, vaccination)</li>
+<li>
+<strong>vary from measurement to measurement</strong> (assay noise)</li>
+<li>can <strong>cross-react</strong> with antibodies from other exposures</li>
+</ul>
+</div>
+<div class="notes">
+<p>Each of these complications has to be handled somewhere in the model: waning, between-person heterogeneity, measurement error, and cross-reactivity. The rest of this section builds that model up piece by piece.</p>
+</div>
+</section><section id="cross-sectional-antibody-surveys" class="level2 incremental" data-number="4.3"><h2 class="incremental anchored" data-number="4.3" data-anchor-id="cross-sectional-antibody-surveys">
+<span class="header-section-number">4.3</span> Cross-sectional antibody surveys</h2>
 <div class="notes">
 <p>Typically, it is difficult to estimate changes from a single time point. However, we can sometimes make assumptions that allow us to do so. In particular, if we assume that the incidence rate is constant over time, then we can estimate incidence from a single cross-sectional survey.</p>
 <p>We will need two pieces of notation to formalize this process.</p>
@@ -809,8 +999,8 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-</section><section id="modeling-assumptions" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="modeling-assumptions">
-<span class="header-section-number">2.2</span> Modeling assumptions</h2>
+</section><section id="modeling-assumptions" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="modeling-assumptions">
+<span class="header-section-number">4.4</span> Modeling assumptions</h2>
 <p>We <strong>assume</strong> that:</p>
 <div class="incremental">
 <ul class="incremental">
@@ -828,55 +1018,79 @@ window.Quarto = {
 </ul>
 </div>
 <div class="notes">
-<p>(For diseases like typhoid, the no-immunity assumption may not hold exactly, but hopefully approximately; modeling the effects of re-exposure during an active infection is <a href="https://github.com/UCD-SERG/dcm/issues/11">on our to-do list</a>).</p>
+<p>(For diseases like typhoid, the no-immunity assumption may not hold exactly, but hopefully approximately; modeling the effects of re-exposure during an active infection is <a href="https://github.com/UCD-SERG/serodynamics/issues/11">on our to-do list</a>).</p>
 </div>
-</section><section id="time-since-infection-and-incidence" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="time-since-infection-and-incidence">
-<span class="header-section-number">2.3</span> Time since infection and incidence</h2>
+</section><section id="time-since-infection-and-incidence" class="level2 smaller" data-number="4.5"><h2 class="smaller anchored" data-number="4.5" data-anchor-id="time-since-infection-and-incidence">
+<span class="header-section-number">4.5</span> Time since infection and incidence</h2>
 <p>Under those assumptions:</p>
-<div class="incremental">
-<ul class="incremental">
+<p>. . .</p>
+<ul>
 <li>
 <span class="math inline">\(T\)</span> has an <strong>exponential distribution</strong>:</li>
 </ul>
-<p><span class="math display">\[\mathbb{p}(T=t) = \lambda \exp{\left\{-\lambda t\right\}}\]</span></p>
-<ul class="incremental">
+<p>. . .</p>
+<p><span class="math display">\[\operatorname{p}(T=t) =  \textcolor{red}{\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}}\]</span></p>
+<p>. . .</p>
+<ul>
 <li>More precisely, the distribution is exponential <strong>truncated by age</strong> at observation (<span class="math inline">\(a\)</span>):</li>
 </ul>
-<p><span class="math display">\[\mathbb{p}(T=t|A=a) = 1_{t \in[0,a]}\lambda \exp{\left\{-\lambda t\right\}} + 1_{t = \text{NA}} \exp{\left\{-\lambda a\right\}}\]</span></p>
-<ul class="incremental">
+<p>. . .</p>
+<p><span class="math display">\[
+\operatorname{p}(T=t|A=a) = 1_{t \in[0,a]} \textcolor{red}{\lambda \operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}} +
+1_{t = \text{NA}} \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}
+\]</span></p>
+<p>. . .</p>
+<ul>
 <li>the rate parameter <span class="math inline">\(\lambda\)</span> is the incidence rate</li>
 </ul>
-</div>
 <div class="notes">
 <p>This is a time-to-event model, looking <strong>backwards in time</strong> from the survey date (when the blood sample was collected).</p>
-<p>The probability that an individual was <strong>last</strong> infected <span class="math inline">\(t\)</span> days ago, <span class="math inline">\(p(T=t)\)</span>, is equal to the probability of being infected at time <span class="math inline">\(t\)</span> (i.e., the incidence rate at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\lambda\)</span>) times the probability of not being infected after time <span class="math inline">\(t\)</span>, which turns out to be <span class="math inline">\(\exp(-\lambda t)\)</span>.</p>
-<p>The distribution of <span class="math inline">\(T\)</span> is truncated by the patient’s birth date; the probability that they have never been infected is <span class="math inline">\(\exp{\left\{-\lambda a\right\}}\)</span>, where <span class="math inline">\(a\)</span> is the patient’s age at the time of the survey.</p>
+<p>The probability that an individual was <strong>last</strong> infected <span class="math inline">\(t\)</span> days ago, <span class="math inline">\(p(T=t)\)</span>, is equal to the probability of being infected at time <span class="math inline">\(t\)</span> (i.e., the incidence rate at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\lambda\)</span>) times the probability of not being infected after time <span class="math inline">\(t\)</span>, which turns out to be <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}\)</span>.</p>
+<p>The distribution of <span class="math inline">\(T\)</span> is truncated by the patient’s birth date; the probability that they have never been infected is <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>, where <span class="math inline">\(a\)</span> is the patient’s age at the time of the survey.</p>
 </div>
-</section><section id="likelihood-of-latent-infection-times" class="level2 smaller" data-number="2.4"><h2 class="smaller anchored" data-number="2.4" data-anchor-id="likelihood-of-latent-infection-times">
-<span class="header-section-number">2.4</span> Likelihood of latent infection times</h2>
+</section><section id="likelihood-of-latent-infection-times" class="level2 smaller" data-number="4.6"><h2 class="smaller anchored" data-number="4.6" data-anchor-id="likelihood-of-latent-infection-times">
+<span class="header-section-number">4.6</span> Likelihood of latent infection times</h2>
 <div class="notes">
 <p>If we could observe <span class="math inline">\(T\)</span>, then we could estimate <span class="math inline">\(\lambda\)</span> using a typical maximum likelihood approach.</p>
 </div>
+<p>. . .</p>
 <div class="notes">
-<p>Starting with the likelihood: Taking the logarithm of the likelihood: Taking the derivative of that log-likelihood to find the score function: Setting the score function equal to 0 to find the score equation, and solving the score equation for <span class="math inline">\(\lambda\)</span> to find the maximum likelihood estimate:</p>
+<p>Starting with the likelihood:</p>
 </div>
-<div class="incremental">
-<ul class="incremental">
-<li><p><span class="math display">\[\mathcal{L}^*(\lambda) = \prod_{i=1}^n \mathbb{p}(T=t_i) = \prod_{i=1}^n \lambda \exp(-\lambda t_i)\]</span></p></li>
-<li><p><span class="math display">\[\ell^*(\lambda) = \log{\left\{\mathcal{L}^*(\lambda)\right\}} = \sum_{i=1}^n \log{\left\{\lambda\right\}} -\lambda t_i\]</span></p></li>
-<li><p><span class="math display">\[\ell^{*'}(\lambda) = \sum_{i=1}^n \lambda^{-1} - t_i\]</span></p></li>
-<li><p><span class="math display">\[\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}\]</span></p></li>
-</ul>
+<p><span class="math display">\[\mathscr{L}^*(\lambda) = \prod_{i=1}^n \operatorname{p}(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}\]</span></p>
+<p>. . .</p>
+<div class="notes">
+<p>Taking the logarithm of the likelihood:</p>
 </div>
+<p><span class="math display">\[\ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\]</span></p>
+<p>. . .</p>
+<div class="notes">
+<p>Taking the derivative of that log-likelihood to find the score function:</p>
+</div>
+<p><span class="math display">\[\ell^{*'}(\lambda) = \sum_{i=1}^n \mathopen{}\left(\lambda\right)^{-1}\mathclose{} - t_i\]</span></p>
+<p>. . .</p>
+<div class="notes">
+<p>Setting the score function equal to 0 to find the score equation, and solving the score equation for <span class="math inline">\(\lambda\)</span> to find the maximum likelihood estimate:</p>
+</div>
+<p><span class="math display">\[\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}\]</span></p>
 <div class="notes">
 <p>The MLE turns out to be the inverse of the mean.</p>
 </div>
-</section><section id="example-log-likelihood-curves" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="example-log-likelihood-curves">
-<span class="header-section-number">2.5</span> Example log-likelihood curves</h2>
+</section><section id="example-log-likelihood-curves" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="example-log-likelihood-curves">
+<span class="header-section-number">4.7</span> Example log-likelihood curves</h2>
 <div class="notes">
 <p>Here’s what that would look like:</p>
 </div>
 <div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'serocalculator'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:serodynamics':
+
+    expect_snapshot_data</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -891,66 +1105,119 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-</div>
-<div class="cell">
 <div class="cell-output-display">
-<div id="fig-loglik" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Example log(likelihood) curves
-</figcaption><div aria-describedby="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="methodology_files/figure-html/fig-loglik-1.png" class="img-fluid figure-img" width="672">
+<div id="fig-ex-lik-curves" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ex-lik-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: log-likelihood curve for latent data
+</figcaption><div aria-describedby="fig-ex-lik-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="methodology_files/figure-html/fig-ex-lik-curves-1.png" class="img-fluid figure-img" width="672">
 </div>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="standard-error" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="standard-error">
-<span class="header-section-number">2.6</span> standard error</h2>
-<p>The standard error of the estimate is approximately equal to the inverse of the rate of curvature (2nd derivative, aka Hessian) in the log-likelihood function, at the maximum:</p>
-<p>more curvature -&gt; likelihood peak is clearer -&gt; smaller standard errors</p>
-</section><section id="likelihood-of-observed-data" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="likelihood-of-observed-data">
-<span class="header-section-number">2.7</span> Likelihood of observed data</h2>
+</section><section id="standard-errors" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="standard-errors">
+<span class="header-section-number">4.8</span> Standard errors</h2>
+<p>The standard error of the estimate is approximately equal to the inverse of the curvature (2nd derivative, aka Hessian) of the log-likelihood function, at the maximum:</p>
+<p>more curvature <span class="math inline">\(\rightarrow\)</span> a sharper likelihood peak <span class="math inline">\(\rightarrow\)</span> smaller standard errors</p>
+</section><section id="hessian-for-the-exponential-model" class="level2 smaller" data-number="4.9"><h2 class="smaller anchored" data-number="4.9" data-anchor-id="hessian-for-the-exponential-model">
+<span class="header-section-number">4.9</span> Hessian for the exponential model</h2>
+<p>For the latent-time exponential model, the log-likelihood is <span class="math display">\[\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i\]</span></p>
+<p>so the score and the Hessian (here a scalar second derivative) are</p>
+<p><span class="math display">\[
+\ell^{*\prime}(\lambda) = \frac{n}{\lambda} - \sum_{i=1}^n t_i,
+\qquad
+\ell^{*\prime\prime}(\lambda) = -\frac{n}{\lambda^2}
+\]</span></p>
+<div class="notes">
+<p>The observed information is <span class="math inline">\(\mathcal{I}(\lambda) = -\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
+</div>
+<p>Evaluated at the MLE <span class="math inline">\(\hat\lambda = 1/\bar t\)</span>, the variance and standard error are</p>
+<p><span class="math display">\[
+\widehat{\operatorname{Var}}(\hat\lambda) \approx
+\left[-\ell^{*\prime\prime}(\hat\lambda)\right]^{-1} = \frac{\hat\lambda^2}{n},
+\qquad
+\operatorname{SE}(\hat\lambda) \approx \frac{\hat\lambda}{\sqrt{n}}
+\]</span></p>
+<div class="notes">
+<p>So more curvature (larger <span class="math inline">\(n/\lambda^2\)</span>) means a sharper peak and a smaller standard error, consistent with the previous slide.</p>
+</div>
+</section><section id="likelihood-of-observed-data" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="likelihood-of-observed-data">
+<span class="header-section-number">4.10</span> Likelihood of observed data</h2>
 <div class="notes">
 <p>Unfortunately, we don’t observe infection times <span class="math inline">\(T\)</span>; we only observe antibody levels <span class="math inline">\({Y}\)</span>. So things get a little more complicated.</p>
 <p>In short, we are hoping that we can estimate <span class="math inline">\(T\)</span> (time since last infection) from <span class="math inline">\(Y\)</span> (current antibody levels). If we could do that, then we could plug in our estimates <span class="math inline">\(\hat t_i\)</span> into that likelihood above, and estimate <span class="math inline">\(\lambda\)</span> as previously.</p>
 <p>We’re actually going to do something a little more nuanced; instead of just using one value for <span class="math inline">\(\hat t\)</span>, we are going to consider all possible values of <span class="math inline">\(t\)</span> for each individual.</p>
 <p>We need to link the data we actually observed to the incidence rate.</p>
-<p>The likelihood of an individual’s observed data, <span class="math inline">\(\mathbb{p}(Y=y)\)</span>, can be expressed as an integral over the joint likelihood of <span class="math inline">\(Y\)</span> and <span class="math inline">\(T\)</span> (using the Law of Total Probability):</p>
+<p>The likelihood of an individual’s observed data, <span class="math inline">\(\operatorname{p}(Y=y)\)</span>, can be expressed as an integral over the joint likelihood of <span class="math inline">\(Y\)</span> and <span class="math inline">\(T\)</span> (using the Law of Total Probability):</p>
 </div>
 <div class="incremental">
 <ul class="incremental">
-<li><span class="math display">\[\mathbb{p}(Y=y) = \int_t \mathbb{p}(Y=y,T=t)dt\]</span></li>
+<li><span class="math display">\[\operatorname{p}(Y=y) = \int_t \operatorname{p}(Y=y,T=t)dt\]</span></li>
 </ul>
 <div class="notes">
 <p>Further, we can express the joint probability <span class="math inline">\(p(Y=y,T=t)\)</span> as the product of <span class="math inline">\(p(T=t)\)</span> and <span class="math inline">\(p(Y=y|T=t)\)</span> the “antibody response curve after infection”. That is:</p>
 </div>
 <ul class="incremental">
-<li><span class="math display">\[\mathbb{p}(Y=y,T=t) = \mathbb{p}(Y=y|T=t) \mathbb{p}(T=t)\]</span></li>
+<li><span class="math display">\[\operatorname{p}(Y=y,T=t) = \operatorname{p}(Y=y|T=t) \operatorname{p}(T=t)\]</span></li>
 </ul>
 </div>
-</section><section id="antibody-response-curves" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="antibody-response-curves">
-<span class="header-section-number">2.8</span> Antibody response curves</h2>
-<div id="fig-decay" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</section><section id="antibody-response-curves" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="antibody-response-curves">
+<span class="header-section-number">4.11</span> Antibody response curves</h2>
+<div id="fig-sim-case-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-sim-case-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\)</span>, for typhoid
-</figcaption><div aria-describedby="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="fig/fig1a-1.svg" class="img-fluid figure-img">
+</figcaption><div aria-describedby="fig-sim-case-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="methodology_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </figure>
 </div>
-</section><section id="putting-it-all-together" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="putting-it-all-together">
-<span class="header-section-number">2.9</span> Putting it all together</h2>
-<p>Substituting <span class="math inline">\(p(Y=y,T=t) = p(Y=y|T=t)P(T=t)\)</span> into the previous expression for <span class="math inline">\(p(Y=y)\)</span>:</p>
+{{&lt; slidebreak &gt;}}
+<div id="fig-decay" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Observed antibody measurements over time since fever onset, for typhoid
+</figcaption><div aria-describedby="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 904 Columns: 8
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (6): Country, person_id, sample_id, bldculres, antigen_iso, studyvisit
+dbl (2): dayssincefeveronset, result
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="methodology_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</section><section id="the-per-person-likelihood" class="level2" data-number="4.12"><h2 data-number="4.12" class="anchored" data-anchor-id="the-per-person-likelihood">
+<span class="header-section-number">4.12</span> The per-person likelihood</h2>
+<p>Substituting <span class="math inline">\(p(Y=y,T=t) = p(Y=y|T=t)\,p(T=t)\)</span> into the previous expression for <span class="math inline">\(p(Y=y)\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 p(Y=y)
-&amp;= \int_t p(Y=y|T=t)P(T=t) dt
+&amp;= \int_t p(Y=y|T=t)\,p(T=t)\, dt
 \end{aligned}
 \]</span></p>
-</section><section id="composing-the-likelihood" class="level2 smaller" data-number="2.10"><h2 class="smaller anchored" data-number="2.10" data-anchor-id="composing-the-likelihood">
-<span class="header-section-number">2.10</span> Composing the likelihood</h2>
+</section><section id="the-full-sample-likelihood" class="level2 smaller" data-number="4.13"><h2 class="smaller anchored" data-number="4.13" data-anchor-id="the-full-sample-likelihood">
+<span class="header-section-number">4.13</span> The full-sample likelihood</h2>
 <div class="notes">
-<p>Now, the likelihood of the observed data <span class="math inline">\(\mathbf{y} = (y_1, y_2, ..., y_n)\)</span> is:</p>
+<p>Now, the likelihood of the observed data <span class="math inline">\(\tilde{y} = (y_1, y_2, ..., y_n)\)</span> is:</p>
 </div>
 <p><span class="math display">\[
 \begin{aligned}
@@ -962,8 +1229,8 @@ p(Y=y)
 <div class="notes">
 <p>If we know <span class="math inline">\(p(Y=y|T=t)\)</span>, then we can maximize <span class="math inline">\(\mathcal{L}(\lambda)\)</span> over <span class="math inline">\(\lambda\)</span> to find the “maximum likelihood estimate” (MLE) of <span class="math inline">\(\lambda\)</span>, denoted <span class="math inline">\(\hat\lambda\)</span>.</p>
 </div>
-</section><section id="finding-the-mle-numerically" class="level2" data-number="2.11"><h2 data-number="2.11" class="anchored" data-anchor-id="finding-the-mle-numerically">
-<span class="header-section-number">2.11</span> Finding the MLE numerically</h2>
+</section><section id="finding-the-mle-numerically" class="level2" data-number="4.14"><h2 data-number="4.14" class="anchored" data-anchor-id="finding-the-mle-numerically">
+<span class="header-section-number">4.14</span> Finding the MLE numerically</h2>
 <div class="notes">
 <p>The likelihood of <span class="math inline">\(Y\)</span> involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:</p>
 </div>
@@ -977,11 +1244,11 @@ p(Y=y)
 <div class="notes">
 <p>The derivative of this expression doesn’t come out cleanly, so we will use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) to find the MLE and corresponding standard error.</p>
 </div>
-</section><section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="level2" data-number="2.12"><h2 data-number="2.12" class="anchored" data-anchor-id="cluster-robust-standard-errors-for-clustered-sampling-designs">
-<span class="header-section-number">2.12</span> Cluster-robust standard errors for clustered sampling designs</h2>
+</section><section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="level2" data-number="4.15"><h2 data-number="4.15" class="anchored" data-anchor-id="cluster-robust-standard-errors-for-clustered-sampling-designs">
+<span class="header-section-number">4.15</span> Cluster-robust standard errors for clustered sampling designs</h2>
 <p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.</p>
-<section id="why-clustering-matters" class="level3" data-number="2.12.1"><h3 data-number="2.12.1" class="anchored" data-anchor-id="why-clustering-matters">
-<span class="header-section-number">2.12.1</span> Why clustering matters</h3>
+<section id="why-clustering-matters" class="level3" data-number="4.15.1"><h3 data-number="4.15.1" class="anchored" data-anchor-id="why-clustering-matters">
+<span class="header-section-number">4.15.1</span> Why clustering matters</h3>
 <p>When observations are clustered:</p>
 <ul>
 <li>Individuals within the same cluster share common exposures or characteristics</li>
@@ -990,8 +1257,8 @@ p(Y=y)
 </li>
 <li>p-values will be <strong>too optimistic</strong>
 </li>
-</ul></section><section id="cluster-robust-variance-estimation" class="level3" data-number="2.12.2"><h3 data-number="2.12.2" class="anchored" data-anchor-id="cluster-robust-variance-estimation">
-<span class="header-section-number">2.12.2</span> Cluster-robust variance estimation</h3>
+</ul></section><section id="cluster-robust-variance-estimation" class="level3" data-number="4.15.2"><h3 data-number="4.15.2" class="anchored" data-anchor-id="cluster-robust-variance-estimation">
+<span class="header-section-number">4.15.2</span> Cluster-robust variance estimation</h3>
 <p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> (also known as the Huber-White robust variance estimator):</p>
 <p><span class="math display">\[V_{\text{robust}} = H^{-1} B H^{-1}\]</span></p>
 <p>where:</p>
@@ -1013,42 +1280,44 @@ p(Y=y)
 </li>
 <li>
 <span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient operator (vector of partial derivatives with respect to the parameter <span class="math inline">\(\lambda\)</span>)</li>
-</ul></section><section id="implementation-in-serocalculator" class="level3" data-number="2.12.3"><h3 data-number="2.12.3" class="anchored" data-anchor-id="implementation-in-serocalculator">
-<span class="header-section-number">2.12.3</span> Implementation in serocalculator</h3>
+</ul></section><section id="implementation-in-serocalculator" class="level3" data-number="4.15.3"><h3 data-number="4.15.3" class="anchored" data-anchor-id="implementation-in-serocalculator">
+<span class="header-section-number">4.15.3</span> Implementation in serocalculator</h3>
 <p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
 <p>When cluster-robust standard errors are used, the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> output indicates this with <code>se_type = "cluster-robust"</code>.</p>
-</section><section id="effect-on-results" class="level3" data-number="2.12.4"><h3 data-number="2.12.4" class="anchored" data-anchor-id="effect-on-results">
-<span class="header-section-number">2.12.4</span> Effect on results</h3>
+</section><section id="effect-on-results" class="level3" data-number="4.15.4"><h3 data-number="4.15.4" class="anchored" data-anchor-id="effect-on-results">
+<span class="header-section-number">4.15.4</span> Effect on results</h3>
 <ul>
 <li>
 <strong>Point estimates</strong> (incidence rates) remain unchanged</li>
 <li>
-<strong>Standard errors</strong> typically increase by 5-15% to reflect within-cluster correlation</li>
+<strong>Standard errors</strong> often increase to reflect within-cluster correlation</li>
 <li>
 <strong>Confidence intervals</strong> appropriately widen to account for reduced effective sample size</li>
-</ul></section></section></section><section id="modeling-the-seroresponse-kinetics-curve" class="level1" data-number="3"><h1 data-number="3">
-<span class="header-section-number">3</span> Modeling the seroresponse kinetics curve</h1>
+</ul></section></section></section><section id="modeling-the-seroresponse-kinetics-curve" class="level1" data-number="5"><h1 data-number="5">
+<span class="header-section-number">5</span> Modeling the seroresponse kinetics curve</h1>
 <div class="notes">
-<p>Now, we need a model for the antibody response to infection, <span class="math inline">\(\mathbb{p}(Y=y|T=t)\)</span>. The current version of the <a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a> package uses a two-phase model for the shape of the seroresponse <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>.</p>
+<p>Now, we need a model for the antibody response to infection, <span class="math inline">\(\operatorname{p}(Y=y|T=t)\)</span>. The current version of the <a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a> package uses a two-phase model for the shape of the seroresponse <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>.</p>
 </div>
-<section id="model-for-active-infection-period" class="level2 smaller" data-number="3.1"><h2 class="smaller anchored" data-number="3.1" data-anchor-id="model-for-active-infection-period">
-<span class="header-section-number">3.1</span> Model for active infection period</h2>
+<section id="model-for-active-infection-period" class="level2 smaller" data-number="5.1"><h2 class="smaller anchored" data-number="5.1" data-anchor-id="model-for-active-infection-period">
+<span class="header-section-number">5.1</span> Model for active infection period</h2>
 <div class="notes">
 <p>The first phase of the model represents the <strong>active infection period</strong>, and uses a simplified Lotka-Volterra predator-prey model <span class="citation" data-cites="volterra1928variations">(<a href="#ref-volterra1928variations" role="doc-biblioref">Volterra 1928</a>)</span> where the pathogen is the prey and the antibodies are the predator:</p>
 </div>
 <p>Notation:</p>
 <ul>
 <li>
-<span class="math inline">\(x(t)\)</span>: Pathogen concentration at time <span class="math inline">\(t\)</span>
+<span class="math inline">\(x(t)\)</span>: pathogen concentration at time <span class="math inline">\(t\)</span>
 </li>
 <li>
-<span class="math inline">\(y(t)\)</span>: Antibody concentration at time <span class="math inline">\(t\)</span>
+<span class="math inline">\(y(t)\)</span>: antibody concentration at time <span class="math inline">\(t\)</span>
 </li>
+<li>
+<span class="math inline">\(\mu_0\)</span>: pathogen growth rate; <span class="math inline">\(\beta\)</span>: pathogen-inactivation strength; <span class="math inline">\(\mu\)</span>: antibody growth rate</li>
 </ul>
 <p>Model:</p>
 <ul>
-<li><span class="math display">\[x'(t) = \alpha x(t) - \beta y(t)\]</span></li>
-<li><span class="math display">\[y'(t) = \delta y(t)\]</span></li>
+<li><span class="math display">\[x'(t) = \mu_0\, x(t) - \beta y(t)\]</span></li>
+<li><span class="math display">\[y'(t) = \mu\, y(t)\]</span></li>
 </ul>
 <div class="notes">
 <p>With baseline antibody concentration <span class="math inline">\(y(0) = y_{0}\)</span> and initial pathogen concentration <span class="math inline">\(x(0) = x_{0}\)</span>.</p>
@@ -1058,21 +1327,24 @@ p(Y=y)
 <ul>
 <li><p>the predation term with the <span class="math inline">\(\beta\)</span> coefficient is missing the prey concentration <span class="math inline">\(x(t)\)</span> factor; we assume that the efficiency of predation doesn’t depend on pathogen concentration.</p></li>
 <li><p>the differential equation for predator density is missing the predator death rate term <span class="math inline">\(-\gamma y(t)\)</span>; we assume that as long as there are any pathogens present, the antibody decay rate is negligible compared to the growth rate.</p></li>
-<li><p>the predator growth rate term <span class="math inline">\(\delta y(t)\)</span> is missing the prey density factor <span class="math inline">\(x(t)\)</span> we assume that as long as there are any pathogens present, the antibody concentration grows at the same exponential rate.</p></li>
+<li><p>the predator growth rate term <span class="math inline">\(\mu\, y(t)\)</span> is missing the prey density factor <span class="math inline">\(x(t)\)</span>; we assume that as long as there are any pathogens present, the antibody concentration grows at the same exponential rate.</p></li>
 </ul>
 <p>These omissions were made to simplify the estimation process, under the assumption that they are negligible compared to the other terms in the model.</p>
 </div>
-</section><section id="model-for-post-infection-antibody-decay" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="model-for-post-infection-antibody-decay">
-<span class="header-section-number">3.2</span> Model for post-infection antibody decay</h2>
+</section><section id="model-for-post-infection-antibody-decay" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="model-for-post-infection-antibody-decay">
+<span class="header-section-number">5.2</span> Model for post-infection antibody decay</h2>
+<div class="notes">
+<p>Once the immune response clears the infection, the pathogen concentration reaches zero, so antibody production is no longer stimulated and the antibody concentration decays.</p>
+</div>
+<p>Once the pathogen is cleared (<span class="math inline">\(x(t) = 0\)</span>), the antibody concentration decays:</p>
 <ul>
-<li><p><span class="math display">\[b(t) = 0\]</span></p></li>
-<li><p><span class="math display">\[y^{\prime}(t) = -\alpha y(t)^r\]</span></p></li>
+<li><span class="math display">\[y^{\prime}(t) = -\alpha y(t)^r\]</span></li>
 </ul>
 <div class="notes">
 <p>Antibody decay is different from exponential (log–linear) decay. When the shape parameter <span class="math inline">\(r &gt; 1\)</span>, log concentrations decrease rapidly after infection has terminated, but decay then slows down and low antibody concentrations are maintained for a long period. If <span class="math inline">\(r = 1\)</span>, this model reduces to exponential decay with decay rate <span class="math inline">\(\alpha\)</span>.</p>
 </div>
-</section><section id="putting-it-all-together-1" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="putting-it-all-together-1">
-<span class="header-section-number">3.3</span> Putting it all together</h2>
+</section><section id="assembling-the-full-response-curve" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="assembling-the-full-response-curve">
+<span class="header-section-number">5.3</span> Assembling the full response curve</h2>
 <p>The serum antibody response <span class="math inline">\(y(t)\)</span> can be written as</p>
 <p><span class="math display">\[
 y(t) = y_{+}(t) + y_{-}(t)
@@ -1084,23 +1356,32 @@ y_{+}(t) &amp; = y_{0}\text{e}^{\mu t}[0\leq t &lt;t_{1}]\\
 y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}}[t_{1}\le t &lt; \infty]
 \end{align}
 \]</span></p>
-<hr>
+</section><section id="growth-rate-from-peak-and-baseline" class="level2" data-visibility="hidden" data-number="5.4"><h2 data-visibility="hidden" data-number="5.4" class="anchored" data-anchor-id="growth-rate-from-peak-and-baseline">
+<span class="header-section-number">5.4</span> Growth rate from peak and baseline</h2>
 <p>Since the peak level is <span class="math inline">\(y_{1} = y_{0}\text{e}^{\mu t_{1}}\)</span> the growth rate <span class="math inline">\(\mu\)</span> can be written as <span class="math display">\[\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)\]</span></p>
+</section><section id="from-the-full-model-to-the-observed-curve" class="level2 smaller" data-number="5.5"><h2 class="smaller anchored" data-number="5.5" data-anchor-id="from-the-full-model-to-the-observed-curve">
+<span class="header-section-number">5.5</span> From the full model to the observed curve</h2>
+<div class="notes">
+<p>The antibody curve <span class="math inline">\(y(t)\)</span> that we observe and plot falls out of the two-phase system as follows:</p>
+</div>
+<ul>
+<li><p><strong>During infection</strong> (<span class="math inline">\(t &lt; t_1\)</span>): the antibody equation <span class="math inline">\(y'(t) = \mu\, y(t)\)</span> gives exponential growth, <span class="math inline">\(y(t) = y_0\, e^{\mu t}\)</span>.</p></li>
+<li><p>The <strong>pathogen equation sets the peak time</strong> <span class="math inline">\(t_1\)</span>: circulating antibodies inactivate the pathogen (the <span class="math inline">\(-\beta y(t)\)</span> term), driving <span class="math inline">\(x(t)\)</span> to zero at <span class="math inline">\(t_1\)</span>. Once the pathogen is cleared, stimulation stops and decay begins, so the peak antibody level is <span class="math inline">\(y_1 = y_0\, e^{\mu t_1}\)</span>.</p></li>
+<li><p><strong>After the peak</strong> (<span class="math inline">\(t \ge t_1\)</span>): power-law decay, <span class="math inline">\(y'(t) = -\alpha y(t)^r\)</span>.</p></li>
+</ul>
+<div class="notes">
+<p>So the pathogen trajectory <span class="math inline">\(x(t)\)</span> never appears in the final antibody curve — it enters only through the peak time <span class="math inline">\(t_1\)</span>. From antibody data alone the pathogen-side quantities (<span class="math inline">\(\mu_0\)</span>, <span class="math inline">\(\beta\)</span>, and the inoculum <span class="math inline">\(x_0\)</span>) are not separately identifiable <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>, so the curve is summarized by five parameters: <span class="math inline">\(y_0,\ y_1,\ t_1,\ \alpha,\ r\)</span>.</p>
+</div>
 <hr>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Scale for x is already present.
 Adding another scale for x, which will replace the existing scale.</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Computation failed in `stat_function()`.
-Caused by error in `if (r == 1) ...`:
-! argument is of length zero</code></pre>
-</div>
 <div class="cell-output-display">
 <div id="fig-response-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: An example kinetics curve for HlyE IgG
+Figure&nbsp;4: An example kinetics curve for HlyE IgG
 </figcaption><div aria-describedby="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="methodology_files/figure-html/fig-response-graph-1.png" class="img-fluid figure-img" width="672">
 </div>
@@ -1113,15 +1394,15 @@ Figure&nbsp;3: An example kinetics curve for HlyE IgG
 </div>
 <hr>
 <div class="notes">
-<p>An interactive Shiny app that allows the user to manipulate the model parameters is available at:</p>
-<p><a href="https://ucdserg.shinyapps.io/antibody-kinetics-model-2/" class="uri">https://ucdserg.shinyapps.io/antibody-kinetics-model-2/</a></p>
+<p>An interactive Shiny app lets you manipulate the model parameters:</p>
 </div>
+<p>Interactive Shiny app: <a href="https://ucdserg.shinyapps.io/antibody-kinetics-model-2/" class="uri">https://ucdserg.shinyapps.io/antibody-kinetics-model-2/</a></p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><figcaption>QR code for shiny app</figcaption><p><img src="../man/figures/qr_akm2.svg" class="img-fluid figure-img"></p>
+<figure class="figure"><figcaption>QR code for the antibody-kinetics Shiny app</figcaption><p><img src="../man/figures/qr_akm2.svg" class="img-fluid figure-img" width="280"></p>
 </figure>
 </div>
-</section><section id="biological-noise" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="biological-noise">
-<span class="header-section-number">3.4</span> Biological noise</h2>
+</section><section id="biological-noise" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="biological-noise">
+<span class="header-section-number">5.6</span> Biological noise</h2>
 <div class="notes">
 <p>When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).</p>
 <p>We might miss some of the antibodies (undercount, false negatives) and we also might incorrectly count some other molecules that aren’t actually the ones we are looking for (overcount, false positives, cross-reactivity).</p>
@@ -1142,13 +1423,171 @@ Figure&nbsp;3: An example kinetics curve for HlyE IgG
 <li><span class="math inline">\(\epsilon_b \sim \text{Unif}(0, \nu)\)</span></li>
 </ul>
 <p><span class="math inline">\(\nu\)</span> needs to be pre-estimated using negative controls, typically using the 95th percentile of the distribution of antibody responses to the antigen-isotype in a population with no exposure.</p>
-</section><section id="measurement-noise" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="measurement-noise">
-<span class="header-section-number">3.5</span> Measurement noise</h2>
+</section><section id="measurement-noise" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="measurement-noise">
+<span class="header-section-number">5.7</span> Measurement noise</h2>
 <p>There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source and include it in <span class="math inline">\(p(Y=y|T=t)\)</span>.</p>
 <p>Measurement noise, <span class="math inline">\(\varepsilon\)</span> (“epsilon”), represents measurement error from the laboratory testing process. It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. Note that the CV should ideally be measured across plates rather than within the same plate.</p>
 <!-- {{< include articles/_methods-continued.qmd >}} -->
+</section><section id="multiple-biomarkers" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="multiple-biomarkers">
+<span class="header-section-number">5.8</span> Multiple biomarkers</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-loglik" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Example log(likelihood) curves
+</figcaption><div aria-describedby="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="methodology_files/figure-html/fig-loglik-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="variation-in-antibody-kinetics-by-country" class="level2 smaller" data-number="5.9"><h2 class="smaller anchored" data-number="5.9" data-anchor-id="variation-in-antibody-kinetics-by-country">
+<span class="header-section-number">5.9</span> Variation in antibody kinetics: by country</h2>
+<p>Antibody-decay kinetics are not identical across populations. Estimated seroresponse parameters vary by <strong>country</strong>, <strong>age</strong>, and <strong>serotype</strong> (<em>Typhi</em> vs <em>Paratyphi</em> A).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>Decay curves (A), peak antibody levels (B), and decay rates (C) for HlyE and LPS (IgG/IgA), by country (Bangladesh, Pakistan, Nepal, Ghana). SEES study.</figcaption><p><img src="../man/figures/kinetics-variation-1.png" class="img-fluid figure-img" alt="Antibody decay curves and distributions of peak level and decay rate, stratified by country, for four antigen-isotypes"></p>
+</figure>
+</div>
+</section><section id="variation-in-antibody-kinetics-by-age-and-serotype" class="level2 smaller" data-number="5.10"><h2 class="smaller anchored" data-number="5.10" data-anchor-id="variation-in-antibody-kinetics-by-age-and-serotype">
+<span class="header-section-number">5.10</span> Variation in antibody kinetics: by age and serotype</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>Decay curves by age stratum (&lt;5, 5–15, 16+) and serotype (<em>Typhi</em> vs <em>Paratyphi</em> A), for HlyE and LPS (IgG/IgA). SEES study.</figcaption><p><img src="../man/figures/kinetics-variation-2.png" class="img-fluid figure-img" alt="Antibody decay curves stratified by age group and by Typhi versus Paratyphi A serotype, for four antigen-isotypes"></p>
+</figure>
+</div>
+<div class="notes">
+<p>This heterogeneity is why we stratify the analysis (for example by country and age group) and why extending the model to handle covariates directly is on the roadmap.</p>
+</div>
+</section></section><section id="estimating-the-curves-with-serodynamics" class="level1" data-number="6"><h1 data-number="6">
+<span class="header-section-number">6</span> Estimating the curves with <code>serodynamics</code>
+</h1>
+<section id="where-do-the-curve-parameters-come-from" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="where-do-the-curve-parameters-come-from">
+<span class="header-section-number">6.1</span> Where do the curve parameters come from?</h2>
+<p>The decay curves above are themselves <strong>estimated</strong> from longitudinal antibody measurements on <strong>confirmed cases</strong> — individuals with a known infection date who are sampled repeatedly afterward. Fitting the two-phase model to those data yields, for each antigen-isotype, the parameters the incidence model needs:</p>
+<ul>
+<li>baseline antibody level (<span class="math inline">\(y_0\)</span>)</li>
+<li>peak concentration (<span class="math inline">\(y_1\)</span>)</li>
+<li>time to peak (<span class="math inline">\(t_1\)</span>)</li>
+<li>decay rate (<span class="math inline">\(\alpha\)</span>)</li>
+<li>decay shape (<span class="math inline">\(r\)</span>)</li>
+</ul></section><section id="the-serodynamics-package" class="level2 smaller" data-number="6.2"><h2 class="smaller anchored" data-number="6.2" data-anchor-id="the-serodynamics-package">
+<span class="header-section-number">6.2</span> The <code>serodynamics</code> package</h2>
+<p><a href="https://github.com/UCD-SERG/serodynamics"><code>serodynamics</code></a> is an open-source R package that fits this two-phase within-host kinetics model with a <strong>Bayesian hierarchical</strong> model, sampled by MCMC (via JAGS). The hierarchical structure stabilizes individual-level estimates by borrowing strength across participants — valuable when longitudinal data are sparse.</p>
+<div class="notes">
+<p>The same modeling framework has been applied to pertussis, typhoid, scrub typhus, and <em>Shigella</em>. Previously each application re-implemented the JAGS model specification, data formatting, and post-processing by hand; <code>serodynamics</code> packages that into a single reusable, validated workflow.</p>
+</div>
+</section><section id="a-typical-serodynamics-workflow" class="level2 smaller" data-number="6.3"><h2 class="smaller anchored" data-number="6.3" data-anchor-id="a-typical-serodynamics-workflow">
+<span class="header-section-number">6.3</span> A typical <code>serodynamics</code> workflow</h2>
+<div class="notes">
+<p><code>run_mod()</code> runs several MCMC chains for tens of thousands of iterations, so a real fit takes minutes to hours; the package ships ready-made example output (<code>nepal_sees_jags_output</code>) for experimentation.</p>
+</div>
+</section><section id="what-a-fitted-model-looks-like" class="level2 smaller" data-number="6.4"><h2 class="smaller anchored" data-number="6.4" data-anchor-id="what-a-fitted-model-looks-like">
+<span class="header-section-number">6.4</span> What a fitted model looks like</h2>
+<p>The package ships a cached example fit; <code>plot_jags_dens()</code> shows the posterior densities of the five kinetic parameters (here HlyE IgG, <em>Typhi</em>), overlaid by MCMC chain:</p>
+<div class="notes">
+<p>The overlapping chains indicate good convergence.</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>Posterior densities of the five kinetic parameters from the cached <code>nepal_sees_jags_output</code> fit (HlyE IgG, <em>Typhi</em>), by MCMC chain.</figcaption><p><img src="../man/figures/serodynamics-cached-fit.png" class="img-fluid figure-img" alt="Five posterior density panels (alpha, shape, t1, y0, y1) with two overlapping MCMC chains"></p>
+</figure>
+</div>
+</section><section id="two-packages-one-pipeline" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="two-packages-one-pipeline">
+<span class="header-section-number">6.5</span> Two packages, one pipeline</h2>
+<ul>
+<li>
+<strong><code>serodynamics</code></strong> (upstream): longitudinal <strong>confirmed-case</strong> data <span class="math inline">\(\rightarrow\)</span> estimated antibody-decay <strong>curve parameters</strong>
+</li>
+<li>
+<strong><code>serocalculator</code></strong> (downstream): a <strong>cross-sectional serosurvey</strong> plus those curve parameters <span class="math inline">\(\rightarrow\)</span> a <strong>seroincidence</strong> estimate</li>
+</ul>
+<p>The output of <code>serodynamics</code> feeds directly into <code>serocalculator</code>’s <code>est_seroincidence_by()</code>.</p>
+</section><section id="propagating-uncertainty-and-heterogeneity" class="level2 smaller" data-number="6.6"><h2 class="smaller anchored" data-number="6.6" data-anchor-id="propagating-uncertainty-and-heterogeneity">
+<span class="header-section-number">6.6</span> Propagating uncertainty and heterogeneity</h2>
+<p>The seroresponse model <span class="math inline">\(\operatorname{p}(Y=y|T=t)\)</span> is <strong>not a single fixed curve</strong>. <code>serodynamics</code> returns a posterior <strong>sample</strong> of curve-parameter sets <span class="math inline">\(\theta^{(1)},\dots,\theta^{(M)}\)</span> (each <span class="math inline">\(\theta^{(k)} = (y_0, y_1, t_1, \alpha, r)^{(k)}\)</span>), which together capture both</p>
+<div class="incremental">
+<ul class="incremental">
+<li>
+<strong>estimation uncertainty</strong> in the kinetics parameters, and</li>
+<li>
+<strong>between-person / between-case heterogeneity</strong> in the seroresponse.</li>
+</ul>
+</div>
+<div class="notes">
+<p>Each draw is one plausible antibody-response curve; together they describe the distribution of responses across cases and our uncertainty about it.</p>
+</div>
+{{&lt; slidebreak &gt;}}
+<p>The incidence likelihood <strong>averages over these draws</strong> (Monte Carlo integration), so each person’s contribution becomes</p>
+<p><span class="math display">\[
+\operatorname{p}(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}
+\int_t \operatorname{p}(Y=y|T=t, \theta^{(k)})\; \operatorname{p}_\lambda(T=t)\, dt
+\]</span></p>
+<div class="notes">
+<p>Because the curve-parameter distribution is marginalized into the likelihood this way, the resulting <span class="math inline">\(\hat\lambda\)</span> and its standard error reflect the seroresponse heterogeneity and the parameter uncertainty — they are not conditional on a single point-estimated curve. In <code>serocalculator</code> this is the average over the Monte Carlo parameter sets (the <code>iter</code> draws) carried in the curve-parameter object.</p>
+</div>
+</section></section><section id="using-serocalculator" class="level1" data-number="7"><h1 data-number="7">
+<span class="header-section-number">7</span> Using <code>serocalculator</code>
+</h1>
+<section id="an-open-source-r-package" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="an-open-source-r-package">
+<span class="header-section-number">7.1</span> An open-source R package</h2>
+<p>The methods in this lecture are implemented in the open-source <a href="https://github.com/UCD-SERG/serocalculator"><code>serocalculator</code></a> R package.</p>
+</section><section id="estimating-seroincidence" class="level2 smaller" data-number="7.2"><h2 class="smaller anchored" data-number="7.2" data-anchor-id="estimating-seroincidence">
+<span class="header-section-number">7.2</span> Estimating seroincidence</h2>
+</section><section id="interactive-shiny-app" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="interactive-shiny-app">
+<span class="header-section-number">7.3</span> Interactive Shiny app</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>A point-and-click interface is available at <a href="https://ucdserg.shinyapps.io/shiny_serocalculator/" class="uri">https://ucdserg.shinyapps.io/shiny_serocalculator/</a>.</p>
+</div><div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>The serocalculator Shiny app.</figcaption><p><img src="../man/figures/shiny-serocalculator.png" class="img-fluid figure-img" alt="Screenshot of the serocalculator Shiny web application"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="validation-recovering-known-incidence-rates" class="level1" data-number="8"><h1 data-number="8">
+<span class="header-section-number">8</span> Validation: recovering known incidence rates</h1>
+<section id="simulating-clusters-with-known-incidence" class="level2 smaller" data-number="8.1"><h2 class="smaller anchored" data-number="8.1" data-anchor-id="simulating-clusters-with-known-incidence">
+<span class="header-section-number">8.1</span> Simulating clusters with known incidence</h2>
+<p>We can check the method by <strong>simulating</strong> cross-sectional serosurveys with <strong>known</strong> incidence rates and seeing whether the estimates recover them. <code>sim_pop_data_multi()</code> simulates several clusters, each at a specified true rate <span class="math inline">\(\lambda\)</span>:</p>
+</section><section id="estimates-recover-the-simulated-rates" class="level2 smaller" data-number="8.2"><h2 class="smaller anchored" data-number="8.2" data-anchor-id="estimates-recover-the-simulated-rates">
+<span class="header-section-number">8.2</span> Estimates recover the simulated rates</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><figcaption>Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).</figcaption><p><img src="../man/figures/sim-recovery.png" class="img-fluid figure-img" alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates"></p>
+</figure>
+</div>
+<div class="notes">
+<p>Each point is one simulated cluster: the estimated incidence rate (with its 95% confidence interval) against the true rate used to generate the data. The estimates scatter around the identity line, and the intervals are wider at higher incidence. Abridged from the serocalculator <code>simulate_xsectionalData</code> vignette.</p>
+</div>
+</section><section id="in-progress-work" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="in-progress-work">
+<span class="header-section-number">8.3</span> In-progress work</h2>
+<ul>
+<li><p>Extending and improving existing Shiny apps for these methods (e.g., the <a href="https://ucdserg.shinyapps.io/shiny_serocalculator/">serocalculator Shiny app</a>, <a href="https://github.com/UCD-SERG/shiny_serocalculator">source</a>)</p></li>
+<li><p>Multivariate modeling of biomarkers (relaxing conditional independence)</p></li>
+<li><p>A graphical (Shiny) app for <code>serodynamics</code></p></li>
+<li><p>Modeling time-varying incidence rates</p></li>
+<li><p>Accounting for re-exposure</p></li>
+<li><p>Accounting for latent immunocompromised subpopulations</p></li>
+<li><p>Calibrating to population demographics</p></li>
+</ul></section><section id="multiple-biomarkers-beyond-conditional-independence" class="level2 smaller" data-number="8.4"><h2 class="smaller anchored" data-number="8.4" data-anchor-id="multiple-biomarkers-beyond-conditional-independence">
+<span class="header-section-number">8.4</span> Multiple biomarkers: beyond conditional independence</h2>
+<p>With several biomarkers (e.g.&nbsp;HlyE IgA and IgG), the current method treats them as <strong>conditionally independent given the time since infection</strong>, so the joint likelihood factors into a product of per-biomarker terms:</p>
+<p><span class="math display">\[
+\operatorname{p}(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
+\operatorname{p}(Y_1 = y_1 \mid T=t)\,\operatorname{p}(Y_2 = y_2 \mid T=t)
+\]</span></p>
+<div class="notes">
+<p>This is the same conditional-independence simplification that naive Bayes makes (features independent given the class): convenient, but it ignores any within-person correlation between biomarkers.</p>
+</div>
+<p>. . .</p>
+<p>Kwan Ho Lee (UCD-SERG) is relaxing this to allow <strong>covariance</strong> among biomarkers — a multivariate seroresponse model with a Kronecker-structured covariance, fit in Stan (<a href="https://github.com/UCD-SERG/shigella/pull/13">UCD-SERG/shigella#13</a>).</p>
 </section><section id="references" class="level2 smaller unnumbered"><h2 class="smaller unnumbered anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Aiemjoy_2022_Lancet" class="csl-entry" role="listitem">
+Aiemjoy, K., Seidman J. C., Saha S., Munira S. J., Islam Sajib M. S., and Sarkar Sium S. M. al. 2022. <span>“Estimating Typhoid Incidence from Community-Based Serosurveys: A Multicohort Study.”</span> <em>The Lancet Microbe</em> 3 (8): e578–87. <a href="https://doi.org/10.1016/S2666-5247(22)00114-8">https://doi.org/10.1016/S2666-5247(22)00114-8</a>.
+</div>
+<div id="ref-HAY2024100806" class="csl-entry" role="listitem">
+Hay, James A., Isobel Routledge, and Saki Takahashi. 2024. <span>“Serodynamics: A Primer and Synthetic Review of Methods for Epidemiological Inference Using Serological Data.”</span> <em>Epidemics</em> 49: 100806. <a href="https://doi.org/10.1016/j.epidem.2024.100806">https://doi.org/10.1016/j.epidem.2024.100806</a>.
+</div>
 <div id="ref-Noordzij2010diseasemeasures" class="csl-entry" role="listitem">
 Noordzij, Marlies, Friedo W. Dekker, Carmine Zoccali, and Kitty J. Jager. 2010. <span>“<span class="nocase">Measures of Disease Frequency: Prevalence and Incidence</span>.”</span> <em>Nephron Clinical Practice</em> 115 (1): c17–20. <a href="https://doi.org/10.1159/000286345">https://doi.org/10.1159/000286345</a>.
 </div>

@@ -16,6 +16,8 @@ on:
       - 'man/**'
       - 'altdoc/**'
       - 'vignettes/**'
+      - 'macros'
+      - '.gitmodules'
       - '.github/workflows/docs.yaml'
       - 'README.md'
   release:
@@ -31,6 +33,8 @@ on:
       - 'man/**'
       - 'altdoc/**'
       - 'vignettes/**'
+      - 'macros'
+      - '.gitmodules'
       - '.github/workflows/docs.yaml'
       - 'README.md'
   workflow_dispatch:

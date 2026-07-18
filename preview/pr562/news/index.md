@@ -4,6 +4,11 @@
 
 ### New features
 
+- [`autoplot.sim_results()`](https://ucd-serg.github.io/serocalculator/reference/autoplot.sim_results.md)
+  gains `x_var`, `group_var`, and `color_var` arguments, letting users
+  choose which columns map to the x-axis, group, and color aesthetics
+  instead of the previous hardcoded `sample_size` / `lambda.sim`
+  mapping.
 - [`graph.curve.params()`](https://ucd-serg.github.io/serocalculator/reference/graph.curve.params.md)
   now uses the 5-parameter
   [`ab_5p()`](https://ucd-serg.github.io/serocalculator/reference/ab_5p.md)

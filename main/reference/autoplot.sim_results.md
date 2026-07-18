@@ -8,19 +8,44 @@ method for `sim_results` objects
 
 ``` r
 # S3 method for class 'sim_results'
-autoplot(object, statistic = "Empirical_SE", ...)
+autoplot(
+  object,
+  statistic = "Empirical_SE",
+  x_var = "sample_size",
+  group_var = "lambda.sim",
+  color_var = group_var,
+  ...
+)
 ```
 
 ## Arguments
 
 - object:
 
-  a `sim_results` object (from
+  a [data.frame](https://rdrr.io/r/base/data.frame.html) containing the
+  columns expected for a `sim_results` object (from
   [`analyze_sims()`](https://ucd-serg.github.io/serocalculator/reference/analyze_sims.md))
 
 - statistic:
 
-  which column of `object` should be the y-axis?
+  which column of `object` should be the y-axis
+
+- x_var:
+
+  [character](https://rdrr.io/r/base/character.html): which column in
+  `object` to use for the x-axis
+
+- group_var:
+
+  [character](https://rdrr.io/r/base/character.html): which column in
+  `object` to use for the `group` aesthetic in
+  [`ggplot2::aes()`](https://ggplot2.tidyverse.org/reference/aes.html)
+
+- color_var:
+
+  [character](https://rdrr.io/r/base/character.html): which column in
+  `object` to use for the `color` aesthetic in
+  [`ggplot2::aes()`](https://ggplot2.tidyverse.org/reference/aes.html)
 
 - ...:
 
@@ -89,6 +114,13 @@ ests |>
 summary() |>
 analyze_sims() |>
 autoplot()
+
+
+# customize which columns map to the x-axis, group, and color aesthetics
+ests |>
+summary() |>
+analyze_sims() |>
+autoplot(x_var = "lambda.sim", group_var = "sample_size")
 
 
 # }

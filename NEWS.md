@@ -21,6 +21,11 @@
 
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* Completed the measurement-noise model in the `methodology` vignette
+  (multiplicative relative error) and added a "Noise and never-infected
+  subjects" section explaining that additive biological noise spreads a
+  never-infected subject's measured response over a positive range while
+  multiplicative measurement noise leaves a true zero at zero. (#561)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

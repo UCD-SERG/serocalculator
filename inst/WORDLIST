@@ -37,6 +37,7 @@ SeroEpidemiology
 Seroepidemiology
 Seroincidence
 Serological
+Serosurveys
 Shigella
 TCVs
 TW
@@ -79,6 +80,7 @@ ge
 geoms
 ggproto
 gh
+hardcoded
 hemolysin
 immunocompromised
 infty
@@ -96,9 +98,7 @@ llik
 logf
 macular
 magrittr
-malaise
 mathbb
-mathbf
 mathcal
 mcmc
 md
@@ -120,19 +120,14 @@ params
 pathognomonic
 pipetting
 pkgdown
-pmf
 pre
 predation
-providecommand
 qmd
 qquad
 recombinant
-remotes
 renamings
-renewcommand
 reproducibly
 rightarrow
-rlang
 roadmap
 se
 sectionally

@@ -248,10 +248,14 @@ percentile of the distribution of antibody responses to the
 antigen-isotype in a population with no exposure.
 
 Measurement noise, $`\varepsilon`$ (“epsilon”), represents measurement
-error from the laboratory testing process. It is defined by a CV
-(coefficient of variation) as the ratio of the standard deviation to the
-mean for replicates. Note that the CV should ideally be measured across
-plates rather than within the same plate.
+error from the laboratory testing process. The relative error is modeled
+as uniform on $`[-\varepsilon, \varepsilon]`$, so $`\varepsilon`$ is the
+largest relative deviation a measurement can have from its true value,
+not a coefficient of variation (CV). Assay precision is often reported
+as a CV, the ratio of the standard deviation to the mean for replicates,
+ideally measured across plates rather than within the same plate; under
+this uniform model the CV equals $`\varepsilon/\sqrt{3}`$, so a measured
+CV corresponds to $`\varepsilon = \sqrt{3}\,\text{CV}`$.
 
 *Formatting Specifications*: Noise parameter data should be a dataframe
 with one row for each antigen isotype and columns for each noise

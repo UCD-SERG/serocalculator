@@ -334,10 +334,18 @@ responses to the antigen-isotype in a population with no exposure.</p>
 <p>Measurement noise,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ε</mi><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math>
 (“epsilon”), represents measurement error from the laboratory testing
-process. It is defined by a CV (coefficient of variation) as the ratio
-of the standard deviation to the mean for replicates. Note that the CV
-should ideally be measured across plates rather than within the same
-plate.</p>
+process. The relative error is modeled as uniform on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mi>−</mi><mi>ε</mi><mo>,</mo><mi>ε</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[-\varepsilon, \varepsilon]</annotation></semantics></math>,
+so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ε</mi><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math>
+is the largest relative deviation a measurement can have from its true
+value, not a coefficient of variation (CV). Assay precision is often
+reported as a CV, the ratio of the standard deviation to the mean for
+replicates, ideally measured across plates rather than within the same
+plate; under this uniform model the CV equals
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi><mi>/</mi><msqrt><mn>3</mn></msqrt></mrow><annotation encoding="application/x-tex">\varepsilon/\sqrt{3}</annotation></semantics></math>,
+so a measured CV corresponds to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi><mo>=</mo><msqrt><mn>3</mn></msqrt><mspace width="0.167em"></mspace><mtext mathvariant="normal">CV</mtext></mrow><annotation encoding="application/x-tex">\varepsilon = \sqrt{3}\,\text{CV}</annotation></semantics></math>.</p>
 <p><em>Formatting Specifications</em>: Noise parameter data should be a
 dataframe with one row for each antigen isotype and columns for each
 noise parameter below.</p>

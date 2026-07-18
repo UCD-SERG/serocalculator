@@ -714,7 +714,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method for <code>sim_results</code> objects</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">## S3 method for class 'sim_results'
-autoplot(object, statistic = "Empirical_SE", ...)
+autoplot(
+  object,
+  statistic = "Empirical_SE",
+  x_var = "sample_size",
+  group_var = "lambda.sim",
+  color_var = group_var,
+  ...
+)
 </code></pre>
 </section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <table role="presentation">
@@ -723,7 +730,7 @@ autoplot(object, statistic = "Empirical_SE", ...)
 <code id="object">object</code>
 </td>
 <td>
-a <code>sim_results</code> object (from <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/analyze_sims.html">analyze_sims()</a></code>)
+a data.frame containing the columns expected for a <code>sim_results</code> object (from <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/analyze_sims.html">analyze_sims()</a></code>)
 </td>
 </tr>
 <tr>
@@ -731,7 +738,31 @@ a <code>sim_results</code> object (from <code><a href="https://ucd-serg.github.i
 <code id="statistic">statistic</code>
 </td>
 <td>
-which column of <code>object</code> should be the y-axis?
+which column of <code>object</code> should be the y-axis
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="x_var">x_var</code>
+</td>
+<td>
+character: which column in <code>object</code> to use for the x-axis
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="group_var">group_var</code>
+</td>
+<td>
+character: which column in <code>object</code> to use for the <code>group</code> aesthetic in <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">ggplot2::aes()</a></code>
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="color_var">color_var</code>
+</td>
+<td>
+character: which column in <code>object</code> to use for the <code>color</code> aesthetic in <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">ggplot2::aes()</a></code>
 </td>
 </tr>
 <tr>
@@ -807,6 +838,17 @@ unused
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="autoplot.sim_results_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># customize which columns map to the x-axis, group, and color aesthetics</span></span>
+<span><span class="va">ests</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/analyze_sims.html">analyze_sims</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>x_var <span class="op">=</span> <span class="st">"lambda.sim"</span>, group_var <span class="op">=</span> <span class="st">"sample_size"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="autoplot.sim_results_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

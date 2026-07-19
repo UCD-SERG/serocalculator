@@ -24,7 +24,7 @@ Depends:
 Imports: 
     cli,
     doParallel,
-    dplyr,
+    dplyr (>= 1.1.0),
     foreach,
     ggplot2,
     patchwork,
@@ -50,10 +50,12 @@ Suggests:
     bookdown,
     DT,
     fs,
+    gdl,
     ggbeeswarm,
     knitr,
     maps,
     mixtools,
+    packageRank,
     pak,
     quarto,
     rmarkdown,
@@ -82,6 +84,7 @@ LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace"))
 Remotes:
+    d-morrison/gdl,
     d-morrison/snapr,
     UCD-SERG/serodynamics
 Config/roxygen2/version: 8.0.0

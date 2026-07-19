@@ -1,3 +1,9 @@
+# Network-bound wrappers around external APIs (CRAN, GitHub).
+# Can't be exercised in CI without network mocking, so exclude from
+# coverage rather than dragging down patch/project metrics.
+ignore:
+  - "R/graph_downloads.R"
+
 coverage:
   status:
     project: # add everything under here, more options at

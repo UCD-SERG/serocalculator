@@ -76,6 +76,7 @@ expf
 flagellar
 forall
 frac
+gdl
 ge
 geoms
 ggproto
@@ -115,6 +116,7 @@ operatorname
 overcount
 overcounts
 overline
+packageRank
 param
 params
 pathognomonic

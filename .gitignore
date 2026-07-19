@@ -27,3 +27,4 @@ junit.xml
 *.knit.md
 .positai
 tests/vdiffr.Rout.fail
+.positai/

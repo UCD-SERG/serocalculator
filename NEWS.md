@@ -53,7 +53,10 @@
   distribution's width, not its exact shape, and note that this width
   is difficult to verify against a mixed (ongoing-seroresponse)
   population -- motivating estimation from a clean negative-control
-  panel instead. (#567)
+  panel instead. Also noted that the specific choice of the 95th
+  percentile (rather than, e.g., the 99th or the sample maximum) is an
+  adopted convention, not a result derived or optimized in the paper.
+  (#567)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

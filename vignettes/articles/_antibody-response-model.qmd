@@ -276,6 +276,25 @@ A negative-control panel (subjects confirmed never infected) avoids
 this circularity: every observed value in that panel *is* noise, with
 no signal mixed in, so its empirical 95th percentile is a direct
 estimate of the width the model needs.
+
+Why the 95th percentile specifically, rather than the 99th or the
+100th (the sample maximum)? [@Teunis_2020] motivates a *width-based*
+approach and uses "the one-sided 95%" throughout as its working
+definition of that width, but does not compare 95% against other
+levels -- so the choice of 95% itself is an adopted convention (it
+matches how reference intervals are commonly defined in clinical
+laboratory practice), not a result derived or optimized in the paper.
+The 100th percentile (the sample maximum) would be a poor choice
+regardless: it is driven entirely by the single most extreme
+observation in the panel, so one contaminated or mislabeled
+negative control inflates $\nu$ directly, and for any finite panel
+it underestimates the true theoretical bound. A percentile further
+into the tail than 95% (e.g., 99%) needs a substantially larger
+negative-control panel to estimate with comparable precision, for the
+same reason -- order statistics closer to the extreme have higher
+sampling variance. 95% is the conventional middle ground: far enough
+into the tail to capture the width that matters, without the
+fragility of chasing a more extreme quantile.
 :::
 
 ## Measurement noise

@@ -61,6 +61,14 @@
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+* Added the `lint-changed-lines` CI workflow (calling the reusable
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `lint-changed-lines.yml@v2` workflow), which flags lint issues only on the
+  lines a PR actually adds or modifies (rather than whole changed files, as
+  `lint-changed-files` does). This lets lint rules be adopted or tightened
+  incrementally as code is touched, instead of forcing a repo-wide reformat.
+  Intended to replace `lint-changed-files` as the lint gate once branch
+  protection is updated to require it. (#558)
 
 ## Bug fixes
 

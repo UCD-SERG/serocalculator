@@ -108,6 +108,8 @@
 
 ### Internal
 
+- Added Codex repository guidance and R-package workflow skills.
+  ([\#574](https://github.com/UCD-SERG/serocalculator/issues/574))
 - `news.yaml` now calls the central
   [`d-morrison/gha`](https://github.com/d-morrison/gha)
   `check-news.yml@v1` reusable workflow instead of invoking

@@ -28,3 +28,4 @@ junit.xml
 tests/vdiffr.Rout.fail
 altdoc
 _quarto
+reviewed-documents

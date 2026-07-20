@@ -36,6 +36,11 @@
   vignettes): `eps` is the bound on the relative measurement error
   (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
   corresponds to `eps = sqrt(3) * CV`. (#563)
+* Added the never-infected density under combined biological and
+  measurement noise to the `methodology` vignette: the piecewise
+  closed form for `y_obs = eps_b * (1 + xi)`, matching Teunis and van
+  Eijkeren (2020) Equation 19 and verified to integrate to the
+  never-infected probability. (#567)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

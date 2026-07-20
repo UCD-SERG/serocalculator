@@ -337,3 +337,42 @@ can be estimated from a known unexposed population:
 those subjects are essentially all never-infected,
 so their measured antibody levels are, to good approximation,
 draws from the biological-noise distribution itself.
+
+**Under both noise sources together**, the never-infected contribution
+is neither of these two single-source shapes.
+Substituting $y_\text{true} = 0$ into the combined model gives
+
+$$
+y_\text{obs} = \epsilon_b (1 + \xi), \qquad
+\epsilon_b \sim \text{Unif}(0, \nu), \quad
+\xi \sim \text{Unif}(-\varepsilon, \varepsilon),
+$$
+
+a product of two independent uniform random variables, not itself
+uniform. Following the same conditioning argument Teunis and van
+Eijkeren use to derive their combined-noise density [@Teunis_2020],
+its density (the never-infected contribution to the overall observed
+density, including the never-infected weight $\expf{-\lambda a}$) is
+
+$$
+\rho_{bm}(y \mid \text{never-infected}) =
+\begin{cases}
+\dfrac{\expf{-\lambda a}}{2\varepsilon\nu}
+  \log\!\left(\dfrac{1+\varepsilon}{1-\varepsilon}\right)
+  & 0 < y \le \nu(1-\varepsilon) \\[8pt]
+\dfrac{\expf{-\lambda a}}{2\varepsilon\nu}
+  \log\!\left(\dfrac{\nu(1+\varepsilon)}{y}\right)
+  & \nu(1-\varepsilon) < y < \nu(1+\varepsilon) \\[8pt]
+0 & y \ge \nu(1+\varepsilon)
+\end{cases}
+$$
+
+The first piece matches Teunis and van Eijkeren's Equation 19: it is
+flat (constant in $y$) over most of its support, then tapers to zero
+by $y = \nu(1+\varepsilon)$.
+Integrating both pieces over their full range recovers exactly
+$\expf{-\lambda a}$, the never-infected probability, confirming the
+density is correctly normalized.
+As $\varepsilon \to 0$ the flat piece reduces to
+$\expf{-\lambda a}/\nu$, the biological-noise-only density on
+$[0, \nu]$, matching the single-source case above.

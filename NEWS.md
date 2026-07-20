@@ -46,6 +46,14 @@
   integral is now shown split into its continuous (ever-infected) and
   discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
   defined as a point mass at zero (before noise). (#567)
+* Explained, in the "Biological noise" section of the `methodology`
+  vignette, why the biological-noise width `nu` is estimated as the
+  95th percentile of negative controls: Teunis and van Eijkeren (2020)
+  show that a uniform noise model only needs to match the true noise
+  distribution's width, not its exact shape, and note that this width
+  is difficult to verify against a mixed (ongoing-seroresponse)
+  population -- motivating estimation from a clean negative-control
+  panel instead. (#567)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

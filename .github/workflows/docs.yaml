@@ -129,14 +129,18 @@ jobs:
       # If event is a release, set subdir to '<tag_name>'
       - name: "[release] Set documentation subdirectory"
         if: github.event_name == 'release'
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
-          echo "subdir=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          echo "subdir=$TAG_NAME" >> $GITHUB_ENV
 
       # If event is workflow_dispatch, set subdir to 'inputs.tag'
       - name: '[dispatch] Set documentation subdirectory'
         if: github.event_name == 'workflow_dispatch'
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
         run: |
-          echo "subdir=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          echo "subdir=$INPUT_TAG" >> $GITHUB_ENV
 
       # If event is a push to main (not a tag), deploy to root (empty subdir)
       - name: "[main] Set documentation subdirectory"
@@ -152,7 +156,11 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          clean-exclude: pr-preview
+          # Preserve PR previews and previously-deployed versioned (tag/release)
+          # docs subdirectories when a push to main re-deploys to the root.
+          clean-exclude: |
+            pr-preview
+            v*
           branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
           folder: docs
           target-folder: ${{ env.subdir }}

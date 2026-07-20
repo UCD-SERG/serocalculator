@@ -41,6 +41,11 @@
   closed form for `y_obs = eps_b * (1 + xi)`, matching Teunis and van
   Eijkeren (2020) Equation 19 and verified to integrate to the
   never-infected probability. (#567)
+* Made the never-infected term explicit in the "per-person likelihood"
+  slide of the `methodology` vignette: the observed-data likelihood
+  integral is now shown split into its continuous (ever-infected) and
+  discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
+  defined as a point mass at zero (before noise). (#567)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

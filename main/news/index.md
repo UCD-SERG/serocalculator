@@ -103,6 +103,15 @@
 - Claude PR review workflow now skips (rather than hard-failing) when
   triggered by a bot (e.g. `claude[bot]` pushing a commit).
   ([\#519](https://github.com/UCD-SERG/serocalculator/issues/519))
+- Added the `lint-changed-lines` CI workflow (calling the reusable
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `lint-changed-lines.yml@v2` workflow), which flags lint issues only on
+  the lines a PR actually adds or modifies (rather than whole changed
+  files, as `lint-changed-files` does). This lets lint rules be adopted
+  or tightened incrementally as code is touched, instead of forcing a
+  repo-wide reformat. Intended to replace `lint-changed-files` as the
+  lint gate once branch protection is updated to require it.
+  ([\#558](https://github.com/UCD-SERG/serocalculator/issues/558))
 
 ### Bug fixes
 

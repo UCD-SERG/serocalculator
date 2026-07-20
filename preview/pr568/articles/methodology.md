@@ -950,6 +950,51 @@ $`\nu`$ needs to be pre-estimated using negative controls, typically
 using the 95th percentile of the distribution of antibody responses to
 the antigen-isotype in a population with no exposure.
 
+Why the 95th percentile of negative controls, rather than fitting the
+full shape of the noise distribution?
+
+([Teunis and Eijkeren 2020](#ref-Teunis_2020)) show that a uniform noise
+model only needs to get the noise *width* right, not its exact *shape*:
+comparing $`\lambda`$ estimates under the true (lognormal) noise
+distribution against estimates under a uniform distribution with the
+same one-sided 95% range, the two are similar. Getting the width right
+matters far more than getting the shape right, so a single width
+parameter – rather than a fully specified distribution – is sufficient.
+
+That still leaves the question of *how* to estimate the width. The
+general cross-sectional sample cannot be used directly: it is a mixture
+of never-infected subjects (pure noise) and subjects at various stages
+of a real antibody response (signal plus noise), and separating the two
+requires already knowing who is infected – exactly what the model is
+trying to estimate. ([Teunis and Eijkeren 2020](#ref-Teunis_2020)) note
+this explicitly: “against a background of ongoing seroresponses, even
+reliable verification of the (95%) width of the distribution may be
+difficult.”
+
+A negative-control panel (subjects confirmed never infected) avoids this
+circularity: every observed value in that panel *is* noise, with no
+signal mixed in, so its empirical 95th percentile is a direct estimate
+of the width the model needs.
+
+Why the 95th percentile specifically, rather than the 99th or the 100th
+(the sample maximum)? ([Teunis and Eijkeren 2020](#ref-Teunis_2020))
+motivates a *width-based* approach, first framing it as “the one-sided
+95%” and later as the “95% range” / “(95%) width” of the noise
+distribution, but never compares 95% against other levels – so the
+choice of 95% itself is an adopted convention (it matches how reference
+intervals are commonly defined in clinical laboratory practice), not a
+result derived or optimized in the paper. The 100th percentile (the
+sample maximum) would be a poor choice regardless: it is driven entirely
+by the single most extreme observation in the panel, so one contaminated
+or mislabeled negative control inflates $`\nu`$ directly, and for any
+finite panel it underestimates the true theoretical bound. A percentile
+further into the tail than 95% (e.g., 99%) needs a substantially larger
+negative-control panel to estimate with comparable precision, for the
+same reason – order statistics closer to the extreme have higher
+sampling variance. 95% is the conventional middle ground: far enough
+into the tail to capture the width that matters, without the fragility
+of chasing a more extreme quantile.
+
 ### Measurement noise
 
 There are also some other sources of noise in our bioassays; user

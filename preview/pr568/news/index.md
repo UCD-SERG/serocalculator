@@ -70,6 +70,17 @@
   discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
   defined as a point mass at zero (before noise).
   ([\#567](https://github.com/UCD-SERG/serocalculator/issues/567))
+- Explained, in the “Biological noise” section of the `methodology`
+  vignette, why the biological-noise width `nu` is estimated as the 95th
+  percentile of negative controls: Teunis and van Eijkeren (2020) show
+  that a uniform noise model only needs to match the true noise
+  distribution’s width, not its exact shape, and note that this width is
+  difficult to verify against a mixed (ongoing-seroresponse) population
+  – motivating estimation from a clean negative-control panel instead.
+  Also noted that the specific choice of the 95th percentile (rather
+  than, e.g., the 99th or the sample maximum) is an adopted convention,
+  not a result derived or optimized in the paper.
+  ([\#567](https://github.com/UCD-SERG/serocalculator/issues/567))
 - Moved
   [`f_dev0()`](https://ucd-serg.github.io/serocalculator/reference/f_dev0.md)’s
   `@examples` block to a separate example file

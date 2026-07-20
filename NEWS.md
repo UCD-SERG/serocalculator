@@ -61,7 +61,7 @@
   biological- and measurement-noise model to the `methodology` vignette,
   derived from the independent-product-variance identity and checked
   against both single-source special cases already in the vignette.
-  (#567)
+  (#571)
 * Added `Var(y_obs | T=t)`, marginalizing over between-person heterogeneity
   in `y_true`, to the `methodology` vignette: derived via the law of total
   variance from the `Var(y_obs | y_true)` formula above, with the

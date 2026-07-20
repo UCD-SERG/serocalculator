@@ -23,6 +23,10 @@
 
 ## Documentation
 
+* Updated the documentation site configuration to promote "Get started",
+  "Reference", and "News" in the top navigation, and added a grouped
+  `reference.qmd` index plus grouped sidebar reference sections that
+  exclude internal-only topics.
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
 * Completed the measurement-noise model in the `methodology` vignette

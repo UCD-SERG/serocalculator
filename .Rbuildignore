@@ -42,6 +42,9 @@ allpopsamples_hlye.csv$
 ^\.positai$
 ^CLAUDE\.md$
 ^\.claude$
+^AGENTS\.md$
+^\.agents$
+^reviewed-documents$
 ^_extensions$
 ^macros$
 ^\.gitmodules$

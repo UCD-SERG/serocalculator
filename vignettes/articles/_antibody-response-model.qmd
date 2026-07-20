@@ -385,6 +385,53 @@ This is the model `serocalculator` uses
 whenever a `noise_params` row has both $\nu > 0$ and $\varepsilon > 0$;
 setting either width to zero recovers the corresponding single-source model above.
 
+::: notes
+The observed concentration is a product of two independent random
+variables, $y_\text{obs} = S \cdot X$, where $S = y_\text{true} + \epsilon_b$
+and $X = 1 + \xi$. Conditional on $y_\text{true}$ (holding it fixed, since
+only $\epsilon_b$ and $\xi$ are random),
+
+$$
+E[S] = y_\text{true} + \frac{\nu}{2}, \qquad
+\text{Var}(S) = \text{Var}(\epsilon_b) = \frac{\nu^2}{12},
+\qquad
+E[X] = 1, \qquad
+\text{Var}(X) = \text{Var}(\xi) = \frac{\varepsilon^2}{3},
+$$
+
+the first pair from $\epsilon_b \sim \text{Unif}(0,\nu)$, the second from
+$\xi \sim \text{Unif}(-\varepsilon,\varepsilon)$ (as derived above). For
+independent $S$ and $X$,
+
+$$
+\text{Var}(SX) = \text{Var}(S)\text{Var}(X) + \text{Var}(S)\,E[X]^2
+  + E[S]^2\,\text{Var}(X).
+$$
+
+Substituting $E[X] = 1$ and the variances above,
+
+$$
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\cdot\frac{\varepsilon^2}{3}
++ \frac{\nu^2}{12}\cdot 1
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3},
+$$
+
+which simplifies to
+
+$$
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\left(1 + \frac{\varepsilon^2}{3}\right)
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3}.
+$$
+
+As a check, this reduces to the two single-source cases above: setting
+$\varepsilon = 0$ gives $\nu^2/12$, matching $\text{Var}(\epsilon_b)$ for
+biological noise alone; setting $\nu = 0$ gives
+$y_\text{true}^2\,\varepsilon^2/3$, matching the measurement-noise-only
+CV derivation ($\text{SD}(y_\text{obs}) = y_\text{true}\cdot\varepsilon/\sqrt{3}$).
+:::
+
 ## Noise and never-infected subjects
 
 A subject who has never been infected has

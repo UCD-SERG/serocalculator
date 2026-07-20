@@ -68,7 +68,11 @@
   between-person heterogeneity term `Var(y_true | T=t)` introduced
   symbolically (it has no closed form in this framework, since
   `serodynamics` represents curve-parameter heterogeneity as an empirical
-  posterior sample rather than a stated parametric distribution). (#571)
+  posterior sample rather than a stated parametric distribution). Clarified
+  that the longitudinal model's residual variance is constant on the log
+  scale conditional on individual random effects, while random waning rates
+  can induce time-varying marginal population variance that `serocalculator`
+  carries forward by averaging over kinetic-parameter draws. (#571)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

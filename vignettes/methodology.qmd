@@ -875,6 +875,52 @@ the average over the Monte Carlo parameter sets (the `iter` draws) carried in
 the curve-parameter object.
 :::
 
+## Random effects and variance over time {.smaller}
+
+The longitudinal model distinguishes two kinds of variation:
+
+* **Conditional observation noise:** given a person's kinetic parameters
+  $\theta_i$, residual noise has constant variance on the log-antibody scale.
+* **Marginal population variation:** because $\theta_i$ includes random
+  effects --- notably the waning rate $\alpha_i$ --- individual trajectories
+  can spread apart with increasing time since infection.
+
+Thus, even without an explicit time-varying residual variance $\sigma^2(t)$,
+the variance around the population mean trajectory can vary with $t$:
+
+$$
+\operatorname{Var}(\log Y(t)\mid T=t)
+= \sigma_{\log Y}^2
++ \operatorname{Var}_{\theta}\!\left[\log y(t;\theta)\right].
+$$
+
+::: notes
+This is the distinction between *conditional* and *marginal*
+heteroscedasticity. The `serodynamics` observation model uses one residual
+precision per antigen-isotype, shared across subjects and observation times.
+It therefore does not fit an additional residual-variance function of time.
+
+Nevertheless, its subject-level kinetic parameters are random effects with a
+joint distribution. For illustration, if post-peak decay were exponential
+($r=1$), with the other parameters held fixed,
+
+$$
+\log y_i(t) = \log y_1 - \alpha_i(t-t_1),
+$$
+
+so variation in $\alpha_i$ alone contributes
+$(t-t_1)^2\operatorname{Var}(\alpha_i)$ to the population variance on the log
+scale. The full nonlinear model also allows the other kinetic parameters and
+their correlations to affect how the variance changes over time.
+
+`serocalculator` accounts for this trajectory-induced variation by averaging
+the incidence likelihood over the Monte Carlo sample of kinetic-parameter
+sets. It does not reclassify that variation as observation noise or replace it
+with a fitted $\sigma^2(t)$. Its separate biological- and measurement-noise
+models have constant additive and relative widths, respectively; neither
+width is an explicit function of time since infection.
+:::
+
 # Using `serocalculator`
 
 ## An open-source R package

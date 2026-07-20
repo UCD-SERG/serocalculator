@@ -552,6 +552,39 @@ p(Y=y)
 \end{aligned}
 ```
 
+This integral is shorthand. $`T`$ is not purely continuous: recall from
+“Time since infection and incidence” that $`T`$ has a **mixed**
+distribution — continuous on $`[0,a]`$ with density
+$`\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}`$,
+plus a discrete atom at $`T=\text{NA}`$ (never infected) with
+probability
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$.
+Written out explicitly, the “integral” over $`t`$ is really an integral
+over the continuous part plus the never-infected term:
+
+``` math
+p(Y=y) =
+\int_0^a p(Y=y\mid T=t)\,\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}\,dt
+\;+\;
+p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}
+```
+
+The first term is the contribution from subjects infected at least once;
+the second is the contribution from subjects never infected.
+
+Two pieces here were not yet defined:
+
+- $`p(T=\text{NA}) = \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$
+  is already known — the same never-infected probability from “Time
+  since infection and incidence”.
+- $`p(Y=y\mid T=\text{NA})`$, the antibody response of a never-infected
+  subject, needs its own definition. Without any noise, a never-infected
+  subject’s true antibody level is exactly zero, so this is a point mass
+  at $`y=0`$ (a Dirac delta): $`p(Y=y\mid T=\text{NA}) = \delta(y)`$.
+  Once measurement noise and biological (cross-reactivity) noise are
+  introduced below, this point mass is handled differently by each — see
+  “Noise and never-infected subjects”.
+
 ### The full-sample likelihood
 
 Now, the likelihood of the observed data
@@ -917,6 +950,51 @@ $`\nu`$ needs to be pre-estimated using negative controls, typically
 using the 95th percentile of the distribution of antibody responses to
 the antigen-isotype in a population with no exposure.
 
+Why the 95th percentile of negative controls, rather than fitting the
+full shape of the noise distribution?
+
+([Teunis and Eijkeren 2020](#ref-Teunis_2020)) show that a uniform noise
+model only needs to get the noise *width* right, not its exact *shape*:
+comparing $`\lambda`$ estimates under the true (lognormal) noise
+distribution against estimates under a uniform distribution with the
+same one-sided 95% range, the two are similar. Getting the width right
+matters far more than getting the shape right, so a single width
+parameter – rather than a fully specified distribution – is sufficient.
+
+That still leaves the question of *how* to estimate the width. The
+general cross-sectional sample cannot be used directly: it is a mixture
+of never-infected subjects (pure noise) and subjects at various stages
+of a real antibody response (signal plus noise), and separating the two
+requires already knowing who is infected – exactly what the model is
+trying to estimate. ([Teunis and Eijkeren 2020](#ref-Teunis_2020)) note
+this explicitly: “against a background of ongoing seroresponses, even
+reliable verification of the (95%) width of the distribution may be
+difficult.”
+
+A negative-control panel (subjects confirmed never infected) avoids this
+circularity: every observed value in that panel *is* noise, with no
+signal mixed in, so its empirical 95th percentile is a direct estimate
+of the width the model needs.
+
+Why the 95th percentile specifically, rather than the 99th or the 100th
+(the sample maximum)? ([Teunis and Eijkeren 2020](#ref-Teunis_2020))
+motivates a *width-based* approach, first framing it as “the one-sided
+95%” and later as the “95% range” / “(95%) width” of the noise
+distribution, but never compares 95% against other levels – so the
+choice of 95% itself is an adopted convention (it matches how reference
+intervals are commonly defined in clinical laboratory practice), not a
+result derived or optimized in the paper. The 100th percentile (the
+sample maximum) would be a poor choice regardless: it is driven entirely
+by the single most extreme observation in the panel, so one contaminated
+or mislabeled negative control inflates $`\nu`$ directly, and for any
+finite panel it underestimates the true theoretical bound. A percentile
+further into the tail than 95% (e.g., 99%) needs a substantially larger
+negative-control panel to estimate with comparable precision, for the
+same reason – order statistics closer to the extreme have higher
+sampling variance. 95% is the conventional middle ground: far enough
+into the tail to capture the width that matters, without the fragility
+of chasing a more extreme quantile.
+
 ### Measurement noise
 
 There are also some other sources of noise in our bioassays; user
@@ -950,6 +1028,36 @@ CV, the ratio of the standard deviation to the mean for replicates,
 ideally measured across plates rather than within the same plate. Under
 this uniform model the CV equals $`\varepsilon/\sqrt{3}`$, so a measured
 CV corresponds to $`\varepsilon = \sqrt{3}\,\text{CV}`$.
+
+This follows directly from the variance of a uniform distribution. For
+$`\xi \sim \text{Unif}(-\varepsilon, \varepsilon)`$,
+
+``` math
+\text{Var}(\xi) = \frac{(2\varepsilon)^2}{12} = \frac{\varepsilon^2}{3}
+\quad\Longrightarrow\quad
+\text{SD}(\xi) = \frac{\varepsilon}{\sqrt{3}}.
+```
+
+Since $`E[\xi] = 0`$ by symmetry, for a fixed true concentration
+$`y_\text{true}`$,
+
+``` math
+E[y_\text{obs}] = y_\text{true} \cdot E[1 + \xi] = y_\text{true},
+\qquad
+\text{SD}(y_\text{obs}) = y_\text{true} \cdot \text{SD}(\xi)
+  = y_\text{true} \cdot \frac{\varepsilon}{\sqrt{3}},
+```
+
+so
+
+``` math
+\text{CV} = \frac{\text{SD}(y_\text{obs})}{E[y_\text{obs}]}
+  = \frac{\varepsilon}{\sqrt{3}}.
+```
+
+The true concentration $`y_\text{true}`$ cancels, so the CV depends only
+on $`\varepsilon`$, not on the concentration being measured – as
+expected for a *relative* (multiplicative) error model.
 
 ### Combined biological and measurement noise
 
@@ -999,6 +1107,49 @@ $`\nu`$ can be estimated from a known unexposed population: those
 subjects are essentially all never-infected, so their measured antibody
 levels are, to good approximation, draws from the biological-noise
 distribution itself.
+
+**Under both noise sources together**, the never-infected contribution
+is neither of these two single-source shapes. Substituting
+$`y_\text{true} = 0`$ into the combined model gives
+
+``` math
+y_\text{obs} = \epsilon_b (1 + \xi), \qquad
+\epsilon_b \sim \text{Unif}(0, \nu), \quad
+\xi \sim \text{Unif}(-\varepsilon, \varepsilon),
+```
+
+a product of two independent uniform random variables, not itself
+uniform. Following the same conditioning argument Teunis and van
+Eijkeren use to derive their combined-noise density ([Teunis and
+Eijkeren 2020](#ref-Teunis_2020)), its density (the never-infected
+contribution to the overall observed density, including the
+never-infected weight
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$)
+is
+
+``` math
+\rho_{bm}(y \mid \text{never-infected}) =
+\begin{cases}
+\dfrac{\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}}{2\varepsilon\nu}
+  \log\!\left(\dfrac{1+\varepsilon}{1-\varepsilon}\right)
+  & 0 < y \le \nu(1-\varepsilon) \\[8pt]
+\dfrac{\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}}{2\varepsilon\nu}
+  \log\!\left(\dfrac{\nu(1+\varepsilon)}{y}\right)
+  & \nu(1-\varepsilon) < y < \nu(1+\varepsilon) \\[8pt]
+0 & y \ge \nu(1+\varepsilon)
+\end{cases}
+```
+
+The first piece matches Teunis and van Eijkeren’s Equation 19: it is
+flat (constant in $`y`$) over most of its support, then tapers to zero
+by $`y = \nu(1+\varepsilon)`$. Integrating both pieces over their full
+range recovers exactly
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$,
+the never-infected probability, confirming the density is correctly
+normalized. As $`\varepsilon \to 0`$ the flat piece reduces to
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}/\nu`$,
+the biological-noise-only density on $`[0, \nu]`$, matching the
+single-source case above.
 
 ### Multiple biomarkers
 

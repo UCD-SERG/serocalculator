@@ -1076,6 +1076,122 @@ This is the model `serocalculator` uses whenever a `noise_params` row
 has both $`\nu > 0`$ and $`\varepsilon > 0`$; setting either width to
 zero recovers the corresponding single-source model above.
 
+The observed concentration is a product of two independent random
+variables, $`y_\text{obs} = S \cdot X`$, where
+$`S = y_\text{true} + \epsilon_b`$ and $`X = 1 + \xi`$. Conditional on
+$`y_\text{true}`$ (holding it fixed, since only $`\epsilon_b`$ and
+$`\xi`$ are random),
+
+``` math
+E[S] = y_\text{true} + \frac{\nu}{2}, \qquad
+\text{Var}(S) = \text{Var}(\epsilon_b) = \frac{\nu^2}{12},
+\qquad
+E[X] = 1, \qquad
+\text{Var}(X) = \text{Var}(\xi) = \frac{\varepsilon^2}{3},
+```
+
+the first pair from $`\epsilon_b \sim \text{Unif}(0,\nu)`$, the second
+from $`\xi \sim \text{Unif}(-\varepsilon,\varepsilon)`$ (as derived
+above). For independent $`S`$ and $`X`$,
+
+``` math
+\text{Var}(SX) = \text{Var}(S)\text{Var}(X) + \text{Var}(S)\,E[X]^2
+  + E[S]^2\,\text{Var}(X).
+```
+
+Substituting $`E[X] = 1`$ and the variances above,
+
+``` math
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\cdot\frac{\varepsilon^2}{3}
++ \frac{\nu^2}{12}\cdot 1
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3},
+```
+
+which simplifies to
+
+``` math
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\left(1 + \frac{\varepsilon^2}{3}\right)
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3}.
+```
+
+As a check, this reduces to the two single-source cases above: setting
+$`\varepsilon = 0`$ gives $`\nu^2/12`$, matching
+$`\text{Var}(\epsilon_b)`$ for biological noise alone; setting
+$`\nu = 0`$ gives $`y_\text{true}^2\,\varepsilon^2/3`$, matching the
+measurement-noise-only CV derivation
+($`\text{SD}(y_\text{obs}) = y_\text{true}\cdot\varepsilon/\sqrt{3}`$).
+
+$`\text{Var}(y_\text{obs} \mid y_\text{true})`$ conditions on a specific
+individual’s true concentration. At the population level, even at a
+fixed time since infection $`T=t`$, different individuals have different
+true antibody concentrations: `serodynamics` returns a posterior
+*sample* of curve-parameter sets rather than a single fixed curve,
+capturing both estimation uncertainty and between-person heterogeneity
+in the seroresponse (see “Propagating uncertainty and heterogeneity” in
+the `methodology` vignette). Write
+$`\mu(t) = E[y_\text{true} \mid T=t]`$ and
+$`\sigma^2(t) = \text{Var}(y_\text{true} \mid T=t)`$ for this
+heterogeneity. Unlike $`\epsilon_b`$ and $`\xi`$, $`y_\text{true}`$ is
+not a named distribution in this framework – its population distribution
+is the empirical Monte Carlo sample, not a stated closed form – so
+$`\sigma^2(t)`$ has no closed form here and is carried through the
+derivation symbolically.
+
+Assuming $`y_\text{true}`$, $`\epsilon_b`$, and $`\xi`$ are mutually
+independent given $`T=t`$, the law of total variance gives
+
+``` math
+\text{Var}(y_\text{obs} \mid T=t) =
+E\big[\text{Var}(y_\text{obs} \mid y_\text{true}) \mid T=t\big]
++ \text{Var}\big(E[y_\text{obs} \mid y_\text{true}] \mid T=t\big).
+```
+
+For the second term,
+$`E[y_\text{obs}\mid y_\text{true}] = y_\text{true} +
+\nu/2`$ (a constant shift of $`y_\text{true}`$), so
+
+``` math
+\text{Var}\big(E[y_\text{obs} \mid y_\text{true}] \mid T=t\big) =
+\text{Var}(y_\text{true} \mid T=t) = \sigma^2(t).
+```
+
+For the first term, take the expectation of the
+$`\text{Var}(y_\text{obs}\mid y_\text{true})`$ formula derived above
+over $`y_\text{true}`$:
+
+``` math
+E\big[\text{Var}(y_\text{obs}\mid y_\text{true}) \mid T=t\big] =
+\frac{\nu^2}{12}\left(1+\frac{\varepsilon^2}{3}\right)
++ \frac{\varepsilon^2}{3}\, E\!\left[\left(y_\text{true}+\frac{\nu}{2}\right)^2 \middle| T=t\right].
+```
+
+Writing $`W = y_\text{true} + \nu/2`$ (a constant shift), $`E[W^2] =
+\text{Var}(W) + E[W]^2 = \sigma^2(t) + (\mu(t)+\nu/2)^2`$, so
+
+``` math
+E\!\left[\left(y_\text{true}+\frac{\nu}{2}\right)^2 \middle| T=t\right]
+= \sigma^2(t) + \left(\mu(t) + \frac{\nu}{2}\right)^2.
+```
+
+Adding the two law-of-total-variance terms together,
+
+``` math
+\text{Var}(y_\text{obs} \mid T=t) =
+\left(1+\frac{\varepsilon^2}{3}\right)\left[\frac{\nu^2}{12}+\sigma^2(t)\right]
++ \frac{\varepsilon^2}{3}\left(\mu(t)+\frac{\nu}{2}\right)^2.
+```
+
+This has the same functional form as $`\text{Var}(y_\text{obs}\mid
+y_\text{true})`$ above, with $`y_\text{true}`$ replaced by its
+conditional mean $`\mu(t)`$ and an extra between-person heterogeneity
+term $`\sigma^2(t)`$ added alongside the biological-noise variance
+$`\nu^2/12`$. As a check, setting $`\sigma^2(t) = 0`$ (no heterogeneity,
+a single fixed curve so $`y_\text{true} = \mu(t)`$ with certainty)
+recovers $`\text{Var}(y_\text{obs}\mid y_\text{true}=\mu(t))`$ exactly,
+as expected.
+
 ### Noise and never-infected subjects
 
 A subject who has never been infected has true antibody concentration
@@ -1331,6 +1447,55 @@ error reflect the seroresponse heterogeneity and the parameter
 uncertainty — they are not conditional on a single point-estimated
 curve. In `serocalculator` this is the average over the Monte Carlo
 parameter sets (the `iter` draws) carried in the curve-parameter object.
+
+### Random effects and variance over time
+
+The longitudinal model distinguishes two kinds of variation:
+
+- **Conditional observation noise:** given a person’s kinetic parameters
+  $`\theta_i`$, residual noise has constant variance on the log-antibody
+  scale.
+- **Marginal population variation:** because $`\theta_i`$ includes
+  random effects — notably the waning rate $`\alpha_i`$ — individual
+  trajectories can spread apart with increasing time since infection.
+
+Thus, even without an explicit time-varying residual variance
+$`\sigma^2(t)`$, the variance around the population mean trajectory can
+vary with $`t`$:
+
+``` math
+\operatorname{Var}(\log Y(t)\mid T=t)
+= \sigma_{\log Y}^2
++ \operatorname{Var}_{\theta}\!\left[\log y(t;\theta)\right].
+```
+
+This is the distinction between *conditional* and *marginal*
+heteroscedasticity. The `serodynamics` observation model uses one
+residual precision per antigen-isotype, shared across subjects and
+observation times. It therefore does not fit an additional
+residual-variance function of time.
+
+Nevertheless, its subject-level kinetic parameters are random effects
+with a joint distribution. For illustration, if post-peak decay were
+exponential ($`r=1`$), with the other parameters held fixed,
+
+``` math
+\log y_i(t) = \log y_1 - \alpha_i(t-t_1),
+```
+
+so variation in $`\alpha_i`$ alone contributes
+$`(t-t_1)^2\operatorname{Var}(\alpha_i)`$ to the population variance on
+the log scale. The full nonlinear model also allows the other kinetic
+parameters and their correlations to affect how the variance changes
+over time.
+
+`serocalculator` accounts for this trajectory-induced variation by
+averaging the incidence likelihood over the Monte Carlo sample of
+kinetic-parameter sets. It does not reclassify that variation as
+observation noise or replace it with a fitted $`\sigma^2(t)`$. Its
+separate biological- and measurement-noise models have constant additive
+and relative widths, respectively; neither width is an explicit function
+of time since infection.
 
 ## Using `serocalculator`
 

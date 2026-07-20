@@ -81,6 +81,24 @@
   than, e.g., the 99th or the sample maximum) is an adopted convention,
   not a result derived or optimized in the paper.
   ([\#567](https://github.com/UCD-SERG/serocalculator/issues/567))
+- Added the conditional variance `Var(y_obs | y_true)` for the combined
+  biological- and measurement-noise model to the `methodology` vignette,
+  derived from the independent-product-variance identity and checked
+  against both single-source special cases already in the vignette.
+  ([\#571](https://github.com/UCD-SERG/serocalculator/issues/571))
+- Added `Var(y_obs | T=t)`, marginalizing over between-person
+  heterogeneity in `y_true`, to the `methodology` vignette: derived via
+  the law of total variance from the `Var(y_obs | y_true)` formula
+  above, with the between-person heterogeneity term `Var(y_true | T=t)`
+  introduced symbolically (it has no closed form in this framework,
+  since `serodynamics` represents curve-parameter heterogeneity as an
+  empirical posterior sample rather than a stated parametric
+  distribution). Clarified that the longitudinal model’s residual
+  variance is constant on the log scale conditional on individual random
+  effects, while random waning rates can induce time-varying marginal
+  population variance that `serocalculator` carries forward by averaging
+  over kinetic-parameter draws.
+  ([\#571](https://github.com/UCD-SERG/serocalculator/issues/571))
 - Moved
   [`f_dev0()`](https://ucd-serg.github.io/serocalculator/reference/f_dev0.md)’s
   `@examples` block to a separate example file

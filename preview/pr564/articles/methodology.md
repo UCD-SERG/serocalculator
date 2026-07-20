@@ -925,10 +925,80 @@ This noise can cause both overcount and undercount. We can also estimate
 the magnitude of this noise source and include it in $`p(Y=y|T=t)`$.
 
 Measurement noise, $`\varepsilon`$ (“epsilon”), represents measurement
-error from the laboratory testing process. It is defined by a CV
-(coefficient of variation) as the ratio of the standard deviation to the
-mean for replicates. Note that the CV should ideally be measured across
-plates rather than within the same plate.
+error from the laboratory testing process.
+
+Unlike biological noise, measurement noise is *multiplicative*: the
+error scales with the true concentration (equivalently, it is additive
+on a log scale), and it has mean zero, so on average it neither inflates
+nor deflates the measured concentration.
+
+Notation:
+
+- $`y_\text{obs}`$: measured serum antibody concentration
+- $`y_\text{true}`$: “true” serum antibody concentration
+- $`\xi`$: relative measurement error
+- $`\varepsilon`$: bound on the relative error
+
+Model:
+
+- $`y_\text{obs} = y_\text{true} \cdot (1 + \xi)`$
+- $`\xi \sim \text{Unif}(-\varepsilon, \varepsilon), \quad 0 \le \varepsilon < 1`$
+
+Here $`\varepsilon`$ is the bound on the relative error, not a
+coefficient of variation (CV). Assay precision is often reported as a
+CV, the ratio of the standard deviation to the mean for replicates,
+ideally measured across plates rather than within the same plate. Under
+this uniform model the CV equals $`\varepsilon/\sqrt{3}`$, so a measured
+CV corresponds to $`\varepsilon = \sqrt{3}\,\text{CV}`$.
+
+### Combined biological and measurement noise
+
+In practice both noise sources are usually present at once. The two are
+applied in sequence ([Teunis and Eijkeren 2020](#ref-Teunis_2020)):
+biological noise is added to the true concentration, and measurement
+noise then scales the result.
+
+Model:
+
+- $`y_\text{obs} = (y_\text{true} + \epsilon_b)(1 + \xi)`$
+- $`\epsilon_b \sim \text{Unif}(0, \nu)`$
+- $`\xi \sim \text{Unif}(-\varepsilon, \varepsilon)`$
+
+This is the model `serocalculator` uses whenever a `noise_params` row
+has both $`\nu > 0`$ and $`\varepsilon > 0`$; setting either width to
+zero recovers the corresponding single-source model above.
+
+### Noise and never-infected subjects
+
+A subject who has never been infected has true antibody concentration
+$`y_\text{true} = 0`$; the probability of never having been infected by
+age $`a`$ is
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$.
+The two noise sources treat such a subject very differently ([Teunis and
+Eijkeren 2020](#ref-Teunis_2020)):
+
+- **Biological noise is additive**, so a never-infected subject is
+  measured as
+  $`y_\text{obs} = 0 + \epsilon_b \sim \text{Unif}(0, \nu)`$.
+  Cross-reactivity can register a positive signal even when there was no
+  true response, so never-infected subjects still contribute a
+  spread-out distribution of small positive values, not a single spike
+  at zero.
+
+- **Measurement noise is multiplicative**, so a never-infected subject
+  is measured as $`y_\text{obs} = 0 \cdot (1 + \xi) = 0`$. A relative
+  error cannot move a true zero, so measurement noise alone leaves these
+  subjects exactly at zero.
+
+So the probability mass at $`y = 0`$ from never-infected subjects (with
+weight
+$`\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}`$)
+survives measurement noise but is smeared into small positive values by
+biological noise. This also explains why the biological-noise width
+$`\nu`$ can be estimated from a known unexposed population: those
+subjects are essentially all never-infected, so their measured antibody
+levels are, to good approximation, draws from the biological-noise
+distribution itself.
 
 ### Multiple biomarkers
 
@@ -1286,6 +1356,11 @@ Noordzij, Marlies, Friedo W. Dekker, Carmine Zoccali, and Kitty J.
 Jager. 2010. “Measures of Disease Frequency: Prevalence and Incidence.”
 *Nephron Clinical Practice* 115 (1): c17–20.
 <https://doi.org/10.1159/000286345>.
+
+Teunis, P. F. M., and J. C. H. van Eijkeren. 2020. “Estimation of
+Seroconversion Rates for Infectious Diseases: Effects of Age and Noise.”
+*Statistics in Medicine* 39 (21): 2799–814.
+<https://doi.org/10.1002/sim.8578>.
 
 Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić
 Marinović, and M. E. E. Kretzschmar. 2016. “Linking the Seroresponse to

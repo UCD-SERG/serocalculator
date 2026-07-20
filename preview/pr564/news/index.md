@@ -45,6 +45,19 @@
 
 - Added introductory lecture slides to the `methodology` vignette
   (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).
+- Completed the measurement-noise model in the `methodology` vignette
+  (multiplicative relative error), added a “Combined biological and
+  measurement noise” section, and added a “Noise and never-infected
+  subjects” section explaining that additive biological noise spreads a
+  never-infected subject’s measured response over a positive range while
+  multiplicative measurement noise leaves a true zero at zero.
+  ([\#561](https://github.com/UCD-SERG/serocalculator/issues/561))
+- Corrected the documentation of the `eps` measurement-noise parameter
+  (in `example_noise_params_pk`/`example_noise_params_sees` and the
+  vignettes): `eps` is the bound on the relative measurement error
+  (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
+  corresponds to `eps = sqrt(3) * CV`.
+  ([\#563](https://github.com/UCD-SERG/serocalculator/issues/563))
 - Moved
   [`f_dev0()`](https://ucd-serg.github.io/serocalculator/reference/f_dev0.md)’s
   `@examples` block to a separate example file
@@ -90,12 +103,14 @@
 - Claude PR review workflow now skips (rather than hard-failing) when
   triggered by a bot (e.g. `claude[bot]` pushing a commit).
   ([\#519](https://github.com/UCD-SERG/serocalculator/issues/519))
-- Added the `lint-changed-lines` CI workflow, which flags lint issues
-  only on the lines a PR actually adds or modifies (rather than whole
-  changed files, as `lint-changed-files` does). This lets lint rules be
-  adopted or tightened incrementally as code is touched, instead of
-  forcing a repo-wide reformat. Intended to replace `lint-changed-files`
-  as the lint gate once branch protection is updated to require it.
+- Added the `lint-changed-lines` CI workflow (calling the reusable
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `lint-changed-lines.yml@v2` workflow), which flags lint issues only on
+  the lines a PR actually adds or modifies (rather than whole changed
+  files, as `lint-changed-files` does). This lets lint rules be adopted
+  or tightened incrementally as code is touched, instead of forcing a
+  repo-wide reformat. Intended to replace `lint-changed-files` as the
+  lint gate once branch protection is updated to require it.
   ([\#558](https://github.com/UCD-SERG/serocalculator/issues/558))
 
 ### Bug fixes

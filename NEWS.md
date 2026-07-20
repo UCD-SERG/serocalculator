@@ -36,6 +36,27 @@
   vignettes): `eps` is the bound on the relative measurement error
   (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
   corresponds to `eps = sqrt(3) * CV`. (#563)
+* Added the never-infected density under combined biological and
+  measurement noise to the `methodology` vignette: the piecewise
+  closed form for `y_obs = eps_b * (1 + xi)`, matching Teunis and van
+  Eijkeren (2020) Equation 19 and verified to integrate to the
+  never-infected probability. (#567)
+* Made the never-infected term explicit in the "per-person likelihood"
+  slide of the `methodology` vignette: the observed-data likelihood
+  integral is now shown split into its continuous (ever-infected) and
+  discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
+  defined as a point mass at zero (before noise). (#567)
+* Explained, in the "Biological noise" section of the `methodology`
+  vignette, why the biological-noise width `nu` is estimated as the
+  95th percentile of negative controls: Teunis and van Eijkeren (2020)
+  show that a uniform noise model only needs to match the true noise
+  distribution's width, not its exact shape, and note that this width
+  is difficult to verify against a mixed (ongoing-seroresponse)
+  population -- motivating estimation from a clean negative-control
+  panel instead. Also noted that the specific choice of the 95th
+  percentile (rather than, e.g., the 99th or the sample maximum) is an
+  adopted convention, not a result derived or optimized in the paper.
+  (#567)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)
@@ -62,6 +83,14 @@
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+* Added the `lint-changed-lines` CI workflow (calling the reusable
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `lint-changed-lines.yml@v2` workflow), which flags lint issues only on the
+  lines a PR actually adds or modifies (rather than whole changed files, as
+  `lint-changed-files` does). This lets lint rules be adopted or tightened
+  incrementally as code is touched, instead of forcing a repo-wide reformat.
+  Intended to replace `lint-changed-files` as the lint gate once branch
+  protection is updated to require it. (#558)
 
 ## Bug fixes
 

@@ -633,6 +633,40 @@ p(Y=y)
 \end{aligned}
 $$
 
+::: notes
+This integral is shorthand.
+$T$ is not purely continuous: recall from "Time since infection and
+incidence" that $T$ has a **mixed** distribution --- continuous on
+$[0,a]$ with density $\lambda\expf{-\lambda t}$, plus a discrete atom
+at $T=\NA$ (never infected) with probability $\expf{-\lambda a}$.
+Written out explicitly, the "integral" over $t$ is really an integral
+over the continuous part plus the never-infected term:
+:::
+
+$$
+p(Y=y) =
+\int_0^a p(Y=y\mid T=t)\,\lambda\expf{-\lambda t}\,dt
+\;+\;
+p(Y=y\mid T=\NA)\cdot \expf{-\lambda a}
+$$
+
+The first term is the contribution from subjects infected at least
+once; the second is the contribution from subjects never infected.
+
+::: notes
+Two pieces here were not yet defined:
+
+* $p(T=\NA) = \expf{-\lambda a}$ is already known --- the same
+never-infected probability from "Time since infection and incidence".
+* $p(Y=y\mid T=\NA)$, the antibody response of a never-infected
+subject, needs its own definition. Without any noise, a never-infected
+subject's true antibody level is exactly zero, so this is a point mass
+at $y=0$ (a Dirac delta): $p(Y=y\mid T=\NA) = \delta(y)$. Once
+measurement noise and biological (cross-reactivity) noise are
+introduced below, this point mass is handled differently by each ---
+see "Noise and never-infected subjects".
+:::
+
 ## The full-sample likelihood {.smaller}
 
 ::: notes

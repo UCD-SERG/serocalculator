@@ -22,8 +22,9 @@ NEWS_files
 **/.quarto/
 *.pdf
 junit.xml
-
 **/*.quarto_ipynb
 *.knit.md
 .positai
 tests/vdiffr.Rout.fail
+altdoc
+_quarto

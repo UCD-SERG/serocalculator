@@ -279,11 +279,12 @@ estimate of the width the model needs.
 
 Why the 95th percentile specifically, rather than the 99th or the
 100th (the sample maximum)? [@Teunis_2020] motivates a *width-based*
-approach and uses "the one-sided 95%" throughout as its working
-definition of that width, but does not compare 95% against other
-levels -- so the choice of 95% itself is an adopted convention (it
-matches how reference intervals are commonly defined in clinical
-laboratory practice), not a result derived or optimized in the paper.
+approach, first framing it as "the one-sided 95%" and later as the
+"95% range" / "(95%) width" of the noise distribution, but never
+compares 95% against other levels -- so the choice of 95% itself is
+an adopted convention (it matches how reference intervals are
+commonly defined in clinical laboratory practice), not a result
+derived or optimized in the paper.
 The 100th percentile (the sample maximum) would be a poor choice
 regardless: it is driven entirely by the single most extreme
 observation in the panel, so one contaminated or mislabeled

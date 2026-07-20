@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">serocalculator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="internal-development-version">Internal<a class="anchor" aria-label="anchor" href="#internal-development-version"></a></h3>
-<ul><li>
+<ul><li>Added Codex repository guidance and R-package workflow skills. (<a href="https://github.com/UCD-SERG/serocalculator/issues/574" class="external-link">#574</a>)</li>
+<li>
 <code>news.yaml</code> now calls the central <a href="https://github.com/d-morrison/gha" class="external-link"><code>d-morrison/gha</code></a> <code>check-news.yml@v1</code> reusable workflow instead of invoking <code>UCD-SERG/changelog-check-action@v2</code> directly. (<a href="https://github.com/UCD-SERG/serocalculator/issues/537" class="external-link">#537</a>)</li>
 <li>
 <code>claude.yml</code> and <code>claude-code-review.yml</code> now call the central <a href="https://github.com/d-morrison/gha" class="external-link"><code>d-morrison/gha</code></a> <code>claude.yml@v2</code> and <code>claude-code-review.yml@v2</code> reusable workflows instead of carrying their own copy of the agent/review machinery. (<a href="https://github.com/UCD-SERG/serocalculator/issues/549" class="external-link">#549</a>)</li>

@@ -32,18 +32,20 @@ Manual](https://ucd-serg.github.io/lab-manual/) (source:
 ## Pre-commit checklist
 
 Run the relevant checks before committing (see copilot-instructions.md
-for the full list). Slash commands are available for the common ones:
+for the full list). Codex skills provide instructions for the common
+ones:
 
-- `/document` — `devtools::document()` after editing roxygen2 comments
-  (keeps `man/`, `NAMESPACE`, `DESCRIPTION` in sync; `R-check-docs.yml`
-  enforces this).
-- `/lint` — `lintr::lint_package()` against `.lintr.R`; fix issues in
-  changed files.
-- `/spell` —
+- `source-command-document` — `devtools::document()` after editing
+  roxygen2 comments (keeps `man/`, `NAMESPACE`, `DESCRIPTION` in sync;
+  `R-check-docs.yml` enforces this).
+- `source-command-lint` — `lintr::lint_package()` against `.lintr.R`;
+  fix issues in changed files.
+- `source-command-spell` —
   [`spelling::spell_check_package()`](https://docs.ropensci.org/spelling//reference/spell_check_package.html);
   add genuine terms to `inst/WORDLIST`.
-- `/test` — `devtools::test()` for affected tests.
-- `/check` — `devtools::check()` for the full R CMD check (slow).
+- `source-command-test` — `devtools::test()` for affected tests.
+- `source-command-check` — `devtools::check()` for the full R CMD check
+  (slow).
 - Add a `NEWS.md` bullet for any user-facing change (`news.yaml`
   enforces this unless the PR carries the `no-changelog` label).
 

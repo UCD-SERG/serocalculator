@@ -288,6 +288,38 @@ ideally measured across plates rather than within the same plate.
 Under this uniform model the CV equals $\varepsilon/\sqrt{3}$,
 so a measured CV corresponds to $\varepsilon = \sqrt{3}\,\text{CV}$.
 
+::: notes
+This follows directly from the variance of a uniform distribution.
+For $\xi \sim \text{Unif}(-\varepsilon, \varepsilon)$,
+
+$$
+\text{Var}(\xi) = \frac{(2\varepsilon)^2}{12} = \frac{\varepsilon^2}{3}
+\quad\Longrightarrow\quad
+\text{SD}(\xi) = \frac{\varepsilon}{\sqrt{3}}.
+$$
+
+Since $E[\xi] = 0$ by symmetry, for a fixed true concentration
+$y_\text{true}$,
+
+$$
+E[y_\text{obs}] = y_\text{true} \cdot E[1 + \xi] = y_\text{true},
+\qquad
+\text{SD}(y_\text{obs}) = y_\text{true} \cdot \text{SD}(\xi)
+  = y_\text{true} \cdot \frac{\varepsilon}{\sqrt{3}},
+$$
+
+so
+
+$$
+\text{CV} = \frac{\text{SD}(y_\text{obs})}{E[y_\text{obs}]}
+  = \frac{\varepsilon}{\sqrt{3}}.
+$$
+
+The true concentration $y_\text{true}$ cancels, so the CV depends only
+on $\varepsilon$, not on the concentration being measured -- as
+expected for a *relative* (multiplicative) error model.
+:::
+
 ## Combined biological and measurement noise
 
 In practice both noise sources are usually present at once.

@@ -57,6 +57,18 @@
   percentile (rather than, e.g., the 99th or the sample maximum) is an
   adopted convention, not a result derived or optimized in the paper.
   (#567)
+* Added the conditional variance `Var(y_obs | y_true)` for the combined
+  biological- and measurement-noise model to the `methodology` vignette,
+  derived from the independent-product-variance identity and checked
+  against both single-source special cases already in the vignette.
+  (#571)
+* Added `Var(y_obs | T=t)`, marginalizing over between-person heterogeneity
+  in `y_true`, to the `methodology` vignette: derived via the law of total
+  variance from the `Var(y_obs | y_true)` formula above, with the
+  between-person heterogeneity term `Var(y_true | T=t)` introduced
+  symbolically (it has no closed form in this framework, since
+  `serodynamics` represents curve-parameter heterogeneity as an empirical
+  posterior sample rather than a stated parametric distribution). (#571)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

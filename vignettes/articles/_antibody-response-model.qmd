@@ -385,6 +385,120 @@ This is the model `serocalculator` uses
 whenever a `noise_params` row has both $\nu > 0$ and $\varepsilon > 0$;
 setting either width to zero recovers the corresponding single-source model above.
 
+::: notes
+The observed concentration is a product of two independent random
+variables, $y_\text{obs} = S \cdot X$, where $S = y_\text{true} + \epsilon_b$
+and $X = 1 + \xi$. Conditional on $y_\text{true}$ (holding it fixed, since
+only $\epsilon_b$ and $\xi$ are random),
+
+$$
+E[S] = y_\text{true} + \frac{\nu}{2}, \qquad
+\text{Var}(S) = \text{Var}(\epsilon_b) = \frac{\nu^2}{12},
+\qquad
+E[X] = 1, \qquad
+\text{Var}(X) = \text{Var}(\xi) = \frac{\varepsilon^2}{3},
+$$
+
+the first pair from $\epsilon_b \sim \text{Unif}(0,\nu)$, the second from
+$\xi \sim \text{Unif}(-\varepsilon,\varepsilon)$ (as derived above). For
+independent $S$ and $X$,
+
+$$
+\text{Var}(SX) = \text{Var}(S)\text{Var}(X) + \text{Var}(S)\,E[X]^2
+  + E[S]^2\,\text{Var}(X).
+$$
+
+Substituting $E[X] = 1$ and the variances above,
+
+$$
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\cdot\frac{\varepsilon^2}{3}
++ \frac{\nu^2}{12}\cdot 1
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3},
+$$
+
+which simplifies to
+
+$$
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\left(1 + \frac{\varepsilon^2}{3}\right)
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3}.
+$$
+
+As a check, this reduces to the two single-source cases above: setting
+$\varepsilon = 0$ gives $\nu^2/12$, matching $\text{Var}(\epsilon_b)$ for
+biological noise alone; setting $\nu = 0$ gives
+$y_\text{true}^2\,\varepsilon^2/3$, matching the measurement-noise-only
+CV derivation ($\text{SD}(y_\text{obs}) = y_\text{true}\cdot\varepsilon/\sqrt{3}$).
+:::
+
+::: notes
+$\text{Var}(y_\text{obs} \mid y_\text{true})$ conditions on a specific
+individual's true concentration. At the population level, even at a fixed
+time since infection $T=t$, different individuals have different true
+antibody concentrations: `serodynamics` returns a posterior *sample* of
+curve-parameter sets rather than a single fixed curve, capturing both
+estimation uncertainty and between-person heterogeneity in the seroresponse
+(see "Propagating uncertainty and heterogeneity" in the `methodology`
+vignette). Write $\mu(t) = E[y_\text{true} \mid T=t]$ and
+$\sigma^2(t) = \text{Var}(y_\text{true} \mid T=t)$ for this heterogeneity.
+Unlike $\epsilon_b$ and $\xi$, $y_\text{true}$ is not a named distribution
+in this framework -- its population distribution is the empirical Monte
+Carlo sample, not a stated closed form -- so $\sigma^2(t)$ has no closed
+form here and is carried through the derivation symbolically.
+
+Assuming $y_\text{true}$, $\epsilon_b$, and $\xi$ are mutually independent
+given $T=t$, the law of total variance gives
+
+$$
+\text{Var}(y_\text{obs} \mid T=t) =
+E\big[\text{Var}(y_\text{obs} \mid y_\text{true}) \mid T=t\big]
++ \text{Var}\big(E[y_\text{obs} \mid y_\text{true}] \mid T=t\big).
+$$
+
+For the second term, $E[y_\text{obs}\mid y_\text{true}] = y_\text{true} +
+\nu/2$ (a constant shift of $y_\text{true}$), so
+
+$$
+\text{Var}\big(E[y_\text{obs} \mid y_\text{true}] \mid T=t\big) =
+\text{Var}(y_\text{true} \mid T=t) = \sigma^2(t).
+$$
+
+For the first term, take the expectation of the
+$\text{Var}(y_\text{obs}\mid y_\text{true})$ formula derived above over
+$y_\text{true}$:
+
+$$
+E\big[\text{Var}(y_\text{obs}\mid y_\text{true}) \mid T=t\big] =
+\frac{\nu^2}{12}\left(1+\frac{\varepsilon^2}{3}\right)
++ \frac{\varepsilon^2}{3}\, E\!\left[\left(y_\text{true}+\frac{\nu}{2}\right)^2 \middle| T=t\right].
+$$
+
+Writing $W = y_\text{true} + \nu/2$ (a constant shift), $E[W^2] =
+\text{Var}(W) + E[W]^2 = \sigma^2(t) + (\mu(t)+\nu/2)^2$, so
+
+$$
+E\!\left[\left(y_\text{true}+\frac{\nu}{2}\right)^2 \middle| T=t\right]
+= \sigma^2(t) + \left(\mu(t) + \frac{\nu}{2}\right)^2.
+$$
+
+Adding the two law-of-total-variance terms together,
+
+$$
+\text{Var}(y_\text{obs} \mid T=t) =
+\left(1+\frac{\varepsilon^2}{3}\right)\left[\frac{\nu^2}{12}+\sigma^2(t)\right]
++ \frac{\varepsilon^2}{3}\left(\mu(t)+\frac{\nu}{2}\right)^2.
+$$
+
+This has the same functional form as $\text{Var}(y_\text{obs}\mid
+y_\text{true})$ above, with $y_\text{true}$ replaced by its conditional
+mean $\mu(t)$ and an extra between-person heterogeneity term $\sigma^2(t)$
+added alongside the biological-noise variance $\nu^2/12$. As a check,
+setting $\sigma^2(t) = 0$ (no heterogeneity, a single fixed curve so
+$y_\text{true} = \mu(t)$ with certainty) recovers
+$\text{Var}(y_\text{obs}\mid y_\text{true}=\mu(t))$ exactly, as expected.
+:::
+
 ## Noise and never-infected subjects
 
 A subject who has never been infected has

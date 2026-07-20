@@ -84,10 +84,8 @@ names must *exactly* match follow the naming conventions:
 
 ``` r
 
-# Import longitudinal antibody parameters from OSF
-curves <-
-  "https://osf.io/download/rtw5k/" |>
-  load_sr_params()
+# Load example longitudinal antibody parameters included in serocalculator
+curves <- typhoid_curves_nostrat_100
 ```
 
 ### Visualize curve parameters
@@ -137,9 +135,8 @@ are required:
 
 ``` r
 
-#Import cross-sectional data from OSF and rename required variables
-xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
-  as_pop_data()
+# Load example cross-sectional data included in serocalculator
+xs_data <- sees_pop_data_100
 ```
 
 ### Summarize antibody data
@@ -152,22 +149,22 @@ with a [`summary()`](https://rdrr.io/r/base/summary.html) method for
 
 xs_data |> summary()
 #> 
-#> n = 3336 
+#> n = 1000 
 #> 
 #> Distribution of age: 
 #> 
 #> # A tibble: 1 × 7
 #>       n   min first_quartile median  mean third_quartile   max
 #>   <int> <dbl>          <dbl>  <dbl> <dbl>          <dbl> <dbl>
-#> 1  3336   0.6              5     10  10.5             15    25
+#> 1  1000   0.8           5.38   10.1  10.7           14.8  24.8
 #> 
 #> Distributions of antigen-isotype measurements:
 #> 
 #> # A tibble: 2 × 7
-#>   antigen_iso   Min `1st Qu.` Median `3rd Qu.`   Max `# NAs`
-#>   <fct>       <dbl>     <dbl>  <dbl>     <dbl> <dbl>   <int>
-#> 1 HlyE_IgA        0     0.851   1.74      3.66  133.       0
-#> 2 HlyE_IgG        0     1.15    2.70      6.74  219.       0
+#>   antigen_iso    Min `1st Qu.` Median `3rd Qu.`   Max `# NAs`
+#>   <fct>        <dbl>     <dbl>  <dbl>     <dbl> <dbl>   <int>
+#> 1 HlyE_IgA    0          0.949   2.01      3.90  133.       0
+#> 2 HlyE_IgG    0.0394     1.18    2.84      6.84  135.       0
 ```
 
 ### Visualize antibody data
@@ -205,7 +202,7 @@ xs_data |>
   scale_x_log10(labels = scales::label_comma())
 #> Warning in scale_x_log10(labels = scales::label_comma()): log-10
 #> transformation introduced infinite values.
-#> Warning: Removed 18 rows containing non-finite outside the scale range
+#> Warning: Removed 4 rows containing non-finite outside the scale range
 #> (`stat_density()`).
 ```
 
@@ -272,9 +269,8 @@ parameter below.
 
 ``` r
 
-# Import noise parameters from OSF
-
-noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
+# Load example noise parameters included in serocalculator
+noise <- example_noise_params_sees
 ```
 
 ## Estimate Seroincidence
@@ -306,9 +302,9 @@ est1 <- est_seroincidence(
 
 summary(est1)
 #> # A tibble: 1 × 11
-#>   est.start incidence.rate      SE CI.lwr CI.upr se_type  coverage log.lik
-#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
-#> 1       0.1          0.128 0.00682  0.115  0.142 standard     0.95  -2376.
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 ```
@@ -340,12 +336,12 @@ est_country_age <- est_seroincidence_by(
 #> # A tibble: 6 × 4
 #>   Country ageCat antigen_iso     n
 #>   <chr>   <fct>  <fct>       <int>
-#> 1 Nepal   <5     HlyE_IgA      171
-#> 2 Nepal   <5     HlyE_IgG      179
-#> 3 Nepal   5-15   HlyE_IgA      378
-#> 4 Nepal   5-15   HlyE_IgG      390
-#> 5 Nepal   16+    HlyE_IgA      211
-#> 6 Nepal   16+    HlyE_IgG      217
+#> 1 Nepal   <5     HlyE_IgA       42
+#> 2 Nepal   <5     HlyE_IgG       40
+#> 3 Nepal   5-15   HlyE_IgA      106
+#> 4 Nepal   5-15   HlyE_IgG      109
+#> 5 Nepal   16+    HlyE_IgA       52
+#> 6 Nepal   16+    HlyE_IgG       51
 
 summary(est_country_age)
 #> Seroincidence estimated given the following setup:
@@ -356,15 +352,15 @@ summary(est_country_age)
 #> # A tibble: 9 × 15
 #>   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr
 #>   <chr>     <chr>    <fct>  <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl>
-#> 1 Stratum 1 Banglad… <5       101       0.1         0.400  0.0395  0.330  0.485 
-#> 2 Stratum 2 Banglad… 5-15     256       0.1         0.477  0.0320  0.418  0.544 
-#> 3 Stratum 3 Banglad… 16+       44       0.1         0.449  0.0763  0.322  0.627 
-#> 4 Stratum 4 Nepal    <5       171       0.1         0.0203 0.00444 0.0132 0.0311
-#> 5 Stratum 5 Nepal    5-15     378       0.1         0.0355 0.00311 0.0299 0.0421
-#> 6 Stratum 6 Nepal    16+      211       0.1         0.0935 0.00776 0.0795 0.110 
-#> 7 Stratum 7 Pakistan <5       126       0.1         0.106  0.0136  0.0823 0.136 
-#> 8 Stratum 8 Pakistan 5-15     261       0.1         0.115  0.00845 0.0991 0.132 
-#> 9 Stratum 9 Pakistan 16+      107       0.1         0.190  0.0204  0.154  0.235 
+#> 1 Stratum 1 Banglad… <5        24       0.1         0.567  0.105   0.394  0.816 
+#> 2 Stratum 2 Banglad… 5-15      65       0.1         0.606  0.0749  0.476  0.772 
+#> 3 Stratum 3 Banglad… 16+       11       0.1         0.541  0.165   0.297  0.985 
+#> 4 Stratum 4 Nepal    <5        40       0.1         0.0292 0.0111  0.0139 0.0614
+#> 5 Stratum 5 Nepal    5-15     106       0.1         0.0415 0.00687 0.0300 0.0574
+#> 6 Stratum 6 Nepal    16+       51       0.1         0.0972 0.0163  0.0701 0.135 
+#> 7 Stratum 7 Pakistan <5        43       0.1         0.117  0.0241  0.0785 0.176 
+#> 8 Stratum 8 Pakistan 5-15     115       0.1         0.140  0.0145  0.114  0.171 
+#> 9 Stratum 9 Pakistan 16+       42       0.1         0.269  0.0423  0.198  0.367 
 #> # ℹ 6 more variables: se_type <chr>, coverage <dbl>, log.lik <dbl>,
 #> #   iterations <int>, antigen.isos <chr>, nlm.convergence.code <ord>
 ```
@@ -446,13 +442,13 @@ print(comparison)
 #>  Two-sample z-test for difference in seroincidence rates
 #> 
 #> data:  seroincidence estimates
-#> z = 17.027, p-value < 2.2e-16
+#> z = 9.311, p-value < 2.2e-16
 #> alternative hypothesis: true difference in incidence rates is not equal to 0
 #> 95 percent confidence interval:
-#>  0.3559738 0.4485881
+#>  0.4224426 0.6477095
 #> sample estimates:
 #> incidence rate 1 incidence rate 2       difference 
-#>       0.45050113       0.04822018       0.40228095
+#>       0.58838264       0.05330655       0.53507609
 ```
 
 The output follows the standard `htest` format in R, providing the
@@ -475,16 +471,16 @@ print(comparisons_table)
 #> # A tibble: 36 × 14
 #>    Stratum_1 Stratum_2 Country.1  ageCat.1 Country.2  ageCat.2 incidence.rate.1
 #>  * <chr>     <chr>     <chr>      <fct>    <chr>      <fct>               <dbl>
-#>  1 Stratum 1 Stratum 2 Bangladesh <5       Bangladesh 5-15                0.400
-#>  2 Stratum 1 Stratum 3 Bangladesh <5       Bangladesh 16+                 0.400
-#>  3 Stratum 1 Stratum 4 Bangladesh <5       Nepal      <5                  0.400
-#>  4 Stratum 1 Stratum 5 Bangladesh <5       Nepal      5-15                0.400
-#>  5 Stratum 1 Stratum 6 Bangladesh <5       Nepal      16+                 0.400
-#>  6 Stratum 1 Stratum 7 Bangladesh <5       Pakistan   <5                  0.400
-#>  7 Stratum 1 Stratum 8 Bangladesh <5       Pakistan   5-15                0.400
-#>  8 Stratum 1 Stratum 9 Bangladesh <5       Pakistan   16+                 0.400
-#>  9 Stratum 2 Stratum 3 Bangladesh 5-15     Bangladesh 16+                 0.477
-#> 10 Stratum 2 Stratum 4 Bangladesh 5-15     Nepal      <5                  0.477
+#>  1 Stratum 1 Stratum 2 Bangladesh <5       Bangladesh 5-15                0.567
+#>  2 Stratum 1 Stratum 3 Bangladesh <5       Bangladesh 16+                 0.567
+#>  3 Stratum 1 Stratum 4 Bangladesh <5       Nepal      <5                  0.567
+#>  4 Stratum 1 Stratum 5 Bangladesh <5       Nepal      5-15                0.567
+#>  5 Stratum 1 Stratum 6 Bangladesh <5       Nepal      16+                 0.567
+#>  6 Stratum 1 Stratum 7 Bangladesh <5       Pakistan   <5                  0.567
+#>  7 Stratum 1 Stratum 8 Bangladesh <5       Pakistan   5-15                0.567
+#>  8 Stratum 1 Stratum 9 Bangladesh <5       Pakistan   16+                 0.567
+#>  9 Stratum 2 Stratum 3 Bangladesh 5-15     Bangladesh 16+                 0.606
+#> 10 Stratum 2 Stratum 4 Bangladesh 5-15     Nepal      <5                  0.606
 #> # ℹ 26 more rows
 #> # ℹ 7 more variables: incidence.rate.2 <dbl>, difference <dbl>, SE <dbl>,
 #> #   z.statistic <dbl>, p.value <dbl>, CI.lwr <dbl>, CI.upr <dbl>
@@ -535,7 +531,7 @@ summary(est_with_clustering)
 #> # A tibble: 1 × 11
 #>   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
 #>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>             <dbl>   <dbl>
-#> 1       0.1          0.128 0.0104  0.109  0.150 cluster-robust     0.95  -2376.
+#> 1       0.1          0.158 0.0214  0.122  0.206 cluster-robust     0.95  -1016.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 
@@ -550,9 +546,9 @@ est_no_clustering <- est_seroincidence(
 
 summary(est_no_clustering)
 #> # A tibble: 1 × 11
-#>   est.start incidence.rate      SE CI.lwr CI.upr se_type  coverage log.lik
-#>       <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
-#> 1       0.1          0.128 0.00682  0.115  0.142 standard     0.95  -2376.
+#>   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#>       <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>       <dbl>   <dbl>
+#> 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.
 #> # ℹ 3 more variables: iterations <int>, antigen.isos <chr>,
 #> #   nlm.convergence.code <ord>
 ```
@@ -600,10 +596,10 @@ summary(est_catchment_clustered)
 #> 
 #>  Seroincidence estimates:
 #> # A tibble: 2 × 14
-#>   Stratum catchment     n est.start incidence.rate      SE CI.lwr CI.upr se_type
-#>   <chr>   <chr>     <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>  
-#> 1 Stratu… aku         294       0.1          0.106 0.00983 0.0880  0.127 cluste…
-#> 2 Stratu… kgh         200       0.1          0.167 0.00905 0.151   0.186 cluste…
+#>   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#>   <chr>    <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratum… aku         100       0.1          0.114 0.0216 0.0788  0.165 cluste…
+#> 2 Stratum… kgh         100       0.1          0.217 0.0161 0.188   0.251 cluste…
 #> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
 #> #   antigen.isos <chr>, nlm.convergence.code <ord>
 
@@ -632,10 +628,10 @@ summary(est_catchment_no_clustering)
 #> 
 #>  Seroincidence estimates:
 #> # A tibble: 2 × 14
-#>   Stratum catchment     n est.start incidence.rate      SE CI.lwr CI.upr se_type
-#>   <chr>   <chr>     <int>     <dbl>          <dbl>   <dbl>  <dbl>  <dbl> <chr>  
-#> 1 Stratu… aku         294       0.1          0.106 0.00767 0.0916  0.122 standa…
-#> 2 Stratu… kgh         200       0.1          0.167 0.0133  0.143   0.196 standa…
+#>   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#>   <chr>    <chr>     <int>     <dbl>          <dbl>  <dbl>  <dbl>  <dbl> <chr>  
+#> 1 Stratum… aku         100       0.1          0.114 0.0135 0.0905  0.144 standa…
+#> 2 Stratum… kgh         100       0.1          0.217 0.0223 0.177   0.265 standa…
 #> # ℹ 5 more variables: coverage <dbl>, log.lik <dbl>, iterations <int>,
 #> #   antigen.isos <chr>, nlm.convergence.code <ord>
 ```
@@ -715,13 +711,13 @@ print(comparison_bangla_nepal)
 #>  Two-sample z-test for difference in seroincidence rates
 #> 
 #> data:  seroincidence estimates
-#> z = 14.99, p-value < 2.2e-16
+#> z = 54.102, p-value < 2.2e-16
 #> alternative hypothesis: true difference in incidence rates is not equal to 0
 #> 95 percent confidence interval:
-#>  0.3496836 0.4548783
+#>  0.5156917 0.5544605
 #> sample estimates:
 #> incidence rate 1 incidence rate 2       difference 
-#>       0.45050113       0.04822018       0.40228095
+#>       0.58838264       0.05330655       0.53507609
 
 print("Bangladesh vs Pakistan:")
 #> [1] "Bangladesh vs Pakistan:"
@@ -730,13 +726,13 @@ print(comparison_bangla_pakistan)
 #>  Two-sample z-test for difference in seroincidence rates
 #> 
 #> data:  seroincidence estimates
-#> z = 11.372, p-value < 2.2e-16
+#> z = 19.126, p-value < 2.2e-16
 #> alternative hypothesis: true difference in incidence rates is not equal to 0
 #> 95 percent confidence interval:
-#>  0.2670811 0.3783145
+#>  0.3859467 0.4740769
 #> sample estimates:
 #> incidence rate 1 incidence rate 2       difference 
-#>        0.4505011        0.1278034        0.3226978
+#>        0.5883826        0.1583708        0.4300118
 
 print("Nepal vs Pakistan:")
 #> [1] "Nepal vs Pakistan:"
@@ -745,13 +741,13 @@ print(comparison_nepal_pakistan)
 #>  Two-sample z-test for difference in seroincidence rates
 #> 
 #> data:  seroincidence estimates
-#> z = -6.978, p-value = 2.994e-12
+#> z = -4.67, p-value = 3.012e-06
 #> alternative hypothesis: true difference in incidence rates is not equal to 0
 #> 95 percent confidence interval:
-#>  -0.10193630 -0.05723007
+#>  -0.14915874 -0.06096985
 #> sample estimates:
 #> incidence rate 1 incidence rate 2       difference 
-#>       0.04822018       0.12780336      -0.07958318
+#>       0.05330655       0.15837084      -0.10506430
 ```
 
 The cluster-robust comparisons provide more accurate inference by
@@ -762,17 +758,17 @@ accounting for within-cluster correlation in the study design.
 Using cluster-robust standard errors to account for geographic
 clustering in the SEES study, we observe significant variation in
 enteric fever seroconversion rates across the three countries.
-Bangladesh has the highest overall seroconversion rate at 450.5 per 1000
-person-years (95% CI: 401.6-505.4), followed by Pakistan at 127.8 per
-1000 person-years (95% CI: 109-149.8), and Nepal at 48.2 per 1000
-person-years (95% CI: 39.8-58.5). Pairwise comparisons show Bangladesh
-has significantly higher rates than both Nepal (p \< 0.001) and Pakistan
-(p \< 0.001), while the difference between Nepal and Pakistan is also
+Bangladesh has the highest overall seroconversion rate at 588.4 per 1000
+person-years (95% CI: 574.9-602.2), followed by Pakistan at 158.4 per
+1000 person-years (95% CI: 121.6-206.3), and Nepal at 53.3 per 1000
+person-years (95% CI: 41.2-69). Pairwise comparisons show Bangladesh has
+significantly higher rates than both Nepal (p \< 0.001) and Pakistan (p
+\< 0.001), while the difference between Nepal and Pakistan is also
 significant (p \< 0.001).
 
 Across age groups, the highest rates are observed among 5- to
-15-year-olds in Bangladesh (477 per 1000 person-years), which is 14
-times higher than Nepal in the same age group (35 per 1000
+15-year-olds in Bangladesh (606 per 1000 person-years), which is 15
+times higher than Nepal in the same age group (41 per 1000
 person-years). These findings highlight substantial geographic variation
 in enteric fever transmission, emphasizing the need for targeted
 prevention strategies tailored to local epidemiology.

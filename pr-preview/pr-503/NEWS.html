@@ -772,6 +772,8 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
 <ul>
 <li>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</li>
+<li>Completed the measurement-noise model in the <code>methodology</code> vignette (multiplicative relative error), added a “Combined biological and measurement noise” section, and added a “Noise and never-infected subjects” section explaining that additive biological noise spreads a never-infected subject’s measured response over a positive range while multiplicative measurement noise leaves a true zero at zero. (<a href="https://github.com/UCD-SERG/serocalculator/issues/561">#561</a>)</li>
+<li>Corrected the documentation of the <code>eps</code> measurement-noise parameter (in <code>example_noise_params_pk</code>/<code>example_noise_params_sees</code> and the vignettes): <code>eps</code> is the bound on the relative measurement error (<code>Unif(-eps, eps)</code>), not a coefficient of variation. A measured CV corresponds to <code>eps = sqrt(3) * CV</code>. (<a href="https://github.com/UCD-SERG/serocalculator/issues/563">#563</a>)</li>
 <li>Moved <code>f_dev0()</code>’s <code>@examples</code> block to a separate example file (<code>inst/examples/exm-f_dev.R</code>), following the convention already used by other functions in this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
 </ul>
 </section>
@@ -787,6 +789,7 @@ window.Quarto = {
 <li>Added the <code>iterate</code> Claude Code skill (<code>.claude/skills/iterate/</code>) for driving a PR to a clean review verdict.</li>
 <li>Ported the <code>@claude</code> agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: <code>CLAUDE.md</code>, <code>.claude/</code> settings and slash commands, and path-scoped <code>.github/instructions/</code>) from the UCD-SERG <code>qwt</code> template, adapted to this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/523">#523</a>)</li>
 <li>Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g.&nbsp;<code>claude[bot]</code> pushing a commit). (#519)</li>
+<li>Added the <code>lint-changed-lines</code> CI workflow (calling the reusable <a href="https://github.com/d-morrison/gha"><code>d-morrison/gha</code></a> <code>lint-changed-lines.yml@v2</code> workflow), which flags lint issues only on the lines a PR actually adds or modifies (rather than whole changed files, as <code>lint-changed-files</code> does). This lets lint rules be adopted or tightened incrementally as code is touched, instead of forcing a repo-wide reformat. Intended to replace <code>lint-changed-files</code> as the lint gate once branch protection is updated to require it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/558">#558</a>)</li>
 </ul>
 </section>
 <section id="bug-fixes" class="level2">

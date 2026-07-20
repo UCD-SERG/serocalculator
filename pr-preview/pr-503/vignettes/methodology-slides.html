@@ -1153,22 +1153,56 @@ Figure&nbsp;4: An example kinetics curve for HlyE IgG
 <section id="measurement-noise" class="slide level2" data-number="5.7">
 <h2><span class="header-section-number">5.7</span> Measurement noise</h2>
 <p>There are also some other sources of noise in our bioassays; user differences in pipetting technique, random ELISA plate effects, etc. This noise can cause both overcount and undercount. We can also estimate the magnitude of this noise source and include it in <span class="math inline">\(p(Y=y|T=t)\)</span>.</p>
-<p>Measurement noise, <span class="math inline">\(\varepsilon\)</span> (“epsilon”), represents measurement error from the laboratory testing process. It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. Note that the CV should ideally be measured across plates rather than within the same plate.</p>
+<p>Measurement noise, <span class="math inline">\(\varepsilon\)</span> (“epsilon”), represents measurement error from the laboratory testing process.</p>
+<p>Unlike biological noise, measurement noise is <em>multiplicative</em>: the error scales with the true concentration (equivalently, it is additive on a log scale), and it has mean zero, so on average it neither inflates nor deflates the measured concentration.</p>
+<p>Notation:</p>
+<ul>
+<li><span class="math inline">\(y_\text{obs}\)</span>: measured serum antibody concentration</li>
+<li><span class="math inline">\(y_\text{true}\)</span>: “true” serum antibody concentration</li>
+<li><span class="math inline">\(\xi\)</span>: relative measurement error</li>
+<li><span class="math inline">\(\varepsilon\)</span>: bound on the relative error</li>
+</ul>
+<p>Model:</p>
+<ul>
+<li><span class="math inline">\(y_\text{obs} = y_\text{true} \cdot (1 + \xi)\)</span></li>
+<li><span class="math inline">\(\xi \sim \text{Unif}(-\varepsilon, \varepsilon), \quad 0 \le \varepsilon &lt; 1\)</span></li>
+</ul>
+<p>Here <span class="math inline">\(\varepsilon\)</span> is the bound on the relative error, not a coefficient of variation (CV). Assay precision is often reported as a CV, the ratio of the standard deviation to the mean for replicates, ideally measured across plates rather than within the same plate. Under this uniform model the CV equals <span class="math inline">\(\varepsilon/\sqrt{3}\)</span>, so a measured CV corresponds to <span class="math inline">\(\varepsilon = \sqrt{3}\,\text{CV}\)</span>.</p>
+</section>
+<section id="combined-biological-and-measurement-noise" class="slide level2" data-number="5.8">
+<h2><span class="header-section-number">5.8</span> Combined biological and measurement noise</h2>
+<p>In practice both noise sources are usually present at once. The two are applied in sequence <span class="citation" data-cites="Teunis_2020">(<a href="#/references" role="doc-biblioref" onclick="">Teunis and Eijkeren 2020</a>)</span>: biological noise is added to the true concentration, and measurement noise then scales the result.</p>
+<p>Model:</p>
+<ul>
+<li><span class="math inline">\(y_\text{obs} = (y_\text{true} + \epsilon_b)(1 + \xi)\)</span></li>
+<li><span class="math inline">\(\epsilon_b \sim \text{Unif}(0, \nu)\)</span></li>
+<li><span class="math inline">\(\xi \sim \text{Unif}(-\varepsilon, \varepsilon)\)</span></li>
+</ul>
+<p>This is the model <code>serocalculator</code> uses whenever a <code>noise_params</code> row has both <span class="math inline">\(\nu &gt; 0\)</span> and <span class="math inline">\(\varepsilon &gt; 0\)</span>; setting either width to zero recovers the corresponding single-source model above.</p>
+</section>
+<section id="noise-and-never-infected-subjects" class="slide level2" data-number="5.9">
+<h2><span class="header-section-number">5.9</span> Noise and never-infected subjects</h2>
+<p>A subject who has never been infected has true antibody concentration <span class="math inline">\(y_\text{true} = 0\)</span>; the probability of never having been infected by age <span class="math inline">\(a\)</span> is <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>. The two noise sources treat such a subject very differently <span class="citation" data-cites="Teunis_2020">(<a href="#/references" role="doc-biblioref" onclick="">Teunis and Eijkeren 2020</a>)</span>:</p>
+<ul>
+<li><p><strong>Biological noise is additive</strong>, so a never-infected subject is measured as <span class="math inline">\(y_\text{obs} = 0 + \epsilon_b \sim \text{Unif}(0, \nu)\)</span>. Cross-reactivity can register a positive signal even when there was no true response, so never-infected subjects still contribute a spread-out distribution of small positive values, not a single spike at zero.</p></li>
+<li><p><strong>Measurement noise is multiplicative</strong>, so a never-infected subject is measured as <span class="math inline">\(y_\text{obs} = 0 \cdot (1 + \xi) = 0\)</span>. A relative error cannot move a true zero, so measurement noise alone leaves these subjects exactly at zero.</p></li>
+</ul>
+<p>So the probability mass at <span class="math inline">\(y = 0\)</span> from never-infected subjects (with weight <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>) survives measurement noise but is smeared into small positive values by biological noise. This also explains why the biological-noise width <span class="math inline">\(\nu\)</span> can be estimated from a known unexposed population: those subjects are essentially all never-infected, so their measured antibody levels are, to good approximation, draws from the biological-noise distribution itself.</p>
 <!-- {{< include articles/_methods-continued.qmd >}} -->
 </section>
-<section id="multiple-biomarkers" class="slide level2" data-number="5.8">
-<h2><span class="header-section-number">5.8</span> Multiple biomarkers</h2>
+<section id="multiple-biomarkers" class="slide level2" data-number="5.10">
+<h2><span class="header-section-number">5.10</span> Multiple biomarkers</h2>
 
 <img data-src="methodology_files/figure-html/fig-loglik-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-loglik"><p class="caption">
 Figure&nbsp;5: Example log(likelihood) curves
 </p></section>
-<section id="variation-in-antibody-kinetics-by-country" class="slide level2 smaller" data-number="5.9">
-<h2><span class="header-section-number">5.9</span> Variation in antibody kinetics: by country</h2>
+<section id="variation-in-antibody-kinetics-by-country" class="slide level2 smaller" data-number="5.11">
+<h2><span class="header-section-number">5.11</span> Variation in antibody kinetics: by country</h2>
 <p>Antibody-decay kinetics are not identical across populations. Estimated seroresponse parameters vary by <strong>country</strong>, <strong>age</strong>, and <strong>serotype</strong> (<em>Typhi</em> vs <em>Paratyphi</em> A).</p>
 
 <img data-src="../man/figures/kinetics-variation-1.png" alt="Antibody decay curves and distributions of peak level and decay rate, stratified by country, for four antigen-isotypes" class="r-stretch quarto-figure-center"><p class="caption">Decay curves (A), peak antibody levels (B), and decay rates (C) for HlyE and LPS (IgG/IgA), by country (Bangladesh, Pakistan, Nepal, Ghana). SEES study.</p></section>
-<section id="variation-in-antibody-kinetics-by-age-and-serotype" class="slide level2 smaller" data-number="5.10">
-<h2><span class="header-section-number">5.10</span> Variation in antibody kinetics: by age and serotype</h2>
+<section id="variation-in-antibody-kinetics-by-age-and-serotype" class="slide level2 smaller" data-number="5.12">
+<h2><span class="header-section-number">5.12</span> Variation in antibody kinetics: by age and serotype</h2>
 
 <img data-src="../man/figures/kinetics-variation-2.png" alt="Antibody decay curves stratified by age group and by Typhi versus Paratyphi A serotype, for four antigen-isotypes" class="r-stretch quarto-figure-center"><p class="caption">Decay curves by age stratum (&lt;5, 5–15, 16+) and serotype (<em>Typhi</em> vs <em>Paratyphi</em> A), for HlyE and LPS (IgG/IgA). SEES study.</p><aside class="notes">
 <p>This heterogeneity is why we stratify the analysis (for example by country and age group) and why extending the model to handle covariates directly is on the roadmap.</p>
@@ -1398,6 +1432,9 @@ Hay, James A., Isobel Routledge, and Saki Takahashi. 2024. <span>“Serodynamics
 </div>
 <div id="ref-Noordzij2010diseasemeasures" class="csl-entry" role="listitem">
 Noordzij, Marlies, Friedo W. Dekker, Carmine Zoccali, and Kitty J. Jager. 2010. <span>“<span class="nocase">Measures of Disease Frequency: Prevalence and Incidence</span>.”</span> <em>Nephron Clinical Practice</em> 115 (1): c17–20. <a href="https://doi.org/10.1159/000286345">https://doi.org/10.1159/000286345</a>.
+</div>
+<div id="ref-Teunis_2020" class="csl-entry" role="listitem">
+Teunis, P. F. M., and J. C. H. van Eijkeren. 2020. <span>“Estimation of Seroconversion Rates for Infectious Diseases: Effects of Age and Noise.”</span> <em>Statistics in Medicine</em> 39 (21): 2799–814. <a href="https://doi.org/10.1002/sim.8578">https://doi.org/10.1002/sim.8578</a>.
 </div>
 <div id="ref-Teunis_2016" class="csl-entry" role="listitem">
 Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić Marinović, and M. E. E. Kretzschmar. 2016. <span>“Linking the Seroresponse to Infection to Within-Host Heterogeneity in Antibody Production.”</span> <em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001">https://doi.org/10.1016/j.epidem.2016.04.001</a>.

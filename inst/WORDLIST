@@ -4,6 +4,8 @@ Chiang
 CodeFactor
 Codecov
 Dhulikhel
+Eijkeren
+Eijkeren's
 FIC
 Fogarty
 GHA
@@ -17,6 +19,7 @@ LMICs
 LPS
 LV
 Lik
+Longrightarrow
 Lotka
 NIAID
 NLL
@@ -55,6 +58,7 @@ behaviour
 bioassays
 biomarker
 biomarkers
+bm
 boldsymbol
 callout
 cdot
@@ -63,6 +67,7 @@ colour
 csv
 dev
 devtools
+dfrac
 displaystyle
 dplyr
 dropdown
@@ -96,6 +101,7 @@ leq
 linter
 llik
 logf
+lognormal
 macular
 magrittr
 mathbb

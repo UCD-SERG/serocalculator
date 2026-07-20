@@ -36,6 +36,27 @@
   vignettes): `eps` is the bound on the relative measurement error
   (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
   corresponds to `eps = sqrt(3) * CV`. (#563)
+* Added the never-infected density under combined biological and
+  measurement noise to the `methodology` vignette: the piecewise
+  closed form for `y_obs = eps_b * (1 + xi)`, matching Teunis and van
+  Eijkeren (2020) Equation 19 and verified to integrate to the
+  never-infected probability. (#567)
+* Made the never-infected term explicit in the "per-person likelihood"
+  slide of the `methodology` vignette: the observed-data likelihood
+  integral is now shown split into its continuous (ever-infected) and
+  discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
+  defined as a point mass at zero (before noise). (#567)
+* Explained, in the "Biological noise" section of the `methodology`
+  vignette, why the biological-noise width `nu` is estimated as the
+  95th percentile of negative controls: Teunis and van Eijkeren (2020)
+  show that a uniform noise model only needs to match the true noise
+  distribution's width, not its exact shape, and note that this width
+  is difficult to verify against a mixed (ongoing-seroresponse)
+  population -- motivating estimation from a clean negative-control
+  panel instead. Also noted that the specific choice of the 95th
+  percentile (rather than, e.g., the 99th or the sample maximum) is an
+  adopted convention, not a result derived or optimized in the paper.
+  (#567)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

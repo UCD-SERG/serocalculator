@@ -24,7 +24,6 @@ NEWS_files
 **/.quarto/
 *.pdf
 junit.xml
-
 **/*.quarto_ipynb
 *.knit.md
 .positai
@@ -34,3 +33,5 @@ tests/vdiffr.Rout.fail
 _freeze/
 **/_freeze/
 .positai
+altdoc
+_quarto

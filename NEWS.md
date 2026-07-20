@@ -2,6 +2,10 @@
 
 ## New features
 
+* `autoplot.sim_results()` gains `x_var`, `group_var`, and `color_var`
+  arguments, letting users choose which columns map to the x-axis, group,
+  and color aesthetics instead of the previous hardcoded `sample_size` /
+  `lambda.sim` mapping.
 * `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
   model and supports `units`-aware curve parameters. (#393)
 * Added `ab_5p()`, a 5-parameter antibody response model that supports
@@ -21,6 +25,17 @@
 
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* Completed the measurement-noise model in the `methodology` vignette
+  (multiplicative relative error), added a "Combined biological and
+  measurement noise" section, and added a "Noise and never-infected
+  subjects" section explaining that additive biological noise spreads a
+  never-infected subject's measured response over a positive range while
+  multiplicative measurement noise leaves a true zero at zero. (#561)
+* Corrected the documentation of the `eps` measurement-noise parameter
+  (in `example_noise_params_pk`/`example_noise_params_sees` and the
+  vignettes): `eps` is the bound on the relative measurement error
+  (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
+  corresponds to `eps = sqrt(3) * CV`. (#563)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)

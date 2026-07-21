@@ -53,7 +53,7 @@ The **serocalculator** package was designed to calculate the incidence of seroco
 
 ### See An Example
 
-To get started with a simple example for using **serocalculator**, see the [Enteric Fever Seroincidence Vignette](https://ucd-serg.github.io/serocalculator/main/articles/enteric_fever_example.html)
+To get started with a simple example for using **serocalculator**, see the [Enteric Fever Seroincidence Vignette](https://ucd-serg.github.io/serocalculator/main/articles/enteric_fever_example.html).
 
 ### The Serocalculator App
 

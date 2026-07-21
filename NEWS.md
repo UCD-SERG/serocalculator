@@ -76,7 +76,7 @@
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)
-* Added plot of posterior predictive variance over time to `methodology.qmd`(#578)
+* Added plot of posterior predictive variance over time to `methodology.qmd` (#578)
 
 
 ## Internal

@@ -566,7 +566,7 @@ sim_case_data |>
 
 ```
 
-Antibody response curves, $p(Y=y|T=t)$, for typhoid
+Simulated antibody response curves for typhoid
 
 :::
 

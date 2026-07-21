@@ -1,0 +1,66 @@
+---
+title: Reference
+---
+
+## Prepare data, kinetics models, and noise parameters for analysis
+
+- [as_pop_data](man/as_pop_data.qmd)
+- [load_pop_data](man/load_pop_data.qmd)
+- [as_sr_params](man/as_sr_params.qmd)
+- [load_sr_params](man/load_sr_params.qmd)
+- [as_noise_params](man/as_noise_params.qmd)
+- [load_noise_params](man/load_noise_params.qmd)
+- [check_pop_data](man/check_pop_data.qmd)
+- [strata](man/strata.qmd)
+
+## Extract information from data, seroresponse models, and noise parameters
+
+- [get_biomarker_levels](man/get_biomarker_levels.qmd)
+- [get_biomarker_names_var](man/get_biomarker_names_var.qmd)
+- [get_values_var](man/get_values_var.qmd)
+- [get_values](man/get_values.qmd)
+
+## Visualize data
+
+- [autoplot.pop_data](man/autoplot.pop_data.qmd)
+- [autoplot.curve_params](man/autoplot.curve_params.qmd)
+- [graph.curve.params](man/graph.curve.params.qmd)
+- [graph_loglik](man/graph_loglik.qmd)
+- [log_likelihood](man/log_likelihood.qmd)
+
+## Estimate seroconversion incidence rates
+
+- [est_seroincidence](man/est_seroincidence.qmd)
+- [est_seroincidence_by](man/est_seroincidence_by.qmd)
+
+## Summarize seroconversion incidence rate estimates
+
+- [summary.seroincidence](man/summary.seroincidence.qmd)
+- [summary.seroincidence.by](man/summary.seroincidence.by.qmd)
+
+## Visualize seroconversion incidence rate estimates
+
+- [autoplot.seroincidence](man/autoplot.seroincidence.qmd)
+- [autoplot.seroincidence.by](man/autoplot.seroincidence.by.qmd)
+- [autoplot.summary.seroincidence.by](man/autoplot.summary.seroincidence.by.qmd)
+
+## Compare seroconversion incidence rates
+
+- [compare_seroincidence](man/compare_seroincidence.qmd)
+
+## Example data sets
+
+- [sees_pop_data_100](man/sees_pop_data_100.qmd)
+- [sees_pop_data_pk_100](man/sees_pop_data_pk_100.qmd)
+- [typhoid_curves_nostrat_100](man/typhoid_curves_nostrat_100.qmd)
+- [example_noise_params_sees](man/example_noise_params_sees.qmd)
+- [example_noise_params_pk](man/example_noise_params_pk.qmd)
+- [sees_typhoid_ests_strat](man/sees_typhoid_ests_strat.qmd)
+- [serocalculator_example](man/serocalculator_example.qmd)
+
+## Simulate data sets
+
+- [sim_pop_data](man/sim_pop_data.qmd)
+- [sim_pop_data_multi](man/sim_pop_data_multi.qmd)
+- [analyze_sims](man/analyze_sims.qmd)
+- [autoplot.sim_results](man/autoplot.sim_results.qmd)

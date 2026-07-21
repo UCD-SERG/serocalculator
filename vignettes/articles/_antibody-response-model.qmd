@@ -1,7 +1,7 @@
 # Modeling the seroresponse kinetics curve
 
 ::: notes
-Now, we need a model for the antibody response to infection, $\pdf(Y=y|T=t)$.
+Now, we need a model for the antibody response to infection, $\dens(Y=y|T=t)$.
 The current version of the `{serocalculator}` package uses
 a two-phase model for
 the shape of the seroresponse [@Teunis_2016].
@@ -18,13 +18,14 @@ where the pathogen is the prey and the antibodies are the predator:
 
 Notation:
 
-* $x(t)$: Pathogen concentration at time $t$ 
-* $y(t)$: Antibody concentration at time $t$ 
+* $x(t)$: pathogen concentration at time $t$
+* $y(t)$: antibody concentration at time $t$
+* $\mu_0$: pathogen growth rate; $\beta$: pathogen-inactivation strength; $\mu$: antibody growth rate
 
-Model: 
+Model:
 
-* $$x'(t) = \alpha x(t) - \beta y(t)$$
-* $$y'(t) = \delta y(t)$$
+* $$x'(t) = \mu_0\, x(t) - \beta y(t)$$
+* $$y'(t) = \mu\, y(t)$$
 
 ::: notes
 With baseline antibody concentration $y(0) = y_{0}$ and
@@ -45,8 +46,8 @@ the predator death rate term
 $-\gamma y(t)$; we assume that as long as there are any pathogens present,
 the antibody decay rate is negligible compared to the growth rate.
 
-* the predator growth rate term $\delta y(t)$ is missing
-the prey density factor $x(t)$
+* the predator growth rate term $\mu\, y(t)$ is missing
+the prey density factor $x(t)$;
 we assume that as long as there are any pathogens present,
 the antibody concentration grows at the same exponential rate.
 
@@ -58,7 +59,13 @@ compared to the other terms in the model.
 
 ## Model for post-infection antibody decay
 
-* $$b(t) = 0$$
+::: notes
+Once the immune response clears the infection, the pathogen concentration
+reaches zero, so antibody production is no longer stimulated and the
+antibody concentration decays.
+:::
+
+Once the pathogen is cleared ($x(t) = 0$), the antibody concentration decays:
 
 * $$y^{\prime}(t) = -\alpha y(t)^r$$
 
@@ -72,7 +79,7 @@ If $r = 1$,
 this model reduces to exponential decay with decay rate $\alpha$.
 :::
 
-## Putting it all together
+## Assembling the full response curve
 
 The serum antibody response $y(t)$ can be written as
 
@@ -89,11 +96,37 @@ y_{-}(t) & = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{r-1}
 \end{align}
 $$
 
----
+## Growth rate from peak and baseline {visibility="hidden"}
 
 Since the peak level is $y_{1} = y_{0}\text{e}^{\mu t_{1}}$
 the growth rate $\mu$ can be written as
 $$\mu = \frac{1}{t_{1}}\log\left(\frac{y_{1}}{y_{0}}\right)$$
+
+## From the full model to the observed curve {.smaller}
+
+::: notes
+The antibody curve $y(t)$ that we observe and plot falls out of the
+two-phase system as follows:
+:::
+
+* **During infection** ($t < t_1$): the antibody equation
+$y'(t) = \mu\, y(t)$ gives exponential growth, $y(t) = y_0\, e^{\mu t}$.
+
+* The **pathogen equation sets the peak time** $t_1$: circulating
+antibodies inactivate the pathogen (the $-\beta y(t)$ term), driving $x(t)$
+to zero at $t_1$. Once the pathogen is cleared, stimulation stops and decay
+begins, so the peak antibody level is $y_1 = y_0\, e^{\mu t_1}$.
+
+* **After the peak** ($t \ge t_1$): power-law decay,
+$y'(t) = -\alpha y(t)^r$.
+
+::: notes
+So the pathogen trajectory $x(t)$ never appears in the final antibody curve
+--- it enters only through the peak time $t_1$. From antibody data alone
+the pathogen-side quantities ($\mu_0$, $\beta$, and the inoculum $x_0$) are
+not separately identifiable [@Teunis_2016], so the curve is summarized by
+five parameters: $y_0,\ y_1,\ t_1,\ \alpha,\ r$.
+:::
 
 ---
 
@@ -109,12 +142,12 @@ library(serocalculator)
 library(dplyr)
 # Import longitudinal antibody parameters from OSF
 curves <-
-  "https://osf.io/download/rtw5k/" %>%
-  load_sr_params() %>%
+  "https://osf.io/download/rtw5k/" |>
+  load_sr_params() |>
   filter(iter < 50)
 
 curve1 <-
-  curves %>%
+  curves |>
   filter(
     iter == 5,
     antigen_iso == cur_ai
@@ -122,6 +155,9 @@ curve1 <-
 library(ggplot2)
 
 curve1 |>
+  # plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a
+  # single pre-filtered curve must be relabelled iter 1 or no curve is drawn.
+  mutate(iter = 1) |>
   serocalculator:::plot_curve_params_one_ab(
     log_y = FALSE
   ) +
@@ -171,11 +207,11 @@ Any antibody level $y(t) \in (y_{0}, y_{1})$ eventually occurs twice.
 ---
 
 ::: notes
-An interactive Shiny app that allows the user to manipulate the model parameters is available at:
-
-<https://ucdserg.shinyapps.io/antibody-kinetics-model-2/>
-
+An interactive Shiny app lets you manipulate the model parameters:
 :::
+
+Interactive Shiny app:
+<https://ucdserg.shinyapps.io/antibody-kinetics-model-2/>
 
 ```{r}
 #| echo: false
@@ -186,7 +222,7 @@ code <- qr_code("https://ucdserg.shinyapps.io/antibody-kinetics-model-2/")
 generate_svg(code, filename = "man/figures/qr_akm2.svg")
 ```
 
-![QR code for shiny app](../man/figures/qr_akm2.svg)
+![QR code for the antibody-kinetics Shiny app](../man/figures/qr_akm2.svg){width="280"}
 
 ## Biological noise
 
@@ -210,9 +246,57 @@ Model:
 * $\epsilon_b \sim \text{Unif}(0, \nu)$
 
 $\nu$ needs to be pre-estimated using negative controls,
-typically using the 95th percentile of the distribution of 
-antibody responses to the antigen-isotype 
+typically using the 95th percentile of the distribution of
+antibody responses to the antigen-isotype
 in a population with no exposure.
+
+::: notes
+Why the 95th percentile of negative controls, rather than fitting the
+full shape of the noise distribution?
+
+[@Teunis_2020] show that a uniform noise model only needs to get the
+noise *width* right, not its exact *shape*: comparing $\lambda$
+estimates under the true (lognormal) noise distribution against
+estimates under a uniform distribution with the same one-sided 95%
+range, the two are similar. Getting the width right matters far more
+than getting the shape right, so a single width parameter -- rather
+than a fully specified distribution -- is sufficient.
+
+That still leaves the question of *how* to estimate the width. The
+general cross-sectional sample cannot be used directly: it is a
+mixture of never-infected subjects (pure noise) and subjects at
+various stages of a real antibody response (signal plus noise), and
+separating the two requires already knowing who is infected -- exactly
+what the model is trying to estimate. [@Teunis_2020] note this
+explicitly: "against a background of ongoing seroresponses, even
+reliable verification of the (95%) width of the distribution may be
+difficult."
+
+A negative-control panel (subjects confirmed never infected) avoids
+this circularity: every observed value in that panel *is* noise, with
+no signal mixed in, so its empirical 95th percentile is a direct
+estimate of the width the model needs.
+
+Why the 95th percentile specifically, rather than the 99th or the
+100th (the sample maximum)? [@Teunis_2020] motivates a *width-based*
+approach, first framing it as "the one-sided 95%" and later as the
+"95% range" / "(95%) width" of the noise distribution, but never
+compares 95% against other levels -- so the choice of 95% itself is
+an adopted convention (it matches how reference intervals are
+commonly defined in clinical laboratory practice), not a result
+derived or optimized in the paper.
+The 100th percentile (the sample maximum) would be a poor choice
+regardless: it is driven entirely by the single most extreme
+observation in the panel, so one contaminated or mislabeled
+negative control inflates $\nu$ directly, and for any finite panel
+it underestimates the true theoretical bound. A percentile further
+into the tail than 95% (e.g., 99%) needs a substantially larger
+negative-control panel to estimate with comparable precision, for the
+same reason -- order statistics closer to the extreme have higher
+sampling variance. 95% is the conventional middle ground: far enough
+into the tail to capture the width that matters, without the
+fragility of chasing a more extreme quantile.
+:::
 
 ## Measurement noise
 
@@ -223,7 +307,267 @@ This noise can cause both overcount and undercount.
 We can also estimate the magnitude of this noise source
 and include it in $p(Y=y|T=t)$.
 
-Measurement noise, $\varepsilon$ ("epsilon"), 
-represents measurement error from the laboratory testing process. 
-It is defined by a CV (coefficient of variation) as the ratio of the standard deviation to the mean for replicates. The model accounts for this baseline assay imprecision and technical variation by applying a log-normal error structure to the observed quantitative antibody responses.
-Note that the CV should ideally be measured across plates rather than within the same plate. 
+
+Measurement noise, $\varepsilon$ ("epsilon"),
+represents measurement error from the laboratory testing process.
+
+Unlike biological noise, measurement noise is *multiplicative*:
+the error scales with the true concentration
+(equivalently, it is additive on a log scale),
+and it has mean zero,
+so on average it neither inflates nor deflates the measured concentration.
+
+Notation:
+
+* $y_\text{obs}$: measured serum antibody concentration
+* $y_\text{true}$: "true" serum antibody concentration
+* $\xi$: relative measurement error
+* $\varepsilon$: bound on the relative error
+
+Model:
+
+* $y_\text{obs} = y_\text{true} \cdot (1 + \xi)$
+* $\xi \sim \text{Unif}(-\varepsilon, \varepsilon), \quad 0 \le \varepsilon < 1$
+
+Here $\varepsilon$ is the bound on the relative error,
+not a coefficient of variation (CV).
+Assay precision is often reported as a CV,
+the ratio of the standard deviation to the mean for replicates,
+ideally measured across plates rather than within the same plate.
+Under this uniform model the CV equals $\varepsilon/\sqrt{3}$,
+so a measured CV corresponds to $\varepsilon = \sqrt{3}\,\text{CV}$.
+
+::: notes
+This follows directly from the variance of a uniform distribution.
+For $\xi \sim \text{Unif}(-\varepsilon, \varepsilon)$,
+
+$$
+\text{Var}(\xi) = \frac{(2\varepsilon)^2}{12} = \frac{\varepsilon^2}{3}
+\quad\Longrightarrow\quad
+\text{SD}(\xi) = \frac{\varepsilon}{\sqrt{3}}.
+$$
+
+Since $E[\xi] = 0$ by symmetry, for a fixed true concentration
+$y_\text{true}$,
+
+$$
+E[y_\text{obs}] = y_\text{true} \cdot E[1 + \xi] = y_\text{true},
+\qquad
+\text{SD}(y_\text{obs}) = y_\text{true} \cdot \text{SD}(\xi)
+  = y_\text{true} \cdot \frac{\varepsilon}{\sqrt{3}},
+$$
+
+so
+
+$$
+\text{CV} = \frac{\text{SD}(y_\text{obs})}{E[y_\text{obs}]}
+  = \frac{\varepsilon}{\sqrt{3}}.
+$$
+
+The true concentration $y_\text{true}$ cancels, so the CV depends only
+on $\varepsilon$, not on the concentration being measured -- as
+expected for a *relative* (multiplicative) error model.
+:::
+
+## Combined biological and measurement noise
+
+In practice both noise sources are usually present at once.
+The two are applied in sequence [@Teunis_2020]:
+biological noise is added to the true concentration,
+and measurement noise then scales the result.
+
+Model:
+
+* $y_\text{obs} = (y_\text{true} + \epsilon_b)(1 + \xi)$
+* $\epsilon_b \sim \text{Unif}(0, \nu)$
+* $\xi \sim \text{Unif}(-\varepsilon, \varepsilon)$
+
+This is the model `serocalculator` uses
+whenever a `noise_params` row has both $\nu > 0$ and $\varepsilon > 0$;
+setting either width to zero recovers the corresponding single-source model above.
+
+::: notes
+The observed concentration is a product of two independent random
+variables, $y_\text{obs} = S \cdot X$, where $S = y_\text{true} + \epsilon_b$
+and $X = 1 + \xi$. Conditional on $y_\text{true}$ (holding it fixed, since
+only $\epsilon_b$ and $\xi$ are random),
+
+$$
+E[S] = y_\text{true} + \frac{\nu}{2}, \qquad
+\text{Var}(S) = \text{Var}(\epsilon_b) = \frac{\nu^2}{12},
+\qquad
+E[X] = 1, \qquad
+\text{Var}(X) = \text{Var}(\xi) = \frac{\varepsilon^2}{3},
+$$
+
+the first pair from $\epsilon_b \sim \text{Unif}(0,\nu)$, the second from
+$\xi \sim \text{Unif}(-\varepsilon,\varepsilon)$ (as derived above). For
+independent $S$ and $X$,
+
+$$
+\text{Var}(SX) = \text{Var}(S)\text{Var}(X) + \text{Var}(S)\,E[X]^2
+  + E[S]^2\,\text{Var}(X).
+$$
+
+Substituting $E[X] = 1$ and the variances above,
+
+$$
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\cdot\frac{\varepsilon^2}{3}
++ \frac{\nu^2}{12}\cdot 1
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3},
+$$
+
+which simplifies to
+
+$$
+\text{Var}(y_\text{obs} \mid y_\text{true}) =
+\frac{\nu^2}{12}\left(1 + \frac{\varepsilon^2}{3}\right)
++ \left(y_\text{true} + \frac{\nu}{2}\right)^2 \frac{\varepsilon^2}{3}.
+$$
+
+As a check, this reduces to the two single-source cases above: setting
+$\varepsilon = 0$ gives $\nu^2/12$, matching $\text{Var}(\epsilon_b)$ for
+biological noise alone; setting $\nu = 0$ gives
+$y_\text{true}^2\,\varepsilon^2/3$, matching the measurement-noise-only
+CV derivation ($\text{SD}(y_\text{obs}) = y_\text{true}\cdot\varepsilon/\sqrt{3}$).
+:::
+
+::: notes
+$\text{Var}(y_\text{obs} \mid y_\text{true})$ conditions on a specific
+individual's true concentration. At the population level, even at a fixed
+time since infection $T=t$, different individuals have different true
+antibody concentrations: `serodynamics` returns a posterior *sample* of
+curve-parameter sets rather than a single fixed curve, capturing both
+estimation uncertainty and between-person heterogeneity in the seroresponse
+(see "Propagating uncertainty and heterogeneity" in the `methodology`
+vignette). Write $\mu(t) = E[y_\text{true} \mid T=t]$ and
+$\sigma^2(t) = \text{Var}(y_\text{true} \mid T=t)$ for this heterogeneity.
+Unlike $\epsilon_b$ and $\xi$, $y_\text{true}$ is not a named distribution
+in this framework -- its population distribution is the empirical Monte
+Carlo sample, not a stated closed form -- so $\sigma^2(t)$ has no closed
+form here and is carried through the derivation symbolically.
+
+Assuming $y_\text{true}$, $\epsilon_b$, and $\xi$ are mutually independent
+given $T=t$, the law of total variance gives
+
+$$
+\text{Var}(y_\text{obs} \mid T=t) =
+E\big[\text{Var}(y_\text{obs} \mid y_\text{true}) \mid T=t\big]
++ \text{Var}\big(E[y_\text{obs} \mid y_\text{true}] \mid T=t\big).
+$$
+
+For the second term, $E[y_\text{obs}\mid y_\text{true}] = y_\text{true} +
+\nu/2$ (a constant shift of $y_\text{true}$), so
+
+$$
+\text{Var}\big(E[y_\text{obs} \mid y_\text{true}] \mid T=t\big) =
+\text{Var}(y_\text{true} \mid T=t) = \sigma^2(t).
+$$
+
+For the first term, take the expectation of the
+$\text{Var}(y_\text{obs}\mid y_\text{true})$ formula derived above over
+$y_\text{true}$:
+
+$$
+E\big[\text{Var}(y_\text{obs}\mid y_\text{true}) \mid T=t\big] =
+\frac{\nu^2}{12}\left(1+\frac{\varepsilon^2}{3}\right)
++ \frac{\varepsilon^2}{3}\, E\!\left[\left(y_\text{true}+\frac{\nu}{2}\right)^2 \middle| T=t\right].
+$$
+
+Writing $W = y_\text{true} + \nu/2$ (a constant shift), $E[W^2] =
+\text{Var}(W) + E[W]^2 = \sigma^2(t) + (\mu(t)+\nu/2)^2$, so
+
+$$
+E\!\left[\left(y_\text{true}+\frac{\nu}{2}\right)^2 \middle| T=t\right]
+= \sigma^2(t) + \left(\mu(t) + \frac{\nu}{2}\right)^2.
+$$
+
+Adding the two law-of-total-variance terms together,
+
+$$
+\text{Var}(y_\text{obs} \mid T=t) =
+\left(1+\frac{\varepsilon^2}{3}\right)\left[\frac{\nu^2}{12}+\sigma^2(t)\right]
++ \frac{\varepsilon^2}{3}\left(\mu(t)+\frac{\nu}{2}\right)^2.
+$$
+
+This has the same functional form as $\text{Var}(y_\text{obs}\mid
+y_\text{true})$ above, with $y_\text{true}$ replaced by its conditional
+mean $\mu(t)$ and an extra between-person heterogeneity term $\sigma^2(t)$
+added alongside the biological-noise variance $\nu^2/12$. As a check,
+setting $\sigma^2(t) = 0$ (no heterogeneity, a single fixed curve so
+$y_\text{true} = \mu(t)$ with certainty) recovers
+$\text{Var}(y_\text{obs}\mid y_\text{true}=\mu(t))$ exactly, as expected.
+:::
+
+## Noise and never-infected subjects
+
+A subject who has never been infected has
+true antibody concentration $y_\text{true} = 0$;
+the probability of never having been infected by age $a$
+is $\expf{-\lambda a}$.
+The two noise sources treat such a subject very differently [@Teunis_2020]:
+
+* **Biological noise is additive**,
+so a never-infected subject is measured as
+$y_\text{obs} = 0 + \epsilon_b \sim \text{Unif}(0, \nu)$.
+Cross-reactivity can register a positive signal
+even when there was no true response,
+so never-infected subjects still contribute
+a spread-out distribution of small positive values,
+not a single spike at zero.
+
+* **Measurement noise is multiplicative**,
+so a never-infected subject is measured as
+$y_\text{obs} = 0 \cdot (1 + \xi) = 0$.
+A relative error cannot move a true zero,
+so measurement noise alone leaves these subjects exactly at zero.
+
+So the probability mass at $y = 0$ from never-infected subjects
+(with weight $\expf{-\lambda a}$)
+survives measurement noise
+but is smeared into small positive values by biological noise.
+This also explains why the biological-noise width $\nu$
+can be estimated from a known unexposed population:
+those subjects are essentially all never-infected,
+so their measured antibody levels are, to good approximation,
+draws from the biological-noise distribution itself.
+
+**Under both noise sources together**, the never-infected contribution
+is neither of these two single-source shapes.
+Substituting $y_\text{true} = 0$ into the combined model gives
+
+$$
+y_\text{obs} = \epsilon_b (1 + \xi), \qquad
+\epsilon_b \sim \text{Unif}(0, \nu), \quad
+\xi \sim \text{Unif}(-\varepsilon, \varepsilon),
+$$
+
+a product of two independent uniform random variables, not itself
+uniform. Following the same conditioning argument Teunis and van
+Eijkeren use to derive their combined-noise density [@Teunis_2020],
+its density (the never-infected contribution to the overall observed
+density, including the never-infected weight $\expf{-\lambda a}$) is
+
+$$
+\rho_{bm}(y \mid \text{never-infected}) =
+\begin{cases}
+\dfrac{\expf{-\lambda a}}{2\varepsilon\nu}
+  \log\!\left(\dfrac{1+\varepsilon}{1-\varepsilon}\right)
+  & 0 < y \le \nu(1-\varepsilon) \\[8pt]
+\dfrac{\expf{-\lambda a}}{2\varepsilon\nu}
+  \log\!\left(\dfrac{\nu(1+\varepsilon)}{y}\right)
+  & \nu(1-\varepsilon) < y < \nu(1+\varepsilon) \\[8pt]
+0 & y \ge \nu(1+\varepsilon)
+\end{cases}
+$$
+
+The first piece matches Teunis and van Eijkeren's Equation 19: it is
+flat (constant in $y$) over most of its support, then tapers to zero
+by $y = \nu(1+\varepsilon)$.
+Integrating both pieces over their full range recovers exactly
+$\expf{-\lambda a}$, the never-infected probability, confirming the
+density is correctly normalized.
+As $\varepsilon \to 0$ the flat piece reduces to
+$\expf{-\lambda a}/\nu$, the biological-noise-only density on
+$[0, \nu]$, matching the single-source case above.

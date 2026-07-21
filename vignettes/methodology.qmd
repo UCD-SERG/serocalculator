@@ -566,7 +566,7 @@ sim_case_data |>
 
 ```
 
-Antibody response curves, $p(Y=y|T=t)$, for typhoid
+Antibody response curves for typhoid
 
 :::
 
@@ -702,6 +702,7 @@ to find the MLE and corresponding standard error.
 {{< include articles/_antibody-response-model.qmd >}}
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->
+
 
 ## Multiple biomarkers
 
@@ -921,6 +922,75 @@ models have constant additive and relative widths, respectively; neither
 width is an explicit function of time since infection.
 :::
 
+## Posterior predictive variance over time
+
+The figure below illustrates this empirically. Posterior predictive variance — computed across the full Monte Carlo sample of kinetic parameter sets at each time point — is highest during the acute phase (approximately days 0–150) and decreases monotonically thereafter. This convergence occurs because the power-law decay rate is concentration-dependent: individuals with high peaks wane faster than those with lower peaks, causing trajectories to converge rather than diverge over time. The marginal likelihood approach therefore does not misspecify observation error in the waning phase.
+
+```{r}
+#| echo: false
+
+# Load posterior curve parameter samples
+curves <- load_sr_params("https://osf.io/download/rtw5k/") |>
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
+
+# Load noise parameters
+noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
+
+
+# Define the two-phase kinetics function
+predicted_ab <- function(t, y0, y1, t1, alpha, r) {
+  if (t <= t1) {
+    y0 * exp(log(y1 / y0) / t1 * t)
+  } else {
+    y1 * (1 + (r - 1) * y1^(r - 1) * alpha * (t - t1))^(-1 / (r - 1))
+  }
+}
+predicted_ab <- Vectorize(predicted_ab, vectorize.args = "t")
+
+# Time grid
+time_grid <- seq(0, 730, by = 7)
+
+# Loop over all antigen-isotypes
+all_summaries <- curves |>
+  distinct(antigen_iso) |>
+  pull(antigen_iso) |>
+  lapply(function(ab) {
+    curves_ab <- curves |> filter(antigen_iso == ab)
+
+    pred_matrix <- mapply(
+      function(y0, y1, t1, alpha, r) predicted_ab(time_grid, y0, y1, t1, alpha, r),
+      y0    = curves_ab$y0,
+      y1    = curves_ab$y1,
+      t1    = curves_ab$t1,
+      alpha = curves_ab$alpha,
+      r     = curves_ab$r
+    )
+
+    tibble(
+      antigen_iso = ab,
+      time        = time_grid,
+      mean_ab     = rowMeans(pred_matrix),
+      var_ab      = apply(pred_matrix, 1, var),
+      sd_ab       = apply(pred_matrix, 1, sd)
+    )
+  }) |>
+  bind_rows()
+
+# Plot 1: variance over time, faceted by antigen-isotype, log scale
+ggplot(all_summaries, aes(x = time, y = var_ab)) +
+  geom_line() +
+  scale_y_log10() +
+  facet_wrap(~ antigen_iso, scales = "free_y") +
+  labs(
+    x = "Days since infection",
+    y = "Variance of predicted antibody level (log scale)",
+    title = "Posterior predictive variance over time since infection"
+  ) +
+  theme_bw()
+
+```
+
+
 # Using `serocalculator`
 
 ## An open-source R package
@@ -1041,6 +1111,13 @@ at higher incidence. Abridged from the serocalculator
 `simulate_xsectionalData` vignette.
 :::
 
+
+
+## Conclusion
+
+By formalizing the relationship between continuous antibody titers, longitudinal decay curves, and population exposure rates, this methodology allows researchers to extract maximum epidemiological utility from cross-sectional surveys. **serocalculator** handles the intensive computational steps of integrating out the unobserved infection times while robustly managing measurement noise and individual heterogeneity. The resulting maximum likelihood framework provides a standardized, high-resolution approach to estimating population-level seroincidence from a single snapshot in time.
+
+
 ## In-progress work
 
 * Extending and improving existing Shiny apps for these methods
@@ -1082,6 +1159,8 @@ Kwan Ho Lee (UCD-SERG) is relaxing this to allow **covariance** among
 biomarkers --- a multivariate seroresponse model with a Kronecker-structured
 covariance, fit in Stan
 ([UCD-SERG/shigella#13](https://github.com/UCD-SERG/shigella/pull/13)).
+
+
 
 ## References {.smaller .unnumbered}
 

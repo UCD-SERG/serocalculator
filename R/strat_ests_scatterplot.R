@@ -57,7 +57,7 @@ strat_ests_scatterplot <- function(
       col = .data[[color_var]]
     ) +
     ggplot2::xlab(xvar) +
-    ggplot2::ylab("Estimated seroincidence rate") +
+    ggplot2::ylab("Estimated incidence rate") +
     ggplot2::theme_linedraw() +
     ggplot2::theme(
       panel.grid.minor.x = ggplot2::element_blank(),

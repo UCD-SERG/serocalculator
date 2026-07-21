@@ -65,24 +65,3 @@ test_that(
       vdiffr::expect_doppelganger(title = "curve-samples-log_x")
   }
 )
-
-test_that(
-  desc = "units-aware curve parameters are supported",
-  code = {
-    curve <-
-      typhoid_curves_nostrat_100 |>
-      dplyr::filter(antigen_iso == "HlyE_IgG", iter <= 3) |>
-      dplyr::mutate(
-        alpha = units::as_units(.data$alpha, "1/days"),
-        t1 = units::as_units(.data$t1, "days")
-      )
-
-    plot <- graph.curve.params(
-      curve,
-      n_curves = 0,
-      quantiles = 0.5
-    )
-
-    expect_s3_class(plot, "ggplot")
-  }
-)

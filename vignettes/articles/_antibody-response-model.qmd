@@ -307,6 +307,7 @@ This noise can cause both overcount and undercount.
 We can also estimate the magnitude of this noise source
 and include it in $p(Y=y|T=t)$.
 
+
 Measurement noise, $\varepsilon$ ("epsilon"),
 represents measurement error from the laboratory testing process.
 

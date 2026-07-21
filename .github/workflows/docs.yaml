@@ -14,8 +14,6 @@ on:
       - DESCRIPTION
       - "**.md"
       - "**.Rmd"
-      - "**.qmd"
-      - "macros"
       - "man/**"
       - "LICENSE.*"
       - NAMESPACE
@@ -29,6 +27,8 @@ on:
       - reopened
       - ready_for_review
       - closed
+    branches:
+      - main
     paths:
       - "inst/templates/**"
       - "pkgdown/**"
@@ -36,8 +36,6 @@ on:
       - DESCRIPTION
       - "**.md"
       - "**.Rmd"
-      - "**.qmd"
-      - "macros"
       - "man/**"
       - "LICENSE.*"
       - NAMESPACE
@@ -86,7 +84,6 @@ jobs:
           ref: ${{ steps.branch-name.outputs.head_ref_branch }}
           path: ${{ github.event.repository.name }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-          submodules: true
 
       - name: Checkout repo 🛎
         uses: actions/checkout@v4.3.1
@@ -94,7 +91,6 @@ jobs:
         with:
           ref: ${{ steps.current-branch-or-tag.outputs.ref-name }}
           path: ${{ github.event.repository.name }}
-          submodules: true
 
       - name: Check commit message 💬
         run: |
@@ -144,9 +140,9 @@ jobs:
         run: |
           # Set devel = FALSE for version tags, TRUE for everything else
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            Rscript -e 'pkgdown::build_site(devel = FALSE, quiet = FALSE)'
+            Rscript -e 'pkgdown::build_site(devel = FALSE)'
           else
-            Rscript -e 'pkgdown::build_site(devel = TRUE, quiet = FALSE)'
+            Rscript -e 'pkgdown::build_site(devel = TRUE)'
           fi
         shell: bash
         working-directory: ${{ github.event.repository.name }}

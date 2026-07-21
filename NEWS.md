@@ -1,125 +1,15 @@
 # serocalculator (development version)
 
-## New features
-
-* `autoplot.sim_results()` gains `x_var`, `group_var`, and `color_var`
-  arguments, letting users choose which columns map to the x-axis, group,
-  and color aesthetics instead of the previous hardcoded `sample_size` /
-  `lambda.sim` mapping.
-* `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
-  model and supports `units`-aware curve parameters. (#393)
-* Added `ab_5p()`, a 5-parameter antibody response model that supports
-  {units}-aware inputs (e.g. `t = units::as_units(50, "days")`), building on
-  the existing `bt()` active-phase helper. CI now installs the system
-  `udunits2` library on macOS and Windows so the new `units` dependency can
-  compile there. (#393)
-* Added `sim_pop_data_2()`, a `sim_pop_data()` alternative built on `ab_5p()`
-  that simulates each simulated individual's age (`sim_age()`) and time
-  since their last seroconversion (`sim_time_since_last_sc()`) directly,
-  rather than simulating an infection history. Both new helper functions,
-  and `sim_pop_data_2()` itself, accept `units`-aware inputs.
-* `sim_pop_data_multi()` gained a `sim_function` parameter (default
-  `sim_pop_data`) so callers can select `sim_pop_data_2()` instead. (#393)
-
-## Documentation
-
-* Added introductory lecture slides to the `methodology` vignette
-  ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
-* Completed the measurement-noise model in the `methodology` vignette
-  (multiplicative relative error), added a "Combined biological and
-  measurement noise" section, and added a "Noise and never-infected
-  subjects" section explaining that additive biological noise spreads a
-  never-infected subject's measured response over a positive range while
-  multiplicative measurement noise leaves a true zero at zero. (#561)
-* Corrected the documentation of the `eps` measurement-noise parameter
-  (in `example_noise_params_pk`/`example_noise_params_sees` and the
-  vignettes): `eps` is the bound on the relative measurement error
-  (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
-  corresponds to `eps = sqrt(3) * CV`. (#563)
-* Added the never-infected density under combined biological and
-  measurement noise to the `methodology` vignette: the piecewise
-  closed form for `y_obs = eps_b * (1 + xi)`, matching Teunis and van
-  Eijkeren (2020) Equation 19 and verified to integrate to the
-  never-infected probability. (#567)
-* Made the never-infected term explicit in the "per-person likelihood"
-  slide of the `methodology` vignette: the observed-data likelihood
-  integral is now shown split into its continuous (ever-infected) and
-  discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
-  defined as a point mass at zero (before noise). (#567)
-* Explained, in the "Biological noise" section of the `methodology`
-  vignette, why the biological-noise width `nu` is estimated as the
-  95th percentile of negative controls: Teunis and van Eijkeren (2020)
-  show that a uniform noise model only needs to match the true noise
-  distribution's width, not its exact shape, and note that this width
-  is difficult to verify against a mixed (ongoing-seroresponse)
-  population -- motivating estimation from a clean negative-control
-  panel instead. Also noted that the specific choice of the 95th
-  percentile (rather than, e.g., the 99th or the sample maximum) is an
-  adopted convention, not a result derived or optimized in the paper.
-  (#567)
-* Added the conditional variance `Var(y_obs | y_true)` for the combined
-  biological- and measurement-noise model to the `methodology` vignette,
-  derived from the independent-product-variance identity and checked
-  against both single-source special cases already in the vignette.
-  (#571)
-* Added `Var(y_obs | T=t)`, marginalizing over between-person heterogeneity
-  in `y_true`, to the `methodology` vignette: derived via the law of total
-  variance from the `Var(y_obs | y_true)` formula above, with the
-  between-person heterogeneity term `Var(y_true | T=t)` introduced
-  symbolically (it has no closed form in this framework, since
-  `serodynamics` represents curve-parameter heterogeneity as an empirical
-  posterior sample rather than a stated parametric distribution). Clarified
-  that the longitudinal model's residual variance is constant on the log
-  scale conditional on individual random effects, while random waning rates
-  can induce time-varying marginal population variance that `serocalculator`
-  carries forward by averaging over kinetic-parameter draws. (#571)
-* Moved `f_dev0()`'s `@examples` block to a separate example file
-  (`inst/examples/exm-f_dev.R`), following the convention already used by
-  other functions in this package. (#393)
-
 ## Internal
 
-* Added Codex repository guidance and R-package workflow skills. (#574)
-* `news.yaml` now calls the central
-  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`
-  reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`
-  directly. (#537)
-* `claude.yml` and `claude-code-review.yml` now call the central
-  [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2` and
-  `claude-code-review.yml@v2` reusable workflows instead of carrying their own
-  copy of the agent/review machinery. (#549)
-* The `methodology` vignette's LaTeX macros now come from the shared
-  [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
-  (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
-  `vignettes/articles/_macros.qmd`. The deck adopts the shared macro
-  vocabulary (e.g. `\dens` for the density function in place of the local
-  `\pdf`). (#534)
 * `claude-code-review.yml` now sets `allowed_bots: github-actions[bot]` so the review still runs (and posts feedback) when `claude.yml` re-dispatches it on an `@claude review` comment; previously the bot-initiated dispatch aborted with "Workflow initiated by non-human actor".
 * `claude.yml` now grants the `@claude` agent the file tools (`Read`/`Glob`/`Grep`/`Edit`/`MultiEdit`/`Write`) in `--allowedTools`; previously the agent could run checks/git/gh but not edit files, so it fell back to posting diffs for manual application.
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
-* Added the `lint-changed-lines` CI workflow (calling the reusable
-  [`d-morrison/gha`](https://github.com/d-morrison/gha)
-  `lint-changed-lines.yml@v2` workflow), which flags lint issues only on the
-  lines a PR actually adds or modifies (rather than whole changed files, as
-  `lint-changed-files` does). This lets lint rules be adopted or tightened
-  incrementally as code is touched, instead of forcing a repo-wide reformat.
-  Intended to replace `lint-changed-files` as the lint gate once branch
-  protection is updated to require it. (#558)
 
 ## Bug fixes
 
-* `sim_pop_data()` and `sim_pop_data_multi()` now produce identical results
-  across operating systems. Simulated inter-infection times are now rounded to
-  whole days, so the number of random draws consumed no longer depends on
-  platform-specific floating-point results of `log()` (which previously
-  shifted the random-number stream out of sync and made simulated values, and
-  their snapshots, differ between macOS, Windows, and Linux). Simulated
-  values change slightly as a result of this fix. (#447)
-* Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
-  `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
-  "seroconversion"/"incidence".
 * `load_noise_params()` and `load_sr_params()` now fail gracefully with informative messages when internet resources are unavailable, complying with CRAN policy (#505)
 * Added Version Crosswalk article to pkgdown website to help users migrate code from v1.3.0 to v1.4.0
   - Provides clear tables comparing old and new function names
@@ -140,6 +30,7 @@
 * `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
   for multi-level clustered sampling designs. Cluster-robust standard errors will account
   for all specified clustering levels.
+* Updated `methodology.qmd` with additional noise and methodological details. 
 
 ## Bug fixes
 

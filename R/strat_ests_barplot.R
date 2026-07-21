@@ -26,7 +26,7 @@ strat_ests_barplot <- function(
     alpha = 0.7,
     CIs = FALSE, # nolint: object_name_linter
     title = NULL,
-    xlab = "Seroincidence rate per 1000 person-years",
+    xlab = "Seroconversion rate per 1000 person-years",
     ylab = yvar,
     fill_lab = NULL,
     color_palette = NULL,

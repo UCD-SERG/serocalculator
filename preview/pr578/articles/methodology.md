@@ -1732,6 +1732,15 @@ biomarkers — a multivariate seroresponse model with a
 Kronecker-structured covariance, fit in Stan
 ([UCD-SERG/shigella#13](https://github.com/UCD-SERG/shigella/pull/13)).
 
+### Conclusion
+
+By pairing cross-sectional quantitative antibody responses with modeled
+antibody decay curves, accounting for individual-level heterogeneity,
+multiple antigen isotypes, and both measurement noise and biological
+variability, serocalculator provides a standardized approach to
+estimating population-level seroincidence from cross-sectional
+serosurveys.
+
 ### References
 
 Aiemjoy, K., Seidman J. C., Saha S., Munira S. J., Islam Sajib M. S.,

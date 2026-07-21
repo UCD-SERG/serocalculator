@@ -923,7 +923,7 @@ width is an explicit function of time since infection.
 
 ## Posterior predictive variance over time
 
-osterior predictive variance — computed across the full Monte Carlo sample of kinetic parameter sets at each time point — is highest during the acute phase (approximately days 0–150) and decreases monotonically thereafter. This convergence occurs because the power-law decay rate is concentration-dependent: individuals with high peaks wane faster than those with lower peaks, causing trajectories to converge rather than diverge over time. The marginal likelihood approach therefore does not misspecify observation error in the waning phase.
+Posterior predictive variance — computed across the full Monte Carlo sample of kinetic parameter sets at each time point — is highest during the acute phase (approximately days 0–150) and decreases monotonically thereafter. This convergence occurs because the power-law decay rate is concentration-dependent: individuals with high peaks wane faster than those with lower peaks, causing trajectories to converge rather than diverge over time. The marginal likelihood approach therefore does not misspecify observation error in the waning phase.
 
 ```{r}
 

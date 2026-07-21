@@ -51,7 +51,7 @@ thereby providing a means to estimate the seroincidence.
 
 To get started with a simple example for using **serocalculator**, see
 the [Enteric Fever Seroincidence
-Vignette](https://ucd-serg.github.io/serocalculator/main/articles/enteric_fever_example.html)
+Vignette](https://ucd-serg.github.io/serocalculator/main/articles/enteric_fever_example.html).
 
 ### The Serocalculator App
 

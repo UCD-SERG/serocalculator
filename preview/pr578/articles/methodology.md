@@ -490,7 +490,7 @@ sim_case_data |>
 
 ![](methodology_files/figure-html/unnamed-chunk-3-1.png)
 
-Figure 2: Antibody response curves, $`p(Y=y|T=t)`$, for typhoid
+Figure 2: Simulated antibody response curves for typhoid
 
 {{\< slidebreak \>}}
 
@@ -1499,19 +1499,16 @@ of time since infection.
 
 ### Posterior predictive variance over time
 
-The figure below illustrates this empirically. Posterior predictive
-variance — computed across the full Monte Carlo sample of kinetic
-parameter sets at each time point — is highest during the acute phase
-(approximately days 0–150) and decreases monotonically thereafter. This
-convergence occurs because the power-law decay rate is
+Posterior predictive variance — computed across the full Monte Carlo
+sample of kinetic parameter sets at each time point — is highest during
+the acute phase (approximately days 0–150) and decreases monotonically
+thereafter. This convergence occurs because the power-law decay rate is
 concentration-dependent: individuals with high peaks wane faster than
 those with lower peaks, causing trajectories to converge rather than
 diverge over time. The marginal likelihood approach therefore does not
 misspecify observation error in the waning phase.
 
 ``` r
-
-#| echo: false
 
 library(serocalculator)
 library(dplyr)
@@ -1520,11 +1517,7 @@ library(tidyr)
 
 # Load posterior curve parameter samples
 curves <- load_sr_params("https://osf.io/download/rtw5k/") |>
-  filter(antigen_iso == c("HlyE_IgA", "HlyE_IgG"))
-
-# Load noise parameters
-noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
-
+  filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 
 # Define the two-phase kinetics function
 predicted_ab <- function(t, y0, y1, t1, alpha, r) {

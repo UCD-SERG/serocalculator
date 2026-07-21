@@ -106,7 +106,8 @@
   by other functions in this package.
   ([\#393](https://github.com/UCD-SERG/serocalculator/issues/393))
 - Added plot of posterior predictive variance over time to
-  `methodology.qmd`([\#578](https://github.com/UCD-SERG/serocalculator/issues/578))
+  `methodology.qmd`
+  ([\#578](https://github.com/UCD-SERG/serocalculator/issues/578))
 
 ### Internal
 

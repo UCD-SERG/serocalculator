@@ -84,6 +84,7 @@
 ## Internal
 
 * Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for `methodology.qmd`) formats. Fixed the HTML/revealjs output-filename collision by specifying `output-file: methodology-slides.html` for revealjs in `methodology.qmd`'s frontmatter; docx goes in `_metadata.yml` globally since `.docx` has no collision risk. (#503)
+* Added Codex repository guidance and R-package workflow skills. (#574)
 * `news.yaml` now calls the central
   [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`
   reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`

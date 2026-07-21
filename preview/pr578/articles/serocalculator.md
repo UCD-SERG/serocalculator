@@ -47,6 +47,23 @@ seroincidence). Given the seroresponse, this marginal distribution of
 antibody concentrations can be fitted to the cross-sectional data and
 thereby providing a means to estimate the seroincidence.
 
+### A Note on Sample Size
+
+We do not currently recommend a specific sample size in the
+cross-sectional population data because the required sample depends on
+the research question and heterogeneity in post-infection seroresponse
+parameters. Users should use particular caution when producing
+stratified estimates, as small numbers (e.g. n\<20) may produce unstable
+results. At this time, we recommend that users conduct simulation
+exercises to determine the power that they already have in an existing
+cross-sectional study dataset with given seroresponse parameters, or the
+size needed to detect a desired effect size. Users can use the
+[`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
+function in serocalculator for simulation-based sample size estimation.
+For further details, see the [Simulation
+Studies](https://ucd-serg.github.io/serocalculator/main/articles/simulate_xsectionalData.html)
+article.
+
 ### See An Example
 
 To get started with a simple example for using **serocalculator**, see
@@ -59,9 +76,13 @@ The **serocalculator app** is a web based tool that takes the 5 curve
 parameters (y0, y1, t1, alpha, and r) to draw a single curve on antibody
 concentration.
 
-### Please Wait
+y-axis maximum
 
-![loading](/__static__/frontend/images/spinner.gif?v=ce6bcde20b2f6c562913c06be83f9e7c8a19b008017407a3094b76fa82bbd6b7f4048e032e07e534d4ab5442b9105294d612863735077ab13a47653a14c5866e)
+logarithmic y-axis
+
+logarithmic x-axis
+
+x-axis maximum
 
 ## Further reading
 
@@ -181,3 +202,11 @@ J. F. P. Schellekens, and P. F. M. Teunis. 2005. “Age-Specific Long-Term
 Course of IgG Antibodies to Pertussis Toxin After Symptomatic Infection
 with Bordetella Pertussis.” *Epidemiology and Infection* 133 (4):
 737–48. <https://doi.org/10.1017/s0950268805003833>.
+
+y-axis maximum
+
+logarithmic y-axis
+
+logarithmic x-axis
+
+x-axis maximum

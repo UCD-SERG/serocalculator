@@ -30,6 +30,7 @@
 * `cluster_var` parameter now accepts multiple variables (e.g., `c("school", "classroom")`)
   for multi-level clustered sampling designs. Cluster-robust standard errors will account
   for all specified clustering levels.
+* Updated `methodology.qmd` with additional noise and methodological details. 
 
 ## Bug fixes
 

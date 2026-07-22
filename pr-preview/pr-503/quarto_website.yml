@@ -27,13 +27,12 @@ website:
         href: $ALTDOC_PACKAGE_URL_GITHUB
         aria-label: View $ALTDOC_PACKAGE_NAME on GitHub
     left:
-      - text: Documentation
-        file: man/serocalculator-package.qmd
+      - text: Reference
+        file: reference.qmd
+      - text: Get started
+        file: vignettes/articles/serocalculator.Rmd
       - text: Articles
         menu:
-          - text: "---Get started---"
-          - text: "Get started with serocalculator"
-            file: vignettes/articles/serocalculator.Rmd
           - text: "---Methodology---"
           - text: "Methodology"
             file: vignettes/methodology.qmd
@@ -47,6 +46,8 @@ website:
           - text: "---Other---"
           - text: "Version crosswalk (1.3 to 1.4)"
             file: vignettes/articles/version-crosswalk-1.3-to-1.4.qmd
+      - text: Changelog
+        file: NEWS.md
   sidebar:
     collapse-level: 1
     contents:
@@ -68,7 +69,63 @@ website:
           - section: Other
             contents:
               - vignettes/articles/version-crosswalk-1.3-to-1.4.qmd
-      - section: $ALTDOC_MAN_BLOCK
+      - section: Reference
+        contents:
+          - reference.qmd
+          - section: Prepare data, kinetics models, and noise parameters for analysis
+            contents:
+              - man/as_pop_data.qmd
+              - man/load_pop_data.qmd
+              - man/as_sr_params.qmd
+              - man/load_sr_params.qmd
+              - man/as_noise_params.qmd
+              - man/load_noise_params.qmd
+              - man/check_pop_data.qmd
+              - man/strata.qmd
+          - section: Extract information from data, seroresponse models, and noise parameters
+            contents:
+              - man/get_biomarker_levels.qmd
+              - man/get_biomarker_names_var.qmd
+              - man/get_values_var.qmd
+              - man/get_values.qmd
+          - section: Visualize data
+            contents:
+              - man/autoplot.pop_data.qmd
+              - man/autoplot.curve_params.qmd
+              - man/graph.curve.params.qmd
+              - man/graph_loglik.qmd
+              - man/log_likelihood.qmd
+          - section: Estimate seroconversion incidence rates
+            contents:
+              - man/est_seroincidence.qmd
+              - man/est_seroincidence_by.qmd
+          - section: Summarize seroconversion incidence rate estimates
+            contents:
+              - man/summary.seroincidence.qmd
+              - man/summary.seroincidence.by.qmd
+          - section: Visualize seroconversion incidence rate estimates
+            contents:
+              - man/autoplot.seroincidence.qmd
+              - man/autoplot.seroincidence.by.qmd
+              - man/autoplot.summary.seroincidence.by.qmd
+          - section: Compare seroconversion incidence rates
+            contents:
+              - man/compare_seroincidence.qmd
+          - section: Example data sets
+            contents:
+              - man/sees_pop_data_100.qmd
+              - man/sees_pop_data_pk_100.qmd
+              - man/typhoid_curves_nostrat_100.qmd
+              - man/example_noise_params_sees.qmd
+              - man/example_noise_params_pk.qmd
+              - man/sees_typhoid_ests_strat.qmd
+              - man/serocalculator_example.qmd
+          - section: Simulate data sets
+            contents:
+              - man/sim_pop_data.qmd
+              - man/sim_pop_data_multi.qmd
+              - man/analyze_sims.qmd
+              - man/autoplot.sim_results.qmd
       - text: News
         file: NEWS.md
       - text: Code of conduct

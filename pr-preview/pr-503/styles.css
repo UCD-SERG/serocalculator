@@ -4,3 +4,9 @@
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
+
+/* Inline code styling for dark mode */
+body.quarto-dark code:not(pre > code) {
+  background-color: #404040;
+  color: #e6e6e6;
+}

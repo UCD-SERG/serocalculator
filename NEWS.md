@@ -27,6 +27,9 @@
   "Reference", and "News" in the top navigation, and added a grouped
   `reference.qmd` index plus grouped sidebar reference sections that
   exclude internal-only topics.
+* Updated the documentation site's dark-mode styling to match `rpt` by adding
+  the same inline-code color override used there, improving contrast on the
+  home page and article text.
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
 * Completed the measurement-noise model in the `methodology` vignette

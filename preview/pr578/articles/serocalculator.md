@@ -53,11 +53,12 @@ We do not currently recommend a specific sample size in the
 cross-sectional population data because the required sample depends on
 the research question and heterogeneity in post-infection seroresponse
 parameters. Users should use particular caution when producing
-stratified estimates, as small numbers (e.g. n\<20) may produce unstable
-results. At this time, we recommend that users conduct simulation
-exercises to determine the power that they already have in an existing
-cross-sectional study dataset with given seroresponse parameters, or the
-size needed to detect a desired effect size. Users can use the
+stratified estimates, as small numbers (e.g. `n < 20`) may produce
+unstable results. At this time, we recommend that users conduct
+simulation exercises to determine the power that they already have in an
+existing cross-sectional study dataset with given seroresponse
+parameters, or the size needed to detect a desired effect size. Users
+can use the
 [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
 function in serocalculator for simulation-based sample size estimation.
 For further details, see the [Simulation

@@ -27,8 +27,6 @@ website:
         href: $ALTDOC_PACKAGE_URL_GITHUB
         aria-label: View $ALTDOC_PACKAGE_NAME on GitHub
     left:
-      - text: Documentation
-        file: man/serocalculator-package.qmd
       - text: Reference
         file: reference.qmd
       - text: Get started

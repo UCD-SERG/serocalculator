@@ -930,7 +930,6 @@ Posterior predictive variance — computed across the full Monte Carlo sample of
 library(serocalculator)
 library(dplyr)
 library(ggplot2)
-library(tidyr)
 
 # Load posterior curve parameter samples (local example data; no internet required)
 curves <- load_sr_params(serocalculator_example("example_curve_params.rds")) |>
@@ -938,13 +937,15 @@ curves <- load_sr_params(serocalculator_example("example_curve_params.rds")) |>
 
 # Define the two-phase kinetics function
 predicted_ab <- function(t, y0, y1, t1, alpha, r) {
-  if (t <= t1) {
-    y0 * exp(log(y1 / y0) / t1 * t)
+  ab_phase_1 <- y0 * exp(log(y1 / y0) / t1 * t)
+  ab_phase_2 <- if (isTRUE(all.equal(r, 1))) {
+    y1 * exp(-alpha * (t - t1))
   } else {
-    y1 * (1 + (r - 1) * y1^(r - 1) * alpha * (t - t1))^(-1 / (r - 1))
+    (y1^(1 - r) - (1 - r) * alpha * (t - t1))^(1 / (1 - r))
   }
+
+  ifelse(t <= t1, ab_phase_1, ab_phase_2)
 }
-predicted_ab <- Vectorize(predicted_ab, vectorize.args = "t")
 
 # Time grid
 time_grid <- seq(0, 730, by = 7)
@@ -962,8 +963,10 @@ all_summaries <- curves |>
       y1    = curves_ab$y1,
       t1    = curves_ab$t1,
       alpha = curves_ab$alpha,
-      r     = curves_ab$r
+      r     = curves_ab$r,
+      SIMPLIFY = "array"
     )
+    pred_matrix <- matrix(pred_matrix, nrow = length(time_grid))
 
     tibble(
       antigen_iso = ab,

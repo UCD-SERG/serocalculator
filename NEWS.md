@@ -23,6 +23,13 @@
 
 ## Documentation
 
+* Updated the documentation site configuration to promote "Get started",
+  "Reference", and "News" in the top navigation, and added a grouped
+  `reference.qmd` index plus grouped sidebar reference sections that
+  exclude internal-only topics.
+* Updated the documentation site's dark-mode styling to match `rpt` by adding
+  the same inline-code color override used there, improving contrast on the
+  home page and article text.
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
 * Completed the measurement-noise model in the `methodology` vignette
@@ -79,6 +86,7 @@
 
 ## Internal
 
+* Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for `methodology.qmd`) formats. Fixed the HTML/revealjs output-filename collision by specifying `output-file: methodology-slides.html` for revealjs in `methodology.qmd`'s frontmatter; docx goes in `_metadata.yml` globally since `.docx` has no collision risk. (#503)
 * Added Codex repository guidance and R-package workflow skills. (#574)
 * `news.yaml` now calls the central
   [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`

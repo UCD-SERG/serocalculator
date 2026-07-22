@@ -932,8 +932,8 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-# Load posterior curve parameter samples
-curves <- load_sr_params("https://osf.io/download/rtw5k/") |>
+# Load posterior curve parameter samples (local example data; no internet required)
+curves <- load_sr_params(serocalculator_example("example_curve_params.rds")) |>
   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 
 # Define the two-phase kinetics function

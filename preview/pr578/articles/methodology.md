@@ -1551,7 +1551,7 @@ all_summaries <- curves |>
     )
     pred_matrix <- matrix(pred_matrix, nrow = length(time_grid))
 
-    tibble(
+    tibble::tibble(
       antigen_iso = ab,
       time        = time_grid,
       mean_ab     = rowMeans(pred_matrix),

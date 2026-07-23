@@ -1230,7 +1230,7 @@ Figure 5: Example log(likelihood) curves
 <span>    <span class="op">)</span></span>
 <span>    <span class="va">pred_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">pred_matrix</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">time_grid</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>      antigen_iso <span class="op">=</span> <span class="va">ab</span>,</span>
 <span>      time        <span class="op">=</span> <span class="va">time_grid</span>,</span>
 <span>      mean_ab     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">pred_matrix</span><span class="op">)</span>,</span>

@@ -62,14 +62,14 @@ can use the
 [`sim_pop_data()`](https://ucd-serg.github.io/serocalculator/reference/sim_pop_data.md)
 function in serocalculator for simulation-based sample size estimation.
 For further details, see the [Simulation
-Studies](https://ucd-serg.github.io/serocalculator/main/articles/simulate_xsectionalData.html)
+Studies](https://ucd-serg.github.io/serocalculator/articles/simulate_xsectionalData.md)
 article.
 
 ### See An Example
 
 To get started with a simple example for using **serocalculator**, see
 the [Enteric Fever Seroincidence
-Vignette](https://ucd-serg.github.io/serocalculator/main/articles/enteric_fever_example.html).
+Vignette](https://ucd-serg.github.io/serocalculator/articles/enteric_fever_example.md).
 
 ### The Serocalculator App
 

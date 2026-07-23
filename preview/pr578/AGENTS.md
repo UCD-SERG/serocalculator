@@ -38,8 +38,9 @@ ones:
 - `source-command-document` — `devtools::document()` after editing
   roxygen2 comments (keeps `man/`, `NAMESPACE`, `DESCRIPTION` in sync;
   `R-check-docs.yml` enforces this).
-- `source-command-lint` — `lintr::lint_package()` against `.lintr.R`;
-  fix issues in changed files.
+- `source-command-lint` —
+  [`lintr::lint_package()`](https://lintr.r-lib.org/reference/lint.html)
+  against `.lintr.R`; fix issues in changed files.
 - `source-command-spell` —
   [`spelling::spell_check_package()`](https://docs.ropensci.org/spelling//reference/spell_check_package.html);
   add genuine terms to `inst/WORDLIST`.

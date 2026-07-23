@@ -25,6 +25,9 @@
 
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* The `methodology` vignette now loads its `slidebreak` shortcode explicitly so
+  the shortcode no longer leaks into HTML output, and rendered vignettes now
+  suppress package startup messages.
 * Completed the measurement-noise model in the `methodology` vignette
   (multiplicative relative error), added a "Combined biological and
   measurement noise" section, and added a "Noise and never-infected

@@ -5,9 +5,31 @@ vignette: >
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
+format:
+  html:
+    format-links: [docx, revealjs]
+  revealjs:
+    output-file: methodology-slides.html
+    reference-location: document
+    echo: false
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
+shortcodes:
+  - ../_extensions/d-morrison/slidebreak/slidebreak.lua
 ---
 
 {{< include ../macros/macros.qmd >}}
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE)
+```
 
 # Infectious disease epidemiology
 

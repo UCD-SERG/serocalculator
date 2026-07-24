@@ -28,3 +28,5 @@ junit.xml
 tests/vdiffr.Rout.fail
 altdoc
 _quarto
+.posit/assistant/settings.json
+.posit/assistant

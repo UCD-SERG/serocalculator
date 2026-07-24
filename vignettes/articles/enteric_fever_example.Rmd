@@ -81,10 +81,8 @@ r          |  Antibody decay shape
 
 
 ```{r curve, message=FALSE}
-# Import longitudinal antibody parameters from OSF
-curves <-
-  "https://osf.io/download/rtw5k/" |>
-  load_sr_params()
+# Load example longitudinal antibody parameters included in serocalculator
+curves <- typhoid_curves_nostrat_100
 ```
 
 ### Visualize curve parameters
@@ -118,9 +116,8 @@ age       | Numeric age
 
 
 ```{r data, message = FALSE}
-#Import cross-sectional data from OSF and rename required variables
-xs_data <- readr::read_rds("https://osf.io/download//n6cp3/") |>
-  as_pop_data()
+# Load example cross-sectional data included in serocalculator
+xs_data <- sees_pop_data_100
 
 ```
 
@@ -201,9 +198,8 @@ eps         | Measurement noise
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}
-# Import noise parameters from OSF
-
-noise <- url("https://osf.io/download//hqy4v/") |> readRDS()
+# Load example noise parameters included in serocalculator
+noise <- example_noise_params_sees
 ```
 
 ## Estimate Seroincidence 
@@ -540,4 +536,3 @@ We gratefully acknowledge the study participants for their valuable time and int
 This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation. 
 
 ## References
-

@@ -2,14 +2,15 @@
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/UCD-SERG/serocalculator/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/UCD-SERG/serocalculator/graph/badge.svg)](https://app.codecov.io/gh/UCD-SERG/serocalculator)
-[![CodeFactor](https://www.codefactor.io/repository/github/ucd-serg/serocalculator/badge)](https://www.codefactor.io/repository/github/ucd-serg/serocalculator)
+[![CodeFactor](https://img.shields.io/codefactor/grade/github/ucd-serg/serocalculator)](https://www.codefactor.io/repository/github/ucd-serg/serocalculator)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/serocalculator)](https://CRAN.R-project.org/package=serocalculator)
+status](https://img.shields.io/cran/v/serocalculator)](https://CRAN.R-project.org/package=serocalculator)
 <!-- badges: end -->
 
 Antibody levels measured in a cross–sectional population sample can be

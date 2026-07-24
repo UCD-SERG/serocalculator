@@ -1,25 +1,36 @@
 ---
 name: Docs 📚
 
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+# Deploys altdoc for Pull Requests, releases, and pushes to main.
+# PRs are deployed to /pr-preview/pr-<number>/
+# Pushes to main are deployed to /dev/ (development docs)
+# Releases are deployed to /latest-tag/ and /vX.Y.Z/ (stable + archive)
+# Root (/) is a redirect landing page into the default docs version.
+#
+# Ported from d-morrison/rpt's multiversion docs pattern; see
+# UCD-SERG/serocalculator#504. The version-dropdown/landing-page scripts
+# (.github/scripts/) are a direct copy for now -- a generalized version is
+# being contributed to d-morrison/gha (gha#284); once that ships at a
+# released tag this repo can drop the local copies (see rpt#169 for the
+# parallel migration on the source template).
 on:
   push:
     branches:
       - main
     tags:
-      - "v*"
+      - 'v*'  # build on version tags like v1.2.3
     paths:
-      - "inst/templates/**"
-      - "pkgdown/**"
-      - "_pkgdown.*"
-      - DESCRIPTION
-      - "**.md"
-      - "**.Rmd"
-      - "**.qmd"
-      - "macros"
-      - "man/**"
-      - "LICENSE.*"
-      - NAMESPACE
-      - ".github/workflows/docs.yaml"
+      - 'man/**'
+      - 'altdoc/**'
+      - 'vignettes/**'
+      - 'macros/**'
+      - '.gitmodules'
+      - '.github/workflows/docs.yaml'
+      - '.github/scripts/generate_version_dropdown.py'
+      - '.github/scripts/generate_multiversion_landing_page.py'
+      - 'README.md'
   release:
     types: [published]
   pull_request:
@@ -30,92 +41,114 @@ on:
       - ready_for_review
       - closed
     paths:
-      - "inst/templates/**"
-      - "pkgdown/**"
-      - "_pkgdown.*"
-      - DESCRIPTION
-      - "**.md"
-      - "**.Rmd"
-      - "**.qmd"
-      - "macros"
-      - "man/**"
-      - "LICENSE.*"
-      - NAMESPACE
-      - ".github/workflows/docs.yaml"
+      - 'man/**'
+      - 'altdoc/**'
+      - 'vignettes/**'
+      - 'macros/**'
+      - '.gitmodules'
+      - '.github/workflows/docs.yaml'
+      - '.github/scripts/generate_version_dropdown.py'
+      - '.github/scripts/generate_multiversion_landing_page.py'
+      - 'README.md'
   workflow_dispatch:
+    inputs:
+      version:
+        description: Documentation version to deploy
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - stable
+      release_tag:
+        description: Stable release tag to deploy when version=stable (for example, v1.4.1)
+        required: false
+        type: string
 
 concurrency:
   group: docs-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+    PREVIEW_BRANCH: gh-pages
+
 jobs:
   docs:
-    name: Generate 🐣
     runs-on: ubuntu-latest
-    if: >
-      (github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip docs]'))
-        && !(github.event_name == 'pull_request' && github.event.action == 'closed')
+    if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed') }}
+    timeout-minutes: 30
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: docs-${{ github.event_name == 'pull_request' && github.run_id || github.ref }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
+      DOCS_SOURCE_DIR: .
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
     steps:
-      - name: Get branch names 🌿
-        id: branch-name
-        uses: tj-actions/branch-names@v9.0.0
-
-      - name: Get current branch or tag 🏷️
-        id: current-branch-or-tag
-        run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            # For release events, use the tag from the release
-            echo "Release tag: ${{ github.event.release.tag_name }}"
-            echo "ref-name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
-          elif [ "${{ steps.branch-name.outputs.is_tag }}" == "true" ]; then
-            echo "Current tag: ${{ steps.branch-name.outputs.tag }}"
-            echo "ref-name=${{ steps.branch-name.outputs.tag }}" >> $GITHUB_OUTPUT
-          else
-            echo "Current branch: ${{ steps.branch-name.outputs.current_branch }}"
-            echo "ref-name=${{ steps.branch-name.outputs.current_branch }}" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
-
-      - name: Checkout repo (PR) 🛎
-        uses: actions/checkout@v4.3.1
-        if: github.event_name == 'pull_request'
+      - uses: actions/checkout@v4
         with:
-          ref: ${{ steps.branch-name.outputs.head_ref_branch }}
-          path: ${{ github.event.repository.name }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
           submodules: true
+          # fetch-depth: 0 fetches all history and tags, which the version
+          # dropdown script needs to discover all release tags.
+          fetch-depth: 0
 
-      - name: Checkout repo 🛎
-        uses: actions/checkout@v4.3.1
-        if: github.event_name != 'pull_request'
-        with:
-          ref: ${{ steps.current-branch-or-tag.outputs.ref-name }}
-          path: ${{ github.event.repository.name }}
-          submodules: true
-
-      - name: Check commit message 💬
-        run: |
-          git config --global --add safe.directory $(pwd)
-          export head_commit_message="$(git show -s --format=%B | tr '\r\n' ' ' | tr '\n' ' ')"
-          echo "head_commit_message = $head_commit_message"
-          if [[ $head_commit_message == *"$SKIP_INSTRUCTION"* ]]; then
-            echo "Skip instruction detected - cancelling the workflow."
-            exit 1
-          fi
+      - name: Determine latest stable release tag
+        id: latest-stable-tag
         shell: bash
-        working-directory: ${{ github.event.repository.name }}
-        env:
-          SKIP_INSTRUCTION: "[skip docs]"
-
-      - uses: r-lib/actions/setup-pandoc@v2
-      
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST_STABLE_TAG=$(
+            gh api repos/${{ github.repository }}/releases --paginate \
+              --jq '.[] | select(.draft == false and .prerelease == false) | .tag_name' \
+              | awk '/^v[0-9]+\.[0-9]+\.[0-9]+$/' \
+              | sort -V \
+              | tail -n 1
+          )
+          echo "latest_stable_tag=$LATEST_STABLE_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Validate stable workflow_dispatch input
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+          LATEST_STABLE_TAG: ${{ steps.latest-stable-tag.outputs.latest_stable_tag }}
+        run: |
+          if [[ -z "$RELEASE_TAG" ]]; then
+            echo "::error::workflow_dispatch version=stable requires release_tag"
+            exit 1
+          fi
+
+          if [[ -z "$LATEST_STABLE_TAG" ]]; then
+            echo "::error::No stable release tag matching vX.Y.Z was found"
+            exit 1
+          fi
+
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::release_tag must match vX.Y.Z"
+            exit 1
+          fi
+
+          if [[ "$RELEASE_TAG" != "$LATEST_STABLE_TAG" ]]; then
+            echo "::error::release_tag must be the latest stable tag ($LATEST_STABLE_TAG) to update /latest-tag/ and the root landing page"
+            exit 1
+          fi
+
+      - name: Prepare stable source checkout for workflow_dispatch
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+        run: |
+          git worktree add --detach stable-source "refs/tags/$RELEASE_TAG"
+          git -C stable-source submodule update --init --recursive
+          echo "DOCS_SOURCE_DIR=stable-source" >> "$GITHUB_ENV"
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
 
@@ -123,213 +156,206 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          working-directory: ${{ github.event.repository.name }}
-          needs: website
+          working-directory: ${{ env.DOCS_SOURCE_DIR }}
+          needs: |
+            connect
+            website
           extra-packages: |
-            any::pkgdown
+            d-morrison/altdoc@recursive-qmd-search
+            any::quarto
+            any::sessioninfo
+            local::.
 
-      - name: Install R package 🚧
+      # Verify development environment is properly configured
+      - name: Verify development environment
+        shell: bash
         run: |
-          if (file.exists("renv.lock")) renv::restore()
-          install.packages(".", repos=NULL, type="source")
+          echo "=== Development Environment Status ==="
+          export QUARTO_LOG_LEVEL=DEBUG
+          # Check R installation
+          Rscript -e 'cat("R version:", R.version.string, "\n")'
+
+          # Verify Quarto is installed and working
+          echo ""
+          echo "=== Quarto Status ==="
+          quarto --version
+          quarto check
+
+          echo ""
+          echo "Development environment setup complete!"
+
+      - name: Generate version dropdown
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCS_SOURCE_DIR: ${{ env.DOCS_SOURCE_DIR }}
+        run: python3 .github/scripts/generate_version_dropdown.py
+
+      - name: Build site
+        # uncomment the next two lines to get full debugging output
+        # env:
+        #   QUARTO_LOG_LEVEL: DEBUG
+        timeout-minutes: 30
+        env:
+          DOCS_SOURCE_DIR: ${{ env.DOCS_SOURCE_DIR }}
+        run: |
+          setwd(Sys.getenv("DOCS_SOURCE_DIR"))
+          # Enable freeze to cache expensive computations
+          # This significantly speeds up builds by only re-executing changed code
+          altdoc::render_docs(verbose = TRUE, parallel = FALSE, freeze = TRUE)
         shell: Rscript {0}
-        working-directory: ${{ github.event.repository.name }}
 
-      - name: Build docs 🏗
-        if: >
-          github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')
-            || github.event_name == 'push'
+      # If event is workflow_dispatch with stable selected, deploy to /latest-tag/
+      - name: '[dispatch stable] Set documentation subdirectory to /latest-tag/'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
         run: |
-          # Set devel = FALSE for version tags, TRUE for everything else
-          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            Rscript -e 'pkgdown::build_site(devel = FALSE, quiet = FALSE)'
-          else
-            Rscript -e 'pkgdown::build_site(devel = TRUE, quiet = FALSE)'
+          echo "subdir=latest-tag" >> $GITHUB_ENV
+          echo "landing_target=latest-tag" >> $GITHUB_ENV
+
+      # If event is workflow_dispatch with dev selected, deploy to /dev/
+      - name: '[dispatch dev] Set documentation subdirectory to /dev/'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'dev'
+        run: |
+          echo "subdir=dev" >> $GITHUB_ENV
+          echo "landing_target=dev" >> $GITHUB_ENV
+
+      # If event is a tag push, deploy to /<tag>/ (archived; not the landing target)
+      - name: "[tag] Set documentation subdirectory"
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo "subdir=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      # If event is the latest non-prerelease release, deploy stable docs to /latest-tag/
+      - name: "[release] Set documentation subdirectory to /latest-tag/"
+        if: github.event_name == 'release' && !github.event.release.prerelease && github.ref_name == steps.latest-stable-tag.outputs.latest_stable_tag
+        run: |
+          echo "subdir=latest-tag" >> $GITHUB_ENV
+          echo "landing_target=latest-tag" >> $GITHUB_ENV
+
+      # If event is a push to main, deploy development docs to /dev/
+      - name: "[main] Set documentation subdirectory to /dev/"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "subdir=dev" >> $GITHUB_ENV
+          echo "landing_target=dev" >> $GITHUB_ENV
+
+      # On first rollout, /latest-tag/ may not exist yet on gh-pages.
+      # Bootstrap it once from the archived latest stable release directory.
+      - name: "[main] Prepare one-time /latest-tag/ bootstrap if missing"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          LATEST_STABLE_TAG: ${{ steps.latest-stable-tag.outputs.latest_stable_tag }}
+          BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: |
+          echo "bootstrap_latest_tag=false" >> "$GITHUB_ENV"
+          if [[ -z "$LATEST_STABLE_TAG" ]]; then
+            echo "No published stable release tag found; skipping /latest-tag/ bootstrap."
+            exit 0
           fi
-        shell: bash
-        working-directory: ${{ github.event.repository.name }}
 
-      - name: Checkout gh-pages 🛎
-        if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'push'
-        uses: actions/checkout@v4.3.1
-        with:
-          path: "gh-pages"
-          fetch-depth: 0
-          ref: "gh-pages"
+          git fetch origin gh-pages --depth=1
+          if git ls-tree -d --name-only origin/gh-pages latest-tag | grep -qx latest-tag; then
+            echo "/latest-tag/ already exists; skipping bootstrap."
+            exit 0
+          fi
 
-      - name: Upload docs to gh-pages 📙
-        if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'push'
+          if ! git ls-tree -d --name-only origin/gh-pages "$LATEST_STABLE_TAG" | grep -qx "$LATEST_STABLE_TAG"; then
+            echo "No /$LATEST_STABLE_TAG/ directory exists on gh-pages; skipping bootstrap."
+            exit 0
+          fi
+
+          BOOTSTRAP_WORKTREE="$(mktemp -d)"
+          git worktree add --detach "$BOOTSTRAP_WORKTREE" origin/gh-pages
+          mkdir -p site-latest-tag-bootstrap
+          cp -R "$BOOTSTRAP_WORKTREE/$LATEST_STABLE_TAG"/. site-latest-tag-bootstrap/
+          find site-latest-tag-bootstrap -name '*.html' -exec \
+            sed -i -E 's#href="'"$BASE_URL"'"#href="'"$BASE_URL"'latest-tag/"#g' {} +
+          git worktree remove "$BOOTSTRAP_WORKTREE" --force
+          echo "bootstrap_latest_tag=true" >> "$GITHUB_ENV"
+
+      - name: Debug subdir
         run: |
-          GH_PAGES_DIR="gh-pages/${{ steps.current-branch-or-tag.outputs.ref-name }}"
-          mkdir -p $GH_PAGES_DIR
-          echo "Current contents of $GH_PAGES_DIR:"
-          ls -l $GH_PAGES_DIR || echo "Directory is empty or doesn't exist yet"
-          
-          # Remove any existing documentation for this version, but retain coverage and test reports
-          directories_to_retain="coverage-report,unit-test-report"
-          IFS=',' read -ra DIRECTORIES_TO_RETAIN <<< "$directories_to_retain"
-          echo "The following directories will be retained:"
-          for dir in "${DIRECTORIES_TO_RETAIN[@]}"; do
-            echo "$dir"
-          done
-          
-          # Remove all files from GH_PAGES_DIR, except any DIRECTORIES_TO_RETAIN
-          find $GH_PAGES_DIR -mindepth 1 -maxdepth 1 -print0 2>/dev/null | while IFS= read -r -d '' file; do
-            file_to_be_removed="true"
-            # Check if the file/directory matches any directory to be retained
-            for dir in "${DIRECTORIES_TO_RETAIN[@]}"; do
-              if [[ "$GH_PAGES_DIR/$dir" == "$file" ]]; then
-                echo "Not removing $file"
-                file_to_be_removed="false"
-              fi
-            done
-            if [[ "$file_to_be_removed" == "true" ]]; then
-              echo "Removing $file"
-              rm -rf "$file"
-            fi
-          done
-          
-          echo "::group::gh-pages contents"
-          echo "Current contents of $GH_PAGES_DIR:"
-          ls -l $GH_PAGES_DIR || echo "Directory is empty"
-          echo "::endgroup::"
-          
-          # Copy generated pkgdown documentation to gh-pages branch
-          cp -a ${{ github.event.repository.name }}/docs/. $GH_PAGES_DIR
-          
-          echo "::group::gh-pages contents after copy"
-          echo "Current contents of $GH_PAGES_DIR:"
-          ls -l $GH_PAGES_DIR
-          echo "::endgroup::"
-          
-          cd gh-pages
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git config pull.rebase false
-          git status
-          # Random delay to avoid conflicts
-          sleep $((RANDOM % 10))
-          git pull origin gh-pages || true
-          git add -f .
-          git commit -m "Update pkgdown documentation ${{ github.sha }}" || true
-          git push origin gh-pages
-        shell: bash
+          echo "Subdir is set to: ${{ env.subdir }}"
+          echo "Landing target is set to: ${{ env.landing_target }}"
 
-      - name: Create documentation artifact 📂
-        if: github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')
-        run: |
-          pushd ${{ github.event.repository.name }}/docs/
-          zip -r9 $OLDPWD/pkgdown.zip *
-          popd
-        shell: bash
+      - name: Build root landing page redirect
+        if: github.event_name != 'pull_request' && env.landing_target != ''
+        run: python3 .github/scripts/generate_multiversion_landing_page.py
+        env:
+          LANDING_TARGET: ${{ env.landing_target }}
+          OUTPUT_DIR: site-root
 
-      - name: Upload docs for review ⬆
-        if: github.event_name == 'pull_request' || startsWith(github.ref, 'refs/tags/v')
-        uses: actions/upload-artifact@v4.6.2
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request' && env.subdir != ''
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          name: pkgdown.zip
-          path: pkgdown.zip
+          # Preserve PR previews and previously-deployed versioned (tag/release/
+          # dev/latest-tag) docs subdirectories when a build re-deploys.
+          clean-exclude: |
+            pr-preview
+            dev
+            latest-tag
+            v[0-9]*
+          branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
+          folder: ${{ env.DOCS_SOURCE_DIR }}/docs
+          target-folder: ${{ env.subdir }}
 
-      - name: Checkout gh-pages for PR preview 🛎
-        if: github.event_name == 'pull_request'
-        uses: actions/checkout@v4.3.1
+      - name: Deploy root landing page
+        if: github.event_name != 'pull_request' && env.landing_target != ''
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: "gh-pages-preview"
-          fetch-depth: 0
-          ref: "gh-pages"
+          clean: true
+          clean-exclude: |
+            pr-preview
+            dev
+            latest-tag
+            v[0-9]*
+          branch: gh-pages
+          folder: site-root
 
-      - name: Deploy PR preview 🚀
-        if: github.event_name == 'pull_request'
-        id: deploy-pr-preview
-        run: |
-          cd gh-pages-preview
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git config pull.rebase false
-          
-          # Create preview directory
-          PREVIEW_DIR="preview/pr${{ github.event.pull_request.number }}"
-          mkdir -p $PREVIEW_DIR
-          
-          # Copy built docs to preview directory
-          cp -a ../${{ github.event.repository.name }}/docs/. $PREVIEW_DIR/
-          
-          git add -f .
-          git commit -m "Update PR #${{ github.event.pull_request.number }} preview" || true
-          git pull origin gh-pages || true
-          git push origin gh-pages
-          
-          # Set output URL
-          REPO_NAME="${{ github.event.repository.name }}"
-          REPO_OWNER="${{ github.repository_owner }}"
-          echo "url=https://${REPO_OWNER}.github.io/${REPO_NAME}/${PREVIEW_DIR}/" >> $GITHUB_OUTPUT
-        shell: bash
-
-      - name: Comment PR with preview link 💬
-        if: github.event_name == 'pull_request'
-        uses: hasura/comment-progress@v2.2.0
+      - name: "[main] Bootstrap /latest-tag/ from latest stable archive"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.bootstrap_latest_tag == 'true'
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          number: ${{ github.event.pull_request.number }}
-          id: pkgdown-deploy
+          clean: false
+          branch: gh-pages
+          folder: site-latest-tag-bootstrap
+          target-folder: latest-tag
+
+      - name: Deploy PR Preview
+        id: preview-step
+        if: github.event_name == 'pull_request'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: docs
+          preview-branch: ${{ env.PREVIEW_BRANCH }}
+          comment: "false"
+          wait-for-pages-deployment: false
+
+      # following https://github.com/rossjrw/pr-preview-action?tab=readme-ov-file#customise-the-sticky-comment:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        if: steps.preview-step.outputs.deployment-action == 'deploy'
+        with:
+          header: pr-preview
           recreate: true
-          message: >
-            :book: ${{ steps.deploy-pr-preview.outputs.url }}
+          message: |
+              [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
+              :---:
+              | <p><img src="https://qr.rossjrw.com/?url=${{ steps.preview-step.outputs.preview-url }}" height="100" align="right" alt="QR code for preview link"></p> :rocket: View preview at <br> ${{ steps.preview-step.outputs.preview-url }} <br><br>
+              | <h6>Built to branch [`${{ env.PREVIEW_BRANCH }}`](${{ github.server_url }}/${{ github.repository }}/tree/${{ env.PREVIEW_BRANCH }}) at ${{ steps.preview-step.outputs.action-start-time }}. <br> Preview will be ready when the [GitHub Pages deployment](${{ github.server_url }}/${{ github.repository }}/deployments) is complete. <br><br> </h6>
 
-            Preview documentation for this PR (at commit ${{ github.event.pull_request.head.sha }})
-
-  multi-version-docs:
-    name: Multi-version docs 📑
-    needs: docs
-    runs-on: ubuntu-latest
-    if: >
-      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    steps:
-      - name: Checkout repo 🛎
-        uses: actions/checkout@v4.3.1
+      - uses: marocchino/sticky-pull-request-comment@v2
+        if: steps.preview-step.outputs.deployment-action == 'remove'
         with:
-          path: ${{ github.event.repository.name }}
-          ref: "gh-pages"
-
-      - name: Create and publish docs ↗️
-        uses: insightsengineering/r-pkgdown-multiversion@v3
-        with:
-          path: ${{ github.event.repository.name }}
-          default-landing-page: "latest-tag"
-          refs-order: "main latest-tag"
-          branches-or-tags-to-list: '^main$|^latest-tag$|^(serocalculator |v)([0-9]+\\.)?([0-9]+\\.)?([0-9]+)$'
-
-  upload-release-assets:
-    name: Upload documentation assets 🔼
-    needs: docs
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    steps:
-      - name: Checkout repo 🛎
-        uses: actions/checkout@v4.3.1
-
-      - name: Download artifact ⏬
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: pkgdown.zip
-
-      - name: Check if release exists ❓
-        id: check-if-release-exists
-        uses: insightsengineering/release-existence-action@v1
-
-      - name: Upload binaries to release ⤴
-        if: >-
-          steps.check-if-release-exists.outputs.release-exists == 'true'
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: pkgdown.zip
-          asset_name: pkgdown.zip
-          tag: ${{ github.ref }}
-          overwrite: true
+          header: pr-preview
+          message: |
+            [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
+            :---:
+            Preview removed because the pull request was closed.
+            ${{ steps.preview-step.outputs.action-start-time }}
 
   cleanup-pr-preview:
     name: Clean up PR preview 🧹
@@ -337,7 +363,7 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     steps:
       - name: Checkout gh-pages 🛎
-        uses: actions/checkout@v4.3.1
+        uses: actions/checkout@v4
         with:
           ref: "gh-pages"
 
@@ -345,8 +371,8 @@ jobs:
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          
-          preview_dir="preview/pr${{ github.event.pull_request.number }}"
+
+          preview_dir="pr-preview/pr-${{ github.event.pull_request.number }}"
           if [ -d "$preview_dir" ]; then
             git rm -r $preview_dir
             git commit -m "Remove $preview_dir (GitHub Actions)" || echo 'No preview to remove'
@@ -362,6 +388,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           number: ${{ github.event.pull_request.number }}
-          id: pkgdown-deploy
+          id: altdoc-deploy
           message: |
             _:closed_book: Preview documentation for this PR has been cleaned up._

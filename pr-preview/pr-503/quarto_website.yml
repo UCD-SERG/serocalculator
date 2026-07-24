@@ -23,6 +23,17 @@ website:
     search: true
     pinned: false
     right:
+      - text: Versions
+        menu:
+          - text: "v1.4.1 (stable)"
+            href: https://UCD-SERG.github.io/serocalculator/latest-tag/
+          - text: "1.4.1.9010 (dev)"
+            href: https://UCD-SERG.github.io/serocalculator/dev/
+          - text: "---"
+          - text: "v1.4.0"
+            href: https://UCD-SERG.github.io/serocalculator/v1.4.0/
+          - text: "v1.3.0"
+            href: https://UCD-SERG.github.io/serocalculator/v1.3.0/
       - icon: github
         href: $ALTDOC_PACKAGE_URL_GITHUB
         aria-label: View $ALTDOC_PACKAGE_NAME on GitHub

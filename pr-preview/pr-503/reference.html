@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,14 +42,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a28d57623bb1501f2d5adc4c6bd772f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-28eebafa1563988b73446f6e417031f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-a28d57623bb1501f2d5adc4c6bd772f8.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -341,6 +344,30 @@ ul.task-list li input[type="checkbox"] {
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-versions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Versions</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-versions">    
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/latest-tag/">
+ <span class="dropdown-text">v1.4.1 (stable)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
+ <span class="dropdown-text">1.4.1.9010 (dev)</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/v1.4.0/">
+ <span class="dropdown-text">v1.4.0</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/v1.3.0/">
+ <span class="dropdown-text">v1.3.0</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/UCD-SERG/serocalculator"> <i class="bi bi-github" role="img" aria-label="View serocalculator on GitHub">
 </i> 
@@ -852,82 +879,82 @@ ul.task-list li input[type="checkbox"] {
 <section id="prepare-data-kinetics-models-and-noise-parameters-for-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="prepare-data-kinetics-models-and-noise-parameters-for-analysis">Prepare data, kinetics models, and noise parameters for analysis</h2>
 <ul>
-<li><a href="./man/as_pop_data.html">as_pop_data</a></li>
-<li><a href="./man/load_pop_data.html">load_pop_data</a></li>
-<li><a href="./man/as_sr_params.html">as_sr_params</a></li>
-<li><a href="./man/load_sr_params.html">load_sr_params</a></li>
-<li><a href="./man/as_noise_params.html">as_noise_params</a></li>
-<li><a href="./man/load_noise_params.html">load_noise_params</a></li>
-<li><a href="./man/check_pop_data.html">check_pop_data</a></li>
-<li><a href="./man/strata.html">strata</a></li>
+<li><a href="./man/as_pop_data.html">as_pop_data()</a>: Load a cross-sectional antibody survey data set</li>
+<li><a href="./man/load_pop_data.html">load_pop_data()</a>: Load a cross-sectional antibody survey data set</li>
+<li><a href="./man/as_sr_params.html">as_sr_params()</a>: Load longitudinal seroresponse parameters</li>
+<li><a href="./man/load_sr_params.html">load_sr_params()</a>: Load longitudinal seroresponse parameter samples</li>
+<li><a href="./man/as_noise_params.html">as_noise_params()</a>: Load noise parameters</li>
+<li><a href="./man/load_noise_params.html">load_noise_params()</a>: Load noise parameters</li>
+<li><a href="./man/check_pop_data.html">check_pop_data()</a>: Check the formatting of a cross-sectional antibody survey dataset.</li>
+<li><a href="./man/strata.html">strata()</a>: Extract <code>Strata</code> metadata from an object</li>
 </ul>
 </section>
 <section id="extract-information-from-data-seroresponse-models-and-noise-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="extract-information-from-data-seroresponse-models-and-noise-parameters">Extract information from data, seroresponse models, and noise parameters</h2>
 <ul>
-<li><a href="./man/get_biomarker_levels.html">get_biomarker_levels</a></li>
-<li><a href="./man/get_biomarker_names_var.html">get_biomarker_names_var</a></li>
-<li><a href="./man/get_values_var.html">get_values_var</a></li>
-<li><a href="./man/get_values.html">get_values</a></li>
+<li><a href="./man/get_biomarker_levels.html">get_biomarker_levels()</a>: Extract biomarker levels</li>
+<li><a href="./man/get_biomarker_names_var.html">get_biomarker_names_var()</a>: Get biomarker variable name</li>
+<li><a href="./man/get_values_var.html">get_values_var()</a>: Extract antibody measurement values</li>
+<li><a href="./man/get_values.html">get_values()</a>: Get antibody measurement values</li>
 </ul>
 </section>
 <section id="visualize-data" class="level2">
 <h2 class="anchored" data-anchor-id="visualize-data">Visualize data</h2>
 <ul>
-<li><a href="./man/autoplot.pop_data.html">autoplot.pop_data</a></li>
-<li><a href="./man/autoplot.curve_params.html">autoplot.curve_params</a></li>
-<li><a href="./man/graph.curve.params.html">graph.curve.params</a></li>
-<li><a href="./man/graph_loglik.html">graph_loglik</a></li>
-<li><a href="./man/log_likelihood.html">log_likelihood</a></li>
+<li><a href="./man/autoplot.pop_data.html">autoplot.pop_data()</a>: Plot distribution of antibodies</li>
+<li><a href="./man/autoplot.curve_params.html">autoplot.curve_params()</a>: Graph antibody decay curves by antigen isotype</li>
+<li><a href="./man/graph.curve.params.html">graph.curve.params()</a>: Graph estimated antibody decay curves</li>
+<li><a href="./man/graph_loglik.html">graph_loglik()</a>: Graph log-likelihood of data</li>
+<li><a href="./man/log_likelihood.html">log_likelihood()</a>: Calculate log-likelihood</li>
 </ul>
 </section>
 <section id="estimate-seroconversion-incidence-rates" class="level2">
 <h2 class="anchored" data-anchor-id="estimate-seroconversion-incidence-rates">Estimate seroconversion incidence rates</h2>
 <ul>
-<li><a href="./man/est_seroincidence.html">est_seroincidence</a></li>
-<li><a href="./man/est_seroincidence_by.html">est_seroincidence_by</a></li>
+<li><a href="./man/est_seroincidence.html">est_seroincidence()</a>: Find the maximum likelihood estimate of the incidence rate parameter</li>
+<li><a href="./man/est_seroincidence_by.html">est_seroincidence_by()</a>: Estimate Seroincidence</li>
 </ul>
 </section>
 <section id="summarize-seroconversion-incidence-rate-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="summarize-seroconversion-incidence-rate-estimates">Summarize seroconversion incidence rate estimates</h2>
 <ul>
-<li><a href="./man/summary.seroincidence.html">summary.seroincidence</a></li>
-<li><a href="./man/summary.seroincidence.by.html">summary.seroincidence.by</a></li>
+<li><a href="./man/summary.seroincidence.html">summary.seroincidence()</a>: Summarizing fitted seroincidence models</li>
+<li><a href="./man/summary.seroincidence.by.html">summary.seroincidence.by()</a>: Summary Method for <code>"seroincidence.by"</code> Objects</li>
 </ul>
 </section>
 <section id="visualize-seroconversion-incidence-rate-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="visualize-seroconversion-incidence-rate-estimates">Visualize seroconversion incidence rate estimates</h2>
 <ul>
-<li><a href="./man/autoplot.seroincidence.html">autoplot.seroincidence</a></li>
-<li><a href="./man/autoplot.seroincidence.by.html">autoplot.seroincidence.by</a></li>
-<li><a href="./man/autoplot.summary.seroincidence.by.html">autoplot.summary.seroincidence.by</a></li>
+<li><a href="./man/autoplot.seroincidence.html">autoplot.seroincidence()</a>: Plot the log-likelihood curve for the incidence rate estimate</li>
+<li><a href="./man/autoplot.seroincidence.by.html">autoplot.seroincidence.by()</a>: Plot <code>seroincidence.by</code> log-likelihoods</li>
+<li><a href="./man/autoplot.summary.seroincidence.by.html">autoplot.summary.seroincidence.by()</a>: Plot method for <code>summary.seroincidence.by</code> objects</li>
 </ul>
 </section>
 <section id="compare-seroconversion-incidence-rates" class="level2">
 <h2 class="anchored" data-anchor-id="compare-seroconversion-incidence-rates">Compare seroconversion incidence rates</h2>
 <ul>
-<li><a href="./man/compare_seroincidence.html">compare_seroincidence</a></li>
+<li><a href="./man/compare_seroincidence.html">compare_seroincidence()</a>: Compare seroincidence rates between two groups</li>
 </ul>
 </section>
 <section id="example-data-sets" class="level2">
 <h2 class="anchored" data-anchor-id="example-data-sets">Example data sets</h2>
 <ul>
-<li><a href="./man/sees_pop_data_100.html">sees_pop_data_100</a></li>
-<li><a href="./man/sees_pop_data_pk_100.html">sees_pop_data_pk_100</a></li>
-<li><a href="./man/typhoid_curves_nostrat_100.html">typhoid_curves_nostrat_100</a></li>
-<li><a href="./man/example_noise_params_sees.html">example_noise_params_sees</a></li>
-<li><a href="./man/example_noise_params_pk.html">example_noise_params_pk</a></li>
-<li><a href="./man/sees_typhoid_ests_strat.html">sees_typhoid_ests_strat</a></li>
-<li><a href="./man/serocalculator_example.html">serocalculator_example</a></li>
+<li><a href="./man/sees_pop_data_100.html">sees_pop_data_100</a>: Small example cross-sectional data set</li>
+<li><a href="./man/sees_pop_data_pk_100.html">sees_pop_data_pk_100</a>: Small example cross-sectional data set</li>
+<li><a href="./man/typhoid_curves_nostrat_100.html">typhoid_curves_nostrat_100</a>: Small example of antibody response curve parameters for typhoid</li>
+<li><a href="./man/example_noise_params_sees.html">example_noise_params_sees</a>: Small example of noise parameters for typhoid</li>
+<li><a href="./man/example_noise_params_pk.html">example_noise_params_pk</a>: Small example of noise parameters for typhoid</li>
+<li><a href="./man/sees_typhoid_ests_strat.html">sees_typhoid_ests_strat</a>: Example <code>"seroincidence.by"</code> object</li>
+<li><a href="./man/serocalculator_example.html">serocalculator_example()</a>: Get path to an example file</li>
 </ul>
 </section>
 <section id="simulate-data-sets" class="level2">
 <h2 class="anchored" data-anchor-id="simulate-data-sets">Simulate data sets</h2>
 <ul>
-<li><a href="./man/sim_pop_data.html">sim_pop_data</a></li>
-<li><a href="./man/sim_pop_data_multi.html">sim_pop_data_multi</a></li>
-<li><a href="./man/analyze_sims.html">analyze_sims</a></li>
-<li><a href="./man/autoplot.sim_results.html">autoplot.sim_results</a></li>
+<li><a href="./man/sim_pop_data.html">sim_pop_data()</a>: Simulate a cross-sectional serosurvey with noise</li>
+<li><a href="./man/sim_pop_data_multi.html">sim_pop_data_multi()</a>: Simulate multiple data sets</li>
+<li><a href="./man/analyze_sims.html">analyze_sims()</a>: Analyze simulation results</li>
+<li><a href="./man/autoplot.sim_results.html">autoplot.sim_results()</a>: Plot simulation results <code>autoplot()</code> method for <code>sim_results</code> objects</li>
 </ul>
 
 

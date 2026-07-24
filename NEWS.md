@@ -23,6 +23,11 @@
 
 ## Documentation
 
+* The documentation site now deploys multiple versions side by side, following
+  `rpt`'s pattern: pushes to `main` deploy development docs to `/dev/`,
+  published releases deploy stable docs to `/latest-tag/` (plus an archived
+  `/vX.Y.Z/` copy), and the site root redirects to whichever was deployed most
+  recently. A "Versions" navbar dropdown links between them. (#504)
 * Updated the documentation site configuration to promote "Get started",
   "Reference", and "News" in the top navigation, and added a grouped
   `reference.qmd` index plus grouped sidebar reference sections that

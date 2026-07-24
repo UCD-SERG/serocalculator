@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="UC Davis Seroepidemiology Research Group (SERG)">
+<title>Enteric Fever Seroincidence Vignette – serocalculator</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3b0a2887666d7ddefb129c96e5da6a62.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-14cc35b04e49f1562c9e070a92dcb131.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-3b0a2887666d7ddefb129c96e5da6a62.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">serocalculator</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link active" href="../../reference.html" aria-current="page"> 
+<span class="menu-text">Reference</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vignettes/articles/serocalculator.html"> 
+<span class="menu-text">Get started</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-articles" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Articles</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-articles">
+<li class="dropdown-header">—Methodology—</li>
+        <li>
+    <a class="dropdown-item" href="../../vignettes/methodology.html">
+ <span class="dropdown-text">Methodology</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../vignettes/articles/simulate_xsectionalData.html">
+ <span class="dropdown-text">Simulate cross-sectional data</span></a>
+  </li>  
+        <li class="dropdown-header">—Examples—</li>
+        <li>
+    <a class="dropdown-item" href="../../vignettes/articles/enteric_fever_example.html">
+ <span class="dropdown-text">Enteric fever example</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../vignettes/articles/scrubTyphus_example.html">
+ <span class="dropdown-text">Scrub typhus example</span></a>
+  </li>  
+        <li class="dropdown-header">—Other—</li>
+        <li>
+    <a class="dropdown-item" href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">
+ <span class="dropdown-text">Version crosswalk (1.3 to 1.4)</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../NEWS.html"> 
+<span class="menu-text">Changelog</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-more">
+<li class="dropdown-header">—Links—</li>
+        <li>
+    <a class="dropdown-item" href="https://CRAN.R-project.org/package=serocalculator">
+ <span class="dropdown-text">View on CRAN</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/UCD-SERG/serocalculator">
+ <span class="dropdown-text">Browse source code</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/UCD-SERG/serocalculator/issues">
+ <span class="dropdown-text">Report a bug</span></a>
+  </li>  
+        <li class="dropdown-header">—License—</li>
+        <li>
+    <a class="dropdown-item" href="https://www.gnu.org/licenses/gpl-3.0.html">
+ <span class="dropdown-text">GPL-3</span></a>
+  </li>  
+        <li class="dropdown-header">—Community—</li>
+        <li>
+    <a class="dropdown-item" href="../../CONTRIBUTING.html">
+ <span class="dropdown-text">Contributing guide</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li class="dropdown-header">—Citation—</li>
+        <li>
+    <a class="dropdown-item" href="../../citation.html">
+ <span class="dropdown-text">Citing serocalculator</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-versions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Versions</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-versions">
+<li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/latest-tag/">
+ <span class="dropdown-text">v1.4.1 (stable)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
+ <span class="dropdown-text">1.4.1.9010 (dev)</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/v1.4.0/">
+ <span class="dropdown-text">v1.4.0</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/v1.3.0/">
+ <span class="dropdown-text">v1.3.0</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/UCD-SERG/serocalculator"> <i class="bi bi-github" role="img" aria-label="View serocalculator on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Examples</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Get started</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vignettes/articles/serocalculator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to serocalculator</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Methodology</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vignettes/methodology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estimating Incidence Rates from Cross-Sectional Serosurveys</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vignettes/articles/simulate_xsectionalData.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simulation studies</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Examples</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vignettes/articles/enteric_fever_example.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Enteric Fever Seroincidence Vignette</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vignettes/articles/scrubTyphus_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scrub Typhus Seroincidence Vignette</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Version Crosswalk: v1.3.0 to v1.4.0</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Prepare data, kinetics models, and noise parameters for analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/as_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load a cross-sectional antibody survey data set</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/load_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load a cross-sectional antibody survey data set</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/as_sr_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load longitudinal seroresponse parameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/load_sr_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load longitudinal seroresponse parameter samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/as_noise_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load noise parameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/load_noise_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load noise parameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/check_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Check the formatting of a cross-sectional antibody survey dataset.</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extract <code>Strata</code> metadata from an object</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Extract information from data, seroresponse models, and noise parameters</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/get_biomarker_levels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extract biomarker levels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/get_biomarker_names_var.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Get biomarker variable name</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/get_values_var.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Extract antibody measurement values</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/get_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Get antibody measurement values</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Visualize data</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/autoplot.pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot distribution of antibodies</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/autoplot.curve_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph antibody decay curves by antigen isotype</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/graph.curve.params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph estimated antibody decay curves</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/graph_loglik.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph log-likelihood of data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/log_likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calculate log-likelihood</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">Estimate seroconversion incidence rates</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/est_seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Find the maximum likelihood estimate of the incidence rate parameter</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/est_seroincidence_by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estimate Seroincidence</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Summarize seroconversion incidence rate estimates</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/summary.seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summarizing fitted seroincidence models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary Method for <code>“seroincidence.by”</code> Objects</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Visualize seroconversion incidence rate estimates</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/autoplot.seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot the log-likelihood curve for the incidence rate estimate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/autoplot.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot <code>seroincidence.by</code> log-likelihoods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/autoplot.summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot method for <code>summary.seroincidence.by</code> objects</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Compare seroconversion incidence rates</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/compare_seroincidence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Compare seroincidence rates between two groups</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Example data sets</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sees_pop_data_100.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small example cross-sectional data set</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sees_pop_data_pk_100.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small example cross-sectional data set</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/typhoid_curves_nostrat_100.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small example of antibody response curve parameters for typhoid</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/example_noise_params_sees.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small example of noise parameters for typhoid</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/example_noise_params_pk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Small example of noise parameters for typhoid</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sees_typhoid_ests_strat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Example <code>“seroincidence.by”</code> object</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/serocalculator_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Get path to an example file</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">Simulate data sets</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simulate a cross-sectional serosurvey with noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sim_pop_data_multi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Simulate multiple data sets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/analyze_sims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analyze simulation results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot simulation results <code>autoplot()</code> method for <code>sim_results</code> objects</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../NEWS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">News</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../CODE_OF_CONDUCT.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Code of conduct</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../CONTRIBUTING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contributing</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li>
+<a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">2</span> Methods</a>
+  <ul class="collapse">
+<li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages"><span class="header-section-number">2.1</span> Load packages</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">3</span> Load data</a>
+  <ul class="collapse">
+<li><a href="#load-and-prepare-longitudinal-parameter-data" id="toc-load-and-prepare-longitudinal-parameter-data" class="nav-link" data-scroll-target="#load-and-prepare-longitudinal-parameter-data"><span class="header-section-number">3.1</span> Load and prepare longitudinal parameter data</a></li>
+  <li><a href="#visualize-curve-parameters" id="toc-visualize-curve-parameters" class="nav-link" data-scroll-target="#visualize-curve-parameters"><span class="header-section-number">3.2</span> Visualize curve parameters</a></li>
+  <li><a href="#load-and-prepare-cross-sectional-data" id="toc-load-and-prepare-cross-sectional-data" class="nav-link" data-scroll-target="#load-and-prepare-cross-sectional-data"><span class="header-section-number">3.3</span> Load and prepare cross-sectional data</a></li>
+  <li><a href="#summarize-antibody-data" id="toc-summarize-antibody-data" class="nav-link" data-scroll-target="#summarize-antibody-data"><span class="header-section-number">3.4</span> Summarize antibody data</a></li>
+  <li><a href="#visualize-antibody-data" id="toc-visualize-antibody-data" class="nav-link" data-scroll-target="#visualize-antibody-data"><span class="header-section-number">3.5</span> Visualize antibody data</a></li>
+  <li><a href="#load-noise-parameters" id="toc-load-noise-parameters" class="nav-link" data-scroll-target="#load-noise-parameters"><span class="header-section-number">3.6</span> Load noise parameters</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#estimate-seroincidence" id="toc-estimate-seroincidence" class="nav-link" data-scroll-target="#estimate-seroincidence"><span class="header-section-number">4</span> Estimate Seroincidence</a>
+  <ul class="collapse">
+<li><a href="#overall-seroincidence" id="toc-overall-seroincidence" class="nav-link" data-scroll-target="#overall-seroincidence"><span class="header-section-number">4.1</span> Overall Seroincidence</a></li>
+  <li><a href="#stratified-seroincidence" id="toc-stratified-seroincidence" class="nav-link" data-scroll-target="#stratified-seroincidence"><span class="header-section-number">4.2</span> Stratified Seroincidence</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#comparing-seroincidence-rates" id="toc-comparing-seroincidence-rates" class="nav-link" data-scroll-target="#comparing-seroincidence-rates"><span class="header-section-number">5</span> Comparing Seroincidence Rates</a>
+  <ul class="collapse">
+<li><a href="#comparing-two-individual-estimates" id="toc-comparing-two-individual-estimates" class="nav-link" data-scroll-target="#comparing-two-individual-estimates"><span class="header-section-number">5.1</span> Comparing Two Individual Estimates</a></li>
+  <li><a href="#comparing-all-pairs-of-stratified-estimates" id="toc-comparing-all-pairs-of-stratified-estimates" class="nav-link" data-scroll-target="#comparing-all-pairs-of-stratified-estimates"><span class="header-section-number">5.2</span> Comparing All Pairs of Stratified Estimates</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#accounting-for-clustered-sampling-designs" id="toc-accounting-for-clustered-sampling-designs" class="nav-link" data-scroll-target="#accounting-for-clustered-sampling-designs"><span class="header-section-number">6</span> Accounting for Clustered Sampling Designs</a>
+  <ul class="collapse">
+<li><a href="#example-household-clustering" id="toc-example-household-clustering" class="nav-link" data-scroll-target="#example-household-clustering"><span class="header-section-number">6.1</span> Example: Household Clustering</a></li>
+  <li><a href="#clustering-with-stratified-analysis" id="toc-clustering-with-stratified-analysis" class="nav-link" data-scroll-target="#clustering-with-stratified-analysis"><span class="header-section-number">6.2</span> Clustering with Stratified Analysis</a></li>
+  <li><a href="#understanding-the-impact" id="toc-understanding-the-impact" class="nav-link" data-scroll-target="#understanding-the-impact"><span class="header-section-number">6.3</span> Understanding the Impact</a></li>
+  <li><a href="#cluster-robust-country-comparisons" id="toc-cluster-robust-country-comparisons" class="nav-link" data-scroll-target="#cluster-robust-country-comparisons"><span class="header-section-number">6.4</span> Cluster-Robust Country Comparisons</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">7</span> Conclusions</a></li>
+  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments"><span class="header-section-number">8</span> Acknowledgments</a></li>
+  <li><a href="#funding" id="toc-funding" class="nav-link" data-scroll-target="#funding"><span class="header-section-number">9</span> Funding</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">10</span> References</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="enteric_fever_example.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Examples</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li></ol></nav><h1 class="title display-7">Enteric Fever Seroincidence Vignette</h1></header><header id="title-block-header">
+<p class="author">UC Davis Seroepidemiology Research Group (SERG)</p>
+
+<p class="date">Invalid Date</p>
+</header><section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">1</span> Introduction</h2>
+<p>This vignette provides users with an example analysis using the <a href="https://github.com/UCD-SERG/serocalculator"><strong>serocalculator</strong></a> package by reproducing the analysis for: <a href="https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext"><strong>Estimating typhoid incidence from community-based serosurveys: a multicohort study</strong></a> (<span class="citation" data-cites="Aiemjoy_2022_Lancet">Aiemjoy et al. (<a href="#ref-Aiemjoy_2022_Lancet" role="doc-biblioref">2022</a>)</span>). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplified version of the analysis, the results here will differ slightly from those presented in the publication.</p>
+<p>In this example, users will determine the seroincidence of enteric fever in cross-sectional serosurveys conducted as part of the SeroEpidemiology and Environmental Surveillance (SEES) for enteric fever study in Bangladesh, Nepal, and Pakistan. Longitudinal antibody responses were modeled from 1420 blood culture-confirmed enteric fever cases enrolled from the same countries.</p>
+</section><section id="methods" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="methods">
+<span class="header-section-number">2</span> Methods</h2>
+<section id="load-packages" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="load-packages">
+<span class="header-section-number">2.1</span> Load packages</h3>
+<p>The first step in conducting this analysis is to load our necessary packages. <strong>If you haven’t installed already, you will need to do so before loading:</strong></p>
+<p>See the <a href="https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package">Installation instructions</a> for more details.</p>
+<p>Once the <code>serocalculator</code> package has been installed, load it into your R environment using <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>, along with any other packages you may need for data management; For this example, we will load <code>tidyverse</code> and <code>forcats</code>:</p>
+</section></section><section id="load-data" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="load-data">
+<span class="header-section-number">3</span> Load data</h2>
+<p>Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for <strong>serocalculator</strong> are available on the <a href="https://osf.io/ne8pc/">Serocalculator Data Repository</a> on Open Science Framework (OSF). We will pull this data directly into our R environment.</p>
+<p>Note that each dataset has specific formatting and variable name requirements.</p>
+<section id="load-and-prepare-longitudinal-parameter-data" class="level3" data-number="3.1"><h3 data-number="3.1" class="anchored" data-anchor-id="load-and-prepare-longitudinal-parameter-data">
+<span class="header-section-number">3.1</span> Load and prepare longitudinal parameter data</h3>
+<p>We will first load the longitudinal curve parameters to set the antibody decay parameters. In this example, these parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases.</p>
+<p><em>Formatting Specifications</em>: Data should be imported as a “wide” dataframe with one column for each parameter and one row for each iteration of the posterior distribution for each antigen isotype. Column names must <em>exactly</em> match follow the naming conventions:</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>y0</td>
+<td>Baseline antibody concentration</td>
+</tr>
+<tr class="even">
+<td>y1</td>
+<td>Peak antibody concentration</td>
+</tr>
+<tr class="odd">
+<td>t1</td>
+<td>Time to peak antibody concentration</td>
+</tr>
+<tr class="even">
+<td>alpha</td>
+<td>Antibody decay rate</td>
+</tr>
+<tr class="odd">
+<td>r</td>
+<td>Antibody decay shape</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that variable names are case-sensitive</em></p>
+</section><section id="visualize-curve-parameters" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="visualize-curve-parameters">
+<span class="header-section-number">3.2</span> Visualize curve parameters</h3>
+<p>We can graph the decay curves with an <code>autoplot()</code> method:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="load-and-prepare-cross-sectional-data" class="level3" data-number="3.3"><h3 data-number="3.3" class="anchored" data-anchor-id="load-and-prepare-cross-sectional-data">
+<span class="header-section-number">3.3</span> Load and prepare cross-sectional data</h3>
+<p>Next, we load our sample cross-sectional data. We will use a subset of results from the SEES dataset. Ideally, this will be a representative sample of the general population without regard to disease status. Later, we will limit our analysis to cross-sectional data from Pakistan.</p>
+<p>We have selected hemolysin E (<em>HlyE</em>) as our target antigen and <em>IgG</em> and <em>IgA</em> as our target immunoglobulin isotypes. Users may select different serologic markers depending on what is available in your data. From the original dataset, we rename our result and age variables to the names required by <strong>serocalculator</strong>.</p>
+<p><em>Formatting Specifications</em>: Cross-sectional population data should be a “long” dataframe with one column for each variable and one row for each antigen isotype resulted for an individual. So the same individual will have more than one row if they have results for more than one antigen isotype. The dataframe can have additional variables, but the two below are required:</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>value</td>
+<td>Quantitative antibody response</td>
+</tr>
+<tr class="even">
+<td>age</td>
+<td>Numeric age</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that variable names are case sensitive</em></p>
+</section><section id="summarize-antibody-data" class="level3" data-number="3.4"><h3 data-number="3.4" class="anchored" data-anchor-id="summarize-antibody-data">
+<span class="header-section-number">3.4</span> Summarize antibody data</h3>
+<p>We can compute numerical summaries of our cross-sectional antibody data with a <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method for <code>pop_data</code> objects:</p>
+<div class="cell">
+<pre><code>#&gt; 
+#&gt; n = 1000 
+#&gt; 
+#&gt; Distribution of age: 
+#&gt; 
+#&gt; # A tibble: 1 × 7
+#&gt;       n   min first_quartile median  mean third_quartile   max
+#&gt;   &lt;int&gt; &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  1000   0.8           5.38   10.1  10.7           14.8  24.8
+#&gt; 
+#&gt; Distributions of antigen-isotype measurements:
+#&gt; 
+#&gt; # A tibble: 2 × 7
+#&gt;   antigen_iso    Min `1st Qu.` Median `3rd Qu.`   Max `# NAs`
+#&gt;   &lt;fct&gt;        &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
+#&gt; 1 HlyE_IgA    0          0.949   2.01      3.90  133.       0
+#&gt; 2 HlyE_IgG    0.0394     1.18    2.84      6.84  135.       0</code></pre>
+</div>
+</section><section id="visualize-antibody-data" class="level3" data-number="3.5"><h3 data-number="3.5" class="anchored" data-anchor-id="visualize-antibody-data">
+<span class="header-section-number">3.5</span> Visualize antibody data</h3>
+<p>We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/plots-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We see that across countries, our data is highly skewed with the majority of responses on the lower end of our data with long tails. Let’s get a better look at the distribution by log transforming our antibody response value.</p>
+<div class="cell">
+<pre><code>#&gt; Warning in scale_x_log10(labels = scales::label_comma()): log-10 transformation
+#&gt; introduced infinite values.
+#&gt; Warning: Removed 4 rows containing non-finite outside the scale range
+#&gt; (`stat_density()`).</code></pre>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/logplot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data.</p>
+<p>Let’s also take a look at how antibody responses change by age.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/plot-age-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this plot, we can see that the highest burden is in Bangladesh, but Nepal has the steepest slope and experiences the greatest change in seroconversion rates by age, with lower exposures at younger ages and higher exposures at older ages.</p>
+</section><section id="load-noise-parameters" class="level3" data-number="3.6"><h3 data-number="3.6" class="anchored" data-anchor-id="load-noise-parameters">
+<span class="header-section-number">3.6</span> Load noise parameters</h3>
+<p>Next, we must set conditions based on some assumptions about the data and errors that may need to be accounted for. This will differ based on background knowledge of the data.</p>
+<p>The biological noise, <span class="math inline">\(\nu\)</span> (“nu”), represents error from cross-reactivity to other antibodies. It is defined as the 95th percentile of the distribution of antibody responses to the antigen-isotype in a population with no exposure.</p>
+<p>Measurement noise, <span class="math inline">\(\varepsilon\)</span> (“epsilon”), represents measurement error from the laboratory testing process. The relative error is modeled as uniform on <span class="math inline">\([-\varepsilon, \varepsilon]\)</span>, so <span class="math inline">\(\varepsilon\)</span> is the largest relative deviation a measurement can have from its true value, not a coefficient of variation (CV). Assay precision is often reported as a CV, the ratio of the standard deviation to the mean for replicates, ideally measured across plates rather than within the same plate; under this uniform model the CV equals <span class="math inline">\(\varepsilon/\sqrt{3}\)</span>, so a measured CV corresponds to <span class="math inline">\(\varepsilon = \sqrt{3}\,\text{CV}\)</span>.</p>
+<p><em>Formatting Specifications</em>: Noise parameter data should be a dataframe with one row for each antigen isotype and columns for each noise parameter below.</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Column Name</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>y.low</td>
+<td>Lower limit of detection of the assay</td>
+</tr>
+<tr class="even">
+<td>nu</td>
+<td>Biologic noise</td>
+</tr>
+<tr class="odd">
+<td>y.high</td>
+<td>Upper limit of detection of the assay</td>
+</tr>
+<tr class="even">
+<td>eps</td>
+<td>Measurement noise</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note that variable names are case-sensitive.</em></p>
+</section></section><section id="estimate-seroincidence" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="estimate-seroincidence">
+<span class="header-section-number">4</span> Estimate Seroincidence</h2>
+<p>Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, <code>est.incidence</code> and <code>est.incidence.by</code>, to calculate the overall seroincidence and the stratified seroincidence, respectively.</p>
+<section id="overall-seroincidence" class="level3" data-number="4.1"><h3 data-number="4.1" class="anchored" data-anchor-id="overall-seroincidence">
+<span class="header-section-number">4.1</span> Overall Seroincidence</h3>
+<p>Using the function <code>est.incidence</code>, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available.</p>
+<div class="cell">
+<pre><code>#&gt; # A tibble: 1 × 11
+#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.
+#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
+#&gt; #   nlm.convergence.code &lt;ord&gt;</code></pre>
+</div>
+</section><section id="stratified-seroincidence" class="level3" data-number="4.2"><h3 data-number="4.2" class="anchored" data-anchor-id="stratified-seroincidence">
+<span class="header-section-number">4.2</span> Stratified Seroincidence</h3>
+<p>We can also produce stratified seroincidence estimates. Users can select one or more stratification variables in their cross-sectional population dataset. Let’s compare estimates across all countries and by age group.</p>
+<div class="cell">
+<pre><code>#&gt; Warning: The number of observations in `data` varies between antigen isotypes, for at
+#&gt; least one stratum.
+#&gt; Sample size for each stratum will be calculated as the minimum number of
+#&gt; observations across all antigen isotypes.
+#&gt; # A tibble: 6 × 4
+#&gt;   Country ageCat antigen_iso     n
+#&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;fct&gt;       &lt;int&gt;
+#&gt; 1 Nepal   &lt;5     HlyE_IgA       42
+#&gt; 2 Nepal   &lt;5     HlyE_IgG       40
+#&gt; 3 Nepal   5-15   HlyE_IgA      106
+#&gt; 4 Nepal   5-15   HlyE_IgG      109
+#&gt; 5 Nepal   16+    HlyE_IgA       52
+#&gt; 6 Nepal   16+    HlyE_IgG       51
+#&gt; Seroincidence estimated given the following setup:
+#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#&gt; b) Strata       : Country, ageCat 
+#&gt; 
+#&gt;  Seroincidence estimates:
+#&gt; # A tibble: 9 × 15
+#&gt;   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr
+#&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;fct&gt;  &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1 Stratum 1 Banglad… &lt;5        24       0.1         0.567  0.105   0.394  0.816 
+#&gt; 2 Stratum 2 Banglad… 5-15      65       0.1         0.606  0.0749  0.476  0.772 
+#&gt; 3 Stratum 3 Banglad… 16+       11       0.1         0.541  0.165   0.297  0.985 
+#&gt; 4 Stratum 4 Nepal    &lt;5        40       0.1         0.0292 0.0111  0.0139 0.0614
+#&gt; 5 Stratum 5 Nepal    5-15     106       0.1         0.0415 0.00687 0.0300 0.0574
+#&gt; 6 Stratum 6 Nepal    16+       51       0.1         0.0972 0.0163  0.0701 0.135 
+#&gt; 7 Stratum 7 Pakistan &lt;5        43       0.1         0.117  0.0241  0.0785 0.176 
+#&gt; 8 Stratum 8 Pakistan 5-15     115       0.1         0.140  0.0145  0.114  0.171 
+#&gt; 9 Stratum 9 Pakistan 16+       42       0.1         0.269  0.0423  0.198  0.367 
+#&gt; # ℹ 6 more variables: se_type &lt;chr&gt;, coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;,
+#&gt; #   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+</div>
+<p>Note that we get a warning about uneven observations between antigen isotypes, meaning some participants do not have results for both <em>HlyE IgA</em> and <em>HlyE IgG</em>. The warning indicates that the “<em>Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes</em>”, so only participants with both antigen isotypes are included. To avoid this, filter the dataset to include only records with all specified antigen isotypes.</p>
+<p>We set <code>curve_strata_varnames = NULL</code> to avoid stratification in the “curves” dataset because it does not include our strata variables. Without this, a warning appears: “<em>curve_params is missing all strata variables, and will be used unstratified</em>”. To stratify based on variables that exist in a longitudinal curve parameters dataset, specify variables using <code>curve_strata_varnames</code>, similar to how <code>noise_strata_varnames</code> is used for “noise” above.</p>
+<p>Finally, let’s visualize our seroincidence estimates by country and age category using <code>autoplot()</code>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="comparing-seroincidence-rates" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="comparing-seroincidence-rates">
+<span class="header-section-number">5</span> Comparing Seroincidence Rates</h2>
+<p>After estimating seroincidence rates across different groups, we may want to statistically compare these rates to determine if observed differences are significant. The <code>compare_seroincidence()</code> function performs two-sample z-tests to compare seroincidence rates.</p>
+<section id="comparing-two-individual-estimates" class="level3" data-number="5.1"><h3 data-number="5.1" class="anchored" data-anchor-id="comparing-two-individual-estimates">
+<span class="header-section-number">5.1</span> Comparing Two Individual Estimates</h3>
+<p>First, let’s compare seroincidence rates between two countries directly. We’ll estimate seroincidence for Bangladesh and Nepal separately, then compare them:</p>
+<div class="cell">
+<pre><code>#&gt; 
+#&gt;  Two-sample z-test for difference in seroincidence rates
+#&gt; 
+#&gt; data:  seroincidence estimates
+#&gt; z = 9.311, p-value &lt; 2.2e-16
+#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.4224426 0.6477095
+#&gt; sample estimates:
+#&gt; incidence rate 1 incidence rate 2       difference 
+#&gt;       0.58838264       0.05330655       0.53507609</code></pre>
+</div>
+<p>The output follows the standard <code>htest</code> format in R, providing the z-statistic, p-value, estimates for both groups, and a confidence interval for the difference in incidence rates.</p>
+</section><section id="comparing-all-pairs-of-stratified-estimates" class="level3" data-number="5.2"><h3 data-number="5.2" class="anchored" data-anchor-id="comparing-all-pairs-of-stratified-estimates">
+<span class="header-section-number">5.2</span> Comparing All Pairs of Stratified Estimates</h3>
+<p>For stratified analyses, we can compare all pairs of strata at once. This is particularly useful when we have multiple groups and want a comprehensive view of all pairwise differences:</p>
+<div class="cell">
+<pre><code>#&gt; # A tibble: 36 × 14
+#&gt;    Stratum_1 Stratum_2 Country.1  ageCat.1 Country.2  ageCat.2 incidence.rate.1
+#&gt;  * &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;      &lt;fct&gt;    &lt;chr&gt;      &lt;fct&gt;               &lt;dbl&gt;
+#&gt;  1 Stratum 1 Stratum 2 Bangladesh &lt;5       Bangladesh 5-15                0.567
+#&gt;  2 Stratum 1 Stratum 3 Bangladesh &lt;5       Bangladesh 16+                 0.567
+#&gt;  3 Stratum 1 Stratum 4 Bangladesh &lt;5       Nepal      &lt;5                  0.567
+#&gt;  4 Stratum 1 Stratum 5 Bangladesh &lt;5       Nepal      5-15                0.567
+#&gt;  5 Stratum 1 Stratum 6 Bangladesh &lt;5       Nepal      16+                 0.567
+#&gt;  6 Stratum 1 Stratum 7 Bangladesh &lt;5       Pakistan   &lt;5                  0.567
+#&gt;  7 Stratum 1 Stratum 8 Bangladesh &lt;5       Pakistan   5-15                0.567
+#&gt;  8 Stratum 1 Stratum 9 Bangladesh &lt;5       Pakistan   16+                 0.567
+#&gt;  9 Stratum 2 Stratum 3 Bangladesh 5-15     Bangladesh 16+                 0.606
+#&gt; 10 Stratum 2 Stratum 4 Bangladesh 5-15     Nepal      &lt;5                  0.606
+#&gt; # ℹ 26 more rows
+#&gt; # ℹ 7 more variables: incidence.rate.2 &lt;dbl&gt;, difference &lt;dbl&gt;, SE &lt;dbl&gt;,
+#&gt; #   z.statistic &lt;dbl&gt;, p.value &lt;dbl&gt;, CI.lwr &lt;dbl&gt;, CI.upr &lt;dbl&gt;</code></pre>
+</div>
+<p>This produces a table with one row for each pairwise comparison, showing: - The two strata being compared - Incidence rates for each group - The difference in rates - Standard error of the difference - Z-statistic - P-value - 95% confidence interval for the difference</p>
+<p>We can use this to identify which differences are statistically significant (typically using p &lt; 0.05 as a threshold).</p>
+</section></section><section id="accounting-for-clustered-sampling-designs" class="level2" data-number="6"><h2 data-number="6" class="anchored" data-anchor-id="accounting-for-clustered-sampling-designs">
+<span class="header-section-number">6</span> Accounting for Clustered Sampling Designs</h2>
+<p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, geographic area, or school). When observations within clusters are more similar to each other than to observations from different clusters, standard errors that ignore clustering will be too small, leading to overconfident inference.</p>
+<p>The <code>serocalculator</code> package supports cluster-robust standard error estimation through the <code>cluster_var</code> parameter.</p>
+<section id="example-household-clustering" class="level3" data-number="6.1"><h3 data-number="6.1" class="anchored" data-anchor-id="example-household-clustering">
+<span class="header-section-number">6.1</span> Example: Household Clustering</h3>
+<p>The SEES data includes cluster identifiers (<code>cluster</code> for geographic clusters, <code>catchment</code> for health facility catchment areas, and <code>Country</code>). These variables are nested: clusters are nested within catchments, which are nested within countries. We can use these to account for within-cluster correlation:</p>
+<div class="cell">
+<pre><code>#&gt; # A tibble: 1 × 11
+#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
+#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1       0.1          0.158 0.0214  0.122  0.206 cluster-robust     0.95  -1016.
+#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
+#&gt; #   nlm.convergence.code &lt;ord&gt;
+#&gt; # A tibble: 1 × 11
+#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
+#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.
+#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
+#&gt; #   nlm.convergence.code &lt;ord&gt;</code></pre>
+</div>
+<p>Notice that the point estimates (incidence rates) are identical between the two analyses, but the standard errors are larger with cluster-robust estimation. This reflects the reduced effective sample size due to within-cluster correlation.</p>
+<p>The mathematical details of cluster-robust standard errors are explained in the <a href="../methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs">Cluster-robust standard errors section</a> of the methodology article.</p>
+</section><section id="clustering-with-stratified-analysis" class="level3" data-number="6.2"><h3 data-number="6.2" class="anchored" data-anchor-id="clustering-with-stratified-analysis">
+<span class="header-section-number">6.2</span> Clustering with Stratified Analysis</h3>
+<p>Clustering can also be combined with stratified analysis using <code>est_seroincidence_by()</code>:</p>
+<div class="cell">
+<pre><code>#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
+#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
+#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#&gt;   `est_seroincidence_by()`.
+#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.
+#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
+#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#&gt;   `est_seroincidence_by()`.
+#&gt; Seroincidence estimated given the following setup:
+#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#&gt; b) Strata       : catchment 
+#&gt; 
+#&gt;  Seroincidence estimates:
+#&gt; # A tibble: 2 × 14
+#&gt;   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
+#&gt; 1 Stratum… aku         100       0.1          0.114 0.0216 0.0788  0.165 cluste…
+#&gt; 2 Stratum… kgh         100       0.1          0.217 0.0161 0.188   0.251 cluste…
+#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,
+#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;
+#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
+#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
+#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#&gt;   `est_seroincidence_by()`.
+#&gt; `noise_params` is missing all strata variables and will be used unstratified.
+#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
+#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
+#&gt;   `est_seroincidence_by()`.
+#&gt; Seroincidence estimated given the following setup:
+#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
+#&gt; b) Strata       : catchment 
+#&gt; 
+#&gt;  Seroincidence estimates:
+#&gt; # A tibble: 2 × 14
+#&gt;   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
+#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
+#&gt; 1 Stratum… aku         100       0.1          0.114 0.0135 0.0905  0.144 standa…
+#&gt; 2 Stratum… kgh         100       0.1          0.217 0.0223 0.177   0.265 standa…
+#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,
+#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+</div>
+<p>Within each stratum (catchment), the cluster-robust standard errors are larger than the standard errors, appropriately accounting for geographic clustering within each catchment area.</p>
+</section><section id="understanding-the-impact" class="level3" data-number="6.3"><h3 data-number="6.3" class="anchored" data-anchor-id="understanding-the-impact">
+<span class="header-section-number">6.3</span> Understanding the Impact</h3>
+<p>When cluster-robust standard errors are used:</p>
+<ul>
+<li>
+<strong>Point estimates</strong> (incidence rates) remain unchanged</li>
+<li>
+<strong>Standard errors</strong> typically increase by 5-15% to reflect within-cluster correlation</li>
+<li>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> output includes a <code>se_type</code> column indicating “cluster-robust” vs “standard”</li>
+<li>Confidence intervals appropriately widen to account for reduced effective sample size</li>
+</ul></section><section id="cluster-robust-country-comparisons" class="level3" data-number="6.4"><h3 data-number="6.4" class="anchored" data-anchor-id="cluster-robust-country-comparisons">
+<span class="header-section-number">6.4</span> Cluster-Robust Country Comparisons</h3>
+<p>For our main findings comparing all three countries, we should use cluster-robust standard errors to properly account for the geographic clustering in the SEES study:</p>
+<div class="cell">
+<pre><code>#&gt; [1] "Bangladesh vs Nepal:"
+#&gt; 
+#&gt;  Two-sample z-test for difference in seroincidence rates
+#&gt; 
+#&gt; data:  seroincidence estimates
+#&gt; z = 54.102, p-value &lt; 2.2e-16
+#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.5156917 0.5544605
+#&gt; sample estimates:
+#&gt; incidence rate 1 incidence rate 2       difference 
+#&gt;       0.58838264       0.05330655       0.53507609
+#&gt; [1] "Bangladesh vs Pakistan:"
+#&gt; 
+#&gt;  Two-sample z-test for difference in seroincidence rates
+#&gt; 
+#&gt; data:  seroincidence estimates
+#&gt; z = 19.126, p-value &lt; 2.2e-16
+#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.3859467 0.4740769
+#&gt; sample estimates:
+#&gt; incidence rate 1 incidence rate 2       difference 
+#&gt;        0.5883826        0.1583708        0.4300118
+#&gt; [1] "Nepal vs Pakistan:"
+#&gt; 
+#&gt;  Two-sample z-test for difference in seroincidence rates
+#&gt; 
+#&gt; data:  seroincidence estimates
+#&gt; z = -4.67, p-value = 3.012e-06
+#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  -0.14915874 -0.06096985
+#&gt; sample estimates:
+#&gt; incidence rate 1 incidence rate 2       difference 
+#&gt;       0.05330655       0.15837084      -0.10506430</code></pre>
+</div>
+<p>The cluster-robust comparisons provide more accurate inference by accounting for within-cluster correlation in the study design.</p>
+</section></section><section id="conclusions" class="level2" data-number="7"><h2 data-number="7" class="anchored" data-anchor-id="conclusions">
+<span class="header-section-number">7</span> Conclusions</h2>
+<p>Using cluster-robust standard errors to account for geographic clustering in the SEES study, we observe significant variation in enteric fever seroconversion rates across the three countries. Bangladesh has the highest overall seroconversion rate at 588.4 per 1000 person-years (95% CI: 574.9-602.2), followed by Pakistan at 158.4 per 1000 person-years (95% CI: 121.6-206.3), and Nepal at 53.3 per 1000 person-years (95% CI: 41.2-69). Pairwise comparisons show Bangladesh has significantly higher rates than both Nepal (p &lt; 0.001) and Pakistan (p &lt; 0.001), while the difference between Nepal and Pakistan is also significant (p &lt; 0.001).</p>
+<p>Across age groups, the highest rates are observed among 5- to 15-year-olds in Bangladesh (606 per 1000 person-years), which is 15 times higher than Nepal in the same age group (41 per 1000 person-years). These findings highlight substantial geographic variation in enteric fever transmission, emphasizing the need for targeted prevention strategies tailored to local epidemiology.</p>
+<p>The cluster-robust approach properly accounts for within-cluster correlation arising from the geographic sampling design. While point estimates remain unchanged, the cluster-robust standard errors and confidence intervals provide more accurate uncertainty quantification, ensuring valid statistical inference. This adjustment is particularly important for survey designs where observations within clusters (e.g., households, schools, or geographic areas) are correlated, as failing to account for clustering can lead to underestimated standard errors and overly narrow confidence intervals.</p>
+<p><strong>serocalculator</strong> offers an efficient and reproducible approach to estimating seroconversion rates with proper accounting for complex survey designs, enabling data-driven insights for disease surveillance and public health decision-making.</p>
+</section><section id="acknowledgments" class="level2" data-number="8"><h2 data-number="8" class="anchored" data-anchor-id="acknowledgments">
+<span class="header-section-number">8</span> Acknowledgments</h2>
+<p>We gratefully acknowledge the study participants for their valuable time and interest in participating in these studies. Special thanks to our collaborators at Sabin Vaccine Institute, Aga Khan University (Karachi, Pakistan), Child Health Research Foundation (Dhaka, Bangladesh), and Dhulikhel Hospital, Kathmandu University Hospital (Dhulikhel, Nepal).</p>
+</section><section id="funding" class="level2" data-number="9"><h2 data-number="9" class="anchored" data-anchor-id="funding">
+<span class="header-section-number">9</span> Funding</h2>
+<p>This project was supported by grants from the National Institutes of Health (NIH) National Institute of Allergy and Infectious Disease (R21AI176416), the NIH Fogarty International Center (K01TW012177) and the Bill and Melinda Gates Foundation.</p>
+</section><section id="references" class="level2" data-number="10">
+
+
+
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">
+10 References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Aiemjoy_2022_Lancet" class="csl-entry" role="listitem">
+Aiemjoy, K., Seidman J. C., Saha S., Munira S. J., Islam Sajib M. S., and Sarkar Sium S. M. al. 2022. <span>“Estimating Typhoid Incidence from Community-Based Serosurveys: A Multicohort Study.”</span> <em>The Lancet Microbe</em> 3 (8): e578–87. <a href="https://doi.org/10.1016/S2666-5247(22)00114-8">https://doi.org/10.1016/S2666-5247(22)00114-8</a>.
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -23,6 +23,16 @@ website:
     search: true
     pinned: false
     right:
+      - text: Versions
+        menu:
+          - text: Stable
+            href: https://ucd-serg.github.io/serocalculator/latest-tag/
+          # $ALTDOC_PACKAGE_VERSION is substituted by altdoc during local builds.
+          # The docs workflow replaces this entire block with dynamically
+          # generated version labels (including the latest release tag and
+          # previous versions) -- see generate_version_dropdown.py.
+          - text: "$ALTDOC_PACKAGE_VERSION (dev)"
+            href: https://ucd-serg.github.io/serocalculator/dev/
       - icon: github
         href: $ALTDOC_PACKAGE_URL_GITHUB
         aria-label: View $ALTDOC_PACKAGE_NAME on GitHub

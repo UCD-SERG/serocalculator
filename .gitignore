@@ -36,3 +36,7 @@ _freeze/
 altdoc
 _quarto
 .posit/assistant/settings.json
+
+# Python bytecode cache (.github/scripts/*.py)
+__pycache__/
+*.pyc

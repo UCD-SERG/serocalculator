@@ -3,9 +3,18 @@ name: Docs 📚
 
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
-# Deploys altdoc for Pull Requests, tags, and pushes to main branch
+# Deploys altdoc for Pull Requests, releases, and pushes to main.
 # PRs are deployed to /pr-preview/pr-<number>/
-# Tags are deployed to /<tag>/
+# Pushes to main are deployed to /dev/ (development docs)
+# Releases are deployed to /latest-tag/ and /vX.Y.Z/ (stable + archive)
+# Root (/) is a redirect landing page into the default docs version.
+#
+# Ported from d-morrison/rpt's multiversion docs pattern; see
+# UCD-SERG/serocalculator#504. The version-dropdown/landing-page scripts
+# (.github/scripts/) are a direct copy for now -- a generalized version is
+# being contributed to d-morrison/gha (gha#284); once that ships at a
+# released tag this repo can drop the local copies (see rpt#169 for the
+# parallel migration on the source template).
 on:
   push:
     branches:
@@ -19,6 +28,8 @@ on:
       - 'macros'
       - '.gitmodules'
       - '.github/workflows/docs.yaml'
+      - '.github/scripts/generate_version_dropdown.py'
+      - '.github/scripts/generate_multiversion_landing_page.py'
       - 'README.md'
   release:
     types: [published]
@@ -36,13 +47,23 @@ on:
       - 'macros'
       - '.gitmodules'
       - '.github/workflows/docs.yaml'
+      - '.github/scripts/generate_version_dropdown.py'
+      - '.github/scripts/generate_multiversion_landing_page.py'
       - 'README.md'
   workflow_dispatch:
     inputs:
-      tag:
-        description: Tag to deploy (required)
+      version:
+        description: Documentation version to deploy
         required: true
-        default: 'docs'
+        default: dev
+        type: choice
+        options:
+          - dev
+          - stable
+      release_tag:
+        description: Stable release tag to deploy when version=stable (for example, v1.4.1)
+        required: false
+        type: string
 
 concurrency:
   group: docs-${{ github.event.pull_request.number || github.ref }}
@@ -61,6 +82,7 @@ jobs:
       group: docs-${{ github.event_name == 'pull_request' && github.run_id || github.ref }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      DOCS_SOURCE_DIR: .
     permissions:
       contents: write
       pull-requests: write
@@ -69,6 +91,61 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+          # fetch-depth: 0 fetches all history and tags, which the version
+          # dropdown script needs to discover all release tags.
+          fetch-depth: 0
+
+      - name: Determine latest stable release tag
+        id: latest-stable-tag
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST_STABLE_TAG=$(
+            gh api repos/${{ github.repository }}/releases --paginate \
+              --jq '.[] | select(.draft == false and .prerelease == false) | .tag_name' \
+              | awk '/^v[0-9]+\.[0-9]+\.[0-9]+$/' \
+              | sort -V \
+              | tail -n 1
+          )
+          echo "latest_stable_tag=$LATEST_STABLE_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Validate stable workflow_dispatch input
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+          LATEST_STABLE_TAG: ${{ steps.latest-stable-tag.outputs.latest_stable_tag }}
+        run: |
+          if [[ -z "$RELEASE_TAG" ]]; then
+            echo "::error::workflow_dispatch version=stable requires release_tag"
+            exit 1
+          fi
+
+          if [[ -z "$LATEST_STABLE_TAG" ]]; then
+            echo "::error::No stable release tag matching vX.Y.Z was found"
+            exit 1
+          fi
+
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::release_tag must match vX.Y.Z"
+            exit 1
+          fi
+
+          if [[ "$RELEASE_TAG" != "$LATEST_STABLE_TAG" ]]; then
+            echo "::error::release_tag must be the latest stable tag ($LATEST_STABLE_TAG) to update /latest-tag/ and the root landing page"
+            exit 1
+          fi
+
+      - name: Prepare stable source checkout for workflow_dispatch
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+        run: |
+          git worktree add --detach stable-source "refs/tags/$RELEASE_TAG"
+          git -C stable-source submodule update --init --recursive
+          echo "DOCS_SOURCE_DIR=stable-source" >> "$GITHUB_ENV"
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -82,6 +159,7 @@ jobs:
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          working-directory: ${{ env.DOCS_SOURCE_DIR }}
           needs: |
             connect
             website
@@ -109,61 +187,143 @@ jobs:
           echo ""
           echo "Development environment setup complete!"
 
+      - name: Generate version dropdown
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCS_SOURCE_DIR: ${{ env.DOCS_SOURCE_DIR }}
+        run: python3 .github/scripts/generate_version_dropdown.py
+
       - name: Build site
         # uncomment the next two lines to get full debugging output
         # env:
         #   QUARTO_LOG_LEVEL: DEBUG
         timeout-minutes: 30
+        env:
+          DOCS_SOURCE_DIR: ${{ env.DOCS_SOURCE_DIR }}
         run: |
+          setwd(Sys.getenv("DOCS_SOURCE_DIR"))
           # Enable freeze to cache expensive computations
           # This significantly speeds up builds by only re-executing changed code
           altdoc::render_docs(verbose = TRUE, parallel = FALSE, freeze = TRUE)
         shell: Rscript {0}
 
-      # If event is a tag, set subdir to '<tag_name>'
+      # If event is workflow_dispatch with stable selected, deploy to /latest-tag/
+      - name: '[dispatch stable] Set documentation subdirectory to /latest-tag/'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'stable'
+        run: |
+          echo "subdir=latest-tag" >> $GITHUB_ENV
+          echo "landing_target=latest-tag" >> $GITHUB_ENV
+
+      # If event is workflow_dispatch with dev selected, deploy to /dev/
+      - name: '[dispatch dev] Set documentation subdirectory to /dev/'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.version == 'dev'
+        run: |
+          echo "subdir=dev" >> $GITHUB_ENV
+          echo "landing_target=dev" >> $GITHUB_ENV
+
+      # If event is a tag push, deploy to /<tag>/ (archived; not the landing target)
       - name: "[tag] Set documentation subdirectory"
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         run: |
           echo "subdir=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      # If event is a release, set subdir to '<tag_name>'
-      - name: "[release] Set documentation subdirectory"
-        if: github.event_name == 'release'
-        env:
-          TAG_NAME: ${{ github.event.release.tag_name }}
+      # If event is the latest non-prerelease release, deploy stable docs to /latest-tag/
+      - name: "[release] Set documentation subdirectory to /latest-tag/"
+        if: github.event_name == 'release' && !github.event.release.prerelease && github.ref_name == steps.latest-stable-tag.outputs.latest_stable_tag
         run: |
-          echo "subdir=$TAG_NAME" >> $GITHUB_ENV
+          echo "subdir=latest-tag" >> $GITHUB_ENV
+          echo "landing_target=latest-tag" >> $GITHUB_ENV
 
-      # If event is workflow_dispatch, set subdir to 'inputs.tag'
-      - name: '[dispatch] Set documentation subdirectory'
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          INPUT_TAG: ${{ github.event.inputs.tag }}
-        run: |
-          echo "subdir=$INPUT_TAG" >> $GITHUB_ENV
-
-      # If event is a push to main (not a tag), deploy to root (empty subdir)
-      - name: "[main] Set documentation subdirectory"
+      # If event is a push to main, deploy development docs to /dev/
+      - name: "[main] Set documentation subdirectory to /dev/"
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          echo "subdir=" >> $GITHUB_ENV
+          echo "subdir=dev" >> $GITHUB_ENV
+          echo "landing_target=dev" >> $GITHUB_ENV
+
+      # On first rollout, /latest-tag/ may not exist yet on gh-pages.
+      # Bootstrap it once from the archived latest stable release directory.
+      - name: "[main] Prepare one-time /latest-tag/ bootstrap if missing"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          LATEST_STABLE_TAG: ${{ steps.latest-stable-tag.outputs.latest_stable_tag }}
+          BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: |
+          echo "bootstrap_latest_tag=false" >> "$GITHUB_ENV"
+          if [[ -z "$LATEST_STABLE_TAG" ]]; then
+            echo "No published stable release tag found; skipping /latest-tag/ bootstrap."
+            exit 0
+          fi
+
+          git fetch origin gh-pages --depth=1
+          if git ls-tree -d --name-only origin/gh-pages latest-tag | grep -qx latest-tag; then
+            echo "/latest-tag/ already exists; skipping bootstrap."
+            exit 0
+          fi
+
+          if ! git ls-tree -d --name-only origin/gh-pages "$LATEST_STABLE_TAG" | grep -qx "$LATEST_STABLE_TAG"; then
+            echo "No /$LATEST_STABLE_TAG/ directory exists on gh-pages; skipping bootstrap."
+            exit 0
+          fi
+
+          BOOTSTRAP_WORKTREE="$(mktemp -d)"
+          git worktree add --detach "$BOOTSTRAP_WORKTREE" origin/gh-pages
+          mkdir -p site-latest-tag-bootstrap
+          cp -R "$BOOTSTRAP_WORKTREE/$LATEST_STABLE_TAG"/. site-latest-tag-bootstrap/
+          find site-latest-tag-bootstrap -name '*.html' -exec \
+            sed -i -E 's#href="'"$BASE_URL"'"#href="'"$BASE_URL"'latest-tag/"#g' {} +
+          git worktree remove "$BOOTSTRAP_WORKTREE" --force
+          echo "bootstrap_latest_tag=true" >> "$GITHUB_ENV"
 
       - name: Debug subdir
         run: |
           echo "Subdir is set to: ${{ env.subdir }}"
+          echo "Landing target is set to: ${{ env.landing_target }}"
+
+      - name: Build root landing page redirect
+        if: github.event_name != 'pull_request' && env.landing_target != ''
+        run: python3 .github/scripts/generate_multiversion_landing_page.py
+        env:
+          LANDING_TARGET: ${{ env.landing_target }}
+          OUTPUT_DIR: site-root
 
       - name: Deploy to GitHub pages 🚀
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && env.subdir != ''
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          # Preserve PR previews and previously-deployed versioned (tag/release)
-          # docs subdirectories when a push to main re-deploys to the root.
+          # Preserve PR previews and previously-deployed versioned (tag/release/
+          # dev/latest-tag) docs subdirectories when a build re-deploys.
           clean-exclude: |
             pr-preview
-            v*
+            dev
+            latest-tag
+            v[0-9]*
           branch: gh-pages # potentially different from ${{ env.PREVIEW_BRANCH }}
-          folder: docs
+          folder: ${{ env.DOCS_SOURCE_DIR }}/docs
           target-folder: ${{ env.subdir }}
+
+      - name: Deploy root landing page
+        if: github.event_name != 'pull_request' && env.landing_target != ''
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          clean: true
+          clean-exclude: |
+            pr-preview
+            dev
+            latest-tag
+            v[0-9]*
+          branch: gh-pages
+          folder: site-root
+
+      - name: "[main] Bootstrap /latest-tag/ from latest stable archive"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.bootstrap_latest_tag == 'true'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          clean: false
+          branch: gh-pages
+          folder: site-latest-tag-bootstrap
+          target-folder: latest-tag
 
       - name: Deploy PR Preview
         id: preview-step
@@ -211,7 +371,7 @@ jobs:
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          
+
           preview_dir="pr-preview/pr-${{ github.event.pull_request.number }}"
           if [ -d "$preview_dir" ]; then
             git rm -r $preview_dir

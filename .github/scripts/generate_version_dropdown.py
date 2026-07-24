@@ -82,15 +82,9 @@ def _docs_base_url():
         if owner and repo:
             return f"https://{owner}.github.io/{repo}/"
 
-    owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "").strip()
-    repo = os.environ.get("GITHUB_EVENT_REPOSITORY_NAME", "").strip()
-    if owner and repo:
-        return f"https://{owner}.github.io/{repo}/"
-
     print(
         "Could not derive the docs base URL: set the base-url input, or run "
-        "this action where GITHUB_REPOSITORY (or "
-        "GITHUB_REPOSITORY_OWNER + GITHUB_EVENT_REPOSITORY_NAME) is set.",
+        "this action where GITHUB_REPOSITORY is set.",
         file=sys.stderr,
     )
     sys.exit(1)

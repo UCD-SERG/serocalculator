@@ -4,6 +4,7 @@
 ^Meta$
 ^_pkgdown\.yml$
 ^docs$
+^altdoc$
 ^pkgdown$
 ^\.github$
 ^cran-comments\.md$

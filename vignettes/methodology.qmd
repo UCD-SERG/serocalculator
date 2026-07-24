@@ -7,7 +7,7 @@ vignette: >
 bibliography: references.bib
 format:
   html:
-    format-links: [docx, revealjs]
+    format-links: [revealjs]
   revealjs:
     output-file: methodology-slides.html
     reference-location: document

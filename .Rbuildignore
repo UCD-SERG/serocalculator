@@ -49,3 +49,4 @@ allpopsamples_hlye.csv$
 ^macros$
 ^\.gitmodules$
 ^\.posit$
+^\.posit/assistant$

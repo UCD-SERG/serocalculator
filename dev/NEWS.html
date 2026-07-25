@@ -384,7 +384,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9014 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9015 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -955,6 +955,7 @@ window.Quarto = {
 <li>Updated the documentation site configuration to promote “Get started”, “Reference”, and “News” in the top navigation, and added a grouped <code>reference.qmd</code> index plus grouped sidebar reference sections that exclude internal-only topics.</li>
 <li>The documentation site’s reference index page is now titled “Package index” rather than “Reference”, matching the old pkgdown site and distinguishing the page from the navigation entry that links to it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>
 <li>Added a “Citation” entry to the documentation site’s sidebar. The citation page was previously reachable only from the navbar “More” dropdown, unlike <code>rpt</code> and the default sidebar <code>altdoc</code> ships, which both list it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>
+<li>Links to the documentation site’s old <code>/main/</code> paths now resolve again. Before the altdoc migration the development docs were published under the branch name, so they lived at <code>/main/</code>; they now live at <code>/dev/</code>, which left every <code>/main/...</code> link dead. The site now serves a root <code>404.html</code> that redirects any request under <code>/main/</code> to the same path under <code>/dev/</code>, deep links included. Redirection requires JavaScript; without it the page renders as a plain not-found notice linking to the documentation home page. (<a href="https://github.com/UCD-SERG/serocalculator/issues/599">#599</a>)</li>
 <li>Updated the documentation site’s dark-mode styling to match <code>rpt</code> by adding the same inline-code color override used there, improving contrast on the home page and article text.</li>
 <li>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</li>
 <li>The <code>methodology</code> vignette now loads its <code>slidebreak</code> shortcode explicitly so the shortcode no longer leaks into HTML output, and rendered vignettes now suppress package startup messages.</li>

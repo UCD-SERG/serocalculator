@@ -27,6 +27,12 @@ title: Package index
 - [graph.curve.params()](man/graph.curve.params.qmd): Graph estimated antibody decay curves
 - [graph_loglik()](man/graph_loglik.qmd): Graph log-likelihood of data
 - [log_likelihood()](man/log_likelihood.qmd): Calculate log-likelihood
+- [antibody_decay_curve()](man/antibody_decay_curve.qmd): Antibody decay curve with natural parameters
+- [pathogen_decay_curve()](man/pathogen_decay_curve.qmd): Pathogen decay curve
+- [plot_decay_curve()](man/plot_decay_curve.qmd): Plot a decay function
+- [curve_app()](man/curve_app.qmd): Launch the interactive Shiny app for the antigen-antibody kinetics model
+- [t1f()](man/t1f.qmd): Calculate time to end of active infection
+- [y1f()](man/y1f.qmd): Calculate peak antibody concentration
 
 ## Estimate seroconversion incidence rates
 

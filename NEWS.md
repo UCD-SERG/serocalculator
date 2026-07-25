@@ -113,8 +113,8 @@
   `altdoc-multiversion-docs.yml@v2` reusable workflow instead of carrying its
   own ~360-line copy of the build/deploy logic, and the local
   `.github/scripts/generate_version_dropdown.py` and
-  `generate_multiversion_landing_page.py` copies are deleted in favor of that
-  repo's composite actions. Fixes made centrally now reach this package
+  `generate_multiversion_landing_page.py` copies are deleted in favor of the
+  composite actions in that repo. Fixes made centrally now reach this package
   instead of stopping at `rpt`. Rewrote `.github/MULTI_VERSION_DOCS.md`, which
   still described the `pkgdown` setup replaced during the altdoc migration.
   (#595)

@@ -51,7 +51,7 @@
   within the site are now relative so they stay on the reader's docs version,
   and the links in the README point at paths that exist. Also corrected the
   description in the README of which URL serves which docs version, and fixed
-  relative links in `.github/CONTRIBUTING.md` and the pull request template.
+  the link to the contributing guide in the pull request template.
 * Fixed a dead link in the README: the in-development documentation pointed at
   `/main/`, which has served nothing since #504 moved development docs to
   `/dev/`. Also removed a duplicated "the" in the same sentence. (#604)

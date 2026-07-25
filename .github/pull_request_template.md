@@ -9,4 +9,4 @@ To maximize the chances of acceptance:
 - [ ] Documentation should use roxygen2, with Markdown syntax.
 - [ ] Contributions should include unit tests (using `testthat`).
 
-For more information see [Contributing](https://github.com/UCD-SERG/serocalculator/blob/main/.github/CONTRIBUTING.md).
+For more information see [Contributing](CONTRIBUTING.md).

@@ -27,7 +27,7 @@ response characteristics using a set of modeled parameters
 characterizing the longitudinal response of the selected serum
 antibodies. More details on the underlying methods can be found in
 [Getting
-Started](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html).
+Started](https://ucd-serg.github.io/serocalculator/dev/vignettes/articles/serocalculator.html).
 
 ## Installing R
 
@@ -137,12 +137,14 @@ packageDescription("serocalculator")
 citation("serocalculator")
 ```
 
-The full documentation for the current CRAN release version of
-`{serocalculator}` can be accessed at
-<https://ucd-serg.github.io/serocalculator/>, and the documentation for
-the [`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
-in-development version can be accessed at
-<https://ucd-serg.github.io/serocalculator/dev/>.
+The documentation website for `{serocalculator}` is published in several
+versions side by side. <https://ucd-serg.github.io/serocalculator/>
+redirects to the current default version; the documentation for the
+[`main`](https://github.com/UCD-SERG/serocalculator/tree/main)
+in-development version can be accessed directly at
+<https://ucd-serg.github.io/serocalculator/dev/>, and the documentation
+for the latest release at
+<https://ucd-serg.github.io/serocalculator/latest-tag/>.
 
 ## Getting Help
 
@@ -162,13 +164,12 @@ GitHub: <https://epirhandbook.com/en/new_pages/help.html>
 
 We welcome contributions to this project - anything from typo
 corrections to new features. Please see our [Contributor
-guide](https://ucd-serg.github.io/serocalculator/CONTRIBUTING.html#fixing-typos)
+guide](https://ucd-serg.github.io/serocalculator/dev/CONTRIBUTING.html#fixing-typos)
 for more information.
 
 ## QR code
 
-This QR code is a direct link to the latest-release version of the
-package website:
+This QR code is a direct link to the package website:
 
 <figure id="fig-website-QR">
 <img src="man/figures/qr.svg"

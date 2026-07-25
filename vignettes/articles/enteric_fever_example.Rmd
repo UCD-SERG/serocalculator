@@ -44,7 +44,7 @@ install.packages("serocalculator")
 ```
 
 See the 
-[Installation instructions](https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package) for more details.
+[Installation instructions](../../index.html#installing-the-serocalculator-package) for more details.
 
 Once the `serocalculator` package has been installed, 
 load it into your R environment using `library()`,

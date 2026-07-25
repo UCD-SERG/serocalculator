@@ -120,6 +120,12 @@
   incrementally as code is touched, instead of forcing a repo-wide reformat.
   Intended to replace `lint-changed-files` as the lint gate once branch
   protection is updated to require it. (#558)
+* Removed `docs.yaml`'s job-level `concurrency:` group, which resolved to the
+  same string as the workflow-level group on every non-`pull_request` event and
+  so deadlocked the `docs` job: the run already held that group, so the job
+  could never acquire it and was failed instantly with no logs. This blocked
+  every versioned documentation deploy (`/dev/`, `/latest-tag/`, `/vX.Y.Z/`).
+  The workflow-level group already serializes runs by PR number or ref. (#590)
 
 ## Bug fixes
 

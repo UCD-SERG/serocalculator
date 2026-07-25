@@ -40,6 +40,10 @@
 * The `methodology` vignette now loads its `slidebreak` shortcode explicitly so
   the shortcode no longer leaks into HTML output, and rendered vignettes now
   suppress package startup messages.
+* Restored the `methodology` vignette's docx download link, which had been
+  dropped on the (mistaken) assumption that it needed its own `docx:` format
+  block; it renders fine via the `docx:` default already declared in
+  `vignettes/_metadata.yml`.
 * Completed the measurement-noise model in the `methodology` vignette
   (multiplicative relative error), added a "Combined biological and
   measurement noise" section, and added a "Noise and never-infected

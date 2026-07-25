@@ -46,6 +46,12 @@
 * The `methodology` vignette now loads its `slidebreak` shortcode explicitly so
   the shortcode no longer leaks into HTML output, and rendered vignettes now
   suppress package startup messages.
+* Fixed the date in the vignettes' title blocks, which rendered as
+  "Invalid Date" (most visibly on the `methodology` slides' title slide).
+  `vignettes/_metadata.yml` set the date with an inline R expression, but
+  Quarto merges that file into the document metadata without a `knitr` pass,
+  so the expression was never evaluated; the date now uses Quarto's own
+  `today` keyword. (#597)
 * Restored the `methodology` vignette's docx download link, which had been
   dropped on the (mistaken) assumption that it needed its own `docx:` format
   block; it renders fine via the `docx:` default already declared in

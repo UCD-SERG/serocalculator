@@ -281,7 +281,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator</span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9016</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -374,10 +374,10 @@ window.Quarto = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-versions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Versions</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">1.4.1.9016 (dev)</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-versions">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/latest-tag/">
  <span class="dropdown-text">v1.4.1 (stable)</span></a>
@@ -951,7 +951,7 @@ window.Quarto = {
 <section id="documentation" class="level2">
 <h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
 <ul>
-<li>Fixed the README’s link to the in-development documentation, which pointed at <code>/main/</code> and had been dead since <a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a> moved development docs to <code>/dev/</code>. Also removed a duplicated “the” in the same sentence. (<a href="https://github.com/UCD-SERG/serocalculator/issues/604">#604</a>)</li>
+<li>Fixed a dead link in the README: the in-development documentation pointed at <code>/main/</code>, which has served nothing since <a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a> moved development docs to <code>/dev/</code>. Also removed a duplicated “the” in the same sentence. (<a href="https://github.com/UCD-SERG/serocalculator/issues/604">#604</a>)</li>
 <li>The documentation site now deploys multiple versions side by side, following <code>rpt</code>’s pattern: pushes to <code>main</code> deploy development docs to <code>/dev/</code>, published releases deploy stable docs to <code>/latest-tag/</code> (plus an archived <code>/vX.Y.Z/</code> copy), and the site root redirects to whichever was deployed most recently. A “Versions” navbar dropdown links between them. (<a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a>)</li>
 <li>Updated the documentation site configuration to promote “Get started”, “Reference”, and “News” in the top navigation, and added a grouped <code>reference.qmd</code> index plus grouped sidebar reference sections that exclude internal-only topics.</li>
 <li>The documentation site’s reference index page is now titled “Package index” rather than “Reference”, matching the old pkgdown site and distinguishing the page from the navigation entry that links to it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>

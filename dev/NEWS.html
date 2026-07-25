@@ -384,7 +384,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9014 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -535,7 +535,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">Package index</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -873,6 +873,12 @@ window.Quarto = {
  <span class="menu-text">Contributing</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./citation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Citation</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -947,6 +953,8 @@ window.Quarto = {
 <ul>
 <li>The documentation site now deploys multiple versions side by side, following <code>rpt</code>’s pattern: pushes to <code>main</code> deploy development docs to <code>/dev/</code>, published releases deploy stable docs to <code>/latest-tag/</code> (plus an archived <code>/vX.Y.Z/</code> copy), and the site root redirects to whichever was deployed most recently. A “Versions” navbar dropdown links between them. (<a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a>)</li>
 <li>Updated the documentation site configuration to promote “Get started”, “Reference”, and “News” in the top navigation, and added a grouped <code>reference.qmd</code> index plus grouped sidebar reference sections that exclude internal-only topics.</li>
+<li>The documentation site’s reference index page is now titled “Package index” rather than “Reference”, matching the old pkgdown site and distinguishing the page from the navigation entry that links to it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>
+<li>Added a “Citation” entry to the documentation site’s sidebar. The citation page was previously reachable only from the navbar “More” dropdown, unlike <code>rpt</code> and the default sidebar <code>altdoc</code> ships, which both list it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>
 <li>Updated the documentation site’s dark-mode styling to match <code>rpt</code> by adding the same inline-code color override used there, improving contrast on the home page and article text.</li>
 <li>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</li>
 <li>The <code>methodology</code> vignette now loads its <code>slidebreak</code> shortcode explicitly so the shortcode no longer leaks into HTML output, and rendered vignettes now suppress package startup messages.</li>

@@ -12,12 +12,12 @@
 #' @examples
 #' plot_decay_curve(antibody_decay_curve)
 plot_decay_curve <- function(
-    decay_function = antibody_decay_curve, # nolint: object_usage_linter
-    ...,
-    xmax = 100,
-    ymax = NA,
-    title = "") {
-
+  decay_function = antibody_decay_curve, # nolint: object_usage_linter
+  ...,
+  xmax = 100,
+  ymax = NA,
+  title = ""
+) {
   plot1 <-
     ggplot2::ggplot() +
     ggplot2::geom_function(

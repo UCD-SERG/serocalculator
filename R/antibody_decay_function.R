@@ -16,14 +16,15 @@
 #' library(ggplot2)
 #' ggplot() + geom_function(fun = antibody_decay_curve) + xlim(1, 100)
 antibody_decay_curve <- function(
-    t,
-    y0 = 0.74916052,
-    b0 = 1,
-    mu_b = 0.18432798,
-    mu_y = 0.36853621,
-    gamma = 0.0013040664,
-    alpha = 0.00002192627,
-    rho = 2) {
+  t,
+  y0 = 0.74916052,
+  b0 = 1,
+  mu_b = 0.18432798,
+  mu_y = 0.36853621,
+  gamma = 0.0013040664,
+  alpha = 0.00002192627,
+  rho = 2
+) {
   .validate_decay_params( # nolint: object_usage_linter
     y0 = y0, b0 = b0, mu_b = mu_b, mu_y = mu_y, gamma = gamma
   )

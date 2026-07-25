@@ -113,10 +113,10 @@
 * Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for `methodology.qmd`) formats. Fixed the HTML/revealjs output-filename collision by specifying `output-file: methodology-slides.html` for revealjs in `methodology.qmd`'s frontmatter; docx goes in `_metadata.yml` globally since `.docx` has no collision risk. (#503)
 * Added Codex repository guidance and R-package workflow skills. (#574)
 * `news.yaml` now calls the central
-  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml`
-  reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`
-  directly (#537), pinned to `@v2` (bumped from the initial `@v1`, which
-  predated gha's fix for this repo's `no-changelog` label convention) (#593).
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v2`
+  reusable workflow (bumped from the initial `@v1` pin, which predated gha's
+  fix for this repo's `no-changelog` label convention) instead of invoking
+  `UCD-SERG/changelog-check-action@v2` directly. (#537, #593)
 * `claude.yml` and `claude-code-review.yml` now call the central
   [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2` and
   `claude-code-review.yml@v2` reusable workflows instead of carrying their own

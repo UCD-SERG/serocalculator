@@ -37,7 +37,7 @@
   page from the navigation entry that links to it. (#594)
 * Added a "Citation" entry to the documentation site's sidebar. The citation
   page was previously reachable only from the navbar "More" dropdown, unlike
-  `rpt` and altdoc's own default sidebar, which both list it. (#594)
+  `rpt` and the default sidebar `altdoc` ships, which both list it. (#594)
 * Updated the documentation site's dark-mode styling to match `rpt` by adding
   the same inline-code color override used there, improving contrast on the
   home page and article text.

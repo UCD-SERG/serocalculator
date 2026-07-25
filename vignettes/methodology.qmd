@@ -6,6 +6,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
 format:
+  # vignettes/_metadata.yml already declares a `docx:` format and a
+  # `format-links: [docx]` default for every file under vignettes/, deep-merged
+  # into each document's own `format:` block -- but a `format-links` key
+  # declared here replaces (not merges with) that inherited list, so docx
+  # must be listed explicitly here too or its link silently drops off the
+  # rendered page (the docx file itself still renders regardless).
   html:
     format-links: [docx, revealjs]
   revealjs:
@@ -20,9 +26,16 @@ format:
     number-sections: true
     number-depth: 2
     fig-cap-location: top
+shortcodes:
+  - _extensions/d-morrison/slidebreak/slidebreak.lua
 ---
 
 {{< include ../macros/macros.qmd >}}
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE)
+```
 
 # Infectious disease epidemiology
 

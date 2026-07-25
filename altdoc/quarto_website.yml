@@ -13,6 +13,7 @@ project:
 # This is especially important for vignettes with long-running code
 execute:
   freeze: auto  # re-execute only when source changes
+  message: false
 
 bibliography: vignettes/references.bib
 website:

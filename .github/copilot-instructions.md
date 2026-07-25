@@ -274,6 +274,36 @@ In many survey designs, observations are clustered...
 
 This ensures proper document structure and makes it clear where each section begins when viewing the parent document.
 
+### Quarto format-links: array keys replace, not merge, when redeclared
+
+`vignettes/_metadata.yml` declares a `docx:` format and `format-links: [docx]`
+under `html:` as directory-wide defaults for everything under `vignettes/`.
+Quarto deep-merges a document's own `format:` map into these directory
+defaults key-by-key, but when the document redeclares an **array-valued**
+key like `format-links`, that array **replaces** the inherited one instead of
+merging with it — even though the surrounding map merges normally, and even
+though `docx:` itself still renders fine as an inherited format regardless.
+
+Concretely: if a vignette's frontmatter needs its own `format-links` entry
+(e.g. `methodology.qmd` adding a `revealjs` slide-deck link), it must
+explicitly re-list every format it wants linked, including `docx`:
+
+```yaml
+format:
+  html:
+    format-links: [docx, revealjs]  # docx must be repeated here, or its
+                                     # link silently drops off the page
+  revealjs:
+    output-file: methodology-slides.html
+```
+
+Leaving `docx` out doesn't stop the docx file from rendering — only the
+button linking to it disappears, which is easy to miss in review since
+nothing errors. Verify this kind of Quarto merge-semantics question
+empirically (a small isolated `quarto render` reproduction) rather than by
+inspecting the YAML alone; the same-looking structure has burned this repo
+before ([#581](https://github.com/UCD-SERG/serocalculator/pull/581)).
+
 ### Version Management
 
 **CRITICAL**: Always ensure the development version in your PR branch is one version number higher than the main branch.

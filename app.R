@@ -2,5 +2,4 @@
 # To deploy, run: rsconnect::deployApp()
 # Or use the blue button on top of this file
 
-library(serocalculator)
 serocalculator::curve_app() # add parameters here (if any)

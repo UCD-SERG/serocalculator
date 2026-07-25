@@ -5,6 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
+<meta name="dcterms.date" content="2026-07-25">
 <title>Version Crosswalk: v1.3.0 to v1.4.0 – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -898,13 +899,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#other-notable-changes" id="toc-other-notable-changes" class="nav-link" data-scroll-target="#other-notable-changes"><span class="header-section-number">5</span> Other Notable Changes</a></li>
   <li><a href="#need-more-help" id="toc-need-more-help" class="nav-link" data-scroll-target="#need-more-help"><span class="header-section-number">6</span> Need More Help?</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7</span> Summary</a></li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="version-crosswalk-1.3-to-1.4.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="version-crosswalk-1.3-to-1.4.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Other</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Version Crosswalk: v1.3.0 to v1.4.0</a></li></ol></nav><h1 class="title display-7">Version Crosswalk: v1.3.0 to v1.4.0</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">Invalid Date</p>
+<p class="date">2026-07-25</p>
 </header><section id="overview" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">1</span> Overview</h2>
 <p>This guide helps users migrate code from <strong>serocalculator v1.3.0</strong> to <strong>v1.4.0</strong>. The main changes are function renamings for improved clarity and consistency.</p>
@@ -1079,14 +1080,14 @@ Note
 #&gt; ℹ These dimensions will be ordered by first appearance.
 #&gt; ℹ Check results using `dimnames()`.
 #&gt; # A tibble: 6 × 4
-#&gt;     age id    antigen_iso   value
-#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;
-#&gt; 1  9.98 1     HlyE_IgA      3.72 
-#&gt; 2  9.98 1     HlyE_IgG      4.50 
-#&gt; 3  7.36 2     HlyE_IgA      3.87 
-#&gt; 4  7.36 2     HlyE_IgG    402.   
-#&gt; 5  2.68 3     HlyE_IgA      0.541
-#&gt; 6  2.68 3     HlyE_IgG      0.610
+#&gt;     age id    antigen_iso  value
+#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
+#&gt; 1  4.4  1     HlyE_IgA     0.338
+#&gt; 2  4.4  1     HlyE_IgG     0.745
+#&gt; 3 11.9  2     HlyE_IgA     0.842
+#&gt; 4 11.9  2     HlyE_IgG     0.733
+#&gt; 5  4.97 3     HlyE_IgA     4.55 
+#&gt; 6  4.97 3     HlyE_IgG    17.0
 #&gt; Warning: Some dimension variables are not factors.
 #&gt; ℹ These dimensions will be ordered by first appearance.
 #&gt; ℹ Check results using `dimnames()`.
@@ -1619,4 +1620,4 @@ Warning
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

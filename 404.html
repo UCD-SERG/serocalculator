@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page not found</title>
+<script>
+(function () {
+  var basePath = "/serocalculator/";
+  var moved = {"main": "dev"};
+  var path = window.location.pathname;
+  if (path.indexOf(basePath) !== 0) {
+    return;
+  }
+  var rest = path.slice(basePath.length);
+  var slash = rest.indexOf("/");
+  var head = slash === -1 ? rest : rest.slice(0, slash);
+  if (!Object.prototype.hasOwnProperty.call(moved, head)) {
+    return;
+  }
+  var tail = slash === -1 ? "" : rest.slice(slash + 1);
+  window.location.replace(
+    basePath + moved[head] + "/" + tail + window.location.search + window.location.hash
+  );
+})();
+</script>
+</head>
+<body>
+<h1>Page not found</h1>
+<p>This page does not exist, or it moved to a different documentation version.</p>
+<p><a href="https://UCD-SERG.github.io/serocalculator/">Go to the documentation home page</a></p>
+</body>
+</html>

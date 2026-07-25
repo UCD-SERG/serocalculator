@@ -55,4 +55,10 @@ summary() |>
 analyze_sims() |>
 autoplot()
 
+# customize which columns map to the x-axis, group, and color aesthetics
+ests |>
+summary() |>
+analyze_sims() |>
+autoplot(x_var = "lambda.sim", group_var = "sample_size")
+
 }

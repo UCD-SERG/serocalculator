@@ -9,6 +9,10 @@
 * Added `plot_decay_curve()` for plotting decay functions using ggplot2 (#392).
 * Added helper functions `t1f()` (time to end of active infection) and
   `y1f()` (peak antibody concentration) (#392).
+* `autoplot.sim_results()` gains `x_var`, `group_var`, and `color_var`
+  arguments, letting users choose which columns map to the x-axis, group,
+  and color aesthetics instead of the previous hardcoded `sample_size` /
+  `lambda.sim` mapping.
 * `graph.curve.params()` now uses the 5-parameter `ab_5p()` antibody response
   model and supports `units`-aware curve parameters. (#393)
 * Added `ab_5p()`, a 5-parameter antibody response model that supports
@@ -26,22 +30,121 @@
 
 ## Documentation
 
+* The documentation site now deploys multiple versions side by side, following
+  `rpt`'s pattern: pushes to `main` deploy development docs to `/dev/`,
+  published releases deploy stable docs to `/latest-tag/` (plus an archived
+  `/vX.Y.Z/` copy), and the site root redirects to whichever was deployed most
+  recently. A "Versions" navbar dropdown links between them. (#504)
+* Updated the documentation site configuration to promote "Get started",
+  "Reference", and "News" in the top navigation, and added a grouped
+  `reference.qmd` index plus grouped sidebar reference sections that
+  exclude internal-only topics.
+* The documentation site's reference index page is now titled "Package index"
+  rather than "Reference", matching the old pkgdown site and distinguishing the
+  page from the navigation entry that links to it. (#594)
+* Added a "Citation" entry to the documentation site's sidebar. The citation
+  page was previously reachable only from the navbar "More" dropdown, unlike
+  `rpt` and the default sidebar `altdoc` ships, which both list it. (#594)
+* Links to the documentation site's old `/main/` paths now resolve again.
+  Before the altdoc migration the development docs were published under the
+  branch name, so they lived at `/main/`; they now live at `/dev/`, which left
+  every `/main/...` link dead. The site now serves a root `404.html` that
+  redirects any request under `/main/` to the same path under `/dev/`, deep
+  links included. Redirection requires JavaScript; without it the page renders
+  as a plain not-found notice linking to the documentation home page. (#599)
+* Updated the documentation site's dark-mode styling to match `rpt` by adding
+  the same inline-code color override used there, improving contrast on the
+  home page and article text.
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* The `methodology` vignette now loads its `slidebreak` shortcode explicitly so
+  the shortcode no longer leaks into HTML output, and rendered vignettes now
+  suppress package startup messages.
+* Fixed the date in the vignettes' title blocks, which rendered as
+  "Invalid Date" (most visibly on the `methodology` slides' title slide).
+  `vignettes/_metadata.yml` set the date with an inline R expression, but
+  Quarto merges that file into the document metadata without a `knitr` pass,
+  so the expression was never evaluated; the date now uses Quarto's own
+  `today` keyword. (#597)
+* Restored the `methodology` vignette's docx download link, which had been
+  dropped on the (mistaken) assumption that it needed its own `docx:` format
+  block; it renders fine via the `docx:` default already declared in
+  `vignettes/_metadata.yml`.
+* Completed the measurement-noise model in the `methodology` vignette
+  (multiplicative relative error), added a "Combined biological and
+  measurement noise" section, and added a "Noise and never-infected
+  subjects" section explaining that additive biological noise spreads a
+  never-infected subject's measured response over a positive range while
+  multiplicative measurement noise leaves a true zero at zero. (#561)
+* Corrected the documentation of the `eps` measurement-noise parameter
+  (in `example_noise_params_pk`/`example_noise_params_sees` and the
+  vignettes): `eps` is the bound on the relative measurement error
+  (`Unif(-eps, eps)`), not a coefficient of variation. A measured CV
+  corresponds to `eps = sqrt(3) * CV`. (#563)
+* Added the never-infected density under combined biological and
+  measurement noise to the `methodology` vignette: the piecewise
+  closed form for `y_obs = eps_b * (1 + xi)`, matching Teunis and van
+  Eijkeren (2020) Equation 19 and verified to integrate to the
+  never-infected probability. (#567)
+* Made the never-infected term explicit in the "per-person likelihood"
+  slide of the `methodology` vignette: the observed-data likelihood
+  integral is now shown split into its continuous (ever-infected) and
+  discrete (`T = NA`, never-infected) parts, with `p(Y=y | T=NA)`
+  defined as a point mass at zero (before noise). (#567)
+* Explained, in the "Biological noise" section of the `methodology`
+  vignette, why the biological-noise width `nu` is estimated as the
+  95th percentile of negative controls: Teunis and van Eijkeren (2020)
+  show that a uniform noise model only needs to match the true noise
+  distribution's width, not its exact shape, and note that this width
+  is difficult to verify against a mixed (ongoing-seroresponse)
+  population -- motivating estimation from a clean negative-control
+  panel instead. Also noted that the specific choice of the 95th
+  percentile (rather than, e.g., the 99th or the sample maximum) is an
+  adopted convention, not a result derived or optimized in the paper.
+  (#567)
+* Added the conditional variance `Var(y_obs | y_true)` for the combined
+  biological- and measurement-noise model to the `methodology` vignette,
+  derived from the independent-product-variance identity and checked
+  against both single-source special cases already in the vignette.
+  (#571)
+* Added `Var(y_obs | T=t)`, marginalizing over between-person heterogeneity
+  in `y_true`, to the `methodology` vignette: derived via the law of total
+  variance from the `Var(y_obs | y_true)` formula above, with the
+  between-person heterogeneity term `Var(y_true | T=t)` introduced
+  symbolically (it has no closed form in this framework, since
+  `serodynamics` represents curve-parameter heterogeneity as an empirical
+  posterior sample rather than a stated parametric distribution). Clarified
+  that the longitudinal model's residual variance is constant on the log
+  scale conditional on individual random effects, while random waning rates
+  can induce time-varying marginal population variance that `serocalculator`
+  carries forward by averaging over kinetic-parameter draws. (#571)
 * Moved `f_dev0()`'s `@examples` block to a separate example file
   (`inst/examples/exm-f_dev.R`), following the convention already used by
   other functions in this package. (#393)
 
 ## Internal
 
+* Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for `methodology.qmd`) formats. Fixed the HTML/revealjs output-filename collision by specifying `output-file: methodology-slides.html` for revealjs in `methodology.qmd`'s frontmatter; docx goes in `_metadata.yml` globally since `.docx` has no collision risk. (#503)
+* Added Codex repository guidance and R-package workflow skills. (#574)
 * `news.yaml` now calls the central
-  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`
-  reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`
-  directly. (#537)
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v2`
+  reusable workflow (bumped from the initial `@v1` pin, which predated gha's
+  fix for this repo's `no-changelog` label convention) instead of invoking
+  `UCD-SERG/changelog-check-action@v2` directly. (#537, #593)
 * `claude.yml` and `claude-code-review.yml` now call the central
   [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2` and
   `claude-code-review.yml@v2` reusable workflows instead of carrying their own
   copy of the agent/review machinery. (#549)
+* `docs.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `altdoc-multiversion-docs.yml@v2` reusable workflow instead of carrying its
+  own ~360-line copy of the build/deploy logic, and the local
+  `.github/scripts/generate_version_dropdown.py` and
+  `generate_multiversion_landing_page.py` copies are deleted in favor of the
+  composite actions in that repo. Fixes made centrally now reach this package
+  instead of stopping at `rpt`. Rewrote `.github/MULTI_VERSION_DOCS.md`, which
+  still described the `pkgdown` setup replaced during the altdoc migration.
+  (#595)
 * The `methodology` vignette's LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
   (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
@@ -53,6 +156,20 @@
 * Added the `iterate` Claude Code skill (`.claude/skills/iterate/`) for driving a PR to a clean review verdict.
 * Ported the `@claude` agent and PR-review GitHub Actions workflows (plus Claude/Copilot config: `CLAUDE.md`, `.claude/` settings and slash commands, and path-scoped `.github/instructions/`) from the UCD-SERG `qwt` template, adapted to this package. (#523)
 * Claude PR review workflow now skips (rather than hard-failing) when triggered by a bot (e.g. `claude[bot]` pushing a commit). (#519)
+* Added the `lint-changed-lines` CI workflow (calling the reusable
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `lint-changed-lines.yml@v2` workflow), which flags lint issues only on the
+  lines a PR actually adds or modifies (rather than whole changed files, as
+  `lint-changed-files` does). This lets lint rules be adopted or tightened
+  incrementally as code is touched, instead of forcing a repo-wide reformat.
+  Intended to replace `lint-changed-files` as the lint gate once branch
+  protection is updated to require it. (#558)
+* Removed `docs.yaml`'s job-level `concurrency:` group, which resolved to the
+  same string as the workflow-level group on every non-`pull_request` event and
+  so deadlocked the `docs` job: the run already held that group, so the job
+  could never acquire it and was failed instantly with no logs. This blocked
+  every versioned documentation deploy (`/dev/`, `/latest-tag/`, `/vX.Y.Z/`).
+  The workflow-level group already serializes runs by PR number or ref. (#590)
 
 ## Bug fixes
 
@@ -71,8 +188,10 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
-* Removed a spurious `and` entry from `DESCRIPTION`'s `Imports` (not a real
-  CRAN package), which previously broke package installation (#392).
+* `autoplot.seroincidence()` now raises its "graphs cannot be extracted" error
+  via `cli::cli_abort()` rather than `stop()`, so the message is formatted as a
+  cross bullet naming the problem and an info bullet naming the
+  `build_graph = TRUE` argument that was missing (#392).
 * `antibody_decay_curve()`, `pathogen_decay_curve()`, `t1f()`, and `y1f()` now
   validate their parameters (non-negative values, `mu_y != mu_b`) and raise an
   informative `cli::cli_abort()` error instead of silently returning `NaN` or

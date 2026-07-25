@@ -1,0 +1,19 @@
+author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
+# Quarto resolves `today` itself. An inline R expression (`r Sys.Date()`)
+# would not work here: knitr evaluates inline R in a document's own YAML
+# front matter, but `_metadata.yml` is merged into the document metadata
+# without passing through knitr, so the literal backtick string reaches
+# Quarto's date handling and renders as "Invalid Date".
+date: today
+format:
+  html:
+    number-sections: true
+    toc: true
+    html-math-method: mathjax
+    fig-cap-location: top
+    echo: false
+    format-links: [docx]
+  docx:
+    number-sections: true
+    reference-location: document
+    echo: false

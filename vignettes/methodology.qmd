@@ -5,9 +5,37 @@ vignette: >
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
+format:
+  # vignettes/_metadata.yml already declares a `docx:` format and a
+  # `format-links: [docx]` default for every file under vignettes/, deep-merged
+  # into each document's own `format:` block -- but a `format-links` key
+  # declared here replaces (not merges with) that inherited list, so docx
+  # must be listed explicitly here too or its link silently drops off the
+  # rendered page (the docx file itself still renders regardless).
+  html:
+    format-links: [docx, revealjs]
+  revealjs:
+    output-file: methodology-slides.html
+    reference-location: document
+    echo: false
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
+shortcodes:
+  - _extensions/d-morrison/slidebreak/slidebreak.lua
 ---
 
 {{< include ../macros/macros.qmd >}}
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE)
+```
 
 # Infectious disease epidemiology
 
@@ -618,6 +646,40 @@ p(Y=y)
 \end{aligned}
 $$
 
+::: notes
+This integral is shorthand.
+$T$ is not purely continuous: recall from "Time since infection and
+incidence" that $T$ has a **mixed** distribution --- continuous on
+$[0,a]$ with density $\lambda\expf{-\lambda t}$, plus a discrete atom
+at $T=\NA$ (never infected) with probability $\expf{-\lambda a}$.
+Written out explicitly, the "integral" over $t$ is really an integral
+over the continuous part plus the never-infected term:
+:::
+
+$$
+p(Y=y) =
+\int_0^a p(Y=y\mid T=t)\,\lambda\expf{-\lambda t}\,dt
+\;+\;
+p(Y=y\mid T=\NA)\cdot \expf{-\lambda a}
+$$
+
+The first term is the contribution from subjects infected at least
+once; the second is the contribution from subjects never infected.
+
+::: notes
+Two pieces here were not yet defined:
+
+* $p(T=\NA) = \expf{-\lambda a}$ is already known --- the same
+never-infected probability from "Time since infection and incidence".
+* $p(Y=y\mid T=\NA)$, the antibody response of a never-infected
+subject, needs its own definition. Without any noise, a never-infected
+subject's true antibody level is exactly zero, so this is a point mass
+at $y=0$ (a Dirac delta): $p(Y=y\mid T=\NA) = \delta(y)$. Once
+measurement noise and biological (cross-reactivity) noise are
+introduced below, this point mass is handled differently by each ---
+see "Noise and never-infected subjects".
+:::
+
 ## The full-sample likelihood {.smaller}
 
 ::: notes
@@ -839,6 +901,52 @@ seroresponse heterogeneity and the parameter uncertainty --- they are not
 conditional on a single point-estimated curve. In `serocalculator` this is
 the average over the Monte Carlo parameter sets (the `iter` draws) carried in
 the curve-parameter object.
+:::
+
+## Random effects and variance over time {.smaller}
+
+The longitudinal model distinguishes two kinds of variation:
+
+* **Conditional observation noise:** given a person's kinetic parameters
+  $\theta_i$, residual noise has constant variance on the log-antibody scale.
+* **Marginal population variation:** because $\theta_i$ includes random
+  effects --- notably the waning rate $\alpha_i$ --- individual trajectories
+  can spread apart with increasing time since infection.
+
+Thus, even without an explicit time-varying residual variance $\sigma^2(t)$,
+the variance around the population mean trajectory can vary with $t$:
+
+$$
+\operatorname{Var}(\log Y(t)\mid T=t)
+= \sigma_{\log Y}^2
++ \operatorname{Var}_{\theta}\!\left[\log y(t;\theta)\right].
+$$
+
+::: notes
+This is the distinction between *conditional* and *marginal*
+heteroscedasticity. The `serodynamics` observation model uses one residual
+precision per antigen-isotype, shared across subjects and observation times.
+It therefore does not fit an additional residual-variance function of time.
+
+Nevertheless, its subject-level kinetic parameters are random effects with a
+joint distribution. For illustration, if post-peak decay were exponential
+($r=1$), with the other parameters held fixed,
+
+$$
+\log y_i(t) = \log y_1 - \alpha_i(t-t_1),
+$$
+
+so variation in $\alpha_i$ alone contributes
+$(t-t_1)^2\operatorname{Var}(\alpha_i)$ to the population variance on the log
+scale. The full nonlinear model also allows the other kinetic parameters and
+their correlations to affect how the variance changes over time.
+
+`serocalculator` accounts for this trajectory-induced variation by averaging
+the incidence likelihood over the Monte Carlo sample of kinetic-parameter
+sets. It does not reclassify that variation as observation noise or replace it
+with a fitted $\sigma^2(t)$. Its separate biological- and measurement-noise
+models have constant additive and relative widths, respectively; neither
+width is an explicit function of time since infection.
 :::
 
 # Using `serocalculator`

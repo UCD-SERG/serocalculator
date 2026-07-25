@@ -51,7 +51,6 @@ autoplot.seroincidence.by <- function(
       "Graphs cannot be extracted; ",
       "`build_graph` was not `TRUE` in the call to `est_seroincidence_by()`"
     )
-    figure <- NULL
   }
 
   labels <- names(object)

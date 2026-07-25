@@ -2,9 +2,9 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
-^_pkgdown\.yml$
 ^docs$
-^pkgdown$
+^altdoc$
+^_quarto$
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$
@@ -43,6 +43,9 @@ allpopsamples_hlye.csv$
 ^\.positai$
 ^CLAUDE\.md$
 ^\.claude$
-^_extensions$
+^AGENTS\.md$
+^\.agents$
 ^macros$
 ^\.gitmodules$
+^\.posit$
+^\.posit/assistant$

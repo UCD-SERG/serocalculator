@@ -108,6 +108,16 @@
   [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2` and
   `claude-code-review.yml@v2` reusable workflows instead of carrying their own
   copy of the agent/review machinery. (#549)
+* `docs.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `altdoc-multiversion-docs.yml@v2` reusable workflow instead of carrying its
+  own ~360-line copy of the build/deploy logic, and the local
+  `.github/scripts/generate_version_dropdown.py` and
+  `generate_multiversion_landing_page.py` copies are deleted in favor of that
+  repo's composite actions. Fixes made centrally now reach this package
+  instead of stopping at `rpt`. Rewrote `.github/MULTI_VERSION_DOCS.md`, which
+  still described the `pkgdown` setup replaced during the altdoc migration.
+  (#595)
 * The `methodology` vignette's LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
   (included via `{{< include ../macros/macros.qmd >}}`) instead of a local

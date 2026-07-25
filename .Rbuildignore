@@ -44,7 +44,6 @@ allpopsamples_hlye.csv$
 ^\.claude$
 ^AGENTS\.md$
 ^\.agents$
-^_extensions$
 ^macros$
 ^\.gitmodules$
 ^\.posit$

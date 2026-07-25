@@ -21,7 +21,7 @@ format:
     number-depth: 2
     fig-cap-location: top
 shortcodes:
-  - ../_extensions/d-morrison/slidebreak/slidebreak.lua
+  - _extensions/d-morrison/slidebreak/slidebreak.lua
 ---
 
 {{< include ../macros/macros.qmd >}}

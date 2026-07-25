@@ -77,9 +77,13 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !(github.event_name == 'pull_request' && github.event.action == 'closed') }}
     timeout-minutes: 30
-    # Only restrict concurrency for non-PR jobs
-    concurrency:
-      group: docs-${{ github.event_name == 'pull_request' && github.run_id || github.ref }}
+    # No job-level `concurrency:` here. The workflow-level group above already
+    # serializes runs (by PR number for pull_request events, by ref otherwise).
+    # A job-level group that resolves to the same string as the workflow-level
+    # one deadlocks: the run itself holds the group, so the job can never
+    # acquire it and is failed instantly with no logs. That is what happened on
+    # every non-PR event, where both groups evaluated to `docs-<github.ref>`.
+    # See UCD-SERG/serocalculator#590.
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       DOCS_SOURCE_DIR: .

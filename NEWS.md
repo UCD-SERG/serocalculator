@@ -49,8 +49,8 @@
   The site root is now a redirect page, so `/articles/…`, `/reference/index.html`,
   `/news/index.html`, and `/CONTRIBUTING.html` no longer resolve; links from
   within the site are now relative so they stay on the reader's docs version,
-  and the README's links point at paths that exist. Also corrected the
-  README's description of which URL serves which docs version, and fixed
+  and the links in the README point at paths that exist. Also corrected the
+  description in the README of which URL serves which docs version, and fixed
   relative links in `.github/CONTRIBUTING.md` and the pull request template.
 * Fixed a dead link in the README: the in-development documentation pointed at
   `/main/`, which has served nothing since #504 moved development docs to

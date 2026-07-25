@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -902,7 +902,7 @@ autoplot(
 <code id="object">object</code>
 </td>
 <td>
-a <code>curve_params</code> object (constructed using <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/as_sr_params.html">as_sr_params()</a></code>), which is a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> containing MCMC samples of antibody decay curve parameters
+a <code>curve_params</code> object (constructed using <code><a href="https://rdrr.io/pkg/serocalculator/man/as_sr_params.html">as_sr_params()</a></code>), which is a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> containing MCMC samples of antibody decay curve parameters
 </td>
 </tr>
 <tr>
@@ -913,10 +913,10 @@ a <code>curve_params</code> object (constructed using <code><a href="https://ucd
 <p>a character string indicating whether to use</p>
 <ul>
 <li>
-<p><code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/graph.curve.params.html">graph.curve.params()</a></code> (default) or</p>
+<p><code><a href="https://rdrr.io/pkg/serocalculator/man/graph.curve.params.html">graph.curve.params()</a></code> (default) or</p>
 </li>
 <li>
-<p><code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/graph_seroresponse_model_1.html">graph_seroresponse_model_1()</a></code> (previous default) as the graphing method.</p>
+<p><code><a href="https://rdrr.io/pkg/serocalculator/man/graph_seroresponse_model_1.html">graph_seroresponse_model_1()</a></code> (previous default) as the graphing method.</p>
 </li>
 </ul>
 </td>
@@ -930,7 +930,7 @@ additional arguments passed to the sub-function indicated by the <code>method</c
 </td>
 </tr>
 </tbody></table></section><section id="details" class="level3"><h3 class="anchored" data-anchor-id="details">Details</h3>
-<p>Currently, the backend for this method is <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/graph.curve.params.html">graph.curve.params()</a></code>. Previously, the backend for this method was <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/graph_seroresponse_model_1.html">graph_seroresponse_model_1()</a></code>. That function is still available if preferred.</p>
+<p>Currently, the backend for this method is <code><a href="https://rdrr.io/pkg/serocalculator/man/graph.curve.params.html">graph.curve.params()</a></code>. Previously, the backend for this method was <code><a href="https://rdrr.io/pkg/serocalculator/man/graph_seroresponse_model_1.html">graph_seroresponse_model_1()</a></code>. That function is still available if preferred.</p>
 </section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
 <p>a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> object</p>
 </section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
@@ -943,9 +943,9 @@ additional arguments passed to the sub-function indicated by the <code>method</c
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">curve</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_curve_params.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_curve_params.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/as_sr_params.html">as_sr_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/as_sr_params.html">as_sr_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>

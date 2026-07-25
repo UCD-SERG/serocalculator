@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1023,7 +1023,7 @@ whether to graph the log-likelihood function across a range of incidence rates (
 <code id="print_graph">print_graph</code>
 </td>
 <td>
-whether to display the log-likelihood curve graph in the course of running <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>
+whether to display the log-likelihood curve graph in the course of running <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>
 </td>
 </tr>
 <tr>
@@ -1116,7 +1116,7 @@ a logical scalar specifying whether the analytic gradients and Hessians, if they
 <span>  <span class="va">example_noise_params_pk</span></span>
 <span></span>
 <span><span class="co"># Basic usage without clustering</span></span>
-<span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">sr_curve</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
@@ -1134,7 +1134,7 @@ a logical scalar specifying whether the analytic gradients and Hessians, if they
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Usage with clustered sampling design</span></span>
 <span><span class="co"># Standard errors will be adjusted for within-cluster correlation</span></span>
-<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">sr_curve</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
@@ -1152,7 +1152,7 @@ a logical scalar specifying whether the analytic gradients and Hessians, if they
 #   nlm.convergence.code &lt;ord&gt;</code></pre>
 </div>
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># With both cluster and stratum variables</span></span>
-<span><span class="va">est3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">est3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">sr_curve</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>

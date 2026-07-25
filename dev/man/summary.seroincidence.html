@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -885,7 +885,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/summary.seroincidence.html">Summarize seroconversion incidence rate estimates</a></li><li class="breadcrumb-item"><a href="../man/summary.seroincidence.html">Summarizing fitted seroincidence models</a></li></ol></nav></header><section id="summarizing-fitted-seroincidence-models" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="summarizing-fitted-seroincidence-models">Summarizing fitted seroincidence models</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>This function is a <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method for <code>seroincidence</code> objects. When the model was fit with clustered data (using the <code>cluster_var</code> parameter in <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>), this function automatically computes cluster-robust standard errors to account for within-cluster correlation.</p>
+<p>This function is a <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method for <code>seroincidence</code> objects. When the model was fit with clustered data (using the <code>cluster_var</code> parameter in <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>), this function automatically computes cluster-robust standard errors to account for within-cluster correlation.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">## S3 method for class 'seroincidence'
 summary(object, coverage = 0.95, verbose = TRUE, ...)
@@ -897,7 +897,7 @@ summary(object, coverage = 0.95, verbose = TRUE, ...)
 <code id="object">object</code>
 </td>
 <td>
-a <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> outputted by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code> or <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>
+a <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> outputted by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code> or <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>
 </td>
 </tr>
 <tr>
@@ -952,7 +952,7 @@ unused
 <p><code>coverage</code>: coverage probability</p>
 </li>
 <li>
-<p><code>log.lik</code>: log-likelihood of the data used in the call to <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>, evaluated at the maximum-likelihood estimate of lambda (i.e., at <code>incidence.rate</code>)</p>
+<p><code>log.lik</code>: log-likelihood of the data used in the call to <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>, evaluated at the maximum-likelihood estimate of lambda (i.e., at <code>incidence.rate</code>)</p>
 </li>
 <li>
 <p><code>iterations</code>: the number of iterations used</p>
@@ -970,7 +970,7 @@ unused
 <p>2: successive iterates within tolerance, current iterate is probably solution.</p>
 </li>
 <li>
-<p>3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or <code>stepmin</code> in <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code> (a.k.a., <code>steptol</code> in <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) is too large.</p>
+<p>3: Last global step failed to locate a point lower than x. Either x is an approximate local minimum of the function, the function is too non-linear for this algorithm, or <code>stepmin</code> in <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code> (a.k.a., <code>steptol</code> in <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) is too large.</p>
 </li>
 <li>
 <p>4: iteration limit exceeded; increase <code>iterlim</code>.</p>
@@ -997,7 +997,7 @@ unused
 <span><span class="va">noise</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">example_noise_params_pk</span></span>
 <span></span>
-<span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">curve</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>

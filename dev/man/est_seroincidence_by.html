@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1041,7 +1041,7 @@ logical: if TRUE, print verbose log information to console
 <code id="print_graph">print_graph</code>
 </td>
 <td>
-whether to display the log-likelihood curve graph in the course of running <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>
+whether to display the log-likelihood curve graph in the course of running <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>
 </td>
 </tr>
 <tr>
@@ -1125,11 +1125,11 @@ a logical scalar specifying whether the analytic gradients and Hessians, if they
 </td>
 </tr>
 </tbody></table></section><section id="details" class="level3"><h3 class="anchored" data-anchor-id="details">Details</h3>
-<p>If <code>strata</code> is left empty, a warning will be produced, recommending that you use <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code> for unstratified analyses, and then the data will be passed to <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>. If for some reason you want to use <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by()</a></code> with no strata instead of calling <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>, you may use <code>NA</code>, <code>NULL</code>, or <code>““</code> as the <code>strata</code> argument to avoid that warning.</p>
+<p>If <code>strata</code> is left empty, a warning will be produced, recommending that you use <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code> for unstratified analyses, and then the data will be passed to <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>. If for some reason you want to use <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code> with no strata instead of calling <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>, you may use <code>NA</code>, <code>NULL</code>, or <code>““</code> as the <code>strata</code> argument to avoid that warning.</p>
 </section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
 <ul>
 <li>
-<p>if <code>strata</code> has meaningful inputs: An object of class <code>“seroincidence.by”</code>; i.e., a list of <code>“seroincidence”</code> objects from <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence.html">est_seroincidence()</a></code>, one for each stratum, with some meta-data attributes.</p>
+<p>if <code>strata</code> has meaningful inputs: An object of class <code>“seroincidence.by”</code>; i.e., a list of <code>“seroincidence”</code> objects from <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>, one for each stratum, with some meta-data attributes.</p>
 </li>
 <li>
 <p>if <code>strata</code> is missing, <code>NULL</code>, <code>NA</code>, or <code>““</code>: An object of class <code>”seroincidence”</code>.</p>
@@ -1151,7 +1151,7 @@ a logical scalar specifying whether the analytic gradients and Hessians, if they
 <span><span class="va">noise</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">example_noise_params_pk</span></span>
 <span></span>
-<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="st">"catchment"</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">curve</span>,</span>

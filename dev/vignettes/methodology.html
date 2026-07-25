@@ -389,7 +389,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1056,7 +1056,7 @@ window.Quarto = {
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><figcaption>Countries with routine TCV introduction as of 2023. Source: CDC MMWR 72(7):182–188 (public domain).</figcaption><p><img src="methodology_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></p>
+<figure class="figure"><figcaption>Countries with routine TCV introduction as of 2023. Source: CDC MMWR 72(7):182–188 (public domain).</figcaption><p><img src="methodology_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></p>
 </figure>
 </div>
 </div>
@@ -1067,7 +1067,6 @@ window.Quarto = {
 <p>Three large randomized trials showed that a Vi tetanus-toxoid typhoid conjugate vaccine is 80-90% effective at preventing symptomatic typhoid, and the WHO has recommended these vaccines since 2018. Yet as of 2023 only a handful of countries had introduced them into routine immunization. The binding constraint is data: without incidence estimates, countries cannot make the case for vaccine funding.</p>
 <p>“Data inequality is our biggest challenge moving forward” — Kathy Neuzil, 2023</p>
 </div>
-{{&lt; slidebreak &gt;}}
 </section><section id="seroepidemiology-can-fill-the-gap" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="seroepidemiology-can-fill-the-gap">
 <span class="header-section-number">2.2</span> Seroepidemiology can fill the gap</h2>
 <p>The Seroepidemiology and Environmental Surveillance for Enteric Fever (SEES) study collected cross-sectional serosurveys across multiple countries to estimate typhoid incidence from antibody data <span class="citation" data-cites="Aiemjoy_2022_Lancet">(<a href="#ref-Aiemjoy_2022_Lancet" role="doc-biblioref">Aiemjoy et al. 2022</a>)</span>.</p>
@@ -1079,7 +1078,6 @@ window.Quarto = {
 <div id="def-incidence" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Population incidence rate)</strong></span> The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">(<a href="#ref-Noordzij2010diseasemeasures" role="doc-biblioref">Noordzij et al. 2010</a>)</span>.</p>
 </div>
-{{&lt; slidebreak &gt;}}
 <div id="exm-incidence-rate" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Population incidence rate)</strong></span> If there are <strong>10 new cases</strong> of typhoid in a population of <strong>1000 persons</strong> during a <strong>one month</strong> time period, then the <strong>incidence rate</strong> for that time period is <strong>10 new cases per 1000 persons per month</strong>.</p>
 </div>
@@ -1259,29 +1257,6 @@ window.Quarto = {
 <p>Here’s what that would look like:</p>
 </div>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'serocalculator'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:serodynamics':
-
-    expect_snapshot_data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
 <div class="cell-output-display">
 <div id="fig-ex-lik-curves" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ex-lik-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1348,7 +1323,7 @@ Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\
 <div class="cell">
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="methodology_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="methodology_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1356,25 +1331,14 @@ Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\
 </div>
 </figure>
 </div>
-{{&lt; slidebreak &gt;}}
 <div id="fig-decay" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Observed antibody measurements over time since fever onset, for typhoid
 </figcaption><div aria-describedby="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 904 Columns: 8
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (6): Country, person_id, sample_id, bldculres, antigen_iso, studyvisit
-dbl (2): dayssincefeveronset, result
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="methodology_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="methodology_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1570,10 +1534,6 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 </div>
 <hr>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Scale for x is already present.
-Adding another scale for x, which will replace the existing scale.</code></pre>
-</div>
 <div class="cell-output-display">
 <div id="fig-response-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1859,7 +1819,6 @@ Figure&nbsp;5: Example log(likelihood) curves
 <div class="notes">
 <p>Each draw is one plausible antibody-response curve; together they describe the distribution of responses across cases and our uncertainty about it.</p>
 </div>
-{{&lt; slidebreak &gt;}}
 <p>The incidence likelihood <strong>averages over these draws</strong> (Monte Carlo integration), so each person’s contribution becomes</p>
 <p><span class="math display">\[
 \operatorname{p}(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}

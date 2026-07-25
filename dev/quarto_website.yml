@@ -13,6 +13,7 @@ project:
 # This is especially important for vignettes with long-running code
 execute:
   freeze: auto  # re-execute only when source changes
+  message: false
 
 bibliography: vignettes/references.bib
 website:
@@ -27,7 +28,7 @@ website:
         menu:
           - text: "v1.4.1 (stable)"
             href: https://UCD-SERG.github.io/serocalculator/latest-tag/
-          - text: "1.4.1.9012 (dev)"
+          - text: "1.4.1.9013 (dev)"
             href: https://UCD-SERG.github.io/serocalculator/dev/
           - text: "---"
           - text: "v1.4.0"

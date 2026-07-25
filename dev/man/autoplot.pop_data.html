@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -897,7 +897,7 @@ autoplot(object, log = FALSE, type = "density", strata = NULL, ...)
 <code id="object">object</code>
 </td>
 <td>
-A <code>pop_data</code> object (from <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/load_pop_data.html">load_pop_data()</a></code>)
+A <code>pop_data</code> object (from <code><a href="https://rdrr.io/pkg/serocalculator/man/load_pop_data.html">load_pop_data()</a></code>)
 </td>
 </tr>
 <tr>
@@ -944,9 +944,9 @@ unused
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">xs_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_pop_data.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_pop_data.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/as_pop_data.html">as_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/as_pop_data.html">as_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"catchment"</span>, type <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">

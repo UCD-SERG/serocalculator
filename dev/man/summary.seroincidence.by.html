@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -885,7 +885,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../reference.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/summary.seroincidence.html">Summarize seroconversion incidence rate estimates</a></li><li class="breadcrumb-item"><a href="../man/summary.seroincidence.by.html">Summary Method for <code>“seroincidence.by”</code> Objects</a></li></ol></nav></header><section id="summary-method-for-seroincidence.by-objects" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="summary-method-for-seroincidence.by-objects">Summary Method for <code>“seroincidence.by”</code> Objects</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Calculate seroincidence from output of the seroincidence calculator <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by()</a></code>.</p>
+<p>Calculate seroincidence from output of the seroincidence calculator <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">## S3 method for class 'seroincidence.by'
 summary(
@@ -904,7 +904,7 @@ summary(
 <code id="object">object</code>
 </td>
 <td>
-A dataframe containing output of <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by()</a></code>.
+A dataframe containing output of <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>.
 </td>
 </tr>
 <tr>
@@ -969,10 +969,10 @@ Additional arguments affecting the summary produced.
 <p>The object also has the following metadata (accessible through <code><a href="https://rdrr.io/r/base/attr.html">base::attr()</a></code>):</p>
 <ul>
 <li>
-<p><code>antigen_isos</code> Character vector with names of input antigen isotypes used in <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by()</a></code></p>
+<p><code>antigen_isos</code> Character vector with names of input antigen isotypes used in <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code></p>
 </li>
 <li>
-<p><code>Strata</code> Character with names of strata used in <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by()</a></code></p>
+<p><code>Strata</code> Character with names of strata used in <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code></p>
 </li>
 </ul></section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
@@ -991,7 +991,7 @@ Additional arguments affecting the summary produced.
 <span>  <span class="va">example_noise_params_pk</span></span>
 <span></span>
 <span><span class="co"># estimate seroincidence</span></span>
-<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">curve</span>,</span>

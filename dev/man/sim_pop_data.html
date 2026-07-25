@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9012 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9013 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -990,7 +990,7 @@ a <code><a href="https://rdrr.io/r/base/logical.html">logical()</a></code> indic
 <code id="curve_params">curve_params</code>
 </td>
 <td>
-a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> of MCMC samples of antibody decay curve parameters, with one row per MCMC sample. Required columns: <code>antigen_iso</code>, <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, <code>r</code>. See <code><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/load_sr_params.html">load_sr_params()</a></code> for details.
+a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> of MCMC samples of antibody decay curve parameters, with one row per MCMC sample. Required columns: <code>antigen_iso</code>, <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, <code>r</code>. See <code><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params()</a></code> for details.
 </td>
 </tr>
 <tr>
@@ -1138,7 +1138,7 @@ range of possible baseline antibody levels
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Generate cross-sectional data</span></span>
-<span><span class="va">csdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ucd-serg.github.io/serocalculator/latest-tag/reference/sim_pop_data.html">sim_pop_data</a></span><span class="op">(</span></span>
+<span><span class="va">csdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data.html">sim_pop_data</a></span><span class="op">(</span></span>
 <span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
 <span>  lambda <span class="op">=</span> <span class="va">lambda</span>,</span>
 <span>  n_samples <span class="op">=</span> <span class="va">nrep</span>,</span>

@@ -245,7 +245,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <figcaption>Countries with routine TCV introduction as of 2023. Source: CDC MMWR 72(7):182–188 (public domain).</figcaption>
-<p><img data-src="methodology_files/figure-html/unnamed-chunk-1-1.png" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></p>
+<p><img data-src="methodology_files/figure-html/unnamed-chunk-2-1.png" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></p>
 </figure>
 </div>
 </div>
@@ -265,7 +265,6 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-{{&lt; slidebreak &gt;}}
 </section>
 <section id="seroepidemiology-can-fill-the-gap" class="slide level2" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> Seroepidemiology can fill the gap</h2>
@@ -289,7 +288,9 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <div id="def-incidence" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1 (Population incidence rate)</strong></span> The <strong>incidence rate</strong> of a disease over a <strong>specific time period</strong> is the rate at which individuals in a population are <em>acquiring</em> the disease during that time period <span class="citation" data-cites="Noordzij2010diseasemeasures">(<a href="#/references" role="doc-biblioref" onclick="">Noordzij et al. 2010</a>)</span>.</p>
 </div>
-{{&lt; slidebreak &gt;}}
+</section>
+<section class="slide level2">
+
 <div id="exm-incidence-rate" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Population incidence rate)</strong></span> If there are <strong>10 new cases</strong> of typhoid in a population of <strong>1000 persons</strong> during a <strong>one month</strong> time period, then the <strong>incidence rate</strong> for that time period is <strong>10 new cases per 1000 persons per month</strong>.</p>
 </div>
@@ -637,32 +638,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'serocalculator'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:serodynamics':
 
-    expect_snapshot_data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-
-</div>
 <img data-src="methodology_files/figure-html/fig-ex-lik-curves-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-ex-lik-curves"><p class="caption">
 Figure&nbsp;1: log-likelihood curve for latent data
 </p></section>
@@ -755,54 +731,16 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </section>
 <section id="antibody-response-curves" class="slide level2" data-number="4.11">
 <h2><span class="header-section-number">4.11</span> Antibody response curves</h2>
-<div id="fig-sim-case-data" class="quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-sim-case-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\)</span>, for typhoid
-</figcaption>
-<div aria-describedby="fig-sim-case-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="methodology_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</figure>
-</div>
-{{&lt; slidebreak &gt;}}
-<div id="fig-decay" class="quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Observed antibody measurements over time since fever onset, for typhoid
-</figcaption>
-<div aria-describedby="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 904 Columns: 8
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (6): Country, person_id, sample_id, bldculres, antigen_iso, studyvisit
-dbl (2): dayssincefeveronset, result
 
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="methodology_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</figure>
-</div>
-</section>
+<img data-src="methodology_files/figure-html/unnamed-chunk-4-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-sim-case-data"><p class="caption">
+Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\)</span>, for typhoid
+</p></section>
+<section class="slide level2">
+
+
+<img data-src="methodology_files/figure-html/unnamed-chunk-5-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-decay"><p class="caption">
+Figure&nbsp;3: Observed antibody measurements over time since fever onset, for typhoid
+</p></section>
 <section id="the-per-person-likelihood" class="slide level2" data-number="4.12">
 <h2><span class="header-section-number">4.12</span> The per-person likelihood</h2>
 <p>Substituting <span class="math inline">\(p(Y=y,T=t) = p(Y=y|T=t)\,p(T=t)\)</span> into the previous expression for <span class="math inline">\(p(Y=y)\)</span>:</p>
@@ -1119,13 +1057,7 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 </section>
 <section class="slide level2">
 
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Scale for x is already present.
-Adding another scale for x, which will replace the existing scale.</code></pre>
-</div>
 
-</div>
 <img data-src="methodology_files/figure-html/fig-response-graph-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-response-graph"><p class="caption">
 Figure&nbsp;4: An example kinetics curve for HlyE IgG
 </p><aside class="notes">
@@ -1505,7 +1437,9 @@ Figure&nbsp;5: Example log(likelihood) curves
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-{{&lt; slidebreak &gt;}}
+</section>
+<section class="slide level2">
+
 <p>The incidence likelihood <strong>averages over these draws</strong> (Monte Carlo integration), so each person’s contribution becomes</p>
 <p><span class="math display">\[
 \operatorname{p}(Y=y) \approx \frac{1}{M}\sum_{k=1}^{M}

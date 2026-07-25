@@ -398,11 +398,7 @@ The following workflows run on every PR. **All must pass** for merge:
 
 6. **R-check-docs.yml**: Runs `roxygen2::roxygenise()` and checks if `man/`, `NAMESPACE`, or `DESCRIPTION` changed. Fails if documentation is out of sync. (~2-3 min)
 
-7. **news.yaml**: Ensures NEWS.md is updated for every PR. Can be bypassed with the
-   `no changelog` label (note: space, not hyphen — `UCD-SERG/changelog-check-action`
-   hardcodes `contains(github.event.pull_request.labels.*.name, 'no changelog')`;
-   this repo also has an unrelated `no-changelog` (hyphen) label that does nothing
-   for this check). (~1 min)
+7. **news.yaml**: Ensures NEWS.md is updated for every PR. Can be bypassed with `no-changelog` label. (~1 min)
 
 8. **version-check.yaml**: Verifies DESCRIPTION version number increased vs. main branch. Run `usethis::use_version()` to increment. (~1 min)
 
@@ -480,7 +476,7 @@ Team members can trigger actions by commenting on PRs:
 
 ### NEWS.md Not Updated
 **Symptom**: news.yaml workflow fails.
-**Solution**: Add a bullet point to NEWS.md under the development version header, or add the `no changelog` label (space, not hyphen — see the news.yaml entry above) to the PR if the change doesn't warrant a NEWS entry.
+**Solution**: Add a bullet point to NEWS.md under the development version header, or add `no-changelog` label to PR if change doesn't warrant NEWS entry.
 
 ### Linting Failures
 **Symptom**: lint-changed-files.yaml fails.

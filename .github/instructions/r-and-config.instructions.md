@@ -21,7 +21,7 @@ description: "Use when editing R source, package configuration, or GitHub workfl
   `.R` or config files. Fix genuine typos at the source and add legitimate
   technical terms to `inst/WORDLIST` rather than disabling the check.
 - Add a `NEWS.md` bullet for any user-facing change (`news.yaml` enforces this
-  unless the PR has the `no changelog` label -- space, not hyphen).
+  unless the PR has the `no-changelog` label).
 - Do not add a new R package dependency without a clear reason; declare it in
   `DESCRIPTION` (Imports/Suggests). Align workflow changes with existing CI
   patterns instead of inventing parallel setup.

@@ -118,8 +118,8 @@ jobs:
 
         3. **Changelog & docs hygiene**
            - NEWS.md has a bullet for user-facing changes (the news.yaml
-             check enforces this unless the PR has the `no changelog`
-             label -- space, not hyphen).
+             check enforces this unless the PR has the `no-changelog`
+             label).
            - Spelling passes `spelling::spell_check_package()`; genuine
              new terms are added to `inst/WORDLIST` rather than
              suppressed.

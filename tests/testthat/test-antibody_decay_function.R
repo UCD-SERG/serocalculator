@@ -71,3 +71,9 @@ test_that("`antibody_decay_curve()` errors on negative parameters", {
   expect_error(antibody_decay_curve(t = 1, y0 = -1), class = "rlang_error")
   expect_error(antibody_decay_curve(t = 1, alpha = -1), class = "rlang_error")
 })
+
+test_that("`antibody_decay_curve()` errors when `rho` is less than 1", {
+  # `rho` is a shape exponent, not a rate, so it has its own guard separate
+  # from the non-negativity checks above.
+  expect_error(antibody_decay_curve(t = 1, rho = 0), class = "rlang_error")
+})

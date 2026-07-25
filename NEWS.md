@@ -32,6 +32,12 @@
   "Reference", and "News" in the top navigation, and added a grouped
   `reference.qmd` index plus grouped sidebar reference sections that
   exclude internal-only topics.
+* The documentation site's reference index page is now titled "Package index"
+  rather than "Reference", matching the old pkgdown site and distinguishing the
+  page from the navigation entry that links to it. (#594)
+* Added a "Citation" entry to the documentation site's sidebar. The citation
+  page was previously reachable only from the navbar "More" dropdown, unlike
+  `rpt` and the default sidebar `altdoc` ships, which both list it. (#594)
 * Updated the documentation site's dark-mode styling to match `rpt` by adding
   the same inline-code color override used there, improving contrast on the
   home page and article text.

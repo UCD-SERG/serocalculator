@@ -163,6 +163,8 @@ website:
         file: CODE_OF_CONDUCT.md
       - text: Contributing
         file: CONTRIBUTING.md
+      - text: Citation
+        file: citation.qmd
 
 format:
   html:

@@ -1,5 +1,5 @@
 ---
-title: Reference
+title: Package index
 ---
 
 ## Prepare data, kinetics models, and noise parameters for analysis

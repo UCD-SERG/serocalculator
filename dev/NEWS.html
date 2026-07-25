@@ -281,7 +281,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9016</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9017</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -375,7 +375,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9016 (dev)</span>
+ <span class="menu-text">1.4.1.9017 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -384,7 +384,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9016 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9017 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -671,6 +671,36 @@ window.Quarto = {
  <span class="menu-text">Calculate log-likelihood</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./man/antibody_decay_curve.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Antibody decay curve with natural parameters</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./man/pathogen_decay_curve.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pathogen decay curve</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./man/plot_decay_curve.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot a decay function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./man/curve_app.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Launch the interactive Shiny app for the antigen-antibody kinetics model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">man/t1f.qmd</span>
+  </li>
+          <li class="sidebar-item">
+ <span class="menu-text">man/y1f.qmd</span>
+  </li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -896,19 +926,20 @@ window.Quarto = {
   <li><a href="#internal" id="toc-internal" class="nav-link" data-scroll-target="#internal">Internal</a></li>
   <li><a href="#bug-fixes" id="toc-bug-fixes" class="nav-link" data-scroll-target="#bug-fixes">Bug fixes</a></li>
   <li><a href="#compatibility" id="toc-compatibility" class="nav-link" data-scroll-target="#compatibility">Compatibility</a></li>
-  <li><a href="#new-features-1" id="toc-new-features-1" class="nav-link" data-scroll-target="#new-features-1">New features</a></li>
-  <li><a href="#bug-fixes-1" id="toc-bug-fixes-1" class="nav-link" data-scroll-target="#bug-fixes-1">Bug fixes</a></li>
+  <li><a href="#new-features-cluster-robust-se" id="toc-new-features-cluster-robust-se" class="nav-link" data-scroll-target="#new-features-cluster-robust-se">New features (cluster-robust SE)</a></li>
+  <li><a href="#bug-fixes-cluster-robust-se" id="toc-bug-fixes-cluster-robust-se" class="nav-link" data-scroll-target="#bug-fixes-cluster-robust-se">Bug fixes (cluster-robust SE)</a></li>
   <li><a href="#code-organization" id="toc-code-organization" class="nav-link" data-scroll-target="#code-organization">Code organization</a></li>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies">Dependencies</a></li>
   </ul></li>
   <li><a href="#serocalculator-1.4.0" id="toc-serocalculator-1.4.0" class="nav-link" data-scroll-target="#serocalculator-1.4.0">serocalculator 1.4.0</a>
   <ul class="collapse">
-  <li><a href="#new-features-2" id="toc-new-features-2" class="nav-link" data-scroll-target="#new-features-2">New features</a></li>
-  <li><a href="#bug-fixes-2" id="toc-bug-fixes-2" class="nav-link" data-scroll-target="#bug-fixes-2">Bug fixes</a></li>
+  <li><a href="#new-features-1" id="toc-new-features-1" class="nav-link" data-scroll-target="#new-features-1">New features</a></li>
+  <li><a href="#bug-fixes-1" id="toc-bug-fixes-1" class="nav-link" data-scroll-target="#bug-fixes-1">Bug fixes</a></li>
   <li><a href="#internal-changes" id="toc-internal-changes" class="nav-link" data-scroll-target="#internal-changes">Internal changes</a></li>
   </ul></li>
   <li><a href="#serocalculator-1.3.0" id="toc-serocalculator-1.3.0" class="nav-link" data-scroll-target="#serocalculator-1.3.0">serocalculator 1.3.0</a>
   <ul class="collapse">
-  <li><a href="#new-features-3" id="toc-new-features-3" class="nav-link" data-scroll-target="#new-features-3">New features</a></li>
+  <li><a href="#new-features-2" id="toc-new-features-2" class="nav-link" data-scroll-target="#new-features-2">New features</a></li>
   <li><a href="#internal-changes-1" id="toc-internal-changes-1" class="nav-link" data-scroll-target="#internal-changes-1">Internal changes</a></li>
   </ul></li>
   <li><a href="#serocalculator-1.2.0" id="toc-serocalculator-1.2.0" class="nav-link" data-scroll-target="#serocalculator-1.2.0">serocalculator 1.2.0</a></li>
@@ -941,6 +972,10 @@ window.Quarto = {
 <section id="new-features" class="level2">
 <h2 class="anchored" data-anchor-id="new-features">New features</h2>
 <ul>
+<li>Added interactive Shiny app <code>curve_app()</code> for visualizing antigen-antibody kinetics models with real-time parameter sliders (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
+<li>Added <code>antibody_decay_curve()</code> and <code>pathogen_decay_curve()</code> functions for simulating antibody and pathogen decay over time (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
+<li>Added <code>plot_decay_curve()</code> for plotting decay functions using ggplot2 (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
+<li>Added helper functions <code>t1f()</code> (time to end of active infection) and <code>y1f()</code> (peak antibody concentration) (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
 <li><code>autoplot.sim_results()</code> gains <code>x_var</code>, <code>group_var</code>, and <code>color_var</code> arguments, letting users choose which columns map to the x-axis, group, and color aesthetics instead of the previous hardcoded <code>sample_size</code> / <code>lambda.sim</code> mapping.</li>
 <li><code>graph.curve.params()</code> now uses the 5-parameter <code>ab_5p()</code> antibody response model and supports <code>units</code>-aware curve parameters. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
 <li>Added <code>ab_5p()</code>, a 5-parameter antibody response model that supports {units}-aware inputs (e.g.&nbsp;<code>t = units::as_units(50, "days")</code>), building on the existing <code>bt()</code> active-phase helper. CI now installs the system <code>udunits2</code> library on macOS and Windows so the new <code>units</code> dependency can compile there. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
@@ -1002,6 +1037,9 @@ window.Quarto = {
 <li>Includes code examples showing how to update existing code</li>
 <li>Accessible as a prominent tab in the website navigation</li>
 </ul></li>
+<li><code>autoplot.seroincidence()</code> now raises its “graphs cannot be extracted” error via <code>cli::cli_abort()</code> rather than <code>stop()</code>, so the message is formatted as a cross bullet naming the problem and an info bullet naming the <code>build_graph = TRUE</code> argument that was missing (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
+<li><code>antibody_decay_curve()</code>, <code>pathogen_decay_curve()</code>, <code>t1f()</code>, and <code>y1f()</code> now validate their parameters (non-negative values, <code>mu_y != mu_b</code>) and raise an informative <code>cli::cli_abort()</code> error instead of silently returning <code>NaN</code> or dividing by zero (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
+<li><code>plot_decay_curve()</code> now respects its <code>xmax</code> argument instead of always plotting to <code>x = 100</code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>).</li>
 </ul>
 </section>
 <section id="compatibility" class="level2">
@@ -1010,15 +1048,15 @@ window.Quarto = {
 <li>Replaced deprecated <code>dplyr::is.grouped_df()</code> usage with <code>dplyr::is_grouped_df()</code> in <code>df_to_array()</code> for compatibility with newer dplyr releases.</li>
 </ul>
 </section>
-<section id="new-features-1" class="level2">
-<h2 class="anchored" data-anchor-id="new-features-1">New features</h2>
+<section id="new-features-cluster-robust-se" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-cluster-robust-se">New features (cluster-robust SE)</h2>
 <ul>
 <li>Added <code>cluster_var</code> and <code>stratum_var</code> parameters to <code>est_seroincidence()</code> and <code>est_seroincidence_by()</code> to support cluster-robust standard error estimation. When <code>cluster_var</code> is specified, <code>summary.seroincidence()</code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</li>
 <li><code>cluster_var</code> parameter now accepts multiple variables (e.g., <code>c("school", "classroom")</code>) for multi-level clustered sampling designs. Cluster-robust standard errors will account for all specified clustering levels.</li>
 </ul>
 </section>
-<section id="bug-fixes-1" class="level2">
-<h2 class="anchored" data-anchor-id="bug-fixes-1">Bug fixes</h2>
+<section id="bug-fixes-cluster-robust-se" class="level2">
+<h2 class="anchored" data-anchor-id="bug-fixes-cluster-robust-se">Bug fixes (cluster-robust SE)</h2>
 <ul>
 <li>Fixed column naming issue in <code>summary.seroincidence()</code> where cluster-robust standard errors caused <code>[]</code> notation in column names (<code>SE[,1]</code> instead of <code>SE</code>).</li>
 <li>Added <code>se_type</code> column to <code>summary.seroincidence()</code> output to clearly indicate whether “standard” or “cluster-robust” standard errors are being used.</li>
@@ -1028,20 +1066,25 @@ window.Quarto = {
 <section id="code-organization" class="level2">
 <h2 class="anchored" data-anchor-id="code-organization">Code organization</h2>
 <ul>
-<li><p>Refactored clustering-related code following package organization policies:</p>
+<li>Refactored clustering-related code following package organization policies:
 <ul>
 <li>Moved <code>.compute_cluster_robust_var()</code> to <code>R/compute_cluster_robust_var.R</code></li>
 <li>Each function now in its own file for better maintainability and git history</li>
 </ul></li>
-<li><p>Updated copilot-instructions.md with code organization policies ## Dependencies</p></li>
-<li><p>Replaced <code>ggpubr</code> with <code>patchwork</code> for arranging multi-panel plots, removing the indirect <code>ggrepel</code> transitive dependency.</p></li>
+<li>Updated copilot-instructions.md with code organization policies</li>
+</ul>
+</section>
+<section id="dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies">Dependencies</h2>
+<ul>
+<li>Replaced <code>ggpubr</code> with <code>patchwork</code> for arranging multi-panel plots, removing the indirect <code>ggrepel</code> transitive dependency.</li>
 </ul>
 </section>
 </section>
 <section id="serocalculator-1.4.0" class="level1">
 <h1>serocalculator 1.4.0</h1>
-<section id="new-features-2" class="level2">
-<h2 class="anchored" data-anchor-id="new-features-2">New features</h2>
+<section id="new-features-1" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-1">New features</h2>
 <ul>
 <li><p>Added support for cluster-robust standard errors in <code>est_seroincidence()</code> through new <code>cluster_var</code> and <code>stratum_var</code> parameters. When <code>cluster_var</code> is specified, <code>summary.seroincidence()</code> automatically computes cluster-robust (sandwich) variance estimates to account for within-cluster correlation in clustered sampling designs such as household or school-based surveys.</p></li>
 <li><p>Added <code>compare_seroincidence()</code> function for statistical comparison of seroincidence rates</p>
@@ -1105,8 +1148,8 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
-<section id="bug-fixes-2" class="level2">
-<h2 class="anchored" data-anchor-id="bug-fixes-2">Bug fixes</h2>
+<section id="bug-fixes-1" class="level2">
+<h2 class="anchored" data-anchor-id="bug-fixes-1">Bug fixes</h2>
 <ul>
 <li>Fixed CRAN errors (<a href="https://github.com/UCD-SERG/serocalculator/issues/464">#464</a>)</li>
 <li>Fixed stratification issue in enteric fever vignette (<a href="https://github.com/UCD-SERG/serocalculator/issues/418">#418</a>)</li>
@@ -1135,8 +1178,8 @@ window.Quarto = {
 </section>
 <section id="serocalculator-1.3.0" class="level1">
 <h1>serocalculator 1.3.0</h1>
-<section id="new-features-3" class="level2">
-<h2 class="anchored" data-anchor-id="new-features-3">New features</h2>
+<section id="new-features-2" class="level2">
+<h2 class="anchored" data-anchor-id="new-features-2">New features</h2>
 <ul>
 <li><p>Removed function ‘get_additional_data()’ (<a href="https://github.com/UCD-SERG/serocalculator/issues/332">#332</a>)</p></li>
 <li><p>Updated documentation examples to include csv files (<a href="https://github.com/UCD-SERG/serocalculator/issues/328">#328</a>)</p></li>

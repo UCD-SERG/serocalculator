@@ -87,9 +87,9 @@ More details
 ## Code of Conduct
 
 Please note that the serocalculator project is released with a
-[Contributor Code of Conduct](https://github.com/UCD-SERG/serocalculator/blob/main/CODE_OF_CONDUCT.md).
-By contributing to
-this project you agree to abide by its terms.
+[Contributor Code of
+Conduct](https://github.com/UCD-SERG/serocalculator/blob/main/CODE_OF_CONDUCT.md).
+By contributing to this project you agree to abide by its terms.
 
 ## Guide to the package structure
 

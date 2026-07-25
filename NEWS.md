@@ -23,6 +23,9 @@
 
 ## Documentation
 
+* Fixed the README's link to the in-development documentation, which pointed at
+  `/main/` and had been dead since #504 moved development docs to `/dev/`. Also
+  removed a duplicated "the" in the same sentence. (#604)
 * The documentation site now deploys multiple versions side by side, following
   `rpt`'s pattern: pushes to `main` deploy development docs to `/dev/`,
   published releases deploy stable docs to `/latest-tag/` (plus an archived

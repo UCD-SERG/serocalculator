@@ -84,8 +84,10 @@ jobs:
         local::.
       dispatch-version: ${{ github.event.inputs.version }}
       dispatch-release-tag: ${{ github.event.inputs.release_tag }}
-      # TODO(#599): add `legacy-paths: main=dev` to keep pre-migration
-      # /main/... links working. That input does not exist at `@v2` until
-      # d-morrison/gha#303 merges and the major tag advances, and an
-      # undeclared `workflow_call` input is a hard error, so it stays
-      # commented out until then.
+      # Before the altdoc migration this site was built by pkgdown and
+      # insightsengineering/r-pkgdown-multiversion, which published each branch
+      # under its own name -- so the development docs lived at /main/. They now
+      # live at /dev/. This generates a site-root 404.html redirecting
+      # /main/<path> to /dev/<path>, deep links included, so links written
+      # against the old layout keep resolving.
+      legacy-paths: main=dev

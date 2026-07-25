@@ -38,6 +38,13 @@
 * Added a "Citation" entry to the documentation site's sidebar. The citation
   page was previously reachable only from the navbar "More" dropdown, unlike
   `rpt` and the default sidebar `altdoc` ships, which both list it. (#594)
+* Links to the documentation site's old `/main/` paths now resolve again.
+  Before the altdoc migration the development docs were published under the
+  branch name, so they lived at `/main/`; they now live at `/dev/`, which left
+  every `/main/...` link dead. The site now serves a root `404.html` that
+  redirects any request under `/main/` to the same path under `/dev/`, deep
+  links included. Redirection requires JavaScript; without it the page renders
+  as a plain not-found notice linking to the documentation home page. (#599)
 * Updated the documentation site's dark-mode styling to match `rpt` by adding
   the same inline-code color override used there, improving contrast on the
   home page and article text.

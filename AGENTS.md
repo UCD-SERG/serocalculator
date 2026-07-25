@@ -41,7 +41,7 @@ full list). Codex skills provide instructions for the common ones:
 - `source-command-test` — `devtools::test()` for affected tests.
 - `source-command-check` — `devtools::check()` for the full R CMD check (slow).
 - Add a `NEWS.md` bullet for any user-facing change (`news.yaml` enforces this
-  unless the PR carries the `no-changelog` label).
+  unless the PR carries the `no changelog` label -- space, not hyphen).
 
 ## Working in this repo
 

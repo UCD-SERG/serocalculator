@@ -14,8 +14,15 @@ format:
   # rendered page (the docx file itself still renders regardless).
   html:
     format-links: [docx, revealjs]
+    # Click any figure to open a zoomed lightbox view. Set explicitly on each
+    # format here (rather than relying only on the site-level `format: html:`
+    # default in altdoc/quarto_website.yml) so both this article's HTML page
+    # and its reveal.js slides get lightbox: the site default reaches the HTML
+    # page but not the separate slides output below.
+    lightbox: true
   revealjs:
     output-file: methodology-slides.html
+    lightbox: true
     reference-location: document
     echo: false
     html-math-method: mathjax

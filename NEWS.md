@@ -30,6 +30,11 @@
 
 ## Documentation
 
+* Added a `.github/CODE_OF_CONDUCT.md` pointer to the canonical Code of Conduct
+  at the repository root, so the link from `.github/CONTRIBUTING.md` resolves
+  when that file is viewed on GitHub. Relative paths there resolve against
+  `.github/`, so the link previously 404'd; it already worked on the
+  documentation site, which is why the link itself is unchanged (#612).
 * Restored the R code in the documentation website's vignettes and articles.
   `vignettes/_metadata.yml` set `echo: false` for the `html` and `docx`
   formats, which applied to every file under `vignettes/`, so the published

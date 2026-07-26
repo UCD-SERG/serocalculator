@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (SERG)">
-<meta name="dcterms.date" content="2026-07-25">
+<meta name="dcterms.date" content="2026-07-26">
 <title>Enteric Fever Seroincidence Vignette – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -24,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -66,7 +101,10 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -287,7 +325,7 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9017</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9019</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -381,7 +419,7 @@ window.Quarto = {
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9017 (dev)</span>
+ <span class="menu-text">1.4.1.9019 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -390,7 +428,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9017 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9019 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -878,7 +916,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot simulation results <code>autoplot()</code> method for <code>sim_results</code> objects</span></a>
+ <span class="menu-text">Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method for <code>sim_results</code> objects</span></a>
   </div>
 </li>
       </ul>
@@ -968,7 +1006,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Examples</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Enteric Fever Seroincidence Vignette</a></li></ol></nav><h1 class="title display-7">Enteric Fever Seroincidence Vignette</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (SERG)</p>
 
-<p class="date">2026-07-25</p>
+<p class="date">2026-07-26</p>
 </header><section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
 <span class="header-section-number">1</span> Introduction</h2>
 <p>This vignette provides users with an example analysis using the <a href="https://github.com/UCD-SERG/serocalculator"><strong>serocalculator</strong></a> package by reproducing the analysis for: <a href="https://www.thelancet.com/journals/lanmic/article/PIIS2666-5247(22)00114-8/fulltext"><strong>Estimating typhoid incidence from community-based serosurveys: a multicohort study</strong></a> (<span class="citation" data-cites="Aiemjoy_2022_Lancet">Aiemjoy et al. (<a href="#ref-Aiemjoy_2022_Lancet" role="doc-biblioref">2022</a>)</span>). We review the methods underlying the analysis and then walk through an example of enteric fever incidence in Pakistan. Note that because this is a simplified version of the analysis, the results here will differ slightly from those presented in the publication.</p>
@@ -978,8 +1016,18 @@ window.Quarto = {
 <section id="load-packages" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="load-packages">
 <span class="header-section-number">2.1</span> Load packages</h3>
 <p>The first step in conducting this analysis is to load our necessary packages. <strong>If you haven’t installed already, you will need to do so before loading:</strong></p>
-<p>See the <a href="https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package">Installation instructions</a> for more details.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"serocalculator"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>See the <a href="../../index.html#installing-the-serocalculator-package">Installation instructions</a> for more details.</p>
 <p>Once the <code>serocalculator</code> package has been installed, load it into your R environment using <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>, along with any other packages you may need for data management; For this example, we will load <code>tidyverse</code> and <code>forcats</code>:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/">forcats</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section></section><section id="load-data" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="load-data">
 <span class="header-section-number">3</span> Load data</h2>
 <p>Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for <strong>serocalculator</strong> are available on the <a href="https://osf.io/ne8pc/">Serocalculator Data Repository</a> on Open Science Framework (OSF). We will pull this data directly into our R environment.</p>
@@ -1017,13 +1065,24 @@ window.Quarto = {
 </tbody>
 </table>
 <p><em>Note that variable names are case-sensitive</em></p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load example longitudinal antibody parameters included in serocalculator</span></span>
+<span><span class="va">curves</span> <span class="op">&lt;-</span> <span class="va">typhoid_curves_nostrat_100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section><section id="visualize-curve-parameters" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="visualize-curve-parameters">
 <span class="header-section-number">3.2</span> Visualize curve parameters</h3>
-<p>We can graph the decay curves with an <code>autoplot()</code> method:</p>
+<p>We can graph the decay curves with an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method:</p>
 <div class="cell">
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualize curve parameters</span></span>
+<span><span class="va">curves</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
+<span>    <span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="enteric_fever_example_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="enteric_fever_example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1050,48 +1109,68 @@ window.Quarto = {
 </tbody>
 </table>
 <p><em>Note that variable names are case sensitive</em></p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load example cross-sectional data included in serocalculator</span></span>
+<span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="va">sees_pop_data_100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section><section id="summarize-antibody-data" class="level3" data-number="3.4"><h3 data-number="3.4" class="anchored" data-anchor-id="summarize-antibody-data">
 <span class="header-section-number">3.4</span> Summarize antibody data</h3>
 <p>We can compute numerical summaries of our cross-sectional antibody data with a <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method for <code>pop_data</code> objects:</p>
 <div class="cell">
-<pre><code>#&gt; 
-#&gt; n = 1000 
-#&gt; 
-#&gt; Distribution of age: 
-#&gt; 
-#&gt; # A tibble: 1 × 7
-#&gt;       n   min first_quartile median  mean third_quartile   max
-#&gt;   &lt;int&gt; &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1  1000   0.8           5.38   10.1  10.7           14.8  24.8
-#&gt; 
-#&gt; Distributions of antigen-isotype measurements:
-#&gt; 
-#&gt; # A tibble: 2 × 7
-#&gt;   antigen_iso    Min `1st Qu.` Median `3rd Qu.`   Max `# NAs`
-#&gt;   &lt;fct&gt;        &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
-#&gt; 1 HlyE_IgA    0          0.949   2.01      3.90  133.       0
-#&gt; 2 HlyE_IgG    0.0394     1.18    2.84      6.84  135.       0</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; n = 1000 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Distribution of age: </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 7</span></span>
+<span><span class="co">#&gt;       n   min first_quartile median  mean third_quartile   max</span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  1000   0.8           5.38   10.1  10.7           14.8  24.8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Distributions of antigen-isotype measurements:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 7</span></span>
+<span><span class="co">#&gt;   antigen_iso    Min `1st Qu.` Median `3rd Qu.`   Max `# NAs`</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;        &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 HlyE_IgA    0          0.949   2.01      3.90  133.       0</span></span>
+<span><span class="co">#&gt; 2 HlyE_IgG    0.0394     1.18    2.84      6.84  135.       0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="visualize-antibody-data" class="level3" data-number="3.5"><h3 data-number="3.5" class="anchored" data-anchor-id="visualize-antibody-data">
 <span class="header-section-number">3.5</span> Visualize antibody data</h3>
 <p>We examine our cross-sectional antibody data by visualizing the distribution of quantitative antibody responses. Here, we will look at the distribution of our selected antigen and isotype pairs, HlyE IgA and HlyE IgG, across participating countries.</p>
 <div class="cell">
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="co">#color palette</span></span>
+<span><span class="va">country_pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#EA6552"</span>, <span class="st">"#8F4B86"</span>, <span class="st">"#0099B4FF"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>, type <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country_pal</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/plots-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="enteric_fever_example_files/figure-html/plots-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="enteric_fever_example_files/figure-html/plots-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We see that across countries, our data is highly skewed with the majority of responses on the lower end of our data with long tails. Let’s get a better look at the distribution by log transforming our antibody response value.</p>
 <div class="cell">
-<pre><code>#&gt; Warning in scale_x_log10(labels = scales::label_comma()): log-10 transformation
-#&gt; introduced infinite values.
-#&gt; Warning: Removed 4 rows containing non-finite outside the scale range
-#&gt; (`stat_density()`).</code></pre>
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create log transformed plots</span></span>
+<span></span>
+<span><span class="va">xs_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Country <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">Country</span>, <span class="st">"Bangladesh"</span>, <span class="st">"Pakistan"</span>, <span class="st">"Nepal"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"Country"</span>, type <span class="op">=</span> <span class="st">"density"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country_pal</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_comma</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in scale_x_log10(labels = scales::label_comma()): log-10 transformation</span></span>
+<span><span class="co">#&gt; introduced infinite values.</span></span>
+<span><span class="co">#&gt; Warning: Removed 4 rows containing non-finite outside the scale range</span></span>
+<span><span class="co">#&gt; (`stat_density()`).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/logplot-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="enteric_fever_example_files/figure-html/logplot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="enteric_fever_example_files/figure-html/logplot-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1099,9 +1178,17 @@ window.Quarto = {
 <p>Once log transformed, our data looks much more normally distributed. In most cases, log transformation will be the best way to visualize serologic data.</p>
 <p>Let’s also take a look at how antibody responses change by age.</p>
 <div class="cell">
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span></span>
+<span><span class="co">#Plot antibody responses by age</span></span>
+<span><span class="va">xs_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span></span>
+<span>    strata <span class="op">=</span> <span class="st">"Country"</span>,</span>
+<span>    type <span class="op">=</span> <span class="st">"age-scatter"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country_pal</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/plot-age-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="enteric_fever_example_files/figure-html/plot-age-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="enteric_fever_example_files/figure-html/plot-age-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1138,6 +1225,11 @@ window.Quarto = {
 </tbody>
 </table>
 <p><em>Note that variable names are case-sensitive.</em></p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load example noise parameters included in serocalculator</span></span>
+<span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="va">example_noise_params_sees</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section></section><section id="estimate-seroincidence" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="estimate-seroincidence">
 <span class="header-section-number">4</span> Estimate Seroincidence</h2>
 <p>Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, <code>est.incidence</code> and <code>est.incidence.by</code>, to calculate the overall seroincidence and the stratified seroincidence, respectively.</p>
@@ -1145,101 +1237,165 @@ window.Quarto = {
 <span class="header-section-number">4.1</span> Overall Seroincidence</h3>
 <p>Using the function <code>est.incidence</code>, we filter to sites in Pakistan and define the datasets for our cross-sectional data (pop_data), longitudinal parameters (curve_param), and noise parameters (noise_param). We also define the antigen-isotype pairs to be included in the estimate (antigen_isos). Here, we have chosen to use two antigen isotypes, but users can add additional pairs if available.</p>
 <div class="cell">
-<pre><code>#&gt; # A tibble: 1 × 11
-#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
-#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.
-#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
-#&gt; #   nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using est.incidence (no strata)</span></span>
+<span></span>
+<span><span class="va">est1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 11</span></span>
+<span><span class="co">#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik</span></span>
+<span><span class="co">#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="stratified-seroincidence" class="level3" data-number="4.2"><h3 data-number="4.2" class="anchored" data-anchor-id="stratified-seroincidence">
 <span class="header-section-number">4.2</span> Stratified Seroincidence</h3>
 <p>We can also produce stratified seroincidence estimates. Users can select one or more stratification variables in their cross-sectional population dataset. Let’s compare estimates across all countries and by age group.</p>
 <div class="cell">
-<pre><code>#&gt; Warning: The number of observations in `data` varies between antigen isotypes, for at
-#&gt; least one stratum.
-#&gt; Sample size for each stratum will be calculated as the minimum number of
-#&gt; observations across all antigen isotypes.
-#&gt; # A tibble: 6 × 4
-#&gt;   Country ageCat antigen_iso     n
-#&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;fct&gt;       &lt;int&gt;
-#&gt; 1 Nepal   &lt;5     HlyE_IgA       42
-#&gt; 2 Nepal   &lt;5     HlyE_IgG       40
-#&gt; 3 Nepal   5-15   HlyE_IgA      106
-#&gt; 4 Nepal   5-15   HlyE_IgG      109
-#&gt; 5 Nepal   16+    HlyE_IgA       52
-#&gt; 6 Nepal   16+    HlyE_IgG       51
-#&gt; Seroincidence estimated given the following setup:
-#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
-#&gt; b) Strata       : Country, ageCat 
-#&gt; 
-#&gt;  Seroincidence estimates:
-#&gt; # A tibble: 9 × 15
-#&gt;   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr
-#&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;fct&gt;  &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1 Stratum 1 Banglad… &lt;5        24       0.1         0.567  0.105   0.394  0.816 
-#&gt; 2 Stratum 2 Banglad… 5-15      65       0.1         0.606  0.0749  0.476  0.772 
-#&gt; 3 Stratum 3 Banglad… 16+       11       0.1         0.541  0.165   0.297  0.985 
-#&gt; 4 Stratum 4 Nepal    &lt;5        40       0.1         0.0292 0.0111  0.0139 0.0614
-#&gt; 5 Stratum 5 Nepal    5-15     106       0.1         0.0415 0.00687 0.0300 0.0574
-#&gt; 6 Stratum 6 Nepal    16+       51       0.1         0.0972 0.0163  0.0701 0.135 
-#&gt; 7 Stratum 7 Pakistan &lt;5        43       0.1         0.117  0.0241  0.0785 0.176 
-#&gt; 8 Stratum 8 Pakistan 5-15     115       0.1         0.140  0.0145  0.114  0.171 
-#&gt; 9 Stratum 9 Pakistan 16+       42       0.1         0.269  0.0423  0.198  0.367 
-#&gt; # ℹ 6 more variables: se_type &lt;chr&gt;, coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;,
-#&gt; #   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#Using est.incidence.by (strata)</span></span>
+<span></span>
+<span><span class="va">est_country_age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Country"</span>, <span class="st">"ageCat"</span><span class="op">)</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
+<span>  noise_strata_varnames <span class="op">=</span> <span class="st">"Country"</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The number of observations in `data` varies between antigen isotypes, for at</span></span>
+<span><span class="co">#&gt; least one stratum.</span></span>
+<span><span class="co">#&gt; Sample size for each stratum will be calculated as the minimum number of</span></span>
+<span><span class="co">#&gt; observations across all antigen isotypes.</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span><span class="co">#&gt;   Country ageCat antigen_iso     n</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;fct&gt;  &lt;fct&gt;       &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Nepal   &lt;5     HlyE_IgA       42</span></span>
+<span><span class="co">#&gt; 2 Nepal   &lt;5     HlyE_IgG       40</span></span>
+<span><span class="co">#&gt; 3 Nepal   5-15   HlyE_IgA      106</span></span>
+<span><span class="co">#&gt; 4 Nepal   5-15   HlyE_IgG      109</span></span>
+<span><span class="co">#&gt; 5 Nepal   16+    HlyE_IgA       52</span></span>
+<span><span class="co">#&gt; 6 Nepal   16+    HlyE_IgG       51</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est_country_age</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
+<span><span class="co">#&gt; b) Strata       : Country, ageCat </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; # A tibble: 9 × 15</span></span>
+<span><span class="co">#&gt;   Stratum   Country  ageCat     n est.start incidence.rate      SE CI.lwr CI.upr</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;fct&gt;  &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Stratum 1 Banglad… &lt;5        24       0.1         0.567  0.105   0.394  0.816 </span></span>
+<span><span class="co">#&gt; 2 Stratum 2 Banglad… 5-15      65       0.1         0.606  0.0749  0.476  0.772 </span></span>
+<span><span class="co">#&gt; 3 Stratum 3 Banglad… 16+       11       0.1         0.541  0.165   0.297  0.985 </span></span>
+<span><span class="co">#&gt; 4 Stratum 4 Nepal    &lt;5        40       0.1         0.0292 0.0111  0.0139 0.0614</span></span>
+<span><span class="co">#&gt; 5 Stratum 5 Nepal    5-15     106       0.1         0.0415 0.00687 0.0300 0.0574</span></span>
+<span><span class="co">#&gt; 6 Stratum 6 Nepal    16+       51       0.1         0.0972 0.0163  0.0701 0.135 </span></span>
+<span><span class="co">#&gt; 7 Stratum 7 Pakistan &lt;5        43       0.1         0.117  0.0241  0.0785 0.176 </span></span>
+<span><span class="co">#&gt; 8 Stratum 8 Pakistan 5-15     115       0.1         0.140  0.0145  0.114  0.171 </span></span>
+<span><span class="co">#&gt; 9 Stratum 9 Pakistan 16+       42       0.1         0.269  0.0423  0.198  0.367 </span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: se_type &lt;chr&gt;, coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>Note that we get a warning about uneven observations between antigen isotypes, meaning some participants do not have results for both <em>HlyE IgA</em> and <em>HlyE IgG</em>. The warning indicates that the “<em>Sample size for each stratum will be calculated as the minimum number of observations across all antigen isotypes</em>”, so only participants with both antigen isotypes are included. To avoid this, filter the dataset to include only records with all specified antigen isotypes.</p>
 <p>We set <code>curve_strata_varnames = NULL</code> to avoid stratification in the “curves” dataset because it does not include our strata variables. Without this, a warning appears: “<em>curve_params is missing all strata variables, and will be used unstratified</em>”. To stratify based on variables that exist in a longitudinal curve parameters dataset, specify variables using <code>curve_strata_varnames</code>, similar to how <code>noise_strata_varnames</code> is used for “noise” above.</p>
-<p>Finally, let’s visualize our seroincidence estimates by country and age category using <code>autoplot()</code>:</p>
+<p>Finally, let’s visualize our seroincidence estimates by country and age category using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code>:</p>
 <div class="cell">
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Save summary(est_country_age)</span></span>
+<span><span class="va">est_country_agedf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est_country_age</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot seroincidence estimates</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_country_agedf</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"bar"</span>,</span>
+<span>  yvar <span class="op">=</span> <span class="st">"ageCat"</span>,</span>
+<span>  color_var <span class="op">=</span> <span class="st">"Country"</span>,</span>
+<span>  color_palette <span class="op">=</span> <span class="va">country_pal</span>,</span>
+<span>  CIs <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="enteric_fever_example_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
 </section></section><section id="comparing-seroincidence-rates" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="comparing-seroincidence-rates">
 <span class="header-section-number">5</span> Comparing Seroincidence Rates</h2>
-<p>After estimating seroincidence rates across different groups, we may want to statistically compare these rates to determine if observed differences are significant. The <code>compare_seroincidence()</code> function performs two-sample z-tests to compare seroincidence rates.</p>
+<p>After estimating seroincidence rates across different groups, we may want to statistically compare these rates to determine if observed differences are significant. The <code><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence()</a></code> function performs two-sample z-tests to compare seroincidence rates.</p>
 <section id="comparing-two-individual-estimates" class="level3" data-number="5.1"><h3 data-number="5.1" class="anchored" data-anchor-id="comparing-two-individual-estimates">
 <span class="header-section-number">5.1</span> Comparing Two Individual Estimates</h3>
 <p>First, let’s compare seroincidence rates between two countries directly. We’ll estimate seroincidence for Bangladesh and Nepal separately, then compare them:</p>
 <div class="cell">
-<pre><code>#&gt; 
-#&gt;  Two-sample z-test for difference in seroincidence rates
-#&gt; 
-#&gt; data:  seroincidence estimates
-#&gt; z = 9.311, p-value &lt; 2.2e-16
-#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.4224426 0.6477095
-#&gt; sample estimates:
-#&gt; incidence rate 1 incidence rate 2       difference 
-#&gt;       0.58838264       0.05330655       0.53507609</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Estimate seroincidence for Bangladesh</span></span>
+<span><span class="va">est_bangladesh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Bangladesh"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Bangladesh"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estimate seroincidence for Nepal</span></span>
+<span><span class="va">est_nepal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Nepal"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Nepal"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compare the two estimates</span></span>
+<span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span><span class="va">est_bangladesh</span>, <span class="va">est_nepal</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = 9.311, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  0.4224426 0.6477095</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;       0.58838264       0.05330655       0.53507609</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>The output follows the standard <code>htest</code> format in R, providing the z-statistic, p-value, estimates for both groups, and a confidence interval for the difference in incidence rates.</p>
 </section><section id="comparing-all-pairs-of-stratified-estimates" class="level3" data-number="5.2"><h3 data-number="5.2" class="anchored" data-anchor-id="comparing-all-pairs-of-stratified-estimates">
 <span class="header-section-number">5.2</span> Comparing All Pairs of Stratified Estimates</h3>
 <p>For stratified analyses, we can compare all pairs of strata at once. This is particularly useful when we have multiple groups and want a comprehensive view of all pairwise differences:</p>
 <div class="cell">
-<pre><code>#&gt; # A tibble: 36 × 14
-#&gt;    Stratum_1 Stratum_2 Country.1  ageCat.1 Country.2  ageCat.2 incidence.rate.1
-#&gt;  * &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;      &lt;fct&gt;    &lt;chr&gt;      &lt;fct&gt;               &lt;dbl&gt;
-#&gt;  1 Stratum 1 Stratum 2 Bangladesh &lt;5       Bangladesh 5-15                0.567
-#&gt;  2 Stratum 1 Stratum 3 Bangladesh &lt;5       Bangladesh 16+                 0.567
-#&gt;  3 Stratum 1 Stratum 4 Bangladesh &lt;5       Nepal      &lt;5                  0.567
-#&gt;  4 Stratum 1 Stratum 5 Bangladesh &lt;5       Nepal      5-15                0.567
-#&gt;  5 Stratum 1 Stratum 6 Bangladesh &lt;5       Nepal      16+                 0.567
-#&gt;  6 Stratum 1 Stratum 7 Bangladesh &lt;5       Pakistan   &lt;5                  0.567
-#&gt;  7 Stratum 1 Stratum 8 Bangladesh &lt;5       Pakistan   5-15                0.567
-#&gt;  8 Stratum 1 Stratum 9 Bangladesh &lt;5       Pakistan   16+                 0.567
-#&gt;  9 Stratum 2 Stratum 3 Bangladesh 5-15     Bangladesh 16+                 0.606
-#&gt; 10 Stratum 2 Stratum 4 Bangladesh 5-15     Nepal      &lt;5                  0.606
-#&gt; # ℹ 26 more rows
-#&gt; # ℹ 7 more variables: incidence.rate.2 &lt;dbl&gt;, difference &lt;dbl&gt;, SE &lt;dbl&gt;,
-#&gt; #   z.statistic &lt;dbl&gt;, p.value &lt;dbl&gt;, CI.lwr &lt;dbl&gt;, CI.upr &lt;dbl&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compare all pairs of country-age combinations</span></span>
+<span><span class="va">comparisons_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span><span class="va">est_country_age</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display the results</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">comparisons_table</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 36 × 14</span></span>
+<span><span class="co">#&gt;    Stratum_1 Stratum_2 Country.1  ageCat.1 Country.2  ageCat.2 incidence.rate.1</span></span>
+<span><span class="co">#&gt;  * &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;      &lt;fct&gt;    &lt;chr&gt;      &lt;fct&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Stratum 1 Stratum 2 Bangladesh &lt;5       Bangladesh 5-15                0.567</span></span>
+<span><span class="co">#&gt;  2 Stratum 1 Stratum 3 Bangladesh &lt;5       Bangladesh 16+                 0.567</span></span>
+<span><span class="co">#&gt;  3 Stratum 1 Stratum 4 Bangladesh &lt;5       Nepal      &lt;5                  0.567</span></span>
+<span><span class="co">#&gt;  4 Stratum 1 Stratum 5 Bangladesh &lt;5       Nepal      5-15                0.567</span></span>
+<span><span class="co">#&gt;  5 Stratum 1 Stratum 6 Bangladesh &lt;5       Nepal      16+                 0.567</span></span>
+<span><span class="co">#&gt;  6 Stratum 1 Stratum 7 Bangladesh &lt;5       Pakistan   &lt;5                  0.567</span></span>
+<span><span class="co">#&gt;  7 Stratum 1 Stratum 8 Bangladesh &lt;5       Pakistan   5-15                0.567</span></span>
+<span><span class="co">#&gt;  8 Stratum 1 Stratum 9 Bangladesh &lt;5       Pakistan   16+                 0.567</span></span>
+<span><span class="co">#&gt;  9 Stratum 2 Stratum 3 Bangladesh 5-15     Bangladesh 16+                 0.606</span></span>
+<span><span class="co">#&gt; 10 Stratum 2 Stratum 4 Bangladesh 5-15     Nepal      &lt;5                  0.606</span></span>
+<span><span class="co">#&gt; # ℹ 26 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 7 more variables: incidence.rate.2 &lt;dbl&gt;, difference &lt;dbl&gt;, SE &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   z.statistic &lt;dbl&gt;, p.value &lt;dbl&gt;, CI.lwr &lt;dbl&gt;, CI.upr &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>This produces a table with one row for each pairwise comparison, showing: - The two strata being compared - Incidence rates for each group - The difference in rates - Standard error of the difference - Z-statistic - P-value - 95% confidence interval for the difference</p>
 <p>We can use this to identify which differences are statistically significant (typically using p &lt; 0.05 as a threshold).</p>
@@ -1251,65 +1407,115 @@ window.Quarto = {
 <span class="header-section-number">6.1</span> Example: Household Clustering</h3>
 <p>The SEES data includes cluster identifiers (<code>cluster</code> for geographic clusters, <code>catchment</code> for health facility catchment areas, and <code>Country</code>). These variables are nested: clusters are nested within catchments, which are nested within countries. We can use these to account for within-cluster correlation:</p>
 <div class="cell">
-<pre><code>#&gt; # A tibble: 1 × 11
-#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik
-#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1       0.1          0.158 0.0214  0.122  0.206 cluster-robust     0.95  -1016.
-#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
-#&gt; #   nlm.convergence.code &lt;ord&gt;
-#&gt; # A tibble: 1 × 11
-#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
-#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.
-#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
-#&gt; #   nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Account for geographic clustering</span></span>
+<span><span class="co"># Clusters in the SEES data represent geographic areas</span></span>
+<span><span class="co"># Use Pakistan data for this example</span></span>
+<span><span class="va">est_with_clustering</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span>  <span class="co"># Geographic cluster identifier</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># The summary will show cluster-robust standard errors</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est_with_clustering</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 11</span></span>
+<span><span class="co">#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type        coverage log.lik</span></span>
+<span><span class="co">#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1       0.1          0.158 0.0214  0.122  0.206 cluster-robust     0.95  -1016.</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   nlm.convergence.code &lt;ord&gt;</span></span>
+<span></span>
+<span><span class="co"># Compare with non-robust (standard) analysis</span></span>
+<span><span class="va">est_no_clustering</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span>  <span class="co"># No cluster_var specified - uses standard errors</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est_no_clustering</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 11</span></span>
+<span><span class="co">#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik</span></span>
+<span><span class="co">#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1       0.1          0.158 0.0122  0.136  0.184 standard     0.95  -1016.</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>Notice that the point estimates (incidence rates) are identical between the two analyses, but the standard errors are larger with cluster-robust estimation. This reflects the reduced effective sample size due to within-cluster correlation.</p>
 <p>The mathematical details of cluster-robust standard errors are explained in the <a href="../methodology.html#cluster-robust-standard-errors-for-clustered-sampling-designs">Cluster-robust standard errors section</a> of the methodology article.</p>
 </section><section id="clustering-with-stratified-analysis" class="level3" data-number="6.2"><h3 data-number="6.2" class="anchored" data-anchor-id="clustering-with-stratified-analysis">
 <span class="header-section-number">6.2</span> Clustering with Stratified Analysis</h3>
-<p>Clustering can also be combined with stratified analysis using <code>est_seroincidence_by()</code>:</p>
+<p>Clustering can also be combined with stratified analysis using <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>:</p>
 <div class="cell">
-<pre><code>#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Seroincidence estimated given the following setup:
-#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
-#&gt; b) Strata       : catchment 
-#&gt; 
-#&gt;  Seroincidence estimates:
-#&gt; # A tibble: 2 × 14
-#&gt;   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
-#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
-#&gt; 1 Stratum… aku         100       0.1          0.114 0.0216 0.0788  0.165 cluste…
-#&gt; 2 Stratum… kgh         100       0.1          0.217 0.0161 0.188   0.251 cluste…
-#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,
-#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;
-#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; `noise_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Seroincidence estimated given the following setup:
-#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA 
-#&gt; b) Strata       : catchment 
-#&gt; 
-#&gt;  Seroincidence estimates:
-#&gt; # A tibble: 2 × 14
-#&gt;   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type
-#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
-#&gt; 1 Stratum… aku         100       0.1          0.114 0.0135 0.0905  0.144 standa…
-#&gt; 2 Stratum… kgh         100       0.1          0.217 0.0223 0.177   0.265 standa…
-#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,
-#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Stratified analysis by catchment with cluster adjustment</span></span>
+<span><span class="co"># Use Pakistan data for this example</span></span>
+<span><span class="va">est_catchment_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  strata <span class="op">=</span> <span class="st">"catchment"</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span>  <span class="co"># Account for clustering within each stratum</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est_catchment_clustered</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
+<span><span class="co">#&gt; b) Strata       : catchment </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 14</span></span>
+<span><span class="co">#&gt;   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt; 1 Stratum… aku         100       0.1          0.114 0.0216 0.0788  0.165 cluste…</span></span>
+<span><span class="co">#&gt; 2 Stratum… kgh         100       0.1          0.217 0.0161 0.188   0.251 cluste…</span></span>
+<span><span class="co">#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span>
+<span></span>
+<span><span class="co"># Compare with stratified analysis without clustering</span></span>
+<span><span class="va">est_catchment_no_clustering</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  strata <span class="op">=</span> <span class="st">"catchment"</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span></span>
+<span>  <span class="co"># No cluster_var - standard errors</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est_catchment_no_clustering</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgG, HlyE_IgA </span></span>
+<span><span class="co">#&gt; b) Strata       : catchment </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 14</span></span>
+<span><span class="co">#&gt;   Stratum  catchment     n est.start incidence.rate     SE CI.lwr CI.upr se_type</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt; 1 Stratum… aku         100       0.1          0.114 0.0135 0.0905  0.144 standa…</span></span>
+<span><span class="co">#&gt; 2 Stratum… kgh         100       0.1          0.217 0.0223 0.177   0.265 standa…</span></span>
+<span><span class="co">#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>Within each stratum (catchment), the cluster-robust standard errors are larger than the standard errors, appropriately accounting for geographic clustering within each catchment area.</p>
 </section><section id="understanding-the-impact" class="level3" data-number="6.3"><h3 data-number="6.3" class="anchored" data-anchor-id="understanding-the-impact">
@@ -1326,42 +1532,95 @@ window.Quarto = {
 <span class="header-section-number">6.4</span> Cluster-Robust Country Comparisons</h3>
 <p>For our main findings comparing all three countries, we should use cluster-robust standard errors to properly account for the geographic clustering in the SEES study:</p>
 <div class="cell">
-<pre><code>#&gt; [1] "Bangladesh vs Nepal:"
-#&gt; 
-#&gt;  Two-sample z-test for difference in seroincidence rates
-#&gt; 
-#&gt; data:  seroincidence estimates
-#&gt; z = 54.102, p-value &lt; 2.2e-16
-#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.5156917 0.5544605
-#&gt; sample estimates:
-#&gt; incidence rate 1 incidence rate 2       difference 
-#&gt;       0.58838264       0.05330655       0.53507609
-#&gt; [1] "Bangladesh vs Pakistan:"
-#&gt; 
-#&gt;  Two-sample z-test for difference in seroincidence rates
-#&gt; 
-#&gt; data:  seroincidence estimates
-#&gt; z = 19.126, p-value &lt; 2.2e-16
-#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.3859467 0.4740769
-#&gt; sample estimates:
-#&gt; incidence rate 1 incidence rate 2       difference 
-#&gt;        0.5883826        0.1583708        0.4300118
-#&gt; [1] "Nepal vs Pakistan:"
-#&gt; 
-#&gt;  Two-sample z-test for difference in seroincidence rates
-#&gt; 
-#&gt; data:  seroincidence estimates
-#&gt; z = -4.67, p-value = 3.012e-06
-#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  -0.14915874 -0.06096985
-#&gt; sample estimates:
-#&gt; incidence rate 1 incidence rate 2       difference 
-#&gt;       0.05330655       0.15837084      -0.10506430</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Estimate seroincidence for Bangladesh with cluster adjustment</span></span>
+<span><span class="va">est_bangladesh_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Bangladesh"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Bangladesh"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estimate seroincidence for Nepal with cluster adjustment</span></span>
+<span><span class="va">est_nepal_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Nepal"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Nepal"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estimate seroincidence for Pakistan with cluster adjustment</span></span>
+<span><span class="va">est_pakistan_clustered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  cluster_var <span class="op">=</span> <span class="st">"cluster"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Pairwise comparisons with cluster-robust SEs</span></span>
+<span><span class="va">comparison_bangla_nepal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_bangladesh_clustered</span>, </span>
+<span>  <span class="va">est_nepal_clustered</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison_bangla_pakistan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_bangladesh_clustered</span>,</span>
+<span>  <span class="va">est_pakistan_clustered</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison_nepal_pakistan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence</a></span><span class="op">(</span></span>
+<span>  <span class="va">est_nepal_clustered</span>,</span>
+<span>  <span class="va">est_pakistan_clustered</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display all comparisons</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Bangladesh vs Nepal:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Bangladesh vs Nepal:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">comparison_bangla_nepal</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = 54.102, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  0.5156917 0.5544605</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;       0.58838264       0.05330655       0.53507609</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Bangladesh vs Pakistan:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Bangladesh vs Pakistan:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">comparison_bangla_pakistan</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = 19.126, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  0.3859467 0.4740769</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;        0.5883826        0.1583708        0.4300118</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"Nepal vs Pakistan:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Nepal vs Pakistan:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">comparison_nepal_pakistan</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two-sample z-test for difference in seroincidence rates</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  seroincidence estimates</span></span>
+<span><span class="co">#&gt; z = -4.67, p-value = 3.012e-06</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in incidence rates is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  -0.14915874 -0.06096985</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; incidence rate 1 incidence rate 2       difference </span></span>
+<span><span class="co">#&gt;       0.05330655       0.15837084      -0.10506430</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>The cluster-robust comparisons provide more accurate inference by accounting for within-cluster correlation in the study design.</p>
 </section></section><section id="conclusions" class="level2" data-number="7"><h2 data-number="7" class="anchored" data-anchor-id="conclusions">
@@ -1799,7 +2058,38 @@ Aiemjoy, K., Seidman J. C., Saha S., Munira S. J., Islam Sajib M. S., and Sarkar
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/enteric_fever_example.Rmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

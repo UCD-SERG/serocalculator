@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (SERG)">
-<meta name="dcterms.date" content="2026-07-25">
+<meta name="dcterms.date" content="2026-07-26">
 <title>Scrub Typhus Seroincidence Vignette – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -24,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -66,7 +101,10 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -287,7 +325,7 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9017</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9019</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -381,7 +419,7 @@ window.Quarto = {
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9017 (dev)</span>
+ <span class="menu-text">1.4.1.9019 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -390,7 +428,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9017 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9019 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -878,7 +916,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot simulation results <code>autoplot()</code> method for <code>sim_results</code> objects</span></a>
+ <span class="menu-text">Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method for <code>sim_results</code> objects</span></a>
   </div>
 </li>
       </ul>
@@ -943,7 +981,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/enteric_fever_example.html">Examples</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/scrubTyphus_example.html">Scrub Typhus Seroincidence Vignette</a></li></ol></nav><h1 class="title display-7">Scrub Typhus Seroincidence Vignette</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (SERG)</p>
 
-<p class="date">2026-07-25</p>
+<p class="date">2026-07-26</p>
 </header><section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
 <span class="header-section-number">1</span> Introduction</h2>
 <p>This vignette reproduces the analysis for: <a href="https://www.medrxiv.org/content/10.1101/2022.11.07.22282017v2"><strong>Estimating the seroincidence of scrub typhus using antibody dynamics following infection</strong></a> (<span class="citation" data-cites="Aiemjoy_2024_scrub"><span class="nocase">Aiemjoy et al.</span> (<a href="#ref-Aiemjoy_2024_scrub" role="doc-biblioref">Accepted Feb 2024</a>)</span>).</p>
@@ -958,8 +996,14 @@ window.Quarto = {
 <p>Scrub typhus, a vector-borne bacterial infection, is an important but neglected disease globally. Accurately characterizing burden is challenging due to non-specific symptoms and limited diagnostics. Prior seroepidemiology studies have struggled to find consensus cutoffs that permit comparing estimates across contexts and time. In this study, we present a novel approach that does not require a cutoff and instead uses information about antibody kinetics after infection to estimate seroincidence. We use data from three cohorts of scrub typhus patients in Chiang Rai, Thailand, and Vellore, India to characterize antibody kinetics after infection and two population serosurveys in the Kathmandu valley, Nepal, and Tamil Nadu, India to estimate seroincidence. The samples were tested for IgM and IgG responses to Orientia tsutsugamushi-derived recombinant 56-kDa antigen using commercial ELISA kits. We used Bayesian hierarchical models to characterize antibody responses after scrub typhus infection and used the joint distributions of the peak antibody titers and decay rates to estimate population-level incidence rates in the cross-sectional serosurveys.</p>
 <section id="load-packages" class="level3" data-number="3.1"><h3 data-number="3.1" class="anchored" data-anchor-id="load-packages">
 <span class="header-section-number">3.1</span> Load packages</h3>
-<p>The first step in conducting this analysis is to load our necessary packages. If you haven’t installed already, you will need to do so before loading. We will also need to have the <code>tidyverse</code> and <code>mixtools</code> packages installed for data manipulation and graphics operations we will perform in this vignette. Please see the websites for <a href="https://ucd-serg.github.io/serocalculator/#installing-the-serocalculator-package"><code>serocalculator</code></a>, <a href="https://tidyverse.tidyverse.org/#installation"><code>tidyverse</code></a>, and <a href="https://github.com/dsy109/mixtools?tab=readme-ov-file#installation"><code>mixtools</code></a> for guidance on installing these packages into your R package library.</p>
+<p>The first step in conducting this analysis is to load our necessary packages. If you haven’t installed already, you will need to do so before loading. We will also need to have the <code>tidyverse</code> and <code>mixtools</code> packages installed for data manipulation and graphics operations we will perform in this vignette. Please see the websites for <a href="../../index.html#installing-the-serocalculator-package"><code>serocalculator</code></a>, <a href="https://tidyverse.tidyverse.org/#installation"><code>tidyverse</code></a>, and <a href="https://github.com/dsy109/mixtools?tab=readme-ov-file#installation"><code>mixtools</code></a> for guidance on installing these packages into your R package library.</p>
 <p>Once all three of those packages are installed, we can load them into our active R session environment:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dsy109/mixtools">mixtools</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section><section id="load-data" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="load-data">
 <span class="header-section-number">3.2</span> Load data</h3>
 <p>Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for <strong>serocalculator</strong> are available on the <a href="https://osf.io/ne8pc/">Serocalculator Repository</a> on Open Science Framework (OSF). We will pull this data directly into our R environment.</p>
@@ -967,16 +1011,23 @@ window.Quarto = {
 <span class="header-section-number">3.2.1</span> Load and prepare longitudinal parameter data</h4>
 <p>We will first load the longitudinal curve parameters to set the antibody decay parameters. These parameters were modeled with Bayesian hierarchical models to fit two-phase power-function decay models to the longitudinal antibody responses among confirmed enteric fever cases.</p>
 <div class="cell">
-<pre><code>#&gt; Warning: `data` is missing `iter` column
-#&gt; It will be inferred from row ordering.</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Import longitudinal antibody parameters from OSF</span></span>
+<span></span>
+<span><span class="va">curves</span> <span class="op">&lt;-</span></span>
+<span>  <span class="st">"https://osf.io/download/u5gxh/"</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `data` is missing `iter` column</span></span>
+<span><span class="co">#&gt; It will be inferred from row ordering.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="visualize-curve-parameters" class="level4" data-number="3.2.2"><h4 data-number="3.2.2" class="anchored" data-anchor-id="visualize-curve-parameters">
 <span class="header-section-number">3.2.2</span> Visualize curve parameters</h4>
-<p>We can graph the decay curves with an <code>autoplot()</code> method:</p>
+<p>We can graph the decay curves with an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method:</p>
 <div class="cell">
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">curves</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="scrubTyphus_example_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -984,53 +1035,70 @@ window.Quarto = {
 </section><section id="load-and-prepare-cross-sectional-data" class="level4" data-number="3.2.3"><h4 data-number="3.2.3" class="anchored" data-anchor-id="load-and-prepare-cross-sectional-data">
 <span class="header-section-number">3.2.3</span> Load and prepare cross-sectional data</h4>
 <p>Next, we load our sample cross-sectional data.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Import cross-sectional data from OSF and rename required variables</span></span>
+<span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_pop_data.html">load_pop_data</a></span><span class="op">(</span></span>
+<span>  file_path <span class="op">=</span> <span class="st">"https://osf.io/download/h5js4/"</span>,</span>
+<span>  age <span class="op">=</span> <span class="st">"Age"</span>,</span>
+<span>  value <span class="op">=</span> <span class="st">"result"</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"index_id"</span>,</span>
+<span>  standardize <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 </section><section id="check-formatting" class="level4" data-number="3.2.4"><h4 data-number="3.2.4" class="anchored" data-anchor-id="check-formatting">
 <span class="header-section-number">3.2.4</span> Check formatting</h4>
-<p>We can check that <code>xs_data</code> has the correct formatting using the <code>check_pop_data()</code> function:</p>
+<p>We can check that <code>xs_data</code> has the correct formatting using the <code><a href="https://rdrr.io/pkg/serocalculator/man/check_pop_data.html">check_pop_data()</a></code> function:</p>
 <div class="cell">
-<pre><code>#&gt; data format is as expected.</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/check_pop_data.html">check_pop_data</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; data format is as expected.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="summarize-antibody-data" class="level4" data-number="3.2.5"><h4 data-number="3.2.5" class="anchored" data-anchor-id="summarize-antibody-data">
 <span class="header-section-number">3.2.5</span> Summarize antibody data</h4>
 <p>We can compute numerical summaries of our cross-sectional antibody data with a <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> method for <code>pop_data</code> objects:</p>
 <div class="cell">
-<pre><code>#&gt; Warning: There were 2 warnings in `dplyr::summarize()`.
-#&gt; The first warning was:
-#&gt; ℹ In argument: `across(...)`.
-#&gt; ℹ In group 4: `antigen_iso = OT56kda_IgM`, `country = Nepal`.
-#&gt; Caused by warning in `min()`:
-#&gt; ! no non-missing arguments to min; returning Inf
-#&gt; ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
-#&gt; 
-#&gt; n = 1608 
-#&gt; 
-#&gt; Distribution of age: 
-#&gt; 
-#&gt; # A tibble: 2 × 8
-#&gt;   country     n   min first_quartile median  mean third_quartile   max
-#&gt;   &lt;fct&gt;   &lt;int&gt; &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1 India     721  18             40     49    50.5           62    87  
-#&gt; 2 Nepal     887   0.9            5.5   10.9  11.6           17.0  27.4
-#&gt; 
-#&gt; Distributions of antigen-isotype measurements:
-#&gt; 
-#&gt; # A tibble: 4 × 8
-#&gt;   antigen_iso country     Min `1st Qu.` Median `3rd Qu.`     Max `# NAs`
-#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
-#&gt; 1 OT56kda_IgG India     0.05      0.111  0.222     2.56     3.81       0
-#&gt; 2 OT56kda_IgM India     0.051     0.1    0.139     0.229    3.60       0
-#&gt; 3 OT56kda_IgG Nepal     0.112     0.335  0.464     0.602    3.29       0
-#&gt; 4 OT56kda_IgM Nepal   Inf        NA     NA        NA     -Inf       1105</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span>strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There were 2 warnings in `dplyr::summarize()`.</span></span>
+<span><span class="co">#&gt; The first warning was:</span></span>
+<span><span class="co">#&gt; ℹ In argument: `across(...)`.</span></span>
+<span><span class="co">#&gt; ℹ In group 4: `antigen_iso = OT56kda_IgM`, `country = Nepal`.</span></span>
+<span><span class="co">#&gt; Caused by warning in `min()`:</span></span>
+<span><span class="co">#&gt; ! no non-missing arguments to min; returning Inf</span></span>
+<span><span class="co">#&gt; ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; n = 1608 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Distribution of age: </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 8</span></span>
+<span><span class="co">#&gt;   country     n   min first_quartile median  mean third_quartile   max</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;   &lt;int&gt; &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 India     721  18             40     49    50.5           62    87  </span></span>
+<span><span class="co">#&gt; 2 Nepal     887   0.9            5.5   10.9  11.6           17.0  27.4</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Distributions of antigen-isotype measurements:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 8</span></span>
+<span><span class="co">#&gt;   antigen_iso country     Min `1st Qu.` Median `3rd Qu.`     Max `# NAs`</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;       &lt;fct&gt;     &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 OT56kda_IgG India     0.05      0.111  0.222     2.56     3.81       0</span></span>
+<span><span class="co">#&gt; 2 OT56kda_IgM India     0.051     0.1    0.139     0.229    3.60       0</span></span>
+<span><span class="co">#&gt; 3 OT56kda_IgG Nepal     0.112     0.335  0.464     0.602    3.29       0</span></span>
+<span><span class="co">#&gt; 4 OT56kda_IgM Nepal   Inf        NA     NA        NA     -Inf       1105</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="visualize-antibody-data" class="level4" data-number="3.2.6"><h4 data-number="3.2.6" class="anchored" data-anchor-id="visualize-antibody-data">
 <span class="header-section-number">3.2.6</span> Visualize antibody data</h4>
 <p>Let’s also take a look at how antibody responses change by age.</p>
 <div class="cell">
-<pre><code>#&gt; Warning: Removed 1105 rows containing missing values or values outside the scale range
-#&gt; (`geom_point()`).</code></pre>
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot antibody responses by age</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">xs_data</span>, type <span class="op">=</span> <span class="st">"age-scatter"</span>, strata <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1105 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="scrubTyphus_example_files/figure-html/plot-age-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="scrubTyphus_example_files/figure-html/plot-age-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="scrubTyphus_example_files/figure-html/plot-age-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1066,81 +1134,171 @@ window.Quarto = {
 </table>
 <p><em>Note that variable names are case-sensitive.</em></p>
 <div class="cell">
-<pre><code>#&gt; number of iterations= 35 
-#&gt; number of iterations= 24</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># biologic noise</span></span>
+<span><span class="va">b_noise</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">antigen_iso</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&lt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># restrict to young ages to capture recent exposures</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/do.html">do</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
+<span>    <span class="co"># Fit the mixture model</span></span>
+<span>    <span class="va">mixmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mixtools/man/normalmixEM.html">normalmixEM</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">value</span>, k <span class="op">=</span> <span class="fl">2</span>, maxit <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span>    <span class="co"># k is the number of components, adjust as necessary</span></span>
+<span>    <span class="co"># Assuming the first component is the lower distribution:</span></span>
+<span>    <span class="va">lower_mu</span> <span class="op">&lt;-</span> <span class="va">mixmod</span><span class="op">$</span><span class="va">mu</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>    <span class="va">lower_sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">mixmod</span><span class="op">$</span><span class="va">sigma</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="co"># Calculate the 90th percentile of the lower distribution</span></span>
+<span>    <span class="va">percentile75</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span></span>
+<span>      <span class="fl">0.75</span>,</span>
+<span>      <span class="va">lower_mu</span>,</span>
+<span>      <span class="va">lower_sigma</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="co"># Return the results</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>antigen_iso <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">antigen_iso</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>               percentile75 <span class="op">=</span> <span class="va">percentile75</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#&gt; number of iterations= 35 </span></span>
+<span><span class="co">#&gt; number of iterations= 24</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="co"># define conditional parameters</span></span>
+<span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  antigen_iso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span>, <span class="st">"OT56kda_IgM"</span><span class="op">)</span>,</span>
+<span>  nu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">b_noise</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">]</span>, <span class="va">b_noise</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>, <span class="co"># Biologic noise (nu)</span></span>
+<span>  eps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="co"># M noise (eps)</span></span>
+<span>  y.low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="co"># low cutoff (llod)</span></span>
+<span>  y.high <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">200</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># high cutoff (y.high)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">round</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section></section><section id="estimate-seroincidence-by-study-site" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="estimate-seroincidence-by-study-site">
 <span class="header-section-number">4</span> Estimate Seroincidence by study site</h2>
 <p>Now we are ready to begin estimating seroincidence. We will use <code>est.incidence.by</code> to calculate stratified seroincidence rates.</p>
 <div class="cell">
-<pre><code>#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Seroincidence estimated given the following setup:
-#&gt; a) Antigen isotypes   : OT56kda_IgG 
-#&gt; b) Strata       : country 
-#&gt; 
-#&gt;  Seroincidence estimates:
-#&gt; # A tibble: 2 × 14
-#&gt;   Stratum  country     n est.start incidence.rate      SE  CI.lwr CI.upr se_type
-#&gt;   &lt;chr&gt;    &lt;fct&gt;   &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
-#&gt; 1 Stratum… India     721       0.1        0.0202  0.00148 0.0175  0.0233 standa…
-#&gt; 2 Stratum… Nepal    1105       0.1        0.00854 0.00107 0.00668 0.0109 standa…
-#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,
-#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using est.incidence.by (strata)</span></span>
+<span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"country"</span><span class="op">)</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span><span class="op">)</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : OT56kda_IgG </span></span>
+<span><span class="co">#&gt; b) Strata       : country </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 14</span></span>
+<span><span class="co">#&gt;   Stratum  country     n est.start incidence.rate      SE  CI.lwr CI.upr se_type</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;    &lt;fct&gt;   &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt; 1 Stratum… India     721       0.1        0.0202  0.00148 0.0175  0.0233 standa…</span></span>
+<span><span class="co">#&gt; 2 Stratum… Nepal    1105       0.1        0.00854 0.00107 0.00668 0.0109 standa…</span></span>
+<span><span class="co">#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="estimate-seroincidence-by-study-site-and-age-strata" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="estimate-seroincidence-by-study-site-and-age-strata">
 <span class="header-section-number">5</span> Estimate Seroincidence by study site and age strata</h2>
 <p>Now we are ready to begin estimating seroincidence. We will use <code>est.incidence.by</code> to calculate stratified seroincidence rates.</p>
 <div class="cell">
-<pre><code>#&gt; Warning: Some strata are completely missing one or more biomarkers.
-#&gt; , , antigen_iso = OT56kda_IgM
-#&gt; 
-#&gt;        ageQ
-#&gt; country 0-17 18-29 30-49 50-89
-#&gt;   India    0    59   302   360
-#&gt;   Nepal  876   229     0     0
-#&gt; 
-#&gt; , , antigen_iso = OT56kda_IgG
-#&gt; 
-#&gt;        ageQ
-#&gt; country 0-17 18-29 30-49 50-89
-#&gt;   India    0    59   302   360
-#&gt;   Nepal  876   229     0     0
-#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Seroincidence estimated given the following setup:
-#&gt; a) Antigen isotypes   : OT56kda_IgG 
-#&gt; b) Strata       : country, ageQ 
-#&gt; 
-#&gt;  Seroincidence estimates:
-#&gt; # A tibble: 5 × 15
-#&gt;   Stratum   country ageQ      n est.start incidence.rate      SE  CI.lwr  CI.upr
-#&gt;   &lt;chr&gt;     &lt;fct&gt;   &lt;fct&gt; &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1 Stratum 1 India   18-29    59       0.1        0.00985 0.00330 0.00511 0.0190 
-#&gt; 2 Stratum 2 India   30-49   302       0.1        0.0151  0.00178 0.0120  0.0190 
-#&gt; 3 Stratum 3 India   50-89   360       0.1        0.0288  0.00290 0.0236  0.0350 
-#&gt; 4 Stratum 4 Nepal   0-17    876       0.1        0.00606 0.00108 0.00428 0.00860
-#&gt; 5 Stratum 5 Nepal   18-29   229       0.1        0.0144  0.00259 0.0101  0.0205 
-#&gt; # ℹ 6 more variables: se_type &lt;chr&gt;, coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;,
-#&gt; #   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using est.incidence.by (strata)</span></span>
+<span></span>
+<span><span class="va">est2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"country"</span>, <span class="st">"ageQ"</span><span class="op">)</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"OT56kda_IgG"</span><span class="op">)</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">8</span> <span class="co"># Allow for parallel processing to decrease run time</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Some strata are completely missing one or more biomarkers.</span></span>
+<span><span class="co">#&gt; , , antigen_iso = OT56kda_IgM</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;        ageQ</span></span>
+<span><span class="co">#&gt; country 0-17 18-29 30-49 50-89</span></span>
+<span><span class="co">#&gt;   India    0    59   302   360</span></span>
+<span><span class="co">#&gt;   Nepal  876   229     0     0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; , , antigen_iso = OT56kda_IgG</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;        ageQ</span></span>
+<span><span class="co">#&gt; country 0-17 18-29 30-49 50-89</span></span>
+<span><span class="co">#&gt;   India    0    59   302   360</span></span>
+<span><span class="co">#&gt;   Nepal  876   229     0     0</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : OT56kda_IgG </span></span>
+<span><span class="co">#&gt; b) Strata       : country, ageQ </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 15</span></span>
+<span><span class="co">#&gt;   Stratum   country ageQ      n est.start incidence.rate      SE  CI.lwr  CI.upr</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;fct&gt;   &lt;fct&gt; &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Stratum 1 India   18-29    59       0.1        0.00985 0.00330 0.00511 0.0190 </span></span>
+<span><span class="co">#&gt; 2 Stratum 2 India   30-49   302       0.1        0.0151  0.00178 0.0120  0.0190 </span></span>
+<span><span class="co">#&gt; 3 Stratum 3 India   50-89   360       0.1        0.0288  0.00290 0.0236  0.0350 </span></span>
+<span><span class="co">#&gt; 4 Stratum 4 Nepal   0-17    876       0.1        0.00606 0.00108 0.00428 0.00860</span></span>
+<span><span class="co">#&gt; 5 Stratum 5 Nepal   18-29   229       0.1        0.0144  0.00259 0.0101  0.0205 </span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: se_type &lt;chr&gt;, coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   iterations &lt;int&gt;, antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>Let’s visualize our seroincidence estimates by strata.</p>
 <div class="cell">
-<div class="cell-output-display">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Plot seroincidence estimates</span></span>
+<span></span>
+<span><span class="co"># Save summary(est) as a dataframe</span></span>
+<span><span class="va">estdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ageQ <span class="op">=</span> <span class="st">"Overall"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Save summary(est2) as a dataframe</span></span>
+<span><span class="va">est2df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">est2</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">est_comb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">estdf</span>, <span class="va">est2df</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create barplot (rescale incidence rate and CIs)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">est_comb</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ageQ</span>, x <span class="op">=</span> <span class="va">incidence.rate</span> <span class="op">*</span> <span class="fl">1000</span>, fill <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span></span>
+<span>    stat <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>    position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge2</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.8</span>, preserve <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_linerange</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">CI.lwr</span> <span class="op">*</span> <span class="fl">1000</span>, xmax <span class="op">=</span> <span class="va">CI.upr</span> <span class="op">*</span> <span class="fl">1000</span><span class="op">)</span>,</span>
+<span>                 position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge2</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.8</span>, preserve <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Enteric Fever Seroincidence by Catchment Area"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Seroincience rate per 1000 person-years"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Catchment"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">country</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span>,</span>
+<span>        axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange2"</span>, <span class="st">"#39558CFF"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="scrubTyphus_example_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="scrubTyphus_example_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1589,7 +1747,38 @@ Teunis, P. F. M., JCH van Eijkeren, CW Ang, et al. 2012. <span>“Biomarker Dyna
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/scrubTyphus_example.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/scrubTyphus_example.Rmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/vignettes/articles/scrubTyphus_example.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/vignettes/articles/scrubTyphus_example.Rmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

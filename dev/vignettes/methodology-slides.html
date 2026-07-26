@@ -6,11 +6,14 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-  <meta name="dcterms.date" content="2026-07-25">
+  <meta name="dcterms.date" content="2026-07-26">
   <title>serocalculator – Estimating Incidence Rates from Cross-Sectional Serosurveys</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -35,6 +38,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -164,7 +233,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 </div>
 </div>
 
-  <p class="date">2026-07-25</p>
+  <p class="date">2026-07-26</p>
 </section>
 <section class="slide level2">
 
@@ -186,7 +255,21 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <li><strong>Symptoms:</strong> sustained high fever, severe headache, abdominal pain, malaise; rose-spot rash (~30% of patients); constipation (early) or diarrhea (later)</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<p><img data-src="../man/figures/SalmonellaTyphiFlagellarStain.jpg" alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"> <img data-src="../man/figures/Fievre_typhoide.png" alt="World map showing high (red) and moderate (orange) typhoid-burden countries"></p>
+<!-- Keep a blank line between these two images: without it Pandoc reads them as
+one paragraph of inline images and silently drops both captions, taking the
+CC BY-SA attribution for the map with them. -->
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption><em>Salmonella</em> Typhi, flagellar stain. Photo: CDC/PHIL (public domain), via <a href="https://commons.wikimedia.org/wiki/File:SalmonellaTyphiFlagellarStain.jpg">Wikimedia Commons</a>.</figcaption>
+<p><a href="../man/figures/SalmonellaTyphiFlagellarStain.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Salmonella Typhi, flagellar stain. Photo: CDC/PHIL (public domain), via Wikimedia Commons."><img data-src="../man/figures/SalmonellaTyphiFlagellarStain.jpg" alt="Photomicrograph of Salmonella Typhi bacteria with a flagellar stain"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption>Global distribution of typhoid fever. Source: <a href="https://commons.wikimedia.org/wiki/File:Fievre_typhoide.png">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</figcaption>
+<p><a href="../man/figures/Fievre_typhoide.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Global distribution of typhoid fever. Source: Wikimedia Commons, CC BY-SA 3.0."><img data-src="../man/figures/Fievre_typhoide.png" alt="World map showing high (red) and moderate (orange) typhoid-burden countries"></a></p>
+</figure>
+</div>
 </div></div>
 </section>
 <section id="shigella-dysentery" class="slide level2" data-number="1.2">
@@ -203,7 +286,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <figcaption><em>Shigella</em> in a stool sample. Photo: CDC/PHIL (public domain), via <a href="https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg">Wikimedia Commons</a>.</figcaption>
-<p><img data-src="../man/figures/Shigella_stool.jpg" alt="Microscopy of a stool sample containing *Shigella* bacteria"></p>
+<p><a href="../man/figures/Shigella_stool.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Shigella in a stool sample. Photo: CDC/PHIL (public domain), via Wikimedia Commons."><img data-src="../man/figures/Shigella_stool.jpg" alt="Microscopy of a stool sample containing Shigella bacteria"></a></p>
 </figure>
 </div>
 </div></div>
@@ -221,7 +304,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <figcaption><em>Trombicula</em> mite larva with stylostome. Photo: Alan R Walker / <a href="https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</figcaption>
-<p><img data-src="../man/figures/Trombicula-larva-stylostome.jpg" alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"></p>
+<p><a href="../man/figures/Trombicula-larva-stylostome.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Trombicula mite larva with stylostome. Photo: Alan R Walker / Wikimedia Commons, CC BY-SA 3.0."><img data-src="../man/figures/Trombicula-larva-stylostome.jpg" alt="Microscopy of a Trombicula mite larva with its stylostome feeding tube"></a></p>
 </figure>
 </div>
 </div></div>
@@ -246,7 +329,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <figcaption>Countries with routine TCV introduction as of 2023. Source: CDC MMWR 72(7):182–188 (public domain).</figcaption>
-<p><img data-src="methodology_files/figure-html/unnamed-chunk-2-1.png" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></p>
+<p><a href="methodology_files/figure-html/unnamed-chunk-2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Countries with routine TCV introduction as of 2023. Source: CDC MMWR 72(7):182–188 (public domain)."><img data-src="methodology_files/figure-html/unnamed-chunk-2-1.png" alt="World map highlighting countries that have introduced typhoid conjugate vaccines (TCV) into routine immunization (green). As of 2023 only a handful of countries — Pakistan, Nepal, Liberia, Zimbabwe, Malawi, and Samoa — have done so, despite much wider typhoid burden." width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -358,7 +441,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 <li>timely</li>
 <li>cost-efficient</li>
 </ul>
-<p>See <span class="citation" data-cites="HAY2024100806">Hay et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> for overview</p>
+<p>See <span class="citation" data-cites="HAY2024100806">Hay et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> for an overview.</p>
 </section></section>
 <section>
 <section id="estimating-incidence-from-cross-sectional-serosurveys" class="title-slide slide level1 center" data-number="4">
@@ -501,7 +584,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 </div>
 <div class="fragment">
 <ul>
-<li>More precisely, the distribution is exponential <strong>truncated by age</strong> at observation (<span class="math inline">\(a\)</span>):</li>
+<li>More precisely, the distribution is exponential <strong>limited by age</strong> at observation (<span class="math inline">\(a\)</span>): no one can have been infected before they were born, so the density is supported on <span class="math inline">\([0,a]\)</span> and the leftover probability, <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>, sits on “never infected”:</li>
 </ul>
 </div>
 <div class="fragment">
@@ -576,7 +659,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\]</span></p>
+<p><span class="math display">\[\ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \mathopen{}\left(\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\right)\mathclose{}\]</span></p>
 </div>
 <div class="fragment">
 <aside class="notes">
@@ -592,7 +675,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\ell^{*'}(\lambda) = \sum_{i=1}^n \mathopen{}\left(\lambda\right)^{-1}\mathclose{} - t_i\]</span></p>
+<p><span class="math display">\[\ell^{*'}(\lambda) = \sum_{i=1}^n \mathopen{}\left(\mathopen{}\left(\lambda\right)^{-1}\mathclose{} - t_i\right)\mathclose{}\]</span></p>
 </div>
 <div class="fragment">
 <aside class="notes">
@@ -639,13 +722,52 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-
-<img data-src="methodology_files/figure-html/fig-ex-lik-curves-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-ex-lik-curves"><p class="caption">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(serodynamics)</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(serocalculator)</span>
+<span id="cb1-3"><a aria-label="3"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a aria-label="4"></a>antibodies <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span>)</span>
+<span id="cb1-5"><a aria-label="5"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1-6"><a aria-label="6"></a></span>
+<span id="cb1-7"><a aria-label="7"></a>sim_case_data <span class="ot">&lt;-</span></span>
+<span id="cb1-8"><a aria-label="8"></a>  serocalculator<span class="sc">::</span>typhoid_curves_nostrat_100 <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a aria-label="9"></a>  <span class="fu">sim_case_data</span>(<span class="at">n =</span> <span class="dv">5</span>, </span>
+<span id="cb1-10"><a aria-label="10"></a>                <span class="at">antigen_isos =</span> antibodies,</span>
+<span id="cb1-11"><a aria-label="11"></a>                <span class="at">max_n_obs =</span> <span class="dv">20</span>, <span class="at">followup_interval =</span> <span class="dv">14</span>)</span>
+<span id="cb1-12"><a aria-label="12"></a></span>
+<span id="cb1-13"><a aria-label="13"></a>t1 <span class="ot">&lt;-</span> sim_case_data<span class="sc">$</span>timeindays</span>
+<span id="cb1-14"><a aria-label="14"></a>loglik0 <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
+<span id="cb1-15"><a aria-label="15"></a>  <span class="fu">sum</span>(</span>
+<span id="cb1-16"><a aria-label="16"></a>    <span class="fu">dexp</span>(t1, <span class="at">rate =</span> lambda, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-17"><a aria-label="17"></a>  )</span>
+<span id="cb1-18"><a aria-label="18"></a>}</span>
+<span id="cb1-19"><a aria-label="19"></a>loglik1 <span class="ot">&lt;-</span> <span class="fu">Vectorize</span>(loglik0, <span class="at">vectorize.args =</span> <span class="st">"lambda"</span>)</span>
+<span id="cb1-20"><a aria-label="20"></a></span>
+<span id="cb1-21"><a aria-label="21"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-22"><a aria-label="22"></a></span>
+<span id="cb1-23"><a aria-label="23"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb1-24"><a aria-label="24"></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> loglik1) <span class="sc">+</span></span>
+<span id="cb1-25"><a aria-label="25"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, .<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-26"><a aria-label="26"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb1-27"><a aria-label="27"></a>  <span class="fu">xlab</span>(<span class="st">"lambda"</span>) <span class="sc">+</span></span>
+<span id="cb1-28"><a aria-label="28"></a>  <span class="fu">ylab</span>(<span class="st">"log-likelihood"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-ex-lik-curves" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ex-lik-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: log-likelihood curve for latent data
-</p></section>
+</figcaption>
+<div aria-describedby="fig-ex-lik-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="methodology_files/figure-html/fig-ex-lik-curves-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;1: log-likelihood curve for latent data"><img data-src="methodology_files/figure-html/fig-ex-lik-curves-1.png" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="standard-errors" class="slide level2" data-number="4.8">
 <h2><span class="header-section-number">4.8</span> Standard errors</h2>
-<p>The standard error of the estimate is approximately equal to the inverse of the curvature (2nd derivative, aka Hessian) of the log-likelihood function, at the maximum:</p>
+<p>The <strong>variance</strong> of the estimate is approximately equal to the inverse of the <em>negative</em> curvature (2nd derivative, aka Hessian) of the log-likelihood function, at the maximum, and the standard error is the square root of that variance:</p>
 <p>more curvature <span class="math inline">\(\rightarrow\)</span> a sharper likelihood peak <span class="math inline">\(\rightarrow\)</span> smaller standard errors</p>
 </section>
 <section id="hessian-for-the-exponential-model" class="slide level2 smaller" data-number="4.9">
@@ -732,16 +854,73 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </section>
 <section id="antibody-response-curves" class="slide level2" data-number="4.11">
 <h2><span class="header-section-number">4.11</span> Antibody response curves</h2>
-
-<img data-src="methodology_files/figure-html/unnamed-chunk-4-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-sim-case-data"><p class="caption">
+<div id="fig-sim-case-data" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-sim-case-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Antibody response curves, <span class="math inline">\(p(Y=y|T=t)\)</span>, for typhoid
-</p></section>
+</figcaption>
+<div aria-describedby="fig-sim-case-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>sim_case_data <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a aria-label="2"></a>  <span class="fu">autoplot</span>(<span class="at">alpha =</span> .<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="methodology_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;2: Antibody response curves, p(Y=y|T=t), for typhoid"><img data-src="methodology_files/figure-html/unnamed-chunk-4-1.png" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</section>
 <section class="slide level2">
 
-
-<img data-src="methodology_files/figure-html/unnamed-chunk-5-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-decay"><p class="caption">
+<div id="fig-decay" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Observed antibody measurements over time since fever onset, for typhoid
-</p></section>
+</figcaption>
+<div aria-describedby="fig-decay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>case_data <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a aria-label="2"></a>    <span class="fu">serodynamics_example</span>(</span>
+<span id="cb3-3"><a aria-label="3"></a>      <span class="st">"SEES_Case_Nepal_ForSeroKinetics_02-13-2025.csv"</span></span>
+<span id="cb3-4"><a aria-label="4"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a aria-label="5"></a>    readr<span class="sc">::</span><span class="fu">read_csv</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a aria-label="6"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb3-7"><a aria-label="7"></a>      <span class="at">.by =</span> person_id,</span>
+<span id="cb3-8"><a aria-label="8"></a>      <span class="at">visit_num =</span> dplyr<span class="sc">::</span><span class="fu">row_number</span>()</span>
+<span id="cb3-9"><a aria-label="9"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a aria-label="10"></a>    <span class="fu">as_case_data</span>(</span>
+<span id="cb3-11"><a aria-label="11"></a>      <span class="at">id_var =</span> <span class="st">"person_id"</span>,</span>
+<span id="cb3-12"><a aria-label="12"></a>      <span class="at">biomarker_var =</span> <span class="st">"antigen_iso"</span>,</span>
+<span id="cb3-13"><a aria-label="13"></a>      <span class="at">value_var =</span> <span class="st">"result"</span>,</span>
+<span id="cb3-14"><a aria-label="14"></a>      <span class="at">time_in_days =</span> <span class="st">"dayssincefeveronset"</span></span>
+<span id="cb3-15"><a aria-label="15"></a>    )</span>
+<span id="cb3-16"><a aria-label="16"></a></span>
+<span id="cb3-17"><a aria-label="17"></a>most_obs <span class="ot">&lt;-</span></span>
+<span id="cb3-18"><a aria-label="18"></a>  case_data <span class="sc">|&gt;</span></span>
+<span id="cb3-19"><a aria-label="19"></a>  <span class="fu">count</span>(id) <span class="sc">|&gt;</span> </span>
+<span id="cb3-20"><a aria-label="20"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-21"><a aria-label="21"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb3-22"><a aria-label="22"></a>  </span>
+<span id="cb3-23"><a aria-label="23"></a>case_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-24"><a aria-label="24"></a>  <span class="fu">semi_join</span>(most_obs, <span class="at">by =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-25"><a aria-label="25"></a>    <span class="fu">autoplot</span>(<span class="at">alpha =</span> .<span class="dv">5</span>, <span class="at">log_x =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><a href="methodology_files/figure-html/unnamed-chunk-5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;3: Observed antibody measurements over time since fever onset, for typhoid"><img data-src="methodology_files/figure-html/unnamed-chunk-5-1.png" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</section>
 <section id="the-per-person-likelihood" class="slide level2" data-number="4.12">
 <h2><span class="header-section-number">4.12</span> The per-person likelihood</h2>
 <p>Substituting <span class="math inline">\(p(Y=y,T=t) = p(Y=y|T=t)\,p(T=t)\)</span> into the previous expression for <span class="math inline">\(p(Y=y)\)</span>:</p>
@@ -890,6 +1069,21 @@ p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right
 </ul>
 <h3 id="implementation-in-serocalculator">Implementation in serocalculator</h3>
 <p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Single-level clustering (e.g., by household)</span></span>
+<span id="cb4-2"><a aria-label="2"></a>est <span class="ot">&lt;-</span> <span class="fu">est_seroincidence</span>(</span>
+<span id="cb4-3"><a aria-label="3"></a>  <span class="at">pop_data =</span> data,</span>
+<span id="cb4-4"><a aria-label="4"></a>  <span class="at">cluster_var =</span> <span class="st">"household_id"</span>,</span>
+<span id="cb4-5"><a aria-label="5"></a>  ...</span>
+<span id="cb4-6"><a aria-label="6"></a>)</span>
+<span id="cb4-7"><a aria-label="7"></a></span>
+<span id="cb4-8"><a aria-label="8"></a><span class="co"># Multi-level clustering (e.g., schools within districts)</span></span>
+<span id="cb4-9"><a aria-label="9"></a>est <span class="ot">&lt;-</span> <span class="fu">est_seroincidence</span>(</span>
+<span id="cb4-10"><a aria-label="10"></a>  <span class="at">pop_data =</span> data,</span>
+<span id="cb4-11"><a aria-label="11"></a>  <span class="at">cluster_var =</span> <span class="fu">c</span>(<span class="st">"district_id"</span>, <span class="st">"school_id"</span>),</span>
+<span id="cb4-12"><a aria-label="12"></a>  ...</span>
+<span id="cb4-13"><a aria-label="13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>When cluster-robust standard errors are used, the <code>summary()</code> output indicates this with <code>se_type = "cluster-robust"</code>.</p>
 <h3 id="effect-on-results">Effect on results</h3>
 <ul>
@@ -1058,10 +1252,84 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 </section>
 <section class="slide level2">
 
-
-<img data-src="methodology_files/figure-html/fig-response-graph-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-response-graph"><p class="caption">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">library</span>(serocalculator)</span>
+<span id="cb5-2"><a aria-label="2"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-3"><a aria-label="3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-4"><a aria-label="4"></a></span>
+<span id="cb5-5"><a aria-label="5"></a>cur_ai <span class="ot">&lt;-</span> <span class="st">"HlyE_IgG"</span></span>
+<span id="cb5-6"><a aria-label="6"></a></span>
+<span id="cb5-7"><a aria-label="7"></a><span class="co"># Import longitudinal antibody parameters from OSF.</span></span>
+<span id="cb5-8"><a aria-label="8"></a><span class="co"># Deliberately named `curves_all`, not `curves`: this file is included into</span></span>
+<span id="cb5-9"><a aria-label="9"></a><span class="co"># methodology.qmd, which already defines a `curves` object filtered to the</span></span>
+<span id="cb5-10"><a aria-label="10"></a><span class="co"># antigen-isotypes that document analyzes. Reusing that name here would silently</span></span>
+<span id="cb5-11"><a aria-label="11"></a><span class="co"># overwrite it for every later chunk in the parent document.</span></span>
+<span id="cb5-12"><a aria-label="12"></a>curves_all <span class="ot">&lt;-</span></span>
+<span id="cb5-13"><a aria-label="13"></a>  <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="sc">|&gt;</span></span>
+<span id="cb5-14"><a aria-label="14"></a>  <span class="fu">load_sr_params</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-15"><a aria-label="15"></a>  <span class="fu">filter</span>(iter <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
+<span id="cb5-16"><a aria-label="16"></a></span>
+<span id="cb5-17"><a aria-label="17"></a>curve1 <span class="ot">&lt;-</span></span>
+<span id="cb5-18"><a aria-label="18"></a>  curves_all <span class="sc">|&gt;</span></span>
+<span id="cb5-19"><a aria-label="19"></a>  <span class="fu">filter</span>(</span>
+<span id="cb5-20"><a aria-label="20"></a>    iter <span class="sc">==</span> <span class="dv">5</span>,</span>
+<span id="cb5-21"><a aria-label="21"></a>    antigen_iso <span class="sc">==</span> cur_ai</span>
+<span id="cb5-22"><a aria-label="22"></a>  )</span>
+<span id="cb5-23"><a aria-label="23"></a></span>
+<span id="cb5-24"><a aria-label="24"></a>curve1 <span class="sc">|&gt;</span></span>
+<span id="cb5-25"><a aria-label="25"></a>  <span class="co"># plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a</span></span>
+<span id="cb5-26"><a aria-label="26"></a>  <span class="co"># single pre-filtered curve must be relabelled iter 1 or no curve is drawn.</span></span>
+<span id="cb5-27"><a aria-label="27"></a>  <span class="fu">mutate</span>(<span class="at">iter =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-28"><a aria-label="28"></a>  serocalculator<span class="sc">:::</span><span class="fu">plot_curve_params_one_ab</span>(</span>
+<span id="cb5-29"><a aria-label="29"></a>    <span class="at">log_y =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-30"><a aria-label="30"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-31"><a aria-label="31"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb5-32"><a aria-label="32"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-33"><a aria-label="33"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb5-34"><a aria-label="34"></a>    <span class="fu">aes</span>(</span>
+<span id="cb5-35"><a aria-label="35"></a>      <span class="at">xintercept =</span> curve1<span class="sc">$</span>t1,</span>
+<span id="cb5-36"><a aria-label="36"></a>      <span class="at">col =</span> <span class="st">"t1"</span></span>
+<span id="cb5-37"><a aria-label="37"></a>    )</span>
+<span id="cb5-38"><a aria-label="38"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-39"><a aria-label="39"></a></span>
+<span id="cb5-40"><a aria-label="40"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb5-41"><a aria-label="41"></a>    <span class="fu">aes</span>(</span>
+<span id="cb5-42"><a aria-label="42"></a>      <span class="at">yintercept =</span> curve1<span class="sc">$</span>y0,</span>
+<span id="cb5-43"><a aria-label="43"></a>      <span class="at">col =</span> <span class="st">"y0"</span></span>
+<span id="cb5-44"><a aria-label="44"></a>    )</span>
+<span id="cb5-45"><a aria-label="45"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-46"><a aria-label="46"></a></span>
+<span id="cb5-47"><a aria-label="47"></a></span>
+<span id="cb5-48"><a aria-label="48"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb5-49"><a aria-label="49"></a>    <span class="fu">aes</span>(</span>
+<span id="cb5-50"><a aria-label="50"></a>      <span class="at">yintercept =</span> curve1<span class="sc">$</span>y1,</span>
+<span id="cb5-51"><a aria-label="51"></a>      <span class="at">col =</span> <span class="st">"y1"</span></span>
+<span id="cb5-52"><a aria-label="52"></a>    )</span>
+<span id="cb5-53"><a aria-label="53"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-54"><a aria-label="54"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb5-55"><a aria-label="55"></a>    <span class="at">data =</span> curve1,</span>
+<span id="cb5-56"><a aria-label="56"></a>    <span class="fu">aes</span>(</span>
+<span id="cb5-57"><a aria-label="57"></a>      <span class="at">x =</span> t1,</span>
+<span id="cb5-58"><a aria-label="58"></a>      <span class="at">y =</span> y1,</span>
+<span id="cb5-59"><a aria-label="59"></a>      <span class="at">col =</span> <span class="st">"(t1,y1)"</span></span>
+<span id="cb5-60"><a aria-label="60"></a>    )</span>
+<span id="cb5-61"><a aria-label="61"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-62"><a aria-label="62"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb5-63"><a aria-label="63"></a>  <span class="fu">labs</span>(<span class="at">col =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-response-graph" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: An example kinetics curve for HlyE IgG
-</p><aside class="notes">
+</figcaption>
+<div aria-describedby="fig-response-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="methodology_files/figure-html/fig-response-graph-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;4: An example kinetics curve for HlyE IgG"><img data-src="methodology_files/figure-html/fig-response-graph-1.png" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
 <p>The antibody level at <span class="math inline">\(t=0\)</span> is <span class="math inline">\(y_{0}\)</span>; the rising branch ends at <span class="math inline">\(t = t_{1}\)</span> where the peak antibody level <span class="math inline">\(y_{1}\)</span> is reached. Any antibody level <span class="math inline">\(y(t) \in (y_{0}, y_{1})\)</span> eventually occurs twice.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1091,8 +1359,13 @@ Figure&nbsp;4: An example kinetics curve for HlyE IgG
           display:block!important;
       }</style></aside>
 <p>Interactive Shiny app: <a href="https://ucdserg.shinyapps.io/antibody-kinetics-model-2/" class="uri">https://ucdserg.shinyapps.io/antibody-kinetics-model-2/</a></p>
-
-<img data-src="../man/figures/qr_akm2.svg" width="280" class="r-stretch quarto-figure-center"><p class="caption">QR code for the antibody-kinetics Shiny app</p></section>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption>QR code for the antibody-kinetics Shiny app</figcaption>
+<p><a href="../man/figures/qr_akm2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="QR code for the antibody-kinetics Shiny app"><img data-src="../man/figures/qr_akm2.svg" width="280" alt="QR code for the antibody-kinetics Shiny app"></a></p>
+</figure>
+</div>
+</section>
 <section id="biological-noise" class="slide level2" data-number="5.6">
 <h2><span class="header-section-number">5.6</span> Biological noise</h2>
 <aside class="notes">
@@ -1317,19 +1590,87 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 </section>
 <section id="multiple-biomarkers" class="slide level2" data-number="5.10">
 <h2><span class="header-section-number">5.10</span> Multiple biomarkers</h2>
-
-<img data-src="methodology_files/figure-html/fig-loglik-1.png" width="672" class="r-stretch quarto-figure-center" id="fig-loglik"><p class="caption">
-Figure&nbsp;5: Example log(likelihood) curves
-</p></section>
+<p>A serosurvey usually measures more than one antigen-isotype per participant. The current model treats biomarkers as <strong>conditionally independent given the time since infection</strong>, so their response densities multiply <em>inside</em> each person’s integral over <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display">\[
+\operatorname{p}(Y_1=y_1, Y_2=y_2) =
+\int_t \operatorname{p}(Y_1=y_1|T=t)\,\operatorname{p}(Y_2=y_2|T=t)\,\operatorname{p}_\lambda(T=t)\, dt
+\]</span></p>
+<p>Note that this is <strong>not</strong> the product of the two single-biomarker likelihoods: the shared latent infection time <span class="math inline">\(t\)</span> couples them.</p>
+<aside class="notes">
+<p>(<a href="#/sec-multivariate" class="quarto-xref">Section&nbsp;9.2</a> below describes work in progress to relax the conditional-independence assumption itself.)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p>Using both biomarkers concentrates the log-likelihood around its maximum, and so shrinks the standard error, relative to either biomarker alone (<a href="#/fig-loglik" class="quarto-xref">Figure&nbsp;5</a>):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>lik_HlyE_IgA <span class="ot">&lt;-</span> <span class="fu">graph_loglik</span>( <span class="co"># nolint: object_name_linter.</span></span>
+<span id="cb6-2"><a aria-label="2"></a>  <span class="at">pop_data =</span> xs_data,</span>
+<span id="cb6-3"><a aria-label="3"></a>  <span class="at">curve_params =</span> curves,</span>
+<span id="cb6-4"><a aria-label="4"></a>  <span class="at">noise_params =</span> noise,</span>
+<span id="cb6-5"><a aria-label="5"></a>  <span class="at">antigen_isos =</span> <span class="st">"HlyE_IgA"</span>,</span>
+<span id="cb6-6"><a aria-label="6"></a>  <span class="at">log_x =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-7"><a aria-label="7"></a>)</span>
+<span id="cb6-8"><a aria-label="8"></a></span>
+<span id="cb6-9"><a aria-label="9"></a>lik_HlyE_IgG <span class="ot">&lt;-</span> <span class="fu">graph_loglik</span>( <span class="co"># nolint: object_name_linter.</span></span>
+<span id="cb6-10"><a aria-label="10"></a>  <span class="at">previous_plot =</span> lik_HlyE_IgA,</span>
+<span id="cb6-11"><a aria-label="11"></a>  <span class="at">pop_data =</span> xs_data,</span>
+<span id="cb6-12"><a aria-label="12"></a>  <span class="at">curve_params =</span> curves,</span>
+<span id="cb6-13"><a aria-label="13"></a>  <span class="at">noise_params =</span> noise,</span>
+<span id="cb6-14"><a aria-label="14"></a>  <span class="at">antigen_isos =</span> <span class="st">"HlyE_IgG"</span>,</span>
+<span id="cb6-15"><a aria-label="15"></a>  <span class="at">log_x =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-16"><a aria-label="16"></a>)</span>
+<span id="cb6-17"><a aria-label="17"></a></span>
+<span id="cb6-18"><a aria-label="18"></a>lik_both <span class="ot">&lt;-</span> <span class="fu">graph_loglik</span>(</span>
+<span id="cb6-19"><a aria-label="19"></a>  <span class="at">previous_plot =</span> lik_HlyE_IgG,</span>
+<span id="cb6-20"><a aria-label="20"></a>  <span class="at">pop_data =</span> xs_data,</span>
+<span id="cb6-21"><a aria-label="21"></a>  <span class="at">curve_params =</span> curves,</span>
+<span id="cb6-22"><a aria-label="22"></a>  <span class="at">noise_params =</span> noise,</span>
+<span id="cb6-23"><a aria-label="23"></a>  <span class="at">antigen_isos =</span> <span class="fu">c</span>(<span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span>),</span>
+<span id="cb6-24"><a aria-label="24"></a>  <span class="at">log_x =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-25"><a aria-label="25"></a>)</span>
+<span id="cb6-26"><a aria-label="26"></a></span>
+<span id="cb6-27"><a aria-label="27"></a><span class="fu">print</span>(lik_both)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-loglik" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both biomarkers combined.
+</figcaption>
+<div aria-describedby="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="methodology_files/figure-html/fig-loglik-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both biomarkers combined."><img data-src="methodology_files/figure-html/fig-loglik-1.png" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="variation-in-antibody-kinetics-by-country" class="slide level2 smaller" data-number="5.11">
 <h2><span class="header-section-number">5.11</span> Variation in antibody kinetics: by country</h2>
 <p>Antibody-decay kinetics are not identical across populations. Estimated seroresponse parameters vary by <strong>country</strong>, <strong>age</strong>, and <strong>serotype</strong> (<em>Typhi</em> vs <em>Paratyphi</em> A).</p>
-
-<img data-src="../man/figures/kinetics-variation-1.png" alt="Antibody decay curves and distributions of peak level and decay rate, stratified by country, for four antigen-isotypes" class="r-stretch quarto-figure-center"><p class="caption">Decay curves (A), peak antibody levels (B), and decay rates (C) for HlyE and LPS (IgG/IgA), by country (Bangladesh, Pakistan, Nepal, Ghana). SEES study.</p></section>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption>Decay curves (A), peak antibody levels (B), and decay rates (C) for HlyE and LPS (IgG/IgA), by country (Bangladesh, Pakistan, Nepal, Ghana). SEES study.</figcaption>
+<p><a href="../man/figures/kinetics-variation-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Decay curves (A), peak antibody levels (B), and decay rates (C) for HlyE and LPS (IgG/IgA), by country (Bangladesh, Pakistan, Nepal, Ghana). SEES study."><img data-src="../man/figures/kinetics-variation-1.png" alt="Antibody decay curves and distributions of peak level and decay rate, stratified by country, for four antigen-isotypes"></a></p>
+</figure>
+</div>
+</section>
 <section id="variation-in-antibody-kinetics-by-age-and-serotype" class="slide level2 smaller" data-number="5.12">
 <h2><span class="header-section-number">5.12</span> Variation in antibody kinetics: by age and serotype</h2>
-
-<img data-src="../man/figures/kinetics-variation-2.png" alt="Antibody decay curves stratified by age group and by Typhi versus Paratyphi A serotype, for four antigen-isotypes" class="r-stretch quarto-figure-center"><p class="caption">Decay curves by age stratum (&lt;5, 5–15, 16+) and serotype (<em>Typhi</em> vs <em>Paratyphi</em> A), for HlyE and LPS (IgG/IgA). SEES study.</p><aside class="notes">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption>Decay curves by age stratum (&lt;5, 5–15, 16+) and serotype (<em>Typhi</em> vs <em>Paratyphi</em> A), for HlyE and LPS (IgG/IgA). SEES study.</figcaption>
+<p><a href="../man/figures/kinetics-variation-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Decay curves by age stratum (<5, 5–15, 16+) and serotype (Typhi vs Paratyphi A), for HlyE and LPS (IgG/IgA). SEES study."><img data-src="../man/figures/kinetics-variation-2.png" alt="Antibody decay curves stratified by age group and by Typhi versus Paratyphi A serotype, for four antigen-isotypes"></a></p>
+</figure>
+</div>
+<aside class="notes">
 <p>This heterogeneity is why we stratify the analysis (for example by country and age group) and why extending the model to handle covariates directly is on the roadmap.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1378,6 +1719,19 @@ Figure&nbsp;5: Example log(likelihood) curves
 </section>
 <section id="a-typical-serodynamics-workflow" class="slide level2 smaller" data-number="6.3">
 <h2><span class="header-section-number">6.3</span> A typical <code>serodynamics</code> workflow</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">library</span>(serodynamics)</span>
+<span id="cb7-2"><a aria-label="2"></a></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="co"># Longitudinal confirmed-case data (example data ships with the package)</span></span>
+<span id="cb7-4"><a aria-label="4"></a><span class="fu">data</span>(<span class="st">"nepal_sees"</span>)</span>
+<span id="cb7-5"><a aria-label="5"></a></span>
+<span id="cb7-6"><a aria-label="6"></a><span class="co"># Fit the two-phase model by MCMC (JAGS); slow, so not run here</span></span>
+<span id="cb7-7"><a aria-label="7"></a>fit <span class="ot">&lt;-</span> <span class="fu">run_mod</span>(<span class="at">data =</span> nepal_sees, <span class="at">with_post =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-8"><a aria-label="8"></a></span>
+<span id="cb7-9"><a aria-label="9"></a><span class="co"># Check convergence, then export serocalculator-ready curve parameters</span></span>
+<span id="cb7-10"><a aria-label="10"></a><span class="fu">plot_jags_Rhat</span>(fit)</span>
+<span id="cb7-11"><a aria-label="11"></a>curve_params <span class="ot">&lt;-</span> <span class="fu">postprocess_jags_output</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <aside class="notes">
 <p><code>run_mod()</code> runs several MCMC chains for tens of thousands of iterations, so a real fit takes minutes to hours; the package ships ready-made example output (<code>nepal_sees_jags_output</code>) for experimentation.</p>
 <style type="text/css">
@@ -1408,8 +1762,17 @@ Figure&nbsp;5: Example log(likelihood) curves
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-
-<img data-src="../man/figures/serodynamics-cached-fit.png" alt="Five posterior density panels (alpha, shape, t1, y0, y1) with two overlapping MCMC chains" class="r-stretch quarto-figure-center"><p class="caption">Posterior densities of the five kinetic parameters from the cached <code>nepal_sees_jags_output</code> fit (HlyE IgG, <em>Typhi</em>), by MCMC chain.</p></section>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"nepal_sees_jags_output"</span>)</span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">plot_jags_dens</span>(nepal_sees_jags_output, <span class="at">iso =</span> <span class="st">"HlyE_IgG"</span>, <span class="at">strat =</span> <span class="st">"typhi"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption>Posterior densities of the five kinetic parameters from the cached <code>nepal_sees_jags_output</code> fit (HlyE IgG, <em>Typhi</em>), by MCMC chain.</figcaption>
+<p><a href="../man/figures/serodynamics-cached-fit.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Posterior densities of the five kinetic parameters from the cached nepal_sees_jags_output fit (HlyE IgG, Typhi), by MCMC chain."><img data-src="../man/figures/serodynamics-cached-fit.png" alt="Five posterior density panels (alpha, shape, t1, y0, y1) with two overlapping MCMC chains"></a></p>
+</figure>
+</div>
+</section>
 <section id="two-packages-one-pipeline" class="slide level2" data-number="6.5">
 <h2><span class="header-section-number">6.5</span> Two packages, one pipeline</h2>
 <ul>
@@ -1501,9 +1864,34 @@ Figure&nbsp;5: Example log(likelihood) curves
 <section id="an-open-source-r-package" class="slide level2" data-number="7.1">
 <h2><span class="header-section-number">7.1</span> An open-source R package</h2>
 <p>The methods in this lecture are implemented in the open-source <a href="https://github.com/UCD-SERG/serocalculator"><code>serocalculator</code></a> R package.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">library</span>(serocalculator)</span>
+<span id="cb9-2"><a aria-label="2"></a></span>
+<span id="cb9-3"><a aria-label="3"></a><span class="co"># Load antibody-decay curve parameters and cross-sectional population data</span></span>
+<span id="cb9-4"><a aria-label="4"></a>curves <span class="ot">&lt;-</span> <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="sc">|&gt;</span> <span class="fu">load_sr_params</span>()</span>
+<span id="cb9-5"><a aria-label="5"></a>xs_data <span class="ot">&lt;-</span> <span class="st">"https://osf.io/download/n6cp3/"</span> <span class="sc">|&gt;</span> <span class="fu">load_pop_data</span>()</span>
+<span id="cb9-6"><a aria-label="6"></a>noise <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">"https://osf.io/download/hqy4v/"</span>) <span class="sc">|&gt;</span> <span class="fu">readRDS</span>()</span>
+<span id="cb9-7"><a aria-label="7"></a></span>
+<span id="cb9-8"><a aria-label="8"></a><span class="co"># Visualize the cross-sectional antibody distribution</span></span>
+<span id="cb9-9"><a aria-label="9"></a>xs_data <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="at">strata =</span> <span class="st">"Country"</span>, <span class="at">type =</span> <span class="st">"density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="estimating-seroincidence" class="slide level2 smaller" data-number="7.2">
 <h2><span class="header-section-number">7.2</span> Estimating seroincidence</h2>
+<p><code>est_seroincidence_by()</code> maximizes the log-likelihood <span class="math inline">\(\log\mathcal{L}(\lambda)\)</span> derived above, separately within each stratum, and <code>summary()</code> reports each stratum’s <span class="math inline">\(\hat\lambda\)</span> with a standard error and confidence interval (cluster-robust, if <code>cluster_var</code> was supplied):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="co"># Estimate incidence, stratified by country and age group</span></span>
+<span id="cb10-2"><a aria-label="2"></a>est <span class="ot">&lt;-</span> <span class="fu">est_seroincidence_by</span>(</span>
+<span id="cb10-3"><a aria-label="3"></a>  <span class="at">pop_data =</span> xs_data,</span>
+<span id="cb10-4"><a aria-label="4"></a>  <span class="at">sr_params =</span> curves,</span>
+<span id="cb10-5"><a aria-label="5"></a>  <span class="at">noise_params =</span> noise,</span>
+<span id="cb10-6"><a aria-label="6"></a>  <span class="at">strata =</span> <span class="fu">c</span>(<span class="st">"Country"</span>, <span class="st">"ageCat"</span>),</span>
+<span id="cb10-7"><a aria-label="7"></a>  <span class="at">antigen_isos =</span> <span class="fu">c</span>(<span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span>)</span>
+<span id="cb10-8"><a aria-label="8"></a>)</span>
+<span id="cb10-9"><a aria-label="9"></a></span>
+<span id="cb10-10"><a aria-label="10"></a><span class="fu">summary</span>(est)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Stratifying this way also makes the constant-and-homogeneous-incidence assumption more plausible within each stratum, and lets each stratum use the seroresponse parameters appropriate to it.</p>
 </section>
 <section id="interactive-shiny-app" class="slide level2" data-number="7.3">
 <h2><span class="header-section-number">7.3</span> Interactive Shiny app</h2>
@@ -1514,7 +1902,7 @@ Figure&nbsp;5: Example log(likelihood) curves
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <figcaption>The serocalculator Shiny app.</figcaption>
-<p><img data-src="../man/figures/shiny-serocalculator.png" alt="Screenshot of the serocalculator Shiny web application"></p>
+<p><a href="../man/figures/shiny-serocalculator.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="The serocalculator Shiny app."><img data-src="../man/figures/shiny-serocalculator.png" alt="Screenshot of the serocalculator Shiny web application"></a></p>
 </figure>
 </div>
 </div></div>
@@ -1527,11 +1915,58 @@ Figure&nbsp;5: Example log(likelihood) curves
 <section id="simulating-clusters-with-known-incidence" class="slide level2 smaller" data-number="8.1">
 <h2><span class="header-section-number">8.1</span> Simulating clusters with known incidence</h2>
 <p>We can check the method by <strong>simulating</strong> cross-sectional serosurveys with <strong>known</strong> incidence rates and seeing whether the estimates recover them. <code>sim_pop_data_multi()</code> simulates several clusters, each at a specified true rate <span class="math inline">\(\lambda\)</span>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">library</span>(serocalculator)</span>
+<span id="cb11-2"><a aria-label="2"></a></span>
+<span id="cb11-3"><a aria-label="3"></a>antibodies <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span>)</span>
+<span id="cb11-4"><a aria-label="4"></a></span>
+<span id="cb11-5"><a aria-label="5"></a><span class="co"># Noise settings follow serocalculator's `simulate_xsectionalData` vignette,</span></span>
+<span id="cb11-6"><a aria-label="6"></a><span class="co"># where the estimation noise is kept consistent with the simulated noise.</span></span>
+<span id="cb11-7"><a aria-label="7"></a><span class="co"># Assay-noise parameters for estimation:</span></span>
+<span id="cb11-8"><a aria-label="8"></a>noise_params <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb11-9"><a aria-label="9"></a>  <span class="at">antigen_iso =</span> antibodies,</span>
+<span id="cb11-10"><a aria-label="10"></a>  <span class="at">nu =</span> <span class="fl">0.5</span>, <span class="at">eps =</span> <span class="dv">0</span>, <span class="at">y.low =</span> <span class="dv">1</span>, <span class="at">y.high =</span> <span class="fl">5e6</span></span>
+<span id="cb11-11"><a aria-label="11"></a>)</span>
+<span id="cb11-12"><a aria-label="12"></a></span>
+<span id="cb11-13"><a aria-label="13"></a><span class="co"># Biologic-noise limits for the simulation (vignette `dlims`):</span></span>
+<span id="cb11-14"><a aria-label="14"></a>noise_limits <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb11-15"><a aria-label="15"></a>  <span class="at">HlyE_IgA =</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.5</span>),</span>
+<span id="cb11-16"><a aria-label="16"></a>  <span class="at">HlyE_IgG =</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.5</span>)</span>
+<span id="cb11-17"><a aria-label="17"></a>)</span>
+<span id="cb11-18"><a aria-label="18"></a></span>
+<span id="cb11-19"><a aria-label="19"></a><span class="co"># Simulate clusters at a range of true incidence rates</span></span>
+<span id="cb11-20"><a aria-label="20"></a>sim_df <span class="ot">&lt;-</span> <span class="fu">sim_pop_data_multi</span>(</span>
+<span id="cb11-21"><a aria-label="21"></a>  <span class="at">curve_params =</span> typhoid_curves_nostrat_100,</span>
+<span id="cb11-22"><a aria-label="22"></a>  <span class="at">lambdas =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>), <span class="co"># true incidence rates</span></span>
+<span id="cb11-23"><a aria-label="23"></a>  <span class="at">nclus =</span> <span class="dv">3</span>, <span class="co"># clusters per rate</span></span>
+<span id="cb11-24"><a aria-label="24"></a>  <span class="at">sample_sizes =</span> <span class="dv">100</span>,</span>
+<span id="cb11-25"><a aria-label="25"></a>  <span class="at">age_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb11-26"><a aria-label="26"></a>  <span class="at">antigen_isos =</span> antibodies,</span>
+<span id="cb11-27"><a aria-label="27"></a>  <span class="at">add_noise =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-28"><a aria-label="28"></a>  <span class="at">noise_limits =</span> noise_limits,</span>
+<span id="cb11-29"><a aria-label="29"></a>  <span class="at">format =</span> <span class="st">"long"</span></span>
+<span id="cb11-30"><a aria-label="30"></a>)</span>
+<span id="cb11-31"><a aria-label="31"></a></span>
+<span id="cb11-32"><a aria-label="32"></a><span class="co"># Estimate incidence separately in each simulated cluster</span></span>
+<span id="cb11-33"><a aria-label="33"></a>ests <span class="ot">&lt;-</span> <span class="fu">est_seroincidence_by</span>(</span>
+<span id="cb11-34"><a aria-label="34"></a>  <span class="at">pop_data =</span> sim_df,</span>
+<span id="cb11-35"><a aria-label="35"></a>  <span class="at">sr_params =</span> typhoid_curves_nostrat_100,</span>
+<span id="cb11-36"><a aria-label="36"></a>  <span class="at">noise_params =</span> noise_params,</span>
+<span id="cb11-37"><a aria-label="37"></a>  <span class="at">strata =</span> <span class="fu">c</span>(<span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span>),</span>
+<span id="cb11-38"><a aria-label="38"></a>  <span class="at">antigen_isos =</span> antibodies</span>
+<span id="cb11-39"><a aria-label="39"></a>)</span>
+<span id="cb11-40"><a aria-label="40"></a><span class="fu">summary</span>(ests)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="estimates-recover-the-simulated-rates" class="slide level2 smaller" data-number="8.2">
 <h2><span class="header-section-number">8.2</span> Estimates recover the simulated rates</h2>
-
-<img data-src="../man/figures/sim-recovery.png" alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates" class="r-stretch quarto-figure-center"><p class="caption">Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).</p><aside class="notes">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<figcaption>Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).</figcaption>
+<p><a href="../man/figures/sim-recovery.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line)."><img data-src="../man/figures/sim-recovery.png" alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates"></a></p>
+</figure>
+</div>
+<aside class="notes">
 <p>Each point is one simulated cluster: the estimated incidence rate (with its 95% confidence interval) against the true rate used to generate the data. The estimates scatter around the identity line, and the intervals are wider at higher incidence. Abridged from the serocalculator <code>simulate_xsectionalData</code> vignette.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1544,9 +1979,14 @@ Figure&nbsp;5: Example log(likelihood) curves
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section></section>
+<section>
+<section id="ongoing-and-future-work" class="title-slide slide level1 center" data-number="9">
+<h1><span class="header-section-number">9</span> Ongoing and future work</h1>
+
 </section>
-<section id="in-progress-work" class="slide level2" data-number="8.3">
-<h2><span class="header-section-number">8.3</span> In-progress work</h2>
+<section id="in-progress-work" class="slide level2" data-number="9.1">
+<h2><span class="header-section-number">9.1</span> In-progress work</h2>
 <ul>
 <li><p>Extending and improving existing Shiny apps for these methods (e.g., the <a href="https://ucdserg.shinyapps.io/shiny_serocalculator/">serocalculator Shiny app</a>, <a href="https://github.com/UCD-SERG/shiny_serocalculator">source</a>)</p></li>
 <li><p>Multivariate modeling of biomarkers (relaxing conditional independence)</p></li>
@@ -1557,8 +1997,8 @@ Figure&nbsp;5: Example log(likelihood) curves
 <li><p>Calibrating to population demographics</p></li>
 </ul>
 </section>
-<section id="multiple-biomarkers-beyond-conditional-independence" class="slide level2 smaller" data-number="8.4">
-<h2><span class="header-section-number">8.4</span> Multiple biomarkers: beyond conditional independence</h2>
+<section id="sec-multivariate" class="slide level2 smaller" data-number="9.2">
+<h2><span class="header-section-number">9.2</span> Multiple biomarkers: beyond conditional independence</h2>
 <p>With several biomarkers (e.g.&nbsp;HlyE IgA and IgG), the current method treats them as <strong>conditionally independent given the time since infection</strong>, so the joint likelihood factors into a product of per-biomarker terms:</p>
 <p><span class="math display">\[
 \operatorname{p}(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
@@ -1580,9 +2020,9 @@ Figure&nbsp;5: Example log(likelihood) curves
 <div class="fragment">
 <p>Kwan Ho Lee (UCD-SERG) is relaxing this to allow <strong>covariance</strong> among biomarkers — a multivariate seroresponse model with a Kronecker-structured covariance, fit in Stan (<a href="https://github.com/UCD-SERG/shigella/pull/13">UCD-SERG/shigella#13</a>).</p>
 </div>
-</section>
-<section id="references" class="slide level2 smaller unnumbered scrollable">
-<h2>References</h2>
+</section></section>
+<section id="references" class="title-slide slide level1 smaller unnumbered scrollable">
+<h1>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Aiemjoy_2022_Lancet" class="csl-entry" role="listitem">
 Aiemjoy, K., Seidman J. C., Saha S., Munira S. J., Islam Sajib M. S., and Sarkar Sium S. M. al. 2022. <span>“Estimating Typhoid Incidence from Community-Based Serosurveys: A Multicohort Study.”</span> <em>The Lancet Microbe</em> 3 (8): e578–87. <a href="https://doi.org/10.1016/S2666-5247(22)00114-8">https://doi.org/10.1016/S2666-5247(22)00114-8</a>.
@@ -1605,7 +2045,7 @@ Volterra, Vito. 1928. <span>“Variations and Fluctuations of the Number of Indi
 </div>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -1989,6 +2429,38 @@ Volterra, Vito. 1928. <span>“Variations and Fluctuations of the Number of Indi
         }
       });
       </script>
+    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+    (function() {
+      let previousOnload = window.onload;
+      window.onload = () => {
+        if (previousOnload) {
+          previousOnload();
+        }
+        lightboxQuarto.on('slide_before_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          const href = trigger.getAttribute('href');
+          if (href !== null) {
+            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+            if (imgEl !== null) {
+              const srcAttr = imgEl.getAttribute("src");
+              if (srcAttr && srcAttr.startsWith("data:")) {
+                slideConfig.href = srcAttr;
+              }
+            }
+          } 
+        });
+      
+        lightboxQuarto.on('slide_after_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(slideNode);
+          }
+        });
+      
+      };
+      
+    })();
+              </script>
     
 
 </body></html>

@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-07-25">
+<meta name="dcterms.date" content="2026-07-26">
 <title>Version Crosswalk: v1.3.0 to v1.4.0 – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -278,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9017</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9019</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -372,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9017 (dev)</span>
+ <span class="menu-text">1.4.1.9019 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -381,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9017 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9019 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -869,7 +869,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot simulation results <code>autoplot()</code> method for <code>sim_results</code> objects</span></a>
+ <span class="menu-text">Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method for <code>sim_results</code> objects</span></a>
   </div>
 </li>
       </ul>
@@ -935,7 +935,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Other</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Version Crosswalk: v1.3.0 to v1.4.0</a></li></ol></nav><h1 class="title display-7">Version Crosswalk: v1.3.0 to v1.4.0</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-07-25</p>
+<p class="date">2026-07-26</p>
 </header><section id="overview" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">1</span> Overview</h2>
 <p>This guide helps users migrate code from <strong>serocalculator v1.3.0</strong> to <strong>v1.4.0</strong>. The main changes are function renamings for improved clarity and consistency.</p>
@@ -957,13 +957,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code>est.incidence()</code></td>
-<td><code>est_seroincidence()</code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/est.incidence.html">est.incidence()</a></code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code></td>
 <td>Estimate seroincidence for entire dataset</td>
 </tr>
 <tr class="even">
-<td><code>est.incidence.by()</code></td>
-<td><code>est_seroincidence_by()</code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/est.incidence.by.html">est.incidence.by()</a></code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code></td>
 <td>Estimate seroincidence stratified by groups</td>
 </tr>
 </tbody>
@@ -996,23 +996,23 @@ Note
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code>load_curve_params()</code></td>
-<td><code>load_sr_params()</code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/load_curve_params.html">load_curve_params()</a></code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params()</a></code></td>
 <td>Load seroresponse curve parameters</td>
 </tr>
 <tr class="even">
-<td><code>as_curve_params()</code></td>
-<td><code>as_sr_params()</code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/as_curve_params.html">as_curve_params()</a></code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/as_sr_params.html">as_sr_params()</a></code></td>
 <td>Convert data to seroresponse parameters</td>
 </tr>
 <tr class="odd">
-<td><code>sim.cs()</code></td>
-<td><code>sim_pop_data()</code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/sim.cs.html">sim.cs()</a></code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data.html">sim_pop_data()</a></code></td>
 <td>Simulate cross-sectional population data</td>
 </tr>
 <tr class="even">
-<td><code>sim.cs.multi()</code></td>
-<td><code>sim_pop_data_multi()</code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/sim.cs.multi.html">sim.cs.multi()</a></code></td>
+<td><code><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code></td>
 <td>Simulate multiple cross-sectional datasets</td>
 </tr>
 </tbody>
@@ -1033,7 +1033,7 @@ Note
 <td><code>curve_params</code></td>
 <td><code>sr_params</code></td>
 <td>
-<code>est_seroincidence()</code>, <code>est_seroincidence_by()</code>
+<code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>, <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>
 </td>
 </tr></tbody>
 </table></section></section><section id="code-examples" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="code-examples">
@@ -1051,103 +1051,185 @@ Note
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>New code (v1.4.0):</strong></p>
 <div class="cell">
-<pre><code>#&gt; # A tibble: 1 × 11
-#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik
-#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1       0.1          0.166 0.0178  0.135  0.205 standard     0.95   -524.
-#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,
-#&gt; #   nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load seroresponse parameters from RDS file</span></span>
+<span><span class="va">sr_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_curve_params.rds"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load example population data from CSV</span></span>
+<span><span class="va">pop_data</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_pop_data.csv"</span><span class="op">)</span>,</span>
+<span>  show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/as_pop_data.html">as_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load noise parameters</span></span>
+<span><span class="va">noise_params_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_noise_params.html">load_noise_params</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_noise_params.rds"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Use only the antigen-isotypes present in pop_data</span></span>
+<span><span class="va">antigen_isos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/get_biomarker_names.html">get_biomarker_names</a></span><span class="op">(</span><span class="va">pop_data</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">noise_params</span> <span class="op">&lt;-</span> <span class="va">noise_params_full</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">antigen_isos</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Country</span>, <span class="op">-</span><span class="va">X</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estimate seroincidence</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise_params</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 11</span></span>
+<span><span class="co">#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik</span></span>
+<span><span class="co">#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1       0.1          0.166 0.0178  0.135  0.205 standard     0.95   -524.</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="example-2-stratified-analysis" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="example-2-stratified-analysis">
 <span class="header-section-number">3.2</span> Example 2: Stratified Analysis</h3>
 <p><strong>Old code (v1.3.0):</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Stratified estimation (v1.3.0 - DEPRECATED)</span></span>
-<span><span class="va">results_by_group</span> <span class="op">&lt;-</span> <span class="fu">est.incidence.by</span><span class="op">(</span></span>
+<span><span class="va">results_by_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">my_data</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
 <span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"age_group"</span>, <span class="st">"location"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>New code (v1.4.0):</strong></p>
 <div class="cell">
-<pre><code>#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.
-#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in
-#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to
-#&gt;   `est_seroincidence_by()`.
-#&gt; Seroincidence estimated given the following setup:
-#&gt; a) Antigen isotypes   : HlyE_IgA, HlyE_IgG 
-#&gt; b) Strata       : Country 
-#&gt; 
-#&gt;  Seroincidence estimates:
-#&gt; # A tibble: 1 × 14
-#&gt;   Stratum   Country      n est.start incidence.rate     SE CI.lwr CI.upr se_type
-#&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  
-#&gt; 1 Stratum 1 Pakistan   100       0.1          0.166 0.0178  0.135  0.205 standa…
-#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,
-#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Stratified estimation by Country</span></span>
+<span><span class="va">results_by_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">noise_params</span>,</span>
+<span>  strata <span class="op">=</span> <span class="st">"Country"</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
+<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
+<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
+<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results_by_group</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
+<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgA, HlyE_IgG </span></span>
+<span><span class="co">#&gt; b) Strata       : Country </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 14</span></span>
+<span><span class="co">#&gt;   Stratum   Country      n est.start incidence.rate     SE CI.lwr CI.upr se_type</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt; 1 Stratum 1 Pakistan   100       0.1          0.166 0.0178  0.135  0.205 standa…</span></span>
+<span><span class="co">#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section><section id="example-3-simulating-data" class="level3" data-number="3.3"><h3 data-number="3.3" class="anchored" data-anchor-id="example-3-simulating-data">
 <span class="header-section-number">3.3</span> Example 3: Simulating Data</h3>
 <p><strong>Old code (v1.3.0):</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Simulate cross-sectional data (v1.3.0 - DEPRECATED)</span></span>
-<span><span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu">sim.cs</span><span class="op">(</span></span>
+<span><span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/sim.cs.html">sim.cs</a></span><span class="op">(</span></span>
 <span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Simulate multiple datasets</span></span>
-<span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu">sim.cs.multi</span><span class="op">(</span></span>
+<span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/sim.cs.multi.html">sim.cs.multi</a></span><span class="op">(</span></span>
 <span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  n_reps <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>New code (v1.4.0):</strong></p>
 <div class="cell">
-<pre><code>#&gt; Warning: Some dimension variables are not factors.
-#&gt; ℹ These dimensions will be ordered by first appearance.
-#&gt; ℹ Check results using `dimnames()`.
-#&gt; # A tibble: 6 × 4
-#&gt;     age id    antigen_iso  value
-#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
-#&gt; 1  15.7 1     HlyE_IgA     0.580
-#&gt; 2  15.7 1     HlyE_IgG     1.17 
-#&gt; 3  14.2 2     HlyE_IgA     0.339
-#&gt; 4  14.2 2     HlyE_IgG     0.779
-#&gt; 5  19.2 3     HlyE_IgA    21.2  
-#&gt; 6  19.2 3     HlyE_IgG     5.57
-#&gt; Warning: Some dimension variables are not factors.
-#&gt; ℹ These dimensions will be ordered by first appearance.
-#&gt; ℹ Check results using `dimnames()`.
-#&gt; Some dimension variables are not factors.
-#&gt; ℹ These dimensions will be ordered by first appearance.
-#&gt; ℹ Check results using `dimnames()`.
-#&gt; Some dimension variables are not factors.
-#&gt; ℹ These dimensions will be ordered by first appearance.
-#&gt; ℹ Check results using `dimnames()`.
-#&gt; [1] 600</code></pre>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Biologic noise distribution for simulation</span></span>
+<span><span class="va">noise_limits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">antigen_isos</span><span class="op">)</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  byrow <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">antigen_isos</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulate cross-sectional data</span></span>
+<span><span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data.html">sim_pop_data</a></span><span class="op">(</span></span>
+<span>  curve_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
+<span>  noise_limits <span class="op">=</span> <span class="va">noise_limits</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span>,</span>
+<span>  n_samples <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"long"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">simulated_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span><span class="co">#&gt;     age id    antigen_iso  value</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 14.7  1     HlyE_IgA     0.470</span></span>
+<span><span class="co">#&gt; 2 14.7  1     HlyE_IgG     0.529</span></span>
+<span><span class="co">#&gt; 3  2.04 2     HlyE_IgA     0.843</span></span>
+<span><span class="co">#&gt; 4  2.04 2     HlyE_IgG     0.553</span></span>
+<span><span class="co">#&gt; 5 11.2  3     HlyE_IgA     6.30 </span></span>
+<span><span class="co">#&gt; 6 11.2  3     HlyE_IgG    34.2</span></span>
+<span></span>
+<span><span class="co"># Simulate multiple datasets</span></span>
+<span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
+<span>  curve_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
+<span>  noise_limits <span class="op">=</span> <span class="va">noise_limits</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span>,</span>
+<span>  sample_sizes <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  nclus <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  lambdas <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"long"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
+<span><span class="co">#&gt; Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
+<span><span class="co">#&gt; Some dimension variables are not factors.</span></span>
+<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
+<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">multiple_sims</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 600</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section></section><section id="new-features-in-v1.4.0" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="new-features-in-v1.4.0">
 <span class="header-section-number">4</span> New Features in v1.4.0</h2>
 <p>In addition to the renamed functions, v1.4.0 includes several new features:</p>
 <ul>
 <li>
-<strong><code>compare_seroincidence()</code></strong>: New function for statistical comparison of seroincidence rates between groups</li>
+<strong><code><a href="https://rdrr.io/pkg/serocalculator/man/compare_seroincidence.html">compare_seroincidence()</a></code></strong>: New function for statistical comparison of seroincidence rates between groups</li>
 <li>
 <strong>Enhanced plotting</strong>: Additional options for <code>autoplot.curve_params()</code> including <code>log_x</code>, <code>log_y</code>, and <code>chain_color</code>
 </li>
 <li>
-<strong>Extended simulation analysis</strong>: New <code>analyze_sims()</code> and <code>autoplot.sim_results()</code> functions</li>
+<strong>Extended simulation analysis</strong>: New <code><a href="https://rdrr.io/pkg/serocalculator/man/analyze_sims.html">analyze_sims()</a></code> and <code>autoplot.sim_results()</code> functions</li>
 <li>
 <strong>Improved documentation</strong>: Multi-version pkgdown documentation with version dropdown</li>
 </ul></section><section id="other-notable-changes" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="other-notable-changes">
 <span class="header-section-number">5</span> Other Notable Changes</h2>
 <ul>
-<li>Main estimation functions (<code>est_seroincidence()</code>, <code>est_seroincidence_by()</code>) now use <code>sr_params</code> argument instead of <code>curve_params</code>
+<li>Main estimation functions (<code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>, <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>) now use <code>sr_params</code> argument instead of <code>curve_params</code>
 </li>
-<li>Function names now use snake_case instead of dots (e.g., <code>est.incidence()</code> → <code>est_seroincidence()</code>)</li>
+<li>Function names now use snake_case instead of dots (e.g., <code><a href="https://rdrr.io/pkg/serocalculator/man/est.incidence.html">est.incidence()</a></code> → <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>)</li>
 <li>Many internal improvements to error messages and warnings</li>
 </ul>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -1160,24 +1242,24 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Important</strong>: Not all functions changed their parameter names. Functions like <code>sim_pop_data()</code> and <code>graph_loglik()</code> still use <code>curve_params</code> as the parameter name. Only the main estimation functions use <code>sr_params</code>.</p>
+<p><strong>Important</strong>: Not all functions changed their parameter names. Functions like <code><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data.html">sim_pop_data()</a></code> and <code><a href="https://rdrr.io/pkg/serocalculator/man/graph_loglik.html">graph_loglik()</a></code> still use <code>curve_params</code> as the parameter name. Only the main estimation functions use <code>sr_params</code>.</p>
 </div>
 </div>
 </section><section id="need-more-help" class="level2" data-number="6"><h2 data-number="6" class="anchored" data-anchor-id="need-more-help">
 <span class="header-section-number">6</span> Need More Help?</h2>
 <ul>
-<li>See the <a href="https://ucd-serg.github.io/serocalculator/news/index.html">NEWS file</a> for complete details</li>
-<li>Check the <a href="https://ucd-serg.github.io/serocalculator/articles/serocalculator.html">main tutorial</a> for comprehensive examples using v1.4.0 syntax</li>
-<li>Visit the <a href="https://ucd-serg.github.io/serocalculator/reference/index.html">function reference</a> for detailed documentation</li>
+<li>See the <a href="../../NEWS.html">NEWS file</a> for complete details</li>
+<li>Check the <a href="serocalculator.html">main tutorial</a> for comprehensive examples using v1.4.0 syntax</li>
+<li>Visit the <a href="../../reference.html">function reference</a> for detailed documentation</li>
 </ul></section><section id="summary" class="level2" data-number="7"><h2 data-number="7" class="anchored" data-anchor-id="summary">
 <span class="header-section-number">7</span> Summary</h2>
 <p>The transition from v1.3.0 to v1.4.0 primarily involves:</p>
 <ol type="1">
-<li>Replace dots in function names with underscores (e.g., <code>est.incidence()</code> → <code>est_seroincidence()</code>)</li>
+<li>Replace dots in function names with underscores (e.g., <code><a href="https://rdrr.io/pkg/serocalculator/man/est.incidence.html">est.incidence()</a></code> → <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code>)</li>
 <li>Update <code>curve_params</code> arguments to <code>sr_params</code> <strong>for estimation functions only</strong>
 </li>
-<li>Use the new <code>load_sr_params()</code> and <code>as_sr_params()</code> instead of the <code>_curve_params</code> versions</li>
-<li>Use <code>.rds</code> files with <code>load_sr_params()</code> (not <code>.csv</code> files)</li>
+<li>Use the new <code><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params()</a></code> and <code><a href="https://rdrr.io/pkg/serocalculator/man/as_sr_params.html">as_sr_params()</a></code> instead of the <code>_curve_params</code> versions</li>
+<li>Use <code>.rds</code> files with <code><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params()</a></code> (not <code>.csv</code> files)</li>
 </ol>
 <p><strong>Quick search-and-replace tips:</strong></p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1222,13 +1304,13 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Within calls to <code>est_seroincidence()</code> and <code>est_seroincidence_by()</code>:</p>
+<p>Within calls to <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence()</a></code> and <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>:</p>
 <ul>
 <li>
 <code>curve_params =</code> → <code>sr_params =</code>
 </li>
 </ul>
-<p><strong>Do not</strong> change <code>curve_params</code> to <code>sr_params</code> in other functions like <code>sim_pop_data()</code>.</p>
+<p><strong>Do not</strong> change <code>curve_params</code> to <code>sr_params</code> in other functions like <code><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data.html">sim_pop_data()</a></code>.</p>
 </div>
 </div>
 

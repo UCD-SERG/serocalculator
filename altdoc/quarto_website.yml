@@ -175,6 +175,23 @@ website:
 
 format:
   html:
+    # Click any figure to open a zoomed lightbox view. `lightbox: true` covers
+    # every block image (both `#fig-`-labelled figures and plain `![](...)`
+    # images), so no per-figure `.lightbox` class or `match: auto` is needed.
+    #
+    # This MUST be nested under `format: html:`, not set as a top-level
+    # (document) option. altdoc's `.finalize_quarto_website()` filters the
+    # generated `_quarto.yml` with `settings[!grepl("^\\w*$", settings)]`,
+    # which drops any top-level key whose value stringifies to all word
+    # characters -- and a top-level `lightbox: true` becomes "TRUE", so it is
+    # silently removed and never reaches the built site (verified: the
+    # pr-preview build had zero lightbox markup with the top-level form).
+    # Nested inside the `format` list it is untouched by that filter.
+    #
+    # This covers every HTML page. The reveal.js slides
+    # (methodology-slides.html) are a separate format and are handled by a
+    # `lightbox: true` in vignettes/methodology.qmd's own frontmatter.
+    lightbox: true
     code-link: true # enables downlit; see https://altdoc.etiennebacher.com/#/man/render_docs.md#auto-link-for-quarto-websites
     theme:
       light: default

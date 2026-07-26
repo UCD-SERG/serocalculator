@@ -149,6 +149,11 @@
 
 ## Internal
 
+* Removed `.github/CONTRIBUTING.Rmd`; `.github/CONTRIBUTING.md` is now the
+  hand-maintained source. The `.Rmd` executed no code (its only chunk was
+  `eval = FALSE`), so it rendered to markdown identical to a hand-written file
+  while adding a source/generated pair with no CI check to keep the two in
+  sync. (#613)
 * Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for `methodology.qmd`) formats. Fixed the HTML/revealjs output-filename collision by specifying `output-file: methodology-slides.html` for revealjs in `methodology.qmd`'s frontmatter; docx goes in `_metadata.yml` globally since `.docx` has no collision risk. (#503)
 * Added Codex repository guidance and R-package workflow skills. (#574)
 * `news.yaml` now calls the central

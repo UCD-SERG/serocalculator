@@ -173,6 +173,16 @@ website:
       - text: Citation
         file: citation.qmd
 
+# Click any figure to open a zoomed lightbox view. This is a top-level
+# (document) option, not nested under `format: html:`, so it applies to every
+# format the site renders -- both the HTML pages and the reveal.js slides
+# (e.g. methodology-slides.html). `lightbox: true` covers every block image
+# (both `#fig-`-labelled figures and plain `![](...)` images), so no per-figure
+# `.lightbox` class or `match: auto` is needed. Quarto sets `previewLinks:
+# false` on the slides, so the lightbox does not collide with reveal.js's own
+# link handling.
+lightbox: true
+
 format:
   html:
     code-link: true # enables downlit; see https://altdoc.etiennebacher.com/#/man/render_docs.md#auto-link-for-quarto-websites

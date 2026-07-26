@@ -30,6 +30,10 @@
 
 ## Documentation
 
+* Figures on the documentation website now open an enlarged lightbox view when
+  selected. Enabled site-wide (`lightbox: true`) across every format, including
+  the revealjs slides, and covering both cross-referenced figures and plain
+  images (#584).
 * Restored the R code in the documentation website's vignettes and articles.
   `vignettes/_metadata.yml` set `echo: false` for the `html` and `docx`
   formats, which applied to every file under `vignettes/`, so the published

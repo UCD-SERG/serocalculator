@@ -30,6 +30,28 @@
 
 ## Documentation
 
+* Restored the R code in the documentation website's vignettes and articles.
+  `vignettes/_metadata.yml` set `echo: false` for the `html` and `docx`
+  formats, which applied to every file under `vignettes/`, so the published
+  tutorials rendered as prose and figures with no code at all, and the
+  `methodology` article's "Estimating seroincidence" section --- whose only
+  content is a non-evaluated code chunk --- rendered as an empty heading.
+* Reviewed and revised the `methodology` article: corrected the standard-error
+  description (the inverse negative Hessian is the *variance*, not the
+  standard error) and the "truncated by age" characterization of the latent
+  infection-time distribution, added narrative to the previously code-only
+  "Estimating seroincidence" and "Multiple biomarkers" sections, moved
+  "In-progress work" out of the "Validation" section into its own section,
+  promoted "References" to a top-level section, and restored the captions and
+  image credits on the two typhoid figures (adjacent images with no blank line
+  between them are parsed as one paragraph, which drops their captions).
+* Fixed dead documentation links that still used the old pkgdown site layout.
+  The site root is now a redirect page, so `/articles/…`, `/reference/index.html`,
+  `/news/index.html`, and `/CONTRIBUTING.html` no longer resolve; links from
+  within the site are now relative so they stay on the reader's docs version,
+  and the links in the README point at paths that exist. Also corrected the
+  description in the README of which URL serves which docs version, and fixed
+  the link to the contributing guide in the pull request template.
 * Fixed a dead link in the README: the in-development documentation pointed at
   `/main/`, which has served nothing since #504 moved development docs to
   `/dev/`. Also removed a duplicated "the" in the same sentence. (#604)

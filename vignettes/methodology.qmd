@@ -935,24 +935,8 @@ library(ggplot2)
 curves <- load_sr_params(serocalculator_example("example_curve_params.rds")) |>
   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 
-# Define the two-phase kinetics function
-predicted_ab <- function(t, y0, y1, t1, alpha, r) {
- ab <- numeric(length(t))
- 
-   early <- t <= t1
-   ab[early] <- y0 * exp(log(y1 / y0) / t1 * t[early])
-   
-   late_t <- t[!early]
-   if (length(late_t) > 0) {
-     ab[!early] <- if (isTRUE(all.equal(r, 1))) {
-       y1 * exp(-alpha * (late_t - t1))
-     } else {
-       (y1^(1 - r) - (1 - r) * alpha * (late_t - t1))^(1 / (1 - r))
-     }
-  }
-
-  ab
-}
+# Reuse the package's existing 5-parameter kinetics implementation
+predicted_ab <- serocalculator::ab_5p
 
 # Time grid
 time_grid <- seq(0, 730, by = 7)

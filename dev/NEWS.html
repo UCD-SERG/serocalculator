@@ -281,7 +281,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9019</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9020</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -375,7 +375,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9019 (dev)</span>
+ <span class="menu-text">1.4.1.9020 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -384,7 +384,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9019 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9020 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -986,6 +986,7 @@ window.Quarto = {
 <section id="documentation" class="level2">
 <h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
 <ul>
+<li>Fixed two dead external links. The <code>methodology</code> article credited the <em>Salmonella</em> Typhi photo to a Wikimedia Commons page that was deleted on 2026-03-11; the deletion discussion confirms the image is CDC/PHIL public-domain work (PHIL ID 2115), so the credit now cites PHIL directly instead of the dead page. The Ubuntu R install snippet in <code>.github/copilot-instructions.md</code> fetched <code>pubkey.gpg</code>, which CRAN no longer serves (404); it now uses <code>marutter_pubkey.asc</code>.</li>
 <li>Figures on the documentation website now open an enlarged lightbox view when selected. Enabled site-wide (<code>lightbox: true</code>) across every format, including the revealjs slides, and covering both cross-referenced figures and plain images (<a href="https://github.com/UCD-SERG/serocalculator/issues/584">#584</a>).</li>
 <li>Restored the R code in the documentation website’s vignettes and articles. <code>vignettes/_metadata.yml</code> set <code>echo: false</code> for the <code>html</code> and <code>docx</code> formats, which applied to every file under <code>vignettes/</code>, so the published tutorials rendered as prose and figures with no code at all, and the <code>methodology</code> article’s “Estimating seroincidence” section — whose only content is a non-evaluated code chunk — rendered as an empty heading.</li>
 <li>Reviewed and revised the <code>methodology</code> article: corrected the standard-error description (the inverse negative Hessian is the <em>variance</em>, not the standard error) and the “truncated by age” characterization of the latent infection-time distribution, added narrative to the previously code-only “Estimating seroincidence” and “Multiple biomarkers” sections, moved “In-progress work” out of the “Validation” section into its own section, promoted “References” to a top-level section, and restored the captions and image credits on the two typhoid figures (adjacent images with no blank line between them are parsed as one paragraph, which drops their captions).</li>

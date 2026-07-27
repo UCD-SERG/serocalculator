@@ -30,14 +30,13 @@
 
 ## Documentation
 
-* Fixed two dead external links, found once the sandbox allowed the hosts to be
-  reached. The `methodology` article credited the *Salmonella* Typhi photo to a
-  Wikimedia Commons page that was deleted on 2026-03-11; the deletion
-  discussion confirms the image is CDC/PHIL public-domain work (PHIL ID 2115),
-  so the credit now cites PHIL directly instead of the dead page. The Ubuntu R
-  install snippet in `.github/copilot-instructions.md` fetched
-  `pubkey.gpg`, which CRAN no longer serves (404); it now uses
-  `marutter_pubkey.asc`.
+* Fixed two dead external links. The `methodology` article credited the
+  *Salmonella* Typhi photo to a Wikimedia Commons page that was deleted on
+  2026-03-11; the deletion discussion confirms the image is CDC/PHIL
+  public-domain work (PHIL ID 2115), so the credit now cites PHIL directly
+  instead of the dead page. The Ubuntu R install snippet in
+  `.github/copilot-instructions.md` fetched `pubkey.gpg`, which CRAN no longer
+  serves (404); it now uses `marutter_pubkey.asc`.
 * Figures on the documentation website now open an enlarged lightbox view when
   selected. Enabled site-wide (`lightbox: true`) across every format, including
   the revealjs slides, and covering both cross-referenced figures and plain

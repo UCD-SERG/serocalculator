@@ -30,6 +30,15 @@
 
 ## Documentation
 
+* The contributing guide no longer links the Code of Conduct as a relative
+  path, naming the file in prose instead. The link resolved on the
+  documentation site (Quarto rewrites project-internal `.md` links) but 404'd
+  in GitHub's own rendering of `.github/CONTRIBUTING.md`, where relative paths
+  resolve against `.github/` rather than the repository root. No relative or
+  absolute form works in both contexts, and a `.github/CODE_OF_CONDUCT.md`
+  pointer was ruled out after testing showed GitHub's community profile
+  prefers it over the root file, downgrading the recognized Contributor
+  Covenant to "other" (#612).
 * Figures on the documentation website now open an enlarged lightbox view when
   selected. Enabled site-wide (`lightbox: true`) across every format, including
   the revealjs slides, and covering both cross-referenced figures and plain

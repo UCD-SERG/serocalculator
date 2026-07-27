@@ -64,7 +64,7 @@ knitr::opts_chunk$set(message = FALSE)
 one paragraph of inline images and silently drops both captions, taking the
 CC BY-SA attribution for the map with them. -->
 
-![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SalmonellaTyphiFlagellarStain.jpg).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of Salmonella Typhi bacteria with a flagellar stain"}
+![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain; PHIL ID 2115).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of Salmonella Typhi bacteria with a flagellar stain"}
 
 ![Global distribution of typhoid fever. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fievre_typhoide.png), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Fievre_typhoide.png){fig-alt="World map showing high (red) and moderate (orange) typhoid-burden countries"}
 

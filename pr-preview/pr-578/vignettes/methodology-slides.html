@@ -1868,67 +1868,58 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span id="cb9-6"><a aria-label="6"></a>curves <span class="ot">&lt;-</span> <span class="fu">load_sr_params</span>(<span class="fu">serocalculator_example</span>(<span class="st">"example_curve_params.rds"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb9-7"><a aria-label="7"></a>  <span class="fu">filter</span>(antigen_iso <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span>))</span>
 <span id="cb9-8"><a aria-label="8"></a></span>
-<span id="cb9-9"><a aria-label="9"></a><span class="co"># Define the two-phase kinetics function</span></span>
-<span id="cb9-10"><a aria-label="10"></a>predicted_ab <span class="ot">&lt;-</span> <span class="cf">function</span>(t, y0, y1, t1, alpha, r) {</span>
-<span id="cb9-11"><a aria-label="11"></a> ab <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(t))</span>
-<span id="cb9-12"><a aria-label="12"></a> </span>
-<span id="cb9-13"><a aria-label="13"></a>   early <span class="ot">&lt;-</span> t <span class="sc">&lt;=</span> t1</span>
-<span id="cb9-14"><a aria-label="14"></a>   ab[early] <span class="ot">&lt;-</span> y0 <span class="sc">*</span> <span class="fu">exp</span>(<span class="fu">log</span>(y1 <span class="sc">/</span> y0) <span class="sc">/</span> t1 <span class="sc">*</span> t[early])</span>
-<span id="cb9-15"><a aria-label="15"></a>   </span>
-<span id="cb9-16"><a aria-label="16"></a>   late_t <span class="ot">&lt;-</span> t[<span class="sc">!</span>early]</span>
-<span id="cb9-17"><a aria-label="17"></a>   <span class="cf">if</span> (<span class="fu">length</span>(late_t) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb9-18"><a aria-label="18"></a>     ab[<span class="sc">!</span>early] <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">isTRUE</span>(<span class="fu">all.equal</span>(r, <span class="dv">1</span>))) {</span>
-<span id="cb9-19"><a aria-label="19"></a>       y1 <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>alpha <span class="sc">*</span> (late_t <span class="sc">-</span> t1))</span>
-<span id="cb9-20"><a aria-label="20"></a>     } <span class="cf">else</span> {</span>
-<span id="cb9-21"><a aria-label="21"></a>       (y1<span class="sc">^</span>(<span class="dv">1</span> <span class="sc">-</span> r) <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> r) <span class="sc">*</span> alpha <span class="sc">*</span> (late_t <span class="sc">-</span> t1))<span class="sc">^</span>(<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> r))</span>
-<span id="cb9-22"><a aria-label="22"></a>     }</span>
-<span id="cb9-23"><a aria-label="23"></a>  }</span>
-<span id="cb9-24"><a aria-label="24"></a></span>
-<span id="cb9-25"><a aria-label="25"></a>  ab</span>
-<span id="cb9-26"><a aria-label="26"></a>}</span>
-<span id="cb9-27"><a aria-label="27"></a></span>
-<span id="cb9-28"><a aria-label="28"></a><span class="co"># Time grid</span></span>
-<span id="cb9-29"><a aria-label="29"></a>time_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">730</span>, <span class="at">by =</span> <span class="dv">7</span>)</span>
-<span id="cb9-30"><a aria-label="30"></a></span>
-<span id="cb9-31"><a aria-label="31"></a><span class="co"># Loop over all antigen-isotypes</span></span>
-<span id="cb9-32"><a aria-label="32"></a>all_summaries <span class="ot">&lt;-</span> curves <span class="sc">|&gt;</span></span>
-<span id="cb9-33"><a aria-label="33"></a>  <span class="fu">distinct</span>(antigen_iso) <span class="sc">|&gt;</span></span>
-<span id="cb9-34"><a aria-label="34"></a>  <span class="fu">pull</span>(antigen_iso) <span class="sc">|&gt;</span></span>
-<span id="cb9-35"><a aria-label="35"></a>  <span class="fu">lapply</span>(<span class="cf">function</span>(ab) {</span>
-<span id="cb9-36"><a aria-label="36"></a>    curves_ab <span class="ot">&lt;-</span> curves <span class="sc">|&gt;</span> <span class="fu">filter</span>(antigen_iso <span class="sc">==</span> ab)</span>
-<span id="cb9-37"><a aria-label="37"></a></span>
-<span id="cb9-38"><a aria-label="38"></a>    pred_matrix <span class="ot">&lt;-</span> <span class="fu">mapply</span>(</span>
-<span id="cb9-39"><a aria-label="39"></a>      <span class="cf">function</span>(y0, y1, t1, alpha, r) <span class="fu">predicted_ab</span>(time_grid, y0, y1, t1, alpha, r),</span>
-<span id="cb9-40"><a aria-label="40"></a>      <span class="at">y0    =</span> curves_ab<span class="sc">$</span>y0,</span>
-<span id="cb9-41"><a aria-label="41"></a>      <span class="at">y1    =</span> curves_ab<span class="sc">$</span>y1,</span>
-<span id="cb9-42"><a aria-label="42"></a>      <span class="at">t1    =</span> curves_ab<span class="sc">$</span>t1,</span>
-<span id="cb9-43"><a aria-label="43"></a>      <span class="at">alpha =</span> curves_ab<span class="sc">$</span>alpha,</span>
-<span id="cb9-44"><a aria-label="44"></a>      <span class="at">r     =</span> curves_ab<span class="sc">$</span>r,</span>
-<span id="cb9-45"><a aria-label="45"></a>      <span class="at">SIMPLIFY =</span> <span class="st">"array"</span></span>
+<span id="cb9-9"><a aria-label="9"></a><span class="co"># Time grid</span></span>
+<span id="cb9-10"><a aria-label="10"></a>time_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">730</span>, <span class="at">by =</span> <span class="dv">7</span>)</span>
+<span id="cb9-11"><a aria-label="11"></a></span>
+<span id="cb9-12"><a aria-label="12"></a><span class="co"># Loop over all antigen-isotypes</span></span>
+<span id="cb9-13"><a aria-label="13"></a>all_summaries <span class="ot">&lt;-</span> curves <span class="sc">|&gt;</span></span>
+<span id="cb9-14"><a aria-label="14"></a>  <span class="fu">distinct</span>(antigen_iso) <span class="sc">|&gt;</span></span>
+<span id="cb9-15"><a aria-label="15"></a>  <span class="fu">pull</span>(antigen_iso) <span class="sc">|&gt;</span></span>
+<span id="cb9-16"><a aria-label="16"></a>  <span class="fu">lapply</span>(<span class="cf">function</span>(ab) {</span>
+<span id="cb9-17"><a aria-label="17"></a>    curves_ab <span class="ot">&lt;-</span> curves <span class="sc">|&gt;</span> <span class="fu">filter</span>(antigen_iso <span class="sc">==</span> ab)</span>
+<span id="cb9-18"><a aria-label="18"></a></span>
+<span id="cb9-19"><a aria-label="19"></a>    <span class="co"># Reuse the package's own two-phase kinetics function instead of</span></span>
+<span id="cb9-20"><a aria-label="20"></a>    <span class="co"># reimplementing it; suppressWarnings() avoids NaN warnings from the</span></span>
+<span id="cb9-21"><a aria-label="21"></a>    <span class="co"># phase-2 formula being evaluated (and discarded) for early time points.</span></span>
+<span id="cb9-22"><a aria-label="22"></a>    pred_matrix <span class="ot">&lt;-</span> <span class="fu">mapply</span>(</span>
+<span id="cb9-23"><a aria-label="23"></a>      <span class="cf">function</span>(y0, y1, t1, alpha, r) {</span>
+<span id="cb9-24"><a aria-label="24"></a>        <span class="fu">suppressWarnings</span>(</span>
+<span id="cb9-25"><a aria-label="25"></a>          serocalculator<span class="sc">:::</span><span class="fu">ab0</span>(</span>
+<span id="cb9-26"><a aria-label="26"></a>            <span class="at">t =</span> time_grid,</span>
+<span id="cb9-27"><a aria-label="27"></a>            <span class="at">curve_params =</span> <span class="fu">list</span>(<span class="at">y0 =</span> y0, <span class="at">y1 =</span> y1, <span class="at">t1 =</span> t1, <span class="at">alpha =</span> alpha, <span class="at">r =</span> r)</span>
+<span id="cb9-28"><a aria-label="28"></a>          )</span>
+<span id="cb9-29"><a aria-label="29"></a>        )</span>
+<span id="cb9-30"><a aria-label="30"></a>      },</span>
+<span id="cb9-31"><a aria-label="31"></a>      <span class="at">y0    =</span> curves_ab<span class="sc">$</span>y0,</span>
+<span id="cb9-32"><a aria-label="32"></a>      <span class="at">y1    =</span> curves_ab<span class="sc">$</span>y1,</span>
+<span id="cb9-33"><a aria-label="33"></a>      <span class="at">t1    =</span> curves_ab<span class="sc">$</span>t1,</span>
+<span id="cb9-34"><a aria-label="34"></a>      <span class="at">alpha =</span> curves_ab<span class="sc">$</span>alpha,</span>
+<span id="cb9-35"><a aria-label="35"></a>      <span class="at">r     =</span> curves_ab<span class="sc">$</span>r,</span>
+<span id="cb9-36"><a aria-label="36"></a>      <span class="at">SIMPLIFY =</span> <span class="st">"array"</span></span>
+<span id="cb9-37"><a aria-label="37"></a>    )</span>
+<span id="cb9-38"><a aria-label="38"></a>    pred_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(pred_matrix, <span class="at">nrow =</span> <span class="fu">length</span>(time_grid))</span>
+<span id="cb9-39"><a aria-label="39"></a></span>
+<span id="cb9-40"><a aria-label="40"></a>    tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb9-41"><a aria-label="41"></a>      <span class="at">antigen_iso =</span> ab,</span>
+<span id="cb9-42"><a aria-label="42"></a>      <span class="at">time        =</span> time_grid,</span>
+<span id="cb9-43"><a aria-label="43"></a>      <span class="at">mean_ab     =</span> <span class="fu">rowMeans</span>(pred_matrix),</span>
+<span id="cb9-44"><a aria-label="44"></a>      <span class="at">var_ab      =</span> <span class="fu">apply</span>(pred_matrix, <span class="dv">1</span>, var),</span>
+<span id="cb9-45"><a aria-label="45"></a>      <span class="at">sd_ab       =</span> <span class="fu">apply</span>(pred_matrix, <span class="dv">1</span>, sd)</span>
 <span id="cb9-46"><a aria-label="46"></a>    )</span>
-<span id="cb9-47"><a aria-label="47"></a>    pred_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(pred_matrix, <span class="at">nrow =</span> <span class="fu">length</span>(time_grid))</span>
-<span id="cb9-48"><a aria-label="48"></a></span>
-<span id="cb9-49"><a aria-label="49"></a>    tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb9-50"><a aria-label="50"></a>      <span class="at">antigen_iso =</span> ab,</span>
-<span id="cb9-51"><a aria-label="51"></a>      <span class="at">time        =</span> time_grid,</span>
-<span id="cb9-52"><a aria-label="52"></a>      <span class="at">mean_ab     =</span> <span class="fu">rowMeans</span>(pred_matrix),</span>
-<span id="cb9-53"><a aria-label="53"></a>      <span class="at">var_ab      =</span> <span class="fu">apply</span>(pred_matrix, <span class="dv">1</span>, var),</span>
-<span id="cb9-54"><a aria-label="54"></a>      <span class="at">sd_ab       =</span> <span class="fu">apply</span>(pred_matrix, <span class="dv">1</span>, sd)</span>
-<span id="cb9-55"><a aria-label="55"></a>    )</span>
-<span id="cb9-56"><a aria-label="56"></a>  }) <span class="sc">|&gt;</span></span>
-<span id="cb9-57"><a aria-label="57"></a>  <span class="fu">bind_rows</span>()</span>
-<span id="cb9-58"><a aria-label="58"></a></span>
-<span id="cb9-59"><a aria-label="59"></a><span class="co"># Plot 1: variance over time, faceted by antigen-isotype, log scale</span></span>
-<span id="cb9-60"><a aria-label="60"></a><span class="fu">ggplot</span>(all_summaries, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> var_ab)) <span class="sc">+</span></span>
-<span id="cb9-61"><a aria-label="61"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb9-62"><a aria-label="62"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb9-63"><a aria-label="63"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> antigen_iso, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb9-64"><a aria-label="64"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-65"><a aria-label="65"></a>    <span class="at">x =</span> <span class="st">"Days since infection"</span>,</span>
-<span id="cb9-66"><a aria-label="66"></a>    <span class="at">y =</span> <span class="st">"Variance of predicted antibody level (log scale)"</span>,</span>
-<span id="cb9-67"><a aria-label="67"></a>    <span class="at">title =</span> <span class="st">"Posterior predictive variance over time since infection"</span></span>
-<span id="cb9-68"><a aria-label="68"></a>  ) <span class="sc">+</span></span>
-<span id="cb9-69"><a aria-label="69"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-47"><a aria-label="47"></a>  }) <span class="sc">|&gt;</span></span>
+<span id="cb9-48"><a aria-label="48"></a>  <span class="fu">bind_rows</span>()</span>
+<span id="cb9-49"><a aria-label="49"></a></span>
+<span id="cb9-50"><a aria-label="50"></a><span class="co"># Plot 1: variance over time, faceted by antigen-isotype, log scale</span></span>
+<span id="cb9-51"><a aria-label="51"></a><span class="fu">ggplot</span>(all_summaries, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> var_ab)) <span class="sc">+</span></span>
+<span id="cb9-52"><a aria-label="52"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb9-53"><a aria-label="53"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb9-54"><a aria-label="54"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> antigen_iso, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb9-55"><a aria-label="55"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-56"><a aria-label="56"></a>    <span class="at">x =</span> <span class="st">"Days since infection"</span>,</span>
+<span id="cb9-57"><a aria-label="57"></a>    <span class="at">y =</span> <span class="st">"Variance of predicted antibody level (log scale)"</span>,</span>
+<span id="cb9-58"><a aria-label="58"></a>    <span class="at">title =</span> <span class="st">"Posterior predictive variance over time since infection"</span></span>
+<span id="cb9-59"><a aria-label="59"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-60"><a aria-label="60"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>

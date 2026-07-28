@@ -160,6 +160,12 @@
 
 ## Internal
 
+* Fixed two dead provenance links in workflow comments. `check-readme.yaml`
+  cited a file that was deleted from `IndrajeetPatil/statsExpressions`'s
+  default branch when its CI moved to reusable workflows; the citation is now
+  pinned to a commit where the file exists. `test-coverage.yaml` cited a GitHub
+  Actions *run* URL, which expires after roughly 90 days; it now cites the
+  upstream workflow file.
 * Removed `.github/CONTRIBUTING.Rmd`; `.github/CONTRIBUTING.md` is now the
   hand-maintained source. The `.Rmd` executed no code (its only chunk was
   `eval = FALSE`), so it rendered to markdown identical to a hand-written file

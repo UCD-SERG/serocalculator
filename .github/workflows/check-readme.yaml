@@ -1,4 +1,6 @@
-# Workflow derived from https://github.com/IndrajeetPatil/statsExpressions/blob/main/.github/workflows/check-readme.yaml
+# Workflow derived from https://github.com/IndrajeetPatil/statsExpressions/blob/5d1efae04f/.github/workflows/check-readme.yaml
+# (pinned to a commit: the file was deleted from that repo's default branch on
+# 2026-04-03 in 2a1cd93, when its CI moved to IndrajeetPatil/workflows)
 on:
   push:
     branches: [main, master]

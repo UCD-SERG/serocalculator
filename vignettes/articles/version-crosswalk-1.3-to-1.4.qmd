@@ -7,7 +7,8 @@ format: html
 #| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE
 )
 ```
 
@@ -207,9 +208,9 @@ In addition to the renamed functions, v1.4.0 includes several new features:
 
 ## Need More Help?
 
-- See the [NEWS file](https://ucd-serg.github.io/serocalculator/news/index.html) for complete details
-- Check the [main tutorial](https://ucd-serg.github.io/serocalculator/articles/serocalculator.html) for comprehensive examples using v1.4.0 syntax
-- Visit the [function reference](https://ucd-serg.github.io/serocalculator/reference/index.html) for detailed documentation
+- See the [NEWS file](../../NEWS.html) for complete details
+- Check the [main tutorial](serocalculator.html) for comprehensive examples using v1.4.0 syntax
+- Visit the [function reference](../../reference.html) for detailed documentation
 
 ## Summary
 

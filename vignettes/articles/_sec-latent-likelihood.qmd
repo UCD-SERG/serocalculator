@@ -18,14 +18,14 @@ $$\Lik^*(\lambda) = \prod_{i=1}^n \dens(T=t_i \mid \lambda) = \prod_{i=1}^n \lam
 Taking the logarithm of the likelihood:
 ::::
 
-$$\llik^*(\lambda) = \logf{\Lik^*(\lambda)} = \sum_{i=1}^n \logf{\lambda} -\lambda t_i$$
+$$\llik^*(\lambda) = \logf{\Lik^*(\lambda)} = \sum_{i=1}^n \paren{\logf{\lambda} -\lambda t_i}$$
 
 . . . 
 
 ::: notes
 Taking the derivative of that log-likelihood to find the score function:
 :::
-$$\llik^{*'}(\lambda) = \sum_{i=1}^n \invf{\lambda} - t_i$$
+$$\llik^{*'}(\lambda) = \sum_{i=1}^n \paren{\invf{\lambda} - t_i}$$
 
 . . . 
 

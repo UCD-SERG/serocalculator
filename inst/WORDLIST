@@ -28,6 +28,7 @@ Neuzil
 OSF
 Orientia
 PRs
+Pandoc
 Paratyphi
 Photomicrograph
 RStudio
@@ -54,6 +55,7 @@ Vellore
 Volterra
 Wikimedia
 al
+altdoc
 ast
 behaviour
 bioassays
@@ -70,6 +72,7 @@ dev
 devtools
 dfrac
 displaystyle
+docx
 dplyr
 dropdown
 dt
@@ -82,10 +85,13 @@ expf
 flagellar
 forall
 frac
+frontmatter
 ge
 geoms
+ggplot
 ggproto
 gh
+gha's
 hardcoded
 hemolysin
 immunocompromised
@@ -99,6 +105,7 @@ isotypes
 kDa
 le
 leq
+lightbox
 linter
 llik
 logf
@@ -116,6 +123,7 @@ multicohort
 multiversion
 myalgia
 nabla
+navbar
 nd
 nr
 olds
@@ -125,6 +133,7 @@ overcounts
 overline
 param
 params
+paren
 pathognomonic
 pipetting
 pkgdown
@@ -134,7 +143,9 @@ qmd
 qquad
 recombinant
 renamings
+repo's
 reproducibly
+revealjs
 rightarrow
 roadmap
 se
@@ -154,6 +165,7 @@ serosurvey
 serosurveys
 serotype
 shigella
+shortcode
 slidebreak
 smp
 stylostome

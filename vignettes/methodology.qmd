@@ -5,9 +5,44 @@ vignette: >
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
+format:
+  # vignettes/_metadata.yml already declares a `docx:` format and a
+  # `format-links: [docx]` default for every file under vignettes/, deep-merged
+  # into each document's own `format:` block -- but a `format-links` key
+  # declared here replaces (not merges with) that inherited list, so docx
+  # must be listed explicitly here too or its link silently drops off the
+  # rendered page (the docx file itself still renders regardless).
+  html:
+    format-links: [docx, revealjs]
+    # Click any figure to open a zoomed lightbox view. Set explicitly on each
+    # format here (rather than relying only on the site-level `format: html:`
+    # default in altdoc/quarto_website.yml) so both this article's HTML page
+    # and its reveal.js slides get lightbox: the site default reaches the HTML
+    # page but not the separate slides output below.
+    lightbox: true
+  revealjs:
+    output-file: methodology-slides.html
+    lightbox: true
+    reference-location: document
+    echo: false
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
+shortcodes:
+  - _extensions/d-morrison/slidebreak/slidebreak.lua
 ---
 
 {{< include ../macros/macros.qmd >}}
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE)
+```
 
 # Infectious disease epidemiology
 
@@ -25,7 +60,12 @@ bibliography: references.bib
 :::
 
 ::: {.column width="40%"}
-![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SalmonellaTyphiFlagellarStain.jpg).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"}
+<!-- Keep a blank line between these two images: without it Pandoc reads them as
+one paragraph of inline images and silently drops both captions, taking the
+CC BY-SA attribution for the map with them. -->
+
+![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain; PHIL ID 2115).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of Salmonella Typhi bacteria with a flagellar stain"}
+
 ![Global distribution of typhoid fever. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fievre_typhoide.png), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Fievre_typhoide.png){fig-alt="World map showing high (red) and moderate (orange) typhoid-burden countries"}
 
 :::
@@ -47,7 +87,7 @@ bibliography: references.bib
 
 :::: {.column width="50%"}
 
-![*Shigella* in a stool sample. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing *Shigella* bacteria"}
+![*Shigella* in a stool sample. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing Shigella bacteria"}
 ::::
 
 :::
@@ -67,7 +107,7 @@ bibliography: references.bib
 
 :::: {.column width="50%"}
 
-![*Trombicula* mite larva with stylostome. Photo: Alan R Walker / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"}
+![*Trombicula* mite larva with stylostome. Photo: Alan R Walker / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a Trombicula mite larva with its stylostome feeding tube"}
 ::::
 
 :::
@@ -262,7 +302,7 @@ produce estimates that are:
 - timely
 - cost-efficient
 
-See @HAY2024100806 for overview
+See @HAY2024100806 for an overview.
 
 # Estimating incidence from cross-sectional serosurveys
 
@@ -377,8 +417,12 @@ $$\dens(T=t) =  \red{\lambda\expf{-\lambda t}}$$
 
 . . .
 
-  * More precisely, the distribution is exponential 
-  **truncated by age** at observation ($a$):
+  * More precisely, the distribution is exponential
+  **limited by age** at observation ($a$):
+  no one can have been infected before they were born,
+  so the density is supported on $[0,a]$
+  and the leftover probability, $\expf{-\lambda a}$,
+  sits on "never infected":
 
 . . .
 
@@ -472,9 +516,11 @@ noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
 
 ## Standard errors
 
-The standard error of the estimate is approximately equal to
-the inverse of the curvature (2nd derivative, aka Hessian)
-of the log-likelihood function, at the maximum:
+The **variance** of the estimate is approximately equal to
+the inverse of the *negative* curvature
+(2nd derivative, aka Hessian)
+of the log-likelihood function, at the maximum,
+and the standard error is the square root of that variance:
 
 more curvature $\rightarrow$
 a sharper likelihood peak $\rightarrow$
@@ -705,8 +751,32 @@ to find the MLE and corresponding standard error.
 
 ## Multiple biomarkers
 
+A serosurvey usually measures more than one antigen-isotype per participant.
+The current model treats biomarkers as **conditionally independent given the
+time since infection**, so their response densities multiply *inside* each
+person's integral over $t$:
+
+$$
+\dens(Y_1=y_1, Y_2=y_2) =
+\int_t \dens(Y_1=y_1|T=t)\,\dens(Y_2=y_2|T=t)\,\dens_\lambda(T=t)\, dt
+$$
+
+Note that this is **not** the product of the two single-biomarker
+likelihoods: the shared latent infection time $t$ couples them.
+
+::: notes
+(@sec-multivariate below describes work in progress to relax the
+conditional-independence assumption itself.)
+:::
+
+Using both biomarkers concentrates the log-likelihood around its maximum,
+and so shrinks the standard error, relative to either biomarker alone
+(@fig-loglik):
+
 ```{r}
-#| fig-cap: "Example log(likelihood) curves"
+#| fig-cap: >
+#|   Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both
+#|   biomarkers combined.
 #| label: fig-loglik
 lik_HlyE_IgA <- graph_loglik( # nolint: object_name_linter.
   pop_data = xs_data,
@@ -1022,6 +1092,13 @@ xs_data |> autoplot(strata = "Country", type = "density")
 
 ## Estimating seroincidence {.smaller}
 
+`est_seroincidence_by()` maximizes the log-likelihood
+$\log\mathcal{L}(\lambda)$ derived above,
+separately within each stratum,
+and `summary()` reports each stratum's $\hat\lambda$
+with a standard error and confidence interval
+(cluster-robust, if `cluster_var` was supplied):
+
 ```{r}
 #| eval: false
 # Estimate incidence, stratified by country and age group
@@ -1035,6 +1112,10 @@ est <- est_seroincidence_by(
 
 summary(est)
 ```
+
+Stratifying this way also makes the constant-and-homogeneous-incidence
+assumption more plausible within each stratum,
+and lets each stratum use the seroresponse parameters appropriate to it.
 
 ## Interactive Shiny app
 
@@ -1120,6 +1201,8 @@ at higher incidence. Abridged from the serocalculator
 `simulate_xsectionalData` vignette.
 :::
 
+# Ongoing and future work
+
 ## In-progress work
 
 * Extending and improving existing Shiny apps for these methods
@@ -1138,7 +1221,7 @@ at higher incidence. Abridged from the serocalculator
 
 * Calibrating to population demographics
 
-## Multiple biomarkers: beyond conditional independence {.smaller}
+## Multiple biomarkers: beyond conditional independence {#sec-multivariate .smaller}
 
 With several biomarkers (e.g. HlyE IgA and IgG), the current method treats
 them as **conditionally independent given the time since infection**, so the
@@ -1167,7 +1250,7 @@ covariance, fit in Stan
 By pairing cross-sectional quantitative antibody responses with modeled antibody decay curves, accounting for individual-level heterogeneity, multiple antigen isotypes, and both measurement noise and biological variability, serocalculator provides a standardized approach to estimating population-level seroincidence from cross-sectional serosurveys.
 
 
-## References {.smaller .unnumbered}
+# References {.smaller .unnumbered}
 
 ::: {#refs}
 :::

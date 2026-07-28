@@ -8,6 +8,7 @@ bibliography: ../references.bib
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  message = FALSE,
   fig.width = 7,
   fig.height = 5
 )
@@ -368,20 +369,27 @@ ests_summary <- ests |> summary() |> print()
 ```
 
 We can explore the summary table interactively using `DT::datatable()`
+(HTML output only; non-HTML formats print the plain summary table instead,
+since converting the widget to a static image would require a headless
+browser).
 
 ```{r}
-library(DT)
-ests_summary |>
-  DT::datatable(options = list(scrollX = TRUE)) |>
-  DT::formatRound(
-    columns = c(
-      "incidence.rate",
-      "SE",
-      "CI.lwr",
-      "CI.upr",
-      "log.lik"
+if (knitr::is_html_output()) {
+  library(DT)
+  ests_summary |>
+    DT::datatable(options = list(scrollX = TRUE)) |>
+    DT::formatRound(
+      columns = c(
+        "incidence.rate",
+        "SE",
+        "CI.lwr",
+        "CI.upr",
+        "log.lik"
+      )
     )
-  )
+} else {
+  ests_summary
+}
 ```
 
 

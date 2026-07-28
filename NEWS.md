@@ -2,6 +2,13 @@
 
 ## New features
 
+* Added interactive Shiny app `curve_app()` for visualizing antigen-antibody
+  kinetics models with real-time parameter sliders (#392).
+* Added `antibody_decay_curve()` and `pathogen_decay_curve()` functions for
+  simulating antibody and pathogen decay over time (#392).
+* Added `plot_decay_curve()` for plotting decay functions using ggplot2 (#392).
+* Added helper functions `t1f()` (time to end of active infection) and
+  `y1f()` (peak antibody concentration) (#392).
 * `autoplot.sim_results()` gains `x_var`, `group_var`, and `color_var`
   arguments, letting users choose which columns map to the x-axis, group,
   and color aesthetics instead of the previous hardcoded `sample_size` /
@@ -23,8 +30,82 @@
 
 ## Documentation
 
+* Fixed two dead external links. The `methodology` article credited the
+  *Salmonella* Typhi photo to a Wikimedia Commons page that was deleted on
+  2026-03-11; the deletion discussion confirms the image is CDC/PHIL
+  public-domain work (PHIL ID 2115), so the credit now cites PHIL directly
+  instead of the dead page. The Ubuntu R install snippet in
+  `.github/copilot-instructions.md` fetched `pubkey.gpg`, which CRAN no longer
+  serves (404); it now uses `marutter_pubkey.asc`.
+* Figures on the documentation website now open an enlarged lightbox view when
+  selected. Enabled site-wide (`lightbox: true`) across every format, including
+  the revealjs slides, and covering both cross-referenced figures and plain
+  images (#584).
+* Restored the R code in the documentation website's vignettes and articles.
+  `vignettes/_metadata.yml` set `echo: false` for the `html` and `docx`
+  formats, which applied to every file under `vignettes/`, so the published
+  tutorials rendered as prose and figures with no code at all, and the
+  `methodology` article's "Estimating seroincidence" section --- whose only
+  content is a non-evaluated code chunk --- rendered as an empty heading.
+* Reviewed and revised the `methodology` article: corrected the standard-error
+  description (the inverse negative Hessian is the *variance*, not the
+  standard error) and the "truncated by age" characterization of the latent
+  infection-time distribution, added narrative to the previously code-only
+  "Estimating seroincidence" and "Multiple biomarkers" sections, moved
+  "In-progress work" out of the "Validation" section into its own section,
+  promoted "References" to a top-level section, and restored the captions and
+  image credits on the two typhoid figures (adjacent images with no blank line
+  between them are parsed as one paragraph, which drops their captions).
+* Fixed dead documentation links that still used the old pkgdown site layout.
+  The site root is now a redirect page, so `/articles/…`, `/reference/index.html`,
+  `/news/index.html`, and `/CONTRIBUTING.html` no longer resolve; links from
+  within the site are now relative so they stay on the reader's docs version,
+  and the links in the README point at paths that exist. Also corrected the
+  description in the README of which URL serves which docs version, and fixed
+  the link to the contributing guide in the pull request template.
+* Fixed a dead link in the README: the in-development documentation pointed at
+  `/main/`, which has served nothing since #504 moved development docs to
+  `/dev/`. Also removed a duplicated "the" in the same sentence. (#604)
+* The documentation site now deploys multiple versions side by side, following
+  `rpt`'s pattern: pushes to `main` deploy development docs to `/dev/`,
+  published releases deploy stable docs to `/latest-tag/` (plus an archived
+  `/vX.Y.Z/` copy), and the site root redirects to whichever was deployed most
+  recently. A "Versions" navbar dropdown links between them. (#504)
+* Updated the documentation site configuration to promote "Get started",
+  "Reference", and "News" in the top navigation, and added a grouped
+  `reference.qmd` index plus grouped sidebar reference sections that
+  exclude internal-only topics.
+* The documentation site's reference index page is now titled "Package index"
+  rather than "Reference", matching the old pkgdown site and distinguishing the
+  page from the navigation entry that links to it. (#594)
+* Added a "Citation" entry to the documentation site's sidebar. The citation
+  page was previously reachable only from the navbar "More" dropdown, unlike
+  `rpt` and the default sidebar `altdoc` ships, which both list it. (#594)
+* Links to the documentation site's old `/main/` paths now resolve again.
+  Before the altdoc migration the development docs were published under the
+  branch name, so they lived at `/main/`; they now live at `/dev/`, which left
+  every `/main/...` link dead. The site now serves a root `404.html` that
+  redirects any request under `/main/` to the same path under `/dev/`, deep
+  links included. Redirection requires JavaScript; without it the page renders
+  as a plain not-found notice linking to the documentation home page. (#599)
+* Updated the documentation site's dark-mode styling to match `rpt` by adding
+  the same inline-code color override used there, improving contrast on the
+  home page and article text.
 * Added introductory lecture slides to the `methodology` vignette
   ("Estimating Incidence Rates from Cross-Sectional Serosurveys").
+* The `methodology` vignette now loads its `slidebreak` shortcode explicitly so
+  the shortcode no longer leaks into HTML output, and rendered vignettes now
+  suppress package startup messages.
+* Fixed the date in the vignettes' title blocks, which rendered as
+  "Invalid Date" (most visibly on the `methodology` slides' title slide).
+  `vignettes/_metadata.yml` set the date with an inline R expression, but
+  Quarto merges that file into the document metadata without a `knitr` pass,
+  so the expression was never evaluated; the date now uses Quarto's own
+  `today` keyword. (#597)
+* Restored the `methodology` vignette's docx download link, which had been
+  dropped on the (mistaken) assumption that it needed its own `docx:` format
+  block; it renders fine via the `docx:` default already declared in
+  `vignettes/_metadata.yml`.
 * Completed the measurement-noise model in the `methodology` vignette
   (multiplicative relative error), added a "Combined biological and
   measurement noise" section, and added a "Noise and never-infected
@@ -81,15 +162,32 @@
 
 ## Internal
 
+* Removed `.github/CONTRIBUTING.Rmd`; `.github/CONTRIBUTING.md` is now the
+  hand-maintained source. The `.Rmd` executed no code (its only chunk was
+  `eval = FALSE`), so it rendered to markdown identical to a hand-written file
+  while adding a source/generated pair with no CI check to keep the two in
+  sync. (#613)
+* Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for `methodology.qmd`) formats. Fixed the HTML/revealjs output-filename collision by specifying `output-file: methodology-slides.html` for revealjs in `methodology.qmd`'s frontmatter; docx goes in `_metadata.yml` globally since `.docx` has no collision risk. (#503)
 * Added Codex repository guidance and R-package workflow skills. (#574)
 * `news.yaml` now calls the central
-  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v1`
-  reusable workflow instead of invoking `UCD-SERG/changelog-check-action@v2`
-  directly. (#537)
+  [`d-morrison/gha`](https://github.com/d-morrison/gha) `check-news.yml@v2`
+  reusable workflow (bumped from the initial `@v1` pin, which predated gha's
+  fix for this repo's `no-changelog` label convention) instead of invoking
+  `UCD-SERG/changelog-check-action@v2` directly. (#537, #593)
 * `claude.yml` and `claude-code-review.yml` now call the central
   [`d-morrison/gha`](https://github.com/d-morrison/gha) `claude.yml@v2` and
   `claude-code-review.yml@v2` reusable workflows instead of carrying their own
   copy of the agent/review machinery. (#549)
+* `docs.yaml` now calls the central
+  [`d-morrison/gha`](https://github.com/d-morrison/gha)
+  `altdoc-multiversion-docs.yml@v2` reusable workflow instead of carrying its
+  own ~360-line copy of the build/deploy logic, and the local
+  `.github/scripts/generate_version_dropdown.py` and
+  `generate_multiversion_landing_page.py` copies are deleted in favor of the
+  composite actions in that repo. Fixes made centrally now reach this package
+  instead of stopping at `rpt`. Rewrote `.github/MULTI_VERSION_DOCS.md`, which
+  still described the `pkgdown` setup replaced during the altdoc migration.
+  (#595)
 * The `methodology` vignette's LaTeX macros now come from the shared
   [`d-morrison/macros`](https://github.com/d-morrison/macros) git submodule
   (included via `{{< include ../macros/macros.qmd >}}`) instead of a local
@@ -109,6 +207,12 @@
   incrementally as code is touched, instead of forcing a repo-wide reformat.
   Intended to replace `lint-changed-files` as the lint gate once branch
   protection is updated to require it. (#558)
+* Removed `docs.yaml`'s job-level `concurrency:` group, which resolved to the
+  same string as the workflow-level group on every non-`pull_request` event and
+  so deadlocked the `docs` job: the run already held that group, so the job
+  could never acquire it and was failed instantly with no logs. This blocked
+  every versioned documentation deploy (`/dev/`, `/latest-tag/`, `/vX.Y.Z/`).
+  The workflow-level group already serializes runs by PR number or ref. (#590)
 
 ## Bug fixes
 
@@ -127,12 +231,22 @@
   - Provides clear tables comparing old and new function names
   - Includes code examples showing how to update existing code
   - Accessible as a prominent tab in the website navigation
+* `autoplot.seroincidence()` now raises its "graphs cannot be extracted" error
+  via `cli::cli_abort()` rather than `stop()`, so the message is formatted as a
+  cross bullet naming the problem and an info bullet naming the
+  `build_graph = TRUE` argument that was missing (#392).
+* `antibody_decay_curve()`, `pathogen_decay_curve()`, `t1f()`, and `y1f()` now
+  validate their parameters (non-negative values, `mu_y != mu_b`) and raise an
+  informative `cli::cli_abort()` error instead of silently returning `NaN` or
+  dividing by zero (#392).
+* `plot_decay_curve()` now respects its `xmax` argument instead of always
+  plotting to `x = 100` (#392).
 
 ## Compatibility
 
 * Replaced deprecated `dplyr::is.grouped_df()` usage with `dplyr::is_grouped_df()` in `df_to_array()` for compatibility with newer dplyr releases.
 
-## New features
+## New features (cluster-robust SE)
 
 * Added `cluster_var` and `stratum_var` parameters to `est_seroincidence()` and 
   `est_seroincidence_by()` to support cluster-robust standard error estimation. 
@@ -143,7 +257,7 @@
   for multi-level clustered sampling designs. Cluster-robust standard errors will account
   for all specified clustering levels.
 
-## Bug fixes
+## Bug fixes (cluster-robust SE)
 
 * Fixed column naming issue in `summary.seroincidence()` where cluster-robust standard
   errors caused `[]` notation in column names (`SE[,1]` instead of `SE`).
@@ -159,6 +273,7 @@
   - Moved `.compute_cluster_robust_var()` to `R/compute_cluster_robust_var.R`
   - Each function now in its own file for better maintainability and git history
 * Updated copilot-instructions.md with code organization policies
+
 ## Dependencies
 
 * Replaced `ggpubr` with `patchwork` for arranging multi-panel plots,

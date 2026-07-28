@@ -1,7 +1,7 @@
 # Automatic Claude Code review of pull requests — caller stub for the
-# central d-morrison/gha reusable workflow.
+# central Morrison-Lab/gha reusable workflow.
 #
-# The reusable workflow (d-morrison/gha/.github/workflows/claude-code-review.yml)
+# The reusable workflow (Morrison-Lab/gha/.github/workflows/claude-code-review.yml)
 # holds the actual review machinery: the upstream `code-review@claude-code-plugins`
 # plugin, the SERG lab-manual guidance, prior-review-context gathering, stub-review
 # retry, reviewer stash/restore, and comment collapsing — see its own header
@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Parse this workflow's ref
         id: this-wf
-        uses: d-morrison/gha/.github/actions/parse-workflow-ref@v2
+        uses: Morrison-Lab/gha/.github/actions/parse-workflow-ref@v2
         with:
           workflow-ref: ${{ github.workflow_ref }}
 
@@ -86,7 +86,7 @@ jobs:
       issues: write
       id-token: write       # required by claude-code-action for the App-token exchange
       actions: read          # lets the reviewer read CI status
-    uses: d-morrison/gha/.github/workflows/claude-code-review.yml@v2
+    uses: Morrison-Lab/gha/.github/workflows/claude-code-review.yml@v2
     secrets:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

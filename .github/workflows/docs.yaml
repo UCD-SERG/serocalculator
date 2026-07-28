@@ -8,7 +8,7 @@ name: Docs 📚
 #   - published releases -> /latest-tag/ and /vX.Y.Z/ (stable + archive)
 # Root (/) is a redirect landing page into the default docs version.
 #
-# The implementation lives in d-morrison/gha (UCD-SERG/serocalculator#595).
+# The implementation lives in Morrison-Lab/gha (UCD-SERG/serocalculator#595).
 # This file only declares when to run and what to pass; the version-dropdown
 # and landing-page scripts that used to sit in .github/scripts/ are now the
 # generate-altdoc-version-dropdown and generate-altdoc-landing-page composite
@@ -73,7 +73,7 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
-    uses: d-morrison/gha/.github/workflows/altdoc-multiversion-docs.yml@v2
+    uses: Morrison-Lab/gha/.github/workflows/altdoc-multiversion-docs.yml@v2
     with:
       # Pins the altdoc fork this package's docs build needs; the reusable
       # workflow's default is `any::altdoc`.

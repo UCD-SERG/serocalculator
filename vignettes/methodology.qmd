@@ -1005,25 +1005,6 @@ library(ggplot2)
 curves <- load_sr_params(serocalculator_example("example_curve_params.rds")) |>
   filter(antigen_iso %in% c("HlyE_IgA", "HlyE_IgG"))
 
-# Define the two-phase kinetics function
-predicted_ab <- function(t, y0, y1, t1, alpha, r) {
- ab <- numeric(length(t))
- 
-   early <- t <= t1
-   ab[early] <- y0 * exp(log(y1 / y0) / t1 * t[early])
-   
-   late_t <- t[!early]
-   if (length(late_t) > 0) {
-     ab[!early] <- if (isTRUE(all.equal(r, 1))) {
-       y1 * exp(-alpha * (late_t - t1))
-     } else {
-       (y1^(1 - r) - (1 - r) * alpha * (late_t - t1))^(1 / (1 - r))
-     }
-  }
-
-  ab
-}
-
 # Time grid
 time_grid <- seq(0, 730, by = 7)
 
@@ -1034,8 +1015,18 @@ all_summaries <- curves |>
   lapply(function(ab) {
     curves_ab <- curves |> filter(antigen_iso == ab)
 
+    # Reuse the package's own two-phase kinetics function instead of
+    # reimplementing it; suppressWarnings() avoids NaN warnings from the
+    # phase-2 formula being evaluated (and discarded) for early time points.
     pred_matrix <- mapply(
-      function(y0, y1, t1, alpha, r) predicted_ab(time_grid, y0, y1, t1, alpha, r),
+      function(y0, y1, t1, alpha, r) {
+        suppressWarnings(
+          serocalculator:::ab0(
+            t = time_grid,
+            curve_params = list(y0 = y0, y1 = y1, t1 = t1, alpha = alpha, r = r)
+          )
+        )
+      },
       y0    = curves_ab$y0,
       y1    = curves_ab$y1,
       t1    = curves_ab$t1,

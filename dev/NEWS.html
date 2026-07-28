@@ -281,7 +281,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9020</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9021</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -375,7 +375,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9020 (dev)</span>
+ <span class="menu-text">1.4.1.9021 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -384,7 +384,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9020 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9021 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1015,6 +1015,7 @@ window.Quarto = {
 <section id="internal" class="level2">
 <h2 class="anchored" data-anchor-id="internal">Internal</h2>
 <ul>
+<li>Fixed two dead provenance links in workflow comments. <code>check-readme.yaml</code> cited a file that was deleted from <code>IndrajeetPatil/statsExpressions</code>’s default branch when its CI moved to reusable workflows; the citation is now pinned to a commit where the file exists. <code>test-coverage.yaml</code> cited a GitHub Actions <em>run</em> URL, which expires after roughly 90 days; it now cites the upstream workflow file.</li>
 <li>Removed <code>.github/CONTRIBUTING.Rmd</code>; <code>.github/CONTRIBUTING.md</code> is now the hand-maintained source. The <code>.Rmd</code> executed no code (its only chunk was <code>eval = FALSE</code>), so it rendered to markdown identical to a hand-written file while adding a source/generated pair with no CI check to keep the two in sync. (<a href="https://github.com/UCD-SERG/serocalculator/issues/613">#613</a>)</li>
 <li>Documentation website now renders HTML (primary), docx (download link on every page), and revealjs (slides for <code>methodology.qmd</code>) formats. Fixed the HTML/revealjs output-filename collision by specifying <code>output-file: methodology-slides.html</code> for revealjs in <code>methodology.qmd</code>’s frontmatter; docx goes in <code>_metadata.yml</code> globally since <code>.docx</code> has no collision risk. (<a href="https://github.com/UCD-SERG/serocalculator/issues/503">#503</a>)</li>
 <li>Added Codex repository guidance and R-package workflow skills. (<a href="https://github.com/UCD-SERG/serocalculator/issues/574">#574</a>)</li>

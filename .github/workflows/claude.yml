@@ -1,10 +1,10 @@
 # Claude Code GitHub Action (agent mode) — caller stub for the central
-# d-morrison/gha reusable workflow.
+# Morrison-Lab/gha reusable workflow.
 #
 # Responds to "@claude" mentions in issues, issue comments, PR review
 # comments, and PR reviews. Requires the CLAUDE_CODE_OAUTH_TOKEN secret.
 #
-# The reusable workflow (d-morrison/gha/.github/workflows/claude.yml) holds
+# The reusable workflow (Morrison-Lab/gha/.github/workflows/claude.yml) holds
 # the actual agent-mode machinery (branch setup, push, PR open/ready, prose
 # post-back, review dispatch, late-comment dedup, cost reporting) — see its
 # own header comment for details. This stub only holds the triggers, the
@@ -51,7 +51,7 @@ jobs:
       issues: write         # so Claude can comment on issues
       id-token: write
       actions: write        # dispatch claude-code-review.yml via `gh workflow run`
-    uses: d-morrison/gha/.github/workflows/claude.yml@v2
+    uses: Morrison-Lab/gha/.github/workflows/claude.yml@v2
     secrets:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

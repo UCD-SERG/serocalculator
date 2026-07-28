@@ -10,5 +10,5 @@ jobs:
   check:
     # @v1 is frozen and lacks the configurable no-changelog-label input
     # (added at gha#143 specifically for this repo's "no-changelog" (hyphen)
-    # convention); @v2 has it. See d-morrison/gha's Versioning docs.
-    uses: d-morrison/gha/.github/workflows/check-news.yml@v2
+    # convention); @v2 has it. See Morrison-Lab/gha's Versioning docs.
+    uses: Morrison-Lab/gha/.github/workflows/check-news.yml@v2

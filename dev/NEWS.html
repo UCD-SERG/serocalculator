@@ -77,6 +77,84 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!--
+Adds a navbar control that folds the whole sidebar away and gives the content
+the width it held. Quarto's `collapse-level` folds sections *within* the
+sidebar; it has no control for the sidebar itself on a website.
+
+Included from `quarto_website.yml` as `include-in-header`, not
+`include-after-body`, so the stored state is restored before the first paint
+and an already-folded sidebar never flashes into view. The state lives on
+`<html>` for the same reason: `<body>` does not exist yet when this runs.
+
+The paired styling is in `styles.css`.
+-->
+<script>
+  (function () {
+    var KEY = "altdoc-sidebar-folded";
+    var root = document.documentElement;
+
+    function apply(folded) {
+      root.classList.toggle("sidebar-folded", folded);
+      var button = document.getElementById("quarto-sidebar-fold");
+      if (!button) return;
+      var label = folded ? "Show sidebar" : "Hide sidebar";
+      button.setAttribute("aria-expanded", String(!folded));
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
+    }
+
+    // Private browsing and blocked third-party storage both make localStorage
+    // throw rather than return null, so every access is guarded. Losing the
+    // preference is acceptable; losing the button is not.
+    function stored() {
+      try {
+        return localStorage.getItem(KEY) === "1";
+      } catch (e) {
+        return false;
+      }
+    }
+
+    apply(stored());
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // A page with no sidebar has no width to reclaim, so it gets no button.
+      if (!document.getElementById("quarto-sidebar")) return;
+
+      var tools = document.querySelector(".quarto-navbar-tools");
+      if (!tools) {
+        // `.quarto-navbar-tools` is created only when the site asks for a
+        // navbar tool of its own -- a dark-mode switch, reader mode. Both
+        // sites do today, but a theme change should not silently drop the
+        // button, so build the container when it is absent.
+        var navbar = document.querySelector("#quarto-header .navbar > div");
+        if (!navbar) return;
+        tools = document.createElement("div");
+        tools.className = "quarto-navbar-tools";
+        navbar.appendChild(tools);
+      }
+
+      var button = document.createElement("a");
+      button.id = "quarto-sidebar-fold";
+      button.href = "";
+      button.className = "quarto-navigation-tool px-1";
+      button.setAttribute("role", "button");
+      button.setAttribute("aria-controls", "quarto-sidebar");
+      button.innerHTML = '<i class="bi bi-layout-sidebar-inset"></i>';
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        var folded = !root.classList.contains("sidebar-folded");
+        try {
+          localStorage.setItem(KEY, folded ? "1" : "0");
+        } catch (e) {}
+        apply(folded);
+      });
+
+      tools.insertBefore(button, tools.firstChild);
+      apply(root.classList.contains("sidebar-folded"));
+    });
+  })();
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -281,7 +359,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9021</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9023</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -375,7 +453,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9021 (dev)</span>
+ <span class="menu-text">1.4.1.9023 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -384,7 +462,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9021 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9023 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -986,6 +1064,8 @@ window.Quarto = {
 <section id="documentation" class="level2">
 <h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
 <ul>
+<li>Stopped <code>.gitignore</code> from hiding new files added under <code>altdoc/</code>. A bare <code>altdoc</code> entry ignored the whole source directory; the files already in it stayed tracked only because they predate the rule, so the omission was invisible until a <em>new</em> one was added and silently skipped by <code>git add</code>. <code>altdoc/.gitignore</code> already covers the real build artifacts there (<code>_site/</code>, <code>.quarto/</code>, <code>pkgdown.yml</code>, <code>freeze.rds</code>), and <code>_quarto</code> is still ignored separately, so the entry protected nothing.</li>
+<li>Added a control that folds the documentation website’s sidebar away, giving the content the width it held (<a href="https://github.com/UCD-SERG/serocalculator/issues/622">#622</a>). Quarto’s <code>collapse-level</code> folds sections <em>within</em> the sidebar; it has no control for the sidebar itself on a website, so the sidebar held a fixed grid column at every viewport wide enough to show it. The new navbar button hides it and moves the content’s grid start line into the vacated columns, which at a <code>1400px</code> viewport widens the content from <code>630px</code> to <code>922px</code>. The state is kept in <code>localStorage</code>, so it survives navigation between pages. The script that restores it is included in the page header rather than after the body, so a folded sidebar never flashes into view. Below Quarto’s <code>992px</code> breakpoint the button is hidden: the sidebar is already a drawer laid over the content there, so it holds no width to reclaim.</li>
 <li>Fixed two dead external links. The <code>methodology</code> article credited the <em>Salmonella</em> Typhi photo to a Wikimedia Commons page that was deleted on 2026-03-11; the deletion discussion confirms the image is CDC/PHIL public-domain work (PHIL ID 2115), so the credit now cites PHIL directly instead of the dead page. The Ubuntu R install snippet in <code>.github/copilot-instructions.md</code> fetched <code>pubkey.gpg</code>, which CRAN no longer serves (404); it now uses <code>marutter_pubkey.asc</code>.</li>
 <li>Figures on the documentation website now open an enlarged lightbox view when selected. Enabled site-wide (<code>lightbox: true</code>) across every format, including the revealjs slides, and covering both cross-referenced figures and plain images (<a href="https://github.com/UCD-SERG/serocalculator/issues/584">#584</a>).</li>
 <li>Restored the R code in the documentation website’s vignettes and articles. <code>vignettes/_metadata.yml</code> set <code>echo: false</code> for the <code>html</code> and <code>docx</code> formats, which applied to every file under <code>vignettes/</code>, so the published tutorials rendered as prose and figures with no code at all, and the <code>methodology</code> article’s “Estimating seroincidence” section — whose only content is a non-evaluated code chunk — rendered as an empty heading.</li>

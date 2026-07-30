@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-07-28">
+<meta name="dcterms.date" content="2026-07-30">
 <meta name="description" content="A summary of the methods behind serocalculator.">
 <title>Introduction to serocalculator – serocalculator</title>
 <style>
@@ -93,7 +93,83 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link rel="stylesheet" href="../../styles.css">
+}</script><!--
+Adds a navbar control that folds the whole sidebar away and gives the content
+the width it held. Quarto's `collapse-level` folds sections *within* the
+sidebar; it has no control for the sidebar itself on a website.
+
+Included from `quarto_website.yml` as `include-in-header`, not
+`include-after-body`, so the stored state is restored before the first paint
+and an already-folded sidebar never flashes into view. The state lives on
+`<html>` for the same reason: `<body>` does not exist yet when this runs.
+
+The paired styling is in `styles.css`.
+--><script>
+  (function () {
+    var KEY = "altdoc-sidebar-folded";
+    var root = document.documentElement;
+
+    function apply(folded) {
+      root.classList.toggle("sidebar-folded", folded);
+      var button = document.getElementById("quarto-sidebar-fold");
+      if (!button) return;
+      var label = folded ? "Show sidebar" : "Hide sidebar";
+      button.setAttribute("aria-expanded", String(!folded));
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
+    }
+
+    // Private browsing and blocked third-party storage both make localStorage
+    // throw rather than return null, so every access is guarded. Losing the
+    // preference is acceptable; losing the button is not.
+    function stored() {
+      try {
+        return localStorage.getItem(KEY) === "1";
+      } catch (e) {
+        return false;
+      }
+    }
+
+    apply(stored());
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // A page with no sidebar has no width to reclaim, so it gets no button.
+      if (!document.getElementById("quarto-sidebar")) return;
+
+      var tools = document.querySelector(".quarto-navbar-tools");
+      if (!tools) {
+        // `.quarto-navbar-tools` is created only when the site asks for a
+        // navbar tool of its own -- a dark-mode switch, reader mode. Both
+        // sites do today, but a theme change should not silently drop the
+        // button, so build the container when it is absent.
+        var navbar = document.querySelector("#quarto-header .navbar > div");
+        if (!navbar) return;
+        tools = document.createElement("div");
+        tools.className = "quarto-navbar-tools";
+        navbar.appendChild(tools);
+      }
+
+      var button = document.createElement("a");
+      button.id = "quarto-sidebar-fold";
+      button.href = "";
+      button.className = "quarto-navigation-tool px-1";
+      button.setAttribute("role", "button");
+      button.setAttribute("aria-controls", "quarto-sidebar");
+      button.innerHTML = '<i class="bi bi-layout-sidebar-inset"></i>';
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        var folded = !root.classList.contains("sidebar-folded");
+        try {
+          localStorage.setItem(KEY, folded ? "1" : "0");
+        } catch (e) {}
+        apply(folded);
+      });
+
+      tools.insertBefore(button, tools.firstChild);
+      apply(root.classList.contains("sidebar-folded"));
+    });
+  })();
+</script><link rel="stylesheet" href="../../styles.css">
 </head>
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
@@ -263,7 +339,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9021</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9023</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -357,7 +433,7 @@ div.csl-indent {
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9021 (dev)</span>
+ <span class="menu-text">1.4.1.9023 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -366,7 +442,7 @@ div.csl-indent {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9021 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9023 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -916,7 +992,7 @@ div.csl-indent {
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/serocalculator.html">Get started</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/serocalculator.html">Introduction to serocalculator</a></li></ol></nav><h1 class="title display-7">Introduction to serocalculator</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-07-28</p>
+<p class="date">2026-07-30</p>
 </header><section id="overview" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">1</span> Overview</h2>
 <p>The <strong>serocalculator</strong> R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in <span class="citation" data-cites="Simonsen_2009">Simonsen et al. (<a href="#ref-Simonsen_2009" role="doc-biblioref">2009</a>)</span> and <span class="citation" data-cites="Teunis_2012">Teunis, Eijkeren, et al. (<a href="#ref-Teunis_2012" role="doc-biblioref">2012</a>)</span>, and further developed in <span class="citation" data-cites="de_Graaf_2014"><span class="nocase">deGraaf et al.</span> (<a href="#ref-de_Graaf_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="Teunis_2016">Teunis et al. (<a href="#ref-Teunis_2016" role="doc-biblioref">2016</a>)</span>, and <span class="citation" data-cites="Teunis_2020">Teunis and Eijkeren (<a href="#ref-Teunis_2020" role="doc-biblioref">2020</a>)</span>. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.</p>

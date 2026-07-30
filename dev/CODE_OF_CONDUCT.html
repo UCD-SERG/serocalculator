@@ -77,6 +77,84 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!--
+Adds a navbar control that folds the whole sidebar away and gives the content
+the width it held. Quarto's `collapse-level` folds sections *within* the
+sidebar; it has no control for the sidebar itself on a website.
+
+Included from `quarto_website.yml` as `include-in-header`, not
+`include-after-body`, so the stored state is restored before the first paint
+and an already-folded sidebar never flashes into view. The state lives on
+`<html>` for the same reason: `<body>` does not exist yet when this runs.
+
+The paired styling is in `styles.css`.
+-->
+<script>
+  (function () {
+    var KEY = "altdoc-sidebar-folded";
+    var root = document.documentElement;
+
+    function apply(folded) {
+      root.classList.toggle("sidebar-folded", folded);
+      var button = document.getElementById("quarto-sidebar-fold");
+      if (!button) return;
+      var label = folded ? "Show sidebar" : "Hide sidebar";
+      button.setAttribute("aria-expanded", String(!folded));
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
+    }
+
+    // Private browsing and blocked third-party storage both make localStorage
+    // throw rather than return null, so every access is guarded. Losing the
+    // preference is acceptable; losing the button is not.
+    function stored() {
+      try {
+        return localStorage.getItem(KEY) === "1";
+      } catch (e) {
+        return false;
+      }
+    }
+
+    apply(stored());
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // A page with no sidebar has no width to reclaim, so it gets no button.
+      if (!document.getElementById("quarto-sidebar")) return;
+
+      var tools = document.querySelector(".quarto-navbar-tools");
+      if (!tools) {
+        // `.quarto-navbar-tools` is created only when the site asks for a
+        // navbar tool of its own -- a dark-mode switch, reader mode. Both
+        // sites do today, but a theme change should not silently drop the
+        // button, so build the container when it is absent.
+        var navbar = document.querySelector("#quarto-header .navbar > div");
+        if (!navbar) return;
+        tools = document.createElement("div");
+        tools.className = "quarto-navbar-tools";
+        navbar.appendChild(tools);
+      }
+
+      var button = document.createElement("a");
+      button.id = "quarto-sidebar-fold";
+      button.href = "";
+      button.className = "quarto-navigation-tool px-1";
+      button.setAttribute("role", "button");
+      button.setAttribute("aria-controls", "quarto-sidebar");
+      button.innerHTML = '<i class="bi bi-layout-sidebar-inset"></i>';
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        var folded = !root.classList.contains("sidebar-folded");
+        try {
+          localStorage.setItem(KEY, folded ? "1" : "0");
+        } catch (e) {}
+        apply(folded);
+      });
+
+      tools.insertBefore(button, tools.firstChild);
+      apply(root.classList.contains("sidebar-folded"));
+    });
+  })();
+</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -252,7 +330,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9021</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9023</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -346,7 +424,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9021 (dev)</span>
+ <span class="menu-text">1.4.1.9023 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -355,7 +433,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9021 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9023 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>

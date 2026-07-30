@@ -33,7 +33,6 @@ tests/vdiffr.Rout.fail
 _freeze/
 **/_freeze/
 .positai
-altdoc
 _quarto
 .posit/assistant/settings.json
 .posit/assistant

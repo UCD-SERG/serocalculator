@@ -30,6 +30,13 @@
 
 ## Documentation
 
+* Stopped `.gitignore` from hiding new files added under `altdoc/`.
+  A bare `altdoc` entry ignored the whole source directory; the files already
+  in it stayed tracked only because they predate the rule, so the omission was
+  invisible until a *new* one was added and silently skipped by `git add`.
+  `altdoc/.gitignore` already covers the real build artifacts there
+  (`_site/`, `.quarto/`, `pkgdown.yml`, `freeze.rds`), and `_quarto` is still
+  ignored separately, so the entry protected nothing.
 * Added a control that folds the documentation website's sidebar away, giving
   the content the width it held (#622). Quarto's `collapse-level` folds
   sections *within* the sidebar; it has no control for the sidebar itself on a

@@ -49,6 +49,11 @@
   folded sidebar never flashes into view.
   Below Quarto's `992px` breakpoint the button is hidden: the sidebar is already
   a drawer laid over the content there, so it holds no width to reclaim.
+* The documentation website's sidebar now starts folded. Readers arrive on a
+  page to read it, and the navbar already carries the same destinations, so the
+  wider content column is the better default; unfolding the sidebar is
+  remembered, so the choice is still made once per reader rather than once per
+  page.
 * Fixed two dead external links. The `methodology` article credited the
   *Salmonella* Typhi photo to a Wikimedia Commons page that was deleted on
   2026-03-11; the deletion discussion confirms the image is CDC/PHIL

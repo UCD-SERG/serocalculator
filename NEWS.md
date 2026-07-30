@@ -30,6 +30,25 @@
 
 ## Documentation
 
+* Stopped `.gitignore` from hiding new files added under `altdoc/`.
+  A bare `altdoc` entry ignored the whole source directory; the files already
+  in it stayed tracked only because they predate the rule, so the omission was
+  invisible until a *new* one was added and silently skipped by `git add`.
+  `altdoc/.gitignore` already covers the real build artifacts there
+  (`_site/`, `.quarto/`, `pkgdown.yml`, `freeze.rds`), and `_quarto` is still
+  ignored separately, so the entry protected nothing.
+* Added a control that folds the documentation website's sidebar away, giving
+  the content the width it held (#622). Quarto's `collapse-level` folds
+  sections *within* the sidebar; it has no control for the sidebar itself on a
+  website, so the sidebar held a fixed grid column at every viewport wide
+  enough to show it. The new navbar button hides it and moves the content's
+  grid start line into the vacated columns, which at a `1400px` viewport
+  widens the content from `630px` to `922px`. The state is kept in
+  `localStorage`, so it survives navigation between pages. The script that
+  restores it is included in the page header rather than after the body, so a
+  folded sidebar never flashes into view.
+  Below Quarto's `992px` breakpoint the button is hidden: the sidebar is already
+  a drawer laid over the content there, so it holds no width to reclaim.
 * Fixed two dead external links. The `methodology` article credited the
   *Salmonella* Typhi photo to a Wikimedia Commons page that was deleted on
   2026-03-11; the deletion discussion confirms the image is CDC/PHIL

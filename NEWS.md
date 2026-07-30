@@ -35,11 +35,12 @@
   sections *within* the sidebar; it has no control for the sidebar itself on a
   website, so the sidebar held a fixed grid column at every viewport wide
   enough to show it. The new navbar button hides it and moves the content's
-  grid start line into the vacated columns, which at a 1400px viewport widens
-  the content from 630px to 922px. The state is kept in `localStorage`, so it
-  survives navigation between pages, and is restored from the page header
-  rather than after the body, so a folded sidebar never flashes into view.
-  Below Quarto's 992px breakpoint the button is hidden: the sidebar is already
+  grid start line into the vacated columns, which at a `1400px` viewport
+  widens the content from `630px` to `922px`. The state is kept in
+  `localStorage`, so it survives navigation between pages, and is restored
+  from the page header rather than after the body, so a folded sidebar never
+  flashes into view.
+  Below Quarto's `992px` breakpoint the button is hidden: the sidebar is already
   a drawer laid over the content there, so it holds no width to reclaim.
 * Fixed two dead external links. The `methodology` article credited the
   *Salmonella* Typhi photo to a Wikimedia Commons page that was deleted on

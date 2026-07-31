@@ -26,6 +26,13 @@ title: Package index
 # separates them.
 sidebar_labels: name-and-title
 
+# The reference sidebar is long enough that it crowds the content, so this site
+# starts it folded and lets the reader open it. altdoc's own default is
+# `expanded`, so omitting this would silently start the sidebar open -- the
+# behavior would revert rather than fail, which is why it is set explicitly
+# rather than left to the default.
+sidebar_fold: collapsed
+
 reference:
   - title: Prepare data, kinetics models, and noise parameters for analysis
     contents:

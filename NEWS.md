@@ -30,6 +30,17 @@
 
 ## Documentation
 
+* Took the sidebar fold control from `altdoc` instead of keeping a copy here.
+  `altdoc/sidebar-fold.html` and the matching block in `altdoc/styles.css` are
+  replaced by `include-in-header: $ALTDOC_SIDEBAR_FOLD`, which `altdoc` stages
+  at render time with script and style together.
+  The same pair had been copied into `ucdavis/bcs`, and the two copies had
+  already drifted -- this repo changed its copy to start folded and nothing
+  carried that across.
+  The sidebar still starts folded, now via `sidebar_fold: collapsed` in
+  `altdoc/reference.yml`, so what used to be a source-level divergence is a
+  one-line setting.
+
 * Declared the reference manual's grouping once, in a new `altdoc/reference.yml`
   (#610).
   It used to live in two hand-maintained places that nothing kept in step: the

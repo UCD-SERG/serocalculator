@@ -43,10 +43,14 @@
   The published grouping is unchanged: the same nine sections, the same 42
   topics, in the same order.
 
-* Repointed the `altdoc` remote from the `recursive-qmd-search` branch to the
-  default branch, which is what supplies the grouped sidebar above.
+* Moved the `altdoc` dependency off the `recursive-qmd-search` branch and onto
+  the default branch, which is what supplies the grouped sidebar above.
   That branch has no commits the default branch does not already contain, so
-  the pin was holding the docs build behind for nothing.
+  it was holding the docs build behind for nothing.
+  The branch was named in three places -- `Remotes`, `Config/Needs/website`,
+  and the `r-packages` input of the docs workflow -- and changing one of them
+  alone makes the build fail to resolve rather than fall back, since `pak`
+  reads the two as conflicting requirements for the same package.
 
 * Started showing each topic's name alongside its title in the sidebar.
   Titles alone left `as_pop_data` and `load_pop_data` as adjacent entries

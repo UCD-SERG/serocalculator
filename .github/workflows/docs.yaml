@@ -78,7 +78,7 @@ jobs:
       # Pins the altdoc fork this package's docs build needs; the reusable
       # workflow's default is `any::altdoc`.
       r-packages: |
-        d-morrison/altdoc@recursive-qmd-search
+        d-morrison/altdoc
         quarto-dev/quarto-r
         any::sessioninfo
         local::.

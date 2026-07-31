@@ -1,0 +1,92 @@
+<!--
+Adds a navbar control that folds the whole sidebar away and gives the content
+the width it held. Quarto's `collapse-level` folds sections *within* the
+sidebar; it has no control for the sidebar itself on a website.
+
+The sidebar starts folded. Unfolding it is remembered, so the choice is made
+once per reader rather than once per page.
+
+Included from `quarto_website.yml` as `include-in-header`, not
+`include-after-body`, so the stored state is restored before the first paint
+and an already-folded sidebar never flashes into view. The state lives on
+`<html>` for the same reason: `<body>` does not exist yet when this runs.
+
+The paired styling is in `styles.css`.
+-->
+<script>
+  (function () {
+    var KEY = "altdoc-sidebar-folded";
+    var root = document.documentElement;
+
+    function apply(folded) {
+      root.classList.toggle("sidebar-folded", folded);
+      var button = document.getElementById("quarto-sidebar-fold");
+      if (!button) return;
+      var label = folded ? "Show sidebar" : "Hide sidebar";
+      button.setAttribute("aria-expanded", String(!folded));
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
+    }
+
+    // Folded is the default: a first-time visitor gets the full-width content,
+    // and only an explicit "0" -- written by unfolding the sidebar -- opts back
+    // in. That is why this tests against "0" rather than for "1"; a missing key
+    // must mean folded, not unfolded.
+    //
+    // Private browsing and blocked third-party storage both make localStorage
+    // throw rather than return null, so every access is guarded. Losing the
+    // preference is acceptable; losing the button is not.
+    function stored() {
+      try {
+        return localStorage.getItem(KEY) !== "0";
+      } catch (e) {
+        return true;
+      }
+    }
+
+    apply(stored());
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // A page with no sidebar has no width to reclaim, so it gets no button --
+      // and no folded state either. Dropping the class matters now that folded
+      // is the default: without it, every visitor to such a page would have the
+      // content's grid start line moved with no vacated columns to move it into.
+      if (!document.getElementById("quarto-sidebar")) {
+        root.classList.remove("sidebar-folded");
+        return;
+      }
+
+      var tools = document.querySelector(".quarto-navbar-tools");
+      if (!tools) {
+        // `.quarto-navbar-tools` is created only when the site asks for a
+        // navbar tool of its own -- a dark-mode switch, reader mode. Both
+        // sites do today, but a theme change should not silently drop the
+        // button, so build the container when it is absent.
+        var navbar = document.querySelector("#quarto-header .navbar > div");
+        if (!navbar) return;
+        tools = document.createElement("div");
+        tools.className = "quarto-navbar-tools";
+        navbar.appendChild(tools);
+      }
+
+      var button = document.createElement("a");
+      button.id = "quarto-sidebar-fold";
+      button.href = "";
+      button.className = "quarto-navigation-tool px-1";
+      button.setAttribute("role", "button");
+      button.setAttribute("aria-controls", "quarto-sidebar");
+      button.innerHTML = '<i class="bi bi-layout-sidebar-inset"></i>';
+      button.addEventListener("click", function (event) {
+        event.preventDefault();
+        var folded = !root.classList.contains("sidebar-folded");
+        try {
+          localStorage.setItem(KEY, folded ? "1" : "0");
+        } catch (e) {}
+        apply(folded);
+      });
+
+      tools.insertBefore(button, tools.firstChild);
+      apply(root.classList.contains("sidebar-folded"));
+    });
+  })();
+</script>

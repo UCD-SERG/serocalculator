@@ -1,0 +1,56 @@
+/* Add custom styles here */
+
+.sidebar-item-container {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+/* Inline code styling for dark mode */
+body.quarto-dark code:not(pre > code) {
+  background-color: #404040;
+  color: #e6e6e6;
+}
+
+/* Folding the sidebar away.
+
+   Quarto's `collapse-level` folds sections *within* the sidebar; it has no
+   control for the sidebar itself on a website. `sidebar-fold.html` adds one to
+   the navbar and puts `sidebar-folded` on <html>; these rules are the other
+   half of it. */
+
+/* Below Quarto's own breakpoint the sidebar is already a drawer laid over the
+   content, so it holds no width to reclaim and needs no second control. */
+#quarto-sidebar-fold {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  #quarto-sidebar-fold {
+    display: inline-flex;
+  }
+
+  html.sidebar-folded #quarto-sidebar {
+    display: none;
+  }
+
+  /* The sidebar spans `page-start` to `body-start`, so moving the content's
+     start line leftward takes back the columns it vacated. Naming a grid line
+     rather than restating the whole template keeps this independent of the
+     `sidebar-width` the site sets under `format: html: grid:`.
+
+     `page-start-inset` rather than `page-start`: the latter reclaims the
+     outermost track too, which at a 1400px viewport leaves the text 26px from
+     the window edge. Measured at 1400px, against 630px of content unfolded:
+     `page-start` gives 990px at a 26px margin, `page-start-inset` 922px at
+     94px, and `body-start-outset` only 724px. The middle one is the one that
+     buys most of the width without pushing the text against the edge. */
+  html.sidebar-folded #quarto-content > .content {
+    grid-column-start: page-start-inset;
+  }
+
+  /* One icon for both states, mirrored, so the button cannot depend on a
+     second icon name being present in the bundled Bootstrap Icons build. */
+  html.sidebar-folded #quarto-sidebar-fold .bi {
+    transform: scaleX(-1);
+  }
+}

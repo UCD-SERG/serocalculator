@@ -76,18 +76,64 @@ Adds a navbar control that folds the whole sidebar away and gives the content
 the width it held. Quarto's `collapse-level` folds sections *within* the
 sidebar; it has no control for the sidebar itself on a website.
 
-The sidebar starts folded. Unfolding it is remembered, so the choice is made
-once per reader rather than once per page.
+This file is altdoc's, not the user's: `render_docs()` stages it into
+`_quarto/` when a settings file uses `$ALTDOC_SIDEBAR_FOLD`, and rewrites the
+`true` placeholder below from the `sidebar_fold` key in
+`altdoc/reference.yml`. Editing a copy under `altdoc/` will not change the
+published site.
 
-Included from `quarto_website.yml` as `include-in-header`, not
-`include-after-body`, so the stored state is restored before the first paint
-and an already-folded sidebar never flashes into view. The state lives on
-`<html>` for the same reason: `<body>` does not exist yet when this runs.
+The style and the script ship together because they are two halves of one
+mechanism: both name the `sidebar-folded` class and the `quarto-sidebar-fold`
+id, and splitting them across a stylesheet the user maintains would let one
+half move without the other.
 
-The paired styling is in `styles.css`.
---><script>
+Included as `include-in-header` rather than `include-after-body`, so the stored
+state is restored before the first paint and an already-folded sidebar never
+flashes into view. The state lives on `<html>` for the same reason: `<body>`
+does not exist yet when this runs.
+--><style>
+  /* Below Quarto's own breakpoint the sidebar is already a drawer laid over
+     the content, so it holds no width to reclaim and needs no second
+     control. */
+  #quarto-sidebar-fold {
+    display: none;
+  }
+
+  @media (min-width: 992px) {
+    #quarto-sidebar-fold {
+      display: inline-flex;
+    }
+
+    html.sidebar-folded #quarto-sidebar {
+      display: none;
+    }
+
+    /* The sidebar spans `page-start` to `body-start`, so moving the content's
+       start line leftward takes back the columns it vacated. Naming a grid
+       line rather than restating the whole template keeps this independent of
+       whatever `sidebar-width` the site sets under `format: html: grid:`.
+
+       `page-start-inset` rather than `page-start`: the latter reclaims the
+       outermost track too, which at a 1400px viewport leaves the text 26px
+       from the window edge. Measured at 1400px, against 630px of content
+       unfolded: `page-start` gives 990px at a 26px margin, `page-start-inset`
+       922px at 94px, and `body-start-outset` only 724px. The middle one buys
+       most of the width without pushing the text against the edge. */
+    html.sidebar-folded #quarto-content > .content {
+      grid-column-start: page-start-inset;
+    }
+
+    /* One icon for both states, mirrored, so the button cannot depend on a
+       second icon name being present in the bundled Bootstrap Icons build. */
+    html.sidebar-folded #quarto-sidebar-fold .bi {
+      transform: scaleX(-1);
+    }
+  }
+</style>
+<script>
   (function () {
     var KEY = "altdoc-sidebar-folded";
+    var FOLDED_BY_DEFAULT = true;
     var root = document.documentElement;
 
     function apply(folded) {
@@ -100,29 +146,32 @@ The paired styling is in `styles.css`.
       button.setAttribute("title", label);
     }
 
-    // Folded is the default: a first-time visitor gets the full-width content,
-    // and only an explicit "0" -- written by unfolding the sidebar -- opts back
-    // in. That is why this tests against "0" rather than for "1"; a missing key
-    // must mean folded, not unfolded.
+    // Only the two values this script writes are honored, so the configured
+    // default applies to a reader who has never used the button and to one
+    // whose stored value is unreadable alike. Testing for both rather than
+    // for one and treating everything else as its opposite is what lets the
+    // default be either state.
     //
     // Private browsing and blocked third-party storage both make localStorage
     // throw rather than return null, so every access is guarded. Losing the
     // preference is acceptable; losing the button is not.
     function stored() {
       try {
-        return localStorage.getItem(KEY) !== "0";
-      } catch (e) {
-        return true;
-      }
+        var value = localStorage.getItem(KEY);
+        if (value === "1") return true;
+        if (value === "0") return false;
+      } catch (e) {}
+      return FOLDED_BY_DEFAULT;
     }
 
     apply(stored());
 
     document.addEventListener("DOMContentLoaded", function () {
-      // A page with no sidebar has no width to reclaim, so it gets no button --
-      // and no folded state either. Dropping the class matters now that folded
-      // is the default: without it, every visitor to such a page would have the
-      // content's grid start line moved with no vacated columns to move it into.
+      // A page with no sidebar has no width to reclaim, so it gets no button
+      // -- and no folded state either. Dropping the class matters when folded
+      // is the default: without it, a visitor to such a page would have the
+      // content's grid start line moved with no vacated columns to move it
+      // into.
       if (!document.getElementById("quarto-sidebar")) {
         root.classList.remove("sidebar-folded");
         return;
@@ -131,9 +180,9 @@ The paired styling is in `styles.css`.
       var tools = document.querySelector(".quarto-navbar-tools");
       if (!tools) {
         // `.quarto-navbar-tools` is created only when the site asks for a
-        // navbar tool of its own -- a dark-mode switch, reader mode. Both
-        // sites do today, but a theme change should not silently drop the
-        // button, so build the container when it is absent.
+        // navbar tool of its own -- a dark-mode switch, reader mode. A theme
+        // change should not silently drop the button, so build the container
+        // when it is absent.
         var navbar = document.querySelector("#quarto-header .navbar > div");
         if (!navbar) return;
         tools = document.createElement("div");
@@ -331,7 +380,7 @@ The paired styling is in `styles.css`.
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9026</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9027</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -425,7 +474,7 @@ The paired styling is in `styles.css`.
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9026 (dev)</span>
+ <span class="menu-text">1.4.1.9027 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -434,7 +483,7 @@ The paired styling is in `styles.css`.
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9026 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9027 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -977,7 +1026,7 @@ The paired styling is in `styles.css`.
   title = {serocalculator: Estimating Infection Rates from Serological Data},
   author = {Kristina Lai and Chris Orwa and Peter Teunis and Kristen Aiemjoy and Douglas Ezra Morrison},
   year = {2026},
-  note = {R package version 1.4.1.9026},
+  note = {R package version 1.4.1.9027},
   url = {https://ucd-serg.github.io/serocalculator/},
 }</code></pre>
 </div>

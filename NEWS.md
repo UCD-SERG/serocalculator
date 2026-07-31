@@ -30,6 +30,29 @@
 
 ## Documentation
 
+* Declared the reference manual's grouping once, in a new `altdoc/reference.yml`
+  (#610).
+  It used to live in two hand-maintained places that nothing kept in step: the
+  `altdoc/reference.qmd` index page and the `Reference` block of
+  `altdoc/quarto_website.yml`.
+  Adding a topic to one and missing the other rendered cleanly and raised no
+  warning, which is how it went unnoticed on #392.
+  altdoc now builds both surfaces from the single file, so the two cannot
+  disagree, and warns about any exported topic no section claims rather than
+  leaving it off the site in silence.
+  The published grouping is unchanged: the same nine sections, the same 42
+  topics, in the same order.
+
+* Repointed the `altdoc` remote from the `recursive-qmd-search` branch to the
+  default branch, which is what supplies the grouped sidebar above.
+  That branch has no commits the default branch does not already contain, so
+  the pin was holding the docs build behind for nothing.
+
+* Started showing each topic's name alongside its title in the sidebar.
+  Titles alone left `as_pop_data` and `load_pop_data` as adjacent entries
+  reading identically, and the same for `as_noise_params` and
+  `load_noise_params`, with nothing to tell a reader which was which.
+
 * Stopped `.gitignore` from hiding new files added under `altdoc/`.
   A bare `altdoc` entry ignored the whole source directory; the files already
   in it stayed tracked only because they predate the rule, so the omission was

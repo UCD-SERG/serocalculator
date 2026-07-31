@@ -82,6 +82,9 @@ Adds a navbar control that folds the whole sidebar away and gives the content
 the width it held. Quarto's `collapse-level` folds sections *within* the
 sidebar; it has no control for the sidebar itself on a website.
 
+The sidebar starts folded. Unfolding it is remembered, so the choice is made
+once per reader rather than once per page.
+
 Included from `quarto_website.yml` as `include-in-header`, not
 `include-after-body`, so the stored state is restored before the first paint
 and an already-folded sidebar never flashes into view. The state lives on
@@ -104,22 +107,33 @@ The paired styling is in `styles.css`.
       button.setAttribute("title", label);
     }
 
+    // Folded is the default: a first-time visitor gets the full-width content,
+    // and only an explicit "0" -- written by unfolding the sidebar -- opts back
+    // in. That is why this tests against "0" rather than for "1"; a missing key
+    // must mean folded, not unfolded.
+    //
     // Private browsing and blocked third-party storage both make localStorage
     // throw rather than return null, so every access is guarded. Losing the
     // preference is acceptable; losing the button is not.
     function stored() {
       try {
-        return localStorage.getItem(KEY) === "1";
+        return localStorage.getItem(KEY) !== "0";
       } catch (e) {
-        return false;
+        return true;
       }
     }
 
     apply(stored());
 
     document.addEventListener("DOMContentLoaded", function () {
-      // A page with no sidebar has no width to reclaim, so it gets no button.
-      if (!document.getElementById("quarto-sidebar")) return;
+      // A page with no sidebar has no width to reclaim, so it gets no button --
+      // and no folded state either. Dropping the class matters now that folded
+      // is the default: without it, every visitor to such a page would have the
+      // content's grid start line moved with no vacated columns to move it into.
+      if (!document.getElementById("quarto-sidebar")) {
+        root.classList.remove("sidebar-folded");
+        return;
+      }
 
       var tools = document.querySelector(".quarto-navbar-tools");
       if (!tools) {
@@ -359,7 +373,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9023</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9026</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -453,7 +467,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9023 (dev)</span>
+ <span class="menu-text">1.4.1.9026 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -462,7 +476,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9023 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9026 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -601,6 +615,12 @@ window.Quarto = {
   </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package index</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
@@ -610,12 +630,6 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package index</span></a>
-  </div>
-</li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
@@ -628,49 +642,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/as_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load a cross-sectional antibody survey data set</span></a>
+ <span class="menu-text">as_pop_data(): Load a cross-sectional antibody surve…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/load_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load a cross-sectional antibody survey data set</span></a>
+ <span class="menu-text">load_pop_data(): Load a cross-sectional antibody surve…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/as_sr_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load longitudinal seroresponse parameters</span></a>
+ <span class="menu-text">as_sr_params(): Load longitudinal seroresponse parame…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/load_sr_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load longitudinal seroresponse parameter samples</span></a>
+ <span class="menu-text">load_sr_params(): Load longitudinal seroresponse parame…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/as_noise_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load noise parameters</span></a>
+ <span class="menu-text">as_noise_params(): Load noise parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/load_noise_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load noise parameters</span></a>
+ <span class="menu-text">load_noise_params(): Load noise parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/check_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Check the formatting of a cross-sectional antibody survey dataset.</span></a>
+ <span class="menu-text">check_pop_data(): Check the formatting of a cross-secti…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/strata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extract <code>Strata</code> metadata from an object</span></a>
+ <span class="menu-text">strata(): Extract <code>Strata</code> metadata from an object</span></a>
   </div>
 </li>
       </ul>
@@ -687,25 +701,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/get_biomarker_levels.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extract biomarker levels</span></a>
+ <span class="menu-text">get_biomarker_levels(): Extract biomarker levels</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/get_biomarker_names_var.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Get biomarker variable name</span></a>
+ <span class="menu-text">get_biomarker_names_var(): Get biomarker variable name</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/get_values_var.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extract antibody measurement values</span></a>
+ <span class="menu-text">get_values_var(): Extract antibody measurement values</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/get_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Get antibody measurement values</span></a>
+ <span class="menu-text">get_values(): Get antibody measurement values</span></a>
   </div>
 </li>
       </ul>
@@ -722,63 +736,69 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/autoplot.pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot distribution of antibodies</span></a>
+ <span class="menu-text">autoplot.pop_data: Plot distribution of antibodies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/autoplot.curve_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Graph antibody decay curves by antigen isotype</span></a>
+ <span class="menu-text">autoplot.curve_params: Graph antibody decay curves by antige…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/graph.curve.params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Graph estimated antibody decay curves</span></a>
+ <span class="menu-text">graph.curve.params(): Graph estimated antibody decay curves</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/graph_loglik.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Graph log-likelihood of data</span></a>
+ <span class="menu-text">graph_loglik(): Graph log-likelihood of data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/log_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calculate log-likelihood</span></a>
+ <span class="menu-text">log_likelihood(): Calculate log-likelihood</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/antibody_decay_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Antibody decay curve with natural parameters</span></a>
+ <span class="menu-text">antibody_decay_curve(): Antibody decay curve with natural par…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/pathogen_decay_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pathogen decay curve</span></a>
+ <span class="menu-text">pathogen_decay_curve(): Pathogen decay curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/plot_decay_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot a decay function</span></a>
+ <span class="menu-text">plot_decay_curve(): Plot a decay function</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/curve_app.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Launch the interactive Shiny app for the antigen-antibody kinetics model</span></a>
+ <span class="menu-text">curve_app(): Launch the interactive Shiny app for …</span></a>
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">man/t1f.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./man/t1f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">t1f(): Calculate time to end of active infec…</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">man/y1f.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./man/y1f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">y1f(): Calculate peak antibody concentration</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -793,13 +813,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/est_seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Find the maximum likelihood estimate of the incidence rate parameter</span></a>
+ <span class="menu-text">est_seroincidence(): Find the maximum likelihood estimate …</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/est_seroincidence_by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Estimate Seroincidence</span></a>
+ <span class="menu-text">est_seroincidence_by(): Estimate Seroincidence</span></a>
   </div>
 </li>
       </ul>
@@ -816,13 +836,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/summary.seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summarizing fitted seroincidence models</span></a>
+ <span class="menu-text">summary.seroincidence: Summarizing fitted seroincidence models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary Method for <code>“seroincidence.by”</code> Objects</span></a>
+ <span class="menu-text">summary.seroincidence.by: Summary Method for `“seroincidence.by…</span></a>
   </div>
 </li>
       </ul>
@@ -839,19 +859,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/autoplot.seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot the log-likelihood curve for the incidence rate estimate</span></a>
+ <span class="menu-text">autoplot.seroincidence: Plot the log-likelihood curve for the…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/autoplot.seroincidence.by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot <code>seroincidence.by</code> log-likelihoods</span></a>
+ <span class="menu-text">autoplot.seroincidence.by: Plot <code>seroincidence.by</code> log-likelihoods</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/autoplot.summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot method for <code>summary.seroincidence.by</code> objects</span></a>
+ <span class="menu-text">autoplot.summary.seroincidence.by: Plot method for `summary.seroincidenc…</span></a>
   </div>
 </li>
       </ul>
@@ -868,7 +888,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/compare_seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Compare seroincidence rates between two groups</span></a>
+ <span class="menu-text">compare_seroincidence(): Compare seroincidence rates between t…</span></a>
   </div>
 </li>
       </ul>
@@ -885,43 +905,43 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/sees_pop_data_100.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example cross-sectional data set</span></a>
+ <span class="menu-text">sees_pop_data_100: Small example cross-sectional data set</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/sees_pop_data_pk_100.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example cross-sectional data set</span></a>
+ <span class="menu-text">sees_pop_data_pk_100: Small example cross-sectional data set</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/typhoid_curves_nostrat_100.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example of antibody response curve parameters for typhoid</span></a>
+ <span class="menu-text">typhoid_curves_nostrat_100: Small example of antibody response cu…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/example_noise_params_sees.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example of noise parameters for typhoid</span></a>
+ <span class="menu-text">example_noise_params_sees: Small example of noise parameters for…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/example_noise_params_pk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example of noise parameters for typhoid</span></a>
+ <span class="menu-text">example_noise_params_pk: Small example of noise parameters for…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/sees_typhoid_ests_strat.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example <code>“seroincidence.by”</code> object</span></a>
+ <span class="menu-text">sees_typhoid_ests_strat: Example <code>"seroincidence.by"</code> object</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/serocalculator_example.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Get path to an example file</span></a>
+ <span class="menu-text">serocalculator_example(): Get path to an example file</span></a>
   </div>
 </li>
       </ul>
@@ -938,25 +958,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simulate a cross-sectional serosurvey with noise</span></a>
+ <span class="menu-text">sim_pop_data(): Simulate a cross-sectional serosurvey…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/sim_pop_data_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simulate multiple data sets</span></a>
+ <span class="menu-text">sim_pop_data_multi(): Simulate multiple data sets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/analyze_sims.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analyze simulation results</span></a>
+ <span class="menu-text">analyze_sims(): Analyze simulation results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot simulation results <code>autoplot()</code> method for <code>sim_results</code> objects</span></a>
+ <span class="menu-text">autoplot.sim_results: Plot simulation results <code>autoplot()</code> …</span></a>
   </div>
 </li>
       </ul>
@@ -1064,32 +1084,36 @@ window.Quarto = {
 <section id="documentation" class="level2">
 <h2 class="anchored" data-anchor-id="documentation">Documentation</h2>
 <ul>
-<li>Stopped <code>.gitignore</code> from hiding new files added under <code>altdoc/</code>. A bare <code>altdoc</code> entry ignored the whole source directory; the files already in it stayed tracked only because they predate the rule, so the omission was invisible until a <em>new</em> one was added and silently skipped by <code>git add</code>. <code>altdoc/.gitignore</code> already covers the real build artifacts there (<code>_site/</code>, <code>.quarto/</code>, <code>pkgdown.yml</code>, <code>freeze.rds</code>), and <code>_quarto</code> is still ignored separately, so the entry protected nothing.</li>
-<li>Added a control that folds the documentation website’s sidebar away, giving the content the width it held (<a href="https://github.com/UCD-SERG/serocalculator/issues/622">#622</a>). Quarto’s <code>collapse-level</code> folds sections <em>within</em> the sidebar; it has no control for the sidebar itself on a website, so the sidebar held a fixed grid column at every viewport wide enough to show it. The new navbar button hides it and moves the content’s grid start line into the vacated columns, which at a <code>1400px</code> viewport widens the content from <code>630px</code> to <code>922px</code>. The state is kept in <code>localStorage</code>, so it survives navigation between pages. The script that restores it is included in the page header rather than after the body, so a folded sidebar never flashes into view. Below Quarto’s <code>992px</code> breakpoint the button is hidden: the sidebar is already a drawer laid over the content there, so it holds no width to reclaim.</li>
-<li>Fixed two dead external links. The <code>methodology</code> article credited the <em>Salmonella</em> Typhi photo to a Wikimedia Commons page that was deleted on 2026-03-11; the deletion discussion confirms the image is CDC/PHIL public-domain work (PHIL ID 2115), so the credit now cites PHIL directly instead of the dead page. The Ubuntu R install snippet in <code>.github/copilot-instructions.md</code> fetched <code>pubkey.gpg</code>, which CRAN no longer serves (404); it now uses <code>marutter_pubkey.asc</code>.</li>
-<li>Figures on the documentation website now open an enlarged lightbox view when selected. Enabled site-wide (<code>lightbox: true</code>) across every format, including the revealjs slides, and covering both cross-referenced figures and plain images (<a href="https://github.com/UCD-SERG/serocalculator/issues/584">#584</a>).</li>
-<li>Restored the R code in the documentation website’s vignettes and articles. <code>vignettes/_metadata.yml</code> set <code>echo: false</code> for the <code>html</code> and <code>docx</code> formats, which applied to every file under <code>vignettes/</code>, so the published tutorials rendered as prose and figures with no code at all, and the <code>methodology</code> article’s “Estimating seroincidence” section — whose only content is a non-evaluated code chunk — rendered as an empty heading.</li>
-<li>Reviewed and revised the <code>methodology</code> article: corrected the standard-error description (the inverse negative Hessian is the <em>variance</em>, not the standard error) and the “truncated by age” characterization of the latent infection-time distribution, added narrative to the previously code-only “Estimating seroincidence” and “Multiple biomarkers” sections, moved “In-progress work” out of the “Validation” section into its own section, promoted “References” to a top-level section, and restored the captions and image credits on the two typhoid figures (adjacent images with no blank line between them are parsed as one paragraph, which drops their captions).</li>
-<li>Fixed dead documentation links that still used the old pkgdown site layout. The site root is now a redirect page, so <code>/articles/…</code>, <code>/reference/index.html</code>, <code>/news/index.html</code>, and <code>/CONTRIBUTING.html</code> no longer resolve; links from within the site are now relative so they stay on the reader’s docs version, and the links in the README point at paths that exist. Also corrected the description in the README of which URL serves which docs version, and fixed the link to the contributing guide in the pull request template.</li>
-<li>Fixed a dead link in the README: the in-development documentation pointed at <code>/main/</code>, which has served nothing since <a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a> moved development docs to <code>/dev/</code>. Also removed a duplicated “the” in the same sentence. (<a href="https://github.com/UCD-SERG/serocalculator/issues/604">#604</a>)</li>
-<li>The documentation site now deploys multiple versions side by side, following <code>rpt</code>’s pattern: pushes to <code>main</code> deploy development docs to <code>/dev/</code>, published releases deploy stable docs to <code>/latest-tag/</code> (plus an archived <code>/vX.Y.Z/</code> copy), and the site root redirects to whichever was deployed most recently. A “Versions” navbar dropdown links between them. (<a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a>)</li>
-<li>Updated the documentation site configuration to promote “Get started”, “Reference”, and “News” in the top navigation, and added a grouped <code>reference.qmd</code> index plus grouped sidebar reference sections that exclude internal-only topics.</li>
-<li>The documentation site’s reference index page is now titled “Package index” rather than “Reference”, matching the old pkgdown site and distinguishing the page from the navigation entry that links to it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>
-<li>Added a “Citation” entry to the documentation site’s sidebar. The citation page was previously reachable only from the navbar “More” dropdown, unlike <code>rpt</code> and the default sidebar <code>altdoc</code> ships, which both list it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</li>
-<li>Links to the documentation site’s old <code>/main/</code> paths now resolve again. Before the altdoc migration the development docs were published under the branch name, so they lived at <code>/main/</code>; they now live at <code>/dev/</code>, which left every <code>/main/...</code> link dead. The site now serves a root <code>404.html</code> that redirects any request under <code>/main/</code> to the same path under <code>/dev/</code>, deep links included. Redirection requires JavaScript; without it the page renders as a plain not-found notice linking to the documentation home page. (<a href="https://github.com/UCD-SERG/serocalculator/issues/599">#599</a>)</li>
-<li>Updated the documentation site’s dark-mode styling to match <code>rpt</code> by adding the same inline-code color override used there, improving contrast on the home page and article text.</li>
-<li>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</li>
-<li>The <code>methodology</code> vignette now loads its <code>slidebreak</code> shortcode explicitly so the shortcode no longer leaks into HTML output, and rendered vignettes now suppress package startup messages.</li>
-<li>Fixed the date in the vignettes’ title blocks, which rendered as “Invalid Date” (most visibly on the <code>methodology</code> slides’ title slide). <code>vignettes/_metadata.yml</code> set the date with an inline R expression, but Quarto merges that file into the document metadata without a <code>knitr</code> pass, so the expression was never evaluated; the date now uses Quarto’s own <code>today</code> keyword. (<a href="https://github.com/UCD-SERG/serocalculator/issues/597">#597</a>)</li>
-<li>Restored the <code>methodology</code> vignette’s docx download link, which had been dropped on the (mistaken) assumption that it needed its own <code>docx:</code> format block; it renders fine via the <code>docx:</code> default already declared in <code>vignettes/_metadata.yml</code>.</li>
-<li>Completed the measurement-noise model in the <code>methodology</code> vignette (multiplicative relative error), added a “Combined biological and measurement noise” section, and added a “Noise and never-infected subjects” section explaining that additive biological noise spreads a never-infected subject’s measured response over a positive range while multiplicative measurement noise leaves a true zero at zero. (<a href="https://github.com/UCD-SERG/serocalculator/issues/561">#561</a>)</li>
-<li>Corrected the documentation of the <code>eps</code> measurement-noise parameter (in <code>example_noise_params_pk</code>/<code>example_noise_params_sees</code> and the vignettes): <code>eps</code> is the bound on the relative measurement error (<code>Unif(-eps, eps)</code>), not a coefficient of variation. A measured CV corresponds to <code>eps = sqrt(3) * CV</code>. (<a href="https://github.com/UCD-SERG/serocalculator/issues/563">#563</a>)</li>
-<li>Added the never-infected density under combined biological and measurement noise to the <code>methodology</code> vignette: the piecewise closed form for <code>y_obs = eps_b * (1 + xi)</code>, matching Teunis and van Eijkeren (2020) Equation 19 and verified to integrate to the never-infected probability. (<a href="https://github.com/UCD-SERG/serocalculator/issues/567">#567</a>)</li>
-<li>Made the never-infected term explicit in the “per-person likelihood” slide of the <code>methodology</code> vignette: the observed-data likelihood integral is now shown split into its continuous (ever-infected) and discrete (<code>T = NA</code>, never-infected) parts, with <code>p(Y=y | T=NA)</code> defined as a point mass at zero (before noise). (<a href="https://github.com/UCD-SERG/serocalculator/issues/567">#567</a>)</li>
-<li>Explained, in the “Biological noise” section of the <code>methodology</code> vignette, why the biological-noise width <code>nu</code> is estimated as the 95th percentile of negative controls: Teunis and van Eijkeren (2020) show that a uniform noise model only needs to match the true noise distribution’s width, not its exact shape, and note that this width is difficult to verify against a mixed (ongoing-seroresponse) population – motivating estimation from a clean negative-control panel instead. Also noted that the specific choice of the 95th percentile (rather than, e.g., the 99th or the sample maximum) is an adopted convention, not a result derived or optimized in the paper. (<a href="https://github.com/UCD-SERG/serocalculator/issues/567">#567</a>)</li>
-<li>Added the conditional variance <code>Var(y_obs | y_true)</code> for the combined biological- and measurement-noise model to the <code>methodology</code> vignette, derived from the independent-product-variance identity and checked against both single-source special cases already in the vignette. (<a href="https://github.com/UCD-SERG/serocalculator/issues/571">#571</a>)</li>
-<li>Added <code>Var(y_obs | T=t)</code>, marginalizing over between-person heterogeneity in <code>y_true</code>, to the <code>methodology</code> vignette: derived via the law of total variance from the <code>Var(y_obs | y_true)</code> formula above, with the between-person heterogeneity term <code>Var(y_true | T=t)</code> introduced symbolically (it has no closed form in this framework, since <code>serodynamics</code> represents curve-parameter heterogeneity as an empirical posterior sample rather than a stated parametric distribution). Clarified that the longitudinal model’s residual variance is constant on the log scale conditional on individual random effects, while random waning rates can induce time-varying marginal population variance that <code>serocalculator</code> carries forward by averaging over kinetic-parameter draws. (<a href="https://github.com/UCD-SERG/serocalculator/issues/571">#571</a>)</li>
-<li>Moved <code>f_dev0()</code>’s <code>@examples</code> block to a separate example file (<code>inst/examples/exm-f_dev.R</code>), following the convention already used by other functions in this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</li>
+<li><p>Declared the reference manual’s grouping once, in a new <code>altdoc/reference.yml</code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/610">#610</a>). It used to live in two hand-maintained places that nothing kept in step: the <code>altdoc/reference.qmd</code> index page and the <code>Reference</code> block of <code>altdoc/quarto_website.yml</code>. Adding a topic to one and missing the other rendered cleanly and raised no warning, which is how it went unnoticed on <a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>. altdoc now builds both surfaces from the single file, so the two cannot disagree, and warns about any exported topic no section claims rather than leaving it off the site in silence. The published grouping is unchanged: the same nine sections, the same 42 topics, in the same order.</p></li>
+<li><p>Moved the <code>altdoc</code> dependency off the <code>recursive-qmd-search</code> branch and onto the default branch, which is what supplies the grouped sidebar above. That branch has no commits the default branch does not already contain, so it was holding the docs build behind for nothing. The branch was named in three places – <code>Remotes</code>, <code>Config/Needs/website</code>, and the <code>r-packages</code> input of the docs workflow – and changing one of them alone makes the build fail to resolve rather than fall back, since <code>pak</code> reads the two as conflicting requirements for the same package.</p></li>
+<li><p>Started showing each topic’s name alongside its title in the sidebar. Titles alone left <code>as_pop_data</code> and <code>load_pop_data</code> as adjacent entries reading identically, and the same for <code>as_noise_params</code> and <code>load_noise_params</code>, with nothing to tell a reader which was which.</p></li>
+<li><p>Stopped <code>.gitignore</code> from hiding new files added under <code>altdoc/</code>. A bare <code>altdoc</code> entry ignored the whole source directory; the files already in it stayed tracked only because they predate the rule, so the omission was invisible until a <em>new</em> one was added and silently skipped by <code>git add</code>. <code>altdoc/.gitignore</code> already covers the real build artifacts there (<code>_site/</code>, <code>.quarto/</code>, <code>pkgdown.yml</code>, <code>freeze.rds</code>), and <code>_quarto</code> is still ignored separately, so the entry protected nothing.</p></li>
+<li><p>Added a control that folds the documentation website’s sidebar away, giving the content the width it held (<a href="https://github.com/UCD-SERG/serocalculator/issues/622">#622</a>). Quarto’s <code>collapse-level</code> folds sections <em>within</em> the sidebar; it has no control for the sidebar itself on a website, so the sidebar held a fixed grid column at every viewport wide enough to show it. The new navbar button hides it and moves the content’s grid start line into the vacated columns, which at a <code>1400px</code> viewport widens the content from <code>630px</code> to <code>922px</code>. The state is kept in <code>localStorage</code>, so it survives navigation between pages. The script that restores it is included in the page header rather than after the body, so a folded sidebar never flashes into view. Below Quarto’s <code>992px</code> breakpoint the button is hidden: the sidebar is already a drawer laid over the content there, so it holds no width to reclaim.</p></li>
+<li><p>The documentation website’s sidebar now starts folded. Readers arrive on a page to read it, and the navbar already carries the same destinations, so the wider content column is the better default; unfolding the sidebar is remembered, so the choice is still made once per reader rather than once per page.</p></li>
+<li><p>Fixed two dead external links. The <code>methodology</code> article credited the <em>Salmonella</em> Typhi photo to a Wikimedia Commons page that was deleted on 2026-03-11; the deletion discussion confirms the image is CDC/PHIL public-domain work (PHIL ID 2115), so the credit now cites PHIL directly instead of the dead page. The Ubuntu R install snippet in <code>.github/copilot-instructions.md</code> fetched <code>pubkey.gpg</code>, which CRAN no longer serves (404); it now uses <code>marutter_pubkey.asc</code>.</p></li>
+<li><p>Figures on the documentation website now open an enlarged lightbox view when selected. Enabled site-wide (<code>lightbox: true</code>) across every format, including the revealjs slides, and covering both cross-referenced figures and plain images (<a href="https://github.com/UCD-SERG/serocalculator/issues/584">#584</a>).</p></li>
+<li><p>Restored the R code in the documentation website’s vignettes and articles. <code>vignettes/_metadata.yml</code> set <code>echo: false</code> for the <code>html</code> and <code>docx</code> formats, which applied to every file under <code>vignettes/</code>, so the published tutorials rendered as prose and figures with no code at all, and the <code>methodology</code> article’s “Estimating seroincidence” section — whose only content is a non-evaluated code chunk — rendered as an empty heading.</p></li>
+<li><p>Reviewed and revised the <code>methodology</code> article: corrected the standard-error description (the inverse negative Hessian is the <em>variance</em>, not the standard error) and the “truncated by age” characterization of the latent infection-time distribution, added narrative to the previously code-only “Estimating seroincidence” and “Multiple biomarkers” sections, moved “In-progress work” out of the “Validation” section into its own section, promoted “References” to a top-level section, and restored the captions and image credits on the two typhoid figures (adjacent images with no blank line between them are parsed as one paragraph, which drops their captions).</p></li>
+<li><p>Fixed dead documentation links that still used the old pkgdown site layout. The site root is now a redirect page, so <code>/articles/…</code>, <code>/reference/index.html</code>, <code>/news/index.html</code>, and <code>/CONTRIBUTING.html</code> no longer resolve; links from within the site are now relative so they stay on the reader’s docs version, and the links in the README point at paths that exist. Also corrected the description in the README of which URL serves which docs version, and fixed the link to the contributing guide in the pull request template.</p></li>
+<li><p>Fixed a dead link in the README: the in-development documentation pointed at <code>/main/</code>, which has served nothing since <a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a> moved development docs to <code>/dev/</code>. Also removed a duplicated “the” in the same sentence. (<a href="https://github.com/UCD-SERG/serocalculator/issues/604">#604</a>)</p></li>
+<li><p>The documentation site now deploys multiple versions side by side, following <code>rpt</code>’s pattern: pushes to <code>main</code> deploy development docs to <code>/dev/</code>, published releases deploy stable docs to <code>/latest-tag/</code> (plus an archived <code>/vX.Y.Z/</code> copy), and the site root redirects to whichever was deployed most recently. A “Versions” navbar dropdown links between them. (<a href="https://github.com/UCD-SERG/serocalculator/issues/504">#504</a>)</p></li>
+<li><p>Updated the documentation site configuration to promote “Get started”, “Reference”, and “News” in the top navigation, and added a grouped <code>reference.qmd</code> index plus grouped sidebar reference sections that exclude internal-only topics.</p></li>
+<li><p>The documentation site’s reference index page is now titled “Package index” rather than “Reference”, matching the old pkgdown site and distinguishing the page from the navigation entry that links to it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</p></li>
+<li><p>Added a “Citation” entry to the documentation site’s sidebar. The citation page was previously reachable only from the navbar “More” dropdown, unlike <code>rpt</code> and the default sidebar <code>altdoc</code> ships, which both list it. (<a href="https://github.com/UCD-SERG/serocalculator/issues/594">#594</a>)</p></li>
+<li><p>Links to the documentation site’s old <code>/main/</code> paths now resolve again. Before the altdoc migration the development docs were published under the branch name, so they lived at <code>/main/</code>; they now live at <code>/dev/</code>, which left every <code>/main/...</code> link dead. The site now serves a root <code>404.html</code> that redirects any request under <code>/main/</code> to the same path under <code>/dev/</code>, deep links included. Redirection requires JavaScript; without it the page renders as a plain not-found notice linking to the documentation home page. (<a href="https://github.com/UCD-SERG/serocalculator/issues/599">#599</a>)</p></li>
+<li><p>Updated the documentation site’s dark-mode styling to match <code>rpt</code> by adding the same inline-code color override used there, improving contrast on the home page and article text.</p></li>
+<li><p>Added introductory lecture slides to the <code>methodology</code> vignette (“Estimating Incidence Rates from Cross-Sectional Serosurveys”).</p></li>
+<li><p>The <code>methodology</code> vignette now loads its <code>slidebreak</code> shortcode explicitly so the shortcode no longer leaks into HTML output, and rendered vignettes now suppress package startup messages.</p></li>
+<li><p>Fixed the date in the vignettes’ title blocks, which rendered as “Invalid Date” (most visibly on the <code>methodology</code> slides’ title slide). <code>vignettes/_metadata.yml</code> set the date with an inline R expression, but Quarto merges that file into the document metadata without a <code>knitr</code> pass, so the expression was never evaluated; the date now uses Quarto’s own <code>today</code> keyword. (<a href="https://github.com/UCD-SERG/serocalculator/issues/597">#597</a>)</p></li>
+<li><p>Restored the <code>methodology</code> vignette’s docx download link, which had been dropped on the (mistaken) assumption that it needed its own <code>docx:</code> format block; it renders fine via the <code>docx:</code> default already declared in <code>vignettes/_metadata.yml</code>.</p></li>
+<li><p>Completed the measurement-noise model in the <code>methodology</code> vignette (multiplicative relative error), added a “Combined biological and measurement noise” section, and added a “Noise and never-infected subjects” section explaining that additive biological noise spreads a never-infected subject’s measured response over a positive range while multiplicative measurement noise leaves a true zero at zero. (<a href="https://github.com/UCD-SERG/serocalculator/issues/561">#561</a>)</p></li>
+<li><p>Corrected the documentation of the <code>eps</code> measurement-noise parameter (in <code>example_noise_params_pk</code>/<code>example_noise_params_sees</code> and the vignettes): <code>eps</code> is the bound on the relative measurement error (<code>Unif(-eps, eps)</code>), not a coefficient of variation. A measured CV corresponds to <code>eps = sqrt(3) * CV</code>. (<a href="https://github.com/UCD-SERG/serocalculator/issues/563">#563</a>)</p></li>
+<li><p>Added the never-infected density under combined biological and measurement noise to the <code>methodology</code> vignette: the piecewise closed form for <code>y_obs = eps_b * (1 + xi)</code>, matching Teunis and van Eijkeren (2020) Equation 19 and verified to integrate to the never-infected probability. (<a href="https://github.com/UCD-SERG/serocalculator/issues/567">#567</a>)</p></li>
+<li><p>Made the never-infected term explicit in the “per-person likelihood” slide of the <code>methodology</code> vignette: the observed-data likelihood integral is now shown split into its continuous (ever-infected) and discrete (<code>T = NA</code>, never-infected) parts, with <code>p(Y=y | T=NA)</code> defined as a point mass at zero (before noise). (<a href="https://github.com/UCD-SERG/serocalculator/issues/567">#567</a>)</p></li>
+<li><p>Explained, in the “Biological noise” section of the <code>methodology</code> vignette, why the biological-noise width <code>nu</code> is estimated as the 95th percentile of negative controls: Teunis and van Eijkeren (2020) show that a uniform noise model only needs to match the true noise distribution’s width, not its exact shape, and note that this width is difficult to verify against a mixed (ongoing-seroresponse) population – motivating estimation from a clean negative-control panel instead. Also noted that the specific choice of the 95th percentile (rather than, e.g., the 99th or the sample maximum) is an adopted convention, not a result derived or optimized in the paper. (<a href="https://github.com/UCD-SERG/serocalculator/issues/567">#567</a>)</p></li>
+<li><p>Added the conditional variance <code>Var(y_obs | y_true)</code> for the combined biological- and measurement-noise model to the <code>methodology</code> vignette, derived from the independent-product-variance identity and checked against both single-source special cases already in the vignette. (<a href="https://github.com/UCD-SERG/serocalculator/issues/571">#571</a>)</p></li>
+<li><p>Added <code>Var(y_obs | T=t)</code>, marginalizing over between-person heterogeneity in <code>y_true</code>, to the <code>methodology</code> vignette: derived via the law of total variance from the <code>Var(y_obs | y_true)</code> formula above, with the between-person heterogeneity term <code>Var(y_true | T=t)</code> introduced symbolically (it has no closed form in this framework, since <code>serodynamics</code> represents curve-parameter heterogeneity as an empirical posterior sample rather than a stated parametric distribution). Clarified that the longitudinal model’s residual variance is constant on the log scale conditional on individual random effects, while random waning rates can induce time-varying marginal population variance that <code>serocalculator</code> carries forward by averaging over kinetic-parameter draws. (<a href="https://github.com/UCD-SERG/serocalculator/issues/571">#571</a>)</p></li>
+<li><p>Moved <code>f_dev0()</code>’s <code>@examples</code> block to a separate example file (<code>inst/examples/exm-f_dev.R</code>), following the convention already used by other functions in this package. (<a href="https://github.com/UCD-SERG/serocalculator/issues/393">#393</a>)</p></li>
 </ul>
 </section>
 <section id="internal" class="level2">

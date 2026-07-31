@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-07-30">
+<meta name="dcterms.date" content="2026-07-31">
 <title>Estimating Incidence Rates from Cross-Sectional Serosurveys – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -135,6 +135,9 @@ Adds a navbar control that folds the whole sidebar away and gives the content
 the width it held. Quarto's `collapse-level` folds sections *within* the
 sidebar; it has no control for the sidebar itself on a website.
 
+The sidebar starts folded. Unfolding it is remembered, so the choice is made
+once per reader rather than once per page.
+
 Included from `quarto_website.yml` as `include-in-header`, not
 `include-after-body`, so the stored state is restored before the first paint
 and an already-folded sidebar never flashes into view. The state lives on
@@ -156,22 +159,33 @@ The paired styling is in `styles.css`.
       button.setAttribute("title", label);
     }
 
+    // Folded is the default: a first-time visitor gets the full-width content,
+    // and only an explicit "0" -- written by unfolding the sidebar -- opts back
+    // in. That is why this tests against "0" rather than for "1"; a missing key
+    // must mean folded, not unfolded.
+    //
     // Private browsing and blocked third-party storage both make localStorage
     // throw rather than return null, so every access is guarded. Losing the
     // preference is acceptable; losing the button is not.
     function stored() {
       try {
-        return localStorage.getItem(KEY) === "1";
+        return localStorage.getItem(KEY) !== "0";
       } catch (e) {
-        return false;
+        return true;
       }
     }
 
     apply(stored());
 
     document.addEventListener("DOMContentLoaded", function () {
-      // A page with no sidebar has no width to reclaim, so it gets no button.
-      if (!document.getElementById("quarto-sidebar")) return;
+      // A page with no sidebar has no width to reclaim, so it gets no button --
+      // and no folded state either. Dropping the class matters now that folded
+      // is the default: without it, every visitor to such a page would have the
+      // content's grid start line moved with no vacated columns to move it into.
+      if (!document.getElementById("quarto-sidebar")) {
+        root.classList.remove("sidebar-folded");
+        return;
+      }
 
       var tools = document.querySelector(".quarto-navbar-tools");
       if (!tools) {
@@ -401,7 +415,7 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9023</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9026</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -495,7 +509,7 @@ window.Quarto = {
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9023 (dev)</span>
+ <span class="menu-text">1.4.1.9026 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -504,7 +518,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9023 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9026 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -637,6 +651,12 @@ window.Quarto = {
 </li>
       </ul>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package index</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
@@ -646,13 +666,7 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">
-<li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Package index</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">Prepare data, kinetics models, and noise parameters for analysis</span></a>
@@ -664,49 +678,49 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/as_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load a cross-sectional antibody survey data set</span></a>
+ <span class="menu-text">as_pop_data(): Load a cross-sectional antibody surve…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/load_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load a cross-sectional antibody survey data set</span></a>
+ <span class="menu-text">load_pop_data(): Load a cross-sectional antibody surve…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/as_sr_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load longitudinal seroresponse parameters</span></a>
+ <span class="menu-text">as_sr_params(): Load longitudinal seroresponse parame…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/load_sr_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load longitudinal seroresponse parameter samples</span></a>
+ <span class="menu-text">load_sr_params(): Load longitudinal seroresponse parame…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/as_noise_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load noise parameters</span></a>
+ <span class="menu-text">as_noise_params(): Load noise parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/load_noise_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Load noise parameters</span></a>
+ <span class="menu-text">load_noise_params(): Load noise parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/check_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Check the formatting of a cross-sectional antibody survey dataset.</span></a>
+ <span class="menu-text">check_pop_data(): Check the formatting of a cross-secti…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/strata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extract <code>Strata</code> metadata from an object</span></a>
+ <span class="menu-text">strata(): Extract <code>Strata</code> metadata from an object</span></a>
   </div>
 </li>
       </ul>
@@ -723,25 +737,25 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/get_biomarker_levels.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extract biomarker levels</span></a>
+ <span class="menu-text">get_biomarker_levels(): Extract biomarker levels</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/get_biomarker_names_var.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Get biomarker variable name</span></a>
+ <span class="menu-text">get_biomarker_names_var(): Get biomarker variable name</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/get_values_var.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extract antibody measurement values</span></a>
+ <span class="menu-text">get_values_var(): Extract antibody measurement values</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/get_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Get antibody measurement values</span></a>
+ <span class="menu-text">get_values(): Get antibody measurement values</span></a>
   </div>
 </li>
       </ul>
@@ -758,63 +772,69 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/autoplot.pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot distribution of antibodies</span></a>
+ <span class="menu-text">autoplot.pop_data: Plot distribution of antibodies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/autoplot.curve_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Graph antibody decay curves by antigen isotype</span></a>
+ <span class="menu-text">autoplot.curve_params: Graph antibody decay curves by antige…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/graph.curve.params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Graph estimated antibody decay curves</span></a>
+ <span class="menu-text">graph.curve.params(): Graph estimated antibody decay curves</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/graph_loglik.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Graph log-likelihood of data</span></a>
+ <span class="menu-text">graph_loglik(): Graph log-likelihood of data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/log_likelihood.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calculate log-likelihood</span></a>
+ <span class="menu-text">log_likelihood(): Calculate log-likelihood</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/antibody_decay_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Antibody decay curve with natural parameters</span></a>
+ <span class="menu-text">antibody_decay_curve(): Antibody decay curve with natural par…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/pathogen_decay_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pathogen decay curve</span></a>
+ <span class="menu-text">pathogen_decay_curve(): Pathogen decay curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/plot_decay_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot a decay function</span></a>
+ <span class="menu-text">plot_decay_curve(): Plot a decay function</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/curve_app.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Launch the interactive Shiny app for the antigen-antibody kinetics model</span></a>
+ <span class="menu-text">curve_app(): Launch the interactive Shiny app for …</span></a>
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">man/t1f.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../man/t1f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">t1f(): Calculate time to end of active infec…</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
- <span class="menu-text">man/y1f.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../man/y1f.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">y1f(): Calculate peak antibody concentration</span></a>
+  </div>
+</li>
       </ul>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -829,13 +849,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/est_seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Find the maximum likelihood estimate of the incidence rate parameter</span></a>
+ <span class="menu-text">est_seroincidence(): Find the maximum likelihood estimate …</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/est_seroincidence_by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Estimate Seroincidence</span></a>
+ <span class="menu-text">est_seroincidence_by(): Estimate Seroincidence</span></a>
   </div>
 </li>
       </ul>
@@ -852,13 +872,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/summary.seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summarizing fitted seroincidence models</span></a>
+ <span class="menu-text">summary.seroincidence: Summarizing fitted seroincidence models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary Method for <code>“seroincidence.by”</code> Objects</span></a>
+ <span class="menu-text">summary.seroincidence.by: Summary Method for `“seroincidence.by…</span></a>
   </div>
 </li>
       </ul>
@@ -875,19 +895,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/autoplot.seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot the log-likelihood curve for the incidence rate estimate</span></a>
+ <span class="menu-text">autoplot.seroincidence: Plot the log-likelihood curve for the…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/autoplot.seroincidence.by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot <code>seroincidence.by</code> log-likelihoods</span></a>
+ <span class="menu-text">autoplot.seroincidence.by: Plot <code>seroincidence.by</code> log-likelihoods</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/autoplot.summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot method for <code>summary.seroincidence.by</code> objects</span></a>
+ <span class="menu-text">autoplot.summary.seroincidence.by: Plot method for `summary.seroincidenc…</span></a>
   </div>
 </li>
       </ul>
@@ -904,7 +924,7 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/compare_seroincidence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Compare seroincidence rates between two groups</span></a>
+ <span class="menu-text">compare_seroincidence(): Compare seroincidence rates between t…</span></a>
   </div>
 </li>
       </ul>
@@ -921,43 +941,43 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/sees_pop_data_100.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example cross-sectional data set</span></a>
+ <span class="menu-text">sees_pop_data_100: Small example cross-sectional data set</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/sees_pop_data_pk_100.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example cross-sectional data set</span></a>
+ <span class="menu-text">sees_pop_data_pk_100: Small example cross-sectional data set</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/typhoid_curves_nostrat_100.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example of antibody response curve parameters for typhoid</span></a>
+ <span class="menu-text">typhoid_curves_nostrat_100: Small example of antibody response cu…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/example_noise_params_sees.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example of noise parameters for typhoid</span></a>
+ <span class="menu-text">example_noise_params_sees: Small example of noise parameters for…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/example_noise_params_pk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Small example of noise parameters for typhoid</span></a>
+ <span class="menu-text">example_noise_params_pk: Small example of noise parameters for…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/sees_typhoid_ests_strat.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example <code>“seroincidence.by”</code> object</span></a>
+ <span class="menu-text">sees_typhoid_ests_strat: Example <code>"seroincidence.by"</code> object</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/serocalculator_example.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Get path to an example file</span></a>
+ <span class="menu-text">serocalculator_example(): Get path to an example file</span></a>
   </div>
 </li>
       </ul>
@@ -974,25 +994,25 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simulate a cross-sectional serosurvey with noise</span></a>
+ <span class="menu-text">sim_pop_data(): Simulate a cross-sectional serosurvey…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/sim_pop_data_multi.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simulate multiple data sets</span></a>
+ <span class="menu-text">sim_pop_data_multi(): Simulate multiple data sets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/analyze_sims.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analyze simulation results</span></a>
+ <span class="menu-text">analyze_sims(): Analyze simulation results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method for <code>sim_results</code> objects</span></a>
+ <span class="menu-text">autoplot.sim_results: Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> …</span></a>
   </div>
 </li>
       </ul>
@@ -1144,7 +1164,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Estimating Incidence Rates from Cross-Sectional Serosurveys</a></li></ol></nav><h1 class="title display-7">Estimating Incidence Rates from Cross-Sectional Serosurveys</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-07-30</p>
+<p class="date">2026-07-31</p>
 </header><section id="infectious-disease-epidemiology" class="level1" data-number="1"><h1 data-number="1">
 <span class="header-section-number">1</span> Infectious disease epidemiology</h1>
 <section id="salmonella-enterica-typhoid-fever" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="salmonella-enterica-typhoid-fever">
@@ -1430,7 +1450,7 @@ CC BY-SA attribution for the map with them. -->
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sim_case_data</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">serocalculator</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/serocalculator/man/typhoid_curves_nostrat_100.html">typhoid_curves_nostrat_100</a></span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">serocalculator</span><span class="fu">::</span><span class="va"><a href="../man/typhoid_curves_nostrat_100.html">typhoid_curves_nostrat_100</a></span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ucd-serg.github.io/serodynamics/reference/sim_case_data.html">sim_case_data</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span>, </span>
 <span>                antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
 <span>                max_n_obs <span class="op">=</span> <span class="fl">20</span>, followup_interval <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span>
@@ -1666,14 +1686,14 @@ p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right
 <p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Single-level clustering (e.g., by household)</span></span>
-<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  cluster_var <span class="op">=</span> <span class="st">"household_id"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Multi-level clustering (e.g., schools within districts)</span></span>
-<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>  cluster_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"district_id"</span>, <span class="st">"school_id"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -1784,7 +1804,7 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 <span><span class="co"># overwrite it for every later chunk in the parent document.</span></span>
 <span><span class="va">curves_all</span> <span class="op">&lt;-</span></span>
 <span>  <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">iter</span> <span class="op">&lt;</span> <span class="fl">50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">curve1</span> <span class="op">&lt;-</span></span>
@@ -1798,7 +1818,7 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 <span>  <span class="co"># plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a</span></span>
 <span>  <span class="co"># single pre-filtered curve must be relabelled iter 1 or no curve is drawn.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">serocalculator</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/plot_curve_params_one_ab.html">plot_curve_params_one_ab</a></span><span class="op">(</span></span>
+<span>  <span class="fu">serocalculator</span><span class="fu">:::</span><span class="fu"><a href="../man/plot_curve_params_one_ab.html">plot_curve_params_one_ab</a></span><span class="op">(</span></span>
 <span>    log_y <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2045,7 +2065,7 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 </div>
 <p>Using both biomarkers concentrates the log-likelihood around its maximum, and so shrinks the standard error, relative to either biomarker alone (<a href="#fig-loglik" class="quarto-xref">Figure&nbsp;5</a>):</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lik_HlyE_IgA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span> <span class="co"># nolint: object_name_linter.</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lik_HlyE_IgA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span> <span class="co"># nolint: object_name_linter.</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
@@ -2053,7 +2073,7 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 <span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lik_HlyE_IgG</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span> <span class="co"># nolint: object_name_linter.</span></span>
+<span><span class="va">lik_HlyE_IgG</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span> <span class="co"># nolint: object_name_linter.</span></span>
 <span>  previous_plot <span class="op">=</span> <span class="va">lik_HlyE_IgA</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
@@ -2062,7 +2082,7 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 <span>  log_x <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lik_both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span></span>
+<span><span class="va">lik_both</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span></span>
 <span>  previous_plot <span class="op">=</span> <span class="va">lik_HlyE_IgG</span>,</span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
@@ -2160,7 +2180,7 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <li>
 <strong><code>serocalculator</code></strong> (downstream): a <strong>cross-sectional serosurvey</strong> plus those curve parameters <span class="math inline">\(\rightarrow\)</span> a <strong>seroincidence</strong> estimate</li>
 </ul>
-<p>The output of <code>serodynamics</code> feeds directly into <code>serocalculator</code>’s <code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code>.</p>
+<p>The output of <code>serodynamics</code> feeds directly into <code>serocalculator</code>’s <code><a href="../man/est_seroincidence_by.html">est_seroincidence_by()</a></code>.</p>
 </section><section id="propagating-uncertainty-and-heterogeneity" class="level2 smaller" data-number="6.6"><h2 class="smaller anchored" data-number="6.6" data-anchor-id="propagating-uncertainty-and-heterogeneity">
 <span class="header-section-number">6.6</span> Propagating uncertainty and heterogeneity</h2>
 <p>The seroresponse model <span class="math inline">\(\operatorname{p}(Y=y|T=t)\)</span> is <strong>not a single fixed curve</strong>. <code>serodynamics</code> returns a posterior <strong>sample</strong> of curve-parameter sets <span class="math inline">\(\theta^{(1)},\dots,\theta^{(M)}\)</span> (each <span class="math inline">\(\theta^{(k)} = (y_0, y_1, t_1, \alpha, r)^{(k)}\)</span>), which together capture both</p>
@@ -2217,8 +2237,8 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load antibody-decay curve parameters and cross-sectional population data</span></span>
-<span><span class="va">curves</span> <span class="op">&lt;-</span> <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="st">"https://osf.io/download/n6cp3/"</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">curves</span> <span class="op">&lt;-</span> <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="st">"https://osf.io/download/n6cp3/"</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download/hqy4v/"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualize the cross-sectional antibody distribution</span></span>
@@ -2227,10 +2247,10 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 </div>
 </section><section id="estimating-seroincidence" class="level2 smaller" data-number="7.2"><h2 class="smaller anchored" data-number="7.2" data-anchor-id="estimating-seroincidence">
 <span class="header-section-number">7.2</span> Estimating seroincidence</h2>
-<p><code><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by()</a></code> maximizes the log-likelihood <span class="math inline">\(\log\mathcal{L}(\lambda)\)</span> derived above, separately within each stratum, and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> reports each stratum’s <span class="math inline">\(\hat\lambda\)</span> with a standard error and confidence interval (cluster-robust, if <code>cluster_var</code> was supplied):</p>
+<p><code><a href="../man/est_seroincidence_by.html">est_seroincidence_by()</a></code> maximizes the log-likelihood <span class="math inline">\(\log\mathcal{L}(\lambda)\)</span> derived above, separately within each stratum, and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> reports each stratum’s <span class="math inline">\(\hat\lambda\)</span> with a standard error and confidence interval (cluster-robust, if <code>cluster_var</code> was supplied):</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Estimate incidence, stratified by country and age group</span></span>
-<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
@@ -2258,7 +2278,7 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span class="header-section-number">8</span> Validation: recovering known incidence rates</h1>
 <section id="simulating-clusters-with-known-incidence" class="level2 smaller" data-number="8.1"><h2 class="smaller anchored" data-number="8.1" data-anchor-id="simulating-clusters-with-known-incidence">
 <span class="header-section-number">8.1</span> Simulating clusters with known incidence</h2>
-<p>We can check the method by <strong>simulating</strong> cross-sectional serosurveys with <strong>known</strong> incidence rates and seeing whether the estimates recover them. <code><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code> simulates several clusters, each at a specified true rate <span class="math inline">\(\lambda\)</span>:</p>
+<p>We can check the method by <strong>simulating</strong> cross-sectional serosurveys with <strong>known</strong> incidence rates and seeing whether the estimates recover them. <code><a href="../man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code> simulates several clusters, each at a specified true rate <span class="math inline">\(\lambda\)</span>:</p>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
 <span></span>
@@ -2279,7 +2299,7 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Simulate clusters at a range of true incidence rates</span></span>
-<span><span class="va">sim_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
+<span><span class="va">sim_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
 <span>  curve_params <span class="op">=</span> <span class="va">typhoid_curves_nostrat_100</span>,</span>
 <span>  lambdas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span><span class="op">)</span>, <span class="co"># true incidence rates</span></span>
 <span>  nclus <span class="op">=</span> <span class="fl">3</span>, <span class="co"># clusters per rate</span></span>
@@ -2292,7 +2312,7 @@ Figure&nbsp;5: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Estimate incidence separately in each simulated cluster</span></span>
-<span><span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/serocalculator/man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span><span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">typhoid_curves_nostrat_100</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise_params</span>,</span>

@@ -222,6 +222,16 @@
 
 ## Internal
 
+* Disabled the `@claude` agent bot.
+  `.github/workflows/claude.yml`'s reactive triggers are commented out and its
+  job carries `if: false`, so no comment, issue, or review event invokes the
+  agent, and neither does a manual dispatch (the reusable workflow runs
+  unattended on `workflow_dispatch` by design).
+  Reviews are the only Claude capability left, and they run on request only:
+  automatic review on pull-request activity is off, and a review starts when a
+  collaborator comments `/review` on a pull request.
+  That dispatch now pins the review run to the pull request's head branch, so
+  its check-run lands on the right commit.
 * Fixed two dead provenance links in workflow comments. `check-readme.yaml`
   cited a file that was deleted from `IndrajeetPatil/statsExpressions`'s
   default branch when its CI moved to reusable workflows; the citation is now

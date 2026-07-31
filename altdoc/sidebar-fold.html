@@ -3,6 +3,9 @@ Adds a navbar control that folds the whole sidebar away and gives the content
 the width it held. Quarto's `collapse-level` folds sections *within* the
 sidebar; it has no control for the sidebar itself on a website.
 
+The sidebar starts folded. Unfolding it is remembered, so the choice is made
+once per reader rather than once per page.
+
 Included from `quarto_website.yml` as `include-in-header`, not
 `include-after-body`, so the stored state is restored before the first paint
 and an already-folded sidebar never flashes into view. The state lives on
@@ -25,22 +28,33 @@ The paired styling is in `styles.css`.
       button.setAttribute("title", label);
     }
 
+    // Folded is the default: a first-time visitor gets the full-width content,
+    // and only an explicit "0" -- written by unfolding the sidebar -- opts back
+    // in. That is why this tests against "0" rather than for "1"; a missing key
+    // must mean folded, not unfolded.
+    //
     // Private browsing and blocked third-party storage both make localStorage
     // throw rather than return null, so every access is guarded. Losing the
     // preference is acceptable; losing the button is not.
     function stored() {
       try {
-        return localStorage.getItem(KEY) === "1";
+        return localStorage.getItem(KEY) !== "0";
       } catch (e) {
-        return false;
+        return true;
       }
     }
 
     apply(stored());
 
     document.addEventListener("DOMContentLoaded", function () {
-      // A page with no sidebar has no width to reclaim, so it gets no button.
-      if (!document.getElementById("quarto-sidebar")) return;
+      // A page with no sidebar has no width to reclaim, so it gets no button --
+      // and no folded state either. Dropping the class matters now that folded
+      // is the default: without it, every visitor to such a page would have the
+      // content's grid start line moved with no vacated columns to move it into.
+      if (!document.getElementById("quarto-sidebar")) {
+        root.classList.remove("sidebar-folded");
+        return;
+      }
 
       var tools = document.querySelector(".quarto-navbar-tools");
       if (!tools) {

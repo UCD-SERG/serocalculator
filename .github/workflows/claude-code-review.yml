@@ -1,5 +1,16 @@
-# Automatic Claude Code review of pull requests — caller stub for the
+# On-demand Claude Code review of pull requests -- caller stub for the
 # central Morrison-Lab/gha reusable workflow.
+#
+# Reviews run ONLY on request: comment `/review` on a PR. Automatic review on
+# PR activity is disabled (the `pull_request:` trigger below is commented
+# out), alongside the @claude agent in claude.yml. Re-enable by uncommenting
+# that trigger.
+#
+# NOTE for whoever re-enables or audits this: if `review / require-review` (or
+# `review / claude-review`) is configured as a REQUIRED status check in this
+# repo's branch protection, it will no longer report on ordinary PRs, and
+# those PRs will sit blocked waiting for a status that never arrives. Drop it
+# from the required-checks list while automatic review is off.
 #
 # The reusable workflow (Morrison-Lab/gha/.github/workflows/claude-code-review.yml)
 # holds the actual review machinery: the upstream `code-review@claude-code-plugins`
@@ -9,11 +20,14 @@
 # serocalculator-specific review guidance.
 #
 # Skips drafts, Dependabot bumps, and fork PRs (fork PRs can't read repo
-# secrets). Project guidance is in .github/copilot-instructions.md.
-# Requires the CLAUDE_CODE_OAUTH_TOKEN repository secret.
+# secrets) -- that filtering applies to the pull_request path, so it is
+# dormant while that trigger is commented out. Project guidance is in
+# .github/copilot-instructions.md. Requires the CLAUDE_CODE_OAUTH_TOKEN
+# repository secret.
 #
 # The workflow_dispatch path lets claude.yml re-dispatch a review after an
-# @claude run pushes commits — keep this file named claude-code-review.yml
+# @claude run pushes commits (also dormant while claude.yml is disabled) --
+# keep this file named claude-code-review.yml
 # (matching claude.yml's default review-workflow-file input).
 # The issue_comment path lets a trusted collaborator start a review on demand
 # by commenting `/review` on a PR, without going through claude.yml's @claude
@@ -22,8 +36,9 @@
 name: Claude Code Review
 
 on:
-  pull_request:
-    types: [opened, synchronize, ready_for_review, reopened]
+  # Automatic review on PR activity is disabled; reviews are on request only.
+  # pull_request:
+  #   types: [opened, synchronize, ready_for_review, reopened]
   issue_comment:
     types: [created]
   workflow_dispatch:
@@ -70,15 +85,35 @@ jobs:
             exit 0
           fi
           WF_FILE=$(basename "$WF_PATH")
-          echo "Dispatching $WF_FILE to review PR #$PR_NUMBER (/review comment)."
-          gh workflow run "$WF_FILE" --repo "$REPO" -f pr_number="$PR_NUMBER"
+          # This job never checks out the repo, so the PR's head branch has to
+          # be looked up explicitly. --ref pins the dispatched run's check-runs
+          # to that branch instead of the default branch workflow_dispatch
+          # falls back to when no ref is given -- without it, the review
+          # check-run lands on the wrong commit. This matters more now that
+          # `/review` is the only path that ever produces one.
+          PR_JSON=$(gh api "repos/$REPO/pulls/$PR_NUMBER")
+          PR_BRANCH=$(jq -r '.head.ref' <<< "$PR_JSON")
+          PR_HEAD_REPO=$(jq -r '.head.repo.full_name' <<< "$PR_JSON")
+          echo "Dispatching $WF_FILE to review PR #$PR_NUMBER ($PR_BRANCH) (/review comment)."
+          # A fork PR's head branch only exists in the fork, not in $REPO, so
+          # --ref would fail to resolve there. Fall back to no --ref for fork
+          # PRs; the resulting check-run mis-attributes to the default branch
+          # (the no-ref behavior), the lesser problem.
+          REF_ARGS=(--ref "$PR_BRANCH")
+          if [ "$PR_HEAD_REPO" != "$REPO" ]; then
+            echo "::notice::PR #$PR_NUMBER is from a fork ($PR_HEAD_REPO); dispatching $WF_FILE without --ref."
+            REF_ARGS=()
+          fi
+          gh workflow run "$WF_FILE" --repo "$REPO" "${REF_ARGS[@]}" -f pr_number="$PR_NUMBER"
           gh issue comment "$PR_NUMBER" --repo "$REPO" \
             --body ":mag: \`/review\` received — dispatched a Claude review of this PR (see the [dispatch run]($RUN_URL)). The review posts as its own comment when it finishes." \
             || echo "::warning::Could not acknowledge the /review comment."
 
   review:
-    # pull_request and workflow_dispatch only; the issue_comment path is
-    # handled by dispatch-on-comment above (which re-enters via workflow_dispatch).
+    # workflow_dispatch only while the pull_request trigger is off; the
+    # issue_comment path is handled by dispatch-on-comment above (which
+    # re-enters via workflow_dispatch). Written as `!= 'issue_comment'` so
+    # re-enabling the pull_request trigger needs no change here.
     if: github.event_name != 'issue_comment'
     permissions:
       contents: read

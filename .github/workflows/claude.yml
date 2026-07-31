@@ -20,31 +20,52 @@
 # leave it out.
 #
 # Project guidance for Claude lives in .github/copilot-instructions.md.
+#
+# ---------------------------------------------------------------------------
+# DISABLED. The @claude agent is switched off in this repo for now; only
+# reviews are allowed, and only on request (comment `/review` on a PR -- see
+# claude-code-review.yml).
+#
+# Two mechanisms, because either alone is insufficient:
+#   - The reactive triggers below are commented out, so no comment, issue, or
+#     review event reaches this workflow. GitHub rejects a workflow file with
+#     no `on:` key at all, so `workflow_dispatch:` remains as a placeholder.
+#   - `if: false` on the job, because the reusable workflow runs UNATTENDED on
+#     workflow_dispatch (its own gate deliberately exempts that event, since a
+#     manual dispatch already requires Actions write access). Without this,
+#     the placeholder trigger would leave the agent manually runnable.
+#
+# To re-enable: uncomment the trigger block below, and replace the job's
+# `if: false` with the caller-side @claude-mention gate kept alongside it.
+# ---------------------------------------------------------------------------
 
 name: Claude Code
 
 on:
-  issue_comment:
-    types: [created]
-  pull_request_review_comment:
-    types: [created]
-  issues:
-    types: [opened]
-  pull_request_review:
-    types: [submitted]
+  # issue_comment:
+  #   types: [created]
+  # pull_request_review_comment:
+  #   types: [created]
+  # issues:
+  #   types: [opened]
+  # pull_request_review:
+  #   types: [submitted]
+  workflow_dispatch:
 
 jobs:
   claude:
-    # Cheap caller-side gate: only invoke the reusable workflow when an
-    # @claude mention is actually present, so unrelated comment / review /
-    # issue events don't spawn a (skipped) reusable-workflow run. The
-    # reusable workflow still enforces the trusted-author gate
-    # (OWNER/MEMBER/COLLABORATOR).
-    if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+    if: false  # agent disabled; see the header comment
+    # The caller-side gate to restore when re-enabling. Cheap pre-filter: only
+    # invoke the reusable workflow when an @claude mention is actually
+    # present, so unrelated comment / review / issue events don't spawn a
+    # (skipped) reusable-workflow run. The reusable workflow still enforces
+    # the trusted-author gate (OWNER/MEMBER/COLLABORATOR).
+    #
+    # if: |
+    #   (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+    #   (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+    #   (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+    #   (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
     permissions:
       contents: write       # so Claude can push a branch
       pull-requests: write  # so Claude can open / edit PRs

@@ -2133,7 +2133,7 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 \end{cases}
 \]</span></p>
 <p>The first piece matches Teunis and van Eijkeren’s Equation 19: it is flat (constant in <span class="math inline">\(y\)</span>) over most of its support, then tapers to zero by <span class="math inline">\(y = \nu(1+\varepsilon)\)</span>. Integrating both pieces over their full range recovers exactly <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>, the never-infected probability, confirming the density is correctly normalized. As <span class="math inline">\(\varepsilon \to 0\)</span> the flat piece reduces to <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}/\nu\)</span>, the biological-noise-only density on <span class="math inline">\([0, \nu]\)</span>, matching the single-source case above.</p>
-<!-- {{< include articles/_methods-continued.qmd >}} -->
+<!-- {{< include methodology/_methods-continued.qmd >}} -->
 </section><section id="variation-across-the-posterior" class="level2 smaller" data-number="5.10"><h2 class="smaller anchored" data-number="5.10" data-anchor-id="variation-across-the-posterior">
 <span class="header-section-number">5.10</span> Variation across the posterior</h2>
 <p>The figure above draws one curve to name the parameters. The fitted model is really a <em>posterior sample</em> of such curves, and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> on a <code>curve_params</code> object shows their spread:</p>

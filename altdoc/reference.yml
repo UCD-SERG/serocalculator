@@ -70,6 +70,8 @@ reference:
     contents:
       - est_seroincidence
       - est_seroincidence_by
+      - est_seroincidence_by_cached
+      - refit_strata
 
   - title: Summarize seroconversion incidence rate estimates
     contents:
@@ -100,5 +102,6 @@ reference:
     contents:
       - sim_pop_data
       - sim_pop_data_multi
+      - sim_pop_data_multi_cached
       - analyze_sims
       - autoplot.sim_results

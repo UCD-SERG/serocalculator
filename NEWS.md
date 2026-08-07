@@ -49,6 +49,14 @@
 
 ## Documentation
 
+* Listed `sim_pop_data_multi_cached()`, `est_seroincidence_by_cached()`, and
+  `refit_strata()` in the documentation site's reference index.
+  All three were exported and had help pages, but no section of
+  `altdoc/reference.yml` claimed them, so they were unreachable from the
+  reference index and the sidebar and fell into the trailing "Other" group.
+  Surfaced by `altdoc::render_docs()`, which warns about an unclaimed
+  non-internal topic; no CI check covers this. (#632)
+
 * Merged the "Simulation studies" article
   (`vignettes/articles/simulate_xsectionalData.qmd`) into the methodology
   article, which now demonstrates live everything it describes.

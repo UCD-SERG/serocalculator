@@ -1,9 +1,5 @@
 ---
 title: "Estimating Incidence Rates from Cross-Sectional Serosurveys"
-# The "Simulation studies" article (articles/simulate_xsectionalData.qmd) was
-# merged into this one; this alias keeps its published URL working.
-aliases:
-  - articles/simulate_xsectionalData.html
 vignette: >
   %\VignetteIndexEntry{Estimating Incidence Rates from Cross-Sectional Serosurveys}
   %\VignetteEngine{quarto::html}
@@ -18,6 +14,14 @@ format:
   # rendered page (the docx file itself still renders regardless).
   html:
     format-links: [docx, revealjs]
+    # The "Simulation studies" article (articles/simulate_xsectionalData.qmd)
+    # was merged into this one; this alias keeps its published URL working.
+    # It must live inside `html:` rather than at the document level: a
+    # document-level `aliases` applies to every format, and the reveal.js
+    # output wins, so the redirect stub points at methodology-slides.html
+    # instead of the article. Verified both ways in a scratch Quarto project.
+    aliases:
+      - articles/simulate_xsectionalData.html
     # Click any figure to open a zoomed lightbox view. Set explicitly on each
     # format here (rather than relying only on the site-level `format: html:`
     # default in altdoc/quarto_website.yml) so both this article's HTML page

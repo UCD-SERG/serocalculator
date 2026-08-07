@@ -46,7 +46,8 @@ Imports:
     glue,
     stringr,
     parallel,
-    labelled
+    labelled,
+    xfun
 Suggests:
     altdoc,
     bookdown,

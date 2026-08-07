@@ -2,6 +2,16 @@
 
 ## New features
 
+* Added `sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()`,
+  caching wrappers around the two most computationally expensive functions
+  in the package.
+  The first call computes and saves the result;
+  later calls with the same arguments load it instead of recomputing.
+  The cache is keyed on the arguments,
+  so changing any of them recomputes automatically.
+  Pass `cache_rerun = TRUE` to force recomputation.
+  Cache-control arguments carry a `cache_` prefix
+  so the wrapped functions' own `verbose` argument remains reachable. (#631)
 * Added interactive Shiny app `curve_app()` for visualizing antigen-antibody
   kinetics models with real-time parameter sliders (#392).
 * Added `antibody_decay_curve()` and `pathogen_decay_curve()` functions for

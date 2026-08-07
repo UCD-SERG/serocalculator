@@ -33,14 +33,15 @@
 #' @returns the value of `do.call(fun, args)`, whether computed or loaded.
 #' @keywords internal
 .cache_call <- function(
-    fun,
-    args,
-    cache_path,
-    cache_id,
-    cache_rerun = FALSE,
-    cache_verbose = TRUE,
-    cache_extra = NULL,
-    expected_class = NULL) {
+  fun,
+  args,
+  cache_path,
+  cache_id,
+  cache_rerun = FALSE,
+  cache_verbose = TRUE,
+  cache_extra = NULL,
+  expected_class = NULL
+) {
   cache_path <- .validate_cache_path(cache_path)
   cache_dir <- file.path(cache_path, cache_id)
 

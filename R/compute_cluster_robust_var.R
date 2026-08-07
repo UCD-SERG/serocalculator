@@ -30,83 +30,97 @@
   # to get cluster info
   pop_data_combined <- do.call(rbind, pop_data_list)
 
-  # Compute score (gradient) using numerical differentiation
-  # The score is the derivative of log-likelihood w.r.t. log(lambda)
+  # Compute score (gradient) using numerical differentiation.
+  # The score is the derivative of log-likelihood w.r.t. log(lambda).
   epsilon <- 1e-6
 
-  # For each observation, compute the contribution to the score
-  # We need to identify which cluster each observation belongs to
+  .compute_group_scores <- function(group_ids) {
+    unique_groups <- unique(group_ids)
+    group_scores <- numeric(length(unique_groups))
 
-  # Handle multiple clustering levels by creating composite cluster ID
-  if (length(cluster_var) == 1) {
-    cluster_ids <- pop_data_combined[[cluster_var]]
-  } else {
-    # Create composite cluster ID from multiple variables
-    cluster_ids <- interaction(
-      pop_data_combined[, cluster_var, drop = FALSE],
-      drop = TRUE,
-      sep = "_"
-    )
-  }
+    for (i in seq_along(unique_groups)) {
+      group_id <- unique_groups[i]
+      group_mask <- group_ids == group_id
+      pop_data_group <- pop_data_combined[group_mask, , drop = FALSE]
 
-  # Get unique clusters
-  unique_clusters <- unique(cluster_ids)
-  n_clusters <- length(unique_clusters)
+      pop_data_group_list <- split(
+        pop_data_group,
+        pop_data_group$antigen_iso
+      )
 
-  # Compute cluster-level scores
-  cluster_scores <- numeric(n_clusters)
-
-  for (i in seq_along(unique_clusters)) {
-    cluster_id <- unique_clusters[i]
-
-    # Get observations in this cluster
-    cluster_mask <- cluster_ids == cluster_id
-
-    # Create temporary pop_data with only this cluster
-    pop_data_cluster <- pop_data_combined[cluster_mask, , drop = FALSE]
-
-    # Split by antigen
-    pop_data_cluster_list <- split(
-      pop_data_cluster,
-      pop_data_cluster$antigen_iso
-    )
-
-    # Ensure all antigen_isos are represented
-    # (add empty data frames if missing)
-    for (ag in antigen_isos) {
-      if (!ag %in% names(pop_data_cluster_list)) {
-        # Create empty data frame with correct structure
-        pop_data_cluster_list[[ag]] <- pop_data_list[[ag]][0, , drop = FALSE]
+      for (ag in antigen_isos) {
+        if (!ag %in% names(pop_data_group_list)) {
+          pop_data_group_list[[ag]] <- pop_data_list[[ag]][0, , drop = FALSE]
+        }
       }
+
+      ll_group_plus <- -(.nll(
+        log.lambda = log_lambda_mle + epsilon,
+        pop_data = pop_data_group_list,
+        antigen_isos = antigen_isos,
+        curve_params = sr_params_list,
+        noise_params = noise_params_list,
+        verbose = FALSE
+      ))
+
+      ll_group_minus <- -(.nll(
+        log.lambda = log_lambda_mle - epsilon,
+        pop_data = pop_data_group_list,
+        antigen_isos = antigen_isos,
+        curve_params = sr_params_list,
+        noise_params = noise_params_list,
+        verbose = FALSE
+      ))
+
+      group_scores[i] <- (ll_group_plus - ll_group_minus) / (2 * epsilon)
     }
 
-    # Compute log-likelihood for this cluster at MLE
-    ll_cluster_mle <- -(.nll(
-      log.lambda = log_lambda_mle,
-      pop_data = pop_data_cluster_list,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params_list,
-      noise_params = noise_params_list,
-      verbose = FALSE
-    ))
-
-    # Compute log-likelihood at MLE + epsilon
-    ll_cluster_plus <- -(.nll(
-      log.lambda = log_lambda_mle + epsilon,
-      pop_data = pop_data_cluster_list,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params_list,
-      noise_params = noise_params_list,
-      verbose = FALSE
-    ))
-
-    # Numerical derivative (score for this cluster)
-    cluster_scores[i] <- (ll_cluster_plus - ll_cluster_mle) / epsilon
+    group_scores
   }
 
-  # Compute B matrix (middle of sandwich)
-  # B = sum of outer products of cluster scores
-  b_matrix <- sum(cluster_scores^2) # nolint: object_name_linter
+  .compute_meat_term <- function(group_vars) {
+    if (length(group_vars) == 1) {
+      group_ids <- pop_data_combined[[group_vars]]
+    } else {
+      group_ids <- interaction(
+        pop_data_combined[, group_vars, drop = FALSE],
+        drop = TRUE,
+        sep = "_"
+      )
+    }
+
+    group_scores <- .compute_group_scores(group_ids)
+    n_groups <- length(group_scores)
+
+    if (n_groups <= 1) {
+      return(0)
+    }
+
+    # Bell-McCaffrey small-sample correction for clustered meat terms.
+    correction <- n_groups / (n_groups - 1)
+    correction * sum(group_scores^2)
+  }
+
+  # Multi-way clustered sandwich "meat" using inclusion-exclusion.
+  b_matrix <- 0 # nolint: object_name_linter
+  n_cluster_dims <- length(cluster_var)
+
+  for (subset_size in seq_len(n_cluster_dims)) {
+    cluster_subsets <- utils::combn(
+      cluster_var,
+      subset_size,
+      simplify = FALSE
+    )
+    sign_multiplier <- if (subset_size %% 2 == 1) 1 else -1
+
+    for (cluster_subset in cluster_subsets) {
+      b_matrix <- b_matrix +
+        sign_multiplier * .compute_meat_term(cluster_subset)
+    }
+  }
+
+  # Guard against tiny negative values from numerical differentiation noise.
+  b_matrix <- max(0, b_matrix)
 
   # Get Hessian (already computed by nlm)
   h_matrix <- fit$hessian # nolint: object_name_linter

@@ -229,8 +229,10 @@
   registrations, the compiled-library declaration, and all 75 imports are
   unchanged.
   `docs-check` regenerates the documentation and fails when a tracked file
-  differs afterward, so it had been red on every pull request since
-  `roxygen2` 8.1.0 was released on 2026-08-04. (#636)
+  differs afterward, so every run of it since `roxygen2` 8.1.0 was published
+  on 2026-08-04 had failed.
+  Green `docs-check` runs on other open pull requests are stale rather than
+  contradictory: each of them predates that release. (#636)
 * Disabled the `@claude` agent bot.
   `.github/workflows/claude.yml`'s reactive triggers are commented out and its
   job carries `if: false`, so no comment, issue, or review event invokes the

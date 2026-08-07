@@ -1,6 +1,7 @@
 age_scatter <- function(
     object,
     strata = NULL,
+    alpha = 0.7,
     age_var = object |> get_age_var(),
     value_var = object |> get_values_var()) {
   # create default plotting
@@ -37,7 +38,7 @@ age_scatter <- function(
       breaks = c(-1, -0.1, 0, 0.1, 1, 10),
       minor_breaks = NULL
     ) +
-    ggplot2::geom_point(size = .6, alpha = .7) +
+    ggplot2::geom_point(size = .6, alpha = alpha) +
     ggplot2::geom_smooth(
       method = "lm",
       se = FALSE,

@@ -232,6 +232,17 @@
 
 ## Internal
 
+* Regenerated `NAMESPACE` and `DESCRIPTION` with `roxygen2` 8.1.0, which groups
+  each package's `importFrom()` symbols into a single multi-line directive
+  instead of one directive per symbol.
+  The change is purely one of formatting: the exports, the S3 method
+  registrations, the compiled-library declaration, and all 75 imports are
+  unchanged.
+  `docs-check` regenerates the documentation and fails when a tracked file
+  differs afterward, so every run of it since `roxygen2` 8.1.0 was published
+  on 2026-08-04 had failed.
+  Green `docs-check` runs on other open pull requests are stale rather than
+  contradictory: each of them predates that release. (#636)
 * Disabled the `@claude` agent bot.
   `.github/workflows/claude.yml`'s reactive triggers are commented out and its
   job carries `if: false`, so no comment, issue, or review event invokes the

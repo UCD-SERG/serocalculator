@@ -47,9 +47,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-97e3f169fe9e58e23962789afdf8a4dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-8156d632e8d7c264edf6ede9376b0211.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-97e3f169fe9e58e23962789afdf8a4dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -1037,6 +1037,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./man/refit_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">refit_strata(): Re-fit a subset of strata, with log-l…</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</span></a>
   </div>
@@ -1149,7 +1155,7 @@ window.Quarto = {
 <ul>
 <li><p>Merged the “Simulation studies” article (<code>vignettes/articles/simulate_xsectionalData.qmd</code>) into the methodology article, which now demonstrates live everything it describes. The methodology article previously showed <code>serocalculator</code> code in non-executing chunks and closed with a static screenshot of the simulation article’s recovery study, while the simulation article ran that code without deriving the theory behind it. The estimation walkthrough now runs on simulated data where the true rate is known, and the validation section runs the full multi-cluster recovery study, the <code>nlm()</code> convergence checks, <code>analyze_sims()</code>, and the <code>renew_params</code> bias caveat. The retired article’s URL redirects to the merged one. (<a href="https://github.com/UCD-SERG/serocalculator/issues/632">#632</a>)</p></li>
 <li><p>The methodology article’s simulations are cached to <code>vignettes/precomputed/</code> via the new <code>*_cached()</code> wrappers, so a docs build reuses them instead of recomputing once per output format. Its simulation sections now use the bundled <code>typhoid_curves_nostrat_100</code> rather than downloading the same curve parameters from OSF; the two are identical once filtered.</p></li>
-<li><p>The methodology article’s reveal.js slides now show code, folded away by default, instead of hiding it; the Word output hides code except where the code is part of the narrative.</p></li>
+<li><p>The methodology article’s reveal.js slides now show code, folded away by default, instead of hiding it. The Word output hides code by default, except in the demonstration chunks that are never evaluated, which mark themselves <code>echo: true</code> so those sections do not render empty.</p></li>
 <li><p>Took the sidebar fold control from <code>altdoc</code> instead of keeping a copy here. <code>altdoc/sidebar-fold.html</code> and the matching block in <code>altdoc/styles.css</code> are replaced by <code>include-in-header: $ALTDOC_SIDEBAR_FOLD</code>, which <code>altdoc</code> stages at render time with script and style together. The same pair had been copied into <code>ucdavis/bcs</code>, and the two copies had already drifted – this repo changed its copy to start folded and nothing carried that across. The sidebar still starts folded, now via <code>sidebar_fold: collapsed</code> in <code>altdoc/reference.yml</code>, so what used to be a source-level divergence is a one-line setting.</p></li>
 <li><p>Declared the reference manual’s grouping once, in a new <code>altdoc/reference.yml</code> (<a href="https://github.com/UCD-SERG/serocalculator/issues/610">#610</a>). It used to live in two hand-maintained places that nothing kept in step: the <code>altdoc/reference.qmd</code> index page and the <code>Reference</code> block of <code>altdoc/quarto_website.yml</code>. Adding a topic to one and missing the other rendered cleanly and raised no warning, which is how it went unnoticed on <a href="https://github.com/UCD-SERG/serocalculator/issues/392">#392</a>. altdoc now builds both surfaces from the single file, so the two cannot disagree, and warns about any exported topic no section claims rather than leaving it off the site in silence. The published grouping is unchanged: the same nine sections, the same 42 topics, in the same order.</p></li>
 <li><p>Moved the <code>altdoc</code> dependency off the <code>recursive-qmd-search</code> branch and onto the default branch, which is what supplies the grouped sidebar above. That branch has no commits the default branch does not already contain, so it was holding the docs build behind for nothing. The branch was named in three places – <code>Remotes</code>, <code>Config/Needs/website</code>, and the <code>r-packages</code> input of the docs workflow – and changing one of them alone makes the build fail to resolve rather than fall back, since <code>pak</code> reads the two as conflicting requirements for the same package.</p></li>

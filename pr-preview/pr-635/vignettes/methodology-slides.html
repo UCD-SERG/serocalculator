@@ -1619,23 +1619,24 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>curves <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="at">show_quantiles =</span> <span class="cn">TRUE</span>, <span class="at">n_curves =</span> <span class="dv">100</span>, <span class="at">log_x =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>curves <span class="sc">|&gt;</span> <span class="fu">autoplot</span>(<span class="at">quantiles =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>), <span class="at">log_x =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-curve-posterior" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-curve-posterior-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: 100 posterior draws of the antibody-decay curve per antigen-isotype, with the median and the 10% and 90% quantiles overlaid.
+Figure&nbsp;5: Posterior draws of the antibody-decay curve per antigen-isotype, with the 10%, 50%, and 90% point-wise quantiles overlaid.
 </figcaption>
 <div aria-describedby="fig-curve-posterior-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="methodology_files/figure-html/fig-curve-posterior-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;5: 100 posterior draws of the antibody-decay curve per antigen-isotype, with the median and the 10% and 90% quantiles overlaid."><img data-src="methodology_files/figure-html/fig-curve-posterior-1.png" width="672"></a>
+<a href="methodology_files/figure-html/fig-curve-posterior-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;5: Posterior draws of the antibody-decay curve per antigen-isotype, with the 10%, 50%, and 90% point-wise quantiles overlaid."><img data-src="methodology_files/figure-html/fig-curve-posterior-1.png" width="672"></a>
 </div>
 </figure>
 </div>
 </div>
 </div>
+<p><code>curves</code> holds 49 draws per antigen-isotype here, since it was thinned to <code>iter &lt; 50</code> when it was loaded.</p>
 <aside class="notes">
-<p>Passing <code>show_quantiles = FALSE</code> draws the individual draws alone, and <code>log_x = FALSE</code> puts time on a linear scale.</p>
+<p><code>n_curves</code> caps how many draws are drawn rather than setting a target, so asking for more than the object holds simply draws them all. Passing <code>quantiles = NULL</code> omits the overlay, and <code>log_x = FALSE</code> puts time on a linear scale.</p>
 <p>This spread is what the incidence likelihood averages over, as described under “Propagating uncertainty and heterogeneity” above: each draw is one plausible antibody-response curve, and together they carry both the estimation uncertainty and the between-person heterogeneity.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -2328,29 +2329,20 @@ Table&nbsp;1
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a>refit_strata <span class="ot">&lt;-</span> <span class="cf">function</span>(ids) {</span>
-<span id="cb23-2"><a aria-label="2"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(ids) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb23-3"><a aria-label="3"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb23-4"><a aria-label="4"></a>  }</span>
-<span id="cb23-5"><a aria-label="5"></a></span>
-<span id="cb23-6"><a aria-label="6"></a>  <span class="fu">est_seroincidence_by</span>(</span>
-<span id="cb23-7"><a aria-label="7"></a>    <span class="at">pop_data =</span> sim_df <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">semi_join</span>(ids, <span class="at">by =</span> <span class="fu">names</span>(ids)),</span>
-<span id="cb23-8"><a aria-label="8"></a>    <span class="at">sr_params =</span> sim_curve_params,</span>
-<span id="cb23-9"><a aria-label="9"></a>    <span class="at">noise_params =</span> sim_noise_params,</span>
-<span id="cb23-10"><a aria-label="10"></a>    <span class="at">strata =</span> <span class="fu">c</span>(<span class="st">"sample_size"</span>, <span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span>),</span>
-<span id="cb23-11"><a aria-label="11"></a>    <span class="at">curve_strata_varnames =</span> <span class="cn">NULL</span>,</span>
-<span id="cb23-12"><a aria-label="12"></a>    <span class="at">noise_strata_varnames =</span> <span class="cn">NULL</span>,</span>
-<span id="cb23-13"><a aria-label="13"></a>    <span class="at">antigen_isos =</span> antibodies,</span>
-<span id="cb23-14"><a aria-label="14"></a>    <span class="at">build_graph =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb23-15"><a aria-label="15"></a>    <span class="at">num_cores =</span> <span class="dv">1</span></span>
-<span id="cb23-16"><a aria-label="16"></a>  )</span>
-<span id="cb23-17"><a aria-label="17"></a>}</span>
-<span id="cb23-18"><a aria-label="18"></a></span>
-<span id="cb23-19"><a aria-label="19"></a>stratum_ids <span class="ot">&lt;-</span> ests_summary <span class="sc">|&gt;</span></span>
-<span id="cb23-20"><a aria-label="20"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-21"><a aria-label="21"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sample_size, lambda.sim, cluster)</span>
-<span id="cb23-22"><a aria-label="22"></a></span>
-<span id="cb23-23"><a aria-label="23"></a>ests_first_five <span class="ot">&lt;-</span> <span class="fu">refit_strata</span>(stratum_ids <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a>stratum_ids <span class="ot">&lt;-</span> ests_summary <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a aria-label="2"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a aria-label="3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(sample_size, lambda.sim, cluster)</span>
+<span id="cb23-4"><a aria-label="4"></a></span>
+<span id="cb23-5"><a aria-label="5"></a>ests_first_five <span class="ot">&lt;-</span> <span class="fu">refit_strata</span>(</span>
+<span id="cb23-6"><a aria-label="6"></a>  <span class="at">pop_data =</span> sim_df,</span>
+<span id="cb23-7"><a aria-label="7"></a>  <span class="at">strata_ids =</span> stratum_ids <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb23-8"><a aria-label="8"></a>  <span class="at">sr_params =</span> sim_curve_params,</span>
+<span id="cb23-9"><a aria-label="9"></a>  <span class="at">noise_params =</span> sim_noise_params,</span>
+<span id="cb23-10"><a aria-label="10"></a>  <span class="at">curve_strata_varnames =</span> <span class="cn">NULL</span>,</span>
+<span id="cb23-11"><a aria-label="11"></a>  <span class="at">noise_strata_varnames =</span> <span class="cn">NULL</span>,</span>
+<span id="cb23-12"><a aria-label="12"></a>  <span class="at">antigen_isos =</span> antibodies,</span>
+<span id="cb23-13"><a aria-label="13"></a>  <span class="at">num_cores =</span> <span class="dv">1</span></span>
+<span id="cb23-14"><a aria-label="14"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -2415,8 +2407,18 @@ Figure&nbsp;10: Log-likelihood curves for the first five simulated clusters.
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(problem_ids) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb27-2"><a aria-label="2"></a>  <span class="fu">autoplot</span>(<span class="fu">refit_strata</span>(problem_ids), <span class="at">log_x =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-3"><a aria-label="3"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-2"><a aria-label="2"></a>  <span class="fu">refit_strata</span>(</span>
+<span id="cb27-3"><a aria-label="3"></a>    <span class="at">pop_data =</span> sim_df,</span>
+<span id="cb27-4"><a aria-label="4"></a>    <span class="at">strata_ids =</span> problem_ids,</span>
+<span id="cb27-5"><a aria-label="5"></a>    <span class="at">sr_params =</span> sim_curve_params,</span>
+<span id="cb27-6"><a aria-label="6"></a>    <span class="at">noise_params =</span> sim_noise_params,</span>
+<span id="cb27-7"><a aria-label="7"></a>    <span class="at">curve_strata_varnames =</span> <span class="cn">NULL</span>,</span>
+<span id="cb27-8"><a aria-label="8"></a>    <span class="at">noise_strata_varnames =</span> <span class="cn">NULL</span>,</span>
+<span id="cb27-9"><a aria-label="9"></a>    <span class="at">antigen_isos =</span> antibodies,</span>
+<span id="cb27-10"><a aria-label="10"></a>    <span class="at">num_cores =</span> <span class="dv">1</span></span>
+<span id="cb27-11"><a aria-label="11"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb27-12"><a aria-label="12"></a>    <span class="fu">autoplot</span>(<span class="at">log_x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-13"><a aria-label="13"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Some strata are completely missing one or more biomarkers.

@@ -35,6 +35,7 @@
 - [log_likelihood()](https://ucd-serg.github.io/serocalculator/man/log_likelihood.html): Calculate log-likelihood
 - [pathogen_decay_curve()](https://ucd-serg.github.io/serocalculator/man/pathogen_decay_curve.html): Pathogen decay curve
 - [plot_decay_curve()](https://ucd-serg.github.io/serocalculator/man/plot_decay_curve.html): Plot a decay function
+- [refit_strata()](https://ucd-serg.github.io/serocalculator/man/refit_strata.html): Re-fit a subset of strata, with log-likelihood graphs attached
 - [sees_pop_data_100](https://ucd-serg.github.io/serocalculator/man/sees_pop_data_100.html): Small example cross-sectional data set
 - [sees_pop_data_pk_100](https://ucd-serg.github.io/serocalculator/man/sees_pop_data_pk_100.html): Small example cross-sectional data set
 - [sees_typhoid_ests_strat](https://ucd-serg.github.io/serocalculator/man/sees_typhoid_ests_strat.html): Example `"seroincidence.by"` object

@@ -99,9 +99,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-97e3f169fe9e58e23962789afdf8a4dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-8156d632e8d7c264edf6ede9376b0211.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-97e3f169fe9e58e23962789afdf8a4dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
@@ -1074,6 +1074,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../man/est_seroincidence_by_cached.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">est_seroincidence_by_cached(): Estimate seroincidence by stratum, ca…</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/refit_strata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">refit_strata(): Re-fit a subset of strata, with log-l…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -2132,20 +2138,21 @@ y_\text{obs} = \epsilon_b (1 + \xi), \qquad
 <span class="header-section-number">5.10</span> Variation across the posterior</h2>
 <p>The figure above draws one curve to name the parameters. The fitted model is really a <em>posterior sample</em> of such curves, and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> on a <code>curve_params</code> object shows their spread:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">curves</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>show_quantiles <span class="op">=</span> <span class="cn">TRUE</span>, n_curves <span class="op">=</span> <span class="fl">100</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">curves</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div id="fig-curve-posterior" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-curve-posterior-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: 100 posterior draws of the antibody-decay curve per antigen-isotype, with the median and the 10% and 90% quantiles overlaid.
+Figure&nbsp;5: Posterior draws of the antibody-decay curve per antigen-isotype, with the 10%, 50%, and 90% point-wise quantiles overlaid.
 </figcaption><div aria-describedby="fig-curve-posterior-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="methodology_files/figure-html/fig-curve-posterior-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;5: 100 posterior draws of the antibody-decay curve per antigen-isotype, with the median and the 10% and 90% quantiles overlaid."><img src="methodology_files/figure-html/fig-curve-posterior-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="methodology_files/figure-html/fig-curve-posterior-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;5: Posterior draws of the antibody-decay curve per antigen-isotype, with the 10%, 50%, and 90% point-wise quantiles overlaid."><img src="methodology_files/figure-html/fig-curve-posterior-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
 </div>
 </div>
+<p><code>curves</code> holds 49 draws per antigen-isotype here, since it was thinned to <code>iter &lt; 50</code> when it was loaded.</p>
 <div class="notes">
-<p>Passing <code>show_quantiles = FALSE</code> draws the individual draws alone, and <code>log_x = FALSE</code> puts time on a linear scale.</p>
+<p><code>n_curves</code> caps how many draws are drawn rather than setting a target, so asking for more than the object holds simply draws them all. Passing <code>quantiles = NULL</code> omits the overlay, and <code>log_x = FALSE</code> puts time on a linear scale.</p>
 <p>This spread is what the incidence likelihood averages over, as described under “Propagating uncertainty and heterogeneity” above: each draw is one plausible antibody-response curve, and together they carry both the estimation uncertainty and the between-person heterogeneity.</p>
 </div>
 </section><section id="multiple-biomarkers" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="multiple-biomarkers">
@@ -2626,29 +2633,20 @@ Table&nbsp;1
 <span class="header-section-number">8.3</span> Inspecting individual clusters</h2>
 <p>The cached fit above carries no log-likelihood curves, so the few clusters we want to look at are re-fit with <code>build_graph = TRUE</code>. Strata are selected by the columns that define them, because stratum <em>labels</em> are assigned positionally and so are not stable across a subset:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">refit_strata</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">ids</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">ids</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span></span>
-<span>  <span class="fu"><a href="../man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
-<span>    pop_data <span class="op">=</span> <span class="va">sim_df</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">ids</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">ids</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
-<span>    noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
-<span>    strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span>
-<span>    curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
-<span>    build_graph <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    num_cores <span class="op">=</span> <span class="fl">1</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">stratum_ids</span> <span class="op">&lt;-</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stratum_ids</span> <span class="op">&lt;-</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="va">lambda.sim</span>, <span class="va">cluster</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ests_first_five</span> <span class="op">&lt;-</span> <span class="fu">refit_strata</span><span class="op">(</span><span class="va">stratum_ids</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="va">ests_first_five</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/refit_strata.html">refit_strata</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
+<span>  strata_ids <span class="op">=</span> <span class="va">stratum_ids</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
+<span>  curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="cell">
@@ -2692,7 +2690,17 @@ Figure&nbsp;10: Log-likelihood curves for the first five simulated clusters.
 </div>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">problem_ids</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="fu">refit_strata</span><span class="op">(</span><span class="va">problem_ids</span><span class="op">)</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../man/refit_strata.html">refit_strata</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
+<span>    strata_ids <span class="op">=</span> <span class="va">problem_ids</span>,</span>
+<span>    sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
+<span>    curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>    num_cores <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stderr">
 <pre><code>Warning: Some strata are completely missing one or more biomarkers.

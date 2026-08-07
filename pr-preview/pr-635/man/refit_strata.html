@@ -4,9 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-08-07">
-<title>Version Crosswalk: v1.3.0 to v1.4.0 – serocalculator</title>
+<title>refit_strata – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -62,27 +60,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -247,7 +245,7 @@ does not exist yet when this runs.
       apply(root.classList.contains("sidebar-folded"));
     });
   })();
-</script><link rel="stylesheet" href="../../styles.css">
+</script><link rel="stylesheet" href="../styles.css">
 </head>
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
@@ -416,7 +414,7 @@ does not exist yet when this runs.
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9030</small></span>
     </a>
   </div>
@@ -427,11 +425,11 @@ does not exist yet when this runs.
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item">
-    <a class="nav-link active" href="../../reference.html" aria-current="page"> 
+    <a class="nav-link active" href="../reference.html" aria-current="page"> 
 <span class="menu-text">Reference</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../vignettes/articles/serocalculator.html"> 
+    <a class="nav-link" href="../vignettes/articles/serocalculator.html"> 
 <span class="menu-text">Get started</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -441,27 +439,27 @@ does not exist yet when this runs.
     <ul class="dropdown-menu" aria-labelledby="nav-menu-articles">
 <li class="dropdown-header">—Methodology—</li>
         <li>
-    <a class="dropdown-item" href="../../vignettes/methodology.html">
+    <a class="dropdown-item" href="../vignettes/methodology.html">
  <span class="dropdown-text">Methodology</span></a>
   </li>  
         <li class="dropdown-header">—Examples—</li>
         <li>
-    <a class="dropdown-item" href="../../vignettes/articles/enteric_fever_example.html">
+    <a class="dropdown-item" href="../vignettes/articles/enteric_fever_example.html">
  <span class="dropdown-text">Enteric fever example</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../vignettes/articles/scrubTyphus_example.html">
+    <a class="dropdown-item" href="../vignettes/articles/scrubTyphus_example.html">
  <span class="dropdown-text">Scrub typhus example</span></a>
   </li>  
         <li class="dropdown-header">—Other—</li>
         <li>
-    <a class="dropdown-item" href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">
+    <a class="dropdown-item" href="../vignettes/articles/version-crosswalk-1.3-to-1.4.html">
  <span class="dropdown-text">Version crosswalk (1.3 to 1.4)</span></a>
   </li>  
     </ul>
 </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../NEWS.html"> 
+    <a class="nav-link" href="../NEWS.html"> 
 <span class="menu-text">Changelog</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -489,16 +487,16 @@ does not exist yet when this runs.
   </li>  
         <li class="dropdown-header">—Community—</li>
         <li>
-    <a class="dropdown-item" href="../../CONTRIBUTING.html">
+    <a class="dropdown-item" href="../CONTRIBUTING.html">
  <span class="dropdown-text">Contributing guide</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../CODE_OF_CONDUCT.html">
+    <a class="dropdown-item" href="../CODE_OF_CONDUCT.html">
  <span class="dropdown-text">Code of conduct</span></a>
   </li>  
         <li class="dropdown-header">—Citation—</li>
         <li>
-    <a class="dropdown-item" href="../../citation.html">
+    <a class="dropdown-item" href="../citation.html">
  <span class="dropdown-text">Citing serocalculator</span></a>
   </li>  
     </ul>
@@ -544,7 +542,7 @@ does not exist yet when this runs.
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Other</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Version Crosswalk: v1.3.0 to v1.4.0</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Reference</li><li class="breadcrumb-item"><a href="../man/est_seroincidence_by_cached.html">Other</a></li><li class="breadcrumb-item"><a href="../man/refit_strata.html">refit_strata(): Re-fit a subset of strata, with log-l…</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -554,19 +552,19 @@ does not exist yet when this runs.
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Articles</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
 <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
@@ -578,7 +576,7 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../vignettes/articles/serocalculator.html" class="sidebar-item-text sidebar-link">
+  <a href="../vignettes/articles/serocalculator.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction to serocalculator</span></a>
   </div>
 </li>
@@ -595,7 +593,7 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../vignettes/methodology.html" class="sidebar-item-text sidebar-link">
+  <a href="../vignettes/methodology.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estimating Incidence Rates from Cross-Sectional Serosurveys</span></a>
   </div>
 </li>
@@ -612,13 +610,13 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../vignettes/articles/enteric_fever_example.html" class="sidebar-item-text sidebar-link">
+  <a href="../vignettes/articles/enteric_fever_example.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Enteric Fever Seroincidence Vignette</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../vignettes/articles/scrubTyphus_example.html" class="sidebar-item-text sidebar-link">
+  <a href="../vignettes/articles/scrubTyphus_example.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Scrub Typhus Seroincidence Vignette</span></a>
   </div>
 </li>
@@ -626,16 +624,16 @@ does not exist yet when this runs.
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
  <span class="menu-text">Other</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html" class="sidebar-item-text sidebar-link active">
+  <a href="../vignettes/articles/version-crosswalk-1.3-to-1.4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Crosswalk: v1.3.0 to v1.4.0</span></a>
   </div>
 </li>
@@ -645,19 +643,19 @@ does not exist yet when this runs.
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../reference.html" class="sidebar-item-text sidebar-link">
+  <a href="../reference.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package index</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
@@ -669,49 +667,49 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/as_pop_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/as_pop_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">as_pop_data(): Load a cross-sectional antibody surve…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/load_pop_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/load_pop_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">load_pop_data(): Load a cross-sectional antibody surve…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/as_sr_params.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/as_sr_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">as_sr_params(): Load longitudinal seroresponse parame…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/load_sr_params.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/load_sr_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">load_sr_params(): Load longitudinal seroresponse parame…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/as_noise_params.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/as_noise_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">as_noise_params(): Load noise parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/load_noise_params.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/load_noise_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">load_noise_params(): Load noise parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/check_pop_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/check_pop_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">check_pop_data(): Check the formatting of a cross-secti…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/strata.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/strata.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">strata(): Extract <code>Strata</code> metadata from an object</span></a>
   </div>
 </li>
@@ -728,25 +726,25 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/get_biomarker_levels.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/get_biomarker_levels.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">get_biomarker_levels(): Extract biomarker levels</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/get_biomarker_names_var.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/get_biomarker_names_var.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">get_biomarker_names_var(): Get biomarker variable name</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/get_values_var.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/get_values_var.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">get_values_var(): Extract antibody measurement values</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/get_values.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/get_values.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">get_values(): Get antibody measurement values</span></a>
   </div>
 </li>
@@ -763,67 +761,67 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/autoplot.pop_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/autoplot.pop_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">autoplot.pop_data: Plot distribution of antibodies</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/autoplot.curve_params.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/autoplot.curve_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">autoplot.curve_params: Graph antibody decay curves by antige…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/graph.curve.params.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/graph.curve.params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">graph.curve.params(): Graph estimated antibody decay curves</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/graph_loglik.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/graph_loglik.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">graph_loglik(): Graph log-likelihood of data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/log_likelihood.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/log_likelihood.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">log_likelihood(): Calculate log-likelihood</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/antibody_decay_curve.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/antibody_decay_curve.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">antibody_decay_curve(): Antibody decay curve with natural par…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/pathogen_decay_curve.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/pathogen_decay_curve.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">pathogen_decay_curve(): Pathogen decay curve</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/plot_decay_curve.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/plot_decay_curve.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">plot_decay_curve(): Plot a decay function</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/curve_app.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/curve_app.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">curve_app(): Launch the interactive Shiny app for …</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/t1f.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/t1f.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">t1f(): Calculate time to end of active infec…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/y1f.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/y1f.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">y1f(): Calculate peak antibody concentration</span></a>
   </div>
 </li>
@@ -840,13 +838,13 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/est_seroincidence.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/est_seroincidence.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">est_seroincidence(): Find the maximum likelihood estimate …</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/est_seroincidence_by.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/est_seroincidence_by.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">est_seroincidence_by(): Estimate Seroincidence</span></a>
   </div>
 </li>
@@ -863,13 +861,13 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/summary.seroincidence.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/summary.seroincidence.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">summary.seroincidence: Summarizing fitted seroincidence models</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">summary.seroincidence.by: Summary Method for `“seroincidence.by…</span></a>
   </div>
 </li>
@@ -886,19 +884,19 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/autoplot.seroincidence.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/autoplot.seroincidence.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">autoplot.seroincidence: Plot the log-likelihood curve for the…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/autoplot.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/autoplot.seroincidence.by.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">autoplot.seroincidence.by: Plot <code>seroincidence.by</code> log-likelihoods</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/autoplot.summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/autoplot.summary.seroincidence.by.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">autoplot.summary.seroincidence.by: Plot method for `summary.seroincidenc…</span></a>
   </div>
 </li>
@@ -915,7 +913,7 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/compare_seroincidence.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/compare_seroincidence.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">compare_seroincidence(): Compare seroincidence rates between t…</span></a>
   </div>
 </li>
@@ -932,43 +930,43 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/sees_pop_data_100.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sees_pop_data_100.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sees_pop_data_100: Small example cross-sectional data set</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/sees_pop_data_pk_100.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sees_pop_data_pk_100.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sees_pop_data_pk_100: Small example cross-sectional data set</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/typhoid_curves_nostrat_100.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/typhoid_curves_nostrat_100.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">typhoid_curves_nostrat_100: Small example of antibody response cu…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/example_noise_params_sees.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/example_noise_params_sees.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">example_noise_params_sees: Small example of noise parameters for…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/example_noise_params_pk.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/example_noise_params_pk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">example_noise_params_pk: Small example of noise parameters for…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/sees_typhoid_ests_strat.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sees_typhoid_ests_strat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sees_typhoid_ests_strat: Example <code>"seroincidence.by"</code> object</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/serocalculator_example.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/serocalculator_example.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">serocalculator_example(): Get path to an example file</span></a>
   </div>
 </li>
@@ -985,25 +983,25 @@ does not exist yet when this runs.
       <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sim_pop_data(): Simulate a cross-sectional serosurvey…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/sim_pop_data_multi.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sim_pop_data_multi.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sim_pop_data_multi(): Simulate multiple data sets</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/analyze_sims.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/analyze_sims.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">analyze_sims(): Analyze simulation results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/autoplot.sim_results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">autoplot.sim_results: Plot simulation results <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> …</span></a>
   </div>
 </li>
@@ -1011,28 +1009,28 @@ does not exist yet when this runs.
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true">
  <span class="menu-text">Other</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/est_seroincidence_by_cached.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/est_seroincidence_by_cached.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">est_seroincidence_by_cached(): Estimate seroincidence by stratum, ca…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/refit_strata.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/refit_strata.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">refit_strata(): Re-fit a subset of strata, with log-l…</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</span></a>
   </div>
 </li>
@@ -1042,25 +1040,25 @@ does not exist yet when this runs.
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../NEWS.html" class="sidebar-item-text sidebar-link">
+  <a href="../NEWS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">News</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../CODE_OF_CONDUCT.html" class="sidebar-item-text sidebar-link">
+  <a href="../CODE_OF_CONDUCT.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Code of conduct</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../CONTRIBUTING.html" class="sidebar-item-text sidebar-link">
+  <a href="../CONTRIBUTING.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Contributing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../citation.html" class="sidebar-item-text sidebar-link">
+  <a href="../citation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Citation</span></a>
   </div>
 </li>
@@ -1072,414 +1070,215 @@ does not exist yet when this runs.
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
-  <li>
-<a href="#quick-reference-table" id="toc-quick-reference-table" class="nav-link" data-scroll-target="#quick-reference-table"><span class="header-section-number">2</span> Quick Reference Table</a>
+<li>
+<a href="#re-fit-a-subset-of-strata-with-log-likelihood-graphs-attached" id="toc-re-fit-a-subset-of-strata-with-log-likelihood-graphs-attached" class="nav-link active" data-scroll-target="#re-fit-a-subset-of-strata-with-log-likelihood-graphs-attached">Re-fit a subset of strata, with log-likelihood graphs attached</a>
   <ul class="collapse">
-<li><a href="#main-estimation-functions" id="toc-main-estimation-functions" class="nav-link" data-scroll-target="#main-estimation-functions"><span class="header-section-number">2.1</span> Main Estimation Functions</a></li>
-  <li><a href="#data-preparation-functions" id="toc-data-preparation-functions" class="nav-link" data-scroll-target="#data-preparation-functions"><span class="header-section-number">2.2</span> Data Preparation Functions</a></li>
-  <li><a href="#function-arguments" id="toc-function-arguments" class="nav-link" data-scroll-target="#function-arguments"><span class="header-section-number">2.3</span> Function Arguments</a></li>
+<li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details">Details</a></li>
+  <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </li>
-  <li>
-<a href="#code-examples" id="toc-code-examples" class="nav-link" data-scroll-target="#code-examples"><span class="header-section-number">3</span> Code Examples</a>
-  <ul class="collapse">
-<li><a href="#example-1-basic-seroincidence-estimation" id="toc-example-1-basic-seroincidence-estimation" class="nav-link" data-scroll-target="#example-1-basic-seroincidence-estimation"><span class="header-section-number">3.1</span> Example 1: Basic Seroincidence Estimation</a></li>
-  <li><a href="#example-2-stratified-analysis" id="toc-example-2-stratified-analysis" class="nav-link" data-scroll-target="#example-2-stratified-analysis"><span class="header-section-number">3.2</span> Example 2: Stratified Analysis</a></li>
-  <li><a href="#example-3-simulating-data" id="toc-example-3-simulating-data" class="nav-link" data-scroll-target="#example-3-simulating-data"><span class="header-section-number">3.3</span> Example 3: Simulating Data</a></li>
-  </ul>
-</li>
-  <li><a href="#new-features-in-v1.4.0" id="toc-new-features-in-v1.4.0" class="nav-link" data-scroll-target="#new-features-in-v1.4.0"><span class="header-section-number">4</span> New Features in v1.4.0</a></li>
-  <li><a href="#other-notable-changes" id="toc-other-notable-changes" class="nav-link" data-scroll-target="#other-notable-changes"><span class="header-section-number">5</span> Other Notable Changes</a></li>
-  <li><a href="#need-more-help" id="toc-need-more-help" class="nav-link" data-scroll-target="#need-more-help"><span class="header-section-number">6</span> Need More Help?</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7</span> Summary</a></li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/docs/consolidate-articles/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/docs/consolidate-articles/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="version-crosswalk-1.3-to-1.4.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/docs/consolidate-articles/man/refit_strata.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/docs/consolidate-articles/man/refit_strata.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Other</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Version Crosswalk: v1.3.0 to v1.4.0</a></li></ol></nav><h1 class="title display-7">Version Crosswalk: v1.3.0 to v1.4.0</h1></header><header id="title-block-header">
-<p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
-
-<p class="date">2026-08-07</p>
-</header><section id="overview" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="overview">
-<span class="header-section-number">1</span> Overview</h2>
-<p>This guide helps users migrate code from <strong>serocalculator v1.3.0</strong> to <strong>v1.4.0</strong>. The main changes are function renamings for improved clarity and consistency.</p>
-<p><strong>If you have existing code using v1.3.0, use this guide to update your function calls.</strong></p>
-</section><section id="quick-reference-table" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="quick-reference-table">
-<span class="header-section-number">2</span> Quick Reference Table</h2>
-<section id="main-estimation-functions" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="main-estimation-functions">
-<span class="header-section-number">2.1</span> Main Estimation Functions</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 34%">
-<col style="width: 36%">
-<col style="width: 29%">
-</colgroup>
-<thead><tr class="header">
-<th>v1.3.0 Function</th>
-<th>v1.4.0 Function</th>
-<th>What it does</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><code><a href="../../man/est.incidence.html">est.incidence()</a></code></td>
-<td><code><a href="../../man/est_seroincidence.html">est_seroincidence()</a></code></td>
-<td>Estimate seroincidence for entire dataset</td>
-</tr>
-<tr class="even">
-<td><code><a href="../../man/est.incidence.by.html">est.incidence.by()</a></code></td>
-<td><code><a href="../../man/est_seroincidence_by.html">est_seroincidence_by()</a></code></td>
-<td>Estimate seroincidence stratified by groups</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The intermediate names <code>estimate_scr()</code> and <code>estimate_scr_by()</code> were used briefly in early v1.4.0 development but replaced with the final names shown above.</p>
-</div>
-</div>
-</section><section id="data-preparation-functions" class="level3" data-number="2.2"><h3 data-number="2.2" class="anchored" data-anchor-id="data-preparation-functions">
-<span class="header-section-number">2.2</span> Data Preparation Functions</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 34%">
-<col style="width: 36%">
-<col style="width: 29%">
-</colgroup>
-<thead><tr class="header">
-<th>v1.3.0 Function</th>
-<th>v1.4.0 Function</th>
-<th>What it does</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><code><a href="../../man/load_curve_params.html">load_curve_params()</a></code></td>
-<td><code><a href="../../man/load_sr_params.html">load_sr_params()</a></code></td>
-<td>Load seroresponse curve parameters</td>
-</tr>
-<tr class="even">
-<td><code><a href="../../man/as_curve_params.html">as_curve_params()</a></code></td>
-<td><code><a href="../../man/as_sr_params.html">as_sr_params()</a></code></td>
-<td>Convert data to seroresponse parameters</td>
-</tr>
-<tr class="odd">
-<td><code><a href="../../man/sim.cs.html">sim.cs()</a></code></td>
-<td><code><a href="../../man/sim_pop_data.html">sim_pop_data()</a></code></td>
-<td>Simulate cross-sectional population data</td>
-</tr>
-<tr class="even">
-<td><code><a href="../../man/sim.cs.multi.html">sim.cs.multi()</a></code></td>
-<td><code><a href="../../man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code></td>
-<td>Simulate multiple cross-sectional datasets</td>
-</tr>
-</tbody>
-</table></section><section id="function-arguments" class="level3" data-number="2.3"><h3 data-number="2.3" class="anchored" data-anchor-id="function-arguments">
-<span class="header-section-number">2.3</span> Function Arguments</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 32%">
-<col style="width: 32%">
-<col style="width: 35%">
-</colgroup>
-<thead><tr class="header">
-<th>v1.3.0 Argument</th>
-<th>v1.4.0 Argument</th>
-<th>Used in functions</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td><code>curve_params</code></td>
-<td><code>sr_params</code></td>
-<td>
-<code><a href="../../man/est_seroincidence.html">est_seroincidence()</a></code>, <code><a href="../../man/est_seroincidence_by.html">est_seroincidence_by()</a></code>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Reference</li><li class="breadcrumb-item"><a href="../man/est_seroincidence_by_cached.html">Other</a></li><li class="breadcrumb-item"><a href="../man/refit_strata.html">refit_strata(): Re-fit a subset of strata, with log-l…</a></li></ol></nav></header><section id="re-fit-a-subset-of-strata-with-log-likelihood-graphs-attached" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="re-fit-a-subset-of-strata-with-log-likelihood-graphs-attached">Re-fit a subset of strata, with log-likelihood graphs attached</h2>
+<section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
+<p>Companion to <code><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached()</a></code>. Caching a fit built with <code>build_graph = TRUE</code> is impractical over many strata, because a log-likelihood plot is attached to each one; the usual pattern is to cache the whole fit with <code>build_graph = FALSE</code> and then re-fit, with graphs, only the handful of strata you actually want to plot.</p>
+</section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<pre><code class="language-R">refit_strata(pop_data, strata_ids, strata = names(strata_ids), ...)
+</code></pre>
+</section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+<table role="presentation">
+<tbody><tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="pop_data">pop_data</code>
 </td>
-</tr></tbody>
-</table></section></section><section id="code-examples" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="code-examples">
-<span class="header-section-number">3</span> Code Examples</h2>
-<section id="example-1-basic-seroincidence-estimation" class="level3" data-number="3.1"><h3 data-number="3.1" class="anchored" data-anchor-id="example-1-basic-seroincidence-estimation">
-<span class="header-section-number">3.1</span> Example 1: Basic Seroincidence Estimation</h3>
-<p><strong>Old code (v1.3.0):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load curve parameters (v1.3.0 - DEPRECATED)</span></span>
-<span><span class="va">curve_params</span> <span class="op">&lt;-</span> <span class="fu">load_curve_params</span><span class="op">(</span><span class="st">"parameters.rds"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Estimate seroincidence</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">est.incidence</span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">my_data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curve_params</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>New code (v1.4.0):</strong></p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Load seroresponse parameters from RDS file</span></span>
-<span><span class="va">sr_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../../man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_curve_params.rds"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Load example population data from CSV</span></span>
-<span><span class="va">pop_data</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../../man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_pop_data.csv"</span><span class="op">)</span>,</span>
-<span>  show_col_types <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../../man/as_pop_data.html">as_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Load noise parameters</span></span>
-<span><span class="va">noise_params_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/load_noise_params.html">load_noise_params</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../../man/serocalculator_example.html">serocalculator_example</a></span><span class="op">(</span><span class="st">"example_noise_params.rds"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Use only the antigen-isotypes present in pop_data</span></span>
-<span><span class="va">antigen_isos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="../../man/get_biomarker_names.html">get_biomarker_names</a></span><span class="op">(</span><span class="va">pop_data</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">noise_params</span> <span class="op">&lt;-</span> <span class="va">noise_params_full</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">antigen_isos</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Country</span>, <span class="op">-</span><span class="va">X</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Estimate seroincidence</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span>,</span>
-<span>  sr_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">noise_params</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 11</span></span>
-<span><span class="co">#&gt;   est.start incidence.rate     SE CI.lwr CI.upr se_type  coverage log.lik</span></span>
-<span><span class="co">#&gt;       &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1       0.1          0.166 0.0178  0.135  0.205 standard     0.95   -524.</span></span>
-<span><span class="co">#&gt; # ℹ 3 more variables: iterations &lt;int&gt;, antigen.isos &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section><section id="example-2-stratified-analysis" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="example-2-stratified-analysis">
-<span class="header-section-number">3.2</span> Example 2: Stratified Analysis</h3>
-<p><strong>Old code (v1.3.0):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Stratified estimation (v1.3.0 - DEPRECATED)</span></span>
-<span><span class="va">results_by_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/est.incidence.by.html">est.incidence.by</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">my_data</span>,</span>
-<span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
-<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"age_group"</span>, <span class="st">"location"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>New code (v1.4.0):</strong></p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Stratified estimation by Country</span></span>
-<span><span class="va">results_by_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">pop_data</span>,</span>
-<span>  sr_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
-<span>  noise_params <span class="op">=</span> <span class="va">noise_params</span>,</span>
-<span>  strata <span class="op">=</span> <span class="st">"Country"</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `curve_params` is missing all strata variables and will be used unstratified.</span></span>
-<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
-<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
-<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
-<span><span class="co">#&gt; Warning: `noise_params` is missing all strata variables and will be used unstratified.</span></span>
-<span><span class="co">#&gt; ℹ To avoid this warning, specify the desired set of stratifying variables in</span></span>
-<span><span class="co">#&gt;   the `curve_strata_varnames` and `noise_strata_varnames` arguments to</span></span>
-<span><span class="co">#&gt;   `est_seroincidence_by()`.</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">results_by_group</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Seroincidence estimated given the following setup:</span></span>
-<span><span class="co">#&gt; a) Antigen isotypes   : HlyE_IgA, HlyE_IgG </span></span>
-<span><span class="co">#&gt; b) Strata       : Country </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Seroincidence estimates:</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 14</span></span>
-<span><span class="co">#&gt;   Stratum   Country      n est.start incidence.rate     SE CI.lwr CI.upr se_type</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; 1 Stratum 1 Pakistan   100       0.1          0.166 0.0178  0.135  0.205 standa…</span></span>
-<span><span class="co">#&gt; # ℹ 5 more variables: coverage &lt;dbl&gt;, log.lik &lt;dbl&gt;, iterations &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   antigen.isos &lt;chr&gt;, nlm.convergence.code &lt;ord&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section><section id="example-3-simulating-data" class="level3" data-number="3.3"><h3 data-number="3.3" class="anchored" data-anchor-id="example-3-simulating-data">
-<span class="header-section-number">3.3</span> Example 3: Simulating Data</h3>
-<p><strong>Old code (v1.3.0):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Simulate cross-sectional data (v1.3.0 - DEPRECATED)</span></span>
-<span><span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/sim.cs.html">sim.cs</a></span><span class="op">(</span></span>
-<span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
-<span>  n <span class="op">=</span> <span class="fl">100</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Simulate multiple datasets</span></span>
-<span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/sim.cs.multi.html">sim.cs.multi</a></span><span class="op">(</span></span>
-<span>  curve_params <span class="op">=</span> <span class="va">curve_params</span>,</span>
-<span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  n_reps <span class="op">=</span> <span class="fl">10</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>New code (v1.4.0):</strong></p>
-<div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Biologic noise distribution for simulation</span></span>
-<span><span class="va">noise_limits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">antigen_isos</span><span class="op">)</span>,</span>
-<span>  ncol <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  byrow <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">antigen_isos</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Simulate cross-sectional data</span></span>
-<span><span class="va">simulated_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/sim_pop_data.html">sim_pop_data</a></span><span class="op">(</span></span>
-<span>  curve_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
-<span>  noise_limits <span class="op">=</span> <span class="va">noise_limits</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span>,</span>
-<span>  n_samples <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"long"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">simulated_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
-<span><span class="co">#&gt;     age id    antigen_iso value</span></span>
-<span><span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  3.94 1     HlyE_IgA    0.257</span></span>
-<span><span class="co">#&gt; 2  3.94 1     HlyE_IgG    0.463</span></span>
-<span><span class="co">#&gt; 3 16.2  2     HlyE_IgA    0.661</span></span>
-<span><span class="co">#&gt; 4 16.2  2     HlyE_IgG    0.611</span></span>
-<span><span class="co">#&gt; 5  6.02 3     HlyE_IgA    0.530</span></span>
-<span><span class="co">#&gt; 6  6.02 3     HlyE_IgG    0.385</span></span>
-<span></span>
-<span><span class="co"># Simulate multiple datasets</span></span>
-<span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>
-<span>  curve_params <span class="op">=</span> <span class="va">sr_params</span>,</span>
-<span>  noise_limits <span class="op">=</span> <span class="va">noise_limits</span>,</span>
-<span>  antigen_isos <span class="op">=</span> <span class="va">antigen_isos</span>,</span>
-<span>  sample_sizes <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  nclus <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  lambdas <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span>  num_cores <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"long"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
-<span><span class="co">#&gt; Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
-<span><span class="co">#&gt; Some dimension variables are not factors.</span></span>
-<span><span class="co">#&gt; ℹ These dimensions will be ordered by first appearance.</span></span>
-<span><span class="co">#&gt; ℹ Check results using `dimnames()`.</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">multiple_sims</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 600</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section></section><section id="new-features-in-v1.4.0" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="new-features-in-v1.4.0">
-<span class="header-section-number">4</span> New Features in v1.4.0</h2>
-<p>In addition to the renamed functions, v1.4.0 includes several new features:</p>
+<td>
+a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> of cross-sectional serology data: the same data the full fit was built from.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="strata_ids">strata_ids</code>
+</td>
+<td>
+a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> whose columns are the stratifying variables and whose rows select the strata to re-fit. Matched against <code>pop_data</code> with <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">dplyr::semi_join()</a></code>.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="strata">strata</code>
+</td>
+<td>
+a <code><a href="https://rdrr.io/r/base/character.html">character()</a></code> of the stratifying variable names. Defaults to the columns of <code>strata_ids</code>.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="...">…</code>
+</td>
+<td>
+<p>Arguments passed on to <code>est_seroincidence_by</code></p>
+<dl>
+<dt>
+<code>curve_strata_varnames</code>
+</dt>
+<dd>
+A subset of <code>strata</code>. Values must be variable names in <code>curve_params</code>. Default = "".
+</dd>
+<dt>
+<code>noise_strata_varnames</code>
+</dt>
+<dd>
+A subset of <code>strata</code>. Values must be variable names in <code>noise_params</code>. Default = "".
+</dd>
+<dt>
+<code>num_cores</code>
+</dt>
+<dd>
+Number of processor cores to use for calculations when computing by strata. If set to more than 1 and package <span class="pkg">parallel</span> is available, then the computations are executed in parallel. Default = 1L.
+</dd>
+<dt>
+<code>lambda_start</code>
+</dt>
+<dd>
+starting guess for incidence rate, in events/year.
+</dd>
+<dt>
+<code>antigen_isos</code>
+</dt>
+<dd>
+Character vector with one or more antibody names. Must match <code>pop_data</code>
+</dd>
+<dt>
+<code>build_graph</code>
+</dt>
+<dd>
+whether to graph the log-likelihood function across a range of incidence rates (lambda values)
+</dd>
+<dt>
+<code>print_graph</code>
+</dt>
+<dd>
+whether to display the log-likelihood curve graph in the course of running <code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code>
+</dd>
+<dt>
+<code>sr_params</code>
+</dt>
+<dd>
+<p>a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> containing MCMC samples of parameters from the Bayesian posterior distribution of a longitudinal decay curve model. The parameter columns must be named:</p>
 <ul>
 <li>
-<strong><code><a href="../../man/compare_seroincidence.html">compare_seroincidence()</a></code></strong>: New function for statistical comparison of seroincidence rates between groups</li>
-<li>
-<strong>Enhanced plotting</strong>: Additional options for <code>autoplot.curve_params()</code> including <code>log_x</code>, <code>log_y</code>, and <code>chain_color</code>
+<p><code>antigen_iso</code>: a <code><a href="https://rdrr.io/r/base/character.html">character()</a></code> vector indicating antigen-isotype combinations</p>
 </li>
 <li>
-<strong>Extended simulation analysis</strong>: New <code><a href="../../man/analyze_sims.html">analyze_sims()</a></code> and <code>autoplot.sim_results()</code> functions</li>
-<li>
-<strong>Improved documentation</strong>: Multi-version pkgdown documentation with version dropdown</li>
-</ul></section><section id="other-notable-changes" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="other-notable-changes">
-<span class="header-section-number">5</span> Other Notable Changes</h2>
-<ul>
-<li>Main estimation functions (<code><a href="../../man/est_seroincidence.html">est_seroincidence()</a></code>, <code><a href="../../man/est_seroincidence_by.html">est_seroincidence_by()</a></code>) now use <code>sr_params</code> argument instead of <code>curve_params</code>
-</li>
-<li>Function names now use snake_case instead of dots (e.g., <code><a href="../../man/est.incidence.html">est.incidence()</a></code> → <code><a href="../../man/est_seroincidence.html">est_seroincidence()</a></code>)</li>
-<li>Many internal improvements to error messages and warnings</li>
-</ul>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Important</strong>: Not all functions changed their parameter names. Functions like <code><a href="../../man/sim_pop_data.html">sim_pop_data()</a></code> and <code><a href="../../man/graph_loglik.html">graph_loglik()</a></code> still use <code>curve_params</code> as the parameter name. Only the main estimation functions use <code>sr_params</code>.</p>
-</div>
-</div>
-</section><section id="need-more-help" class="level2" data-number="6"><h2 data-number="6" class="anchored" data-anchor-id="need-more-help">
-<span class="header-section-number">6</span> Need More Help?</h2>
-<ul>
-<li>See the <a href="../../NEWS.html">NEWS file</a> for complete details</li>
-<li>Check the <a href="serocalculator.html">main tutorial</a> for comprehensive examples using v1.4.0 syntax</li>
-<li>Visit the <a href="../../reference.html">function reference</a> for detailed documentation</li>
-</ul></section><section id="summary" class="level2" data-number="7"><h2 data-number="7" class="anchored" data-anchor-id="summary">
-<span class="header-section-number">7</span> Summary</h2>
-<p>The transition from v1.3.0 to v1.4.0 primarily involves:</p>
-<ol type="1">
-<li>Replace dots in function names with underscores (e.g., <code><a href="../../man/est.incidence.html">est.incidence()</a></code> → <code><a href="../../man/est_seroincidence.html">est_seroincidence()</a></code>)</li>
-<li>Update <code>curve_params</code> arguments to <code>sr_params</code> <strong>for estimation functions only</strong>
-</li>
-<li>Use the new <code><a href="../../man/load_sr_params.html">load_sr_params()</a></code> and <code><a href="../../man/as_sr_params.html">as_sr_params()</a></code> instead of the <code>_curve_params</code> versions</li>
-<li>Use <code>.rds</code> files with <code><a href="../../man/load_sr_params.html">load_sr_params()</a></code> (not <code>.csv</code> files)</li>
-</ol>
-<p><strong>Quick search-and-replace tips:</strong></p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Function name changes (safe for all code)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>
-<code>est.incidence.by(</code> → <code>est_seroincidence_by(</code>
+<p><code>iter</code>: an <code><a href="https://rdrr.io/r/base/integer.html">integer()</a></code> vector indicating MCMC sampling iterations</p>
 </li>
 <li>
-<code>est.incidence(</code> → <code>est_seroincidence(</code>
+<p><code>y0</code>: baseline antibody level at $t=0$ ($y(t=0)$)</p>
 </li>
 <li>
-<code>load_curve_params(</code> → <code>load_sr_params(</code>
+<p><code>y1</code>: antibody peak level (ELISA units)</p>
 </li>
 <li>
-<code>as_curve_params(</code> → <code>as_sr_params(</code>
+<p><code>t1</code>: duration of infection</p>
 </li>
 <li>
-<code>sim.cs.multi(</code> → <code>sim_pop_data_multi(</code>
+<p><code>alpha</code>: antibody decay rate (1/days for the current longitudinal parameter sets)</p>
 </li>
 <li>
-<code>sim.cs(</code> → <code>sim_pop_data(</code>
+<p><code>r</code>: shape factor of antibody decay</p>
 </li>
 </ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Argument name changes (only for estimation functions)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Within calls to <code><a href="../../man/est_seroincidence.html">est_seroincidence()</a></code> and <code><a href="../../man/est_seroincidence_by.html">est_seroincidence_by()</a></code>:</p>
+</dd>
+<dt>
+<code>cluster_var</code>
+</dt>
+<dd>
+optional name(s) of the variable(s) in <code>pop_data</code> containing cluster identifiers for clustered sampling designs (e.g., households, schools). Can be a single variable name (character string) or a vector of variable names for multi-level clustering (e.g., <code>c(“school”, “classroom”)</code>). When provided, standard errors will be adjusted for within-cluster correlation using cluster-robust variance estimation.
+</dd>
+<dt>
+<code>stratum_var</code>
+</dt>
+<dd>
+optional name of the variable in <code>pop_data</code> containing stratum identifiers. Used in combination with <code>cluster_var</code> for stratified cluster sampling designs.
+</dd>
+<dt>
+<code>noise_params</code>
+</dt>
+<dd>
+<p>a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> (or <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble::tibble()</a></code>) containing the following variables, specifying noise parameters for each antigen isotype:</p>
 <ul>
 <li>
-<code>curve_params =</code> → <code>sr_params =</code>
+<p><code>antigen_iso</code>: antigen isotype whose noise parameters are being specified on each row</p>
+</li>
+<li>
+<p><code>nu</code>: biological noise</p>
+</li>
+<li>
+<p><code>eps</code>: measurement noise</p>
+</li>
+<li>
+<p><code>y.low</code>: lower limit of detection for the current antigen isotype</p>
+</li>
+<li>
+<p><code>y.high</code>: upper limit of detection for the current antigen isotype</p>
 </li>
 </ul>
-<p><strong>Do not</strong> change <code>curve_params</code> to <code>sr_params</code> in other functions like <code><a href="../../man/sim_pop_data.html">sim_pop_data()</a></code>.</p>
-</div>
+</dd>
+<dt>
+<code>verbose</code>
+</dt>
+<dd>
+logical: if TRUE, print verbose log information to console
+</dd>
+</dl>
+</td>
+</tr>
+</tbody></table></section><section id="details" class="level3"><h3 class="anchored" data-anchor-id="details">Details</h3>
+<p>Strata are selected by the columns that define them rather than by index or by label, because <code><a href="../man/count_strata.html">count_strata()</a></code> names strata positionally (<code>paste(“Stratum”, row_number())</code>). A subset therefore renumbers them, so labels and positions from the full fit do not carry over.</p>
+</section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
+<p>a <code>“seroincidence.by”</code> object covering only the selected strata, with graphs attached, or <code>NULL</code> if <code>strata_ids</code> has no rows.</p>
+</section><section id="see-also" class="level3"><h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<p><code><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached()</a></code></p>
+</section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ucd-serg.github.io/serocalculator/">"serocalculator"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence_by.html">est_seroincidence_by</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">sees_pop_data_pk_100</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">typhoid_curves_nostrat_100</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">example_noise_params_pk</span>,</span>
+<span>  strata <span class="op">=</span> <span class="st">"catchment"</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  iterlim <span class="op">=</span> <span class="fl">5</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Re-fit just the strata whose optimizer flagged a possible problem.</span></span>
+<span><span class="va">problem_ids</span> <span class="op">&lt;-</span> <span class="va">ests</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">nlm.convergence.code</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="st">"catchment"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../man/refit_strata.html">refit_strata</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">sees_pop_data_pk_100</span>,</span>
+<span>  strata_ids <span class="op">=</span> <span class="va">problem_ids</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">typhoid_curves_nostrat_100</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">example_noise_params_pk</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>  iterlim <span class="op">=</span> <span class="fl">5</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1896,4 +1695,4 @@ Warning
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/docs/consolidate-articles/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/docs/consolidate-articles/vignettes/articles/version-crosswalk-1.3-to-1.4.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/docs/consolidate-articles/man/refit_strata.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/docs/consolidate-articles/man/refit_strata.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -48,8 +48,6 @@ website:
           - text: "---Methodology---"
           - text: "Methodology"
             file: vignettes/methodology.qmd
-          - text: "Simulate cross-sectional data"
-            file: vignettes/articles/simulate_xsectionalData.qmd
           - text: "---Examples---"
           - text: "Enteric fever example"
             file: vignettes/articles/enteric_fever_example.Rmd
@@ -93,7 +91,6 @@ website:
           - section: Methodology
             contents:
               - vignettes/methodology.qmd
-              - vignettes/articles/simulate_xsectionalData.qmd
           - section: Examples
             contents:
               - vignettes/articles/enteric_fever_example.Rmd

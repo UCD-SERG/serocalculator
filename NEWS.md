@@ -40,6 +40,27 @@
 
 ## Documentation
 
+* Merged the "Simulation studies" article
+  (`vignettes/articles/simulate_xsectionalData.qmd`) into the methodology
+  article, which now demonstrates live everything it describes.
+  The methodology article previously showed `serocalculator` code in
+  non-executing chunks and closed with a static screenshot of the simulation
+  article's recovery study, while the simulation article ran that code without
+  deriving the theory behind it.
+  The estimation walkthrough now runs on simulated data where the true rate is
+  known, and the validation section runs the full multi-cluster recovery study,
+  the `nlm()` convergence checks, `analyze_sims()`, and the `renew_params`
+  bias caveat.
+  The retired article's URL redirects to the merged one. (#632)
+* The methodology article's simulations are cached to `vignettes/precomputed/`
+  via the new `*_cached()` wrappers, so a docs build reuses them instead of
+  recomputing once per output format.
+  Its simulation sections now use the bundled `typhoid_curves_nostrat_100`
+  rather than downloading the same curve parameters from OSF;
+  the two are identical once filtered.
+* The methodology article's reveal.js slides now show code, folded away by
+  default, instead of hiding it;
+  the Word output hides code except where the code is part of the narrative.
 * Took the sidebar fold control from `altdoc` instead of keeping a copy here.
   `altdoc/sidebar-fold.html` and the matching block in `altdoc/styles.css` are
   replaced by `include-in-header: $ALTDOC_SIDEBAR_FOLD`, which `altdoc` stages

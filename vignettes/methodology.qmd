@@ -1,5 +1,9 @@
 ---
 title: "Estimating Incidence Rates from Cross-Sectional Serosurveys"
+# The "Simulation studies" article (articles/simulate_xsectionalData.qmd) was
+# merged into this one; this alias keeps its published URL working.
+aliases:
+  - articles/simulate_xsectionalData.html
 vignette: >
   %\VignetteIndexEntry{Estimating Incidence Rates from Cross-Sectional Serosurveys}
   %\VignetteEngine{quarto::html}
@@ -24,7 +28,10 @@ format:
     output-file: methodology-slides.html
     lightbox: true
     reference-location: document
-    echo: false
+    # Code is shown on the slides, but folded away by default so a slide
+    # leads with its figure rather than with a wall of R. Click to expand.
+    echo: true
+    code-fold: true
     html-math-method: mathjax
     scrollable: true
     auto-stretch: true
@@ -33,6 +40,11 @@ format:
     number-sections: true
     number-depth: 2
     fig-cap-location: top
+  # The Word version reads as a report rather than a tutorial, so code is
+  # hidden by default here; chunks whose code *is* the narrative set
+  # `echo: true` individually, which overrides this.
+  docx:
+    echo: false
 shortcodes:
   - _extensions/d-morrison/slidebreak/slidebreak.lua
 ---
@@ -42,6 +54,12 @@ shortcodes:
 ```{r}
 #| include: false
 knitr::opts_chunk$set(message = FALSE)
+
+# The simulation studies below are expensive, and this document renders to
+# three formats, so every chunk would otherwise execute three times per build.
+# `sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()` write their
+# results here; the directory is committed, so a fresh build reuses them.
+sim_cache <- "precomputed/"
 ```
 
 # Infectious disease epidemiology
@@ -749,6 +767,30 @@ to find the MLE and corresponding standard error.
 
 <!-- {{< include articles/_methods-continued.qmd >}} -->
 
+## Variation across the posterior {.smaller}
+
+The figure above draws one curve to name the parameters. The fitted model is
+really a *posterior sample* of such curves, and `autoplot()` on a
+`curve_params` object shows their spread:
+
+```{r}
+#| label: fig-curve-posterior
+#| fig-cap: >
+#|   100 posterior draws of the antibody-decay curve per antigen-isotype,
+#|   with the median and the 10% and 90% quantiles overlaid.
+curves |> autoplot(show_quantiles = TRUE, n_curves = 100, log_x = TRUE)
+```
+
+::: notes
+Passing `show_quantiles = FALSE` draws the individual draws alone, and
+`log_x = FALSE` puts time on a linear scale.
+
+This spread is what the incidence likelihood averages over, as described
+under "Propagating uncertainty and heterogeneity" above: each draw is one
+plausible antibody-response curve, and together they carry both the
+estimation uncertainty and the between-person heterogeneity.
+:::
+
 ## Multiple biomarkers
 
 A serosurvey usually measures more than one antigen-isotype per participant.
@@ -764,7 +806,37 @@ $$
 Note that this is **not** the product of the two single-biomarker
 likelihoods: the shared latent infection time $t$ couples them.
 
+`log_likelihood()` evaluates the log-likelihood at a given $\lambda$, which
+lets us check that claim numerically:
+
+```{r}
+#| label: loglik-not-additive
+ll_iga <- log_likelihood(
+  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  antigen_isos = "HlyE_IgA", lambda = 0.1
+)
+
+ll_igg <- log_likelihood(
+  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  antigen_isos = "HlyE_IgG", lambda = 0.1
+)
+
+ll_both <- log_likelihood(
+  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"), lambda = 0.1
+)
+
+c(IgA = ll_iga, IgG = ll_igg, sum = ll_iga + ll_igg, joint = ll_both)
+```
+
+The joint log-likelihood differs from the sum of the two separate ones,
+exactly as the shared $t$ implies.
+
 ::: notes
+If the biomarkers were independent *unconditionally*, the joint
+log-likelihood would equal the sum. It does not, because each person's two
+measurements are tied together by their single latent infection time.
+
 (@sec-multivariate below describes work in progress to relax the
 conditional-independence assumption itself.)
 :::
@@ -998,10 +1070,149 @@ width is an explicit function of time since infection.
 The methods in this lecture are implemented in the open-source
 [`serocalculator`](https://github.com/UCD-SERG/serocalculator) R package.
 
+The rest of this section walks through the whole estimation pipeline on
+**simulated** data, where the true incidence rate is known and the estimate
+can be checked against it. @sec-validation then repeats the exercise across
+many simulated populations at once.
+
+## Simulating a cross-sectional survey {.smaller}
+
+`sim_pop_data()` simulates infections as a Poisson process with rate
+`lambda`, then generates each person's antibody levels from the seroresponse
+model:
+
+```{r}
+#| label: sim-single-dataset
+sim_lambda <- 0.2 # true incidence rate, per person-year
+sim_lifespan <- c(0, 10) # age range of the simulated survey
+sim_n <- 100 # number of participants
+
+# Antibody-decay parameters. `typhoid_curves_nostrat_100` ships with the
+# package and is the same posterior sample the article downloads from OSF
+# elsewhere, so the simulation needs no network access.
+sim_curve_params <-
+  typhoid_curves_nostrat_100 |>
+  dplyr::filter(iter < 50, antigen_iso %in% antibodies)
+
+# Biological-noise limits used when *generating* the data
+sim_noise_limits <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5)
+)
+
+set.seed(54321)
+sim_data <- sim_pop_data(
+  curve_params = sim_curve_params,
+  lambda = sim_lambda,
+  n_samples = sim_n,
+  age_range = sim_lifespan,
+  antigen_isos = antibodies,
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
+  add_noise = TRUE,
+  noise_limits = sim_noise_limits,
+  format = "long"
+)
+```
+
+::: notes
+Each individual is simulated separately, but their antibodies are modelled
+jointly, so the biomarkers share one latent infection history.
+
+Three arguments are worth knowing:
+
+* `renew_params` decides whether each infection draws a fresh parameter set
+from the posterior. `FALSE` (used here) picks one set at birth and keeps it,
+updating only the baseline level `y0` before each new infection. `TRUE` is
+more realistic but is not what the estimation method assumes --- see the
+bias check at the end of @sec-validation.
+* `age_fixed` fixes the age at which longitudinal parameters are evaluated;
+setting it to `NA` uses the age at infection instead.
+* `n_mcmc_samples = 0` draws a random posterior sample for each infection.
+Fixing it to a value in `1:4000` reuses that one sample throughout, which is
+useful for diagnostics.
+:::
+
+## Noise parameters
+
+Estimation needs its own noise parameters, matching @sec-noise. Here they are
+declared directly, consistent with the noise used to generate the data above:
+
+```{r}
+#| label: sim-noise-params
+sim_noise_params <- tibble::tibble(
+  antigen_iso = antibodies,
+  nu = 0.5, # biological noise
+  eps = 0, # measurement noise
+  y.low = 1, # lower limit of detection
+  y.high = 5e6 # upper limit of detection
+)
+```
+
+## The simulated antibody distribution
+
+```{r}
+#| label: fig-sim-distribution
+#| fig-cap: >
+#|   Distribution of simulated antibody responses, by antigen-isotype.
+library(ggbeeswarm)
+
+sim_data |>
+  ggplot() +
+  aes(x = as.factor(antigen_iso), y = value) +
+  geom_beeswarm(
+    size = .5, alpha = .5,
+    aes(color = antigen_iso), show.legend = FALSE
+  ) +
+  geom_boxplot(outlier.colour = NA, fill = NA) +
+  scale_y_log10() +
+  theme_linedraw() +
+  labs(x = "antigen - isotype")
+```
+
+## Estimating incidence from the simulated survey {.smaller}
+
+`est_seroincidence()` maximizes the log-likelihood
+$\log\mathcal{L}(\lambda)$ derived above:
+
+```{r}
+#| label: est-single-dataset
+sim_est <- est_seroincidence(
+  pop_data = sim_data,
+  sr_params = sim_curve_params,
+  noise_params = sim_noise_params,
+  lambda_start = .1,
+  build_graph = TRUE,
+  print_graph = FALSE,
+  antigen_isos = antibodies
+)
+
+summary(sim_est)
+```
+
+The true rate used to generate these data was
+`r sim_lambda` infections per person-year.
+
+{{< slidebreak >}}
+
+`autoplot()` draws the log-likelihood curve, with the maximum marked:
+
+```{r}
+#| label: fig-est-single-loglik
+#| fig-cap: >
+#|   Log-likelihood curve for the simulated survey, on a log x-axis.
+autoplot(sim_est, log_x = TRUE)
+```
+
+## Estimating seroincidence in real data {.smaller}
+
+The same call works on a real serosurvey. `est_seroincidence_by()` estimates
+separately within each stratum, and `summary()` reports each stratum's
+$\hat\lambda$ with a standard error and confidence interval (cluster-robust,
+if `cluster_var` was supplied):
+
 ```{r}
 #| eval: false
-library(serocalculator)
-
 # Load antibody-decay curve parameters and cross-sectional population data
 curves <- "https://osf.io/download/rtw5k/" |> load_sr_params()
 xs_data <- "https://osf.io/download/n6cp3/" |> load_pop_data()
@@ -1009,19 +1220,7 @@ noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
 
 # Visualize the cross-sectional antibody distribution
 xs_data |> autoplot(strata = "Country", type = "density")
-```
 
-## Estimating seroincidence {.smaller}
-
-`est_seroincidence_by()` maximizes the log-likelihood
-$\log\mathcal{L}(\lambda)$ derived above,
-separately within each stratum,
-and `summary()` reports each stratum's $\hat\lambda$
-with a standard error and confidence interval
-(cluster-robust, if `cluster_var` was supplied):
-
-```{r}
-#| eval: false
 # Estimate incidence, stratified by country and age group
 est <- est_seroincidence_by(
   pop_data = xs_data,
@@ -1057,70 +1256,312 @@ A point-and-click interface is available at
 
 :::
 
-# Validation: recovering known incidence rates
+# Validation: recovering known incidence rates {#sec-validation}
 
 ## Simulating clusters with known incidence {.smaller}
 
-We can check the method by **simulating** cross-sectional serosurveys with
-**known** incidence rates and seeing whether the estimates recover them.
-`sim_pop_data_multi()` simulates several clusters, each at a specified true
-rate $\lambda$:
+The single survey above recovered a rate close to the one that generated it.
+To check that this was not luck, we simulate many clusters across a range of
+**known** incidence rates and ask whether the estimates track them.
 
 ```{r}
-#| eval: false
-library(serocalculator)
+#| label: sim-multi
+sim_lambdas <- c(.05, .1, .15, .2, .5, .8) # true incidence rates
+sim_nclus <- 20 # clusters per rate
 
-antibodies <- c("HlyE_IgA", "HlyE_IgG")
-
-# Noise settings follow serocalculator's `simulate_xsectionalData` vignette,
-# where the estimation noise is kept consistent with the simulated noise.
-# Assay-noise parameters for estimation:
-noise_params <- tibble::tibble(
-  antigen_iso = antibodies,
-  nu = 0.5, eps = 0, y.low = 1, y.high = 5e6
-)
-
-# Biologic-noise limits for the simulation (vignette `dlims`):
-noise_limits <- rbind(
-  HlyE_IgA = c(min = 0, max = 0.5),
-  HlyE_IgG = c(min = 0, max = 0.5)
-)
-
-# Simulate clusters at a range of true incidence rates
-sim_df <- sim_pop_data_multi(
-  curve_params = typhoid_curves_nostrat_100,
-  lambdas = c(0.05, 0.1, 0.2, 0.3), # true incidence rates
-  nclus = 3, # clusters per rate
-  sample_sizes = 100,
-  age_range = c(0, 10),
+sim_df <- sim_pop_data_multi_cached(
+  curve_params = sim_curve_params,
+  lambdas = sim_lambdas,
+  nclus = sim_nclus,
+  sample_sizes = sim_n,
+  age_range = sim_lifespan,
   antigen_isos = antibodies,
+  renew_params = FALSE,
   add_noise = TRUE,
-  noise_limits = noise_limits,
-  format = "long"
+  noise_limits = sim_noise_limits,
+  format = "long",
+  cache_path = sim_cache,
+  cache_id = "sim_df"
+)
+```
+
+::: notes
+That is `r length(sim_lambdas)` rates times `r sim_nclus` clusters times
+`r sim_n` participants --- `r length(sim_lambdas) * sim_nclus * sim_n`
+simulated individuals.
+
+Simulating and estimating on that many people takes about a minute, and this
+document renders to three formats, so the work would otherwise be repeated
+three times per build. `sim_pop_data_multi_cached()` and
+`est_seroincidence_by_cached()` write their results to a committed cache
+directory keyed on their arguments, so a build reuses them and only recomputes
+when the simulation settings actually change.
+:::
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-sim-multi-distribution
+#| fig-cap: >
+#|   Simulated antibody responses by cluster, faceted by antigen-isotype and
+#|   by the true incidence rate used to generate each cluster.
+#| fig-height: 5
+sim_df |>
+  ggplot() +
+  aes(x = as.factor(cluster), y = value) +
+  geom_beeswarm(size = .2, alpha = .3, aes(color = antigen_iso)) +
+  geom_boxplot(outlier.colour = NA, fill = NA) +
+  scale_y_log10() +
+  facet_wrap(~ antigen_iso + lambda.sim, nrow = 2) +
+  theme_linedraw() +
+  theme(legend.position = "bottom") +
+  labs(x = "cluster")
+```
+
+## Estimating incidence in each cluster {.smaller}
+
+```{r}
+#| label: est-multi
+ests <- est_seroincidence_by_cached(
+  pop_data = sim_df,
+  sr_params = sim_curve_params,
+  noise_params = sim_noise_params,
+  strata = c("sample_size", "lambda.sim", "cluster"),
+  curve_strata_varnames = NULL,
+  noise_strata_varnames = NULL,
+  antigen_isos = antibodies,
+  # Graphs are attached per stratum, which would make the cached object
+  # enormous for this many strata. The handful of curves plotted below are
+  # re-fit on demand instead.
+  build_graph = FALSE,
+  cache_path = sim_cache,
+  cache_id = "ests"
 )
 
-# Estimate incidence separately in each simulated cluster
-ests <- est_seroincidence_by(
-  pop_data = sim_df,
-  sr_params = typhoid_curves_nostrat_100,
-  noise_params = noise_params,
-  strata = c("lambda.sim", "cluster"),
-  antigen_isos = antibodies
-)
-summary(ests)
+ests_summary <- ests |> summary()
+```
+
+::: notes
+`summary()` returns a `tibble()` carrying some extra metadata about the
+stratification.
+:::
+
+{{< slidebreak >}}
+
+```{r}
+#| label: tbl-ests-summary
+if (knitr::is_html_output()) {
+  ests_summary |>
+    DT::datatable(options = list(scrollX = TRUE)) |>
+    DT::formatRound(
+      columns = c("incidence.rate", "SE", "CI.lwr", "CI.upr", "log.lik")
+    )
+} else {
+  ests_summary
+}
+```
+
+::: notes
+The interactive table is HTML-only; other formats print the plain summary,
+since converting the widget to a static image would need a headless browser.
+:::
+
+## Inspecting individual clusters {.smaller}
+
+The cached fit above carries no log-likelihood curves, so the few clusters we
+want to look at are re-fit with `build_graph = TRUE`. Strata are selected by
+the columns that define them, because stratum *labels* are assigned
+positionally and so are not stable across a subset:
+
+```{r}
+#| label: refit-displayed-strata
+refit_strata <- function(ids) {
+  if (nrow(ids) == 0) {
+    return(NULL)
+  }
+
+  est_seroincidence_by(
+    pop_data = sim_df |> dplyr::semi_join(ids, by = names(ids)),
+    sr_params = sim_curve_params,
+    noise_params = sim_noise_params,
+    strata = c("sample_size", "lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = antibodies,
+    build_graph = TRUE,
+    num_cores = 1
+  )
+}
+
+stratum_ids <- ests_summary |>
+  tibble::as_tibble() |>
+  dplyr::select(sample_size, lambda.sim, cluster)
+
+ests_first_five <- refit_strata(stratum_ids |> dplyr::slice(1:5))
+```
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-cluster-logliks
+#| fig-cap: >
+#|   Log-likelihood curves for the first five simulated clusters.
+#| fig-height: 7
+autoplot(ests_first_five, log_x = TRUE)
+```
+
+## Checking `nlm()` convergence {.smaller}
+
+`est_seroincidence()` maximizes the log-likelihood numerically with
+`stats::nlm()`. Exit codes 3 to 5 flag a possible non-convergence, so they are
+worth checking before trusting any of the estimates:
+
+```{r}
+#| label: check-convergence-codes
+problem_ids <- ests_summary |>
+  tibble::as_tibble() |>
+  dplyr::filter(nlm.convergence.code > 2) |>
+  dplyr::select(sample_size, lambda.sim, cluster)
+
+nrow(problem_ids)
+```
+
+::: notes
+Remedies, all passed through to `nlm()`:
+
+* code 3: decrease `stepmin`
+* code 4: increase `iterlim`
+* code 5: increase `stepmax`
+
+Pass them with `num_cores = 1`. `est_seroincidence_by()` currently drops
+these arguments in its parallel branch
+([#629](https://github.com/UCD-SERG/serocalculator/issues/629)), so under
+parallelism they are silently ignored.
+:::
+
+```{r}
+#| label: fig-problem-strata
+#| fig-cap: >
+#|   Log-likelihood curves for any clusters whose optimizer reported a
+#|   possible convergence problem.
+#| fig-height: 7
+if (nrow(problem_ids) > 0) {
+  autoplot(refit_strata(problem_ids), log_x = TRUE)
+}
 ```
 
 ## Estimates recover the simulated rates {.smaller}
 
-![Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).](../man/figures/sim-recovery.png){fig-alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates"}
+```{r}
+#| label: fig-sim-recovery
+#| fig-cap: >
+#|   Estimated incidence rates (points, with 95% confidence intervals) for
+#|   each simulated cluster, against the true rate used to generate it. The
+#|   red line is the identity.
+ests_summary |>
+  autoplot(
+    type = "scatter",
+    xvar = "lambda.sim",
+    CI = TRUE,
+    dodge_width = .05
+  ) +
+  ggplot2::geom_function(
+    fun = function(x) x,
+    col = "red",
+    aes(linetype = "data-generating incidence rate")
+  ) +
+  labs(linetype = "") +
+  scale_x_log10()
+```
 
 ::: notes
-Each point is one simulated cluster: the estimated incidence rate (with its
-95% confidence interval) against the true rate used to generate the data.
-The estimates scatter around the identity line, and the intervals are wider
-at higher incidence. Abridged from the serocalculator
-`simulate_xsectionalData` vignette.
+Each point is one simulated cluster. The estimates scatter around the
+identity line, and the confidence intervals widen at higher incidence.
 :::
+
+{{< slidebreak >}}
+
+`analyze_sims()` summarizes the simulation results across clusters:
+
+```{r}
+#| label: analyze-sims
+ests_summary |> analyze_sims()
+```
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-empirical-se
+#| fig-cap: >
+#|   Empirical standard error of the incidence estimates, by true rate.
+ests_summary |>
+  analyze_sims() |>
+  autoplot(statistic = "Empirical_SE")
+```
+
+## A caveat: renewing parameters at each infection {.smaller}
+
+Everything above sets `renew_params = FALSE`, matching what the estimation
+method assumes. Setting it to `TRUE` --- drawing fresh seroresponse
+parameters at every infection --- is more realistic, and is **not** accounted
+for by the current method, so estimates can be biased in high-incidence
+populations:
+
+```{r}
+#| label: sim-renew
+sim_df_renew <- sim_pop_data_multi_cached(
+  curve_params = sim_curve_params,
+  lambdas = sim_lambdas,
+  nclus = sim_nclus,
+  sample_sizes = sim_n,
+  age_range = sim_lifespan,
+  antigen_isos = antibodies,
+  renew_params = TRUE,
+  add_noise = TRUE,
+  noise_limits = sim_noise_limits,
+  format = "long",
+  cache_path = sim_cache,
+  cache_id = "sim_df_renew"
+)
+
+ests_renew_summary <-
+  est_seroincidence_by_cached(
+    pop_data = sim_df_renew,
+    sr_params = sim_curve_params,
+    noise_params = sim_noise_params,
+    strata = c("sample_size", "lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = antibodies,
+    build_graph = FALSE,
+    cache_path = sim_cache,
+    cache_id = "ests_renew"
+  ) |>
+  summary()
+```
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-sim-recovery-renew
+#| fig-cap: >
+#|   Recovery of the true incidence rate when seroresponse parameters are
+#|   renewed at each infection. Compare with @fig-sim-recovery.
+ests_renew_summary |>
+  autoplot(
+    type = "scatter",
+    xvar = "lambda.sim",
+    CI = TRUE,
+    dodge_width = .05
+  ) +
+  ggplot2::geom_function(
+    fun = function(x) x,
+    col = "red",
+    aes(linetype = "data-generating incidence rate")
+  ) +
+  labs(linetype = "") +
+  scale_x_log10()
+```
 
 # Ongoing and future work
 

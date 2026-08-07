@@ -47,7 +47,7 @@ Imports:
     stringr,
     parallel,
     labelled,
-    xfun
+    xfun (>= 0.44)
 Suggests:
     altdoc,
     bookdown,

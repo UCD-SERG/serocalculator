@@ -21,17 +21,32 @@
 #' @seealso [sim_pop_data_multi_cached()]
 #'
 #' @examples
-#' \dontrun{
+#'
+#' library(dplyr)
+#'
+#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
+#'
+#' curve <-
+#'   typhoid_curves_nostrat_100 |>
+#'   filter(antigen_iso %in% antibodies)
+#'
+#' # Examples must not write into the user's working directory, so send the
+#' # cache to a temporary one.
+#' cache_dir <- file.path(tempdir(), "serocalculator-example-cache")
+#'
 #' ests <- est_seroincidence_by_cached(
-#'   pop_data = sim_df,
-#'   sr_params = typhoid_curves_nostrat_100,
-#'   noise_params = noise_params,
-#'   strata = c("lambda.sim", "cluster"),
-#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   pop_data = sees_pop_data_pk_100,
+#'   sr_params = curve,
+#'   noise_params = example_noise_params_pk,
+#'   strata = "catchment",
+#'   antigen_isos = antibodies,
 #'   build_graph = FALSE,
-#'   cache_path = "cache/"
+#'   num_cores = 1,
+#'   iterlim = 5, # limit iterations for the purpose of this example
+#'   cache_path = cache_dir
 #' )
-#' }
+#'
+#' summary(ests)
 est_seroincidence_by_cached <- function(
   ...,
   cache_path = "cache/",

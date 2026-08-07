@@ -72,6 +72,20 @@
   The Word output hides code by default, except in the demonstration chunks
   that are never evaluated, which mark themselves `echo: true` so those
   sections do not render empty.
+* Ported the full Quarto extension set from `Morrison-Lab/rpt` into
+  `altdoc/_extensions/`, registered project-wide in `altdoc/quarto_website.yml`'s
+  new `filters:` list: `d-morrison/div-anchors` and `d-morrison/equation-anchors`
+  add hover permalinks to theorem/definition divs and numbered equations;
+  `sun123zxy/callouty-theorem` (+ `coatless-quarto/custom-callout`) render the
+  `methodology` vignette's existing `#def-`/`#exm-` divs as colored callout
+  boxes instead of plain numbered text; `d-morrison/revealjs-html-links` adds a
+  link back to the standalone HTML page on the `methodology` vignette's
+  RevealJS slides.
+  The `slidebreak` extension (already in use) moved from
+  `vignettes/_extensions/` to `altdoc/_extensions/` alongside the rest, so it
+  too is now a project-level filter instead of a per-document one.
+  (#585, #586, #587, #588, #589)
+
 * Took the sidebar fold control from `altdoc` instead of keeping a copy here.
   `altdoc/sidebar-fold.html` and the matching block in `altdoc/styles.css` are
   replaced by `include-in-header: $ALTDOC_SIDEBAR_FOLD`, which `altdoc` stages

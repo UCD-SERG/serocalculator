@@ -49,8 +49,6 @@ format:
   # `echo: true` individually, which overrides this.
   docx:
     echo: false
-shortcodes:
-  - _extensions/d-morrison/slidebreak/slidebreak.lua
 ---
 
 {{< include ../macros/macros.qmd >}}

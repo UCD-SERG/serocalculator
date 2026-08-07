@@ -34,6 +34,7 @@ Photomicrograph
 RStudio
 Rai
 Readme
+RevealJS
 Rmd
 Rtools
 SERG
@@ -72,6 +73,7 @@ dev
 devtools
 dfrac
 displaystyle
+divs
 docx
 dplyr
 dropdown
@@ -135,6 +137,7 @@ param
 params
 paren
 pathognomonic
+permalinks
 pipetting
 pkgdown
 positionally

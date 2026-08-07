@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>sim_pop_data – serocalculator</title>
+<title>sim_pop_data_multi_cached – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -546,7 +546,7 @@ does not exist yet when this runs.
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Reference</li><li class="breadcrumb-item"><a href="../man/sim_pop_data.html">Simulate data sets</a></li><li class="breadcrumb-item"><a href="../man/sim_pop_data.html">sim_pop_data(): Simulate a cross-sectional serosurvey…</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Reference</li><li class="breadcrumb-item"><a href="../man/est_seroincidence_by_cached.html">Other</a></li><li class="breadcrumb-item"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -984,16 +984,16 @@ does not exist yet when this runs.
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
  <span class="menu-text">Simulate data sets</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 show">
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/sim_pop_data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../man/sim_pop_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">sim_pop_data(): Simulate a cross-sectional serosurvey…</span></a>
   </div>
 </li>
@@ -1019,13 +1019,13 @@ does not exist yet when this runs.
 </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true">
  <span class="menu-text">Other</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/est_seroincidence_by_cached.html" class="sidebar-item-text sidebar-link">
@@ -1034,7 +1034,7 @@ does not exist yet when this runs.
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link">
+  <a href="../man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</span></a>
   </div>
 </li>
@@ -1075,286 +1075,190 @@ does not exist yet when this runs.
    
   <ul>
 <li>
-<a href="#simulate-a-cross-sectional-serosurvey-with-noise" id="toc-simulate-a-cross-sectional-serosurvey-with-noise" class="nav-link active" data-scroll-target="#simulate-a-cross-sectional-serosurvey-with-noise">Simulate a cross-sectional serosurvey with noise</a>
+<a href="#simulate-multiple-data-sets-caching-the-result-on-disk" id="toc-simulate-multiple-data-sets-caching-the-result-on-disk" class="nav-link active" data-scroll-target="#simulate-multiple-data-sets-caching-the-result-on-disk">Simulate multiple data sets, caching the result on disk</a>
   <ul class="collapse">
 <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
   <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details">Details</a></li>
   <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/man/sim_pop_data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/man/sim_pop_data.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/man/sim_pop_data_multi_cached.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/man/sim_pop_data_multi_cached.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Reference</li><li class="breadcrumb-item"><a href="../man/sim_pop_data.html">Simulate data sets</a></li><li class="breadcrumb-item"><a href="../man/sim_pop_data.html">sim_pop_data(): Simulate a cross-sectional serosurvey…</a></li></ol></nav></header><section id="simulate-a-cross-sectional-serosurvey-with-noise" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="simulate-a-cross-sectional-serosurvey-with-noise">Simulate a cross-sectional serosurvey with noise</h2>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Reference</li><li class="breadcrumb-item"><a href="../man/est_seroincidence_by_cached.html">Other</a></li><li class="breadcrumb-item"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</a></li></ol></nav></header><section id="simulate-multiple-data-sets-caching-the-result-on-disk" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="simulate-multiple-data-sets-caching-the-result-on-disk">Simulate multiple data sets, caching the result on disk</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Makes a cross-sectional data set (age, y(t) set) and adds noise, if desired.</p>
+<p>A caching wrapper around <code><a href="../man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code>, which dominates the runtime of most simulation studies. The first call simulates and saves; later calls with the same arguments load the saved result instead of re-simulating.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
-<pre><code class="language-R">sim_pop_data(
-  lambda = 0.1,
-  n_samples = 100,
-  age_range = c(0, 20),
-  age_fixed = NA,
-  antigen_isos = intersect(get_biomarker_levels(curve_params), rownames(noise_limits)),
-  n_mcmc_samples = 0,
-  renew_params = FALSE,
-  add_noise = FALSE,
-  curve_params,
-  noise_limits,
-  format = "wide",
-  verbose = FALSE,
-  ...
+<pre><code class="language-R">sim_pop_data_multi_cached(
+  ...,
+  cache_path = "cache/",
+  cache_id = "sim_pop_data_multi",
+  cache_rerun = FALSE,
+  cache_verbose = TRUE,
+  cache_extra = NULL
 )
 </code></pre>
 </section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <table role="presentation">
 <tbody><tr>
 <td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="lambda">lambda</code>
-</td>
-<td>
-a <code><a href="https://rdrr.io/r/base/numeric.html">numeric()</a></code> scalar indicating the incidence rate (in events per person-<em>year</em>s)
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="n_samples">n_samples</code>
-</td>
-<td>
-number of samples to simulate
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="age_range">age_range</code>
-</td>
-<td>
-age range of sampled individuals, in <em>years</em>
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="age_fixed">age_fixed</code>
-</td>
-<td>
-specify the curve parameters to use by age (does nothing at present?)
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="antigen_isos">antigen_isos</code>
-</td>
-<td>
-Character vector with one or more antibody names. Values must match <code>curve_params</code>.
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="n_mcmc_samples">n_mcmc_samples</code>
-</td>
-<td>
-<p>how many MCMC samples to use:</p>
-<ul>
-<li>
-<p>when <code>n_mcmc_samples</code> is in <code>1:4000</code> a fixed posterior sample is used</p>
-</li>
-<li>
-<p>when <code>n_mcmc_samples</code> = <code>0</code>, a random sample is chosen</p>
-</li>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="renew_params">renew_params</code>
-</td>
-<td>
-<p>whether to generate a new parameter set for each infection</p>
-<ul>
-<li>
-<p><code>renew_params = TRUE</code> generates a new parameter set for each infection</p>
-</li>
-<li>
-<p><code>renew_params = FALSE</code> keeps the one selected at birth, but updates baseline y0</p>
-</li>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="add_noise">add_noise</code>
-</td>
-<td>
-a <code><a href="https://rdrr.io/r/base/logical.html">logical()</a></code> indicating whether to add biological and measurement noise
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="curve_params">curve_params</code>
-</td>
-<td>
-a <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> of MCMC samples of antibody decay curve parameters, with one row per MCMC sample. Required columns: <code>antigen_iso</code>, <code>y0</code>, <code>y1</code>, <code>t1</code>, <code>alpha</code>, <code>r</code>. See <code><a href="../man/load_sr_params.html">load_sr_params()</a></code> for details.
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="noise_limits">noise_limits</code>
-</td>
-<td>
-biologic noise distribution parameters
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="format">format</code>
-</td>
-<td>
-<p>a <code><a href="https://rdrr.io/r/base/character.html">character()</a></code> variable, containing either:</p>
-<ul>
-<li>
-<p><code>“long”</code> (one measurement per row) or</p>
-</li>
-<li>
-<p><code>“wide”</code> (one serum sample per row)</p>
-</li>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="verbose">verbose</code>
-</td>
-<td>
-<p>verbosity level for console logging. Accepts a logical scalar or a non-negative whole number:</p>
-<ul>
-<li>
-<p><code>FALSE</code>/<code>0</code>: no log messages</p>
-</li>
-<li>
-<p><code>TRUE</code>/<code>1</code>: basic progress messages</p>
-</li>
-<li>
-<p><code style="white-space: pre;">&gt;= 2</code>: basic progress messages plus detailed input logging</p>
-</li>
-</ul>
-</td>
-</tr>
-<tr>
-<td style="white-space: collapse; font-family: monospace; vertical-align: top">
 <code id="...">…</code>
 </td>
 <td>
-<p>Arguments passed on to <code>simcs.tinf</code>, <code>ldpar</code>, <code>ab</code>, <code>mk_baseline</code></p>
+<p>Arguments passed on to <code>sim_pop_data_multi</code></p>
 <dl>
 <dt>
-<code>age</code>
+<code>nclus</code>
 </dt>
 <dd>
-age at infection
+number of clusters
 </dd>
 <dt>
-<code>nmc</code>
+<code>rng_seed</code>
 </dt>
 <dd>
-mcmc sample to use
+starting seed for random number generator, passed to <code><a href="https://rdrr.io/pkg/rngtools/man/RNGseq.html">rngtools::RNGseq()</a></code>
 </dd>
 <dt>
-<code>npar</code>
+<code>sample_sizes</code>
 </dt>
 <dd>
-number of parameters
+sample sizes to simulate
 </dd>
 <dt>
-<code>t</code>
+<code>lambdas</code>
 </dt>
 <dd>
-numeric vector of elapsed times since start of infection
+incidence rate, in events/person*year
 </dd>
 <dt>
-<code>par</code>
+<code>num_cores</code>
 </dt>
 <dd>
-<p>numeric matrix of model parameters:</p>
-<ul>
-<li>
-<p>rows are parameters</p>
-</li>
-<li>
-<p>columns are biomarkers</p>
-</li>
-</ul>
+number of cores to use for parallel computations
 </dd>
 <dt>
-<code>kab</code>
+<code>verbose</code>
 </dt>
 <dd>
-integer indicating which row to read from <code>blims</code>
+whether to report verbose information
 </dd>
 <dt>
-<code>n</code>
+<code>sim_function</code>
 </dt>
 <dd>
-number of observations
-</dd>
-<dt>
-<code>blims</code>
-</dt>
-<dd>
-range of possible baseline antibody levels
+which function to use: <code><a href="../man/sim_pop_data.html">sim_pop_data()</a></code> or <code><a href="../man/sim_pop_data_2.html">sim_pop_data_2()</a></code>
 </dd>
 </dl>
 </td>
 </tr>
-</tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
-<p>a tibble::tbl_df containing simulated cross-sectional serosurvey data, with columns:</p>
-<ul>
-<li>
-<p><code>age</code>: age (in years)</p>
-</li>
-<li>
-<p>one column for each element in the <code>antigen_isos</code> input argument</p>
-</li>
-</ul></section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="cache_path">cache_path</code>
+</td>
+<td>
+a <code><a href="https://rdrr.io/r/base/character.html">character()</a></code> of length 1: the directory in which to store cache files. A trailing slash is added if absent (see <code>.validate_cache_path()</code>). Results are written to <code style="white-space: pre;">cache_path/cache_id/</code>.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="cache_id">cache_id</code>
+</td>
+<td>
+a <code><a href="https://rdrr.io/r/base/character.html">character()</a></code> of length 1: a stable identifier for this cache entry. Distinct calls sharing a <code>cache_path</code> need distinct <code>cache_id</code>s.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="cache_rerun">cache_rerun</code>
+</td>
+<td>
+a <code><a href="https://rdrr.io/r/base/logical.html">logical()</a></code> of length 1: whether to discard any existing cache and recompute. The freshly computed result is saved, so later calls with <code>cache_rerun = FALSE</code> reuse it.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="cache_verbose">cache_verbose</code>
+</td>
+<td>
+a <code><a href="https://rdrr.io/r/base/logical.html">logical()</a></code> of length 1: whether to report cache hits and misses via <code><a href="https://cli.r-lib.org/reference/cli_abort.html">cli::cli_inform()</a></code>.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="cache_extra">cache_extra</code>
+</td>
+<td>
+an object folded into the cache key alongside the arguments. <code>NULL</code> (the default) keys the cache on the arguments alone. See the note on implementation changes in <code><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached()</a></code>.
+</td>
+</tr>
+</tbody></table></section><section id="details" class="level3"><h3 class="anchored" data-anchor-id="details">Details</h3>
+<p>The cache is keyed on the <strong>arguments</strong>, so changing any of them (a new <code>lambdas</code> vector, a different <code>nclus</code>) recomputes automatically, and restoring the old arguments reuses the old result. Argument order and formatting do not matter.</p>
+<p>The cache is <em>not</em> keyed on the implementation. If <code><a href="../man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code> or the functions it calls change, an existing cache stays valid as far as this wrapper is concerned. Pass <code>cache_rerun = TRUE</code> once to refresh it, or fold a version into the key with, for example, <code>cache_extra = utils::packageVersion(“serocalculator”)</code>. That is deliberately not the default: a development version bumps often, which would discard the cache on nearly every commit.</p>
+</section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
+<p>a <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble::tibble()</a></code>, as returned by <code><a href="../man/sim_pop_data_multi.html">sim_pop_data_multi()</a></code>.</p>
+</section><section id="see-also" class="level3"><h3 class="anchored" data-anchor-id="see-also">See Also</h3>
+<p><code><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached()</a></code></p>
+</section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ucd-serg.github.io/serocalculator/">"serocalculator"</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Load curve parameters</span></span>
-<span><span class="va">dmcmc</span> <span class="op">&lt;-</span> <span class="va">typhoid_curves_nostrat_100</span></span>
 <span></span>
-<span><span class="co"># Specify the antibody-isotype responses to include in analyses</span></span>
 <span><span class="va">antibodies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgA"</span>, <span class="st">"HlyE_IgG"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Set seed to reproduce results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
+<span><span class="co"># Examples must not write into the user's working directory, so send the</span></span>
+<span><span class="co"># cache to a temporary one. `cache_path` gains its trailing slash</span></span>
+<span><span class="co"># automatically.</span></span>
+<span><span class="va">cache_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"serocalculator-example-cache"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Simulated incidence rate per person-year</span></span>
-<span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">0.2</span></span>
-<span><span class="co"># Range covered in simulations</span></span>
-<span><span class="va">lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co"># Cross-sectional sample size</span></span>
-<span><span class="va">nrep</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
-<span></span>
-<span><span class="co"># Biologic noise distribution</span></span>
-<span><span class="va">dlims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
-<span>  <span class="st">"HlyE_IgA"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  <span class="st">"HlyE_IgG"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">sim_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached</a></span><span class="op">(</span></span>
+<span>  curve_params <span class="op">=</span> <span class="va">typhoid_curves_nostrat_100</span>,</span>
+<span>  lambdas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span>  nclus <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  sample_sizes <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  age_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  noise_limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
+<span>    HlyE_IgA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    HlyE_IgG <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"long"</span>,</span>
+<span>  cache_path <span class="op">=</span> <span class="va">cache_dir</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Generate cross-sectional data</span></span>
-<span><span class="va">csdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data.html">sim_pop_data</a></span><span class="op">(</span></span>
-<span>  curve_params <span class="op">=</span> <span class="va">dmcmc</span>,</span>
-<span>  lambda <span class="op">=</span> <span class="va">lambda</span>,</span>
-<span>  n_samples <span class="op">=</span> <span class="va">nrep</span>,</span>
-<span>  age_range <span class="op">=</span> <span class="va">lifespan</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">sim_df</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 400</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calling again with the same arguments loads the saved result instead of</span></span>
+<span><span class="co"># re-simulating.</span></span>
+<span><span class="va">sim_df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached</a></span><span class="op">(</span></span>
+<span>  curve_params <span class="op">=</span> <span class="va">typhoid_curves_nostrat_100</span>,</span>
+<span>  lambdas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span>  nclus <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  sample_sizes <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  age_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
-<span>  n_mcmc_samples <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  renew_params <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  num_cores <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  add_noise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  noise_limits <span class="op">=</span> <span class="va">dlims</span>,</span>
-<span>  format <span class="op">=</span> <span class="st">"long"</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<span>  noise_limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
+<span>    HlyE_IgA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    HlyE_IgG <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"long"</span>,</span>
+<span>  cache_path <span class="op">=</span> <span class="va">cache_dir</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">sim_df</span>, <span class="va">sim_df2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
 </div>
 
 
@@ -1775,4 +1679,4 @@ range of possible baseline antibody levels
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/man/sim_pop_data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/man/sim_pop_data.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UCD-SERG/serocalculator/edit/main/man/sim_pop_data_multi_cached.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/blob/main/man/sim_pop_data_multi_cached.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/UCD-SERG/serocalculator/issues" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

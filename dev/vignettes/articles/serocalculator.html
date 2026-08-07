@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-07-31">
+<meta name="dcterms.date" content="2026-08-07">
 <meta name="description" content="A summary of the methods behind serocalculator.">
 <title>Introduction to serocalculator – serocalculator</title>
 <style>
@@ -402,7 +402,7 @@ does not exist yet when this runs.
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9027</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9032</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -496,7 +496,7 @@ does not exist yet when this runs.
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9027 (dev)</span>
+ <span class="menu-text">1.4.1.9032 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -505,7 +505,7 @@ does not exist yet when this runs.
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9027 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9032 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1004,6 +1004,29 @@ does not exist yet when this runs.
 </li>
       </ul>
 </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/est_seroincidence_by_cached.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">est_seroincidence_by_cached(): Estimate seroincidence by stratum, ca…</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</span></a>
+  </div>
+</li>
+      </ul>
+</li>
       </ul>
 </li>
         <li class="sidebar-item">
@@ -1061,7 +1084,7 @@ does not exist yet when this runs.
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/serocalculator.html">Get started</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/serocalculator.html">Introduction to serocalculator</a></li></ol></nav><h1 class="title display-7">Introduction to serocalculator</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-07-31</p>
+<p class="date">2026-08-07</p>
 </header><section id="overview" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">1</span> Overview</h2>
 <p>The <strong>serocalculator</strong> R package provides a rapid and computationally simple method for calculating seroconversion rates, as originally published in <span class="citation" data-cites="Simonsen_2009">Simonsen et al. (<a href="#ref-Simonsen_2009" role="doc-biblioref">2009</a>)</span> and <span class="citation" data-cites="Teunis_2012">Teunis, Eijkeren, et al. (<a href="#ref-Teunis_2012" role="doc-biblioref">2012</a>)</span>, and further developed in <span class="citation" data-cites="de_Graaf_2014"><span class="nocase">deGraaf et al.</span> (<a href="#ref-de_Graaf_2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="Teunis_2016">Teunis et al. (<a href="#ref-Teunis_2016" role="doc-biblioref">2016</a>)</span>, and <span class="citation" data-cites="Teunis_2020">Teunis and Eijkeren (<a href="#ref-Teunis_2020" role="doc-biblioref">2020</a>)</span>. In short, longitudinal seroresponses from confirmed cases with a known symptom onset date are assumed to represent the time course of human serum antibodies against a specific pathogen. Therefore, by using these longitudinal antibody dynamics with any cross–sectional sample of the same antibodies in a human population, an incidence estimate can be calculated. Further details are below.</p>

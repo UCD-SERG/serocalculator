@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-07-31">
+<meta name="dcterms.date" content="2026-08-07">
 <title>Version Crosswalk: v1.3.0 to v1.4.0 – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -417,7 +417,7 @@ does not exist yet when this runs.
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9027</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9032</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -511,7 +511,7 @@ does not exist yet when this runs.
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9027 (dev)</span>
+ <span class="menu-text">1.4.1.9032 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -520,7 +520,7 @@ does not exist yet when this runs.
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9027 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9032 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1019,6 +1019,29 @@ does not exist yet when this runs.
 </li>
       </ul>
 </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Other</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/est_seroincidence_by_cached.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">est_seroincidence_by_cached(): Estimate seroincidence by stratum, ca…</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../man/sim_pop_data_multi_cached.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">sim_pop_data_multi_cached(): Simulate multiple data sets, caching …</span></a>
+  </div>
+</li>
+      </ul>
+</li>
       </ul>
 </li>
         <li class="sidebar-item">
@@ -1080,7 +1103,7 @@ does not exist yet when this runs.
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Other</a></li><li class="breadcrumb-item"><a href="../../vignettes/articles/version-crosswalk-1.3-to-1.4.html">Version Crosswalk: v1.3.0 to v1.4.0</a></li></ol></nav><h1 class="title display-7">Version Crosswalk: v1.3.0 to v1.4.0</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-07-31</p>
+<p class="date">2026-08-07</p>
 </header><section id="overview" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">1</span> Overview</h2>
 <p>This guide helps users migrate code from <strong>serocalculator v1.3.0</strong> to <strong>v1.4.0</strong>. The main changes are function renamings for improved clarity and consistency.</p>
@@ -1323,12 +1346,12 @@ Note
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;     age id    antigen_iso  value</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  17.7 1     HlyE_IgA     0.537</span></span>
-<span><span class="co">#&gt; 2  17.7 1     HlyE_IgG     0.468</span></span>
-<span><span class="co">#&gt; 3  13.9 2     HlyE_IgA    52.3  </span></span>
-<span><span class="co">#&gt; 4  13.9 2     HlyE_IgG    72.6  </span></span>
-<span><span class="co">#&gt; 5  12.0 3     HlyE_IgA     0.595</span></span>
-<span><span class="co">#&gt; 6  12.0 3     HlyE_IgG    15.6</span></span>
+<span><span class="co">#&gt; 1  3.82 1     HlyE_IgA    0.209 </span></span>
+<span><span class="co">#&gt; 2  3.82 1     HlyE_IgG    0.573 </span></span>
+<span><span class="co">#&gt; 3  6.87 2     HlyE_IgA    0.428 </span></span>
+<span><span class="co">#&gt; 4  6.87 2     HlyE_IgG    1.47  </span></span>
+<span><span class="co">#&gt; 5 12.0  3     HlyE_IgA    0.467 </span></span>
+<span><span class="co">#&gt; 6 12.0  3     HlyE_IgG    0.0794</span></span>
 <span></span>
 <span><span class="co"># Simulate multiple datasets</span></span>
 <span><span class="va">multiple_sims</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../man/sim_pop_data_multi.html">sim_pop_data_multi</a></span><span class="op">(</span></span>

@@ -20,6 +20,7 @@
 - [curve_app()](https://ucd-serg.github.io/serocalculator/man/curve_app.html): Launch the interactive Shiny app for the antigen-antibody kinetics model
 - [est_seroincidence()](https://ucd-serg.github.io/serocalculator/man/est_seroincidence.html): Find the maximum likelihood estimate of the incidence rate parameter
 - [est_seroincidence_by()](https://ucd-serg.github.io/serocalculator/man/est_seroincidence_by.html): Estimate Seroincidence
+- [est_seroincidence_by_cached()](https://ucd-serg.github.io/serocalculator/man/est_seroincidence_by_cached.html): Estimate seroincidence by stratum, caching the result on disk
 - [example_noise_params_pk](https://ucd-serg.github.io/serocalculator/man/example_noise_params_pk.html): Small example of noise parameters for typhoid
 - [example_noise_params_sees](https://ucd-serg.github.io/serocalculator/man/example_noise_params_sees.html): Small example of noise parameters for typhoid
 - [get_biomarker_levels()](https://ucd-serg.github.io/serocalculator/man/get_biomarker_levels.html): Extract biomarker levels
@@ -40,6 +41,7 @@
 - [serocalculator_example()](https://ucd-serg.github.io/serocalculator/man/serocalculator_example.html): Get path to an example file
 - [sim_pop_data()](https://ucd-serg.github.io/serocalculator/man/sim_pop_data.html): Simulate a cross-sectional serosurvey with noise
 - [sim_pop_data_multi()](https://ucd-serg.github.io/serocalculator/man/sim_pop_data_multi.html): Simulate multiple data sets
+- [sim_pop_data_multi_cached()](https://ucd-serg.github.io/serocalculator/man/sim_pop_data_multi_cached.html): Simulate multiple data sets, caching the result on disk
 - [strata()](https://ucd-serg.github.io/serocalculator/man/strata.html): Extract `Strata` metadata from an object
 - [summary.seroincidence](https://ucd-serg.github.io/serocalculator/man/summary.seroincidence.html): Summarizing fitted seroincidence models
 - [summary.seroincidence.by](https://ucd-serg.github.io/serocalculator/man/summary.seroincidence.by.html): Summary Method for `"seroincidence.by"` Objects

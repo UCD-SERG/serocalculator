@@ -155,3 +155,135 @@ format:
     grid:
       sidebar-width: 340px
       margin-width: 340px
+
+# Quarto extensions ported from Morrison-Lab/rpt (the lab's R-package
+# template). Extensions live in altdoc/_extensions/ (not vignettes/_extensions/)
+# because altdoc.finalize_quarto_website() stages this altdoc/ directory as
+# the project root of the `_quarto/` build tree it hands to Quarto -- an
+# extension has to sit there, not under vignettes/, for a project-level
+# `filters:` entry (below) to resolve it.
+filters:
+  - slidebreak
+  - d-morrison/div-anchors
+  - d-morrison/equation-anchors
+  - sun123zxy/callouty-theorem
+  - coatless-quarto/custom-callout
+  # Declaring `revealjs:` as a project-level format (instead of registering
+  # this filter here) would apply RevealJS as a format to every rendered
+  # page -- including index.qmd, man pages, and NEWS.md -- breaking the docs
+  # build, since Quarto would then try to produce both an .html and a
+  # RevealJS output at the same output path for pages with no dedicated
+  # `output-file:`. The filter itself already guards on
+  # `string.match(FORMAT, "revealjs")` and returns immediately for every
+  # other format, so it's safe in the global chain and only activates for
+  # vignettes/methodology.qmd, which already opts into `format: revealjs:`
+  # in its own front matter.
+  - d-morrison/revealjs-html-links
+  - quarto
+
+callouty-theorem:
+  # override-title: true for every type below (an improvement over qwt/rme's
+  # upstream config, which leaves it false for thm/lem/cor/prp/cnj/def/exm/exr):
+  # with override-title: false, Quarto's default callout title falls back to
+  # the raw `type:` code (e.g. a rendered callout literally titled "Exm"
+  # instead of "Example"). override-title: true renders the theorem-family
+  # English label plus the div's heading text, e.g. "Example (A first
+  # example)". Note this still doesn't produce Quarto's native crossref
+  # numbering ("Example 3.2") -- wrapping the theorem in a generic callout
+  # (quarto.Callout) instead of rendering it as a native Theorem node loses
+  # that; a real numbered label would require deeper changes to the
+  # callouty-theorem extension itself.
+  thm:
+    override-title: true # override the callout title with
+                         # the theorem-type label,
+                         # appending the element name when provided
+    callout: # parameters of the wrapping callout
+             # see Quarto callout docs for details
+      type: lem  # same color as lem (royal blue); color set in custom-callout block below
+      appearance: minimal
+  lem:
+    override-title: true
+    callout:
+      type: lem
+      appearance: minimal
+  cor:
+    override-title: true
+    callout:
+      type: cor
+      appearance: minimal
+  prp:
+    override-title: true
+    callout:
+      type: prp
+      appearance: minimal
+  cnj:
+    override-title: true
+    callout:
+      type: cnj
+      appearance: minimal
+  def:
+    override-title: true
+    callout:
+      type: def
+      appearance: minimal
+  exm:
+    override-title: true
+    callout:
+      type: exm
+      appearance: default
+      collapse: false
+      icon: false
+  exr:
+    override-title: true
+    callout:
+      type: exr
+      appearance: minimal
+  proof: # also support wrapping proof-like environments
+    override-title: true # override the callout title with
+                         # the proof-type label,
+                         # appending the element name when provided
+    callout:
+      type: proof
+      appearance: default
+      collapse: true
+      icon: true
+  solution:
+    override-title: true
+    callout:
+      type: solution
+      appearance: default
+      collapse: true
+      icon: false
+  remark:
+    override-title: true
+    callout:
+      type: remark
+      appearance: default
+      collapse: false
+      icon: true
+
+# Color palette for theorem/proof environments.
+# The coatless-quarto/custom-callout extension reads this block and injects
+# CSS (HTML) and LaTeX \definecolor (PDF) so each type gets a unique color.
+# Rules: no reds; thm shares lem's royal blue.
+custom-callout:
+  lem:
+    color: "#1565C0"  # royal blue (also used for thm)
+  cor:
+    color: "#00838F"  # dark cyan
+  prp:
+    color: "#827717"  # dark olive
+  cnj:
+    color: "#558B2F"  # grass green
+  def:
+    color: "#1B5E20"  # forest green (very distinct from theorem types)
+  exm:
+    color: "#6A1B9A"  # deep purple
+  exr:
+    color: "#FFA500"  # orange
+  proof:
+    color: "#37474F"  # blue-grey slate
+  solution:
+    color: "#4E342E"  # dark cocoa
+  remark:
+    color: "#AD1457"  # dark magenta

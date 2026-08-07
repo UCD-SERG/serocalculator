@@ -9,8 +9,10 @@ date: today
 # `vignettes/`, which hid the R code in all of them on the website -- the
 # tutorials rendered as prose and figures with no code at all, and
 # `methodology.qmd`'s "Estimating seroincidence" section (a lone `eval: false`
-# chunk) rendered completely empty. `echo: false` belongs only in the slide
-# formats that want it; `methodology.qmd` sets it in its own `revealjs:` block.
+# chunk) rendered completely empty. Set `echo: false` only inside a specific
+# format that wants it, and only where no `eval: false` chunk would then have
+# nothing left to show: `methodology.qmd` sets it in its own `docx:` block, and
+# marks each `eval: false` chunk `echo: true` so those sections survive there.
 format:
   html:
     number-sections: true

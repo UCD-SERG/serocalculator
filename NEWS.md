@@ -59,8 +59,10 @@
   rather than downloading the same curve parameters from OSF;
   the two are identical once filtered.
 * The methodology article's reveal.js slides now show code, folded away by
-  default, instead of hiding it;
-  the Word output hides code except where the code is part of the narrative.
+  default, instead of hiding it.
+  The Word output hides code by default, except in the demonstration chunks
+  that are never evaluated, which mark themselves `echo: true` so those
+  sections do not render empty.
 * Took the sidebar fold control from `altdoc` instead of keeping a copy here.
   `altdoc/sidebar-fold.html` and the matching block in `altdoc/styles.css` are
   replaced by `include-in-header: $ALTDOC_SIDEBAR_FOLD`, which `altdoc` stages

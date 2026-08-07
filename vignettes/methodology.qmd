@@ -780,14 +780,19 @@ really a *posterior sample* of such curves, and `autoplot()` on a
 ```{r}
 #| label: fig-curve-posterior
 #| fig-cap: >
-#|   100 posterior draws of the antibody-decay curve per antigen-isotype,
-#|   with the median and the 10% and 90% quantiles overlaid.
-curves |> autoplot(show_quantiles = TRUE, n_curves = 100, log_x = TRUE)
+#|   Posterior draws of the antibody-decay curve per antigen-isotype, with
+#|   the 10%, 50%, and 90% point-wise quantiles overlaid.
+curves |> autoplot(quantiles = c(0.1, 0.5, 0.9), log_x = TRUE)
 ```
 
+`curves` holds `r dplyr::n_distinct(curves$iter)` draws per antigen-isotype
+here, since it was thinned to `iter < 50` when it was loaded.
+
 ::: notes
-Passing `show_quantiles = FALSE` draws the individual draws alone, and
-`log_x = FALSE` puts time on a linear scale.
+`n_curves` caps how many draws are drawn rather than setting a target, so
+asking for more than the object holds simply draws them all. Passing
+`quantiles = NULL` omits the overlay, and `log_x = FALSE` puts time on a
+linear scale.
 
 This spread is what the incidence likelihood averages over, as described
 under "Propagating uncertainty and heterogeneity" above: each draw is one
@@ -951,6 +956,7 @@ model specification, data formatting, and post-processing by hand;
 
 ```{r}
 #| eval: false
+#| echo: true
 library(serodynamics)
 
 # Longitudinal confirmed-case data (example data ships with the package)
@@ -982,6 +988,7 @@ The overlapping chains indicate good convergence.
 
 ```{r}
 #| eval: false
+#| echo: true
 data("nepal_sees_jags_output")
 plot_jags_dens(nepal_sees_jags_output, iso = "HlyE_IgG", strat = "typhi")
 ```
@@ -1232,6 +1239,7 @@ if `cluster_var` was supplied):
 
 ```{r}
 #| eval: false
+#| echo: true
 # Load antibody-decay curve parameters and cross-sectional population data
 curves <- "https://osf.io/download/rtw5k/" |> load_sr_params()
 xs_data <- "https://osf.io/download/n6cp3/" |> load_pop_data()
@@ -1394,29 +1402,20 @@ positionally and so are not stable across a subset:
 
 ```{r}
 #| label: refit-displayed-strata
-refit_strata <- function(ids) {
-  if (nrow(ids) == 0) {
-    return(NULL)
-  }
-
-  est_seroincidence_by(
-    pop_data = sim_df |> dplyr::semi_join(ids, by = names(ids)),
-    sr_params = sim_curve_params,
-    noise_params = sim_noise_params,
-    strata = c("sample_size", "lambda.sim", "cluster"),
-    curve_strata_varnames = NULL,
-    noise_strata_varnames = NULL,
-    antigen_isos = antibodies,
-    build_graph = TRUE,
-    num_cores = 1
-  )
-}
-
 stratum_ids <- ests_summary |>
   tibble::as_tibble() |>
   dplyr::select(sample_size, lambda.sim, cluster)
 
-ests_first_five <- refit_strata(stratum_ids |> dplyr::slice(1:5))
+ests_first_five <- refit_strata(
+  pop_data = sim_df,
+  strata_ids = stratum_ids |> dplyr::slice(1:5),
+  sr_params = sim_curve_params,
+  noise_params = sim_noise_params,
+  curve_strata_varnames = NULL,
+  noise_strata_varnames = NULL,
+  antigen_isos = antibodies,
+  num_cores = 1
+)
 ```
 
 {{< slidebreak >}}
@@ -1465,7 +1464,17 @@ parallelism they are silently ignored.
 #|   possible convergence problem.
 #| fig-height: 7
 if (nrow(problem_ids) > 0) {
-  autoplot(refit_strata(problem_ids), log_x = TRUE)
+  refit_strata(
+    pop_data = sim_df,
+    strata_ids = problem_ids,
+    sr_params = sim_curve_params,
+    noise_params = sim_noise_params,
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = antibodies,
+    num_cores = 1
+  ) |>
+    autoplot(log_x = TRUE)
 }
 ```
 

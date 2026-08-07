@@ -150,6 +150,23 @@ test_that("`.cache_call()` reports hits and misses when verbose", {
   )
 })
 
+test_that("`.cache_call()` reports discarding a cache on `cache_rerun`", {
+  dir <- withr::local_tempdir()
+
+  .cache_call(
+    fun = nondeterministic, args = list(x = 1),
+    cache_path = dir, cache_id = "demo", cache_verbose = FALSE
+  )
+
+  expect_message(
+    .cache_call(
+      fun = nondeterministic, args = list(x = 1),
+      cache_path = dir, cache_id = "demo", cache_rerun = TRUE
+    ),
+    "discarded the cached result"
+  )
+})
+
 test_that("`.cache_call()` rejects a result of the wrong class", {
   dir <- withr::local_tempdir()
 

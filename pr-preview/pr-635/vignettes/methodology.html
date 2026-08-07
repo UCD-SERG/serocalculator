@@ -2546,7 +2546,7 @@ Figure&nbsp;8: Log-likelihood curve for the simulated survey, on a log x-axis.
 </div>
 <div class="notes">
 <p>That is 6 rates times 20 clusters times 100 participants — 1.2^{4} simulated individuals.</p>
-<p>Simulating and estimating on that many people takes about a minute, and this document renders to three formats, so the work would otherwise be repeated three times per build. <code><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached()</a></code> and <code><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached()</a></code> write their results to a committed cache directory keyed on their arguments, so a build reuses them and only recomputes when the simulation settings actually change.</p>
+<p>Simulating and estimating on that many people is by far the most expensive work in this document, and it renders to three formats, so the work would otherwise be repeated three times per build. <code><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached()</a></code> and <code><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached()</a></code> write their results to a committed cache directory keyed on their arguments, so a build reuses them and only recomputes when the simulation settings actually change.</p>
 </div>
 <div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_df</span> <span class="op">|&gt;</span></span>

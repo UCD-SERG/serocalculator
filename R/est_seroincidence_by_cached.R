@@ -33,12 +33,13 @@
 #' )
 #' }
 est_seroincidence_by_cached <- function(
-    ...,
-    cache_path = "cache/",
-    cache_id = "est_seroincidence_by",
-    cache_rerun = FALSE,
-    cache_verbose = TRUE,
-    cache_extra = NULL) {
+  ...,
+  cache_path = "cache/",
+  cache_id = "est_seroincidence_by",
+  cache_rerun = FALSE,
+  cache_verbose = TRUE,
+  cache_extra = NULL
+) {
   .cache_call(
     fun = est_seroincidence_by,
     args = list(...),

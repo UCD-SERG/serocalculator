@@ -10,7 +10,7 @@ sim_small <- function(cache_path, ...) {
   withr::local_preserve_seed()
 
   sim_pop_data_multi_cached(
-    curve_params = typhoid_curves_nostrat_100,
+    curve_params = serocalculator::typhoid_curves_nostrat_100,
     lambdas = 0.1,
     nclus = 2,
     sample_sizes = 20,

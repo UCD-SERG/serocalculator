@@ -1,8 +1,8 @@
 est_small <- function(pop_data, cache_path, ...) {
   est_seroincidence_by_cached(
     pop_data = pop_data,
-    sr_params = typhoid_curves_nostrat_100,
-    noise_params = example_noise_params_pk,
+    sr_params = serocalculator::typhoid_curves_nostrat_100,
+    noise_params = serocalculator::example_noise_params_pk,
     strata = "cluster",
     curve_strata_varnames = NULL,
     noise_strata_varnames = NULL,
@@ -24,7 +24,7 @@ small_pop_data <- function(rng_seed = 1234) {
   withr::local_preserve_seed()
 
   sim_pop_data_multi(
-    curve_params = typhoid_curves_nostrat_100,
+    curve_params = serocalculator::typhoid_curves_nostrat_100,
     lambdas = 0.1,
     nclus = 2,
     sample_sizes = 20,

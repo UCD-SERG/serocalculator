@@ -35,12 +35,13 @@
 #' )
 #' }
 sim_pop_data_multi_cached <- function(
-    ...,
-    cache_path = "cache/",
-    cache_id = "sim_pop_data_multi",
-    cache_rerun = FALSE,
-    cache_verbose = TRUE,
-    cache_extra = NULL) {
+  ...,
+  cache_path = "cache/",
+  cache_id = "sim_pop_data_multi",
+  cache_rerun = FALSE,
+  cache_verbose = TRUE,
+  cache_extra = NULL
+) {
   .cache_call(
     fun = sim_pop_data_multi,
     args = list(...),

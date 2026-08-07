@@ -55,7 +55,7 @@ shortcodes:
 #| include: false
 knitr::opts_chunk$set(message = FALSE)
 
-# The simulation studies below are expensive, and this document renders to
+# The simulation studies in this article are expensive, and it renders to
 # three formats, so every chunk would otherwise execute three times per build.
 # `sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()` write their
 # results here; the directory is committed, so a fresh build reuses them.
@@ -1331,7 +1331,7 @@ ests <- est_seroincidence_by_cached(
   noise_strata_varnames = NULL,
   antigen_isos = antibodies,
   # Graphs are attached per stratum, which would make the cached object
-  # enormous for this many strata. The handful of curves plotted below are
+  # enormous for this many strata. The few curves this article plots are
   # re-fit on demand instead.
   build_graph = FALSE,
   cache_path = sim_cache,

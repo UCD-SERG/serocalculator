@@ -20,5 +20,5 @@ strata <- function(x) {
 #' @export
 #' @keywords internal
 strata.default <- function(x) {
-  attr(x, "Strata")
+  xfun::attr2(x, "Strata")
 }

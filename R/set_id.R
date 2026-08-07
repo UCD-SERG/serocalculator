@@ -16,7 +16,7 @@
 #' serocalculator_example("example_pop_data.rds") |>
 #'   readr::read_rds() |>
 #'     set_id_var(id = "index_id") |>
-#'     attr("id_var")
+#'     xfun::attr2("id_var")
 set_id_var <- function(object,
                        id = "index_id",
                        standardize = TRUE,
@@ -68,7 +68,7 @@ set_id_var <- function(object,
 
   if (standardize) {
     object <- object |>
-      rename(c("id" = attr(object, "id_var")))
+      rename(c("id" = xfun::attr2(object, "id_var")))
 
     # set id attribute
     attr(object, "id_var") <- "id"

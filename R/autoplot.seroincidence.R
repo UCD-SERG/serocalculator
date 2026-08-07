@@ -35,7 +35,7 @@
 #'}
 autoplot.seroincidence <-
   function(object, log_x = FALSE, ...) {
-    to_return <- attr(object, "ll_graph")
+    to_return <- xfun::attr2(object, "ll_graph")
 
     if (is.null(to_return)) {
       cli::cli_abort(

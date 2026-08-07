@@ -105,7 +105,7 @@ set_age <- function(object,
 
   if (standardize) {
     object <- object |>
-      rename(c("age" = attr(object, "age_var")))
+      rename(c("age" = xfun::attr2(object, "age_var")))
 
     # set age attribute
     attr(object, "age_var") <- "age"
@@ -152,7 +152,7 @@ set_value <- function(object,
 
   if (standardize) {
     object <- object |>
-      rename(c("value" = attr(object, "value_var")))
+      rename(c("value" = xfun::attr2(object, "value_var")))
 
     # set id attribute
     attr(object, "value_var") <- "value"

@@ -11,7 +11,7 @@ set_biomarker_var <- function(object,
 
   if (standardize) {
     object <- object %>%
-      rename(c("antigen_iso" = attr(object, "biomarker_var")))
+      rename(c("antigen_iso" = xfun::attr2(object, "biomarker_var")))
 
     # update attribute
     attr(object, "biomarker_var") <- "antigen_iso"

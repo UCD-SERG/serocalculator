@@ -27,6 +27,6 @@ Sets the \code{id_var} metadata attribute of \code{object}
 serocalculator_example("example_pop_data.rds") |>
   readr::read_rds() |>
     set_id_var(id = "index_id") |>
-    attr("id_var")
+    xfun::attr2("id_var")
 }
 \keyword{internal}

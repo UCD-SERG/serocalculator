@@ -45,7 +45,7 @@ Convergence information returned by \code{\link[stats:nlm]{stats::nlm()}}
 }
 
 The object also has the following metadata
-(accessible through \code{\link[base:attr]{base::attr()}}):
+(accessible through \code{\link[xfun:attr2]{xfun::attr2()}}):
 \itemize{
 \item \code{antigen_isos}
 Character vector with names of input antigen isotypes

@@ -72,10 +72,10 @@ summary.seroincidence <- function(
     coverage = .95,
     verbose = TRUE,
     ...) {
-  start <- object |> attr("lambda_start")
-  antigen_isos <- object |> attr("antigen_isos")
-  cluster_var <- object |> attr("cluster_var")
-  stratum_var <- object |> attr("stratum_var")
+  start <- object |> xfun::attr2("lambda_start")
+  antigen_isos <- object |> xfun::attr2("antigen_isos")
+  cluster_var <- object |> xfun::attr2("cluster_var")
+  stratum_var <- object |> xfun::attr2("stratum_var")
 
   alpha <- 1 - coverage
   h_alpha <- alpha / 2

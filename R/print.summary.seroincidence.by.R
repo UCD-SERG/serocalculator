@@ -41,10 +41,10 @@
 print.summary.seroincidence.by <- function(x, ...) {
   cat("Seroincidence estimated given the following setup:\n")
   cat("a) Antigen isotypes   :",
-      paste(x |> attr("antigen_isos"), collapse = ", "),
+      paste(x |> xfun::attr2("antigen_isos"), collapse = ", "),
       "\n")
   cat("b) Strata       :",
-      paste(x |> attr("Strata"), collapse = ", "),
+      paste(x |> xfun::attr2("Strata"), collapse = ", "),
       "\n")
   cat("\n Seroincidence estimates:\n")
   print(as_tibble(x))

@@ -29,7 +29,7 @@
 #'    Convergence information returned by [stats::nlm()]
 #'
 #' The object also has the following metadata
-#' (accessible through [base::attr()]):
+#' (accessible through [xfun::attr2()]):
 #' * `antigen_isos`
 #'   Character vector with names of input antigen isotypes
 #'   used in [est_seroincidence_by()]
@@ -93,7 +93,7 @@ summary.seroincidence.by <- function(
 
   results <-
     inner_join(
-      object |> attr("Strata"),
+      object |> xfun::attr2("Strata"),
       results,
       by = "Stratum",
       relationship = "one-to-one"
@@ -117,8 +117,8 @@ summary.seroincidence.by <- function(
   output <-
     results |>
     structure(
-      antigen_isos = attr(object, "antigen_isos"),
-      Strata = attr(object, "Strata") |> attr("strata_vars"),
+      antigen_isos = xfun::attr2(object, "antigen_isos"),
+      Strata = xfun::attr2(object, "Strata") |> xfun::attr2("strata_vars"),
       Quantiles = quantiles,
       class = "summary.seroincidence.by" |>
         union(class(results))

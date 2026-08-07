@@ -261,10 +261,10 @@ Parent file (`methodology.qmd`):
 ```markdown
 ## Cluster-robust standard errors
 
-{{< include articles/_cluster-robust-se.qmd >}}
+{{< include methodology/_cluster-robust-se.qmd >}}
 ```
 
-Subfile (`articles/_cluster-robust-se.qmd`):
+Subfile (`methodology/_cluster-robust-se.qmd`):
 ```markdown
 In many survey designs, observations are clustered...
 

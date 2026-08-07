@@ -1,0 +1,18 @@
+```{r}
+#| label: fig-sim-distribution
+#| fig-cap: >
+#|   Distribution of simulated antibody responses, by antigen-isotype.
+library(ggbeeswarm)
+
+sim_data |>
+  ggplot() +
+  aes(x = as.factor(antigen_iso), y = value) +
+  geom_beeswarm(
+    size = .5, alpha = .5,
+    aes(color = antigen_iso), show.legend = FALSE
+  ) +
+  geom_boxplot(outlier.colour = NA, fill = NA) +
+  scale_y_log10() +
+  theme_linedraw() +
+  labs(x = "antigen - isotype")
+```

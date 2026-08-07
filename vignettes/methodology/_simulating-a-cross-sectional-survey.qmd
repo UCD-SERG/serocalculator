@@ -1,0 +1,55 @@
+`sim_pop_data()` simulates infections as a Poisson process with rate
+`lambda`, then generates each person's antibody levels from the seroresponse
+model:
+
+```{r}
+#| label: sim-single-dataset
+sim_lambda <- 0.2 # true incidence rate, per person-year
+sim_lifespan <- c(0, 10) # age range of the simulated survey
+sim_n <- 100 # number of participants
+
+# Antibody-decay parameters. `typhoid_curves_nostrat_100` ships with the
+# package and is the same posterior sample the article downloads from OSF
+# elsewhere, so the simulation needs no network access.
+sim_curve_params <-
+  typhoid_curves_nostrat_100 |>
+  dplyr::filter(iter < 50, antigen_iso %in% antibodies)
+
+# Biological-noise limits used when *generating* the data
+sim_noise_limits <- rbind(
+  "HlyE_IgA" = c(min = 0, max = 0.5),
+  "HlyE_IgG" = c(min = 0, max = 0.5)
+)
+
+set.seed(54321)
+sim_data <- sim_pop_data(
+  curve_params = sim_curve_params,
+  lambda = sim_lambda,
+  n_samples = sim_n,
+  age_range = sim_lifespan,
+  antigen_isos = antibodies,
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
+  add_noise = TRUE,
+  noise_limits = sim_noise_limits,
+  format = "long"
+)
+```
+
+::: notes
+Each individual is simulated separately, but their antibodies are modelled
+jointly, so the biomarkers share one latent infection history.
+
+Three arguments are worth knowing:
+
+* `renew_params` decides whether each infection draws a fresh parameter set
+from the posterior. `FALSE` (used here) picks one set at birth and keeps it,
+updating only the baseline level `y0` before each new infection. `TRUE` is
+more realistic but is not what the estimation method assumes --- see the
+bias check at the end of @sec-validation.
+* `age_fixed` fixes the age at which longitudinal parameters are evaluated;
+setting it to `NA` uses the age at infection instead.
+* `n_mcmc_samples = 0` draws a random posterior sample for each infection.
+Fixing it to a value in `1:4000` reuses that one sample throughout, which is
+useful for diagnostics.
+:::

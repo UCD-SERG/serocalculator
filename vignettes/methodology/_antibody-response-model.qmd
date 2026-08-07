@@ -1,5 +1,3 @@
-# Modeling the seroresponse kinetics curve
-
 ::: notes
 Now, we need a model for the antibody response to infection, $\dens(Y=y|T=t)$.
 The current version of the `{serocalculator}` package uses

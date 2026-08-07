@@ -12,6 +12,15 @@
   Pass `cache_rerun = TRUE` to force recomputation.
   Cache-control arguments carry a `cache_` prefix
   so the wrapped functions' own `verbose` argument remains reachable. (#631)
+* Added `refit_strata()`, which re-fits a chosen subset of strata with
+  log-likelihood graphs attached.
+  It is the companion to caching a large fit with `build_graph = FALSE`:
+  graphs are attached per stratum, so they make a cached fit far larger on
+  disk, and the usual pattern is to cache without them and re-fit only the
+  strata you want to plot.
+  Strata are selected by the columns that define them rather than by index,
+  because `count_strata()` names strata positionally and a subset renumbers
+  them. (#632)
 * Added interactive Shiny app `curve_app()` for visualizing antigen-antibody
   kinetics models with real-time parameter sliders (#392).
 * Added `antibody_decay_curve()` and `pathogen_decay_curve()` functions for

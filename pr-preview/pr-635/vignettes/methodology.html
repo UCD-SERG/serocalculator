@@ -99,9 +99,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-97e3f169fe9e58e23962789afdf8a4dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-8156d632e8d7c264edf6ede9376b0211.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-97e3f169fe9e58e23962789afdf8a4dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
@@ -2179,10 +2179,12 @@ Figure&nbsp;5: 100 posterior draws of the antibody-decay curve per antigen-isoty
 -3801.688 -4918.504 -8720.192 -8720.192 </code></pre>
 </div>
 </div>
-<p>The joint log-likelihood differs from the sum of the two separate ones, exactly as the shared <span class="math inline">\(t\)</span> implies.</p>
+<p>The two-biomarker value is <strong>exactly</strong> the sum of the separate ones. That is worth pausing on, because the formula above says it should not be: one integral over a shared <span class="math inline">\(t\)</span> does not factor into two separate integrals.</p>
+<p>What it tells us is that <code><a href="../man/log_likelihood.html">log_likelihood()</a></code> currently combines biomarkers by summing their individual log-likelihoods, which is the stronger assumption that the biomarkers are independent <em>unconditionally</em>, each with its own latent infection time. <code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code> optimizes through the same code path, so this is the estimation model rather than a quirk of this one function.</p>
+<p>Whether the formula or the implementation should change is <a href="https://github.com/UCD-SERG/serocalculator/issues/637">an open question</a>. Until it is settled, read a multi-biomarker standard error as assuming independence across biomarkers.</p>
 <div class="notes">
-<p>If the biomarkers were independent <em>unconditionally</em>, the joint log-likelihood would equal the sum. It does not, because each person’s two measurements are tied together by their single latent infection time.</p>
-<p>(<a href="#sec-multivariate" class="quarto-xref">Section&nbsp;9.2</a> below describes work in progress to relax the conditional-independence assumption itself.)</p>
+<p><code>R/log_likelihood.R</code> loops over <code>antigen_isos</code>, calls <code><a href="../man/f_dev.html">f_dev()</a></code> once per biomarker, and adds the results, with a source comment naming the independence assumption. Summing log-likelihoods is the log of the product of the marginals.</p>
+<p>(<a href="#sec-multivariate" class="quarto-xref">Section&nbsp;9.2</a> describes work in progress to relax conditional independence <em>given</em> <span class="math inline">\(t\)</span>; the question above is whether the current code implements even that much.)</p>
 </div>
 <p>Using both biomarkers concentrates the log-likelihood around its maximum, and so shrinks the standard error, relative to either biomarker alone (<a href="#fig-loglik" class="quarto-xref">Figure&nbsp;6</a>):</p>
 <div class="cell">

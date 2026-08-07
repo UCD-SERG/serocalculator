@@ -61,5 +61,5 @@
 - [Serocalculator](https://ucd-serg.github.io/serocalculator/vignettes/articles/serocalculator.html)
 - [Test-Quarto-Article](https://ucd-serg.github.io/serocalculator/vignettes/articles/test-quarto-article.html)
 - [Load curve parameters (v1.3.0 - DEPRECATED)](https://ucd-serg.github.io/serocalculator/vignettes/articles/version-crosswalk-1.3-to-1.4.html)
-- [The "Simulation studies" article (articles/simulate_xsectionalData.qmd) was](https://ucd-serg.github.io/serocalculator/vignettes/methodology.html)
+- [The simulation studies in this article are expensive, and it renders to](https://ucd-serg.github.io/serocalculator/vignettes/methodology.html)
 

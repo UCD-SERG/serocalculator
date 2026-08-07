@@ -25,15 +25,53 @@
 #' @seealso [est_seroincidence_by_cached()]
 #'
 #' @examples
-#' \dontrun{
+#'
+#' antibodies <- c("HlyE_IgA", "HlyE_IgG")
+#'
+#' # Examples must not write into the user's working directory, so send the
+#' # cache to a temporary one. `cache_path` gains its trailing slash
+#' # automatically.
+#' cache_dir <- file.path(tempdir(), "serocalculator-example-cache")
+#'
 #' sim_df <- sim_pop_data_multi_cached(
 #'   curve_params = typhoid_curves_nostrat_100,
 #'   lambdas = c(0.05, 0.1),
 #'   nclus = 2,
 #'   sample_sizes = 50,
-#'   cache_path = "cache/"
+#'   age_range = c(0, 10),
+#'   antigen_isos = antibodies,
+#'   num_cores = 1,
+#'   add_noise = TRUE,
+#'   noise_limits = rbind(
+#'     HlyE_IgA = c(min = 0, max = 0.5),
+#'     HlyE_IgG = c(min = 0, max = 0.5)
+#'   ),
+#'   format = "long",
+#'   cache_path = cache_dir
 #' )
-#' }
+#'
+#' nrow(sim_df)
+#'
+#' # Calling again with the same arguments loads the saved result instead of
+#' # re-simulating.
+#' sim_df2 <- sim_pop_data_multi_cached(
+#'   curve_params = typhoid_curves_nostrat_100,
+#'   lambdas = c(0.05, 0.1),
+#'   nclus = 2,
+#'   sample_sizes = 50,
+#'   age_range = c(0, 10),
+#'   antigen_isos = antibodies,
+#'   num_cores = 1,
+#'   add_noise = TRUE,
+#'   noise_limits = rbind(
+#'     HlyE_IgA = c(min = 0, max = 0.5),
+#'     HlyE_IgG = c(min = 0, max = 0.5)
+#'   ),
+#'   format = "long",
+#'   cache_path = cache_dir
+#' )
+#'
+#' identical(sim_df, sim_df2)
 sim_pop_data_multi_cached <- function(
   ...,
   cache_path = "cache/",

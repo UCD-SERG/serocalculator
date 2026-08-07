@@ -422,7 +422,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9029</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9032</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -516,7 +516,7 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9029 (dev)</span>
+ <span class="menu-text">1.4.1.9032 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">    
         <li>
@@ -525,7 +525,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9028 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9031 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1193,6 +1193,7 @@ window.Quarto = {
 <section id="internal" class="level2">
 <h2 class="anchored" data-anchor-id="internal">Internal</h2>
 <ul>
+<li>Regenerated <code>NAMESPACE</code> and <code>DESCRIPTION</code> with <code>roxygen2</code> 8.1.0, which groups each package’s <code>importFrom()</code> symbols into a single multi-line directive instead of one directive per symbol. The change is purely one of formatting: the exports, the S3 method registrations, the compiled-library declaration, and all 75 imports are unchanged. <code>docs-check</code> regenerates the documentation and fails when a tracked file differs afterward, so every run of it since <code>roxygen2</code> 8.1.0 was published on 2026-08-04 had failed. Green <code>docs-check</code> runs on other open pull requests are stale rather than contradictory: each of them predates that release. (<a href="https://github.com/UCD-SERG/serocalculator/issues/636">#636</a>)</li>
 <li>Disabled the <code>@claude</code> agent bot. <code>.github/workflows/claude.yml</code>’s reactive triggers are commented out and its job carries <code>if: false</code>, so no comment, issue, or review event invokes the agent, and neither does a manual dispatch (the reusable workflow runs unattended on <code>workflow_dispatch</code> by design). Reviews are the only Claude capability left, and they run on request only: automatic review on pull-request activity is off, and a review starts when a collaborator comments <code>/review</code> on a pull request. That dispatch now pins the review run to the pull request’s head branch, so its check-run lands on the right commit.</li>
 <li>Fixed two dead provenance links in workflow comments. <code>check-readme.yaml</code> cited a file that was deleted from <code>IndrajeetPatil/statsExpressions</code>’s default branch when its CI moved to reusable workflows; the citation is now pinned to a commit where the file exists. <code>test-coverage.yaml</code> cited a GitHub Actions <em>run</em> URL, which expires after roughly 90 days; it now cites the upstream workflow file.</li>
 <li>Removed <code>.github/CONTRIBUTING.Rmd</code>; <code>.github/CONTRIBUTING.md</code> is now the hand-maintained source. The <code>.Rmd</code> executed no code (its only chunk was <code>eval = FALSE</code>), so it rendered to markdown identical to a hand-written file while adding a source/generated pair with no CI check to keep the two in sync. (<a href="https://github.com/UCD-SERG/serocalculator/issues/613">#613</a>)</li>

@@ -814,7 +814,7 @@ likelihoods: the shared latent infection time $t$ couples them.
 lets us check that claim numerically:
 
 ```{r}
-#| label: loglik-not-additive
+#| label: loglik-multi-biomarker
 ll_iga <- log_likelihood(
   pop_data = xs_data, curve_params = curves, noise_params = noise,
   antigen_isos = "HlyE_IgA", lambda = 0.1
@@ -833,16 +833,31 @@ ll_both <- log_likelihood(
 c(IgA = ll_iga, IgG = ll_igg, sum = ll_iga + ll_igg, joint = ll_both)
 ```
 
-The joint log-likelihood differs from the sum of the two separate ones,
-exactly as the shared $t$ implies.
+The two-biomarker value is **exactly** the sum of the separate ones. That is
+worth pausing on, because the formula above says it should not be: one
+integral over a shared $t$ does not factor into two separate integrals.
+
+What it tells us is that `log_likelihood()` currently combines biomarkers by
+summing their individual log-likelihoods, which is the stronger assumption
+that the biomarkers are independent *unconditionally*, each with its own
+latent infection time. `est_seroincidence()` optimizes through the same code
+path, so this is the estimation model rather than a quirk of this one
+function.
+
+Whether the formula or the implementation should change is
+[an open question](https://github.com/UCD-SERG/serocalculator/issues/637).
+Until it is settled, read a multi-biomarker standard error as assuming
+independence across biomarkers.
 
 ::: notes
-If the biomarkers were independent *unconditionally*, the joint
-log-likelihood would equal the sum. It does not, because each person's two
-measurements are tied together by their single latent infection time.
+`R/log_likelihood.R` loops over `antigen_isos`, calls `f_dev()` once per
+biomarker, and adds the results, with a source comment naming the
+independence assumption. Summing log-likelihoods is the log of the product of
+the marginals.
 
-(@sec-multivariate below describes work in progress to relax the
-conditional-independence assumption itself.)
+(@sec-multivariate describes work in progress to relax conditional
+independence *given* $t$; the question above is whether the current code
+implements even that much.)
 :::
 
 Using both biomarkers concentrates the log-likelihood around its maximum,

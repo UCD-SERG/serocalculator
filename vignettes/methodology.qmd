@@ -1011,7 +1011,7 @@ width is an explicit function of time since infection.
 
 ## Checking `nlm()` convergence {.smaller}
 
-{{< include methodology/_checking-nlm-convergence.qmd >}}
+{{< include methodology/_checking-convergence-codes.qmd >}}
 
 ## Estimates recover the simulated rates {.smaller}
 

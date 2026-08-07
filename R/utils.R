@@ -32,7 +32,7 @@
 
 .check_antibodies <- function(
     pop_data,
-    antigen_isos = pop_data |>  xfun::attr2("antigen_isos")) {
+    antigen_isos = pop_data |>  attr("antigen_isos")) {
 
   if (!is.character(antigen_isos) && !is.factor(antigen_isos)) {
     cli::cli_abort(

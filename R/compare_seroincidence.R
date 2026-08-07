@@ -174,7 +174,7 @@ compare_seroincidence.seroincidence.by <- function(
   sum_x <- summary(x, coverage = coverage, verbose = FALSE)
 
   # Extract strata information
-  strata_vars <- xfun::attr2(sum_x, "Strata")
+  strata_vars <- attr(sum_x, "Strata")
   n_strata <- nrow(sum_x)
 
   if (n_strata < 2) {
@@ -257,7 +257,7 @@ compare_seroincidence.seroincidence.by <- function(
     structure(
       coverage = coverage,
       strata_vars = strata_vars,
-      antigen_isos = xfun::attr2(sum_x, "antigen_isos"),
+      antigen_isos = attr(sum_x, "antigen_isos"),
       class = c("comparison.seroincidence.by", class(result))
     )
 

@@ -39,13 +39,10 @@
 print.seroincidence.by <- function(x, ...) {
   cat("`seroincidence.by` object estimated given the following setup:\n")
   cat("a) Antigen isotypes   :",
-      paste(xfun::attr2(x, "antigen_isos"), collapse = ", "),
+      paste(attr(x, "antigen_isos"), collapse = ", "),
       "\n")
   cat("b) Strata       :",
-      paste(
-        xfun::attr2(x, "Strata") |> xfun::attr2("strata_vars"),
-        collapse = ", "
-      ),
+      paste(attr(x, "Strata") |> attr("strata_vars"), collapse = ", "),
       "\n")
 
   cat("\n")

@@ -46,7 +46,7 @@ autoplot.seroincidence.by <- function(
     )
   }
 
-  if (!xfun::attr2(object, "graphs_included")) {
+  if (!attr(object, "graphs_included")) {
     cli::cli_abort(
       "Graphs cannot be extracted; ",
       "`build_graph` was not `TRUE` in the call to `est_seroincidence_by()`"

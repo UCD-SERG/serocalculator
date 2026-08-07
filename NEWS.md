@@ -232,9 +232,6 @@
 
 ## Internal
 
-* Replaced attribute getter calls that previously used `attr()` with
-  `xfun::attr2()`, and added a regression test to ensure deprecated
-  `xfun::atrr()`/`xfun::attr()` usage does not reappear. (#643)
 * Regenerated `NAMESPACE` and `DESCRIPTION` with `roxygen2` 8.1.0, which groups
   each package's `importFrom()` symbols into a single multi-line directive
   instead of one directive per symbol.

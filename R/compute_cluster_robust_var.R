@@ -18,10 +18,10 @@
     cluster_var,
     stratum_var = NULL) {
   # Extract stored data (already split by antigen_iso)
-  pop_data_list <- xfun::attr2(fit, "pop_data")
-  sr_params_list <- xfun::attr2(fit, "sr_params")
-  noise_params_list <- xfun::attr2(fit, "noise_params")
-  antigen_isos <- xfun::attr2(fit, "antigen_isos")
+  pop_data_list <- attr(fit, "pop_data")
+  sr_params_list <- attr(fit, "sr_params")
+  noise_params_list <- attr(fit, "noise_params")
+  antigen_isos <- attr(fit, "antigen_isos")
 
   # Get MLE estimate
   log_lambda_mle <- fit$estimate

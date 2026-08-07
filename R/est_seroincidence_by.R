@@ -145,7 +145,7 @@ est_seroincidence_by <- function(
     stratum_var = stratum_var
   )
 
-  strata_table <- stratum_data_list |> xfun::attr2("strata")
+  strata_table <- stratum_data_list |> attr("strata")
 
   if (verbose) {
     cli::cli_inform(

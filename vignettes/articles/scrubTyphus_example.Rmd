@@ -82,10 +82,11 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 
 
 ```{r curve, message=FALSE}
-# Import longitudinal antibody parameters from OSF
+# Longitudinal antibody parameters, vendored from OSF (osf.io/u5gxh) --- see
+# ../precomputed/osf/README.md for why and how to refresh.
 
 curves <-
-  "https://osf.io/download/u5gxh/" |> 
+  "../precomputed/osf/u5gxh.rds" |>
   load_sr_params()
 ```
 
@@ -103,9 +104,10 @@ Next, we load our sample cross-sectional data.
 
 
 ```{r data, message = FALSE}
-# Import cross-sectional data from OSF and rename required variables
+# Cross-sectional data, vendored from OSF (osf.io/h5js4); renamed to the
+# required variable names.
 xs_data <- load_pop_data(
-  file_path = "https://osf.io/download/h5js4/",
+  file_path = "../precomputed/osf/h5js4.rds",
   age = "Age",
   value = "result",
   id = "index_id",

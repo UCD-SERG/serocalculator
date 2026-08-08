@@ -49,6 +49,15 @@
 
 ## Documentation
 
+* The methodology, scrub typhus, and antibody-response-model articles no
+  longer fetch their example data from OSF at render time --- the docs build
+  was failing whenever OSF was unavailable, on PRs that never touched the
+  affected vignettes.
+  `n6cp3`, `hqy4v`, `u5gxh`, and `h5js4` are now vendored under
+  `vignettes/precomputed/osf/`; the two chunks that only needed `rtw5k`
+  filtered to `iter < 50` now filter the already-bundled
+  `typhoid_curves_nostrat_100` instead, since the two are identical once
+  filtered, so no separate copy of `rtw5k` needed vendoring. (#648)
 * Listed `sim_pop_data_multi_cached()`, `est_seroincidence_by_cached()`, and
   `refit_strata()` in the documentation site's reference index.
   All three were exported and had help pages, but no section of

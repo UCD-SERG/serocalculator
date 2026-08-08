@@ -4,6 +4,10 @@
 #' When the model was fit with clustered data (using the `cluster_var`
 #' parameter in [est_seroincidence()]), this function automatically computes
 #' cluster-robust standard errors to account for within-cluster correlation.
+#' For a multi-biomarker fit with no `cluster_var`, the reported `SE`
+#' assumes independence across biomarkers --- see `cluster_var`'s
+#' documentation in [est_seroincidence()] for how to correct for
+#' within-person correlation instead.
 #'
 #' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
@@ -68,10 +72,11 @@
 #'
 #' summary(est1)
 summary.seroincidence <- function(
-    object,
-    coverage = .95,
-    verbose = TRUE,
-    ...) {
+  object,
+  coverage = .95,
+  verbose = TRUE,
+  ...
+) {
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")
   cluster_var <- object |> attr("cluster_var")

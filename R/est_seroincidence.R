@@ -35,6 +35,25 @@
 #' variable names for multi-level clustering (e.g., `c("school",
 #' "classroom")`). When provided, standard errors will be adjusted for
 #' within-cluster correlation using cluster-robust variance estimation.
+#' When fitting more than one `antigen_isos` at once, this argument
+#' also has a second use.
+#' `log_likelihood()` combines biomarkers by summing their marginal
+#' log-likelihoods, which is only valid if those contributions are
+#' independent.
+#' Two biomarker readings from the same person usually aren't, since
+#' they share an infection history.
+#' Pass the id column returned by [ids_varname()]
+#' (e.g. `cluster_var = ids_varname(pop_data)`) to get a
+#' cluster-robust standard error that accounts for this within-person
+#' correlation.
+#' This is a distinct concern from a genuine sampling-cluster design,
+#' and multiple `cluster_var` values are grouped by their
+#' intersection rather than combined additively: if every subject
+#' belongs to exactly one sampling cluster,
+#' `cluster_var = c("cluster", "id")` reduces to clustering by `id`
+#' alone, and does not add the sampling-cluster correction on top ---
+#' see issue [#543](https://github.com/UCD-SERG/serocalculator/issues/543).
+#' See issue [#645](https://github.com/UCD-SERG/serocalculator/issues/645).
 #' @param stratum_var optional name of the variable in `pop_data` containing
 #' stratum identifiers. Used in combination with `cluster_var` for
 #' stratified cluster sampling designs.
@@ -94,20 +113,21 @@
 #'
 #' summary(est3)
 est_seroincidence <- function(
-    pop_data,
-    sr_params,
-    noise_params,
-    antigen_isos = get_biomarker_names(pop_data),
-    lambda_start = 0.1,
-    stepmin = 1e-8,
-    stepmax = 3,
-    verbose = FALSE,
-    build_graph = FALSE,
-    print_graph = build_graph & verbose,
-    cluster_var = NULL,
-    stratum_var = NULL,
-    sampling_weights = NULL,
-    ...) {
+  pop_data,
+  sr_params,
+  noise_params,
+  antigen_isos = get_biomarker_names(pop_data),
+  lambda_start = 0.1,
+  stepmin = 1e-8,
+  stepmax = 3,
+  verbose = FALSE,
+  build_graph = FALSE,
+  print_graph = build_graph & verbose,
+  cluster_var = NULL,
+  stratum_var = NULL,
+  sampling_weights = NULL,
+  ...
+) {
   if (verbose > 1) {
     cli::cli_inform("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
@@ -125,6 +145,13 @@ est_seroincidence <- function(
     data = pop_data,
     antigen_isos = antigen_isos,
     curve_params = sr_params
+  )
+
+  .warn_biomarker_independence(
+    pop_data = pop_data,
+    antigen_isos = antigen_isos,
+    cluster_var = cluster_var,
+    verbose = verbose
   )
 
   # Prepare columns to keep
@@ -324,7 +351,8 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-    ...) {
+  ...
+) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

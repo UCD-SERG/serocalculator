@@ -72,10 +72,11 @@
 #'
 #' summary(est1)
 summary.seroincidence <- function(
-    object,
-    coverage = .95,
-    verbose = TRUE,
-    ...) {
+  object,
+  coverage = .95,
+  verbose = TRUE,
+  ...
+) {
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")
   cluster_var <- object |> attr("cluster_var")

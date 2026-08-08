@@ -107,20 +107,21 @@
 #'
 #' summary(est3)
 est_seroincidence <- function(
-    pop_data,
-    sr_params,
-    noise_params,
-    antigen_isos = get_biomarker_names(pop_data),
-    lambda_start = 0.1,
-    stepmin = 1e-8,
-    stepmax = 3,
-    verbose = FALSE,
-    build_graph = FALSE,
-    print_graph = build_graph & verbose,
-    cluster_var = NULL,
-    stratum_var = NULL,
-    sampling_weights = NULL,
-    ...) {
+  pop_data,
+  sr_params,
+  noise_params,
+  antigen_isos = get_biomarker_names(pop_data),
+  lambda_start = 0.1,
+  stepmin = 1e-8,
+  stepmax = 3,
+  verbose = FALSE,
+  build_graph = FALSE,
+  print_graph = build_graph & verbose,
+  cluster_var = NULL,
+  stratum_var = NULL,
+  sampling_weights = NULL,
+  ...
+) {
   if (verbose > 1) {
     cli::cli_inform("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
@@ -344,7 +345,8 @@ est_seroincidence <- function(
 #' @keywords internal
 #' @export
 est.incidence <- function( # nolint: object_name_linter
-    ...) {
+  ...
+) {
   lifecycle::deprecate_soft("1.3.1", "est.incidence()", "est_seroincidence()")
   est_seroincidence(
     ...

@@ -22,10 +22,11 @@
 #' @return `invisible(NULL)`
 #' @keywords internal
 .warn_biomarker_independence <- function(
-    pop_data,
-    antigen_isos,
-    cluster_var,
-    verbose) {
+  pop_data,
+  antigen_isos,
+  cluster_var,
+  verbose
+) {
   if (!verbose || length(antigen_isos) < 2 || !is.null(cluster_var)) {
     return(invisible(NULL))
   }

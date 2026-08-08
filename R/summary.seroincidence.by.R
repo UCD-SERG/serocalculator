@@ -65,21 +65,22 @@
 #'
 #' @export
 summary.seroincidence.by <- function(
-    object,
-    confidence_level = .95,
-    show_deviance = TRUE,
-    show_convergence = TRUE,
-    verbose = FALSE,
-    small_sample = c("none", "CR1"),
-    floor_to_standard = FALSE,
-    debug_cluster = FALSE,
-    ...) {
+  object,
+  confidence_level = .95,
+  show_deviance = TRUE,
+  show_convergence = TRUE,
+  verbose = FALSE,
+  small_sample = c("none", "CR1"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE,
+  ...
+) {
   small_sample <- match.arg(small_sample)
   alpha <- 1 - confidence_level
   quantiles <- c(alpha / 2, 1 - alpha / 2)
 
   if (length(quantiles) != 2 || any(quantiles < 0) || any(quantiles > 1)) {
-    stop("Incorrectly specified quantiles")
+    cli::cli_abort("Incorrectly specified quantiles")
   }
 
   if (quantiles[1] > quantiles[2]) {

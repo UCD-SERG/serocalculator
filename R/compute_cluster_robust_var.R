@@ -21,12 +21,13 @@
 #' @keywords internal
 #' @noRd
 .compute_cluster_robust_var <- function(
-    fit,
-    cluster_var,
-    stratum_var = NULL,
-    small_sample = c("none", "CR1"),
-    floor_to_standard = FALSE,
-    debug_cluster = FALSE) {
+  fit,
+  cluster_var,
+  stratum_var = NULL,
+  small_sample = c("none", "CR1"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE
+) {
   small_sample <- match.arg(small_sample)
   pop_data_list <- attr(fit, "pop_data")
   pop_data_combined <- do.call(rbind, pop_data_list)

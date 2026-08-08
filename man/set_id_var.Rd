@@ -9,7 +9,7 @@ set_id_var(object, id = "index_id", standardize = TRUE, ...)
 \arguments{
 \item{object}{a \link{data.frame}}
 
-\item{id}{\link{character} string at least partially matching a column
+\item{id}{\link{character} string at least partially matching a person ID column
 in \code{object}}
 
 \item{standardize}{whether to rename the column specified by \code{id}
@@ -21,7 +21,10 @@ to "id"}
 a modified version of \code{object}
 }
 \description{
-Sets the \code{id_var} metadata attribute of \code{object}
+Sets the \code{id_var} metadata attribute of \code{object}. The selected column must
+identify people, with the same value repeated across all biomarker rows from
+one person; an observation- or row-level identifier cannot represent
+within-person correlation.
 }
 \examples{
 serocalculator_example("example_pop_data.rds") |>

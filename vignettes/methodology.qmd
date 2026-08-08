@@ -526,8 +526,8 @@ curves <-
   filter(iter < 50) |>
   filter(antigen_iso %in% antibodies)
 
-# Cross-sectional data, vendored from OSF (osf.io/n6cp3) --- see
-# precomputed/osf/README.md for why and how to refresh.
+# Cross-sectional data derived from OSF resource n6cp3, with corrected
+# pseudonymous participant linkage --- see precomputed/osf/README.md.
 xs_data <-
   "precomputed/osf/n6cp3.rds" |>
   load_pop_data()

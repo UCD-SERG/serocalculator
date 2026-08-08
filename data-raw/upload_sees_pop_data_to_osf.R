@@ -50,12 +50,28 @@ if (!file.copy(local_path, upload_path)) {
 }
 
 version_before <- existing_file$meta[[1]]$attributes$current_version
-osfr::osf_upload(
-  target_folder,
-  upload_path,
-  conflicts = "overwrite",
-  progress = TRUE
+
+# `osfr::osf_upload(..., conflicts = "overwrite")` doesn't reliably detect an
+# existing file with the same name in this folder (osfr 0.2.9): it silently
+# creates a new file instead of updating it, so the version never advances
+# and the verification step below fails. Upload directly to the existing
+# file's Waterbutler `upload` link instead, which correctly replaces its
+# content and bumps its version.
+upload_link <- existing_file$meta[[1]]$links$upload
+upload_response <- httr::PUT(
+  upload_link,
+  httr::add_headers(Authorization = paste("Bearer", Sys.getenv("OSF_PAT"))),
+  body = httr::upload_file(upload_path)
 )
+
+if (httr::http_error(upload_response)) {
+  stop(
+    "OSF upload failed (HTTP ",
+    httr::status_code(upload_response),
+    "): ",
+    httr::content(upload_response, "text", encoding = "UTF-8")
+  )
+}
 
 uploaded_file <- osfr::osf_retrieve_file(file_guid)
 download_dir <- tempfile("serocalculator-osf-verify-")

@@ -76,21 +76,34 @@ $$V_S^{\text{CR1}} = \frac{G_S}{G_S - 1} \, V_S$$
 
 where $G_S$ is the number of unique clusters in subset $S$'s grouping.
 
+### Safeguards against invalid variance
+
 The inclusion-exclusion sum $V_{\text{multiway}}$
 is not guaranteed to be non-negative.
 This is a documented property of the Cameron-Gelbach-Miller estimator,
 not a bug.
-Setting `floor_to_standard = TRUE` floors it
+`serocalculator` therefore floors the raw estimate at 0
+(emitting a warning), independent of `floor_to_standard`,
+before it can reach $\sqrt{V}$ as a silent `NaN`:
+
+$$V_{\text{raw}}^{+} = \max\paren{0, V_{\text{multiway}}}$$
+
+Setting `floor_to_standard = TRUE` additionally floors the result
 at the model-based (non-cluster-robust) variance
 $V_{\text{standard}} = H^{-1}$,
 the inverse of the observed information at the MLE:
 
-$$V_{\text{final}} = \max\paren{V_{\text{standard}}, V_{\text{multiway}}}$$
+$$V_{\text{final}} = \max\paren{V_{\text{standard}}, V_{\text{raw}}^{+}}$$
 
-With the default `floor_to_standard = FALSE`,
-$V_{\text{final}} = V_{\text{multiway}}$ directly,
-so a negative inclusion-exclusion sum
-still reaches `summary()` as `sqrt()` of a negative number.
+If any one-way subset term is unavailable,
+for example because its Hessian is non-finite or non-positive,
+the inclusion-exclusion sum is itself non-finite.
+`serocalculator` warns and returns a missing standard error in that case.
+With `floor_to_standard = TRUE` it falls back to $V_{\text{standard}}$
+instead, unless $V_{\text{standard}}$ is itself unusable
+(the same degenerate Hessian poisons $V_{\text{standard}} = H^{-1}$ too),
+in which case it also returns a missing standard error
+rather than silently falling back to a negative or infinite "variance".
 
 ### Implementation in serocalculator
 
@@ -119,7 +132,7 @@ The multi-way behavior above is itself controlled through `summary()`:
 summary(
   est,
   small_sample = "CR1", # the default; "none" disables the CR1 correction
-  floor_to_standard = FALSE, # the default; TRUE floors V_multiway at V_standard
+  floor_to_standard = FALSE, # the default; TRUE additionally floors at V_standard
   debug_cluster = TRUE # prints the V_S/V_raw/V_final decomposition
 )
 ```

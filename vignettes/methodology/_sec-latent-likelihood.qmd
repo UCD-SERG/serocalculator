@@ -35,7 +35,7 @@ and solving the score equation for $\lambda$
 to find the maximum likelihood estimate:
 :::
 
-::: {#cor-mle-fully-observed}
+::: {#prp-mle-fully-observed}
 
 #### MLE when infection times are fully observed
 

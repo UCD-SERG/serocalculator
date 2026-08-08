@@ -661,3 +661,40 @@ test_that("a real degenerate Hessian never yields a negative or NaN SE", {
   # standard_var itself was negative (1 / -1); confirm it was never used
   expect_lt(decomp$standard_var, 0)
 })
+
+test_that("degenerate Hessian + floor_to_standard + debug_cluster: no error", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$cluster_small <- rep(seq_len(4), length.out = nrow(test_data))
+
+  est_cluster <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "cluster_small"
+  )
+  # A real degenerate Hessian makes robust_raw NA. floor_applied was
+  # previously computed with a plain (unguarded) comparison against
+  # robust_raw, and TRUE combined with NA via && is NA rather than FALSE --
+  # the debug_cluster message below then branched on that NA and errored.
+  # .combine_cluster_decomp() (this PR) avoids the crash structurally, but
+  # this test exercises the same real-world scenario through the public
+  # summary() API with debug_cluster = TRUE, which none of the tests above
+  # do.
+  est_cluster$hessian <- -1
+
+  warnings_raised <- testthat::capture_warnings(
+    result <- summary(
+      est_cluster,
+      verbose = FALSE,
+      floor_to_standard = TRUE,
+      debug_cluster = TRUE
+    )
+  )
+  expect_match(paste(warnings_raised, collapse = "\n"), "Hessian")
+  expect_match(paste(warnings_raised, collapse = "\n"), "unavailable")
+
+  expect_true(is.na(result$SE))
+})

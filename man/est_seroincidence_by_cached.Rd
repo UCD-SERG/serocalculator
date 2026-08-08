@@ -69,12 +69,14 @@ Pass the id column returned by \code{\link[=ids_varname]{ids_varname()}}
 cluster-robust standard error that accounts for this within-person
 correlation.
 This is a distinct concern from a genuine sampling-cluster design,
-and multiple \code{cluster_var} values are grouped by their
-intersection rather than combined additively: if every subject
-belongs to exactly one sampling cluster,
-\code{cluster_var = c("cluster", "id")} reduces to clustering by \code{id}
-alone, and does not add the sampling-cluster correction on top ---
-see issue \href{https://github.com/UCD-SERG/serocalculator/issues/543}{#543}.
+and multiple \code{cluster_var} values are combined additively via
+multi-way clustering, not collapsed to a single interaction:
+\code{cluster_var = c("cluster", "id")} computes the three-term
+inclusion-exclusion sum \eqn{V_{cluster} + V_{id} - V_{cluster,id}},
+so passing both a sampling-cluster variable and the subject id
+captures the sampling-cluster and within-person corrections
+together.
+See issue \href{https://github.com/UCD-SERG/serocalculator/issues/543}{#543}.
 See issue \href{https://github.com/UCD-SERG/serocalculator/issues/645}{#645}.}
     \item{\code{stratum_var}}{optional name of the variable in \code{pop_data} containing
 stratum identifiers. Used in combination with \code{cluster_var} for

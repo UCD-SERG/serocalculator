@@ -2,10 +2,10 @@
 #'
 #' A subset of data from the SEES data, for examples and testing.
 #'
-#' @format ## `sees_pop_data_pk_100`
-#' A `pop_data` object (from [as_pop_data()]) with 200 rows and 8 columns:
+#' @format ## `sees_pop_data_100`
+#' A `pop_data` object (from [as_pop_data()]) with 1000 rows and 8 columns:
 #' \describe{
-#'   \item{id}{Observation ID}
+#'   \item{id}{Pseudonymous participant ID, shared across biomarker rows}
 #'   \item{Country}{Country where the participant was living}
 #'   \item{cluster}{survey sampling cluster}
 #'   \item{catchment}{survey catchment area}
@@ -25,7 +25,7 @@
 #' @format ## `sees_pop_data_pk_100`
 #' A `pop_data` object (from [as_pop_data()]) with 200 rows and 8 columns:
 #' \describe{
-#'   \item{id}{Observation ID}
+#'   \item{id}{Pseudonymous participant ID, shared across biomarker rows}
 #'   \item{Country}{Country where the participant was living}
 #'   \item{cluster}{survey sampling cluster}
 #'   \item{catchment}{survey catchment area}
@@ -45,7 +45,7 @@
 #' @format ## `sees_pop_data_pk_100_old_names`
 #' A `pop_data` object (from [as_pop_data()]) with 200 rows and 8 columns:
 #' \describe{
-#'   \item{index_id}{Observation ID}
+#'   \item{index_id}{Pseudonymous participant ID, shared across biomarker rows}
 #'   \item{Country}{Country where the participant was living}
 #'   \item{cluster}{survey sampling cluster}
 #'   \item{catchment}{survey catchment area}

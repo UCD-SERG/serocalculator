@@ -1,60 +1,91 @@
-# Elisa data
-library(dplyr)
-library(forcats)
-library(readr)
-d0 <- read.csv(
-  "inst/extdata/SEES_2022-10-24_redacted_2023-10-12.csv",
-  header = T
-) %>%
-  # filter(antigen != "CdtB" | antigen != "YncE") %>%
-  filter(
+# ELISA data
+#
+# The input contains sensitive identifiers and must not be committed. Point
+# SEES_REDACTED_DATA at the redacted source extract before running this script.
+sees_source_path <- Sys.getenv("SEES_REDACTED_DATA")
+if (!nzchar(sees_source_path)) {
+  stop("Set SEES_REDACTED_DATA to the redacted SEES source extract.")
+}
+
+d0 <- readr::read_csv(
+  sees_source_path,
+  col_types = readr::cols(
+    .default = readr::col_skip(),
+    studyarm = readr::col_character(),
+    elisa_antigen = readr::col_character(),
+    elisa_antbdy_iso = readr::col_character(),
+    Age = readr::col_double(),
+    TimePeriod = readr::col_character(),
+    Arm = readr::col_character(),
+    catchment = readr::col_character(),
+    areaunit3 = readr::col_character(),
+    sid = readr::col_character(),
+    result = readr::col_double(),
+    Country = readr::col_character()
+  ),
+  show_col_types = FALSE
+) |>
+  dplyr::filter(
     studyarm != "highE_hh",
     studyarm != "lowE_hh",
     studyarm != "ae control"
-  ) %>%
-  mutate(
+  ) |>
+  dplyr::mutate(
     antigen_iso =
-      paste(elisa_antigen, "_", elisa_antbdy_iso, sep = "") %>%
+      paste(elisa_antigen, "_", elisa_antbdy_iso, sep = "") |>
         factor(),
     ageCat = cut(
       Age,
       breaks = c(0, 4.99, 15.99, 99),
       right = FALSE, labels = c("<5", "5-15", "16+")
     ),
-    TimePeriod =
-      TimePeriod %>%
-        factor(levels = c("Baseline", "28 days", "3 months", "6 months", "12 months", "18 months", "First visit")),
-    Arm2 =
-      Arm %>%
-        fct_collapse(Cases = c("Prospective Cases", "Retrospective Cases")) %>%
-        factor(
-          levels = c("Cases", "Population-based"),
-          labels = c("Cases", "Population sample")
-        ),
-    sex = sex %>% as.factor() %>% fct_collapse(NULL = c("97"))
-  ) %>%
-  mutate(Gender = factor(sex, labels = c("Male", "Female"))) %>%
-  filter(Age <= 25) %>%
-  filter(catchment != "matiari") %>%
-  filter(catchment != "mirzapur") %>%
-  mutate(cluster = areaunit3) %>%
-  droplevels() %>%
-  filter(Arm2 == "Population sample" & TimePeriod == "Baseline") %>%
-  select(Country, cluster, catchment, Age, ageCat, antigen_iso, result) %>%
-  mutate(cluster = factor(cluster)) %>%
-  filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) %>%
-  as_tibble() %>%
-  select(-cluster)
+    cluster = areaunit3
+  ) |>
+  dplyr::filter(Age <= 25) |>
+  dplyr::filter(catchment != "matiari") |>
+  dplyr::filter(catchment != "mirzapur") |>
+  dplyr::filter(Arm == "Population-based" & TimePeriod == "Baseline") |>
+  dplyr::select(
+    sid,
+    Country,
+    cluster,
+    catchment,
+    Age,
+    ageCat,
+    antigen_iso,
+    result
+  ) |>
+  dplyr::mutate(cluster = factor(cluster)) |>
+  dplyr::filter(antigen_iso %in% c("HlyE_IgG", "HlyE_IgA")) |>
+  droplevels() |>
+  tibble::as_tibble()
 
-sees_crossSectional_baseline_allCountries <- d0
-use_data(sees_crossSectional_baseline_allCountries, overwrite = TRUE)
-write_csv(
-  d0,
-  fs::path(
-    "inst/extdata",
-    paste0(
-      "sees_crossSectional_baseline_allCountries",
-      ".102523.csv"
-    )
+if (anyNA(d0$sid)) {
+  stop("SEES subject identifiers must not be missing.")
+}
+
+country_prefixes <- substr(unique(d0$Country), 1L, 1L)
+if (anyDuplicated(country_prefixes)) {
+  stop("Country initials must be unique before creating public subject IDs.")
+}
+
+# Preserve within-subject biomarker linkage without exposing the source key.
+d0 <-
+  d0 |>
+  dplyr::group_by(Country) |>
+  dplyr::mutate(
+    index_id = paste0(substr(Country, 1L, 1L), match(sid, unique(sid)))
+  ) |>
+  dplyr::ungroup() |>
+  dplyr::select(
+    index_id,
+    Country,
+    cluster,
+    catchment,
+    Age,
+    ageCat,
+    antigen_iso,
+    result
   )
-)
+
+readr::write_rds(d0, "vignettes/precomputed/osf/n6cp3.rds")

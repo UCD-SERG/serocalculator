@@ -1,5 +1,13 @@
 # serocalculator (development version)
 
+## Bug fixes
+
+* Restored participant linkage across biomarker rows in the SEES
+  cross-sectional data and bundled examples. Public IDs are newly generated
+  pseudonyms; the restricted source identifier is never written to package
+  artifacts. `as_pop_data()` and `set_id_var()` now clarify that their ID
+  column must identify people rather than individual observations. (#650)
+
 ## New features
 
 * Added `sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()`,

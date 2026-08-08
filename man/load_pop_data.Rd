@@ -17,7 +17,8 @@ survey data set, stored as a \code{\link[=data.frame]{data.frame()}} or \link[ti
     \item{\code{antigen_isos}}{\code{\link[=character]{character()}}
 vector of antigen isotypes to be used in analyses}
     \item{\code{age}}{a \code{\link[=character]{character()}} identifying the age column}
-    \item{\code{id}}{a \code{\link[=character]{character()}} identifying the id column}
+    \item{\code{id}}{a \code{\link[=character]{character()}} identifying the person ID column. The same ID
+must be used for every biomarker observation from the same person.}
     \item{\code{value}}{a \code{\link[=character]{character()}} identifying the value column}
     \item{\code{standardize}}{a \code{\link[=logical]{logical()}} to determine standardization of columns}
   }}

@@ -23,7 +23,8 @@ vector of antigen isotypes to be used in analyses}
 
 \item{value}{a \code{\link[=character]{character()}} identifying the value column}
 
-\item{id}{a \code{\link[=character]{character()}} identifying the id column}
+\item{id}{a \code{\link[=character]{character()}} identifying the person ID column. The same ID
+must be used for every biomarker observation from the same person.}
 
 \item{standardize}{a \code{\link[=logical]{logical()}} to determine standardization of columns}
 }

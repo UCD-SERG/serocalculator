@@ -1,9 +1,12 @@
 # Upload the corrected SEES cross-sectional data to OSF.
 
-osfr::osf_auth()
-
 if (!requireNamespace("osfr", quietly = TRUE)) {
   stop("Install osfr before running this script: install.packages('osfr')")
+}
+
+osf_pat <- getOption("osfr.pat")
+if (!is.character(osf_pat) || length(osf_pat) != 1L || !nzchar(osf_pat)) {
+  stop("Call osfr::osf_auth() before running this script.")
 }
 
 project_id <- "ne8pc"
@@ -60,7 +63,7 @@ version_before <- existing_file$meta[[1]]$attributes$current_version
 upload_link <- existing_file$meta[[1]]$links$upload
 upload_response <- httr::PUT(
   upload_link,
-  httr::add_headers(Authorization = paste("Bearer", Sys.getenv("OSF_PAT"))),
+  httr::add_headers(Authorization = paste("Bearer", osf_pat)),
   body = httr::upload_file(upload_path)
 )
 

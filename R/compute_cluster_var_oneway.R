@@ -14,7 +14,7 @@
   fit,
   cluster_ids,
   pop_data_combined,
-  small_sample = c("none", "CR1")
+  small_sample = c("CR1", "none")
 ) {
   small_sample <- match.arg(small_sample)
   pop_data_list <- attr(fit, "pop_data")

@@ -10,7 +10,9 @@ FIC
 Fogarty
 GHA
 GUID
+Gelbach
 Grolemund
+Hessian
 Hessians
 HlyE
 IgA
@@ -24,6 +26,7 @@ Longrightarrow
 Lotka
 NIAID
 NLL
+NaN
 Nadu
 Neuzil
 OSF
@@ -80,6 +83,7 @@ docx
 dplyr
 dropdown
 dt
+emptyset
 enterica
 eps
 eschar
@@ -98,6 +102,7 @@ gh
 gha's
 hardcoded
 hemolysin
+hl
 immunocompromised
 infty
 inoculum
@@ -125,10 +130,12 @@ mitre
 modelled
 multicohort
 multiversion
+multiway
 myalgia
 nabla
 navbar
 nd
+neq
 nr
 olds
 operatorname
@@ -158,6 +165,7 @@ roadmap
 se
 sectionally
 sera
+serocalculator
 seroconversion
 seroconversions
 seroconverted
@@ -178,6 +186,7 @@ smp
 stylostome
 subfigures
 submodule
+subseteq
 tenesmus
 th
 tibble

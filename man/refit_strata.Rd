@@ -54,7 +54,26 @@ containing cluster identifiers for clustered sampling designs
 (e.g., households, schools).
 Can be a single variable name (character string) or a vector of
 variable names for multi-level clustering (e.g., \code{c("school", "classroom")}). When provided, standard errors will be adjusted for
-within-cluster correlation using cluster-robust variance estimation.}
+within-cluster correlation using cluster-robust variance estimation.
+When fitting more than one \code{antigen_isos} at once, this argument
+also has a second use.
+\code{log_likelihood()} combines biomarkers by summing their marginal
+log-likelihoods, which is only valid if those contributions are
+independent.
+Two biomarker readings from the same person usually aren't, since
+they share an infection history.
+Pass the id column returned by \code{\link[=ids_varname]{ids_varname()}}
+(e.g. \code{cluster_var = ids_varname(pop_data)}) to get a
+cluster-robust standard error that accounts for this within-person
+correlation.
+This is a distinct concern from a genuine sampling-cluster design,
+and multiple \code{cluster_var} values are grouped by their
+intersection rather than combined additively: if every subject
+belongs to exactly one sampling cluster,
+\code{cluster_var = c("cluster", "id")} reduces to clustering by \code{id}
+alone, and does not add the sampling-cluster correction on top ---
+see issue \href{https://github.com/UCD-SERG/serocalculator/issues/543}{#543}.
+See issue \href{https://github.com/UCD-SERG/serocalculator/issues/645}{#645}.}
     \item{\code{stratum_var}}{optional name of the variable in \code{pop_data} containing
 stratum identifiers. Used in combination with \code{cluster_var} for
 stratified cluster sampling designs.}

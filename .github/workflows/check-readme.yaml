@@ -1,4 +1,8 @@
-# Workflow derived from https://github.com/IndrajeetPatil/statsExpressions/blob/main/.github/workflows/check-readme.yaml
+# Workflow derived from https://github.com/IndrajeetPatil/statsExpressions/blob/1865ad02a6/.github/workflows/check-readme.yaml
+# (pinned to the last commit whose content still matches what this file was
+# derived from. Upstream reduced that file to a one-line delegator in #335 and
+# deleted it outright in #336, both on 2026-04-03, so neither its default
+# branch nor any later commit shows the standalone workflow any more.)
 on:
   push:
     branches: [main, master]

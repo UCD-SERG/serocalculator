@@ -1,0 +1,16 @@
+::: {.columns}
+
+:::: {.column width="60%"}
+
+A point-and-click interface is available at
+<https://ucdserg.shinyapps.io/shiny_serocalculator/>.
+
+::::
+
+:::: {.column width="40%"}
+
+![The serocalculator Shiny app.](../man/figures/shiny-serocalculator.png){fig-alt="Screenshot of the serocalculator Shiny web application"}
+
+::::
+
+:::

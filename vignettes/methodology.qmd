@@ -5,9 +5,64 @@ vignette: >
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 bibliography: references.bib
+format:
+  # vignettes/_metadata.yml already declares a `docx:` format and a
+  # `format-links: [docx]` default for every file under vignettes/, deep-merged
+  # into each document's own `format:` block -- but a `format-links` key
+  # declared here replaces (not merges with) that inherited list, so docx
+  # must be listed explicitly here too or its link silently drops off the
+  # rendered page (the docx file itself still renders regardless).
+  html:
+    format-links: [docx, revealjs]
+    # The "Simulation studies" article (articles/simulate_xsectionalData.qmd)
+    # was merged into this one; this alias keeps its published URL working.
+    # It must live inside `html:` rather than at the document level: a
+    # document-level `aliases` applies to every format, and the reveal.js
+    # output wins, so the redirect stub points at methodology-slides.html
+    # instead of the article. Verified both ways in a scratch Quarto project.
+    aliases:
+      - articles/simulate_xsectionalData.html
+    # Click any figure to open a zoomed lightbox view. Set explicitly on each
+    # format here (rather than relying only on the site-level `format: html:`
+    # default in altdoc/quarto_website.yml) so both this article's HTML page
+    # and its reveal.js slides get lightbox: the site default reaches the HTML
+    # page but not the separate slides output below.
+    lightbox: true
+  revealjs:
+    output-file: methodology-slides.html
+    lightbox: true
+    reference-location: document
+    # Code is shown on the slides, but folded away by default so a slide
+    # leads with its figure rather than with a wall of R. Click to expand.
+    echo: true
+    code-fold: true
+    html-math-method: mathjax
+    scrollable: true
+    auto-stretch: true
+    fig-height: 3
+    fig-width: 7
+    number-sections: true
+    number-depth: 2
+    fig-cap-location: top
+  # The Word version reads as a report rather than a tutorial, so code is
+  # hidden by default here; chunks whose code *is* the narrative set
+  # `echo: true` individually, which overrides this.
+  docx:
+    echo: false
 ---
 
 {{< include ../macros/macros.qmd >}}
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(message = FALSE)
+
+# The simulation studies in this article are expensive, and it renders to
+# three formats, so every chunk would otherwise execute three times per build.
+# `sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()` write their
+# results here; the directory is committed, so a fresh build reuses them.
+sim_cache <- "precomputed/"
+```
 
 # Infectious disease epidemiology
 
@@ -25,7 +80,12 @@ bibliography: references.bib
 :::
 
 ::: {.column width="40%"}
-![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SalmonellaTyphiFlagellarStain.jpg).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of *Salmonella* Typhi bacteria with a flagellar stain"}
+<!-- Keep a blank line between these two images: without it Pandoc reads them as
+one paragraph of inline images and silently drops both captions, taking the
+CC BY-SA attribution for the map with them. -->
+
+![*Salmonella* Typhi, flagellar stain. Photo: CDC/PHIL (public domain; PHIL ID 2115).](../man/figures/SalmonellaTyphiFlagellarStain.jpg){fig-alt="Photomicrograph of Salmonella Typhi bacteria with a flagellar stain"}
+
 ![Global distribution of typhoid fever. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fievre_typhoide.png), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Fievre_typhoide.png){fig-alt="World map showing high (red) and moderate (orange) typhoid-burden countries"}
 
 :::
@@ -47,7 +107,7 @@ bibliography: references.bib
 
 :::: {.column width="50%"}
 
-![*Shigella* in a stool sample. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing *Shigella* bacteria"}
+![*Shigella* in a stool sample. Photo: CDC/PHIL (public domain), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Shigella_stool.jpg).](../man/figures/Shigella_stool.jpg){fig-alt="Microscopy of a stool sample containing Shigella bacteria"}
 ::::
 
 :::
@@ -62,12 +122,11 @@ bibliography: references.bib
   * ~10,000 deaths/year (~1% case fatality with treatment; up to 30% untreated)
   * **Symptoms:** high fever, severe headache, myalgia; eschar (pathognomonic black scab at mite-bite site); macular rash; cough; gastrointestinal symptoms; hemorrhage in severe cases
 
-
 ::::
 
 :::: {.column width="50%"}
 
-![*Trombicula* mite larva with stylostome. Photo: Alan R Walker / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a *Trombicula* mite larva with its stylostome feeding tube"}
+![*Trombicula* mite larva with stylostome. Photo: Alan R Walker / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Trombicula-larva-stylostome.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).](../man/figures/Trombicula-larva-stylostome.jpg){fig-alt="Microscopy of a Trombicula mite larva with its stylostome feeding tube"}
 ::::
 
 :::
@@ -262,7 +321,7 @@ produce estimates that are:
 - timely
 - cost-efficient
 
-See @HAY2024100806 for overview
+See @HAY2024100806 for an overview.
 
 # Estimating incidence from cross-sectional serosurveys
 
@@ -318,7 +377,6 @@ for the disease of interest
 
 ::: notes
 * If a participant has never been infected since birth, then $T$ is undefined.
-
 
 :::
 
@@ -377,8 +435,12 @@ $$\dens(T=t) =  \red{\lambda\expf{-\lambda t}}$$
 
 . . .
 
-  * More precisely, the distribution is exponential 
-  **truncated by age** at observation ($a$):
+  * More precisely, the distribution is exponential
+  **limited by age** at observation ($a$):
+  no one can have been infected before they were born,
+  so the density is supported on $[0,a]$
+  and the leftover probability, $\expf{-\lambda a}$,
+  sits on "never infected":
 
 . . .
 
@@ -411,7 +473,7 @@ where $a$ is the patient's age at the time of the survey.
 
 ## Likelihood of latent infection times {.smaller}
 
-{{< include articles/_sec-latent-likelihood.qmd >}}
+{{< include methodology/_sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 
@@ -455,26 +517,32 @@ ggplot() +
 
 ```{r}
 #| include: false
-# Import longitudinal antibody parameters from OSF
+# `typhoid_curves_nostrat_100` is `load_sr_params()` applied to the OSF
+# object `rtw5k`, filtered to iter %in% 1:100, so filtering it further to
+# iter < 50 is identical to filtering the raw OSF object the same way ---
+# no need to fetch or vendor a separate copy of rtw5k for this.
 curves <-
-  "https://osf.io/download/rtw5k/" |>
-  load_sr_params() |>
+  typhoid_curves_nostrat_100 |>
   filter(iter < 50) |>
   filter(antigen_iso %in% antibodies)
 
-# Import cross-sectional data from OSF and rename required variables:
+# Cross-sectional data, vendored from OSF (osf.io/n6cp3) --- see
+# precomputed/osf/README.md for why and how to refresh.
 xs_data <-
-  "https://osf.io/download/n6cp3/" |>
+  "precomputed/osf/n6cp3.rds" |>
   load_pop_data()
 
-noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
+# Noise parameters, vendored from OSF (osf.io/hqy4v):
+noise <- readRDS("precomputed/osf/hqy4v.rds")
 ```
 
 ## Standard errors
 
-The standard error of the estimate is approximately equal to
-the inverse of the curvature (2nd derivative, aka Hessian)
-of the log-likelihood function, at the maximum:
+The **variance** of the estimate is approximately equal to
+the inverse of the *negative* curvature
+(2nd derivative, aka Hessian)
+of the log-likelihood function, at the maximum,
+and the standard error is the square root of that variance:
 
 more curvature $\rightarrow$
 a sharper likelihood peak $\rightarrow$
@@ -618,6 +686,40 @@ p(Y=y)
 \end{aligned}
 $$
 
+::: notes
+This integral is shorthand.
+$T$ is not purely continuous: recall from "Time since infection and
+incidence" that $T$ has a **mixed** distribution --- continuous on
+$[0,a]$ with density $\lambda\expf{-\lambda t}$, plus a discrete atom
+at $T=\NA$ (never infected) with probability $\expf{-\lambda a}$.
+Written out explicitly, the "integral" over $t$ is really an integral
+over the continuous part plus the never-infected term:
+:::
+
+$$
+p(Y=y) =
+\int_0^a p(Y=y\mid T=t)\,\lambda\expf{-\lambda t}\,dt
+\;+\;
+p(Y=y\mid T=\NA)\cdot \expf{-\lambda a}
+$$
+
+The first term is the contribution from subjects infected at least
+once; the second is the contribution from subjects never infected.
+
+::: notes
+Two pieces here were not yet defined:
+
+* $p(T=\NA) = \expf{-\lambda a}$ is already known --- the same
+never-infected probability from "Time since infection and incidence".
+* $p(Y=y\mid T=\NA)$, the antibody response of a never-infected
+subject, needs its own definition. Without any noise, a never-infected
+subject's true antibody level is exactly zero, so this is a point mass
+at $y=0$ (a Dirac delta): $p(Y=y\mid T=\NA) = \delta(y)$. Once
+measurement noise and biological (cross-reactivity) noise are
+introduced below, this point mass is handled differently by each ---
+see "Noise and never-infected subjects".
+:::
+
 ## The full-sample likelihood {.smaller}
 
 ::: notes
@@ -663,45 +765,21 @@ to find the MLE and corresponding standard error.
 
 ## Cluster-robust standard errors for clustered sampling designs
 
-{{< include articles/_cluster-robust-se.qmd >}}
+{{< include methodology/_cluster-robust-se.qmd >}}
 
-{{< include articles/_antibody-response-model.qmd >}}
+# Modeling the seroresponse kinetics curve
 
-<!-- {{< include articles/_methods-continued.qmd >}} -->
+{{< include methodology/_antibody-response-model.qmd >}}
+
+<!-- {{< include methodology/_methods-continued.qmd >}} -->
+
+## Variation across the posterior {.smaller}
+
+{{< include methodology/_variation-across-the-posterior.qmd >}}
 
 ## Multiple biomarkers
 
-```{r}
-#| fig-cap: "Example log(likelihood) curves"
-#| label: fig-loglik
-lik_HlyE_IgA <- graph_loglik( # nolint: object_name_linter.
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgA",
-  log_x = TRUE
-)
-
-lik_HlyE_IgG <- graph_loglik( # nolint: object_name_linter.
-  previous_plot = lik_HlyE_IgA,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgG",
-  log_x = TRUE
-)
-
-lik_both <- graph_loglik(
-  previous_plot = lik_HlyE_IgG,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  log_x = TRUE
-)
-
-print(lik_both)
-```
+{{< include methodology/_multiple-biomarkers.qmd >}}
 
 ## Variation in antibody kinetics: by country {.smaller}
 
@@ -756,6 +834,7 @@ model specification, data formatting, and post-processing by hand;
 
 ```{r}
 #| eval: false
+#| echo: true
 library(serodynamics)
 
 # Longitudinal confirmed-case data (example data ships with the package)
@@ -787,6 +866,7 @@ The overlapping chains indicate good convergence.
 
 ```{r}
 #| eval: false
+#| echo: true
 data("nepal_sees_jags_output")
 plot_jags_dens(nepal_sees_jags_output, iso = "HlyE_IgG", strat = "typhi")
 ```
@@ -841,125 +921,109 @@ the average over the Monte Carlo parameter sets (the `iter` draws) carried in
 the curve-parameter object.
 :::
 
+## Random effects and variance over time {.smaller}
+
+The longitudinal model distinguishes two kinds of variation:
+
+* **Conditional observation noise:** given a person's kinetic parameters
+  $\theta_i$, residual noise has constant variance on the log-antibody scale.
+* **Marginal population variation:** because $\theta_i$ includes random
+  effects --- notably the waning rate $\alpha_i$ --- individual trajectories
+  can spread apart with increasing time since infection.
+
+Thus, even without an explicit time-varying residual variance $\sigma^2(t)$,
+the variance around the population mean trajectory can vary with $t$:
+
+$$
+\operatorname{Var}(\log Y(t)\mid T=t)
+= \sigma_{\log Y}^2
++ \operatorname{Var}_{\theta}\!\left[\log y(t;\theta)\right].
+$$
+
+::: notes
+This is the distinction between *conditional* and *marginal*
+heteroscedasticity. The `serodynamics` observation model uses one residual
+precision per antigen-isotype, shared across subjects and observation times.
+It therefore does not fit an additional residual-variance function of time.
+
+Nevertheless, its subject-level kinetic parameters are random effects with a
+joint distribution. For illustration, if post-peak decay were exponential
+($r=1$), with the other parameters held fixed,
+
+$$
+\log y_i(t) = \log y_1 - \alpha_i(t-t_1),
+$$
+
+so variation in $\alpha_i$ alone contributes
+$(t-t_1)^2\operatorname{Var}(\alpha_i)$ to the population variance on the log
+scale. The full nonlinear model also allows the other kinetic parameters and
+their correlations to affect how the variance changes over time.
+
+`serocalculator` accounts for this trajectory-induced variation by averaging
+the incidence likelihood over the Monte Carlo sample of kinetic-parameter
+sets. It does not reclassify that variation as observation noise or replace it
+with a fitted $\sigma^2(t)$. Its separate biological- and measurement-noise
+models have constant additive and relative widths, respectively; neither
+width is an explicit function of time since infection.
+:::
+
 # Using `serocalculator`
 
 ## An open-source R package
 
-The methods in this lecture are implemented in the open-source
-[`serocalculator`](https://github.com/UCD-SERG/serocalculator) R package.
+{{< include methodology/_an-open-source-r-package.qmd >}}
 
-```{r}
-#| eval: false
-library(serocalculator)
+## Simulating a cross-sectional survey {.smaller}
 
-# Load antibody-decay curve parameters and cross-sectional population data
-curves <- "https://osf.io/download/rtw5k/" |> load_sr_params()
-xs_data <- "https://osf.io/download/n6cp3/" |> load_pop_data()
-noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
+{{< include methodology/_simulating-a-cross-sectional-survey.qmd >}}
 
-# Visualize the cross-sectional antibody distribution
-xs_data |> autoplot(strata = "Country", type = "density")
-```
+## Noise parameters
 
-## Estimating seroincidence {.smaller}
+{{< include methodology/_noise-parameters.qmd >}}
 
-```{r}
-#| eval: false
-# Estimate incidence, stratified by country and age group
-est <- est_seroincidence_by(
-  pop_data = xs_data,
-  sr_params = curves,
-  noise_params = noise,
-  strata = c("Country", "ageCat"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-)
+## The simulated antibody distribution
 
-summary(est)
-```
+{{< include methodology/_the-simulated-antibody-distribution.qmd >}}
+
+## Estimating incidence from the simulated survey {.smaller}
+
+{{< include methodology/_estimating-incidence-from-the-simulated-survey.qmd >}}
+
+## Estimating seroincidence in real data {.smaller}
+
+{{< include methodology/_estimating-seroincidence-in-real-data.qmd >}}
 
 ## Interactive Shiny app
 
-::: {.columns}
+{{< include methodology/_interactive-shiny-app.qmd >}}
 
-:::: {.column width="60%"}
-
-A point-and-click interface is available at
-<https://ucdserg.shinyapps.io/shiny_serocalculator/>.
-
-::::
-
-:::: {.column width="40%"}
-
-![The serocalculator Shiny app.](../man/figures/shiny-serocalculator.png){fig-alt="Screenshot of the serocalculator Shiny web application"}
-
-::::
-
-:::
-
-# Validation: recovering known incidence rates
+# Validation: recovering known incidence rates {#sec-validation}
 
 ## Simulating clusters with known incidence {.smaller}
 
-We can check the method by **simulating** cross-sectional serosurveys with
-**known** incidence rates and seeing whether the estimates recover them.
-`sim_pop_data_multi()` simulates several clusters, each at a specified true
-rate $\lambda$:
+{{< include methodology/_simulating-clusters-with-known-incidence.qmd >}}
 
-```{r}
-#| eval: false
-library(serocalculator)
+## Estimating incidence in each cluster {.smaller}
 
-antibodies <- c("HlyE_IgA", "HlyE_IgG")
+{{< include methodology/_estimating-incidence-in-each-cluster.qmd >}}
 
-# Noise settings follow serocalculator's `simulate_xsectionalData` vignette,
-# where the estimation noise is kept consistent with the simulated noise.
-# Assay-noise parameters for estimation:
-noise_params <- tibble::tibble(
-  antigen_iso = antibodies,
-  nu = 0.5, eps = 0, y.low = 1, y.high = 5e6
-)
+## Inspecting individual clusters {.smaller}
 
-# Biologic-noise limits for the simulation (vignette `dlims`):
-noise_limits <- rbind(
-  HlyE_IgA = c(min = 0, max = 0.5),
-  HlyE_IgG = c(min = 0, max = 0.5)
-)
+{{< include methodology/_inspecting-individual-clusters.qmd >}}
 
-# Simulate clusters at a range of true incidence rates
-sim_df <- sim_pop_data_multi(
-  curve_params = typhoid_curves_nostrat_100,
-  lambdas = c(0.05, 0.1, 0.2, 0.3), # true incidence rates
-  nclus = 3, # clusters per rate
-  sample_sizes = 100,
-  age_range = c(0, 10),
-  antigen_isos = antibodies,
-  add_noise = TRUE,
-  noise_limits = noise_limits,
-  format = "long"
-)
+## Checking `nlm()` convergence {.smaller}
 
-# Estimate incidence separately in each simulated cluster
-ests <- est_seroincidence_by(
-  pop_data = sim_df,
-  sr_params = typhoid_curves_nostrat_100,
-  noise_params = noise_params,
-  strata = c("lambda.sim", "cluster"),
-  antigen_isos = antibodies
-)
-summary(ests)
-```
+{{< include methodology/_checking-convergence-codes.qmd >}}
 
 ## Estimates recover the simulated rates {.smaller}
 
-![Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).](../man/figures/sim-recovery.png){fig-alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates"}
+{{< include methodology/_estimates-recover-the-simulated-rates.qmd >}}
 
-::: notes
-Each point is one simulated cluster: the estimated incidence rate (with its
-95% confidence interval) against the true rate used to generate the data.
-The estimates scatter around the identity line, and the intervals are wider
-at higher incidence. Abridged from the serocalculator
-`simulate_xsectionalData` vignette.
-:::
+## A caveat: renewing parameters at each infection {.smaller}
+
+{{< include methodology/_a-caveat-renewing-parameters.qmd >}}
+
+# Ongoing and future work
 
 ## In-progress work
 
@@ -979,7 +1043,7 @@ at higher incidence. Abridged from the serocalculator
 
 * Calibrating to population demographics
 
-## Multiple biomarkers: beyond conditional independence {.smaller}
+## Multiple biomarkers: beyond conditional independence {#sec-multivariate .smaller}
 
 With several biomarkers (e.g. HlyE IgA and IgG), the current method treats
 them as **conditionally independent given the time since infection**, so the
@@ -1003,7 +1067,7 @@ biomarkers --- a multivariate seroresponse model with a Kronecker-structured
 covariance, fit in Stan
 ([UCD-SERG/shigella#13](https://github.com/UCD-SERG/shigella/pull/13)).
 
-## References {.smaller .unnumbered}
+# References {.smaller .unnumbered}
 
 ::: {#refs}
 :::

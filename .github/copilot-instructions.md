@@ -120,7 +120,7 @@ The package requires R version 4.1.0 or higher. Install R for your platform:
   # Add CRAN repository for latest R version
   sudo apt-get update
   sudo apt-get install -y software-properties-common dirmngr
-  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/pubkey.gpg | \
+  wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | \
     sudo tee /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
   sudo add-apt-repository \
     "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
@@ -261,10 +261,10 @@ Parent file (`methodology.qmd`):
 ```markdown
 ## Cluster-robust standard errors
 
-{{< include articles/_cluster-robust-se.qmd >}}
+{{< include methodology/_cluster-robust-se.qmd >}}
 ```
 
-Subfile (`articles/_cluster-robust-se.qmd`):
+Subfile (`methodology/_cluster-robust-se.qmd`):
 ```markdown
 In many survey designs, observations are clustered...
 
@@ -273,6 +273,36 @@ In many survey designs, observations are clustered...
 ```
 
 This ensures proper document structure and makes it clear where each section begins when viewing the parent document.
+
+### Quarto format-links: array keys replace, not merge, when redeclared
+
+`vignettes/_metadata.yml` declares a `docx:` format and `format-links: [docx]`
+under `html:` as directory-wide defaults for everything under `vignettes/`.
+Quarto deep-merges a document's own `format:` map into these directory
+defaults key-by-key, but when the document redeclares an **array-valued**
+key like `format-links`, that array **replaces** the inherited one instead of
+merging with it — even though the surrounding map merges normally, and even
+though `docx:` itself still renders fine as an inherited format regardless.
+
+Concretely: if a vignette's frontmatter needs its own `format-links` entry
+(e.g. `methodology.qmd` adding a `revealjs` slide-deck link), it must
+explicitly re-list every format it wants linked, including `docx`:
+
+```yaml
+format:
+  html:
+    format-links: [docx, revealjs]  # docx must be repeated here, or its
+                                     # link silently drops off the page
+  revealjs:
+    output-file: methodology-slides.html
+```
+
+Leaving `docx` out doesn't stop the docx file from rendering — only the
+button linking to it disappears, which is easy to miss in review since
+nothing errors. Verify this kind of Quarto merge-semantics question
+empirically (a small isolated `quarto render` reproduction) rather than by
+inspecting the YAML alone; the same-looking structure has burned this repo
+before ([#581](https://github.com/UCD-SERG/serocalculator/pull/581)).
 
 ### Version Management
 

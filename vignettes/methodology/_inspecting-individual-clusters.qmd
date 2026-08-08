@@ -1,0 +1,32 @@
+The cached fit above carries no log-likelihood curves, so the few clusters we
+want to look at are re-fit with `build_graph = TRUE`. Strata are selected by
+the columns that define them, because stratum *labels* are assigned
+positionally and so are not stable across a subset:
+
+```{r}
+#| label: refit-displayed-strata
+stratum_ids <- ests_summary |>
+  tibble::as_tibble() |>
+  dplyr::select(sample_size, lambda.sim, cluster)
+
+ests_first_five <- refit_strata(
+  pop_data = sim_df,
+  strata_ids = stratum_ids |> dplyr::slice(1:5),
+  sr_params = sim_curve_params,
+  noise_params = sim_noise_params,
+  curve_strata_varnames = NULL,
+  noise_strata_varnames = NULL,
+  antigen_isos = antibodies,
+  num_cores = 1
+)
+```
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-cluster-logliks
+#| fig-cap: >
+#|   Log-likelihood curves for the first five simulated clusters.
+#| fig-height: 7
+autoplot(ests_first_five, log_x = TRUE)
+```

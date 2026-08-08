@@ -1,0 +1,25 @@
+author: "UC Davis Seroepidemiology Research Group (UCD-SERG)"
+# Quarto resolves `today` itself. An inline R expression (`r Sys.Date()`)
+# would not work here: knitr evaluates inline R in a document's own YAML
+# front matter, but `_metadata.yml` is merged into the document metadata
+# without passing through knitr, so the literal backtick string reaches
+# Quarto's date handling and renders as "Invalid Date".
+date: today
+# Do not set `echo: false` here. It applies to every vignette and article under
+# `vignettes/`, which hid the R code in all of them on the website -- the
+# tutorials rendered as prose and figures with no code at all, and
+# `methodology.qmd`'s "Estimating seroincidence" section (a lone `eval: false`
+# chunk) rendered completely empty. Set `echo: false` only inside a specific
+# format that wants it, and only where no `eval: false` chunk would then have
+# nothing left to show: `methodology.qmd` sets it in its own `docx:` block, and
+# marks each `eval: false` chunk `echo: true` so those sections survive there.
+format:
+  html:
+    number-sections: true
+    toc: true
+    html-math-method: mathjax
+    fig-cap-location: top
+    format-links: [docx]
+  docx:
+    number-sections: true
+    reference-location: document

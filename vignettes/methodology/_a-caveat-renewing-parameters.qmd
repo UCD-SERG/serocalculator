@@ -1,0 +1,61 @@
+Everything above sets `renew_params = FALSE`, matching what the estimation
+method assumes. Setting it to `TRUE` --- drawing fresh seroresponse
+parameters at every infection --- is more realistic, and is **not** accounted
+for by the current method, so estimates can be biased in high-incidence
+populations:
+
+```{r}
+#| label: sim-renew
+sim_df_renew <- sim_pop_data_multi_cached(
+  curve_params = sim_curve_params,
+  lambdas = sim_lambdas,
+  nclus = sim_nclus,
+  sample_sizes = sim_n,
+  age_range = sim_lifespan,
+  antigen_isos = antibodies,
+  renew_params = TRUE,
+  add_noise = TRUE,
+  noise_limits = sim_noise_limits,
+  format = "long",
+  cache_path = sim_cache,
+  cache_id = "sim_df_renew"
+)
+
+ests_renew_summary <-
+  est_seroincidence_by_cached(
+    pop_data = sim_df_renew,
+    sr_params = sim_curve_params,
+    noise_params = sim_noise_params,
+    strata = c("sample_size", "lambda.sim", "cluster"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = antibodies,
+    build_graph = FALSE,
+    cache_path = sim_cache,
+    cache_id = "ests_renew"
+  ) |>
+  summary()
+```
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-sim-recovery-renew
+#| fig-cap: >
+#|   Recovery of the true incidence rate when seroresponse parameters are
+#|   renewed at each infection. Compare with @fig-sim-recovery.
+ests_renew_summary |>
+  autoplot(
+    type = "scatter",
+    xvar = "lambda.sim",
+    CI = TRUE,
+    dodge_width = .05
+  ) +
+  ggplot2::geom_function(
+    fun = function(x) x,
+    col = "red",
+    aes(linetype = "data-generating incidence rate")
+  ) +
+  labs(linetype = "") +
+  scale_x_log10()
+```

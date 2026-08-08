@@ -37,7 +37,9 @@ jobs:
           covr::to_cobertura(cov)
         shell: Rscript {0}
 
-      # copied from https://github.com/dieghernan/nominatimlite/actions/runs/12116366823/workflow
+      # copied from https://github.com/dieghernan/nominatimlite/blob/main/.github/workflows/test-coverage.yaml
+      # (the original citation pointed at an Actions *run* URL, which GitHub
+      # expires after ~90 days; this points at the workflow file instead)
       - name: Create Junit Report
         if: always()
         run: |

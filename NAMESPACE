@@ -18,7 +18,9 @@ S3method(strata,default)
 S3method(summary,pop_data)
 S3method(summary,seroincidence)
 S3method(summary,seroincidence.by)
+export(ab_5p)
 export(analyze_sims)
+export(antibody_decay_curve)
 export(as_curve_params)
 export(as_noise_params)
 export(as_pop_data)
@@ -27,10 +29,12 @@ export(autoplot)
 export(check_pop_data)
 export(compare_seroincidence)
 export(count_strata)
+export(curve_app)
 export(est.incidence)
 export(est.incidence.by)
 export(est_seroincidence)
 export(est_seroincidence_by)
+export(est_seroincidence_by_cached)
 export(expect_snapshot_data)
 export(f_dev)
 export(f_dev0)
@@ -51,83 +55,117 @@ export(load_noise_params)
 export(load_pop_data)
 export(load_sr_params)
 export(log_likelihood)
+export(pathogen_decay_curve)
+export(plot_decay_curve)
+export(refit_strata)
 export(serocalculator_example)
 export(set_id_var)
 export(sim.cs)
 export(sim.cs.multi)
 export(sim_pop_data)
+export(sim_pop_data_2)
 export(sim_pop_data_multi)
+export(sim_pop_data_multi_cached)
 export(strat_ests_barplot)
 export(strat_ests_scatterplot)
 export(strata)
+export(t1f)
+export(y1f)
 importFrom(Rcpp,sourceCpp)
 importFrom(doParallel,registerDoParallel)
-importFrom(dplyr,across)
-importFrom(dplyr,all_of)
-importFrom(dplyr,anti_join)
-importFrom(dplyr,any_of)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,count)
-importFrom(dplyr,distinct)
-importFrom(dplyr,everything)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,if_all)
-importFrom(dplyr,if_any)
-importFrom(dplyr,if_else)
-importFrom(dplyr,inner_join)
-importFrom(dplyr,is_grouped_df)
-importFrom(dplyr,mutate)
-importFrom(dplyr,n)
-importFrom(dplyr,n_distinct)
-importFrom(dplyr,pull)
-importFrom(dplyr,relocate)
-importFrom(dplyr,rename)
-importFrom(dplyr,row_number)
-importFrom(dplyr,rowwise)
-importFrom(dplyr,select)
-importFrom(dplyr,semi_join)
-importFrom(dplyr,slice_head)
-importFrom(dplyr,summarise)
-importFrom(dplyr,ungroup)
-importFrom(foreach,"%:%")
-importFrom(foreach,"%dopar%")
-importFrom(foreach,foreach)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,autoplot)
-importFrom(ggplot2,geom_line)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,vars)
+importFrom(dplyr,
+  across,
+  all_of,
+  anti_join,
+  any_of,
+  bind_rows,
+  count,
+  distinct,
+  everything,
+  filter,
+  group_by,
+  if_all,
+  if_any,
+  if_else,
+  inner_join,
+  is_grouped_df,
+  left_join,
+  mutate,
+  n,
+  n_distinct,
+  pull,
+  reframe,
+  relocate,
+  rename,
+  row_number,
+  rowwise,
+  select,
+  semi_join,
+  slice_head,
+  summarise,
+  ungroup
+)
+importFrom(foreach,
+  "%:%",
+  "%dopar%",
+  foreach
+)
+importFrom(ggplot2,
+  aes,
+  autoplot,
+  geom_line,
+  ggplot,
+  labs,
+  vars
+)
 importFrom(lifecycle,deprecated)
 importFrom(magrittr,"%>%")
-importFrom(rlang,.data)
-importFrom(rlang,.env)
-importFrom(rngtools,RNGseq)
-importFrom(rngtools,setRNG)
-importFrom(stats,dlnorm)
-importFrom(stats,formula)
-importFrom(stats,lm)
-importFrom(stats,median)
-importFrom(stats,nlm)
-importFrom(stats,optim)
-importFrom(stats,pgamma)
-importFrom(stats,plnorm)
-importFrom(stats,qnorm)
-importFrom(stats,quantile)
-importFrom(stats,runif)
-importFrom(stats,xtabs)
-importFrom(tibble,as_tibble)
-importFrom(tibble,column_to_rownames)
-importFrom(tibble,tibble)
-importFrom(tidyr,drop_na)
-importFrom(tidyr,pivot_longer)
-importFrom(tidyr,pivot_wider)
-importFrom(tidyselect,contains)
-importFrom(tidyselect,ends_with)
-importFrom(utils,capture.output)
-importFrom(utils,download.file)
-importFrom(utils,head)
-importFrom(utils,tail)
-importFrom(utils,unzip)
+importFrom(rlang,
+  .data,
+  .env
+)
+importFrom(rngtools,
+  RNGseq,
+  setRNG
+)
+importFrom(stats,
+  dlnorm,
+  formula,
+  lm,
+  median,
+  nlm,
+  optim,
+  pgamma,
+  plnorm,
+  qnorm,
+  quantile,
+  rexp,
+  runif,
+  xtabs
+)
+importFrom(tibble,
+  as_tibble,
+  column_to_rownames,
+  tibble
+)
+importFrom(tidyr,
+  drop_na,
+  pivot_longer,
+  pivot_wider
+)
+importFrom(tidyselect,
+  contains,
+  ends_with
+)
+importFrom(units,
+  as_units,
+  set_units
+)
+importFrom(utils,
+  capture.output,
+  download.file,
+  head,
+  tail,
+  unzip
+)
 useDynLib(serocalculator, .registration = TRUE)

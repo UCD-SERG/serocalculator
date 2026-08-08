@@ -1,0 +1,46 @@
+```{r}
+#| label: fig-sim-recovery
+#| fig-cap: >
+#|   Estimated incidence rates (points, with 95% confidence intervals) for
+#|   each simulated cluster, against the true rate used to generate it. The
+#|   red line is the identity.
+ests_summary |>
+  autoplot(
+    type = "scatter",
+    xvar = "lambda.sim",
+    CI = TRUE,
+    dodge_width = .05
+  ) +
+  ggplot2::geom_function(
+    fun = function(x) x,
+    col = "red",
+    aes(linetype = "data-generating incidence rate")
+  ) +
+  labs(linetype = "") +
+  scale_x_log10()
+```
+
+::: notes
+Each point is one simulated cluster. The estimates scatter around the
+identity line, and the confidence intervals widen at higher incidence.
+:::
+
+{{< slidebreak >}}
+
+`analyze_sims()` summarizes the simulation results across clusters:
+
+```{r}
+#| label: analyze-sims
+ests_summary |> analyze_sims()
+```
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-empirical-se
+#| fig-cap: >
+#|   Empirical standard error of the incidence estimates, by true rate.
+ests_summary |>
+  analyze_sims() |>
+  autoplot(statistic = "Empirical_SE")
+```

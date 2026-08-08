@@ -156,8 +156,16 @@ test_that("clustering by subject id gives a composite-likelihood SE (#645)", {
   # to the underlying model (e.g. #646) doesn't silently alter it
   expect_snapshot_value(sum_naive$SE, style = "deparse", tolerance = 1e-6)
 
-  # the naive SE understates the true variance when biomarkers from the
-  # same person are correlated, as expected here
+  # A sandwich SE isn't guaranteed to exceed the naive one in general
+  # (it depends on the sign of the within-cluster score correlation),
+  # so this isn't a property of the estimator.
+  # It's an empirical regression check against `sees_pop_data_pk_100`,
+  # a fixed, bundled dataset.
+  # It's the direction we expect for this fixture, since biomarkers
+  # from the same person are positively correlated here (shared
+  # infection history).
+  # A deliberate change to the underlying model (e.g. #646) may need
+  # to update this value.
   expect_gt(sum_composite$SE, sum_naive$SE)
 })
 

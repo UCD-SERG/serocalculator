@@ -28,6 +28,7 @@
       i Combining 2 biomarkers by summing their marginal log-likelihoods assumes independence across biomarkers.
       i The reported standard error will be too narrow if biomarker readings from the same person are correlated (e.g., because they share an infection history).
       i Pass `cluster_var = "id"` for a cluster-robust standard error that accounts for this.
+      i If the data also has a clustered sampling design (e.g., households, schools), clustering on id alone does not add that correction when subjects are nested within it --- see issue #543.
       i nrow(sr_params) = 200
       Initial negative log-likelihood: 533.379886031329
       about to call `nlm()`

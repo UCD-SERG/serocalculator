@@ -55,3 +55,26 @@ test_that("degrades gracefully when pop_data has no id_var attribute", {
     "independence"
   )
 })
+
+test_that("does not leak ids_varname()'s fallback-to-index_id warning", {
+  # `ids_varname()` warns (not errors) and falls back to "index_id"
+  # in this case -- a `tryCatch(..., error = ...)` alone wouldn't
+  # catch that, so this exercises the middle path `.warn_
+  # biomarker_independence()`'s own tests didn't originally cover.
+  plain_df_with_index_id <- data.frame(
+    index_id = "a",
+    antigen_iso = "HlyE_IgA",
+    value = 1
+  )
+  expect_no_warning(
+    msgs <- testthat::capture_messages(
+      .warn_biomarker_independence(
+        pop_data = plain_df_with_index_id,
+        antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
+        cluster_var = NULL,
+        verbose = TRUE
+      )
+    )
+  )
+  expect_true(any(grepl("index_id", msgs)))
+})

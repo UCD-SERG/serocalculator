@@ -45,8 +45,14 @@
 #' Pass the id column returned by [ids_varname()]
 #' (e.g. `cluster_var = ids_varname(pop_data)`) to get a
 #' cluster-robust standard error that accounts for this within-person
-#' correlation --- distinct from, and combinable with, a genuine
-#' sampling-cluster correction.
+#' correlation.
+#' This is a distinct concern from a genuine sampling-cluster design,
+#' and multiple `cluster_var` values are grouped by their
+#' intersection rather than combined additively: if every subject
+#' belongs to exactly one sampling cluster,
+#' `cluster_var = c("cluster", "id")` reduces to clustering by `id`
+#' alone, and does not add the sampling-cluster correction on top ---
+#' see issue [#543](https://github.com/UCD-SERG/serocalculator/issues/543).
 #' See issue [#645](https://github.com/UCD-SERG/serocalculator/issues/645).
 #' @param stratum_var optional name of the variable in `pop_data` containing
 #' stratum identifiers. Used in combination with `cluster_var` for

@@ -8,8 +8,10 @@
 #' The naive standard error therefore understates the true variance
 #' whenever biomarker readings from the same person are correlated,
 #' as is expected when they share an infection history --- see #645.
-#' This emits a one-time informational message pointing the caller at
+#' This emits an informational message pointing the caller at
 #' `cluster_var` as the fix, unless they've already supplied one.
+#' [est_seroincidence_by()] calls this once per stratum, so a
+#' stratified verbose fit repeats the message.
 #'
 #' @param pop_data the original `pop_data` object passed to
 #' [est_seroincidence()], before filtering removes its `id_var`
@@ -40,12 +42,18 @@
     because they share an infection history)."
   ))
 
-  id_var <- tryCatch(ids_varname(pop_data), error = function(e) NULL)
+  id_var <- suppressWarnings(
+    tryCatch(ids_varname(pop_data), error = function(e) NULL)
+  )
 
   if (!is.null(id_var)) {
     cli::cli_inform(c(
-      "i" = "Pass {.code cluster_var = \"{id_var}\"} for a cluster-robust
-      standard error that accounts for this."
+      "i" = "Pass {.code cluster_var = \"{id_var}\"} for a
+      cluster-robust standard error that accounts for this.",
+      "i" = "If the data also has a clustered sampling design (e.g.,
+      households, schools), clustering on {.field {id_var}} alone
+      does not add that correction when subjects are nested within
+      it --- see issue #543."
     ))
   }
 

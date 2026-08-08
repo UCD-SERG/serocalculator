@@ -29,7 +29,9 @@ integrating a shared latent infection time --- see issue #637.
 The naive standard error therefore understates the true variance
 whenever biomarker readings from the same person are correlated,
 as is expected when they share an infection history --- see #645.
-This emits a one-time informational message pointing the caller at
+This emits an informational message pointing the caller at
 \code{cluster_var} as the fix, unless they've already supplied one.
+\code{\link[=est_seroincidence_by]{est_seroincidence_by()}} calls this once per stratum, so a
+stratified verbose fit repeats the message.
 }
 \keyword{internal}

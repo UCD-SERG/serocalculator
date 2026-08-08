@@ -14,6 +14,14 @@ format:
   # rendered page (the docx file itself still renders regardless).
   html:
     format-links: [docx, revealjs]
+    # The "Simulation studies" article (articles/simulate_xsectionalData.qmd)
+    # was merged into this one; this alias keeps its published URL working.
+    # It must live inside `html:` rather than at the document level: a
+    # document-level `aliases` applies to every format, and the reveal.js
+    # output wins, so the redirect stub points at methodology-slides.html
+    # instead of the article. Verified both ways in a scratch Quarto project.
+    aliases:
+      - articles/simulate_xsectionalData.html
     # Click any figure to open a zoomed lightbox view. Set explicitly on each
     # format here (rather than relying only on the site-level `format: html:`
     # default in altdoc/quarto_website.yml) so both this article's HTML page
@@ -24,7 +32,10 @@ format:
     output-file: methodology-slides.html
     lightbox: true
     reference-location: document
-    echo: false
+    # Code is shown on the slides, but folded away by default so a slide
+    # leads with its figure rather than with a wall of R. Click to expand.
+    echo: true
+    code-fold: true
     html-math-method: mathjax
     scrollable: true
     auto-stretch: true
@@ -33,6 +44,11 @@ format:
     number-sections: true
     number-depth: 2
     fig-cap-location: top
+  # The Word version reads as a report rather than a tutorial, so code is
+  # hidden by default here; chunks whose code *is* the narrative set
+  # `echo: true` individually, which overrides this.
+  docx:
+    echo: false
 ---
 
 {{< include ../macros/macros.qmd >}}
@@ -40,6 +56,12 @@ format:
 ```{r}
 #| include: false
 knitr::opts_chunk$set(message = FALSE)
+
+# The simulation studies in this article are expensive, and it renders to
+# three formats, so every chunk would otherwise execute three times per build.
+# `sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()` write their
+# results here; the directory is committed, so a fresh build reuses them.
+sim_cache <- "precomputed/"
 ```
 
 # Infectious disease epidemiology
@@ -99,7 +121,6 @@ CC BY-SA attribution for the map with them. -->
   * ~1,000,000 infections/year
   * ~10,000 deaths/year (~1% case fatality with treatment; up to 30% untreated)
   * **Symptoms:** high fever, severe headache, myalgia; eschar (pathognomonic black scab at mite-bite site); macular rash; cough; gastrointestinal symptoms; hemorrhage in severe cases
-
 
 ::::
 
@@ -357,7 +378,6 @@ for the disease of interest
 ::: notes
 * If a participant has never been infected since birth, then $T$ is undefined.
 
-
 :::
 
 * $T$ is a **latent, unobserved variable**.
@@ -453,7 +473,7 @@ where $a$ is the patient's age at the time of the survey.
 
 ## Likelihood of latent infection times {.smaller}
 
-{{< include articles/_sec-latent-likelihood.qmd >}}
+{{< include methodology/_sec-latent-likelihood.qmd >}}
 
 ## Example log-likelihood curves
 
@@ -741,69 +761,21 @@ to find the MLE and corresponding standard error.
 
 ## Cluster-robust standard errors for clustered sampling designs
 
-{{< include articles/_cluster-robust-se.qmd >}}
+{{< include methodology/_cluster-robust-se.qmd >}}
 
-{{< include articles/_antibody-response-model.qmd >}}
+# Modeling the seroresponse kinetics curve
 
-<!-- {{< include articles/_methods-continued.qmd >}} -->
+{{< include methodology/_antibody-response-model.qmd >}}
+
+<!-- {{< include methodology/_methods-continued.qmd >}} -->
+
+## Variation across the posterior {.smaller}
+
+{{< include methodology/_variation-across-the-posterior.qmd >}}
 
 ## Multiple biomarkers
 
-A serosurvey usually measures more than one antigen-isotype per participant.
-The current model treats biomarkers as **conditionally independent given the
-time since infection**, so their response densities multiply *inside* each
-person's integral over $t$:
-
-$$
-\dens(Y_1=y_1, Y_2=y_2) =
-\int_t \dens(Y_1=y_1|T=t)\,\dens(Y_2=y_2|T=t)\,\dens_\lambda(T=t)\, dt
-$$
-
-Note that this is **not** the product of the two single-biomarker
-likelihoods: the shared latent infection time $t$ couples them.
-
-::: notes
-(@sec-multivariate below describes work in progress to relax the
-conditional-independence assumption itself.)
-:::
-
-Using both biomarkers concentrates the log-likelihood around its maximum,
-and so shrinks the standard error, relative to either biomarker alone
-(@fig-loglik):
-
-```{r}
-#| fig-cap: >
-#|   Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both
-#|   biomarkers combined.
-#| label: fig-loglik
-lik_HlyE_IgA <- graph_loglik( # nolint: object_name_linter.
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgA",
-  log_x = TRUE
-)
-
-lik_HlyE_IgG <- graph_loglik( # nolint: object_name_linter.
-  previous_plot = lik_HlyE_IgA,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = "HlyE_IgG",
-  log_x = TRUE
-)
-
-lik_both <- graph_loglik(
-  previous_plot = lik_HlyE_IgG,
-  pop_data = xs_data,
-  curve_params = curves,
-  noise_params = noise,
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
-  log_x = TRUE
-)
-
-print(lik_both)
-```
+{{< include methodology/_multiple-biomarkers.qmd >}}
 
 ## Variation in antibody kinetics: by country {.smaller}
 
@@ -858,6 +830,7 @@ model specification, data formatting, and post-processing by hand;
 
 ```{r}
 #| eval: false
+#| echo: true
 library(serodynamics)
 
 # Longitudinal confirmed-case data (example data ships with the package)
@@ -889,6 +862,7 @@ The overlapping chains indicate good convergence.
 
 ```{r}
 #| eval: false
+#| echo: true
 data("nepal_sees_jags_output")
 plot_jags_dens(nepal_sees_jags_output, iso = "HlyE_IgG", strat = "typhi")
 ```
@@ -993,132 +967,57 @@ width is an explicit function of time since infection.
 
 ## An open-source R package
 
-The methods in this lecture are implemented in the open-source
-[`serocalculator`](https://github.com/UCD-SERG/serocalculator) R package.
+{{< include methodology/_an-open-source-r-package.qmd >}}
 
-```{r}
-#| eval: false
-library(serocalculator)
+## Simulating a cross-sectional survey {.smaller}
 
-# Load antibody-decay curve parameters and cross-sectional population data
-curves <- "https://osf.io/download/rtw5k/" |> load_sr_params()
-xs_data <- "https://osf.io/download/n6cp3/" |> load_pop_data()
-noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
+{{< include methodology/_simulating-a-cross-sectional-survey.qmd >}}
 
-# Visualize the cross-sectional antibody distribution
-xs_data |> autoplot(strata = "Country", type = "density")
-```
+## Noise parameters
 
-## Estimating seroincidence {.smaller}
+{{< include methodology/_noise-parameters.qmd >}}
 
-`est_seroincidence_by()` maximizes the log-likelihood
-$\log\mathcal{L}(\lambda)$ derived above,
-separately within each stratum,
-and `summary()` reports each stratum's $\hat\lambda$
-with a standard error and confidence interval
-(cluster-robust, if `cluster_var` was supplied):
+## The simulated antibody distribution
 
-```{r}
-#| eval: false
-# Estimate incidence, stratified by country and age group
-est <- est_seroincidence_by(
-  pop_data = xs_data,
-  sr_params = curves,
-  noise_params = noise,
-  strata = c("Country", "ageCat"),
-  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
-)
+{{< include methodology/_the-simulated-antibody-distribution.qmd >}}
 
-summary(est)
-```
+## Estimating incidence from the simulated survey {.smaller}
 
-Stratifying this way also makes the constant-and-homogeneous-incidence
-assumption more plausible within each stratum,
-and lets each stratum use the seroresponse parameters appropriate to it.
+{{< include methodology/_estimating-incidence-from-the-simulated-survey.qmd >}}
+
+## Estimating seroincidence in real data {.smaller}
+
+{{< include methodology/_estimating-seroincidence-in-real-data.qmd >}}
 
 ## Interactive Shiny app
 
-::: {.columns}
+{{< include methodology/_interactive-shiny-app.qmd >}}
 
-:::: {.column width="60%"}
-
-A point-and-click interface is available at
-<https://ucdserg.shinyapps.io/shiny_serocalculator/>.
-
-::::
-
-:::: {.column width="40%"}
-
-![The serocalculator Shiny app.](../man/figures/shiny-serocalculator.png){fig-alt="Screenshot of the serocalculator Shiny web application"}
-
-::::
-
-:::
-
-# Validation: recovering known incidence rates
+# Validation: recovering known incidence rates {#sec-validation}
 
 ## Simulating clusters with known incidence {.smaller}
 
-We can check the method by **simulating** cross-sectional serosurveys with
-**known** incidence rates and seeing whether the estimates recover them.
-`sim_pop_data_multi()` simulates several clusters, each at a specified true
-rate $\lambda$:
+{{< include methodology/_simulating-clusters-with-known-incidence.qmd >}}
 
-```{r}
-#| eval: false
-library(serocalculator)
+## Estimating incidence in each cluster {.smaller}
 
-antibodies <- c("HlyE_IgA", "HlyE_IgG")
+{{< include methodology/_estimating-incidence-in-each-cluster.qmd >}}
 
-# Noise settings follow serocalculator's `simulate_xsectionalData` vignette,
-# where the estimation noise is kept consistent with the simulated noise.
-# Assay-noise parameters for estimation:
-noise_params <- tibble::tibble(
-  antigen_iso = antibodies,
-  nu = 0.5, eps = 0, y.low = 1, y.high = 5e6
-)
+## Inspecting individual clusters {.smaller}
 
-# Biologic-noise limits for the simulation (vignette `dlims`):
-noise_limits <- rbind(
-  HlyE_IgA = c(min = 0, max = 0.5),
-  HlyE_IgG = c(min = 0, max = 0.5)
-)
+{{< include methodology/_inspecting-individual-clusters.qmd >}}
 
-# Simulate clusters at a range of true incidence rates
-sim_df <- sim_pop_data_multi(
-  curve_params = typhoid_curves_nostrat_100,
-  lambdas = c(0.05, 0.1, 0.2, 0.3), # true incidence rates
-  nclus = 3, # clusters per rate
-  sample_sizes = 100,
-  age_range = c(0, 10),
-  antigen_isos = antibodies,
-  add_noise = TRUE,
-  noise_limits = noise_limits,
-  format = "long"
-)
+## Checking `nlm()` convergence {.smaller}
 
-# Estimate incidence separately in each simulated cluster
-ests <- est_seroincidence_by(
-  pop_data = sim_df,
-  sr_params = typhoid_curves_nostrat_100,
-  noise_params = noise_params,
-  strata = c("lambda.sim", "cluster"),
-  antigen_isos = antibodies
-)
-summary(ests)
-```
+{{< include methodology/_checking-convergence-codes.qmd >}}
 
 ## Estimates recover the simulated rates {.smaller}
 
-![Estimated incidence rates (points, with 95% CIs) for the simulated clusters track the true simulated rates (dashed identity line).](../man/figures/sim-recovery.png){fig-alt="Estimated versus true incidence rate for simulated clusters; points with 95% confidence intervals scatter around the identity line, with wider intervals at higher rates"}
+{{< include methodology/_estimates-recover-the-simulated-rates.qmd >}}
 
-::: notes
-Each point is one simulated cluster: the estimated incidence rate (with its
-95% confidence interval) against the true rate used to generate the data.
-The estimates scatter around the identity line, and the intervals are wider
-at higher incidence. Abridged from the serocalculator
-`simulate_xsectionalData` vignette.
-:::
+## A caveat: renewing parameters at each infection {.smaller}
+
+{{< include methodology/_a-caveat-renewing-parameters.qmd >}}
 
 # Ongoing and future work
 

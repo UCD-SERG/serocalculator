@@ -1,5 +1,3 @@
-# Modeling the seroresponse kinetics curve
-
 ::: notes
 Now, we need a model for the antibody response to infection, $\dens(Y=y|T=t)$.
 The current version of the `{serocalculator}` package uses
@@ -227,7 +225,7 @@ generate_svg(code, filename = "man/figures/qr_akm2.svg")
 
 ![QR code for the antibody-kinetics Shiny app](../man/figures/qr_akm2.svg){width="280"}
 
-## Biological noise
+## Biological noise {#sec-noise}
 
 ::: notes
 When we measure antibody concentrations in a blood sample, we are essentially counting molecules (using biochemistry).

@@ -12,6 +12,15 @@
   Pass `cache_rerun = TRUE` to force recomputation.
   Cache-control arguments carry a `cache_` prefix
   so the wrapped functions' own `verbose` argument remains reachable. (#631)
+* Added `refit_strata()`, which re-fits a chosen subset of strata with
+  log-likelihood graphs attached.
+  It is the companion to caching a large fit with `build_graph = FALSE`:
+  graphs are attached per stratum, so they make a cached fit far larger on
+  disk, and the usual pattern is to cache without them and re-fit only the
+  strata you want to plot.
+  Strata are selected by the columns that define them rather than by index,
+  because `count_strata()` names strata positionally and a subset renumbers
+  them. (#632)
 * Added interactive Shiny app `curve_app()` for visualizing antigen-antibody
   kinetics models with real-time parameter sliders (#392).
 * Added `antibody_decay_curve()` and `pathogen_decay_curve()` functions for
@@ -40,6 +49,37 @@
 
 ## Documentation
 
+* Listed `sim_pop_data_multi_cached()`, `est_seroincidence_by_cached()`, and
+  `refit_strata()` in the documentation site's reference index.
+  All three were exported and had help pages, but no section of
+  `altdoc/reference.yml` claimed them, so they were unreachable from the
+  reference index and the sidebar and fell into the trailing "Other" group.
+  Surfaced by `altdoc::render_docs()`, which warns about an unclaimed
+  non-internal topic; no CI check covers this. (#632)
+
+* Merged the "Simulation studies" article
+  (`vignettes/articles/simulate_xsectionalData.qmd`) into the methodology
+  article, which now demonstrates live everything it describes.
+  The methodology article previously showed `serocalculator` code in
+  non-executing chunks and closed with a static screenshot of the simulation
+  article's recovery study, while the simulation article ran that code without
+  deriving the theory behind it.
+  The estimation walkthrough now runs on simulated data where the true rate is
+  known, and the validation section runs the full multi-cluster recovery study,
+  the `nlm()` convergence checks, `analyze_sims()`, and the `renew_params`
+  bias caveat.
+  The retired article's URL redirects to the merged one. (#632)
+* The methodology article's simulations are cached to `vignettes/precomputed/`
+  via the new `*_cached()` wrappers, so a docs build reuses them instead of
+  recomputing once per output format.
+  Its simulation sections now use the bundled `typhoid_curves_nostrat_100`
+  rather than downloading the same curve parameters from OSF;
+  the two are identical once filtered.
+* The methodology article's reveal.js slides now show code, folded away by
+  default, instead of hiding it.
+  The Word output hides code by default, except in the demonstration chunks
+  that are never evaluated, which mark themselves `echo: true` so those
+  sections do not render empty.
 * Ported the full Quarto extension set from `Morrison-Lab/rpt` into
   `altdoc/_extensions/`, registered project-wide in `altdoc/quarto_website.yml`'s
   new `filters:` list: `d-morrison/div-anchors` and `d-morrison/equation-anchors`

@@ -1,0 +1,100 @@
+A serosurvey usually measures more than one antigen-isotype per participant.
+The current model treats biomarkers as **conditionally independent given the
+time since infection**, so their response densities multiply *inside* each
+person's integral over $t$:
+
+$$
+\dens(Y_1=y_1, Y_2=y_2) =
+\int_t \dens(Y_1=y_1|T=t)\,\dens(Y_2=y_2|T=t)\,\dens_\lambda(T=t)\, dt
+$$
+
+Note that this is **not** the product of the two single-biomarker
+likelihoods: the shared latent infection time $t$ couples them.
+
+`log_likelihood()` evaluates the log-likelihood at a given $\lambda$, which
+lets us check that claim numerically:
+
+```{r}
+#| label: loglik-multi-biomarker
+ll_iga <- log_likelihood(
+  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  antigen_isos = "HlyE_IgA", lambda = 0.1
+)
+
+ll_igg <- log_likelihood(
+  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  antigen_isos = "HlyE_IgG", lambda = 0.1
+)
+
+ll_both <- log_likelihood(
+  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"), lambda = 0.1
+)
+
+c(IgA = ll_iga, IgG = ll_igg, sum = ll_iga + ll_igg, joint = ll_both)
+```
+
+The two-biomarker value is **exactly** the sum of the separate ones. That is
+worth pausing on, because the formula above says it should not be: one
+integral over a shared $t$ does not factor into two separate integrals.
+
+What it tells us is that `log_likelihood()` currently combines biomarkers by
+summing their individual log-likelihoods, which is the stronger assumption
+that the biomarkers are independent *unconditionally*, each with its own
+latent infection time. `est_seroincidence()` optimizes through the same code
+path, so this is the estimation model rather than a quirk of this one
+function.
+
+Whether the formula or the implementation should change is
+[an open question](https://github.com/UCD-SERG/serocalculator/issues/637).
+Until it is settled, read a multi-biomarker standard error as assuming
+independence across biomarkers.
+
+::: notes
+`R/log_likelihood.R` loops over `antigen_isos`, calls `f_dev()` once per
+biomarker, and adds the results, with a source comment naming the
+independence assumption. Summing log-likelihoods is the log of the product of
+the marginals.
+
+(@sec-multivariate describes work in progress to relax conditional
+independence *given* $t$; the question above is whether the current code
+implements even that much.)
+:::
+
+Using both biomarkers concentrates the log-likelihood around its maximum,
+and so shrinks the standard error, relative to either biomarker alone
+(@fig-loglik):
+
+```{r}
+#| fig-cap: >
+#|   Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both
+#|   biomarkers combined.
+#| label: fig-loglik
+lik_HlyE_IgA <- graph_loglik( # nolint: object_name_linter.
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgA",
+  log_x = TRUE
+)
+
+lik_HlyE_IgG <- graph_loglik( # nolint: object_name_linter.
+  previous_plot = lik_HlyE_IgA,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = "HlyE_IgG",
+  log_x = TRUE
+)
+
+lik_both <- graph_loglik(
+  previous_plot = lik_HlyE_IgG,
+  pop_data = xs_data,
+  curve_params = curves,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  log_x = TRUE
+)
+
+print(lik_both)
+```

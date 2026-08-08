@@ -1,0 +1,13 @@
+Estimation needs its own noise parameters, matching @sec-noise. Here they are
+declared directly, consistent with the noise used to generate the data above:
+
+```{r}
+#| label: sim-noise-params
+sim_noise_params <- tibble::tibble(
+  antigen_iso = antibodies,
+  nu = 0.5, # biological noise
+  eps = 0, # measurement noise
+  y.low = 1, # lower limit of detection
+  y.high = 5e6 # upper limit of detection
+)
+```

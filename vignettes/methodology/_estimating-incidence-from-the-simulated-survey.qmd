@@ -1,0 +1,31 @@
+`est_seroincidence()` maximizes the log-likelihood
+$\log\mathcal{L}(\lambda)$ derived above:
+
+```{r}
+#| label: est-single-dataset
+sim_est <- est_seroincidence(
+  pop_data = sim_data,
+  sr_params = sim_curve_params,
+  noise_params = sim_noise_params,
+  lambda_start = .1,
+  build_graph = TRUE,
+  print_graph = FALSE,
+  antigen_isos = antibodies
+)
+
+summary(sim_est)
+```
+
+The true rate used to generate these data was
+`r sim_lambda` infections per person-year.
+
+{{< slidebreak >}}
+
+`autoplot()` draws the log-likelihood curve, with the maximum marked:
+
+```{r}
+#| label: fig-est-single-loglik
+#| fig-cap: >
+#|   Log-likelihood curve for the simulated survey, on a log x-axis.
+autoplot(sim_est, log_x = TRUE)
+```

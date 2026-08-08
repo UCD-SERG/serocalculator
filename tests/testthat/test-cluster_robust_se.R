@@ -384,3 +384,32 @@ test_that("debug output reports two-way variance terms", {
   expect_match(debug_output, "V_raw")
   expect_match(debug_output, "V_final")
 })
+
+test_that("degenerate Hessian + floor_to_standard + debug_cluster: no error", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$cluster_small <- rep(seq_len(4), length.out = nrow(test_data))
+
+  est_cluster <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "cluster_small"
+  )
+  # A real degenerate Hessian makes robust_raw NA. floor_applied was
+  # previously computed with a plain (unguarded) comparison against
+  # robust_raw, and TRUE combined with NA via && is NA rather than FALSE --
+  # the debug_cluster message below then branched on that NA and errored.
+  est_cluster$hessian <- -1
+
+  result <- summary(
+    est_cluster,
+    verbose = FALSE,
+    floor_to_standard = TRUE,
+    debug_cluster = TRUE
+  )
+
+  expect_true(is.na(result$SE))
+})

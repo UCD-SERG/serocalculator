@@ -66,8 +66,12 @@
 
   decomp_terms <- dplyr::bind_rows(decomp_rows)
   robust_raw <- sum(decomp_terms$signed_term)
+  # isTRUE() guards against robust_raw being NA (e.g. from a degenerate
+  # one-way Hessian): `TRUE && NA` is NA, not FALSE, and an NA floor_applied
+  # crashes the debug_cluster message below with "missing value where
+  # TRUE/FALSE needed" rather than merely reporting a missing value.
   floor_applied <- isTRUE(floor_to_standard) &&
-    robust_raw < standard_var_log_lambda
+    isTRUE(robust_raw < standard_var_log_lambda)
   robust_final <- if (isTRUE(floor_to_standard)) {
     max(standard_var_log_lambda, robust_raw)
   } else {

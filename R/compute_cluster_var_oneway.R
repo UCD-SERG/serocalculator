@@ -8,10 +8,11 @@
 #' @keywords internal
 #' @noRd
 .compute_cluster_var_oneway <- function(
-    fit,
-    cluster_ids,
-    pop_data_combined,
-    small_sample = c("none", "CR1")) {
+  fit,
+  cluster_ids,
+  pop_data_combined,
+  small_sample = c("none", "CR1")
+) {
   small_sample <- match.arg(small_sample)
   pop_data_list <- attr(fit, "pop_data")
   sr_params_list <- attr(fit, "sr_params")

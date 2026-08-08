@@ -75,13 +75,14 @@
 #'
 #' summary(est1)
 summary.seroincidence <- function(
-    object,
-    coverage = .95,
-    verbose = TRUE,
-    small_sample = c("none", "CR1"),
-    floor_to_standard = FALSE,
-    debug_cluster = FALSE,
-    ...) {
+  object,
+  coverage = .95,
+  verbose = TRUE,
+  small_sample = c("none", "CR1"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE,
+  ...
+) {
   small_sample <- match.arg(small_sample)
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")

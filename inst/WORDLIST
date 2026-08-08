@@ -82,6 +82,7 @@ dropdown
 dt
 enterica
 eps
+eqdef
 eschar
 estimands
 et
@@ -96,8 +97,10 @@ ggplot
 ggproto
 gh
 gha's
+hVar
 hardcoded
 hemolysin
+hess
 immunocompromised
 infty
 inoculum
@@ -108,6 +111,7 @@ isotype
 isotypes
 js
 kDa
+ldots
 le
 leq
 lightbox
@@ -130,6 +134,7 @@ nabla
 navbar
 nd
 nr
+oinf
 olds
 operatorname
 overcount
@@ -155,6 +160,7 @@ reproducibly
 revealjs
 rightarrow
 roadmap
+sb
 se
 sectionally
 sera

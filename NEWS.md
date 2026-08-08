@@ -397,8 +397,11 @@
   A negative multi-way variance estimate is now floored at 0 (with a warning)
   instead of producing `NaN` standard errors, and an unavailable subset
   variance (for example from a degenerate Hessian) now warns and yields a
-  missing standard error, or the model-based variance when
-  `floor_to_standard = TRUE`, instead of a silent `NaN`. (#543)
+  missing standard error, instead of a silent `NaN`.
+  With `floor_to_standard = TRUE` it falls back to the model-based variance
+  instead, unless that variance is itself unusable (e.g. from the same
+  degenerate Hessian), in which case it also yields a missing standard error.
+  (#543)
 * Corrected default axis labels in `strat_ests_barplot()` (`xlab`) and
   `strat_ests_scatterplot()` (`ylab`) to say "seroincidence" rather than
   "seroconversion"/"incidence".

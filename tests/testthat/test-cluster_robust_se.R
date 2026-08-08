@@ -539,3 +539,78 @@ test_that("debug output reports the variance floor when enabled", {
 
   expect_match(debug_output, "Variance floor relative to standard variance")
 })
+
+test_that("floor_to_standard does not fall back to a poisoned standard_var", {
+  decomp_terms <- tibble::tibble(
+    subset = c("a", "b", "a + b"),
+    order = c(1, 1, 2),
+    sign = c(1, 1, -1),
+    subset_variance = c(NA_real_, NA_real_, NA_real_),
+    signed_term = c(NA_real_, NA_real_, NA_real_)
+  )
+
+  # standard_var itself is negative here, as it would be when the same
+  # degenerate Hessian that poisoned every subset term also poisoned
+  # 1 / hessian. Falling back to it would silently return a negative
+  # "variance".
+  expect_warning(
+    floored <- .combine_cluster_decomp(
+      decomp_terms = decomp_terms,
+      standard_var = -0.5,
+      floor_to_standard = TRUE
+    ),
+    "unavailable"
+  )
+  expect_true(is.na(floored$robust_final))
+  expect_false(floored$floor_applied)
+
+  # an Inf standard_var (hessian == 0) is unusable for the same reason
+  expect_warning(
+    floored_inf <- .combine_cluster_decomp(
+      decomp_terms = decomp_terms,
+      standard_var = Inf,
+      floor_to_standard = TRUE
+    ),
+    "unavailable"
+  )
+  expect_true(is.na(floored_inf$robust_final))
+  expect_false(floored_inf$floor_applied)
+})
+
+test_that("a real degenerate Hessian never yields a negative or NaN SE", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$cluster_small <- rep(seq_len(4), length.out = nrow(test_data))
+
+  est_cluster <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "cluster_small"
+  )
+  # a real degenerate Hessian, not a mock: this poisons every one-way
+  # subset term AND standard_var_log_lambda = 1 / hessian in the same call,
+  # since both are derived from this same fit.
+  est_cluster$hessian <- -1
+
+  warnings_raised <- testthat::capture_warnings(
+    robust_var <- .compute_cluster_robust_var(
+      fit = est_cluster,
+      cluster_var = "cluster_small",
+      small_sample = "none",
+      floor_to_standard = TRUE
+    )
+  )
+  # one warning per degenerate one-way subset term, plus one from the
+  # inclusion-exclusion sum itself being non-finite
+  expect_match(paste(warnings_raised, collapse = "\n"), "Hessian")
+  expect_match(paste(warnings_raised, collapse = "\n"), "unavailable")
+
+  decomp <- attr(robust_var, "cluster_decomp")
+  expect_true(is.na(as.numeric(robust_var)))
+  expect_false(decomp$floor_applied)
+  # standard_var itself was negative (1 / -1); confirm it was never used
+  expect_lt(decomp$standard_var, 0)
+})

@@ -295,6 +295,12 @@
 
 ## Internal
 
+* Added a regression test locking in that multi-biomarker `log_likelihood()`
+  equals the sum of the per-biomarker values.
+  This is the composite (independence) likelihood behavior described in
+  #637: the code sums per-biomarker marginal log-likelihoods rather than
+  integrating a shared latent infection time, and this identity should not
+  change silently if that ever does. (#637)
 * Regenerated `NAMESPACE` and `DESCRIPTION` with `roxygen2` 8.1.0, which groups
   each package's `importFrom()` symbols into a single multi-line directive
   instead of one directive per symbol.

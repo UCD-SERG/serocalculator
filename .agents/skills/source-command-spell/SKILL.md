@@ -1,0 +1,18 @@
+---
+name: "source-command-spell"
+description: "Run the package spell check and report misspellings"
+---
+
+# source-command-spell
+
+Use this skill when the user asks to run the migrated source command `spell`.
+
+## Command Template
+
+Run `Rscript -e 'spelling::spell_check_package()'` to check spelling across
+documentation, vignettes, and the package description.
+
+Report each flagged word with the file(s) it appears in. For each, judge whether
+it is a genuine typo (fix it at the source) or a legitimate technical term (add
+it to `inst/WORDLIST` rather than disabling the check). If nothing is flagged,
+confirm spelling is clean.

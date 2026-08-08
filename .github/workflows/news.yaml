@@ -1,14 +1,14 @@
 name: Check NEWS.md Changelog
+
 on:
   pull_request:
     types: [assigned, opened, synchronize, reopened, labeled, unlabeled]
     branches:
       - main
+
 jobs:
-  Check-Changelog:
-    name: Check Changelog Action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: UCD-SERG/changelog-check-action@v2
-        with:
-          changelog: NEWS.md
+  check:
+    # @v1 is frozen and lacks the configurable no-changelog-label input
+    # (added at gha#143 specifically for this repo's "no-changelog" (hyphen)
+    # convention); @v2 has it. See Morrison-Lab/gha's Versioning docs.
+    uses: Morrison-Lab/gha/.github/workflows/check-news.yml@v2

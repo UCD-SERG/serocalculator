@@ -17,12 +17,26 @@ rsconnect
 README.html
 README_files
 /.quarto/
+_quarto/
+altdoc/pkgdown.yml
 NEWS.html
 NEWS_files
 **/.quarto/
 *.pdf
 junit.xml
-
 **/*.quarto_ipynb
 *.knit.md
+.positai
 tests/vdiffr.Rout.fail
+
+# Quarto freeze cache for faster builds
+_freeze/
+**/_freeze/
+.positai
+_quarto
+.posit/assistant/settings.json
+.posit/assistant
+
+# Python bytecode cache (.github/scripts/*.py)
+__pycache__/
+*.pyc

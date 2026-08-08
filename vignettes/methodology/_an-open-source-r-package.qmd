@@ -1,0 +1,7 @@
+The methods in this lecture are implemented in the open-source
+[`serocalculator`](https://github.com/UCD-SERG/serocalculator) R package.
+
+The rest of this section walks through the whole estimation pipeline on
+**simulated** data, where the true incidence rate is known and the estimate
+can be checked against it. @sec-validation then repeats the exercise across
+many simulated populations at once.

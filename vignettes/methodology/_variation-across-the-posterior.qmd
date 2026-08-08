@@ -1,0 +1,26 @@
+The figure above draws one curve to name the parameters. The fitted model is
+really a *posterior sample* of such curves, and `autoplot()` on a
+`curve_params` object shows their spread:
+
+```{r}
+#| label: fig-curve-posterior
+#| fig-cap: >
+#|   Posterior draws of the antibody-decay curve per antigen-isotype, with
+#|   the 10%, 50%, and 90% point-wise quantiles overlaid.
+curves |> autoplot(quantiles = c(0.1, 0.5, 0.9), log_x = TRUE)
+```
+
+`curves` holds `r dplyr::n_distinct(curves$iter)` draws per antigen-isotype
+here, since it was thinned to `iter < 50` when it was loaded.
+
+::: notes
+`n_curves` caps how many draws are drawn rather than setting a target, so
+asking for more than the object holds simply draws them all. Passing
+`quantiles = NULL` omits the overlay, and `log_x = FALSE` puts time on a
+linear scale.
+
+This spread is what the incidence likelihood averages over, as described
+under "Propagating uncertainty and heterogeneity" above: each draw is one
+plausible antibody-response curve, and together they carry both the
+estimation uncertainty and the between-person heterogeneity.
+:::

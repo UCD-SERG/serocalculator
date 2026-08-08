@@ -1,0 +1,26 @@
+# Advisory, diff-scoped check that flags newly-added lines packing more than
+# one sentence/clause onto a single source line -- the "semantic line
+# breaks" convention (one clause/sentence per line), which keeps a diff
+# scoped to the changed sentence instead of a whole reflowed paragraph.
+# Scoped to lines a PR itself adds, so it never reflags this repo's
+# pre-existing long lines.
+#
+# Covers every Markdown-structured file type this repo tracks (.md, .Rmd,
+# .qmd) -- the checker's block parser (frontmatter, fenced code, tables,
+# headings, blockquotes) handles all three the same way. README.md and the
+# testthat snapshot files are skipped: the former is generated from
+# README.Rmd (fixes belong there instead), and the latter are
+# machine-generated print() output, not hand-written prose.
+#
+# Calls the reusable workflow from Morrison-Lab/gha.
+name: check-new-line-breaks
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    uses: Morrison-Lab/gha/.github/workflows/check-new-line-breaks.yml@v2
+    with:
+      globs: '*.md *.Rmd *.qmd'
+      paths-ignore: 'README.md,tests/testthat/_snaps/**'

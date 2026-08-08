@@ -1,0 +1,57 @@
+The single survey above recovered a rate close to the one that generated it.
+To check that this was not luck, we simulate many clusters across a range of
+**known** incidence rates and ask whether the estimates track them.
+
+```{r}
+#| label: sim-multi
+sim_lambdas <- c(.05, .1, .15, .2, .5, .8) # true incidence rates
+sim_nclus <- 20 # clusters per rate
+
+sim_df <- sim_pop_data_multi_cached(
+  curve_params = sim_curve_params,
+  lambdas = sim_lambdas,
+  nclus = sim_nclus,
+  sample_sizes = sim_n,
+  age_range = sim_lifespan,
+  antigen_isos = antibodies,
+  renew_params = FALSE,
+  add_noise = TRUE,
+  noise_limits = sim_noise_limits,
+  format = "long",
+  cache_path = sim_cache,
+  cache_id = "sim_df"
+)
+```
+
+::: notes
+That is `r length(sim_lambdas)` rates times `r sim_nclus` clusters times
+`r sim_n` participants --- `r length(sim_lambdas) * sim_nclus * sim_n`
+simulated individuals.
+
+Simulating and estimating on that many people is by far the most expensive
+work in this document, and it renders to three formats, so the work would
+otherwise be repeated three times per build.
+`sim_pop_data_multi_cached()` and `est_seroincidence_by_cached()` write their
+results to a committed cache directory keyed on their arguments, so a build
+reuses them and only recomputes when the simulation settings actually change.
+:::
+
+{{< slidebreak >}}
+
+```{r}
+#| label: fig-sim-multi-distribution
+#| fig-cap: >
+#|   Simulated antibody responses by cluster, faceted by antigen-isotype and
+#|   by the true incidence rate used to generate each cluster.
+#| fig-height: 5
+sim_df |>
+  ggplot() +
+  aes(x = as.factor(cluster), y = value) +
+  geom_beeswarm(size = .2, alpha = .3, aes(color = antigen_iso)) +
+  geom_boxplot(outlier.colour = NA, fill = NA) +
+  scale_y_log10() +
+  facet_wrap(~ antigen_iso + lambda.sim, nrow = 2) +
+  theme_linedraw() +
+  theme(legend.position = "bottom") +
+  labs(x = "cluster")
+```

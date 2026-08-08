@@ -2,9 +2,9 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
-^_pkgdown\.yml$
 ^docs$
-^pkgdown$
+^altdoc$
+^_quarto$
 ^\.github$
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT.md$
@@ -19,6 +19,7 @@ allpopsamples_hlye.csv$
 ^serocalculator\.Rcheck$
 ^serocalculator.*\.tar\.gz$
 ^serocalculator.*\.tgz$
+^app\.R$
 ^CRAN-SUBMISSION$
 ^vignettes/rsconnect$
 ^rsconnect$
@@ -36,9 +37,15 @@ allpopsamples_hlye.csv$
 ^vignettes/articles/\.quarto$
 ^vignettes/articles/*_files$
 ^man/check_strata\.Rd$
+^[\.]?air\.toml$
+^\.vscode$
 ^\.lintr\.R$
+^\.positai$
 ^CLAUDE\.md$
 ^\.claude$
-^_extensions$
+^AGENTS\.md$
+^\.agents$
 ^macros$
 ^\.gitmodules$
+^\.posit$
+^\.posit/assistant$

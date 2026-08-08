@@ -9,4 +9,4 @@ To maximize the chances of acceptance:
 - [ ] Documentation should use roxygen2, with Markdown syntax.
 - [ ] Contributions should include unit tests (using `testthat`).
 
-For more information see [Contributing](/.github/CONTRIBUTING.md).
+For more information see [Contributing](CONTRIBUTING.md).

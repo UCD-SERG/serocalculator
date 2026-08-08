@@ -1,0 +1,31 @@
+The same call works on a real serosurvey. `est_seroincidence_by()` estimates
+separately within each stratum, and `summary()` reports each stratum's
+$\hat\lambda$ with a standard error and confidence interval (cluster-robust,
+if `cluster_var` was supplied):
+
+```{r}
+#| eval: false
+#| echo: true
+# Load antibody-decay curve parameters and cross-sectional population data
+curves <- "https://osf.io/download/rtw5k/" |> load_sr_params()
+xs_data <- "https://osf.io/download/n6cp3/" |> load_pop_data()
+noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
+
+# Visualize the cross-sectional antibody distribution
+xs_data |> autoplot(strata = "Country", type = "density")
+
+# Estimate incidence, stratified by country and age group
+est <- est_seroincidence_by(
+  pop_data = xs_data,
+  sr_params = curves,
+  noise_params = noise,
+  strata = c("Country", "ageCat"),
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+)
+
+summary(est)
+```
+
+Stratifying this way also makes the constant-and-homogeneous-incidence
+assumption more plausible within each stratum,
+and lets each stratum use the seroresponse parameters appropriate to it.

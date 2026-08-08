@@ -30,13 +30,19 @@ $$\llik^{*'}(\lambda) = \sum_{i=1}^n \paren{\invf{\lambda} - t_i}$$
 . . . 
 
 ::: notes
-Setting the score function equal to 0 to find the score equation, 
-and solving the score equation for $\lambda$ 
+Setting the score function equal to 0 to find the score equation,
+and solving the score equation for $\lambda$
 to find the maximum likelihood estimate:
 :::
 
-$$\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
+::: {#cor-mle-fully-observed}
 
-::: notes
-The MLE turns out to be the inverse of the mean.
+#### MLE when infection times are fully observed
+
+If the latent infection times $t_1, \ldots, t_n$ were fully observed,
+the maximum likelihood estimate of $\lambda$ (Definition
+@def-likelihood, applying the score equation from Definition
+@def-score) would be the reciprocal of their mean:
+
+$$\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
 :::

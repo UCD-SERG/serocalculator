@@ -11,23 +11,34 @@ When observations are clustered:
 
 ### Cluster-robust variance estimation
 
-To account for within-cluster correlation, `serocalculator` implements the **sandwich estimator** (also known as the Huber-White robust variance estimator):
+To account for within-cluster correlation, `serocalculator` implements the **sandwich estimator** --- also known as the Huber-White robust variance estimator [@Huber1967; @White1980], generalized to clustered/grouped data by @LiangZeger1986.
+
+::: {#def-cluster-robust-variance}
+
+#### Sandwich variance estimator
+
+Let $C$ be the total number of non-overlapping clusters in the sample,
+and let $H$ be the Hessian of the log-likelihood with respect to the
+parameter estimates (Definition @def-hessian), evaluated at the MLE
+$\hat\lambda$. The **cluster-robust variance-covariance matrix** for
+the parameter estimates is
 
 $$V_{\text{robust}} = H^{-1} B H^{-1}$$
 
-where:
+where $B$ is the "meat" of the sandwich, calculated from cluster-level
+score contributions:
 
-* $V_{\text{robust}}$ is the cluster-robust variance-covariance matrix for the parameter estimates
-* $H$ is the Hessian matrix (matrix of second partial derivatives of the log-likelihood with respect to the parameters, evaluated at the MLE $\hat{\lambda}$)
-* $B$ is the "meat" of the sandwich, calculated from cluster-level score contributions:
+$$
+B = \sum_{c=1}^C U_c U_c^T,
+\qquad
+U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i \mid \lambda)
+$$
 
-$$B = \sum_{c=1}^C U_c U_c^T$$
-
-where:
-
-* $C$ is the total number of clusters in the sample
-* $U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)$ is the score contribution (gradient of log-likelihood with respect to $\lambda$) from all observations in cluster $c$
-* $\nabla_\lambda$ denotes the gradient operator (vector of partial derivatives with respect to the parameter $\lambda$)
+and $U_c$ sums the score contributions (Definition @def-score) of
+every observation $i$ in cluster $c$ (i.e., $\nabla_\lambda$ denotes
+the gradient operator, the vector of partial derivatives with respect
+to the parameter $\lambda$).
+:::
 
 ### Implementation in serocalculator
 

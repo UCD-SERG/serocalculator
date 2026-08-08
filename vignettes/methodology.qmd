@@ -392,86 +392,98 @@ which we hope tells us something about $T$ and $\lambda$.
 
 ## Modeling assumptions
 
-We **assume** that:
+::: {#def-modeling-assumptions}
 
-::: incremental
+#### Constant, homogeneous incidence; no lasting immunity
 
-* The incidence rate is approximately **constant** 
-**over time** and **across the population** ("**constant and homogenous incidence**")
+We assume that:
 
-::: notes
+* the incidence rate is approximately **constant over time** and
+  **across the population** (**constant and homogeneous incidence**):
+  $$\lambda_{i,t} = \lambda, \quad \forall i,t$$
+  (subpopulations can be analyzed separately to make this more
+  plausible); and
 
-* that is:
-$$\lambda_{i,t} = \lambda, \forall i,t$$
-
-(We can analyze subpopulations separately to make homogeneity more plausible.)
-:::
-
-* Participants are always at risk of a new infection, 
-regardless of how recently they have been infected
-("**no lasting immunity**").
+* participants are always at risk of a new infection, regardless of
+  how recently they have been infected (**no lasting immunity**).
 
 :::
 
 ::: notes
-(For diseases like typhoid, 
+(For diseases like typhoid,
 the no-immunity assumption may not hold exactly,
-but hopefully approximately; 
-modeling the effects of re-exposure during an active infection is 
+but hopefully approximately;
+modeling the effects of re-exposure during an active infection is
 [on our to-do list](https://github.com/UCD-SERG/serodynamics/issues/11)).
 :::
 
 ## Time since infection and incidence {.smaller}
 
-Under those assumptions:
+Under those assumptions (Definition @def-modeling-assumptions):
 
-. . .
+::: {#prp-time-since-infection}
 
-* $T$ has an **exponential distribution**:
+#### Distribution of time since last infection
 
-. . .
-
-$$\dens(T=t) =  \red{\lambda\expf{-\lambda t}}$$
-
-. . .
-
-  * More precisely, the distribution is exponential
-  **limited by age** at observation ($a$):
-  no one can have been infected before they were born,
-  so the density is supported on $[0,a]$
-  and the leftover probability, $\expf{-\lambda a}$,
-  sits on "never infected":
-
-. . .
+The time since last infection, $T$, has an **exponential
+distribution**, limited by age at observation ($a$): no one can have
+been infected before they were born, so the density is supported on
+$[0,a]$, and the leftover probability, $\expf{-\lambda a}$, sits on
+"never infected":
 
 $$
 \dens(T=t|A=a) = 1_{t \in[0,a]} \red{\lambda \expf{-\lambda t}} +
 1_{t = \NA} \expf{-\lambda a}
 $$
 
-. . .
-
-* the rate parameter $\lambda$ is the incidence rate
+The rate parameter $\lambda$ is the incidence rate.
+:::
 
 ::: notes
-This is a time-to-event model, 
-looking **backwards in time** from the survey date 
+This is a time-to-event model,
+looking **backwards in time** from the survey date
 (when the blood sample was collected).
 
-The probability that 
-an individual was **last** infected $t$ days ago, $p(T=t)$, 
-is equal to the probability of being infected at time $t$ 
-(i.e., the incidence rate at time $t$, $\lambda$) 
-times the probability of not being infected after time $t$, 
+The probability that
+an individual was **last** infected $t$ days ago, $p(T=t)$,
+is equal to the probability of being infected at time $t$
+(i.e., the incidence rate at time $t$, $\lambda$)
+times the probability of not being infected after time $t$,
 which turns out to be $\expf{-\lambda t}$.
 
 The distribution of $T$ is truncated by the patient's birth date;
 the probability that they have never been infected is
-$\expf{-\lambda a}$, 
+$\expf{-\lambda a}$,
 where $a$ is the patient's age at the time of the survey.
 :::
 
 ## Likelihood of latent infection times {.smaller}
+
+::: {#def-likelihood}
+
+#### Likelihood and log-likelihood
+
+For data and parameter $\lambda$, the **likelihood** $\Lik(\lambda)$ is
+the joint probability (or density) of the data, viewed as a function
+of the parameter, and the **log-likelihood** is its natural logarithm:
+
+$$\llik(\lambda) \eqdef \logf{\Lik(\lambda)}$$
+:::
+
+::: {#def-score}
+
+#### Score function
+
+The **score function** is the gradient of the log-likelihood with
+respect to the (possibly vector-valued) parameter; for the scalar
+incidence-rate parameter $\lambda$ used throughout this vignette, this
+is just the ordinary derivative:
+
+$$\score(\lambda) \eqdef \llik'(\lambda)$$
+
+A maximum likelihood estimate $\hat\lambda$ satisfies the score
+equation $\score(\hat\lambda) = 0$.
+:::
 
 {{< include methodology/_sec-latent-likelihood.qmd >}}
 
@@ -538,22 +550,60 @@ noise <- readRDS("precomputed/osf/hqy4v.rds")
 
 ## Standard errors
 
-The **variance** of the estimate is approximately equal to
-the inverse of the *negative* curvature
-(2nd derivative, aka Hessian)
-of the log-likelihood function, at the maximum,
-and the standard error is the square root of that variance:
+::: {#def-hessian}
 
-more curvature $\rightarrow$
+#### Hessian
+
+The **Hessian** is the matrix of second partial derivatives of the
+log-likelihood with respect to the (possibly vector-valued) parameter;
+for the scalar incidence-rate parameter $\lambda$ used throughout this
+vignette, this reduces to the ordinary second derivative:
+
+$$\hess(\lambda) \eqdef \llik''(\lambda)$$
+:::
+
+{{< slidebreak >}}
+
+::: {#def-observed-information}
+
+#### Observed information
+
+The **observed information** is the negative Hessian (Definition
+@def-hessian), evaluated at the maximum likelihood estimate:
+
+$$\oinf(\hat\lambda) \eqdef -\hess(\hat\lambda)$$
+:::
+
+{{< slidebreak >}}
+
+::: {#thm-mle-asymptotic-variance}
+
+#### Asymptotic variance of the MLE
+
+Under standard regularity conditions, the variance of a maximum
+likelihood estimate is approximately the inverse of the observed
+information (Definition @def-observed-information), and the standard
+error is the square root of that variance:
+
+$$\hVar{\hat\lambda} \approx \sb{\oinf(\hat\lambda)}^{-1}$$
+
+So more curvature $\rightarrow$
 a sharper likelihood peak $\rightarrow$
-smaller standard errors
+smaller standard errors.
+:::
 
 ## Hessian for the exponential model {.smaller}
 
-For the latent-time exponential model, the log-likelihood is
+::: {#exm-hessian-exponential}
+
+#### Latent-time exponential model
+
+For the latent-time exponential model (the fully-observed-$T$ case
+from "Likelihood of latent infection times"), the log-likelihood is
 $$\llik^*(\lambda) = n\logf{\lambda} - \lambda\sum_{i=1}^n t_i$$
 
-so the score and the Hessian (here a scalar second derivative) are
+so the score (Definition @def-score) and the Hessian (Definition
+@def-hessian; here a scalar second derivative) are
 
 $$
 \llik^{*\prime}(\lambda) = \frac{n}{\lambda} - \sum_{i=1}^n t_i,
@@ -561,24 +611,24 @@ $$
 \llik^{*\prime\prime}(\lambda) = -\frac{n}{\lambda^2}
 $$
 
-::: notes
-The observed information is
-$\mathcal{I}(\lambda) = -\llik^{*\prime\prime}(\lambda) = n/\lambda^2$.
-:::
+so the observed information (Definition @def-observed-information) is
+$\oinf(\lambda) = -\llik^{*\prime\prime}(\lambda) = n/\lambda^2$.
 
-Evaluated at the MLE $\hat\lambda = 1/\bar t$, the variance and standard
-error are
+Evaluated at the MLE $\hat\lambda = 1/\bar t$ (Corollary
+@cor-mle-fully-observed), Theorem @thm-mle-asymptotic-variance gives
+the variance and standard error:
 
 $$
-\widehat{\operatorname{Var}}(\hat\lambda) \approx
+\hVar{\hat\lambda} \approx
 \left[-\llik^{*\prime\prime}(\hat\lambda)\right]^{-1} = \frac{\hat\lambda^2}{n},
 \qquad
 \operatorname{SE}(\hat\lambda) \approx \frac{\hat\lambda}{\sqrt{n}}
 $$
+:::
 
 ::: notes
 So more curvature (larger $n/\lambda^2$) means a sharper peak and a smaller
-standard error, consistent with the previous slide.
+standard error, consistent with Theorem @thm-mle-asymptotic-variance.
 :::
 
 ## Likelihood of observed data
@@ -688,13 +738,22 @@ $$
 
 ::: notes
 This integral is shorthand.
-$T$ is not purely continuous: recall from "Time since infection and
-incidence" that $T$ has a **mixed** distribution --- continuous on
-$[0,a]$ with density $\lambda\expf{-\lambda t}$, plus a discrete atom
-at $T=\NA$ (never infected) with probability $\expf{-\lambda a}$.
-Written out explicitly, the "integral" over $t$ is really an integral
-over the continuous part plus the never-infected term:
+$T$ is not purely continuous: recall from Proposition
+@prp-time-since-infection that $T$ has a **mixed** distribution ---
+continuous on $[0,a]$ with density $\lambda\expf{-\lambda t}$, plus a
+discrete atom at $T=\NA$ (never infected) with probability
+$\expf{-\lambda a}$. Written out explicitly, the "integral" over $t$
+is really an integral over the continuous part plus the
+never-infected term:
 :::
+
+::: {#prp-marginal-likelihood}
+
+#### Marginal likelihood of an observation
+
+Combining the density of $Y$ given $T$ with the mixed distribution of
+$T$ (Proposition @prp-time-since-infection), the marginal likelihood
+of a single participant's observed antibody level is
 
 $$
 p(Y=y) =
@@ -705,12 +764,13 @@ $$
 
 The first term is the contribution from subjects infected at least
 once; the second is the contribution from subjects never infected.
+:::
 
 ::: notes
 Two pieces here were not yet defined:
 
 * $p(T=\NA) = \expf{-\lambda a}$ is already known --- the same
-never-infected probability from "Time since infection and incidence".
+never-infected probability from Proposition @prp-time-since-infection.
 * $p(Y=y\mid T=\NA)$, the antibody response of a never-infected
 subject, needs its own definition. Without any noise, a never-infected
 subject's true antibody level is exactly zero, so this is a point mass
@@ -722,21 +782,25 @@ see "Noise and never-infected subjects".
 
 ## The full-sample likelihood {.smaller}
 
-::: notes
-Now, the likelihood of the observed data 
-$\vec{y} = (y_1, y_2, ..., y_n)$ is:
-:::
+::: {#def-full-sample-likelihood}
+
+#### Product of per-observation likelihoods
+
+The likelihood of the observed data $\vec{y} = (y_1, y_2, \ldots, y_n)$
+(Definition @def-likelihood) is the product of each participant's
+marginal likelihood (Proposition @prp-marginal-likelihood):
 
 $$
 \begin{aligned}
-\mathcal{L}(\lambda) 
+\Lik(\lambda)
 &= \prod_{i=1}^n p(Y=y_i)
 \\&= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
 \end{aligned}
 $$
+:::
 
 ::: notes
-If we know $p(Y=y|T=t)$, then we can maximize $\mathcal{L}(\lambda)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
+If we know $p(Y=y|T=t)$, then we can maximize $\Lik(\lambda)$ over $\lambda$ to find the "maximum likelihood estimate" (MLE) of $\lambda$, denoted $\hat\lambda$.
 :::
 
 ## Finding the MLE numerically
@@ -747,7 +811,7 @@ The likelihood of $Y$ involves the product of integrals, so the log-likelihood i
 
 $$
 \begin{aligned}
-\log \mathcal{L} (\lambda) 
+\log \Lik (\lambda)
 &= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
 &= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
 \end{aligned}

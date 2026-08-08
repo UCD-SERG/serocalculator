@@ -2,6 +2,18 @@
 
 ## Bug fixes
 
+* `est_seroincidence()`'s `cluster_var` argument can now be pointed at
+  the subject id (e.g. `cluster_var = ids_varname(pop_data)`) to get a
+  cluster-robust standard error for a multi-biomarker fit that
+  accounts for within-person correlation across biomarkers.
+  `log_likelihood()` combines biomarkers by summing their marginal
+  log-likelihoods, which understates the true variance when biomarker
+  readings from the same person are correlated, as expected when they
+  share an infection history --- see #637.
+  A verbose fit with more than one `antigen_isos` and no `cluster_var`
+  now says so, and names the id column to pass.
+  The default behavior (no `cluster_var`) is unchanged, and its
+  standard error is unaffected. (#645)
 * Restored participant linkage across biomarker rows in the SEES
   cross-sectional data and bundled examples. Public IDs are newly generated
   pseudonyms; the restricted source identifier is never written to package

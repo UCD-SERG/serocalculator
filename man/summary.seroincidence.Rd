@@ -60,6 +60,10 @@ This function is a \code{summary()} method for \code{seroincidence} objects.
 When the model was fit with clustered data (using the \code{cluster_var}
 parameter in \code{\link[=est_seroincidence]{est_seroincidence()}}), this function automatically computes
 cluster-robust standard errors to account for within-cluster correlation.
+For a multi-biomarker fit with no \code{cluster_var}, the reported \code{SE}
+assumes independence across biomarkers --- see \code{cluster_var}'s
+documentation in \code{\link[=est_seroincidence]{est_seroincidence()}} for how to correct for
+within-person correlation instead.
 }
 \examples{
 

@@ -115,6 +115,52 @@ test_that("sampling_weights parameter shows warning", {
   )
 })
 
+test_that("clustering by subject id gives a composite-likelihood SE (#645)", {
+  # `log_likelihood()` combines biomarkers by summing their marginal
+  # log-likelihoods (see #637), which is only valid if those
+  # contributions are independent.
+  # Two biomarker readings from the same person usually aren't, since
+  # they share an infection history --- so clustering the
+  # cluster-robust score on the subject id is the
+  # composite-likelihood-appropriate correction (#645).
+  # This locks in today's naive SE and confirms the two differ, in
+  # the expected direction, on real multi-biomarker data.
+
+  id_var <- ids_varname(sees_pop_data_pk_100)
+
+  est_naive <- est_seroincidence(
+    pop_data = sees_pop_data_pk_100,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA")
+  )
+
+  est_composite <- est_seroincidence(
+    pop_data = sees_pop_data_pk_100,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = id_var
+  )
+
+  # clustering only affects inference, not the point estimate
+  expect_equal(est_naive$estimate, est_composite$estimate)
+
+  sum_naive <- summary(est_naive, verbose = FALSE)
+  sum_composite <- summary(est_composite, verbose = FALSE)
+
+  expect_equal(sum_naive$se_type, "standard")
+  expect_equal(sum_composite$se_type, "cluster-robust")
+
+  # locks in today's naive SE, reproduced exactly, so a future change
+  # to the underlying model (e.g. #646) doesn't silently alter it
+  expect_snapshot_value(sum_naive$SE, style = "deparse", tolerance = 1e-6)
+
+  # the naive SE understates the true variance when biomarkers from the
+  # same person are correlated, as expected here
+  expect_gt(sum_composite$SE, sum_naive$SE)
+})
+
 test_that("multiple cluster variables work correctly", {
   withr::local_seed(20241213)
   

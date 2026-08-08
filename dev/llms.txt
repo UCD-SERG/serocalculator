@@ -35,6 +35,7 @@
 - [log_likelihood()](https://ucd-serg.github.io/serocalculator/man/log_likelihood.html): Calculate log-likelihood
 - [pathogen_decay_curve()](https://ucd-serg.github.io/serocalculator/man/pathogen_decay_curve.html): Pathogen decay curve
 - [plot_decay_curve()](https://ucd-serg.github.io/serocalculator/man/plot_decay_curve.html): Plot a decay function
+- [refit_strata()](https://ucd-serg.github.io/serocalculator/man/refit_strata.html): Re-fit a subset of strata, with log-likelihood graphs attached
 - [sees_pop_data_100](https://ucd-serg.github.io/serocalculator/man/sees_pop_data_100.html): Small example cross-sectional data set
 - [sees_pop_data_pk_100](https://ucd-serg.github.io/serocalculator/man/sees_pop_data_pk_100.html): Small example cross-sectional data set
 - [sees_typhoid_ests_strat](https://ucd-serg.github.io/serocalculator/man/sees_typhoid_ests_strat.html): Example `"seroincidence.by"` object
@@ -49,18 +50,32 @@
 
 ## Articles
 
-- [Modeling the seroresponse kinetics curve](https://ucd-serg.github.io/serocalculator/vignettes/articles/_antibody-response-model.html)
-- [Single-level clustering (e.g., by household)](https://ucd-serg.github.io/serocalculator/vignettes/articles/_cluster-robust-se.html)
-- [Other innovations in the `serocalculator` package](https://ucd-serg.github.io/serocalculator/vignettes/articles/_methods-continued.html)
 - [ Outtake-Table](https://ucd-serg.github.io/serocalculator/vignettes/articles/_outtake-table.html)
-- [ Sec-Latent-Likelihood](https://ucd-serg.github.io/serocalculator/vignettes/articles/_sec-latent-likelihood.html)
 - [ Sec Abstract](https://ucd-serg.github.io/serocalculator/vignettes/articles/_sec_abstract.html)
 - [ Test](https://ucd-serg.github.io/serocalculator/vignettes/articles/_test.html)
 - [Load example longitudinal antibody parameters included in serocalculator](https://ucd-serg.github.io/serocalculator/vignettes/articles/enteric_fever_example.html)
 - [Import longitudinal antibody parameters from OSF](https://ucd-serg.github.io/serocalculator/vignettes/articles/scrubTyphus_example.html)
 - [Serocalculator](https://ucd-serg.github.io/serocalculator/vignettes/articles/serocalculator.html)
-- [Simulate a single dataset](https://ucd-serg.github.io/serocalculator/vignettes/articles/simulate_xsectionalData.html)
 - [Test-Quarto-Article](https://ucd-serg.github.io/serocalculator/vignettes/articles/test-quarto-article.html)
 - [Load curve parameters (v1.3.0 - DEPRECATED)](https://ucd-serg.github.io/serocalculator/vignettes/articles/version-crosswalk-1.3-to-1.4.html)
-- [Infectious disease epidemiology](https://ucd-serg.github.io/serocalculator/vignettes/methodology.html)
+- [The simulation studies in this article are expensive, and it renders to](https://ucd-serg.github.io/serocalculator/vignettes/methodology.html)
+- [ a-Caveat-Renewing-Parameters](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_a-caveat-renewing-parameters.html)
+- [ an-Open-Source-r-Package](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_an-open-source-r-package.html)
+- [Import longitudinal antibody parameters from OSF.](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_antibody-response-model.html)
+- [ Checking-Convergence-Codes](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_checking-convergence-codes.html)
+- [Single-level clustering (e.g., by household)](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_cluster-robust-se.html)
+- [ Estimates-Recover-the-Simulated-Rates](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_estimates-recover-the-simulated-rates.html)
+- [ Estimating-Incidence-from-the-Simulated-Survey](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_estimating-incidence-from-the-simulated-survey.html)
+- [ Estimating-Incidence-in-Each-Cluster](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_estimating-incidence-in-each-cluster.html)
+- [Load antibody-decay curve parameters and cross-sectional population data](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_estimating-seroincidence-in-real-data.html)
+- [ Inspecting-Individual-Clusters](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_inspecting-individual-clusters.html)
+- [ Interactive-Shiny-App](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_interactive-shiny-app.html)
+- [Other innovations in the `serocalculator` package](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_methods-continued.html)
+- [ Multiple-Biomarkers](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_multiple-biomarkers.html)
+- [ Noise-Parameters](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_noise-parameters.html)
+- [ Sec-Latent-Likelihood](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_sec-latent-likelihood.html)
+- [Antibody-decay parameters. `typhoid_curves_nostrat_100` ships with the](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_simulating-a-cross-sectional-survey.html)
+- [ Simulating-Clusters-with-Known-Incidence](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_simulating-clusters-with-known-incidence.html)
+- [ the-Simulated-Antibody-Distribution](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_the-simulated-antibody-distribution.html)
+- [ Variation-Across-the-Posterior](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_variation-across-the-posterior.html)
 

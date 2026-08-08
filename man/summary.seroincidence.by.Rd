@@ -10,7 +10,7 @@
   show_deviance = TRUE,
   show_convergence = TRUE,
   verbose = FALSE,
-  small_sample = c("none", "CR1"),
+  small_sample = c("CR1", "none"),
   floor_to_standard = FALSE,
   debug_cluster = FALSE,
   ...

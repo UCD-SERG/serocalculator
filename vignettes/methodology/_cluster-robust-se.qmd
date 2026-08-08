@@ -60,7 +60,7 @@ Computing every subset costs $2^p - 1$ one-way variance evaluations,
 so this is intended for the small $p$ (2-3)
 typical of nested survey designs.
 
-### Small-sample correction and safeguards
+### Small-sample correction
 
 `serocalculator` approximates each cluster's score contribution $U_c$
 by a forward finite difference of the cluster's log-likelihood,
@@ -80,24 +80,17 @@ The inclusion-exclusion sum $V_{\text{multiway}}$
 is not guaranteed to be non-negative.
 This is a documented property of the Cameron-Gelbach-Miller estimator,
 not a bug.
-`serocalculator` therefore floors the raw estimate at 0
-(emitting a warning) before it can reach $\sqrt{V}$ as a silent `NaN`:
-
-$$V_{\text{raw}}^{+} = \max\paren{0, V_{\text{multiway}}}$$
-
-Setting `floor_to_standard = TRUE` additionally floors the result
+Setting `floor_to_standard = TRUE` floors it
 at the model-based (non-cluster-robust) variance
 $V_{\text{standard}} = H^{-1}$,
 the inverse of the observed information at the MLE:
 
-$$V_{\text{final}} = \max\paren{V_{\text{standard}}, V_{\text{raw}}^{+}}$$
+$$V_{\text{final}} = \max\paren{V_{\text{standard}}, V_{\text{multiway}}}$$
 
-If any one-way subset term is unavailable,
-for example because its Hessian is non-finite or non-positive,
-the inclusion-exclusion sum is itself non-finite.
-`serocalculator` warns and returns a missing standard error in that case,
-or falls back to $V_{\text{standard}}$ when `floor_to_standard = TRUE`,
-rather than letting the missing value propagate silently.
+With the default `floor_to_standard = FALSE`,
+$V_{\text{final}} = V_{\text{multiway}}$ directly,
+so a negative inclusion-exclusion sum
+still reaches `summary()` as `sqrt()` of a negative number.
 
 ### Implementation in serocalculator
 

@@ -179,6 +179,53 @@ test_that("CR1 increases variance when clusters are few", {
   expect_equal(var_cr1, var_no_correction * (4 / 3), tolerance = 1e-10)
 })
 
+test_that("small_sample defaults to CR1 when the argument is omitted", {
+  withr::local_seed(20241213)
+
+  test_data <- sees_pop_data_pk_100
+  test_data$cluster_small <- rep(seq_len(4), length.out = nrow(test_data))
+
+  est_cluster <- est_seroincidence(
+    pop_data = test_data,
+    sr_param = typhoid_curves_nostrat_100,
+    noise_param = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    cluster_var = "cluster_small"
+  )
+  pop_data_combined <- do.call(rbind, attr(est_cluster, "pop_data"))
+  cluster_ids <- pop_data_combined$cluster_small
+
+  # match.arg(small_sample) returns the FIRST element of the formal's
+  # default vector when the caller omits the argument -- so the intended
+  # "CR1 by default" behavior depends on the vector's declared order, not
+  # just on "CR1" appearing in it.
+  var_default <- .compute_cluster_var_oneway(
+    fit = est_cluster,
+    cluster_ids = cluster_ids,
+    pop_data_combined = pop_data_combined
+  )
+  var_cr1 <- .compute_cluster_var_oneway(
+    fit = est_cluster,
+    cluster_ids = cluster_ids,
+    pop_data_combined = pop_data_combined,
+    small_sample = "CR1"
+  )
+
+  expect_equal(var_default, var_cr1)
+
+  var_robust_default <- .compute_cluster_robust_var(
+    fit = est_cluster,
+    cluster_var = "cluster_small"
+  )
+  var_robust_cr1 <- .compute_cluster_robust_var(
+    fit = est_cluster,
+    cluster_var = "cluster_small",
+    small_sample = "CR1"
+  )
+
+  expect_equal(as.numeric(var_robust_default), as.numeric(var_robust_cr1))
+})
+
 test_that("cluster decomposition stores signed multi-way terms", {
   withr::local_seed(20241213)
 

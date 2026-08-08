@@ -78,7 +78,7 @@ summary.seroincidence <- function(
   object,
   coverage = .95,
   verbose = TRUE,
-  small_sample = c("none", "CR1"),
+  small_sample = c("CR1", "none"),
   floor_to_standard = FALSE,
   debug_cluster = FALSE,
   ...

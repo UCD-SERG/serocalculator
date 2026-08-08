@@ -1,8 +1,6 @@
 # Upload the corrected SEES cross-sectional data to OSF.
-#
-# Before sourcing this script, authenticate interactively with:
-#
-# osfr::osf_auth()
+
+osfr::osf_auth()
 
 if (!requireNamespace("osfr", quietly = TRUE)) {
   stop("Install osfr before running this script: install.packages('osfr')")

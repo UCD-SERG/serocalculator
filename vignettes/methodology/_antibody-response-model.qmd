@@ -138,10 +138,10 @@ library(ggplot2)
 
 cur_ai <- "HlyE_IgG"
 
-# `typhoid_curves_nostrat_100` is `load_sr_params("https://osf.io/download/rtw5k/")`
-# filtered to iter %in% 1:100, so filtering it further to iter < 50 is
-# identical to filtering the raw OSF object the same way --- no need to fetch
-# or vendor a separate copy of rtw5k for this.
+# `typhoid_curves_nostrat_100` is `load_sr_params()` applied to the OSF
+# object `rtw5k`, filtered to iter %in% 1:100, so filtering it further to
+# iter < 50 is identical to filtering the raw OSF object the same way ---
+# no need to fetch or vendor a separate copy of rtw5k for this.
 # Deliberately named `curves_all`, not `curves`: this file is included into
 # methodology.qmd, which already defines a `curves` object filtered to the
 # antigen-isotypes that document analyzes. Reusing that name here would silently

@@ -2,9 +2,9 @@
 
 The `.rds` files in this directory are byte-for-byte snapshots of objects
 fetched from the [Serocalculator Data Repository](https://osf.io/ne8pc/) on
-OSF, downloaded on 2026-08-07. Vignettes read them from here instead of
-fetching from OSF at render time, so a docs build no longer depends on OSF
-being reachable (issue #648).
+OSF, downloaded on 2026-08-07.
+Vignettes read them from here instead of fetching from OSF at render time,
+so a docs build no longer depends on OSF being reachable (issue #648).
 
 Each file is named after the OSF resource id it was downloaded from
 (`https://osf.io/download/<id>/`):
@@ -27,7 +27,12 @@ To refresh a snapshot after the upstream OSF object changes, re-download it
 and overwrite the file here:
 
 ```r
-download.file("https://osf.io/download/<id>/", "vignettes/precomputed/osf/<id>.rds")
+download.file(
+  "https://osf.io/download/<id>/",
+  "vignettes/precomputed/osf/<id>.rds",
+  mode = "wb" # required: the URL has no .rds extension, so Windows can't
+              # infer binary mode on its own and would CRLF-corrupt the file
+)
 ```
 
 `hqy4v.rds` is worth flagging specifically: as of this snapshot, its content

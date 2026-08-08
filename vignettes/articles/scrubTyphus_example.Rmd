@@ -72,7 +72,9 @@ library(mixtools)
 
 ### Load data
 
-Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
+Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF).
+This vignette reads local, vendored copies of that data instead of fetching them at render time, so the documentation build doesn't depend on OSF's own availability --- see `vignettes/precomputed/osf/README.md` for why and how to refresh them.
+When adapting this code to your own analysis, replace the vendored paths below with the OSF download URL (or your own local file).
 
 
 
@@ -82,10 +84,9 @@ We will first load the longitudinal curve parameters to set the antibody decay p
 
 
 ```{r curve, message=FALSE}
-# Import longitudinal antibody parameters from OSF
-
+# Vendored from OSF (osf.io/u5gxh).
 curves <-
-  "https://osf.io/download/u5gxh/" |> 
+  "../precomputed/osf/u5gxh.rds" |>
   load_sr_params()
 ```
 
@@ -103,9 +104,9 @@ Next, we load our sample cross-sectional data.
 
 
 ```{r data, message = FALSE}
-# Import cross-sectional data from OSF and rename required variables
+# Vendored from OSF (osf.io/h5js4); renamed to the required variable names.
 xs_data <- load_pop_data(
-  file_path = "https://osf.io/download/h5js4/",
+  file_path = "../precomputed/osf/h5js4.rds",
   age = "Age",
   value = "result",
   id = "index_id",

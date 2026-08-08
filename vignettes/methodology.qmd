@@ -517,19 +517,23 @@ ggplot() +
 
 ```{r}
 #| include: false
-# Import longitudinal antibody parameters from OSF
+# `typhoid_curves_nostrat_100` is `load_sr_params()` applied to the OSF
+# object `rtw5k`, filtered to iter %in% 1:100, so filtering it further to
+# iter < 50 is identical to filtering the raw OSF object the same way ---
+# no need to fetch or vendor a separate copy of rtw5k for this.
 curves <-
-  "https://osf.io/download/rtw5k/" |>
-  load_sr_params() |>
+  typhoid_curves_nostrat_100 |>
   filter(iter < 50) |>
   filter(antigen_iso %in% antibodies)
 
-# Import cross-sectional data from OSF and rename required variables:
+# Cross-sectional data, vendored from OSF (osf.io/n6cp3) --- see
+# precomputed/osf/README.md for why and how to refresh.
 xs_data <-
-  "https://osf.io/download/n6cp3/" |>
+  "precomputed/osf/n6cp3.rds" |>
   load_pop_data()
 
-noise <- url("https://osf.io/download/hqy4v/") |> readRDS()
+# Noise parameters, vendored from OSF (osf.io/hqy4v):
+noise <- readRDS("precomputed/osf/hqy4v.rds")
 ```
 
 ## Standard errors

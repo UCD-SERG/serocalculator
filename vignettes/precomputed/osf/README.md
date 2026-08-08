@@ -1,17 +1,26 @@
-# Vendored OSF snapshots
+# Vendored OSF data
 
-The `.rds` files in this directory are byte-for-byte snapshots of objects
-fetched from the [Serocalculator Data Repository](https://osf.io/ne8pc/) on
-OSF, downloaded on 2026-08-07.
+With the exception of `n6cp3.rds`, the `.rds` files in this directory are
+byte-for-byte snapshots of objects fetched from the
+[Serocalculator Data Repository](https://osf.io/ne8pc/) on OSF, downloaded on
+2026-08-07.
 Vignettes read them from here instead of fetching from OSF at render time,
 so a docs build no longer depends on OSF being reachable (issue #648).
+
+`n6cp3.rds` is a privacy-preserving corrected derivative. Its assay and
+demographic fields are unchanged from the OSF object, but its row-level
+`index_id` values have been replaced with opaque participant IDs derived from
+the restricted SEES source. The source identifier is used only in memory and
+is discarded before the file is written. This restores linkage between a
+participant's biomarker rows without exposing the source identifier (issue
+#650).
 
 Each file is named after the OSF resource id it was downloaded from
 (`https://osf.io/download/<id>/`):
 
 | File        | OSF id   | Contents                                             |
 | ----------- | -------- | ----------------------------------------------------- |
-| `n6cp3.rds` | `n6cp3`  | Typhoid cross-sectional population data              |
+| `n6cp3.rds` | `n6cp3`  | Corrected typhoid cross-sectional population data    |
 | `hqy4v.rds` | `hqy4v`  | Typhoid noise parameters                             |
 | `u5gxh.rds` | `u5gxh`  | Scrub typhus antibody-decay curve parameters         |
 | `h5js4.rds` | `h5js4`  | Scrub typhus cross-sectional population data         |
@@ -23,8 +32,8 @@ filtered to `iter %in% 1:100`, so vignettes that only need `iter < 50` from
 second copy of it --- the two are identical once filtered (same reasoning as
 the methodology article's simulation sections, per NEWS.md).
 
-To refresh a snapshot after the upstream OSF object changes, re-download it
-and overwrite the file here:
+To refresh a byte-for-byte snapshot after the upstream OSF object changes,
+re-download it and overwrite the file here:
 
 ```r
 download.file(
@@ -34,6 +43,19 @@ download.file(
               # infer binary mode on its own and would CRLF-corrupt the file
 )
 ```
+
+Do not refresh `n6cp3.rds` with that command because doing so would restore
+the broken row-level IDs. Instead, an authorized maintainer must set
+`SEES_REDACTED_DATA` to the redacted SEES source extract and run:
+
+```r
+devtools::load_all()
+source("data-raw/sees_datacleaning.R")
+source("data-raw/sees_pop_data_pakistan_100.R")
+```
+
+The regeneration script reads only the fields needed for the public
+derivative and never writes the restricted subject identifier.
 
 `hqy4v.rds` is worth flagging specifically: as of this snapshot, its content
 no longer matches the package's own `example_noise_params_sees` data object

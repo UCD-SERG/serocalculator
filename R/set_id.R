@@ -1,8 +1,11 @@
 #' Specify person ID column
 #' @description
-#' Sets the `id_var` metadata attribute of `object`
+#' Sets the `id_var` metadata attribute of `object`. The selected column must
+#' identify people, with the same value repeated across all biomarker rows from
+#' one person; an observation- or row-level identifier cannot represent
+#' within-person correlation.
 #' @param object a [data.frame]
-#' @param id [character] string at least partially matching a column
+#' @param id [character] string at least partially matching a person ID column
 #' in `object`
 #' @param standardize whether to rename the column specified by `id`
 #' to "id"

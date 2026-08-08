@@ -4,7 +4,8 @@
 #' @param antigen_isos [character()]
 #' vector of antigen isotypes to be used in analyses
 #' @param age a [character()] identifying the age column
-#' @param id a [character()] identifying the id column
+#' @param id a [character()] identifying the person ID column. The same ID
+#' must be used for every biomarker observation from the same person.
 #' @param value a [character()] identifying the value column
 #' @param standardize a [logical()] to determine standardization of columns
 #' @returns a `pop_data` object (a [tibble::tbl_df]

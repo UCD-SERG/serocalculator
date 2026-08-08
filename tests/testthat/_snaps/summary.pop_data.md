@@ -4,14 +4,14 @@
       xs_data %>% summary(strata = NULL)
     Output
       
-      n = 200 
+      n = 100 
       
       Distribution of age: 
       
       # A tibble: 1 x 7
             n   min first_quartile median  mean third_quartile   max
         <int> <dbl>          <dbl>  <dbl> <dbl>          <dbl> <dbl>
-      1   200   2.3           6.75     12  11.7             16    24
+      1   100   2.3           6.75     12  11.7             16    24
       
       Distributions of antigen-isotype measurements:
       
@@ -28,15 +28,15 @@
       xs_data %>% summary(strata = "catchment")
     Output
       
-      n = 200 
+      n = 100 
       
       Distribution of age: 
       
       # A tibble: 2 x 8
         catchment     n   min first_quartile median  mean third_quartile   max
         <chr>     <int> <dbl>          <dbl>  <dbl> <dbl>          <dbl> <dbl>
-      1 kgh          94   2.3           6.85     11  11.6           15.9    24
-      2 aku         106   2.3           6.6      12  11.8           16      23
+      1 kgh          47   2.3            6.9     11  11.6           15.8    24
+      2 aku          53   2.3            6.6     12  11.8           16      23
       
       Distributions of antigen-isotype measurements:
       

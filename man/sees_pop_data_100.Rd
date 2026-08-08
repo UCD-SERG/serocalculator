@@ -5,11 +5,11 @@
 \alias{sees_pop_data_100}
 \title{Small example cross-sectional data set}
 \format{
-\subsection{\code{sees_pop_data_pk_100}}{
+\subsection{\code{sees_pop_data_100}}{
 
-A \code{pop_data} object (from \code{\link[=as_pop_data]{as_pop_data()}}) with 200 rows and 8 columns:
+A \code{pop_data} object (from \code{\link[=as_pop_data]{as_pop_data()}}) with 1000 rows and 8 columns:
 \describe{
-\item{id}{Observation ID}
+\item{id}{Pseudonymous participant ID, shared across biomarker rows}
 \item{Country}{Country where the participant was living}
 \item{cluster}{survey sampling cluster}
 \item{catchment}{survey catchment area}

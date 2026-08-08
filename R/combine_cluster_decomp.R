@@ -25,9 +25,10 @@
 #' @keywords internal
 #' @noRd
 .combine_cluster_decomp <- function(
-    decomp_terms,
-    standard_var,
-    floor_to_standard = FALSE) {
+  decomp_terms,
+  standard_var,
+  floor_to_standard = FALSE
+) {
   robust_raw <- sum(decomp_terms$signed_term)
 
   if (!is.finite(robust_raw)) {

@@ -14,9 +14,10 @@
 #' @keywords internal
 #' @noRd
 .print_cluster_decomp <- function(
-    cluster_decomp,
-    cluster_var,
-    floor_to_standard) {
+  cluster_decomp,
+  cluster_var,
+  floor_to_standard
+) {
   decomp_terms <- cluster_decomp$terms
   cli::cli_inform("Cluster-robust variance decomposition:")
 

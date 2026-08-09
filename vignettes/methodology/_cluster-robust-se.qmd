@@ -37,8 +37,10 @@ U_c &= \sum_{i \in c} U_i
 $$
 
 where $\nabla_\lambda$ denotes the gradient with respect to $\lambda$.
-The sandwich accumulates by cluster exactly the per-observation pieces
-that @prp-full-sample-likelihood sums over the whole sample.
+These are gradients of the same $\llik_i$ that
+@prp-full-sample-likelihood defines: the full-sample log-likelihood
+sums $\llik_i$ over every observation, and the sandwich accumulates
+their gradients cluster by cluster.
 The **cluster-robust variance-covariance matrix** for the parameter
 estimates is then
 

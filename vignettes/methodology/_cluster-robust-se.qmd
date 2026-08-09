@@ -79,45 +79,78 @@ Instead it applies the inclusion-exclusion identity of
 Cameron, Gelbach, and Miller (2011) [@Cameron_2011]
 for multi-way cluster-robust variance estimation.
 
+::: {#def-multiway-clustering-variance}
+
+#### Multi-way clustering-robust variance
+
 Let $\mathcal{K} = \{k_1, \dots, k_p\}$ denote the cluster variables.
 For a non-empty subset $S \subseteq \mathcal{K}$,
-let $V_S$ be the one-way sandwich variance $V_{\text{robust}}$ defined above,
+let $V_S$ be the one-way sandwich variance $V_{\text{robust}}$
+(@def-cluster-robust-variance),
 computed by clustering on the interaction of the variables in $S$.
 The multi-way variance is the signed sum over every such subset:
 
 $$V_{\text{multiway}} = \sum_{\emptyset \neq S \subseteq \mathcal{K}} (-1)^{|S| + 1} V_S$$
 
+Computing every subset costs $2^p - 1$ one-way variance evaluations,
+so this is intended for the small $p$ (2-3)
+typical of nested survey designs.
+:::
+
+::: {#exm-two-way-clustering}
+
+#### Two cluster variables
+
 For two cluster variables ($p = 2$),
-this reduces to the familiar three-term formula:
+@def-multiway-clustering-variance reduces to the familiar
+three-term formula:
 
 $$V_{\text{multiway}} = V_1 + V_2 - V_{1 \cap 2}$$
 
 where $V_1$ and $V_2$ cluster on each variable separately,
 and $V_{1 \cap 2}$ clusters on their interaction,
 the most granular grouping.
-Computing every subset costs $2^p - 1$ one-way variance evaluations,
-so this is intended for the small $p$ (2-3)
-typical of nested survey designs.
+:::
 
 ### Small-sample correction
 
+Two adjustments refine the one-way variance terms $V_S$ that feed
+@def-multiway-clustering-variance.
+
+::: {#def-finite-difference-score}
+
+#### Finite-difference score approximation
+
 `serocalculator` approximates each cluster's score contribution $U_c$
-by a forward finite difference of the cluster's log-likelihood,
+(@def-cluster-robust-variance) by a forward finite difference of the
+cluster's log-likelihood,
 $\ell_c(\lambda) = \sum_{i \in c} \log p(Y_i \mid \lambda)$:
 
 $$U_c \approx \frac{\ell_c(\hl + \epsilon) - \ell_c(\hl)}{\epsilon}, \quad \epsilon = 10^{-6}$$
+:::
+
+::: {#def-cr1-correction}
+
+#### CR1 small-sample correction
 
 When `small_sample = "CR1"` (the default),
-each one-way subset variance $V_S$ is inflated by the usual
-cluster degrees-of-freedom correction:
+each one-way subset variance $V_S$
+(@def-multiway-clustering-variance)
+is inflated by the usual cluster degrees-of-freedom correction:
 
 $$V_S^{\text{CR1}} = \frac{G_S}{G_S - 1} \, V_S$$
 
 where $G_S$ is the number of unique clusters in subset $S$'s grouping.
+:::
 
 ### Safeguards against invalid variance
 
+::: {#def-variance-safeguards}
+
+#### Flooring and fallback for the final variance
+
 The inclusion-exclusion sum $V_{\text{multiway}}$
+(@def-multiway-clustering-variance)
 is not guaranteed to be non-negative.
 This is a documented property of the Cameron-Gelbach-Miller estimator,
 not a bug.
@@ -143,6 +176,7 @@ instead, unless $V_{\text{standard}}$ is itself unusable
 (the same degenerate Hessian poisons $V_{\text{standard}} = H^{-1}$ too),
 in which case it also returns a missing standard error
 rather than silently falling back to a negative or infinite "variance".
+:::
 
 ### Implementation in serocalculator
 

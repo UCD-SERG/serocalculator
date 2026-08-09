@@ -482,9 +482,11 @@ $$\Lik(\lambda) \eqdef \dens(\text{data} \mid \lambda)$$
 The **log-likelihood** is the log of the likelihood (@def-likelihood):
 
 $$\llik(\lambda) \eqdef \logf{\Lik(\lambda)}$$
+:::
 
-It is maximized at the same $\lambda$, and is easier to work with because the
-logarithm turns products into sums
+::: notes
+The log-likelihood is maximized at the same $\lambda$ as the likelihood,
+and is easier to work with because the logarithm turns products into sums
 ([the logarithm-of-a-product theorem](https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod)
 in *Regression Models for Epidemiology*).
 :::

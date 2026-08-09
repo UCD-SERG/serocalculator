@@ -24,18 +24,25 @@ To account for within-cluster correlation, `serocalculator` implements the **san
 Let $C$ be the total number of non-overlapping clusters in the sample,
 and let $H = \hess(\hat\lambda)$ be the Hessian (@def-hessian) at the
 MLE.
-Write $U_i$ for observation $i$'s score contribution (@def-score), and
-$U_c$ for the total over the observations in cluster $c$:
+Write $\llik_i$ for observation $i$'s contribution to the
+log-likelihood (@def-likelihood), $U_i$ for its score contribution
+(@def-score), and $U_c$ for the total over the observations in cluster
+$c$:
 
 $$
 \begin{aligned}
-U_i &= \nabla_\lambda \log \dens(Y_i \mid \lambda)
+\llik_i(\lambda) &= \log \dens(Y_i \mid \lambda)
+\\
+U_i &= \nabla_\lambda \llik_i(\lambda)
 \\
 U_c &= \sum_{i \in c} U_i
 \end{aligned}
 $$
 
 where $\nabla_\lambda$ denotes the gradient with respect to $\lambda$.
+Summing $\llik_i$ over every observation recovers the full-sample
+log-likelihood of @prp-full-sample-likelihood, which is what makes
+these per-observation pieces the right thing to accumulate by cluster.
 The **cluster-robust variance-covariance matrix** for the parameter
 estimates is then
 

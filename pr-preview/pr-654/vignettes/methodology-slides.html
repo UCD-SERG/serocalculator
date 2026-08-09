@@ -230,14 +230,23 @@
   <link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
   <script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
   <style>
-  .reveal div.callout-prp.callout {
-    border-left-color: #827717;
+  .reveal div.callout-remark.callout {
+    border-left-color: #AD1457;
   }
-  .reveal div.callout-prp.callout-style-default .callout-title {
-    background-color: rgba(130, 119, 23, 0.13);
+  .reveal div.callout-remark.callout-style-default .callout-title {
+    background-color: rgba(173, 20, 87, 0.13);
   }
-  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-solution.callout {
+    border-left-color: #4E342E;
+  }
+  .reveal div.callout-solution.callout-style-default .callout-title {
+    background-color: rgba(78, 52, 46, 0.13);
+  }
+  .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-lem.callout {
     border-left-color: #1565C0;
@@ -248,6 +257,15 @@
   .reveal div.callout-lem.callout-style-default .callout-icon::before, .reveal div.callout-lem.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
+  .reveal div.callout-prp.callout {
+    border-left-color: #827717;
+  }
+  .reveal div.callout-prp.callout-style-default .callout-title {
+    background-color: rgba(130, 119, 23, 0.13);
+  }
+  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
   .reveal div.callout-cnj.callout {
     border-left-color: #558B2F;
   }
@@ -256,15 +274,6 @@
   }
   .reveal div.callout-cnj.callout-style-default .callout-icon::before, .reveal div.callout-cnj.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-proof.callout {
-    border-left-color: #37474F;
-  }
-  .reveal div.callout-proof.callout-style-default .callout-title {
-    background-color: rgba(55, 71, 79, 0.13);
-  }
-  .reveal div.callout-proof.callout-style-default .callout-icon::before, .reveal div.callout-proof.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-def.callout {
     border-left-color: #1B5E20;
@@ -275,23 +284,23 @@
   .reveal div.callout-def.callout-style-default .callout-icon::before, .reveal div.callout-def.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-cor.callout {
-    border-left-color: #00838F;
+  .reveal div.callout-exr.callout {
+    border-left-color: #FFA500;
   }
-  .reveal div.callout-cor.callout-style-default .callout-title {
-    background-color: rgba(0, 131, 143, 0.13);
+  .reveal div.callout-exr.callout-style-default .callout-title {
+    background-color: rgba(255, 165, 0, 0.13);
   }
-  .reveal div.callout-cor.callout-style-default .callout-icon::before, .reveal div.callout-cor.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-exr.callout-style-default .callout-icon::before, .reveal div.callout-exr.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-remark.callout {
-    border-left-color: #AD1457;
+  .reveal div.callout-proof.callout {
+    border-left-color: #37474F;
   }
-  .reveal div.callout-remark.callout-style-default .callout-title {
-    background-color: rgba(173, 20, 87, 0.13);
+  .reveal div.callout-proof.callout-style-default .callout-title {
+    background-color: rgba(55, 71, 79, 0.13);
   }
-  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-proof.callout-style-default .callout-icon::before, .reveal div.callout-proof.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-exm.callout {
     border-left-color: #6A1B9A;
@@ -302,23 +311,14 @@
   .reveal div.callout-exm.callout-style-default .callout-icon::before, .reveal div.callout-exm.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-exr.callout {
-    border-left-color: #FFA500;
+  .reveal div.callout-cor.callout {
+    border-left-color: #00838F;
   }
-  .reveal div.callout-exr.callout-style-default .callout-title {
-    background-color: rgba(255, 165, 0, 0.13);
+  .reveal div.callout-cor.callout-style-default .callout-title {
+    background-color: rgba(0, 131, 143, 0.13);
   }
-  .reveal div.callout-exr.callout-style-default .callout-icon::before, .reveal div.callout-exr.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-solution.callout {
-    border-left-color: #4E342E;
-  }
-  .reveal div.callout-solution.callout-style-default .callout-title {
-    background-color: rgba(78, 52, 46, 0.13);
-  }
-  .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-cor.callout-style-default .callout-icon::before, .reveal div.callout-cor.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   </style>
 </head>
@@ -1180,14 +1180,16 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 </div>
 <div class="callout-content">
 <div id="prp-full-sample-likelihood" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 4 (Full-sample likelihood, assuming independent participants)</strong></span> If participants are <strong>independent</strong> of one another, the likelihood (<a href="#/def-likelihood" class="quarto-xref">Definition&nbsp;3</a>) of the whole sample <span class="math inline">\(\tilde{y} = (y_1, y_2, \ldots, y_n)\)</span> factors into the product of their individual contributions (<a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>):</p>
+<p><span class="theorem-title"><strong>Proposition 4 (Full-sample likelihood, assuming independent participants)</strong></span> Write <span class="math inline">\(\mathscr{L}_i\)</span> and <span class="math inline">\(\ell_i\)</span> for participant <span class="math inline">\(i\)</span>’s own likelihood and log-likelihood, which is <a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a> evaluated at <span class="math inline">\(y = y_i\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathscr{L}(\lambda)
-&amp;= \prod_{i=1}^n \operatorname{p}(Y=y_i)
-\\&amp;= \prod_{i=1}^n \int_t \operatorname{p}(Y=y_i|T=t)\,\operatorname{p}_\lambda(T=t)\,dt\\
+\mathscr{L}_i(\lambda) &amp;= \operatorname{p}(Y = y_i)
+\\
+\ell_i(\lambda) &amp;= \operatorname{log}\mathopen{}\left\{\mathscr{L}_i(\lambda)\right\}\mathclose{}
 \end{aligned}
 \]</span></p>
+<p>If participants are <strong>independent</strong> of one another, the likelihood (<a href="#/def-likelihood" class="quarto-xref">Definition&nbsp;3</a>) of the whole sample <span class="math inline">\(\tilde{y} = (y_1, y_2, \ldots, y_n)\)</span> is their product:</p>
+<p><span class="math display">\[\mathscr{L}(\lambda) = \prod_{i=1}^n \mathscr{L}_i(\lambda)\]</span></p>
 </div>
 </div>
 </div>
@@ -1210,7 +1212,7 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 <section id="finding-the-mle-numerically" class="slide level2" data-number="4.15">
 <h2><span class="header-section-number">4.15</span> Finding the MLE numerically</h2>
 <aside class="notes">
-<p>The likelihood of <span class="math inline">\(Y\)</span> involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:</p>
+<p>Taking logs turns that product into a sum:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1225,12 +1227,12 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 <p><span class="math display">\[
 \begin{aligned}
 \ell(\lambda)
-&amp;= \log \prod_{i=1}^n \int_t \operatorname{p}(Y=y_i|T=t)\,\operatorname{p}_\lambda(T=t)\,dt\\
-&amp;= \sum_{i=1}^n \log\left\{\int_t \operatorname{p}(Y=y_i|T=t)\,\operatorname{p}_\lambda(T=t)\,dt\right\}\\
+&amp;= \operatorname{log}\mathopen{}\left\{\prod_{i=1}^n \mathscr{L}_i(\lambda)\right\}\mathclose{}
+\\&amp;= \sum_{i=1}^n \ell_i(\lambda)
 \end{aligned}
 \]</span></p>
 <aside class="notes">
-<p>The derivative of this expression doesn’t come out cleanly, so we will use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code>stats::nlm()</code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the maximum, which is what <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns into a standard error.</p>
+<p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code>stats::nlm()</code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the maximum, which is what <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns into a standard error.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1264,17 +1266,15 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 </div>
 <div class="callout-content">
 <div id="def-cluster-robust-variance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the MLE. Write <span class="math inline">\(\ell_i\)</span> for observation <span class="math inline">\(i\)</span>’s contribution to the log-likelihood (<a href="#/def-likelihood" class="quarto-xref">Definition&nbsp;3</a>), <span class="math inline">\(U_i\)</span> for its score contribution (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>), and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 7 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the MLE. Write <span class="math inline">\(U_i\)</span> for observation <span class="math inline">\(i\)</span>’s score contribution (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) — the gradient of its own log-likelihood <span class="math inline">\(\ell_i\)</span> (<a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>) — and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-\ell_i(\lambda) &amp;= \log \operatorname{p}(Y_i \mid \lambda)
-\\
 U_i &amp;= \nabla_\lambda \ell_i(\lambda)
 \\
 U_c &amp;= \sum_{i \in c} U_i
 \end{aligned}
 \]</span></p>
-<p>where <span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient with respect to <span class="math inline">\(\lambda\)</span>. Summing <span class="math inline">\(\ell_i\)</span> over every observation recovers the full-sample log-likelihood of <a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>, which is what makes these per-observation pieces the right thing to accumulate by cluster. The <strong>cluster-robust variance-covariance matrix</strong> for the parameter estimates is then</p>
+<p>where <span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient with respect to <span class="math inline">\(\lambda\)</span>. The sandwich accumulates by cluster exactly the per-observation pieces that <a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a> sums over the whole sample. The <strong>cluster-robust variance-covariance matrix</strong> for the parameter estimates is then</p>
 <p><span class="math display">\[
 \begin{aligned}
 V_{\text{robust}} &amp;= H^{-1} B H^{-1}

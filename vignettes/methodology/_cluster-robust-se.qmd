@@ -91,7 +91,9 @@ computed by clustering on the interaction of the variables in $S$.
 The multi-way variance is the signed sum over every such subset:
 
 $$V_{\text{multiway}} = \sum_{\emptyset \neq S \subseteq \mathcal{K}} (-1)^{|S| + 1} V_S$$
+:::
 
+::: notes
 Computing every subset costs $2^p - 1$ one-way variance evaluations,
 so this is intended for the small $p$ (2-3)
 typical of nested survey designs.
@@ -152,8 +154,6 @@ where $G_S$ is the number of unique clusters in subset $S$'s grouping.
 The inclusion-exclusion sum $V_{\text{multiway}}$
 (@def-multiway-clustering-variance)
 is not guaranteed to be non-negative.
-This is a documented property of the Cameron-Gelbach-Miller estimator,
-not a bug.
 `serocalculator` therefore floors the raw estimate at 0
 (emitting a warning), independent of `floor_to_standard`,
 before it can reach $\sqrt{V}$ as a silent `NaN`:
@@ -176,6 +176,11 @@ instead, unless $V_{\text{standard}}$ is itself unusable
 (the same degenerate Hessian poisons $V_{\text{standard}} = H^{-1}$ too),
 in which case it also returns a missing standard error
 rather than silently falling back to a negative or infinite "variance".
+:::
+
+::: notes
+The inclusion-exclusion sum's occasional negativity is a documented
+property of the Cameron-Gelbach-Miller estimator, not a bug.
 :::
 
 ### Implementation in serocalculator

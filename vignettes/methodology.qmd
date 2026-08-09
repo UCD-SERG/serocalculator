@@ -460,7 +460,7 @@ where $a$ is the patient's age at the time of the survey.
 Several approaches could estimate $\lambda$ from the data.
 `serocalculator` uses **maximum likelihood**: it reports the value of
 $\lambda$ that makes the observed data most probable.
-Stating that precisely takes two definitions.
+Stating that precisely takes three definitions.
 
 ::: {#def-likelihood}
 

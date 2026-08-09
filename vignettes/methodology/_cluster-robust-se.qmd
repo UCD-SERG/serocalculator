@@ -7,9 +7,11 @@ The estimate $\hat\lambda$ itself remains usable, but the inverse-information st
 When observations are clustered:
 
 * Individuals within the same cluster share common exposures or characteristics
-* Standard errors that ignore clustering will be **too small** (anti-conservative)
-* Confidence intervals will be **too narrow**
-* p-values will be **too optimistic**
+* Standard errors that ignore clustering are usually **too small** (anti-conservative)
+* Confidence intervals are then **too narrow**
+* p-values are then **too optimistic**
+
+Usually rather than always: the direction follows the sign of the within-cluster correlation, which is positive in most survey designs but need not be.
 
 ### Cluster-robust variance estimation
 
@@ -32,9 +34,11 @@ The **cluster-robust variance-covariance matrix** for the parameter
 estimates is then
 
 $$
-V_{\text{robust}} = H^{-1} B H^{-1},
-\qquad
-B = \sum_{c=1}^C U_c U_c^T
+\begin{aligned}
+V_{\text{robust}} &= H^{-1} B H^{-1}
+\\
+B &= \sum_{c=1}^C U_c U_c^T
+\end{aligned}
 $$
 
 with $B$ the "meat" of the sandwich.
@@ -87,6 +91,6 @@ back with the delta method
 
 ### Effect on results
 
-* **Point estimates** (incidence rates) remain unchanged
-* **Standard errors** often increase to reflect within-cluster correlation
-* **Confidence intervals** appropriately widen to account for reduced effective sample size
+* **Point estimates** (incidence rates) are unchanged: `cluster_var` affects only the variance, not the likelihood being maximized
+* **Standard errors** usually increase, reflecting within-cluster correlation
+* **Confidence intervals** widen correspondingly, reflecting the reduced effective sample size

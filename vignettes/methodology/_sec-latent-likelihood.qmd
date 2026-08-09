@@ -11,7 +11,13 @@ Starting with the likelihood (@def-likelihood), which multiplies
 participants' contributions because we treat them as independent:
 :::::
 
-$$\Lik^*(\lambda) = \prod_{i=1}^n \dens(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \expf{-\lambda t_i}$$
+$$
+\begin{aligned}
+\Lik^*(\lambda)
+&= \prod_{i=1}^n \dens(T=t_i \mid \lambda)
+\\&= \prod_{i=1}^n \lambda \expf{-\lambda t_i}
+\end{aligned}
+$$
 
 . . . 
 
@@ -19,7 +25,13 @@ $$\Lik^*(\lambda) = \prod_{i=1}^n \dens(T=t_i \mid \lambda) = \prod_{i=1}^n \lam
 Taking the logarithm of the likelihood:
 ::::
 
-$$\llik^*(\lambda) = \logf{\Lik^*(\lambda)} = \sum_{i=1}^n \paren{\logf{\lambda} -\lambda t_i}$$
+$$
+\begin{aligned}
+\llik^*(\lambda)
+&= \logf{\Lik^*(\lambda)}
+\\&= \sum_{i=1}^n \paren{\logf{\lambda} -\lambda t_i}
+\end{aligned}
+$$
 
 . . . 
 
@@ -45,5 +57,11 @@ If the latent infection times $t_1, \ldots, t_n$ were fully observed,
 solving the score equation (@def-score) would estimate $\lambda$ as
 the reciprocal of their mean:
 
-$$\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
+$$
+\begin{aligned}
+\hat{\lambda}_{\text{ML}}
+&= \frac{n}{\sum_{i=1}^n t_i}
+\\&= \frac{1}{\bar{t}}
+\end{aligned}
+$$
 :::

@@ -621,9 +621,11 @@ $$\llik^*(\lambda) = n\logf{\lambda} - \lambda\sum_{i=1}^n t_i$$
 so its score (@def-score) and Hessian (@def-hessian) are
 
 $$
-\llik^{*\prime}(\lambda) = \frac{n}{\lambda} - \sum_{i=1}^n t_i,
-\qquad
-\llik^{*\prime\prime}(\lambda) = -\frac{n}{\lambda^2}
+\begin{aligned}
+\llik^{*\prime}(\lambda) &= \frac{n}{\lambda} - \sum_{i=1}^n t_i
+\\
+\llik^{*\prime\prime}(\lambda) &= -\frac{n}{\lambda^2}
+\end{aligned}
 $$
 
 and its observed information (@def-observed-information) is
@@ -632,10 +634,14 @@ $-\llik^{*\prime\prime}(\lambda) = n/\lambda^2$.
 At the MLE $\hat\lambda = 1/\bar t$, @thm-mle-asymptotic-variance then gives
 
 $$
-\hVar{\hat\lambda} \approx
-\left[-\llik^{*\prime\prime}(\hat\lambda)\right]^{-1} = \frac{\hat\lambda^2}{n},
-\qquad
-\hSEf{\hat\lambda} \approx \frac{\hat\lambda}{\sqrt{n}}
+\begin{aligned}
+\hVar{\hat\lambda}
+&\approx \left[-\llik^{*\prime\prime}(\hat\lambda)\right]^{-1}
+\\&= \frac{\hat\lambda^2}{n}
+\\
+\hSEf{\hat\lambda}
+&\approx \frac{\hat\lambda}{\sqrt{n}}
+\end{aligned}
 $$
 
 so the standard error shrinks like $1/\sqrt{n}$: quadrupling the sample

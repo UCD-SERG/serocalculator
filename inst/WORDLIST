@@ -19,6 +19,7 @@ IgM
 LMICs
 LPS
 LV
+Liang
 Lik
 Longrightarrow
 Lotka
@@ -57,6 +58,7 @@ Unif
 Vellore
 Volterra
 Wikimedia
+Zeger
 additively
 al
 altdoc
@@ -72,6 +74,8 @@ cdot
 codecov
 colour
 csv
+dderiv
+deriv
 dev
 devtools
 dfrac
@@ -83,6 +87,7 @@ dropdown
 dt
 enterica
 eps
+eqdef
 eschar
 estimands
 et
@@ -97,8 +102,11 @@ ggplot
 ggproto
 gh
 gha's
+hSEf
+hVar
 hardcoded
 hemolysin
+hess
 immunocompromised
 infty
 inoculum
@@ -109,6 +117,7 @@ isotype
 isotypes
 js
 kDa
+ldots
 le
 leq
 lightbox
@@ -131,6 +140,7 @@ nabla
 navbar
 nd
 nr
+oinf
 olds
 operatorname
 overcount
@@ -156,6 +166,7 @@ reproducibly
 revealjs
 rightarrow
 roadmap
+sb
 se
 sectionally
 sera

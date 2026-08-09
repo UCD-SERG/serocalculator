@@ -230,41 +230,14 @@
   <link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
   <script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
   <style>
-  .reveal div.callout-remark.callout {
-    border-left-color: #AD1457;
+  .reveal div.callout-prp.callout {
+    border-left-color: #827717;
   }
-  .reveal div.callout-remark.callout-style-default .callout-title {
-    background-color: rgba(173, 20, 87, 0.13);
+  .reveal div.callout-prp.callout-style-default .callout-title {
+    background-color: rgba(130, 119, 23, 0.13);
   }
-  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-lem.callout {
-    border-left-color: #1565C0;
-  }
-  .reveal div.callout-lem.callout-style-default .callout-title {
-    background-color: rgba(21, 101, 192, 0.13);
-  }
-  .reveal div.callout-lem.callout-style-default .callout-icon::before, .reveal div.callout-lem.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-exm.callout {
-    border-left-color: #6A1B9A;
-  }
-  .reveal div.callout-exm.callout-style-default .callout-title {
-    background-color: rgba(106, 27, 154, 0.13);
-  }
-  .reveal div.callout-exm.callout-style-default .callout-icon::before, .reveal div.callout-exm.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-cor.callout {
-    border-left-color: #00838F;
-  }
-  .reveal div.callout-cor.callout-style-default .callout-title {
-    background-color: rgba(0, 131, 143, 0.13);
-  }
-  .reveal div.callout-cor.callout-style-default .callout-icon::before, .reveal div.callout-cor.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-solution.callout {
     border-left-color: #4E342E;
@@ -274,6 +247,15 @@
   }
   .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-exm.callout {
+    border-left-color: #6A1B9A;
+  }
+  .reveal div.callout-exm.callout-style-default .callout-title {
+    background-color: rgba(106, 27, 154, 0.13);
+  }
+  .reveal div.callout-exm.callout-style-default .callout-icon::before, .reveal div.callout-exm.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-cnj.callout {
     border-left-color: #558B2F;
@@ -293,14 +275,14 @@
   .reveal div.callout-def.callout-style-default .callout-icon::before, .reveal div.callout-def.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-prp.callout {
-    border-left-color: #827717;
+  .reveal div.callout-remark.callout {
+    border-left-color: #AD1457;
   }
-  .reveal div.callout-prp.callout-style-default .callout-title {
-    background-color: rgba(130, 119, 23, 0.13);
+  .reveal div.callout-remark.callout-style-default .callout-title {
+    background-color: rgba(173, 20, 87, 0.13);
   }
-  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-proof.callout {
     border-left-color: #37474F;
@@ -311,6 +293,15 @@
   .reveal div.callout-proof.callout-style-default .callout-icon::before, .reveal div.callout-proof.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
+  .reveal div.callout-lem.callout {
+    border-left-color: #1565C0;
+  }
+  .reveal div.callout-lem.callout-style-default .callout-title {
+    background-color: rgba(21, 101, 192, 0.13);
+  }
+  .reveal div.callout-lem.callout-style-default .callout-icon::before, .reveal div.callout-lem.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
   .reveal div.callout-exr.callout {
     border-left-color: #FFA500;
   }
@@ -319,6 +310,15 @@
   }
   .reveal div.callout-exr.callout-style-default .callout-icon::before, .reveal div.callout-exr.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-cor.callout {
+    border-left-color: #00838F;
+  }
+  .reveal div.callout-cor.callout-style-default .callout-title {
+    background-color: rgba(0, 131, 143, 0.13);
+  }
+  .reveal div.callout-cor.callout-style-default .callout-icon::before, .reveal div.callout-cor.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   </style>
 </head>
@@ -786,7 +786,13 @@ CC BY-SA attribution for the map with them. -->
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\mathscr{L}^*(\lambda) = \prod_{i=1}^n \operatorname{p}(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathscr{L}^*(\lambda)
+&amp;= \prod_{i=1}^n \operatorname{p}(T=t_i \mid \lambda)
+\\&amp;= \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}
+\end{aligned}
+\]</span></p>
 </div>
 <div class="fragment">
 <aside class="notes">
@@ -802,7 +808,13 @@ CC BY-SA attribution for the map with them. -->
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \mathopen{}\left(\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\right)\mathclose{}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\ell^*(\lambda)
+&amp;= \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{}
+\\&amp;= \sum_{i=1}^n \mathopen{}\left(\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\right)\mathclose{}
+\end{aligned}
+\]</span></p>
 </div>
 <div class="fragment">
 <aside class="notes">
@@ -842,7 +854,13 @@ CC BY-SA attribution for the map with them. -->
 <div class="callout-content">
 <div id="prp-mle-fully-observed" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 2 (MLE when infection times are fully observed)</strong></span> If the latent infection times <span class="math inline">\(t_1, \ldots, t_n\)</span> were fully observed, solving the score equation (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) would estimate <span class="math inline">\(\lambda\)</span> as the reciprocal of their mean:</p>
-<p><span class="math display">\[\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\lambda}_{\text{ML}}
+&amp;= \frac{n}{\sum_{i=1}^n t_i}
+\\&amp;= \frac{1}{\bar{t}}
+\end{aligned}
+\]</span></p>
 </div>
 </div>
 </div>
@@ -974,17 +992,23 @@ Figure&nbsp;1: log-likelihood curve for latent data
 <p><span class="theorem-title"><strong>Example 2 (Latent-time exponential model)</strong></span> For the latent-time model of <a href="#/prp-mle-fully-observed" class="quarto-xref">Proposition&nbsp;2</a>, the log-likelihood is <span class="math display">\[\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i\]</span></p>
 <p>so its score (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) and Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) are</p>
 <p><span class="math display">\[
-\ell^{*\prime}(\lambda) = \frac{n}{\lambda} - \sum_{i=1}^n t_i,
-\qquad
-\ell^{*\prime\prime}(\lambda) = -\frac{n}{\lambda^2}
+\begin{aligned}
+\ell^{*\prime}(\lambda) &amp;= \frac{n}{\lambda} - \sum_{i=1}^n t_i
+\\
+\ell^{*\prime\prime}(\lambda) &amp;= -\frac{n}{\lambda^2}
+\end{aligned}
 \]</span></p>
 <p>and its observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) is <span class="math inline">\(-\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
 <p>At the MLE <span class="math inline">\(\hat\lambda = 1/\bar t\)</span>, <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> then gives</p>
 <p><span class="math display">\[
-\mathop{\widehat{\operatorname{Var}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{} \approx
-\left[-\ell^{*\prime\prime}(\hat\lambda)\right]^{-1} = \frac{\hat\lambda^2}{n},
-\qquad
-\mathop{\widehat{\operatorname{SE}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{} \approx \frac{\hat\lambda}{\sqrt{n}}
+\begin{aligned}
+\mathop{\widehat{\operatorname{Var}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{}
+&amp;\approx \left[-\ell^{*\prime\prime}(\hat\lambda)\right]^{-1}
+\\&amp;= \frac{\hat\lambda^2}{n}
+\\
+\mathop{\widehat{\operatorname{SE}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{}
+&amp;\approx \frac{\hat\lambda}{\sqrt{n}}
+\end{aligned}
 \]</span></p>
 <p>so the standard error shrinks like <span class="math inline">\(1/\sqrt{n}\)</span>: quadrupling the sample size halves it.</p>
 </div>
@@ -1226,10 +1250,11 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 <p>When observations are clustered:</p>
 <ul>
 <li>Individuals within the same cluster share common exposures or characteristics</li>
-<li>Standard errors that ignore clustering will be <strong>too small</strong> (anti-conservative)</li>
-<li>Confidence intervals will be <strong>too narrow</strong></li>
-<li>p-values will be <strong>too optimistic</strong></li>
+<li>Standard errors that ignore clustering are usually <strong>too small</strong> (anti-conservative)</li>
+<li>Confidence intervals are then <strong>too narrow</strong></li>
+<li>p-values are then <strong>too optimistic</strong></li>
 </ul>
+<p>Usually rather than always: the direction follows the sign of the within-cluster correlation, which is positive in most survey designs but need not be.</p>
 <h3 id="cluster-robust-variance-estimation">Cluster-robust variance estimation</h3>
 <p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> — also known as the Huber-White robust variance estimator <span class="citation" data-cites="Huber1967 White1980">(<a href="#/references" role="doc-biblioref" onclick="">Huber 1967</a>; <a href="#/references" role="doc-biblioref" onclick="">White 1980</a>)</span>, generalized to clustered/grouped data by <span class="citation" data-cites="LiangZeger1986">Liang and Zeger (<a href="#/references" role="doc-biblioref" onclick="">1986</a>)</span>.</p>
 <div class="callout callout-def no-icon callout-titled callout-style-simple">
@@ -1243,9 +1268,11 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 <p><span class="math display">\[U_c = \sum_{i \in c} \nabla_\lambda \log \operatorname{p}(Y_i \mid \lambda)\]</span></p>
 <p>be the total score contribution (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) of the observations in cluster <span class="math inline">\(c\)</span>, where <span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient with respect to <span class="math inline">\(\lambda\)</span>. The <strong>cluster-robust variance-covariance matrix</strong> for the parameter estimates is then</p>
 <p><span class="math display">\[
-V_{\text{robust}} = H^{-1} B H^{-1},
-\qquad
-B = \sum_{c=1}^C U_c U_c^T
+\begin{aligned}
+V_{\text{robust}} &amp;= H^{-1} B H^{-1}
+\\
+B &amp;= \sum_{c=1}^C U_c U_c^T
+\end{aligned}
 \]</span></p>
 <p>with <span class="math inline">\(B\)</span> the “meat” of the sandwich.</p>
 </div>
@@ -1302,9 +1329,9 @@ B = \sum_{c=1}^C U_c U_c^T
       }</style></aside>
 <h3 id="effect-on-results">Effect on results</h3>
 <ul>
-<li><strong>Point estimates</strong> (incidence rates) remain unchanged</li>
-<li><strong>Standard errors</strong> often increase to reflect within-cluster correlation</li>
-<li><strong>Confidence intervals</strong> appropriately widen to account for reduced effective sample size</li>
+<li><strong>Point estimates</strong> (incidence rates) are unchanged: <code>cluster_var</code> affects only the variance, not the likelihood being maximized</li>
+<li><strong>Standard errors</strong> usually increase, reflecting within-cluster correlation</li>
+<li><strong>Confidence intervals</strong> widen correspondingly, reflecting the reduced effective sample size</li>
 </ul>
 </section></section>
 <section>

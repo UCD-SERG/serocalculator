@@ -15,7 +15,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-  <meta name="dcterms.date" content="2026-08-08">
+  <meta name="dcterms.date" content="2026-08-09">
   <title>serocalculator – Estimating Incidence Rates from Cross-Sectional Serosurveys</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -230,32 +230,14 @@
   <link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
   <script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
   <style>
-  .reveal div.callout-remark.callout {
-    border-left-color: #AD1457;
+  .reveal div.callout-exm.callout {
+    border-left-color: #6A1B9A;
   }
-  .reveal div.callout-remark.callout-style-default .callout-title {
-    background-color: rgba(173, 20, 87, 0.13);
+  .reveal div.callout-exm.callout-style-default .callout-title {
+    background-color: rgba(106, 27, 154, 0.13);
   }
-  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-proof.callout {
-    border-left-color: #37474F;
-  }
-  .reveal div.callout-proof.callout-style-default .callout-title {
-    background-color: rgba(55, 71, 79, 0.13);
-  }
-  .reveal div.callout-proof.callout-style-default .callout-icon::before, .reveal div.callout-proof.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-def.callout {
-    border-left-color: #1B5E20;
-  }
-  .reveal div.callout-def.callout-style-default .callout-title {
-    background-color: rgba(27, 94, 32, 0.13);
-  }
-  .reveal div.callout-def.callout-style-default .callout-icon::before, .reveal div.callout-def.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-exm.callout-style-default .callout-icon::before, .reveal div.callout-exm.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-cnj.callout {
     border-left-color: #558B2F;
@@ -266,14 +248,50 @@
   .reveal div.callout-cnj.callout-style-default .callout-icon::before, .reveal div.callout-cnj.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-exm.callout {
-    border-left-color: #6A1B9A;
+  .reveal div.callout-solution.callout {
+    border-left-color: #4E342E;
   }
-  .reveal div.callout-exm.callout-style-default .callout-title {
-    background-color: rgba(106, 27, 154, 0.13);
+  .reveal div.callout-solution.callout-style-default .callout-title {
+    background-color: rgba(78, 52, 46, 0.13);
   }
-  .reveal div.callout-exm.callout-style-default .callout-icon::before, .reveal div.callout-exm.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-def.callout {
+    border-left-color: #1B5E20;
+  }
+  .reveal div.callout-def.callout-style-default .callout-title {
+    background-color: rgba(27, 94, 32, 0.13);
+  }
+  .reveal div.callout-def.callout-style-default .callout-icon::before, .reveal div.callout-def.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-prp.callout {
+    border-left-color: #827717;
+  }
+  .reveal div.callout-prp.callout-style-default .callout-title {
+    background-color: rgba(130, 119, 23, 0.13);
+  }
+  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-proof.callout {
+    border-left-color: #37474F;
+  }
+  .reveal div.callout-proof.callout-style-default .callout-title {
+    background-color: rgba(55, 71, 79, 0.13);
+  }
+  .reveal div.callout-proof.callout-style-default .callout-icon::before, .reveal div.callout-proof.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-remark.callout {
+    border-left-color: #AD1457;
+  }
+  .reveal div.callout-remark.callout-style-default .callout-title {
+    background-color: rgba(173, 20, 87, 0.13);
+  }
+  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-lem.callout {
     border-left-color: #1565C0;
@@ -302,24 +320,6 @@
   .reveal div.callout-cor.callout-style-default .callout-icon::before, .reveal div.callout-cor.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-prp.callout {
-    border-left-color: #827717;
-  }
-  .reveal div.callout-prp.callout-style-default .callout-title {
-    background-color: rgba(130, 119, 23, 0.13);
-  }
-  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-solution.callout {
-    border-left-color: #4E342E;
-  }
-  .reveal div.callout-solution.callout-style-default .callout-title {
-    background-color: rgba(78, 52, 46, 0.13);
-  }
-  .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
   </style>
 </head>
 <body class="quarto-light">
@@ -337,7 +337,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 </div>
 </div>
 
-  <p class="date">2026-08-08</p>
+  <p class="date">2026-08-09</p>
 </section>
 <section class="slide level2">
 
@@ -656,29 +656,22 @@ CC BY-SA attribution for the map with them. -->
 </section>
 <section id="modeling-assumptions" class="slide level2" data-number="4.4">
 <h2><span class="header-section-number">4.4</span> Modeling assumptions</h2>
-<p>We <strong>assume</strong> that:</p>
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition (Constant-incidence model)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-constant-incidence-model" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Constant-incidence model)</strong></span> In the <strong>constant-incidence model</strong>:</p>
 <ul>
-<li class="fragment">The incidence rate is approximately <strong>constant</strong> <strong>over time</strong> and <strong>across the population</strong> (“<strong>constant and homogenous incidence</strong>”)</li>
+<li><p>incidence is <strong>constant over time</strong> and <strong>homogeneous across the population</strong>, so a single number describes the whole sample, <span class="math display">\[\lambda_{i,t} = \lambda, \quad \forall i,t\]</span> (subpopulations can be analyzed separately to make this more plausible); and</p></li>
+<li><p>there is <strong>no lasting immunity</strong>: participants are always at risk of a new infection, regardless of how recently they were last infected.</p></li>
 </ul>
-<aside class="notes">
-<ul>
-<li>that is: <span class="math display">\[\lambda_{i,t} = \lambda, \forall i,t\]</span></li>
-</ul>
-<p>(We can analyze subpopulations separately to make homogeneity more plausible.)</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<ul>
-<li class="fragment">Participants are always at risk of a new infection, regardless of how recently they have been infected (“<strong>no lasting immunity</strong>”).</li>
-</ul>
+</div>
+</div>
+</div>
+</div>
 <aside class="notes">
 <p>(For diseases like typhoid, the no-immunity assumption may not hold exactly, but hopefully approximately; modeling the effects of re-exposure during an active infection is <a href="https://github.com/UCD-SERG/serodynamics/issues/11">on our to-do list</a>).</p>
 <style type="text/css">
@@ -695,30 +688,23 @@ CC BY-SA attribution for the map with them. -->
 </section>
 <section id="time-since-infection-and-incidence" class="slide level2 smaller" data-number="4.5">
 <h2><span class="header-section-number">4.5</span> Time since infection and incidence</h2>
-<p>Under those assumptions:</p>
-<div class="fragment">
-<ul>
-<li><span class="math inline">\(T\)</span> has an <strong>exponential distribution</strong>:</li>
-</ul>
+<div class="callout callout-prp no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Proposition (Distribution of time since last infection)</strong></p>
 </div>
-<div class="fragment">
-<p><span class="math display">\[\operatorname{p}(T=t) =  \textcolor{red}{\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}}\]</span></p>
-</div>
-<div class="fragment">
-<ul>
-<li>More precisely, the distribution is exponential <strong>limited by age</strong> at observation (<span class="math inline">\(a\)</span>): no one can have been infected before they were born, so the density is supported on <span class="math inline">\([0,a]\)</span> and the leftover probability, <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>, sits on “never infected”:</li>
-</ul>
-</div>
-<div class="fragment">
+<div class="callout-content">
+<div id="prp-time-since-infection" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 1 (Distribution of time since last infection)</strong></span> Under the constant-incidence model (<a href="#/def-constant-incidence-model" class="quarto-xref">Definition&nbsp;2</a>), a participant’s time since last infection, <span class="math inline">\(T\)</span>, is <strong>exponentially distributed with rate <span class="math inline">\(\lambda\)</span></strong>, truncated at their age <span class="math inline">\(a\)</span>: no one can have been infected before they were born, so the density is supported on <span class="math inline">\([0,a]\)</span> and the remaining probability, <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>, falls on “never infected”:</p>
 <p><span class="math display">\[
 \operatorname{p}(T=t|A=a) = 1_{t \in[0,a]} \textcolor{red}{\lambda \operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}} +
 1_{t = \text{NA}} \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}
 \]</span></p>
+<p>Its rate parameter is exactly the incidence rate of <a href="#/def-incidence" class="quarto-xref">Definition&nbsp;1</a>, and that identity is what makes <span class="math inline">\(T\)</span> worth recovering.</p>
 </div>
-<div class="fragment">
-<ul>
-<li>the rate parameter <span class="math inline">\(\lambda\)</span> is the incidence rate</li>
-</ul>
+</div>
+</div>
+</div>
 <aside class="notes">
 <p>This is a time-to-event model, looking <strong>backwards in time</strong> from the survey date (when the blood sample was collected).</p>
 <p>The probability that an individual was <strong>last</strong> infected <span class="math inline">\(t\)</span> days ago, <span class="math inline">\(p(T=t)\)</span>, is equal to the probability of being infected at time <span class="math inline">\(t\)</span> (i.e., the incidence rate at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\lambda\)</span>) times the probability of not being infected after time <span class="math inline">\(t\)</span>, which turns out to be <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}\)</span>.</p>
@@ -734,10 +720,45 @@ CC BY-SA attribution for the map with them. -->
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="maximum-likelihood-estimation" class="slide level2 smaller" data-number="4.6">
+<h2><span class="header-section-number">4.6</span> Maximum likelihood estimation</h2>
+<p>Several approaches could estimate <span class="math inline">\(\lambda\)</span> from the data. <code>serocalculator</code> uses <strong>maximum likelihood</strong>: it reports the value of <span class="math inline">\(\lambda\)</span> that makes the observed data most probable. Stating that precisely takes two definitions.</p>
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition (Likelihood and log-likelihood)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-likelihood" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Likelihood and log-likelihood)</strong></span> The <strong>likelihood</strong> is the probability (or density) of the observed data, read as a function of the parameter rather than of the data:</p>
+<p><span class="math display">\[\mathscr{L}(\lambda) \stackrel{\text{def}}{=}\operatorname{p}(\text{data} \mid \lambda)\]</span></p>
+<p>The <strong>log-likelihood</strong> <span class="math inline">\(\ell(\lambda) \stackrel{\text{def}}{=}\operatorname{log}\mathopen{}\left\{\mathscr{L}(\lambda)\right\}\mathclose{}\)</span> is maximized at the same <span class="math inline">\(\lambda\)</span>, and is easier to work with because the logarithm turns products into sums (<a href="https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod">the logarithm-of-a-product theorem</a> in <em>Regression Models for Epidemiology</em>).</p>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="likelihood-of-latent-infection-times" class="slide level2 smaller" data-number="4.6">
-<h2><span class="header-section-number">4.6</span> Likelihood of latent infection times</h2>
+<section class="slide level2">
+
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition (Score function)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-score" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Score function)</strong></span> The <strong>score function</strong> is the derivative of the log-likelihood with respect to the parameter (in general, its gradient):</p>
+<p><span class="math display">\[\ell'(\lambda) \stackrel{\text{def}}{=}\frac{\partial}{\partial \lambda}\ell(\lambda)\]</span></p>
+<p>A maximum likelihood estimate <span class="math inline">\(\hat\lambda\)</span> solves the <strong>score equation</strong> <span class="math inline">\(\ell'(\hat\lambda) = 0\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="likelihood-of-latent-infection-times" class="slide level2 smaller" data-number="4.7">
+<h2><span class="header-section-number">4.7</span> Likelihood of latent infection times</h2>
+<p>If the infection times <span class="math inline">\(T\)</span> were observed directly, these would all take a simple closed form:</p>
 <aside class="notes">
 <p>If we could observe <span class="math inline">\(T\)</span>, then we could estimate <span class="math inline">\(\lambda\)</span> using a typical maximum likelihood approach.</p>
 <style type="text/css">
@@ -753,7 +774,7 @@ CC BY-SA attribution for the map with them. -->
       }</style></aside>
 <div class="fragment">
 <aside class="notes">
-<p>Starting with the likelihood:</p>
+<p>Starting with the likelihood (<a href="#/def-likelihood" class="quarto-xref">Definition&nbsp;3</a>), which multiplies participants’ contributions because we treat them as independent:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -765,7 +786,13 @@ CC BY-SA attribution for the map with them. -->
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\mathscr{L}^*(\lambda) = \prod_{i=1}^n \operatorname{p}(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathscr{L}^*(\lambda)
+&amp;= \prod_{i=1}^n \operatorname{p}(T=t_i \mid \lambda)
+\\&amp;= \prod_{i=1}^n \lambda \operatorname{exp}\mathopen{}\left\{-\lambda t_i\right\}\mathclose{}
+\end{aligned}
+\]</span></p>
 </div>
 <div class="fragment">
 <aside class="notes">
@@ -781,11 +808,17 @@ CC BY-SA attribution for the map with them. -->
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\ell^*(\lambda) = \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{} = \sum_{i=1}^n \mathopen{}\left(\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\right)\mathclose{}\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\ell^*(\lambda)
+&amp;= \operatorname{log}\mathopen{}\left\{\mathscr{L}^*(\lambda)\right\}\mathclose{}
+\\&amp;= \sum_{i=1}^n \mathopen{}\left(\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} -\lambda t_i\right)\mathclose{}
+\end{aligned}
+\]</span></p>
 </div>
 <div class="fragment">
 <aside class="notes">
-<p>Taking the derivative of that log-likelihood to find the score function:</p>
+<p>Taking the derivative of that log-likelihood to find the score function (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>):</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -813,24 +846,29 @@ CC BY-SA attribution for the map with them. -->
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p><span class="math display">\[\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}\]</span></p>
-<aside class="notes">
-<p>The MLE turns out to be the inverse of the mean.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<div class="callout callout-prp no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Proposition (MLE when infection times are fully observed)</strong></p>
+</div>
+<div class="callout-content">
+<div id="prp-mle-fully-observed" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 2 (MLE when infection times are fully observed)</strong></span> If the latent infection times <span class="math inline">\(t_1, \ldots, t_n\)</span> were fully observed, solving the score equation (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) would estimate <span class="math inline">\(\lambda\)</span> as the reciprocal of their mean:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\lambda}_{\text{ML}}
+&amp;= \frac{n}{\sum_{i=1}^n t_i}
+\\&amp;= \frac{1}{\bar{t}}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="example-log-likelihood-curves" class="slide level2" data-number="4.7">
-<h2><span class="header-section-number">4.7</span> Example log-likelihood curves</h2>
+<section id="example-log-likelihood-curves" class="slide level2" data-number="4.8">
+<h2><span class="header-section-number">4.8</span> Example log-likelihood curves</h2>
 <aside class="notes">
 <p>Here’s what that would look like:</p>
 <style type="text/css">
@@ -890,56 +928,96 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 </div>
 </section>
-<section id="standard-errors" class="slide level2" data-number="4.8">
-<h2><span class="header-section-number">4.8</span> Standard errors</h2>
-<p>The <strong>variance</strong> of the estimate is approximately equal to the inverse of the <em>negative</em> curvature (2nd derivative, aka Hessian) of the log-likelihood function, at the maximum, and the standard error is the square root of that variance:</p>
-<p>more curvature <span class="math inline">\(\rightarrow\)</span> a sharper likelihood peak <span class="math inline">\(\rightarrow\)</span> smaller standard errors</p>
+<section id="standard-errors" class="slide level2" data-number="4.9">
+<h2><span class="header-section-number">4.9</span> Standard errors</h2>
+<p>How precisely the data pin down <span class="math inline">\(\hat\lambda\)</span> depends on how sharply the log-likelihood peaks at its maximum, which takes two more definitions to make precise.</p>
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition (Hessian)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-hessian" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Hessian)</strong></span> The <strong>Hessian</strong> is the second derivative of the log-likelihood with respect to the parameter (in general, the matrix of its second partial derivatives):</p>
+<p><span class="math display">\[\ell''(\lambda) \stackrel{\text{def}}{=}\frac{\partial^2}{\partial \lambda^2}\ell(\lambda)\]</span></p>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="hessian-for-the-exponential-model" class="slide level2 smaller" data-number="4.9">
-<h2><span class="header-section-number">4.9</span> Hessian for the exponential model</h2>
-<p>For the latent-time exponential model, the log-likelihood is <span class="math display">\[\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i\]</span></p>
-<p>so the score and the Hessian (here a scalar second derivative) are</p>
-<p><span class="math display">\[
-\ell^{*\prime}(\lambda) = \frac{n}{\lambda} - \sum_{i=1}^n t_i,
-\qquad
-\ell^{*\prime\prime}(\lambda) = -\frac{n}{\lambda^2}
-\]</span></p>
-<aside class="notes">
-<p>The observed information is <span class="math inline">\(\mathcal{I}(\lambda) = -\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<p>Evaluated at the MLE <span class="math inline">\(\hat\lambda = 1/\bar t\)</span>, the variance and standard error are</p>
-<p><span class="math display">\[
-\widehat{\operatorname{Var}}(\hat\lambda) \approx
-\left[-\ell^{*\prime\prime}(\hat\lambda)\right]^{-1} = \frac{\hat\lambda^2}{n},
-\qquad
-\operatorname{SE}(\hat\lambda) \approx \frac{\hat\lambda}{\sqrt{n}}
-\]</span></p>
-<aside class="notes">
-<p>So more curvature (larger <span class="math inline">\(n/\lambda^2\)</span>) means a sharper peak and a smaller standard error, consistent with the previous slide.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section class="slide level2">
+
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition (Observed information)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-observed-information" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 6 (Observed information)</strong></span> The <strong>observed information</strong> is the negative Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>):</p>
+<p><span class="math display">\[I(\lambda) \stackrel{\text{def}}{=}-\ell''(\lambda)\]</span></p>
+<p>A sharper peak at the maximum means a larger observed information.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="likelihood-of-observed-data" class="slide level2" data-number="4.10">
-<h2><span class="header-section-number">4.10</span> Likelihood of observed data</h2>
+<section class="slide level2">
+
+<div class="callout callout-lem no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem (Asymptotic variance of the MLE)</strong></p>
+</div>
+<div class="callout-content">
+<div id="thm-mle-asymptotic-variance" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Asymptotic variance of the MLE)</strong></span> Under standard regularity conditions, the variance of a maximum likelihood estimate is approximately the inverse of the observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) at that estimate:</p>
+<p><span class="math display">\[\mathop{\widehat{\operatorname{Var}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{} \approx \mathopen{}\left[I(\hat\lambda)\right]\mathclose{}^{-1}\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<p>The standard error is the square root of that variance, so:</p>
+<p>more curvature <span class="math inline">\(\rightarrow\)</span> a sharper likelihood peak <span class="math inline">\(\rightarrow\)</span> more observed information <span class="math inline">\(\rightarrow\)</span> smaller standard errors.</p>
+</section>
+<section id="hessian-for-the-exponential-model" class="slide level2 smaller" data-number="4.10">
+<h2><span class="header-section-number">4.10</span> Hessian for the exponential model</h2>
+<div class="callout callout-exm no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example (Latent-time exponential model)</strong></p>
+</div>
+<div class="callout-content">
+<div id="exm-hessian-exponential" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Latent-time exponential model)</strong></span> For the latent-time model of <a href="#/prp-mle-fully-observed" class="quarto-xref">Proposition&nbsp;2</a>, the log-likelihood is <span class="math display">\[\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i\]</span></p>
+<p>so its score (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) and Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) are</p>
+<p><span class="math display">\[
+\begin{aligned}
+\ell^{*\prime}(\lambda) &amp;= \frac{n}{\lambda} - \sum_{i=1}^n t_i
+\\
+\ell^{*\prime\prime}(\lambda) &amp;= -\frac{n}{\lambda^2}
+\end{aligned}
+\]</span></p>
+<p>and its observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) is <span class="math inline">\(-\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
+<p>At the MLE <span class="math inline">\(\hat\lambda = 1/\bar t\)</span>, <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> then gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathop{\widehat{\operatorname{Var}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{}
+&amp;\approx \left[-\ell^{*\prime\prime}(\hat\lambda)\right]^{-1}
+\\&amp;= \frac{\hat\lambda^2}{n}
+\\
+\mathop{\widehat{\operatorname{SE}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{}
+&amp;\approx \frac{\hat\lambda}{\sqrt{n}}
+\end{aligned}
+\]</span></p>
+<p>so the standard error shrinks like <span class="math inline">\(1/\sqrt{n}\)</span>: quadrupling the sample size halves it.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="likelihood-of-observed-data" class="slide level2" data-number="4.11">
+<h2><span class="header-section-number">4.11</span> Likelihood of observed data</h2>
 <aside class="notes">
 <p>Unfortunately, we don’t observe infection times <span class="math inline">\(T\)</span>; we only observe antibody levels <span class="math inline">\({Y}\)</span>. So things get a little more complicated.</p>
 <p>In short, we are hoping that we can estimate <span class="math inline">\(T\)</span> (time since last infection) from <span class="math inline">\(Y\)</span> (current antibody levels). If we could do that, then we could plug in our estimates <span class="math inline">\(\hat t_i\)</span> into that likelihood above, and estimate <span class="math inline">\(\lambda\)</span> as previously.</p>
@@ -977,8 +1055,8 @@ Figure&nbsp;1: log-likelihood curve for latent data
 <li class="fragment"><span class="math display">\[\operatorname{p}(Y=y,T=t) = \operatorname{p}(Y=y|T=t) \operatorname{p}(T=t)\]</span></li>
 </ul>
 </section>
-<section id="antibody-response-curves" class="slide level2" data-number="4.11">
-<h2><span class="header-section-number">4.11</span> Antibody response curves</h2>
+<section id="antibody-response-curves" class="slide level2" data-number="4.12">
+<h2><span class="header-section-number">4.12</span> Antibody response curves</h2>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>sim_case_data <span class="sc">|&gt;</span></span>
@@ -1052,39 +1130,33 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 </figure>
 </div>
 </section>
-<section id="the-per-person-likelihood" class="slide level2" data-number="4.12">
-<h2><span class="header-section-number">4.12</span> The per-person likelihood</h2>
-<p>Substituting <span class="math inline">\(p(Y=y,T=t) = p(Y=y|T=t)\,p(T=t)\)</span> into the previous expression for <span class="math inline">\(p(Y=y)\)</span>:</p>
+<section id="the-per-person-likelihood" class="slide level2 smaller" data-number="4.13">
+<h2><span class="header-section-number">4.13</span> The per-person likelihood</h2>
+<div class="callout callout-prp no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Proposition (Marginal likelihood of one participant’s data)</strong></p>
+</div>
+<div class="callout-content">
+<div id="prp-marginal-likelihood" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 3 (Marginal likelihood of one participant’s data)</strong></span> Substituting <span class="math inline">\(\operatorname{p}(Y=y,T=t) = \operatorname{p}(Y=y|T=t)\,\operatorname{p}(T=t)\)</span> into the expression for <span class="math inline">\(\operatorname{p}(Y=y)\)</span> above gives one participant’s contribution:</p>
+<p><span class="math display">\[\operatorname{p}(Y=y) = \int_t \operatorname{p}(Y=y|T=t)\,\operatorname{p}(T=t)\, dt\]</span></p>
+<p>That integral is shorthand, because <span class="math inline">\(T\)</span> is not purely continuous: it has the <strong>mixed</strong> distribution of <a href="#/prp-time-since-infection" class="quarto-xref">Proposition&nbsp;1</a>, continuous on <span class="math inline">\([0,a]\)</span> plus an atom at <span class="math inline">\(T=\text{NA}\)</span>. Written out over both parts, the integral is</p>
 <p><span class="math display">\[
-\begin{aligned}
-p(Y=y)
-&amp;= \int_t p(Y=y|T=t)\,p(T=t)\, dt
-\end{aligned}
-\]</span></p>
-<aside class="notes">
-<p>This integral is shorthand. <span class="math inline">\(T\)</span> is not purely continuous: recall from “Time since infection and incidence” that <span class="math inline">\(T\)</span> has a <strong>mixed</strong> distribution — continuous on <span class="math inline">\([0,a]\)</span> with density <span class="math inline">\(\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}\)</span>, plus a discrete atom at <span class="math inline">\(T=\text{NA}\)</span> (never infected) with probability <span class="math inline">\(\operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span>. Written out explicitly, the “integral” over <span class="math inline">\(t\)</span> is really an integral over the continuous part plus the never-infected term:</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<p><span class="math display">\[
-p(Y=y) =
-\int_0^a p(Y=y\mid T=t)\,\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}\,dt
+\operatorname{p}(Y=y) =
+\int_0^a \operatorname{p}(Y=y\mid T=t)\,\lambda\operatorname{exp}\mathopen{}\left\{-\lambda t\right\}\mathclose{}\,dt
 \;+\;
-p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}
+\operatorname{p}(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}
 \]</span></p>
 <p>The first term is the contribution from subjects infected at least once; the second is the contribution from subjects never infected.</p>
+</div>
+</div>
+</div>
+</div>
 <aside class="notes">
 <p>Two pieces here were not yet defined:</p>
 <ul>
-<li><span class="math inline">\(p(T=\text{NA}) = \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span> is already known — the same never-infected probability from “Time since infection and incidence”.</li>
+<li><span class="math inline">\(p(T=\text{NA}) = \operatorname{exp}\mathopen{}\left\{-\lambda a\right\}\mathclose{}\)</span> is already known — the same never-infected probability from <a href="#/prp-time-since-infection" class="quarto-xref">Proposition&nbsp;1</a>.</li>
 <li><span class="math inline">\(p(Y=y\mid T=\text{NA})\)</span>, the antibody response of a never-infected subject, needs its own definition. Without any noise, a never-infected subject’s true antibody level is exactly zero, so this is a point mass at <span class="math inline">\(y=0\)</span> (a Dirac delta): <span class="math inline">\(p(Y=y\mid T=\text{NA}) = \delta(y)\)</span>. Once measurement noise and biological (cross-reactivity) noise are introduced below, this point mass is handled differently by each — see “Noise and never-infected subjects”.</li>
 </ul>
 <style type="text/css">
@@ -1099,10 +1171,48 @@ p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-full-sample-likelihood" class="slide level2 smaller" data-number="4.13">
-<h2><span class="header-section-number">4.13</span> The full-sample likelihood</h2>
+<section id="the-full-sample-likelihood" class="slide level2 smaller" data-number="4.14">
+<h2><span class="header-section-number">4.14</span> The full-sample likelihood</h2>
+<div class="callout callout-prp no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Proposition (Full-sample likelihood, assuming independent participants)</strong></p>
+</div>
+<div class="callout-content">
+<div id="prp-full-sample-likelihood" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4 (Full-sample likelihood, assuming independent participants)</strong></span> Write <span class="math inline">\(\mathscr{L}_i\)</span> and <span class="math inline">\(\ell_i\)</span> for participant <span class="math inline">\(i\)</span>’s own likelihood and log-likelihood, which is <a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a> evaluated at <span class="math inline">\(y = y_i\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathscr{L}_i(\lambda) &amp;= \operatorname{p}(Y = y_i)
+\\
+\ell_i(\lambda) &amp;= \operatorname{log}\mathopen{}\left\{\mathscr{L}_i(\lambda)\right\}\mathclose{}
+\end{aligned}
+\]</span></p>
+<p>If participants are <strong>independent</strong> of one another, the likelihood (<a href="#/def-likelihood" class="quarto-xref">Definition&nbsp;3</a>) of the whole sample <span class="math inline">\(\tilde{y} = (y_1, y_2, \ldots, y_n)\)</span> is their product:</p>
+<p><span class="math display">\[\mathscr{L}(\lambda) = \prod_{i=1}^n \mathscr{L}_i(\lambda)\]</span></p>
+</div>
+</div>
+</div>
+</div>
 <aside class="notes">
-<p>Now, the likelihood of the observed data <span class="math inline">\(\tilde{y} = (y_1, y_2, ..., y_n)\)</span> is:</p>
+<p>Independence is what licenses the product; the latent-time likelihood <span class="math inline">\(\mathscr{L}^*\)</span> above multiplies participants’ contributions for the same reason. It is an assumption about the <strong>sampling design</strong>, separate from the assumptions about disease dynamics in <a href="#/def-constant-incidence-model" class="quarto-xref">Definition&nbsp;2</a>.</p>
+<p>If we know <span class="math inline">\(\operatorname{p}(Y=y|T=t)\)</span>, then we can maximize <span class="math inline">\(\mathscr{L}(\lambda)\)</span> over <span class="math inline">\(\lambda\)</span> to find the “maximum likelihood estimate” (MLE) of <span class="math inline">\(\lambda\)</span>, denoted <span class="math inline">\(\hat\lambda\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="finding-the-mle-numerically" class="slide level2" data-number="4.15">
+<h2><span class="header-section-number">4.15</span> Finding the MLE numerically</h2>
+<aside class="notes">
+<p>Taking logs turns that product into a sum:</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1116,13 +1226,13 @@ p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right
       }</style></aside>
 <p><span class="math display">\[
 \begin{aligned}
-\mathcal{L}(\lambda)
-&amp;= \prod_{i=1}^n p(Y=y_i)
-\\&amp;= \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
+\ell(\lambda)
+&amp;= \operatorname{log}\mathopen{}\left\{\prod_{i=1}^n \mathscr{L}_i(\lambda)\right\}\mathclose{}
+\\&amp;= \sum_{i=1}^n \ell_i(\lambda)
 \end{aligned}
 \]</span></p>
 <aside class="notes">
-<p>If we know <span class="math inline">\(p(Y=y|T=t)\)</span>, then we can maximize <span class="math inline">\(\mathcal{L}(\lambda)\)</span> over <span class="math inline">\(\lambda\)</span> to find the “maximum likelihood estimate” (MLE) of <span class="math inline">\(\lambda\)</span>, denoted <span class="math inline">\(\hat\lambda\)</span>.</p>
+<p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code>stats::nlm()</code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the maximum, and <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns that Hessian into a standard error.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1135,69 +1245,62 @@ p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right
           display:block!important;
       }</style></aside>
 </section>
-<section id="finding-the-mle-numerically" class="slide level2" data-number="4.14">
-<h2><span class="header-section-number">4.14</span> Finding the MLE numerically</h2>
-<aside class="notes">
-<p>The likelihood of <span class="math inline">\(Y\)</span> involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<p><span class="math display">\[
-\begin{aligned}
-\log \mathcal{L} (\lambda)
-&amp;= \log \prod_{i=1}^n \int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\\
-&amp;= \sum_{i=1}^n \log\left\{\int_t p(Y=y_i|T=t)p_\lambda(T=t)dt\right\}\\
-\end{aligned}
-\]</span></p>
-<aside class="notes">
-<p>The derivative of this expression doesn’t come out cleanly, so we will use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code>stats::nlm()</code>) to find the MLE and corresponding standard error.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="slide level2" data-number="4.15">
-<h2><span class="header-section-number">4.15</span> Cluster-robust standard errors for clustered sampling designs</h2>
-<p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.</p>
+<section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="slide level2" data-number="4.16">
+<h2><span class="header-section-number">4.16</span> Cluster-robust standard errors for clustered sampling designs</h2>
+<p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, which violates the independence assumption of <a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>. The estimate <span class="math inline">\(\hat\lambda\)</span> itself remains usable, but the inverse-information standard error of <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> no longer applies to it.</p>
 <h3 id="why-clustering-matters">Why clustering matters</h3>
 <p>When observations are clustered:</p>
 <ul>
 <li>Individuals within the same cluster share common exposures or characteristics</li>
-<li>Standard errors that ignore clustering will be <strong>too small</strong> (anti-conservative)</li>
-<li>Confidence intervals will be <strong>too narrow</strong></li>
-<li>p-values will be <strong>too optimistic</strong></li>
+<li>Standard errors that ignore clustering are usually <strong>too small</strong> (anti-conservative)</li>
+<li>Confidence intervals are then <strong>too narrow</strong></li>
+<li>p-values are then <strong>too optimistic</strong></li>
 </ul>
+<p>Usually rather than always: the direction follows the sign of the within-cluster correlation, which is positive in most survey designs but need not be.</p>
 <h3 id="cluster-robust-variance-estimation">Cluster-robust variance estimation</h3>
-<p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> (also known as the Huber-White robust variance estimator):</p>
-<p><span class="math display">\[V_{\text{robust}} = H^{-1} B H^{-1}\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(V_{\text{robust}}\)</span> is the cluster-robust variance-covariance matrix for the parameter estimates</li>
-<li><span class="math inline">\(H\)</span> is the Hessian matrix (matrix of second partial derivatives of the log-likelihood with respect to the parameters, evaluated at the MLE <span class="math inline">\(\hat{\lambda}\)</span>)</li>
-<li><span class="math inline">\(B\)</span> is the “meat” of the sandwich, calculated from cluster-level score contributions:</li>
-</ul>
-<p><span class="math display">\[B = \sum_{c=1}^C U_c U_c^T\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(C\)</span> is the total number of clusters in the sample</li>
-<li><span class="math inline">\(U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)\)</span> is the score contribution (gradient of log-likelihood with respect to <span class="math inline">\(\lambda\)</span>) from all observations in cluster <span class="math inline">\(c\)</span></li>
-<li><span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient operator (vector of partial derivatives with respect to the parameter <span class="math inline">\(\lambda\)</span>)</li>
-</ul>
+<p>To account for within-cluster correlation, <code>serocalculator</code> implements the <strong>sandwich estimator</strong> — also known as the Huber-White robust variance estimator <span class="citation" data-cites="Huber1967 White1980">(<a href="#/references" role="doc-biblioref" onclick="">Huber 1967</a>; <a href="#/references" role="doc-biblioref" onclick="">White 1980</a>)</span>, generalized to clustered/grouped data by <span class="citation" data-cites="LiangZeger1986">Liang and Zeger (<a href="#/references" role="doc-biblioref" onclick="">1986</a>)</span>.</p>
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition (Sandwich variance estimator)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-cluster-robust-variance" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the MLE. Write <span class="math inline">\(U_i\)</span> for observation <span class="math inline">\(i\)</span>’s score contribution (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) — the gradient of its own log-likelihood <span class="math inline">\(\ell_i\)</span> (<a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>) — and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+U_i &amp;= \nabla_\lambda \ell_i(\lambda)
+\\
+U_c &amp;= \sum_{i \in c} U_i
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(\nabla_\lambda\)</span> denotes the gradient with respect to <span class="math inline">\(\lambda\)</span>. These are gradients of the same <span class="math inline">\(\ell_i\)</span> that <a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a> defines: the full-sample log-likelihood sums <span class="math inline">\(\ell_i\)</span> over every observation, and the sandwich accumulates their gradients cluster by cluster. The <strong>cluster-robust variance-covariance matrix</strong> for the parameter estimates is then</p>
+<p><span class="math display">\[
+\begin{aligned}
+V_{\text{robust}} &amp;= H^{-1} B H^{-1}
+\\
+B &amp;= \sum_{c=1}^C U_c U_c^T
+\end{aligned}
+\]</span></p>
+<p>with <span class="math inline">\(B\)</span> the “meat” of the sandwich.</p>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>The sign convention does not matter here: <span class="math inline">\(H\)</span> appears twice, so substituting the observed information <span class="math inline">\(I(\hat\lambda) = -H\)</span> (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) leaves <span class="math inline">\(V_{\text{robust}}\)</span> unchanged.</p>
+<p>The sandwich generalizes <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> rather than replacing it. When the model is correctly specified and observations really are independent, <span class="math inline">\(B\)</span> estimates the same information as <span class="math inline">\(-H\)</span> does, and <span class="math inline">\(H^{-1} B H^{-1}\)</span> collapses to <span class="math inline">\(\mathopen{}\left[I(\hat\lambda)\right]\mathclose{}^{-1}\)</span> — the ordinary standard error. Clustering is what drives the two apart, and the gap between them is what the correction recovers.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <h3 id="implementation-in-serocalculator">Implementation in serocalculator</h3>
 <p>Users can specify clustering using the <code>cluster_var</code> parameter:</p>
 <div class="cell">
@@ -1219,11 +1322,24 @@ p(Y=y\mid T=\text{NA})\cdot \operatorname{exp}\mathopen{}\left\{-\lambda a\right
 </details>
 </div>
 <p>When cluster-robust standard errors are used, the <code>summary()</code> output indicates this with <code>se_type = "cluster-robust"</code>.</p>
+<aside class="notes">
+<p>Internally the optimization is parameterized by <span class="math inline">\(\log\lambda\)</span> rather than <span class="math inline">\(\lambda\)</span>, which keeps the estimate positive, so the sandwich above is evaluated on that scale and <code>summary()</code> converts the result back with the delta method (<span class="math inline">\(\mathop{\widehat{\operatorname{SE}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{} = \hat\lambda \cdot \mathop{\widehat{\operatorname{SE}}}\nolimits\mathopen{}\left(\log\hat\lambda\right)\mathclose{}\)</span>).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <h3 id="effect-on-results">Effect on results</h3>
 <ul>
-<li><strong>Point estimates</strong> (incidence rates) remain unchanged</li>
-<li><strong>Standard errors</strong> often increase to reflect within-cluster correlation</li>
-<li><strong>Confidence intervals</strong> appropriately widen to account for reduced effective sample size</li>
+<li><strong>Point estimates</strong> (incidence rates) are unchanged: <code>cluster_var</code> affects only the variance, not the likelihood being maximized</li>
+<li><strong>Standard errors</strong> usually increase, reflecting within-cluster correlation</li>
+<li><strong>Confidence intervals</strong> widen correspondingly, reflecting the reduced effective sample size</li>
 </ul>
 </section></section>
 <section>
@@ -2910,6 +3026,12 @@ Aiemjoy, K., Seidman J. C., Saha S., Munira S. J., Islam Sajib M. S., and Sarkar
 <div id="ref-HAY2024100806" class="csl-entry" role="listitem">
 Hay, James A., Isobel Routledge, and Saki Takahashi. 2024. <span>“Serodynamics: A Primer and Synthetic Review of Methods for Epidemiological Inference Using Serological Data.”</span> <em>Epidemics</em> 49: 100806. <a href="https://doi.org/10.1016/j.epidem.2024.100806">https://doi.org/10.1016/j.epidem.2024.100806</a>.
 </div>
+<div id="ref-Huber1967" class="csl-entry" role="listitem">
+Huber, Peter J. 1967. <span>“The Behavior of Maximum Likelihood Estimates Under Nonstandard Conditions.”</span> In <em>Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability, Volume 1: Statistics</em>. University of California Press.
+</div>
+<div id="ref-LiangZeger1986" class="csl-entry" role="listitem">
+Liang, Kung-Yee, and Scott L. Zeger. 1986. <span>“Longitudinal Data Analysis Using Generalized Linear Models.”</span> <em>Biometrika</em> 73 (1): 13–22. <a href="https://doi.org/10.1093/biomet/73.1.13">https://doi.org/10.1093/biomet/73.1.13</a>.
+</div>
 <div id="ref-Noordzij2010diseasemeasures" class="csl-entry" role="listitem">
 Noordzij, Marlies, Friedo W. Dekker, Carmine Zoccali, and Kitty J. Jager. 2010. <span>“<span class="nocase">Measures of Disease Frequency: Prevalence and Incidence</span>.”</span> <em>Nephron Clinical Practice</em> 115 (1): c17–20. <a href="https://doi.org/10.1159/000286345">https://doi.org/10.1159/000286345</a>.
 </div>
@@ -2921,6 +3043,9 @@ Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić Marinović
 </div>
 <div id="ref-volterra1928variations" class="csl-entry" role="listitem">
 Volterra, Vito. 1928. <span>“Variations and Fluctuations of the Number of Individuals in Animal Species Living Together.”</span> <em>ICES Journal of Marine Science</em> 3 (1): 3–51.
+</div>
+<div id="ref-White1980" class="csl-entry" role="listitem">
+White, Halbert. 1980. <span>“A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct Test for Heteroskedasticity.”</span> <em>Econometrica</em> 48 (4): 817–38.
 </div>
 </div>
 

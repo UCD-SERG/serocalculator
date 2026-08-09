@@ -28,7 +28,7 @@ website:
         menu:
           - text: "v1.4.1 (stable)"
             href: https://UCD-SERG.github.io/serocalculator/latest-tag/
-          - text: "1.4.1.9038 (dev)"
+          - text: "1.4.1.9039 (dev)"
             href: https://UCD-SERG.github.io/serocalculator/dev/
           - text: "---"
           - text: "v1.4.0"

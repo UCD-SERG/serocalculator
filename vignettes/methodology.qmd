@@ -474,7 +474,7 @@ $$\Lik(\lambda) \eqdef \dens(\text{data} \mid \lambda)$$
 The **log-likelihood** $\llik(\lambda) \eqdef \logf{\Lik(\lambda)}$ is
 maximized at the same $\lambda$, and is easier to work with because the
 logarithm turns products into sums
-([Theorem 15](https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod)
+([the logarithm-of-a-product theorem](https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod)
 in *Regression Models for Epidemiology*).
 :::
 

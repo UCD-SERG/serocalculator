@@ -788,18 +788,23 @@ see "Noise and never-infected subjects".
 
 #### Full-sample likelihood, assuming independent participants
 
-If participants are **independent** of one another, the likelihood
-(@def-likelihood) of the whole sample $\vec{y} = (y_1, y_2, \ldots, y_n)$
-factors into the product of their individual contributions
-(@prp-marginal-likelihood):
+Write $\Lik_i$ and $\llik_i$ for participant $i$'s own likelihood and
+log-likelihood, which is @prp-marginal-likelihood evaluated at
+$y = y_i$:
 
 $$
 \begin{aligned}
-\Lik(\lambda)
-&= \prod_{i=1}^n \dens(Y=y_i)
-\\&= \prod_{i=1}^n \int_t \dens(Y=y_i|T=t)\,\dens_\lambda(T=t)\,dt\\
+\Lik_i(\lambda) &= \dens(Y = y_i)
+\\
+\llik_i(\lambda) &= \logf{\Lik_i(\lambda)}
 \end{aligned}
 $$
+
+If participants are **independent** of one another, the likelihood
+(@def-likelihood) of the whole sample
+$\vec{y} = (y_1, y_2, \ldots, y_n)$ is their product:
+
+$$\Lik(\lambda) = \prod_{i=1}^n \Lik_i(\lambda)$$
 :::
 
 ::: notes
@@ -817,21 +822,22 @@ denoted $\hat\lambda$.
 ## Finding the MLE numerically
 
 ::: notes
-The likelihood of $Y$ involves the product of integrals, so the log-likelihood involves the sum of the logs of integrals:
+Taking logs turns that product into a sum:
 :::
 
 $$
 \begin{aligned}
 \llik(\lambda)
-&= \log \prod_{i=1}^n \int_t \dens(Y=y_i|T=t)\,\dens_\lambda(T=t)\,dt\\
-&= \sum_{i=1}^n \log\left\{\int_t \dens(Y=y_i|T=t)\,\dens_\lambda(T=t)\,dt\right\}\\
+&= \logf{\prod_{i=1}^n \Lik_i(\lambda)}
+\\&= \sum_{i=1}^n \llik_i(\lambda)
 \end{aligned}
 $$
 
 ::: notes
 
-The derivative of this expression doesn't come out cleanly,
-so we will use a *numerical method*
+Each $\llik_i$ is the log of an integral (@prp-marginal-likelihood),
+so the derivative of this sum doesn't come out cleanly,
+and we use a *numerical method*
 (specifically, a Newton-type algorithm,
 implemented by `stats::nlm()`)
 to find the MLE.

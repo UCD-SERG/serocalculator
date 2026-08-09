@@ -69,6 +69,10 @@
 
 ## Documentation
 
+* Split the methodology article's combined "Likelihood and log-likelihood"
+  definition into two separate, independently cross-referenceable
+  definitions (`#def-likelihood`, `#def-log-likelihood`) --- previously
+  only the likelihood half had its own citable id.
 * Formalized the "Cluster-robust standard errors" section of the
   methodology article: the sandwich estimator now cites Huber (1967),
   White (1980), and the clustered-data extension by Liang and Zeger

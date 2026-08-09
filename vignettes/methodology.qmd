@@ -434,7 +434,7 @@ $$
 1_{t = \NA} \expf{-\lambda a}
 $$
 
-Its rate parameter is exactly the incidence rate of @def-incidence, which is what makes $T$ worth recovering.
+Its rate parameter is exactly the incidence rate of @def-incidence, and that identity is what makes $T$ worth recovering.
 :::
 
 ::: notes
@@ -472,8 +472,10 @@ data, read as a function of the parameter rather than of the data:
 $$\Lik(\lambda) \eqdef \dens(\text{data} \mid \lambda)$$
 
 The **log-likelihood** $\llik(\lambda) \eqdef \logf{\Lik(\lambda)}$ is
-maximized at the same $\lambda$, and is easier to work with because it
-turns products into sums.
+maximized at the same $\lambda$, and is easier to work with because the
+logarithm turns products into sums
+([the logarithm-of-a-product theorem](https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod)
+in *Regression Models for Epidemiology*).
 :::
 
 {{< slidebreak >}}
@@ -755,7 +757,7 @@ $$\dens(Y=y) = \int_t \dens(Y=y|T=t)\,\dens(T=t)\, dt$$
 That integral is shorthand, because $T$ is not purely continuous: it has
 the **mixed** distribution of @prp-time-since-infection, continuous on
 $[0,a]$ plus an atom at $T=\NA$.
-Written out, it is
+Written out over both parts, the integral is
 
 $$
 \dens(Y=y) =
@@ -841,7 +843,7 @@ and we use a *numerical method*
 (specifically, a Newton-type algorithm,
 implemented by `stats::nlm()`)
 to find the MLE.
-That algorithm also returns a numerical Hessian (@def-hessian) at the maximum, which is what @thm-mle-asymptotic-variance turns into a standard error.
+That algorithm also returns a numerical Hessian (@def-hessian) at the maximum, and @thm-mle-asymptotic-variance turns that Hessian into a standard error.
 
 :::
 

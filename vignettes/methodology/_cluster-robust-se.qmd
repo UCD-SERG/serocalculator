@@ -1,36 +1,75 @@
-In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, violating the independence assumption of standard maximum likelihood estimation.
+In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area).
+Observations within the same cluster are often more similar to each other than to observations from different clusters, which violates the independence assumption of @prp-full-sample-likelihood.
+The estimate $\hat\lambda$ itself remains usable, but the inverse-information standard error of @thm-mle-asymptotic-variance no longer applies to it.
 
 ### Why clustering matters
 
 When observations are clustered:
 
 * Individuals within the same cluster share common exposures or characteristics
-* Standard errors that ignore clustering will be **too small** (anti-conservative)
-* Confidence intervals will be **too narrow**
-* p-values will be **too optimistic**
+* Standard errors that ignore clustering are usually **too small** (anti-conservative)
+* Confidence intervals are then **too narrow**
+* p-values are then **too optimistic**
+
+Usually rather than always: the direction follows the sign of the within-cluster correlation, which is positive in most survey designs but need not be.
 
 ### Cluster-robust variance estimation
 
-To account for within-cluster correlation, `serocalculator` implements the **sandwich estimator** (also known as the Huber-White robust variance estimator):
+To account for within-cluster correlation, `serocalculator` implements the **sandwich estimator** --- also known as the Huber-White robust variance estimator [@Huber1967; @White1980], generalized to clustered/grouped data by @LiangZeger1986.
 
-$$V_{\text{robust}} = H^{-1} B H^{-1}$$
+::: {#def-cluster-robust-variance}
 
-where:
+#### Sandwich variance estimator
 
-* $V_{\text{robust}}$ is the cluster-robust variance-covariance matrix for the parameter estimates
-* $H$ is the Hessian matrix of the *negative* log-likelihood
-  (the observed information),
-  evaluated at the MLE $\hl$.
-  `serocalculator` obtains it from `stats::nlm()`'s own `hessian` output.
-* $B$ is the "meat" of the sandwich, calculated from cluster-level score contributions:
+Let $C$ be the total number of non-overlapping clusters in the sample,
+and let $H = \hess(\hat\lambda)$ be the Hessian (@def-hessian) at the
+MLE --- `serocalculator` obtains it from `stats::nlm()`'s own
+`hessian` output.
+Write $U_i$ for observation $i$'s score contribution (@def-score) --- the
+gradient of its own log-likelihood $\llik_i$ (@prp-full-sample-likelihood)
+--- and $U_c$ for the total over the observations in cluster $c$:
 
-$$B = \sum_{c=1}^C U_c U_c^T$$
+$$
+\begin{aligned}
+U_i &= \nabla_\lambda \llik_i(\lambda)
+\\
+U_c &= \sum_{i \in c} U_i
+\end{aligned}
+$$
 
-where:
+where $\nabla_\lambda$ denotes the gradient with respect to $\lambda$.
+These are gradients of the same $\llik_i$ that
+@prp-full-sample-likelihood defines: the full-sample log-likelihood
+sums $\llik_i$ over every observation, and the sandwich accumulates
+their gradients cluster by cluster.
+The **cluster-robust variance-covariance matrix** for the parameter
+estimates is then
 
-* $C$ is the total number of clusters in the sample
-* $U_c = \sum_{i \in c} \nabla_\lambda \log p(Y_i | \lambda)$ is the score contribution (gradient of log-likelihood with respect to $\lambda$) from all observations in cluster $c$
-* $\nabla_\lambda$ denotes the gradient operator (vector of partial derivatives with respect to the parameter $\lambda$)
+$$
+\begin{aligned}
+V_{\text{robust}} &= H^{-1} B H^{-1}
+\\
+B &= \sum_{c=1}^C U_c U_c^T
+\end{aligned}
+$$
+
+with $B$ the "meat" of the sandwich.
+:::
+
+::: notes
+The sign convention does not matter here: $H$ appears twice, so
+substituting the observed information $\oinf(\hat\lambda) = -H$
+(@def-observed-information) leaves $V_{\text{robust}}$ unchanged.
+
+The sandwich generalizes @thm-mle-asymptotic-variance rather than
+replacing it.
+When the model is correctly specified and observations really are
+independent, $B$ estimates the same information as $-H$ does, and
+$H^{-1} B H^{-1}$ collapses to $\sb{\oinf(\hat\lambda)}^{-1}$ --- the
+ordinary standard error.
+Clustering is what drives the two apart, and the gap between them is
+what the correction recovers.
+:::
 
 ### Multi-way clustering
 
@@ -137,8 +176,16 @@ summary(
 )
 ```
 
+::: notes
+Internally the optimization is parameterized by $\log\lambda$ rather
+than $\lambda$, which keeps the estimate positive, so the sandwich
+above is evaluated on that scale and `summary()` converts the result
+back with the delta method
+($\hSEf{\hat\lambda} = \hat\lambda \cdot \hSEf{\log\hat\lambda}$).
+:::
+
 ### Effect on results
 
-* **Point estimates** (incidence rates) remain unchanged
-* **Standard errors** often increase to reflect within-cluster correlation
-* **Confidence intervals** appropriately widen to account for reduced effective sample size
+* **Point estimates** (incidence rates) are unchanged: `cluster_var` affects only the variance, not the likelihood being maximized
+* **Standard errors** usually increase, reflecting within-cluster correlation
+* **Confidence intervals** widen correspondingly, reflecting the reduced effective sample size

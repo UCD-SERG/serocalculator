@@ -7,10 +7,17 @@ using a typical maximum likelihood approach.
 . . . 
 
 ::::: notes
-Starting with the likelihood:
+Starting with the likelihood (@def-likelihood), which multiplies
+participants' contributions because we treat them as independent:
 :::::
 
-$$\Lik^*(\lambda) = \prod_{i=1}^n \dens(T=t_i \mid \lambda) = \prod_{i=1}^n \lambda \expf{-\lambda t_i}$$
+$$
+\begin{aligned}
+\Lik^*(\lambda)
+&= \prod_{i=1}^n \dens(T=t_i \mid \lambda)
+\\&= \prod_{i=1}^n \lambda \expf{-\lambda t_i}
+\end{aligned}
+$$
 
 . . . 
 
@@ -18,25 +25,43 @@ $$\Lik^*(\lambda) = \prod_{i=1}^n \dens(T=t_i \mid \lambda) = \prod_{i=1}^n \lam
 Taking the logarithm of the likelihood:
 ::::
 
-$$\llik^*(\lambda) = \logf{\Lik^*(\lambda)} = \sum_{i=1}^n \paren{\logf{\lambda} -\lambda t_i}$$
+$$
+\begin{aligned}
+\llik^*(\lambda)
+&= \logf{\Lik^*(\lambda)}
+\\&= \sum_{i=1}^n \paren{\logf{\lambda} -\lambda t_i}
+\end{aligned}
+$$
 
 . . . 
 
 ::: notes
-Taking the derivative of that log-likelihood to find the score function:
+Taking the derivative of that log-likelihood to find the score function
+(@def-score):
 :::
 $$\llik^{*'}(\lambda) = \sum_{i=1}^n \paren{\invf{\lambda} - t_i}$$
 
-. . . 
+. . .
 
 ::: notes
-Setting the score function equal to 0 to find the score equation, 
-and solving the score equation for $\lambda$ 
+Setting the score function equal to 0 to find the score equation,
+and solving the score equation for $\lambda$
 to find the maximum likelihood estimate:
 :::
 
-$$\hat{\lambda}_{\text{ML}} = \frac{n}{\sum_{i=1}^n t_i} = \frac{1}{\bar{t}}$$
+::: {#prp-mle-fully-observed}
 
-::: notes
-The MLE turns out to be the inverse of the mean.
+#### MLE when infection times are fully observed
+
+If the latent infection times $t_1, \ldots, t_n$ were fully observed,
+solving the score equation (@def-score) would estimate $\lambda$ as
+the reciprocal of their mean:
+
+$$
+\begin{aligned}
+\hat{\lambda}_{\text{ML}}
+&= \frac{n}{\sum_{i=1}^n t_i}
+\\&= \frac{1}{\bar{t}}
+\end{aligned}
+$$
 :::

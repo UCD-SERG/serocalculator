@@ -69,6 +69,12 @@
 
 ## Documentation
 
+* Formalized the "Cluster-robust standard errors" section of the
+  methodology article: the sandwich estimator now cites Huber (1967),
+  White (1980), and the clustered-data extension by Liang and Zeger
+  (1986), and the Hessian, score function, and other definitions and
+  results in that chapter are now stated as numbered, cross-referenced
+  Quarto theorem/definition divs instead of informal prose.
 * The methodology, scrub typhus, and antibody-response-model articles no
   longer fetch their example data from OSF at render time --- the docs build
   was failing whenever OSF was unavailable, on PRs that never touched the

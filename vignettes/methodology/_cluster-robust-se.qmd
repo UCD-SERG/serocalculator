@@ -22,14 +22,20 @@ To account for within-cluster correlation, `serocalculator` implements the **san
 #### Sandwich variance estimator
 
 Let $C$ be the total number of non-overlapping clusters in the sample,
-let $H = \hess(\hat\lambda)$ be the Hessian (@def-hessian) at the MLE,
-and let
+and let $H = \hess(\hat\lambda)$ be the Hessian (@def-hessian) at the
+MLE.
+Write $U_i$ for observation $i$'s score contribution (@def-score), and
+$U_c$ for the total over the observations in cluster $c$:
 
-$$U_c = \sum_{i \in c} \nabla_\lambda \log \dens(Y_i \mid \lambda)$$
+$$
+\begin{aligned}
+U_i &= \nabla_\lambda \log \dens(Y_i \mid \lambda)
+\\
+U_c &= \sum_{i \in c} U_i
+\end{aligned}
+$$
 
-be the total score contribution (@def-score) of the observations in
-cluster $c$, where $\nabla_\lambda$ denotes the gradient with respect
-to $\lambda$.
+where $\nabla_\lambda$ denotes the gradient with respect to $\lambda$.
 The **cluster-robust variance-covariance matrix** for the parameter
 estimates is then
 

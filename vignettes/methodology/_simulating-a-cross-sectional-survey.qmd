@@ -8,9 +8,8 @@ sim_lambda <- 0.2 # true incidence rate, per person-year
 sim_lifespan <- c(0, 10) # age range of the simulated survey
 sim_n <- 100 # number of participants
 
-# Antibody-decay parameters. `typhoid_curves_nostrat_100` ships with the
-# package and is the same posterior sample the article downloads from OSF
-# elsewhere, so the simulation needs no network access.
+# Antibody-decay parameters: `typhoid_curves_nostrat_100`, the same bundled
+# sample used for the antibody-response curves earlier in this article.
 sim_curve_params <-
   typhoid_curves_nostrat_100 |>
   dplyr::filter(iter < 50, antigen_iso %in% antibodies)

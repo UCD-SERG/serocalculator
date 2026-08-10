@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-08-09">
+<meta name="dcterms.date" content="2026-08-10">
 <title>Estimating Incidence Rates from Cross-Sectional Serosurveys – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -277,46 +277,6 @@ does not exist yet when this runs.
 <link href="../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
 <script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script><style>
-div.callout-lem.callout {
-  border-left-color: #1565C0;
-}
-div.callout-lem.callout-style-default .callout-header {
-  background-color: rgba(21, 101, 192, 0.13);
-}
-div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-cnj.callout {
-  border-left-color: #558B2F;
-}
-div.callout-cnj.callout-style-default .callout-header {
-  background-color: rgba(85, 139, 47, 0.13);
-}
-div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-cor.callout {
-  border-left-color: #00838F;
-}
-div.callout-cor.callout-style-default .callout-header {
-  background-color: rgba(0, 131, 143, 0.13);
-}
-div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-def.callout {
-  border-left-color: #1B5E20;
-}
-div.callout-def.callout-style-default .callout-header {
-  background-color: rgba(27, 94, 32, 0.13);
-}
-div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
 div.callout-prp.callout {
   border-left-color: #827717;
 }
@@ -326,16 +286,6 @@ div.callout-prp.callout-style-default .callout-header {
 div.callout-prp .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-prp.callout-style-default .callout-icon::before, div.callout-prp.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-exr.callout {
-  border-left-color: #FFA500;
-}
-div.callout-exr.callout-style-default .callout-header {
-  background-color: rgba(255, 165, 0, 0.13);
-}
-div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-proof.callout {
   border-left-color: #37474F;
@@ -347,15 +297,45 @@ div.callout-proof .callout-toggle::before {  background-image: url('data:image/s
 div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-solution.callout {
-  border-left-color: #4E342E;
+div.callout-lem.callout {
+  border-left-color: #1565C0;
 }
-div.callout-solution.callout-style-default .callout-header {
-  background-color: rgba(78, 52, 46, 0.13);
+div.callout-lem.callout-style-default .callout-header {
+  background-color: rgba(21, 101, 192, 0.13);
 }
-div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-exr.callout {
+  border-left-color: #FFA500;
+}
+div.callout-exr.callout-style-default .callout-header {
+  background-color: rgba(255, 165, 0, 0.13);
+}
+div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-def.callout {
+  border-left-color: #1B5E20;
+}
+div.callout-def.callout-style-default .callout-header {
+  background-color: rgba(27, 94, 32, 0.13);
+}
+div.callout-def .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cnj.callout {
+  border-left-color: #558B2F;
+}
+div.callout-cnj.callout-style-default .callout-header {
+  background-color: rgba(85, 139, 47, 0.13);
+}
+div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-remark.callout {
   border-left-color: #AD1457;
@@ -376,6 +356,26 @@ div.callout-exm.callout-style-default .callout-header {
 div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cor.callout {
+  border-left-color: #00838F;
+}
+div.callout-cor.callout-style-default .callout-header {
+  background-color: rgba(0, 131, 143, 0.13);
+}
+div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-solution.callout {
+  border-left-color: #4E342E;
+}
+div.callout-solution.callout-style-default .callout-header {
+  background-color: rgba(78, 52, 46, 0.13);
+}
+div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script><script type="text/javascript">
@@ -573,7 +573,7 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9040</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9042</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -663,7 +663,7 @@ window.Quarto = {
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9040 (dev)</span>
+ <span class="menu-text">1.4.1.9042 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -672,7 +672,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9039 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9041 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1343,7 +1343,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Estimating Incidence Rates from Cross-Sectional Serosurveys</a></li></ol></nav><h1 class="title display-7">Estimating Incidence Rates from Cross-Sectional Serosurveys</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-08-09</p>
+<p class="date">2026-08-10</p>
 </header><section id="infectious-disease-epidemiology" class="level1" data-number="1"><h1 data-number="1">
 <span class="header-section-number">1</span> Infectious disease epidemiology</h1>
 <section id="salmonella-enterica-typhoid-fever" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="salmonella-enterica-typhoid-fever">
@@ -1619,23 +1619,41 @@ CC BY-SA attribution for the map with them. -->
 </div>
 </section><section id="maximum-likelihood-estimation" class="level2 smaller" data-number="4.6"><h2 class="smaller anchored" data-number="4.6" data-anchor-id="maximum-likelihood-estimation">
 <span class="header-section-number">4.6</span> Maximum likelihood estimation</h2>
-<p>Several approaches could estimate <span class="math inline">\(\lambda\)</span> from the data. <code>serocalculator</code> uses <strong>maximum likelihood</strong>: it reports the value of <span class="math inline">\(\lambda\)</span> that makes the observed data most probable. Stating that precisely takes two definitions.</p>
+<p>Several approaches could estimate <span class="math inline">\(\lambda\)</span> from the data. <code>serocalculator</code> uses <strong>maximum likelihood</strong>: it reports the value of <span class="math inline">\(\lambda\)</span> that makes the observed data most probable. Stating that precisely takes three definitions.</p>
 <div class="callout callout-style-simple callout-def no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Def</span>Definition (Likelihood and log-likelihood)
+<span class="screen-reader-only">Def</span>Definition (Likelihood)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-likelihood" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Likelihood and log-likelihood)</strong></span> The <strong>likelihood</strong> is the probability (or density) of the observed data, read as a function of the parameter rather than of the data:</p>
+<p><span class="theorem-title"><strong>Definition 3 (Likelihood)</strong></span> The <strong>likelihood</strong> is the probability (or density) of the observed data, read as a function of the parameter rather than of the data:</p>
 <p><span class="math display">\[\mathscr{L}(\lambda) \stackrel{\text{def}}{=}\operatorname{p}(\text{data} \mid \lambda)\]</span></p>
-<p>The <strong>log-likelihood</strong> <span class="math inline">\(\ell(\lambda) \stackrel{\text{def}}{=}\operatorname{log}\mathopen{}\left\{\mathscr{L}(\lambda)\right\}\mathclose{}\)</span> is maximized at the same <span class="math inline">\(\lambda\)</span>, and is easier to work with because the logarithm turns products into sums (<a href="https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod">the logarithm-of-a-product theorem</a> in <em>Regression Models for Epidemiology</em>).</p>
 </div>
 </div>
+</div>
+<div class="callout callout-style-simple callout-def no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Def</span>Definition (Log-likelihood)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div id="def-log-likelihood" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Log-likelihood)</strong></span> The <strong>log-likelihood</strong> is the log of the likelihood (<a href="#def-likelihood" class="quarto-xref">Definition&nbsp;3</a>):</p>
+<p><span class="math display">\[\ell(\lambda) \stackrel{\text{def}}{=}\operatorname{log}\mathopen{}\left\{\mathscr{L}(\lambda)\right\}\mathclose{}\]</span></p>
+</div>
+</div>
+</div>
+<div class="notes">
+<p>The log-likelihood is maximized at the same <span class="math inline">\(\lambda\)</span> as the likelihood, and is easier to work with because the logarithm turns products into sums (<a href="https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod">the logarithm-of-a-product theorem</a> in <em>Regression Models for Epidemiology</em>).</p>
 </div>
 <div class="callout callout-style-simple callout-def no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1648,7 +1666,7 @@ CC BY-SA attribution for the map with them. -->
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-score" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Score function)</strong></span> The <strong>score function</strong> is the derivative of the log-likelihood with respect to the parameter (in general, its gradient):</p>
+<p><span class="theorem-title"><strong>Definition 5 (Score function)</strong></span> The <strong>score function</strong> is the derivative of the log-likelihood with respect to the parameter (in general, its gradient):</p>
 <p><span class="math display">\[\ell'(\lambda) \stackrel{\text{def}}{=}\frac{\partial}{\partial \lambda}\ell(\lambda)\]</span></p>
 <p>A maximum likelihood estimate <span class="math inline">\(\hat\lambda\)</span> solves the <strong>score equation</strong> <span class="math inline">\(\ell'(\hat\lambda) = 0\)</span>.</p>
 </div>
@@ -1684,7 +1702,7 @@ CC BY-SA attribution for the map with them. -->
 \]</span></p>
 <p>. . .</p>
 <div class="notes">
-<p>Taking the derivative of that log-likelihood to find the score function (<a href="#def-score" class="quarto-xref">Definition&nbsp;4</a>):</p>
+<p>Taking the derivative of that log-likelihood to find the score function (<a href="#def-score" class="quarto-xref">Definition&nbsp;5</a>):</p>
 </div>
 <p><span class="math display">\[\ell^{*'}(\lambda) = \sum_{i=1}^n \mathopen{}\left(\mathopen{}\left(\lambda\right)^{-1}\mathclose{} - t_i\right)\mathclose{}\]</span></p>
 <p>. . .</p>
@@ -1702,7 +1720,7 @@ CC BY-SA attribution for the map with them. -->
 </div>
 <div class="callout-body-container callout-body">
 <div id="prp-mle-fully-observed" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 2 (MLE when infection times are fully observed)</strong></span> If the latent infection times <span class="math inline">\(t_1, \ldots, t_n\)</span> were fully observed, solving the score equation (<a href="#def-score" class="quarto-xref">Definition&nbsp;4</a>) would estimate <span class="math inline">\(\lambda\)</span> as the reciprocal of their mean:</p>
+<p><span class="theorem-title"><strong>Proposition 2 (MLE when infection times are fully observed)</strong></span> If the latent infection times <span class="math inline">\(t_1, \ldots, t_n\)</span> were fully observed, solving the score equation (<a href="#def-score" class="quarto-xref">Definition&nbsp;5</a>) would estimate <span class="math inline">\(\lambda\)</span> as the reciprocal of their mean:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \hat{\lambda}_{\text{ML}}
@@ -1772,7 +1790,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-hessian" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Hessian)</strong></span> The <strong>Hessian</strong> is the second derivative of the log-likelihood with respect to the parameter (in general, the matrix of its second partial derivatives):</p>
+<p><span class="theorem-title"><strong>Definition 6 (Hessian)</strong></span> The <strong>Hessian</strong> is the second derivative of the log-likelihood with respect to the parameter (in general, the matrix of its second partial derivatives):</p>
 <p><span class="math display">\[\ell''(\lambda) \stackrel{\text{def}}{=}\frac{\partial^2}{\partial \lambda^2}\ell(\lambda)\]</span></p>
 </div>
 </div>
@@ -1788,7 +1806,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-observed-information" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Observed information)</strong></span> The <strong>observed information</strong> is the negative Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;5</a>):</p>
+<p><span class="theorem-title"><strong>Definition 7 (Observed information)</strong></span> The <strong>observed information</strong> is the negative Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;6</a>):</p>
 <p><span class="math display">\[I(\lambda) \stackrel{\text{def}}{=}-\ell''(\lambda)\]</span></p>
 <p>A sharper peak at the maximum means a larger observed information.</p>
 </div>
@@ -1805,7 +1823,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-body-container callout-body">
 <div id="thm-mle-asymptotic-variance" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Asymptotic variance of the MLE)</strong></span> Under standard regularity conditions, the variance of a maximum likelihood estimate is approximately the inverse of the observed information (<a href="#def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) at that estimate:</p>
+<p><span class="theorem-title"><strong>Theorem 1 (Asymptotic variance of the MLE)</strong></span> Under standard regularity conditions, the variance of a maximum likelihood estimate is approximately the inverse of the observed information (<a href="#def-observed-information" class="quarto-xref">Definition&nbsp;7</a>) at that estimate:</p>
 <p><span class="math display">\[\mathop{\widehat{\operatorname{Var}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{} \approx \mathopen{}\left[I(\hat\lambda)\right]\mathclose{}^{-1}\]</span></p>
 </div>
 </div>
@@ -1815,7 +1833,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </section><section id="hessian-for-the-exponential-model" class="level2 smaller" data-number="4.10"><h2 class="smaller anchored" data-number="4.10" data-anchor-id="hessian-for-the-exponential-model">
 <span class="header-section-number">4.10</span> Hessian for the exponential model</h2>
 <div class="callout callout-style-default callout-exm no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1824,11 +1842,11 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse show">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div id="exm-hessian-exponential" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Latent-time exponential model)</strong></span> For the latent-time model of <a href="#prp-mle-fully-observed" class="quarto-xref">Proposition&nbsp;2</a>, the log-likelihood is <span class="math display">\[\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i\]</span></p>
-<p>so its score (<a href="#def-score" class="quarto-xref">Definition&nbsp;4</a>) and Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;5</a>) are</p>
+<p>so its score (<a href="#def-score" class="quarto-xref">Definition&nbsp;5</a>) and Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;6</a>) are</p>
 <p><span class="math display">\[
 \begin{aligned}
 \ell^{*\prime}(\lambda) &amp;= \frac{n}{\lambda} - \sum_{i=1}^n t_i
@@ -1836,7 +1854,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 \ell^{*\prime\prime}(\lambda) &amp;= -\frac{n}{\lambda^2}
 \end{aligned}
 \]</span></p>
-<p>and its observed information (<a href="#def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) is <span class="math inline">\(-\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
+<p>and its observed information (<a href="#def-observed-information" class="quarto-xref">Definition&nbsp;7</a>) is <span class="math inline">\(-\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
 <p>At the MLE <span class="math inline">\(\hat\lambda = 1/\bar t\)</span>, <a href="#thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> then gives</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2010,7 +2028,7 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 \end{aligned}
 \]</span></p>
 <div class="notes">
-<p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the maximum, and <a href="#thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns that Hessian into a standard error.</p>
+<p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;6</a>) at the maximum, and <a href="#thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns that Hessian into a standard error.</p>
 </div>
 </section><section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="level2" data-number="4.16"><h2 data-number="4.16" class="anchored" data-anchor-id="cluster-robust-standard-errors-for-clustered-sampling-designs">
 <span class="header-section-number">4.16</span> Cluster-robust standard errors for clustered sampling designs</h2>
@@ -2041,7 +2059,7 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-cluster-robust-variance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the MLE — <code>serocalculator</code> obtains it from <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>’s own <code>hessian</code> output. Write <span class="math inline">\(U_i\)</span> for observation <span class="math inline">\(i\)</span>’s score contribution (<a href="#def-score" class="quarto-xref">Definition&nbsp;4</a>) — the gradient of its own log-likelihood <span class="math inline">\(\ell_i\)</span> (<a href="#prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>) — and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 8 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;6</a>) at the MLE — <code>serocalculator</code> obtains it from <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>’s own <code>hessian</code> output. Write <span class="math inline">\(U_i\)</span> for observation <span class="math inline">\(i\)</span>’s score contribution (<a href="#def-score" class="quarto-xref">Definition&nbsp;5</a>) — the gradient of its own log-likelihood <span class="math inline">\(\ell_i\)</span> (<a href="#prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>) — and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 U_i &amp;= \nabla_\lambda \ell_i(\lambda)
@@ -2062,7 +2080,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 </div>
 <div class="notes">
-<p>The sign convention does not matter here: <span class="math inline">\(H\)</span> appears twice, so substituting the observed information <span class="math inline">\(I(\hat\lambda) = -H\)</span> (<a href="#def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) leaves <span class="math inline">\(V_{\text{robust}}\)</span> unchanged.</p>
+<p>The sign convention does not matter here: <span class="math inline">\(H\)</span> appears twice, so substituting the observed information <span class="math inline">\(I(\hat\lambda) = -H\)</span> (<a href="#def-observed-information" class="quarto-xref">Definition&nbsp;7</a>) leaves <span class="math inline">\(V_{\text{robust}}\)</span> unchanged.</p>
 <p>The sandwich generalizes <a href="#thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> rather than replacing it. When the model is correctly specified and observations really are independent, <span class="math inline">\(B\)</span> estimates the same information as <span class="math inline">\(-H\)</span> does, and <span class="math inline">\(H^{-1} B H^{-1}\)</span> collapses to <span class="math inline">\(\mathopen{}\left[I(\hat\lambda)\right]\mathclose{}^{-1}\)</span> — the ordinary standard error. Clustering is what drives the two apart, and the gap between them is what the correction recovers.</p>
 </div>
 </section><section id="multi-way-clustering" class="level3" data-number="4.16.3"><h3 data-number="4.16.3" class="anchored" data-anchor-id="multi-way-clustering">
@@ -2079,7 +2097,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-multiway-clustering-variance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8 (Multi-way clustering-robust variance)</strong></span> Let <span class="math inline">\(\mathcal{K} = \{k_1, \dots, k_p\}\)</span> denote the cluster variables. For a non-empty subset <span class="math inline">\(S \subseteq \mathcal{K}\)</span>, let <span class="math inline">\(V_S\)</span> be the one-way sandwich variance <span class="math inline">\(V_{\text{robust}}\)</span> (<a href="#def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;7</a>), computed by clustering on the interaction of the variables in <span class="math inline">\(S\)</span>. The multi-way variance is the signed sum over every such subset:</p>
+<p><span class="theorem-title"><strong>Definition 9 (Multi-way clustering-robust variance)</strong></span> Let <span class="math inline">\(\mathcal{K} = \{k_1, \dots, k_p\}\)</span> denote the cluster variables. For a non-empty subset <span class="math inline">\(S \subseteq \mathcal{K}\)</span>, let <span class="math inline">\(V_S\)</span> be the one-way sandwich variance <span class="math inline">\(V_{\text{robust}}\)</span> (<a href="#def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;8</a>), computed by clustering on the interaction of the variables in <span class="math inline">\(S\)</span>. The multi-way variance is the signed sum over every such subset:</p>
 <p><span class="math display">\[V_{\text{multiway}} = \sum_{\emptyset \neq S \subseteq \mathcal{K}} (-1)^{|S| + 1} V_S\]</span></p>
 </div>
 </div>
@@ -2088,7 +2106,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 <p>Computing every subset costs <span class="math inline">\(2^p - 1\)</span> one-way variance evaluations, so this is intended for the small <span class="math inline">\(p\)</span> (2-3) typical of nested survey designs.</p>
 </div>
 <div class="callout callout-style-default callout-exm no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -2097,10 +2115,10 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse show">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <div id="exm-two-way-clustering" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3 (Two cluster variables)</strong></span> For two cluster variables (<span class="math inline">\(p = 2\)</span>), <a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a> reduces to the familiar three-term formula:</p>
+<p><span class="theorem-title"><strong>Example 3 (Two cluster variables)</strong></span> For two cluster variables (<span class="math inline">\(p = 2\)</span>), <a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a> reduces to the familiar three-term formula:</p>
 <p><span class="math display">\[V_{\text{multiway}} = V_1 + V_2 - V_{1 \cap 2}\]</span></p>
 <p>where <span class="math inline">\(V_1\)</span> and <span class="math inline">\(V_2\)</span> cluster on each variable separately, and <span class="math inline">\(V_{1 \cap 2}\)</span> clusters on their interaction, the most granular grouping.</p>
 </div>
@@ -2109,7 +2127,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 </section><section id="small-sample-correction" class="level3" data-number="4.16.4"><h3 data-number="4.16.4" class="anchored" data-anchor-id="small-sample-correction">
 <span class="header-section-number">4.16.4</span> Small-sample correction</h3>
-<p>Two adjustments refine the one-way variance terms <span class="math inline">\(V_S\)</span> that feed <a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a>.</p>
+<p>Two adjustments refine the one-way variance terms <span class="math inline">\(V_S\)</span> that feed <a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a>.</p>
 <div class="callout callout-style-simple callout-def no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2121,7 +2139,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-finite-difference-score" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9 (Finite-difference score approximation)</strong></span> <code>serocalculator</code> approximates each cluster’s score contribution <span class="math inline">\(U_c\)</span> (<a href="#def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;7</a>) by a forward finite difference of the cluster’s log-likelihood, <span class="math inline">\(\ell_c(\lambda) = \sum_{i \in c} \log p(Y_i \mid \lambda)\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 10 (Finite-difference score approximation)</strong></span> <code>serocalculator</code> approximates each cluster’s score contribution <span class="math inline">\(U_c\)</span> (<a href="#def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;8</a>) by a forward finite difference of the cluster’s log-likelihood, <span class="math inline">\(\ell_c(\lambda) = \sum_{i \in c} \log p(Y_i \mid \lambda)\)</span>:</p>
 <p><span class="math display">\[U_c \approx \frac{\ell_c(\hat \lambda+ \epsilon) - \ell_c(\hat \lambda)}{\epsilon}, \quad \epsilon = 10^{-6}\]</span></p>
 </div>
 </div>
@@ -2137,7 +2155,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-cr1-correction" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 10 (CR1 small-sample correction)</strong></span> When <code>small_sample = "CR1"</code> (the default), each one-way subset variance <span class="math inline">\(V_S\)</span> (<a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a>) is inflated by the usual cluster degrees-of-freedom correction:</p>
+<p><span class="theorem-title"><strong>Definition 11 (CR1 small-sample correction)</strong></span> When <code>small_sample = "CR1"</code> (the default), each one-way subset variance <span class="math inline">\(V_S\)</span> (<a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a>) is inflated by the usual cluster degrees-of-freedom correction:</p>
 <p><span class="math display">\[V_S^{\text{CR1}} = \frac{G_S}{G_S - 1} \, V_S\]</span></p>
 <p>where <span class="math inline">\(G_S\)</span> is the number of unique clusters in subset <span class="math inline">\(S\)</span>’s grouping.</p>
 </div>
@@ -2156,7 +2174,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-body-container callout-body">
 <div id="def-variance-safeguards" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 11 (Flooring and fallback for the final variance)</strong></span> The inclusion-exclusion sum <span class="math inline">\(V_{\text{multiway}}\)</span> (<a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a>) is not guaranteed to be non-negative. <code>serocalculator</code> therefore floors the raw estimate at 0 (emitting a warning), independent of <code>floor_to_standard</code>, before it can reach <span class="math inline">\(\sqrt{V}\)</span> as a silent <code>NaN</code>:</p>
+<p><span class="theorem-title"><strong>Definition 12 (Flooring and fallback for the final variance)</strong></span> The inclusion-exclusion sum <span class="math inline">\(V_{\text{multiway}}\)</span> (<a href="#def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a>) is not guaranteed to be non-negative. <code>serocalculator</code> therefore floors the raw estimate at 0 (emitting a warning), independent of <code>floor_to_standard</code>, before it can reach <span class="math inline">\(\sqrt{V}\)</span> as a silent <code>NaN</code>:</p>
 <p><span class="math display">\[V_{\text{raw}}^{+} = \max\mathopen{}\left(0, V_{\text{multiway}}\right)\mathclose{}\]</span></p>
 <p>Setting <code>floor_to_standard = TRUE</code> additionally floors the result at the model-based (non-cluster-robust) variance <span class="math inline">\(V_{\text{standard}} = H^{-1}\)</span>, the inverse of the observed information at the MLE:</p>
 <p><span class="math display">\[V_{\text{final}} = \max\mathopen{}\left(V_{\text{standard}}, V_{\text{raw}}^{+}\right)\mathclose{}\]</span></p>
@@ -2288,21 +2306,28 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 <p>So the pathogen trajectory <span class="math inline">\(x(t)\)</span> never appears in the final antibody curve — it enters only through the peak time <span class="math inline">\(t_1\)</span>. From antibody data alone the pathogen-side quantities (<span class="math inline">\(\mu_0\)</span>, <span class="math inline">\(\beta\)</span>, and the inoculum <span class="math inline">\(x_0\)</span>) are not separately identifiable <span class="citation" data-cites="Teunis_2016">(<a href="#ref-Teunis_2016" role="doc-biblioref">Teunis et al. 2016</a>)</span>, so the curve is summarized by five parameters: <span class="math inline">\(y_0,\ y_1,\ t_1,\ \alpha,\ r\)</span>.</p>
 </div>
 <hr>
-<div class="cell">
+<!--
+Why this chunk filters the bundled `typhoid_curves_nostrat_100` instead of
+fetching `rtw5k` from OSF is explained in NEWS.md (#648).
+
+`curves_all` is named that way, not `curves`, because this file is included
+into methodology.qmd, which already defines a `curves` object filtered to
+the antigen-isotypes that document analyzes; reusing that name here would
+silently overwrite it for every later chunk in the parent document.
+
+`plot_curve_params_one_ab()` (below) picks rows via
+`iter == seq_len(nrow(.))`, so a single pre-filtered curve must be
+relabelled `iter = 1` or no curve is drawn.
+--><div class="cell">
 <details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ucd-serg.github.io/serocalculator/">serocalculator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cur_ai</span> <span class="op">&lt;-</span> <span class="st">"HlyE_IgG"</span></span>
 <span></span>
-<span><span class="co"># `typhoid_curves_nostrat_100` is `load_sr_params()` applied to the OSF</span></span>
-<span><span class="co"># object `rtw5k`, filtered to iter %in% 1:100, so filtering it further to</span></span>
-<span><span class="co"># iter &lt; 50 is identical to filtering the raw OSF object the same way ---</span></span>
-<span><span class="co"># no need to fetch or vendor a separate copy of rtw5k for this.</span></span>
-<span><span class="co"># Deliberately named `curves_all`, not `curves`: this file is included into</span></span>
-<span><span class="co"># methodology.qmd, which already defines a `curves` object filtered to the</span></span>
-<span><span class="co"># antigen-isotypes that document analyzes. Reusing that name here would silently</span></span>
-<span><span class="co"># overwrite it for every later chunk in the parent document.</span></span>
+<span><span class="co"># `typhoid_curves_nostrat_100` bundles antibody response-curve parameters</span></span>
+<span><span class="co"># for typhoid, in long format with one MCMC draw per `iter` (`iter` runs</span></span>
+<span><span class="co"># 1:100; see `?typhoid_curves_nostrat_100`); keep the first 49 draws.</span></span>
 <span><span class="va">curves_all</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">typhoid_curves_nostrat_100</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">iter</span> <span class="op">&lt;</span> <span class="fl">50</span><span class="op">)</span></span>
@@ -2315,8 +2340,7 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">curve1</span> <span class="op">|&gt;</span></span>
-<span>  <span class="co"># plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a</span></span>
-<span>  <span class="co"># single pre-filtered curve must be relabelled iter 1 or no curve is drawn.</span></span>
+<span>  <span class="co"># Relabel as the (only) curve to plot.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">serocalculator</span><span class="fu">:::</span><span class="fu"><a href="../man/plot_curve_params_one_ab.html">plot_curve_params_one_ab</a></span><span class="op">(</span></span>
 <span>    log_y <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -2790,9 +2814,8 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span><span class="va">sim_lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span> <span class="co"># age range of the simulated survey</span></span>
 <span><span class="va">sim_n</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># number of participants</span></span>
 <span></span>
-<span><span class="co"># Antibody-decay parameters. `typhoid_curves_nostrat_100` ships with the</span></span>
-<span><span class="co"># package and is the same posterior sample the article downloads from OSF</span></span>
-<span><span class="co"># elsewhere, so the simulation needs no network access.</span></span>
+<span><span class="co"># Antibody-decay parameters: `typhoid_curves_nostrat_100`, the same bundled</span></span>
+<span><span class="co"># sample used for the antibody-response curves earlier in this article.</span></span>
 <span><span class="va">sim_curve_params</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">typhoid_curves_nostrat_100</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">iter</span> <span class="op">&lt;</span> <span class="fl">50</span>, <span class="va">antigen_iso</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">antibodies</span><span class="op">)</span></span>
@@ -3008,9 +3031,9 @@ Figure&nbsp;9: Simulated antibody responses by cluster, faceted by antigen-isoty
 <span>  curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
-<span>  <span class="co"># Graphs are attached per stratum, which would make the cached object</span></span>
-<span>  <span class="co"># enormous for this many strata. The few curves this article plots are</span></span>
-<span>  <span class="co"># re-fit on demand instead.</span></span>
+<span>  <span class="co"># build_graph = TRUE attaches a log-likelihood plot to every stratum's</span></span>
+<span>  <span class="co"># fit, which grows large across many strata; re-fit individual curves on</span></span>
+<span>  <span class="co"># demand instead (see below).</span></span>
 <span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cache_path <span class="op">=</span> <span class="va">sim_cache</span>,</span>
 <span>  cache_id <span class="op">=</span> <span class="st">"ests"</span></span>

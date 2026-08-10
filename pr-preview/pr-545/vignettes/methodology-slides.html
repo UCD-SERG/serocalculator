@@ -15,7 +15,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-  <meta name="dcterms.date" content="2026-08-09">
+  <meta name="dcterms.date" content="2026-08-10">
   <title>serocalculator – Estimating Incidence Rates from Cross-Sectional Serosurveys</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -230,6 +230,33 @@
   <link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
   <script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
   <style>
+  .reveal div.callout-exr.callout {
+    border-left-color: #FFA500;
+  }
+  .reveal div.callout-exr.callout-style-default .callout-title {
+    background-color: rgba(255, 165, 0, 0.13);
+  }
+  .reveal div.callout-exr.callout-style-default .callout-icon::before, .reveal div.callout-exr.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-solution.callout {
+    border-left-color: #4E342E;
+  }
+  .reveal div.callout-solution.callout-style-default .callout-title {
+    background-color: rgba(78, 52, 46, 0.13);
+  }
+  .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-lem.callout {
+    border-left-color: #1565C0;
+  }
+  .reveal div.callout-lem.callout-style-default .callout-title {
+    background-color: rgba(21, 101, 192, 0.13);
+  }
+  .reveal div.callout-lem.callout-style-default .callout-icon::before, .reveal div.callout-lem.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
   .reveal div.callout-exm.callout {
     border-left-color: #6A1B9A;
   }
@@ -238,15 +265,6 @@
   }
   .reveal div.callout-exm.callout-style-default .callout-icon::before, .reveal div.callout-exm.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-prp.callout {
-    border-left-color: #827717;
-  }
-  .reveal div.callout-prp.callout-style-default .callout-title {
-    background-color: rgba(130, 119, 23, 0.13);
-  }
-  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-def.callout {
     border-left-color: #1B5E20;
@@ -275,41 +293,14 @@
   .reveal div.callout-proof.callout-style-default .callout-icon::before, .reveal div.callout-proof.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
-  .reveal div.callout-solution.callout {
-    border-left-color: #4E342E;
+  .reveal div.callout-prp.callout {
+    border-left-color: #827717;
   }
-  .reveal div.callout-solution.callout-style-default .callout-title {
-    background-color: rgba(78, 52, 46, 0.13);
+  .reveal div.callout-prp.callout-style-default .callout-title {
+    background-color: rgba(130, 119, 23, 0.13);
   }
-  .reveal div.callout-solution.callout-style-default .callout-icon::before, .reveal div.callout-solution.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-lem.callout {
-    border-left-color: #1565C0;
-  }
-  .reveal div.callout-lem.callout-style-default .callout-title {
-    background-color: rgba(21, 101, 192, 0.13);
-  }
-  .reveal div.callout-lem.callout-style-default .callout-icon::before, .reveal div.callout-lem.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-exr.callout {
-    border-left-color: #FFA500;
-  }
-  .reveal div.callout-exr.callout-style-default .callout-title {
-    background-color: rgba(255, 165, 0, 0.13);
-  }
-  .reveal div.callout-exr.callout-style-default .callout-icon::before, .reveal div.callout-exr.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-  }
-  .reveal div.callout-remark.callout {
-    border-left-color: #AD1457;
-  }
-  .reveal div.callout-remark.callout-style-default .callout-title {
-    background-color: rgba(173, 20, 87, 0.13);
-  }
-  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  .reveal div.callout-prp.callout-style-default .callout-icon::before, .reveal div.callout-prp.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23827717" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   .reveal div.callout-cnj.callout {
     border-left-color: #558B2F;
@@ -319,6 +310,15 @@
   }
   .reveal div.callout-cnj.callout-style-default .callout-icon::before, .reveal div.callout-cnj.callout-titled .callout-icon::before {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+  }
+  .reveal div.callout-remark.callout {
+    border-left-color: #AD1457;
+  }
+  .reveal div.callout-remark.callout-style-default .callout-title {
+    background-color: rgba(173, 20, 87, 0.13);
+  }
+  .reveal div.callout-remark.callout-style-default .callout-icon::before, .reveal div.callout-remark.callout-titled .callout-icon::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
   }
   </style>
 </head>
@@ -337,7 +337,7 @@ UC Davis Seroepidemiology Research Group (UCD-SERG)
 </div>
 </div>
 
-  <p class="date">2026-08-09</p>
+  <p class="date">2026-08-10</p>
 </section>
 <section class="slide level2">
 
@@ -723,17 +723,16 @@ CC BY-SA attribution for the map with them. -->
 </section>
 <section id="maximum-likelihood-estimation" class="slide level2 smaller" data-number="4.6">
 <h2><span class="header-section-number">4.6</span> Maximum likelihood estimation</h2>
-<p>Several approaches could estimate <span class="math inline">\(\lambda\)</span> from the data. <code>serocalculator</code> uses <strong>maximum likelihood</strong>: it reports the value of <span class="math inline">\(\lambda\)</span> that makes the observed data most probable. Stating that precisely takes two definitions.</p>
+<p>Several approaches could estimate <span class="math inline">\(\lambda\)</span> from the data. <code>serocalculator</code> uses <strong>maximum likelihood</strong>: it reports the value of <span class="math inline">\(\lambda\)</span> that makes the observed data most probable. Stating that precisely takes three definitions.</p>
 <div class="callout callout-def no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition (Likelihood and log-likelihood)</strong></p>
+<p><strong>Definition (Likelihood)</strong></p>
 </div>
 <div class="callout-content">
 <div id="def-likelihood" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Likelihood and log-likelihood)</strong></span> The <strong>likelihood</strong> is the probability (or density) of the observed data, read as a function of the parameter rather than of the data:</p>
+<p><span class="theorem-title"><strong>Definition 3 (Likelihood)</strong></span> The <strong>likelihood</strong> is the probability (or density) of the observed data, read as a function of the parameter rather than of the data:</p>
 <p><span class="math display">\[\mathscr{L}(\lambda) \stackrel{\text{def}}{=}\operatorname{p}(\text{data} \mid \lambda)\]</span></p>
-<p>The <strong>log-likelihood</strong> <span class="math inline">\(\ell(\lambda) \stackrel{\text{def}}{=}\operatorname{log}\mathopen{}\left\{\mathscr{L}(\lambda)\right\}\mathclose{}\)</span> is maximized at the same <span class="math inline">\(\lambda\)</span>, and is easier to work with because the logarithm turns products into sums (<a href="https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod">the logarithm-of-a-product theorem</a> in <em>Regression Models for Epidemiology</em>).</p>
 </div>
 </div>
 </div>
@@ -744,11 +743,40 @@ CC BY-SA attribution for the map with them. -->
 <div class="callout callout-def no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
+<p><strong>Definition (Log-likelihood)</strong></p>
+</div>
+<div class="callout-content">
+<div id="def-log-likelihood" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Log-likelihood)</strong></span> The <strong>log-likelihood</strong> is the log of the likelihood (<a href="#/def-likelihood" class="quarto-xref">Definition&nbsp;3</a>):</p>
+<p><span class="math display">\[\ell(\lambda) \stackrel{\text{def}}{=}\operatorname{log}\mathopen{}\left\{\mathscr{L}(\lambda)\right\}\mathclose{}\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>The log-likelihood is maximized at the same <span class="math inline">\(\lambda\)</span> as the likelihood, and is easier to work with because the logarithm turns products into sums (<a href="https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod">the logarithm-of-a-product theorem</a> in <em>Regression Models for Epidemiology</em>).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<div class="callout callout-def no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
 <p><strong>Definition (Score function)</strong></p>
 </div>
 <div class="callout-content">
 <div id="def-score" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Score function)</strong></span> The <strong>score function</strong> is the derivative of the log-likelihood with respect to the parameter (in general, its gradient):</p>
+<p><span class="theorem-title"><strong>Definition 5 (Score function)</strong></span> The <strong>score function</strong> is the derivative of the log-likelihood with respect to the parameter (in general, its gradient):</p>
 <p><span class="math display">\[\ell'(\lambda) \stackrel{\text{def}}{=}\frac{\partial}{\partial \lambda}\ell(\lambda)\]</span></p>
 <p>A maximum likelihood estimate <span class="math inline">\(\hat\lambda\)</span> solves the <strong>score equation</strong> <span class="math inline">\(\ell'(\hat\lambda) = 0\)</span>.</p>
 </div>
@@ -818,7 +846,7 @@ CC BY-SA attribution for the map with them. -->
 </div>
 <div class="fragment">
 <aside class="notes">
-<p>Taking the derivative of that log-likelihood to find the score function (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>):</p>
+<p>Taking the derivative of that log-likelihood to find the score function (<a href="#/def-score" class="quarto-xref">Definition&nbsp;5</a>):</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -853,7 +881,7 @@ CC BY-SA attribution for the map with them. -->
 </div>
 <div class="callout-content">
 <div id="prp-mle-fully-observed" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 2 (MLE when infection times are fully observed)</strong></span> If the latent infection times <span class="math inline">\(t_1, \ldots, t_n\)</span> were fully observed, solving the score equation (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) would estimate <span class="math inline">\(\lambda\)</span> as the reciprocal of their mean:</p>
+<p><span class="theorem-title"><strong>Proposition 2 (MLE when infection times are fully observed)</strong></span> If the latent infection times <span class="math inline">\(t_1, \ldots, t_n\)</span> were fully observed, solving the score equation (<a href="#/def-score" class="quarto-xref">Definition&nbsp;5</a>) would estimate <span class="math inline">\(\lambda\)</span> as the reciprocal of their mean:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \hat{\lambda}_{\text{ML}}
@@ -938,7 +966,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-content">
 <div id="def-hessian" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Hessian)</strong></span> The <strong>Hessian</strong> is the second derivative of the log-likelihood with respect to the parameter (in general, the matrix of its second partial derivatives):</p>
+<p><span class="theorem-title"><strong>Definition 6 (Hessian)</strong></span> The <strong>Hessian</strong> is the second derivative of the log-likelihood with respect to the parameter (in general, the matrix of its second partial derivatives):</p>
 <p><span class="math display">\[\ell''(\lambda) \stackrel{\text{def}}{=}\frac{\partial^2}{\partial \lambda^2}\ell(\lambda)\]</span></p>
 </div>
 </div>
@@ -954,7 +982,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-content">
 <div id="def-observed-information" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6 (Observed information)</strong></span> The <strong>observed information</strong> is the negative Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>):</p>
+<p><span class="theorem-title"><strong>Definition 7 (Observed information)</strong></span> The <strong>observed information</strong> is the negative Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;6</a>):</p>
 <p><span class="math display">\[I(\lambda) \stackrel{\text{def}}{=}-\ell''(\lambda)\]</span></p>
 <p>A sharper peak at the maximum means a larger observed information.</p>
 </div>
@@ -971,7 +999,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 <div class="callout-content">
 <div id="thm-mle-asymptotic-variance" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Asymptotic variance of the MLE)</strong></span> Under standard regularity conditions, the variance of a maximum likelihood estimate is approximately the inverse of the observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) at that estimate:</p>
+<p><span class="theorem-title"><strong>Theorem 1 (Asymptotic variance of the MLE)</strong></span> Under standard regularity conditions, the variance of a maximum likelihood estimate is approximately the inverse of the observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;7</a>) at that estimate:</p>
 <p><span class="math display">\[\mathop{\widehat{\operatorname{Var}}}\nolimits\mathopen{}\left(\hat\lambda\right)\mathclose{} \approx \mathopen{}\left[I(\hat\lambda)\right]\mathclose{}^{-1}\]</span></p>
 </div>
 </div>
@@ -990,7 +1018,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 <div class="callout-content">
 <div id="exm-hessian-exponential" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Latent-time exponential model)</strong></span> For the latent-time model of <a href="#/prp-mle-fully-observed" class="quarto-xref">Proposition&nbsp;2</a>, the log-likelihood is <span class="math display">\[\ell^*(\lambda) = n\operatorname{log}\mathopen{}\left\{\lambda\right\}\mathclose{} - \lambda\sum_{i=1}^n t_i\]</span></p>
-<p>so its score (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) and Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) are</p>
+<p>so its score (<a href="#/def-score" class="quarto-xref">Definition&nbsp;5</a>) and Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;6</a>) are</p>
 <p><span class="math display">\[
 \begin{aligned}
 \ell^{*\prime}(\lambda) &amp;= \frac{n}{\lambda} - \sum_{i=1}^n t_i
@@ -998,7 +1026,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 \ell^{*\prime\prime}(\lambda) &amp;= -\frac{n}{\lambda^2}
 \end{aligned}
 \]</span></p>
-<p>and its observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) is <span class="math inline">\(-\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
+<p>and its observed information (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;7</a>) is <span class="math inline">\(-\ell^{*\prime\prime}(\lambda) = n/\lambda^2\)</span>.</p>
 <p>At the MLE <span class="math inline">\(\hat\lambda = 1/\bar t\)</span>, <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> then gives</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1232,7 +1260,7 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 \end{aligned}
 \]</span></p>
 <aside class="notes">
-<p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code>stats::nlm()</code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the maximum, and <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns that Hessian into a standard error.</p>
+<p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#/prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code>stats::nlm()</code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;6</a>) at the maximum, and <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns that Hessian into a standard error.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1266,7 +1294,7 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 </div>
 <div class="callout-content">
 <div id="def-cluster-robust-variance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 7 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;5</a>) at the MLE — <code>serocalculator</code> obtains it from <code>stats::nlm()</code>’s own <code>hessian</code> output. Write <span class="math inline">\(U_i\)</span> for observation <span class="math inline">\(i\)</span>’s score contribution (<a href="#/def-score" class="quarto-xref">Definition&nbsp;4</a>) — the gradient of its own log-likelihood <span class="math inline">\(\ell_i\)</span> (<a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>) — and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 8 (Sandwich variance estimator)</strong></span> Let <span class="math inline">\(C\)</span> be the total number of non-overlapping clusters in the sample, and let <span class="math inline">\(H = \ell''(\hat\lambda)\)</span> be the Hessian (<a href="#/def-hessian" class="quarto-xref">Definition&nbsp;6</a>) at the MLE — <code>serocalculator</code> obtains it from <code>stats::nlm()</code>’s own <code>hessian</code> output. Write <span class="math inline">\(U_i\)</span> for observation <span class="math inline">\(i\)</span>’s score contribution (<a href="#/def-score" class="quarto-xref">Definition&nbsp;5</a>) — the gradient of its own log-likelihood <span class="math inline">\(\ell_i\)</span> (<a href="#/prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>) — and <span class="math inline">\(U_c\)</span> for the total over the observations in cluster <span class="math inline">\(c\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 U_i &amp;= \nabla_\lambda \ell_i(\lambda)
@@ -1288,7 +1316,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 </div>
 <aside class="notes">
-<p>The sign convention does not matter here: <span class="math inline">\(H\)</span> appears twice, so substituting the observed information <span class="math inline">\(I(\hat\lambda) = -H\)</span> (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;6</a>) leaves <span class="math inline">\(V_{\text{robust}}\)</span> unchanged.</p>
+<p>The sign convention does not matter here: <span class="math inline">\(H\)</span> appears twice, so substituting the observed information <span class="math inline">\(I(\hat\lambda) = -H\)</span> (<a href="#/def-observed-information" class="quarto-xref">Definition&nbsp;7</a>) leaves <span class="math inline">\(V_{\text{robust}}\)</span> unchanged.</p>
 <p>The sandwich generalizes <a href="#/thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> rather than replacing it. When the model is correctly specified and observations really are independent, <span class="math inline">\(B\)</span> estimates the same information as <span class="math inline">\(-H\)</span> does, and <span class="math inline">\(H^{-1} B H^{-1}\)</span> collapses to <span class="math inline">\(\mathopen{}\left[I(\hat\lambda)\right]\mathclose{}^{-1}\)</span> — the ordinary standard error. Clustering is what drives the two apart, and the gap between them is what the correction recovers.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1310,7 +1338,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-content">
 <div id="def-multiway-clustering-variance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8 (Multi-way clustering-robust variance)</strong></span> Let <span class="math inline">\(\mathcal{K} = \{k_1, \dots, k_p\}\)</span> denote the cluster variables. For a non-empty subset <span class="math inline">\(S \subseteq \mathcal{K}\)</span>, let <span class="math inline">\(V_S\)</span> be the one-way sandwich variance <span class="math inline">\(V_{\text{robust}}\)</span> (<a href="#/def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;7</a>), computed by clustering on the interaction of the variables in <span class="math inline">\(S\)</span>. The multi-way variance is the signed sum over every such subset:</p>
+<p><span class="theorem-title"><strong>Definition 9 (Multi-way clustering-robust variance)</strong></span> Let <span class="math inline">\(\mathcal{K} = \{k_1, \dots, k_p\}\)</span> denote the cluster variables. For a non-empty subset <span class="math inline">\(S \subseteq \mathcal{K}\)</span>, let <span class="math inline">\(V_S\)</span> be the one-way sandwich variance <span class="math inline">\(V_{\text{robust}}\)</span> (<a href="#/def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;8</a>), computed by clustering on the interaction of the variables in <span class="math inline">\(S\)</span>. The multi-way variance is the signed sum over every such subset:</p>
 <p><span class="math display">\[V_{\text{multiway}} = \sum_{\emptyset \neq S \subseteq \mathcal{K}} (-1)^{|S| + 1} V_S\]</span></p>
 </div>
 </div>
@@ -1336,7 +1364,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-content">
 <div id="exm-two-way-clustering" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3 (Two cluster variables)</strong></span> For two cluster variables (<span class="math inline">\(p = 2\)</span>), <a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a> reduces to the familiar three-term formula:</p>
+<p><span class="theorem-title"><strong>Example 3 (Two cluster variables)</strong></span> For two cluster variables (<span class="math inline">\(p = 2\)</span>), <a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a> reduces to the familiar three-term formula:</p>
 <p><span class="math display">\[V_{\text{multiway}} = V_1 + V_2 - V_{1 \cap 2}\]</span></p>
 <p>where <span class="math inline">\(V_1\)</span> and <span class="math inline">\(V_2\)</span> cluster on each variable separately, and <span class="math inline">\(V_{1 \cap 2}\)</span> clusters on their interaction, the most granular grouping.</p>
 </div>
@@ -1344,7 +1372,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 </div>
 <h3 id="small-sample-correction">Small-sample correction</h3>
-<p>Two adjustments refine the one-way variance terms <span class="math inline">\(V_S\)</span> that feed <a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a>.</p>
+<p>Two adjustments refine the one-way variance terms <span class="math inline">\(V_S\)</span> that feed <a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a>.</p>
 <div class="callout callout-def no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
@@ -1352,7 +1380,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-content">
 <div id="def-finite-difference-score" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 9 (Finite-difference score approximation)</strong></span> <code>serocalculator</code> approximates each cluster’s score contribution <span class="math inline">\(U_c\)</span> (<a href="#/def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;7</a>) by a forward finite difference of the cluster’s log-likelihood, <span class="math inline">\(\ell_c(\lambda) = \sum_{i \in c} \log p(Y_i \mid \lambda)\)</span>:</p>
+<p><span class="theorem-title"><strong>Definition 10 (Finite-difference score approximation)</strong></span> <code>serocalculator</code> approximates each cluster’s score contribution <span class="math inline">\(U_c\)</span> (<a href="#/def-cluster-robust-variance" class="quarto-xref">Definition&nbsp;8</a>) by a forward finite difference of the cluster’s log-likelihood, <span class="math inline">\(\ell_c(\lambda) = \sum_{i \in c} \log p(Y_i \mid \lambda)\)</span>:</p>
 <p><span class="math display">\[U_c \approx \frac{\ell_c(\hat \lambda+ \epsilon) - \ell_c(\hat \lambda)}{\epsilon}, \quad \epsilon = 10^{-6}\]</span></p>
 </div>
 </div>
@@ -1365,7 +1393,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-content">
 <div id="def-cr1-correction" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 10 (CR1 small-sample correction)</strong></span> When <code>small_sample = "CR1"</code> (the default), each one-way subset variance <span class="math inline">\(V_S\)</span> (<a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a>) is inflated by the usual cluster degrees-of-freedom correction:</p>
+<p><span class="theorem-title"><strong>Definition 11 (CR1 small-sample correction)</strong></span> When <code>small_sample = "CR1"</code> (the default), each one-way subset variance <span class="math inline">\(V_S\)</span> (<a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a>) is inflated by the usual cluster degrees-of-freedom correction:</p>
 <p><span class="math display">\[V_S^{\text{CR1}} = \frac{G_S}{G_S - 1} \, V_S\]</span></p>
 <p>where <span class="math inline">\(G_S\)</span> is the number of unique clusters in subset <span class="math inline">\(S\)</span>’s grouping.</p>
 </div>
@@ -1380,7 +1408,7 @@ B &amp;= \sum_{c=1}^C U_c U_c^T
 </div>
 <div class="callout-content">
 <div id="def-variance-safeguards" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 11 (Flooring and fallback for the final variance)</strong></span> The inclusion-exclusion sum <span class="math inline">\(V_{\text{multiway}}\)</span> (<a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;8</a>) is not guaranteed to be non-negative. <code>serocalculator</code> therefore floors the raw estimate at 0 (emitting a warning), independent of <code>floor_to_standard</code>, before it can reach <span class="math inline">\(\sqrt{V}\)</span> as a silent <code>NaN</code>:</p>
+<p><span class="theorem-title"><strong>Definition 12 (Flooring and fallback for the final variance)</strong></span> The inclusion-exclusion sum <span class="math inline">\(V_{\text{multiway}}\)</span> (<a href="#/def-multiway-clustering-variance" class="quarto-xref">Definition&nbsp;9</a>) is not guaranteed to be non-negative. <code>serocalculator</code> therefore floors the raw estimate at 0 (emitting a warning), independent of <code>floor_to_standard</code>, before it can reach <span class="math inline">\(\sqrt{V}\)</span> as a silent <code>NaN</code>:</p>
 <p><span class="math display">\[V_{\text{raw}}^{+} = \max\mathopen{}\left(0, V_{\text{multiway}}\right)\mathclose{}\]</span></p>
 <p>Setting <code>floor_to_standard = TRUE</code> additionally floors the result at the model-based (non-cluster-robust) variance <span class="math inline">\(V_{\text{standard}} = H^{-1}\)</span>, the inverse of the observed information at the MLE:</p>
 <p><span class="math display">\[V_{\text{final}} = \max\mathopen{}\left(V_{\text{standard}}, V_{\text{raw}}^{+}\right)\mathclose{}\]</span></p>
@@ -1614,6 +1642,19 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 </section>
 <section class="slide level2">
 
+<!--
+Why this chunk filters the bundled `typhoid_curves_nostrat_100` instead of
+fetching `rtw5k` from OSF is explained in NEWS.md (#648).
+
+`curves_all` is named that way, not `curves`, because this file is included
+into methodology.qmd, which already defines a `curves` object filtered to
+the antigen-isotypes that document analyzes; reusing that name here would
+silently overwrite it for every later chunk in the parent document.
+
+`plot_curve_params_one_ab()` (below) picks rows via
+`iter == seq_len(nrow(.))`, so a single pre-filtered curve must be
+relabelled `iter = 1` or no curve is drawn.
+-->
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1623,65 +1664,59 @@ y_{-}(t) &amp; = y_{1}\left(1+(r-1)y_{1}^{r-1}\alpha(t-t_{1})\right)^{-\frac{1}{
 <span id="cb6-4"><a aria-label="4"></a></span>
 <span id="cb6-5"><a aria-label="5"></a>cur_ai <span class="ot">&lt;-</span> <span class="st">"HlyE_IgG"</span></span>
 <span id="cb6-6"><a aria-label="6"></a></span>
-<span id="cb6-7"><a aria-label="7"></a><span class="co"># `typhoid_curves_nostrat_100` is `load_sr_params()` applied to the OSF</span></span>
-<span id="cb6-8"><a aria-label="8"></a><span class="co"># object `rtw5k`, filtered to iter %in% 1:100, so filtering it further to</span></span>
-<span id="cb6-9"><a aria-label="9"></a><span class="co"># iter &lt; 50 is identical to filtering the raw OSF object the same way ---</span></span>
-<span id="cb6-10"><a aria-label="10"></a><span class="co"># no need to fetch or vendor a separate copy of rtw5k for this.</span></span>
-<span id="cb6-11"><a aria-label="11"></a><span class="co"># Deliberately named `curves_all`, not `curves`: this file is included into</span></span>
-<span id="cb6-12"><a aria-label="12"></a><span class="co"># methodology.qmd, which already defines a `curves` object filtered to the</span></span>
-<span id="cb6-13"><a aria-label="13"></a><span class="co"># antigen-isotypes that document analyzes. Reusing that name here would silently</span></span>
-<span id="cb6-14"><a aria-label="14"></a><span class="co"># overwrite it for every later chunk in the parent document.</span></span>
-<span id="cb6-15"><a aria-label="15"></a>curves_all <span class="ot">&lt;-</span></span>
-<span id="cb6-16"><a aria-label="16"></a>  typhoid_curves_nostrat_100 <span class="sc">|&gt;</span></span>
-<span id="cb6-17"><a aria-label="17"></a>  <span class="fu">filter</span>(iter <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
-<span id="cb6-18"><a aria-label="18"></a></span>
-<span id="cb6-19"><a aria-label="19"></a>curve1 <span class="ot">&lt;-</span></span>
-<span id="cb6-20"><a aria-label="20"></a>  curves_all <span class="sc">|&gt;</span></span>
-<span id="cb6-21"><a aria-label="21"></a>  <span class="fu">filter</span>(</span>
-<span id="cb6-22"><a aria-label="22"></a>    iter <span class="sc">==</span> <span class="dv">5</span>,</span>
-<span id="cb6-23"><a aria-label="23"></a>    antigen_iso <span class="sc">==</span> cur_ai</span>
-<span id="cb6-24"><a aria-label="24"></a>  )</span>
-<span id="cb6-25"><a aria-label="25"></a></span>
-<span id="cb6-26"><a aria-label="26"></a>curve1 <span class="sc">|&gt;</span></span>
-<span id="cb6-27"><a aria-label="27"></a>  <span class="co"># plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a</span></span>
-<span id="cb6-28"><a aria-label="28"></a>  <span class="co"># single pre-filtered curve must be relabelled iter 1 or no curve is drawn.</span></span>
-<span id="cb6-29"><a aria-label="29"></a>  <span class="fu">mutate</span>(<span class="at">iter =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-30"><a aria-label="30"></a>  serocalculator<span class="sc">:::</span><span class="fu">plot_curve_params_one_ab</span>(</span>
-<span id="cb6-31"><a aria-label="31"></a>    <span class="at">log_y =</span> <span class="cn">FALSE</span></span>
-<span id="cb6-32"><a aria-label="32"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-33"><a aria-label="33"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">100</span>) <span class="sc">+</span></span>
-<span id="cb6-34"><a aria-label="34"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb6-35"><a aria-label="35"></a>  <span class="fu">geom_vline</span>(</span>
-<span id="cb6-36"><a aria-label="36"></a>    <span class="fu">aes</span>(</span>
-<span id="cb6-37"><a aria-label="37"></a>      <span class="at">xintercept =</span> curve1<span class="sc">$</span>t1,</span>
-<span id="cb6-38"><a aria-label="38"></a>      <span class="at">col =</span> <span class="st">"t1"</span></span>
-<span id="cb6-39"><a aria-label="39"></a>    )</span>
-<span id="cb6-40"><a aria-label="40"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-41"><a aria-label="41"></a></span>
-<span id="cb6-42"><a aria-label="42"></a>  <span class="fu">geom_hline</span>(</span>
-<span id="cb6-43"><a aria-label="43"></a>    <span class="fu">aes</span>(</span>
-<span id="cb6-44"><a aria-label="44"></a>      <span class="at">yintercept =</span> curve1<span class="sc">$</span>y0,</span>
-<span id="cb6-45"><a aria-label="45"></a>      <span class="at">col =</span> <span class="st">"y0"</span></span>
-<span id="cb6-46"><a aria-label="46"></a>    )</span>
-<span id="cb6-47"><a aria-label="47"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-48"><a aria-label="48"></a></span>
-<span id="cb6-49"><a aria-label="49"></a></span>
-<span id="cb6-50"><a aria-label="50"></a>  <span class="fu">geom_hline</span>(</span>
-<span id="cb6-51"><a aria-label="51"></a>    <span class="fu">aes</span>(</span>
-<span id="cb6-52"><a aria-label="52"></a>      <span class="at">yintercept =</span> curve1<span class="sc">$</span>y1,</span>
-<span id="cb6-53"><a aria-label="53"></a>      <span class="at">col =</span> <span class="st">"y1"</span></span>
-<span id="cb6-54"><a aria-label="54"></a>    )</span>
-<span id="cb6-55"><a aria-label="55"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-56"><a aria-label="56"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb6-57"><a aria-label="57"></a>    <span class="at">data =</span> curve1,</span>
-<span id="cb6-58"><a aria-label="58"></a>    <span class="fu">aes</span>(</span>
-<span id="cb6-59"><a aria-label="59"></a>      <span class="at">x =</span> t1,</span>
-<span id="cb6-60"><a aria-label="60"></a>      <span class="at">y =</span> y1,</span>
-<span id="cb6-61"><a aria-label="61"></a>      <span class="at">col =</span> <span class="st">"(t1,y1)"</span></span>
-<span id="cb6-62"><a aria-label="62"></a>    )</span>
-<span id="cb6-63"><a aria-label="63"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-64"><a aria-label="64"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb6-65"><a aria-label="65"></a>  <span class="fu">labs</span>(<span class="at">col =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-7"><a aria-label="7"></a><span class="co"># `typhoid_curves_nostrat_100` bundles antibody response-curve parameters</span></span>
+<span id="cb6-8"><a aria-label="8"></a><span class="co"># for typhoid, in long format with one MCMC draw per `iter` (`iter` runs</span></span>
+<span id="cb6-9"><a aria-label="9"></a><span class="co"># 1:100; see `?typhoid_curves_nostrat_100`); keep the first 49 draws.</span></span>
+<span id="cb6-10"><a aria-label="10"></a>curves_all <span class="ot">&lt;-</span></span>
+<span id="cb6-11"><a aria-label="11"></a>  typhoid_curves_nostrat_100 <span class="sc">|&gt;</span></span>
+<span id="cb6-12"><a aria-label="12"></a>  <span class="fu">filter</span>(iter <span class="sc">&lt;</span> <span class="dv">50</span>)</span>
+<span id="cb6-13"><a aria-label="13"></a></span>
+<span id="cb6-14"><a aria-label="14"></a>curve1 <span class="ot">&lt;-</span></span>
+<span id="cb6-15"><a aria-label="15"></a>  curves_all <span class="sc">|&gt;</span></span>
+<span id="cb6-16"><a aria-label="16"></a>  <span class="fu">filter</span>(</span>
+<span id="cb6-17"><a aria-label="17"></a>    iter <span class="sc">==</span> <span class="dv">5</span>,</span>
+<span id="cb6-18"><a aria-label="18"></a>    antigen_iso <span class="sc">==</span> cur_ai</span>
+<span id="cb6-19"><a aria-label="19"></a>  )</span>
+<span id="cb6-20"><a aria-label="20"></a></span>
+<span id="cb6-21"><a aria-label="21"></a>curve1 <span class="sc">|&gt;</span></span>
+<span id="cb6-22"><a aria-label="22"></a>  <span class="co"># Relabel as the (only) curve to plot.</span></span>
+<span id="cb6-23"><a aria-label="23"></a>  <span class="fu">mutate</span>(<span class="at">iter =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-24"><a aria-label="24"></a>  serocalculator<span class="sc">:::</span><span class="fu">plot_curve_params_one_ab</span>(</span>
+<span id="cb6-25"><a aria-label="25"></a>    <span class="at">log_y =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-26"><a aria-label="26"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-27"><a aria-label="27"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb6-28"><a aria-label="28"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-29"><a aria-label="29"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb6-30"><a aria-label="30"></a>    <span class="fu">aes</span>(</span>
+<span id="cb6-31"><a aria-label="31"></a>      <span class="at">xintercept =</span> curve1<span class="sc">$</span>t1,</span>
+<span id="cb6-32"><a aria-label="32"></a>      <span class="at">col =</span> <span class="st">"t1"</span></span>
+<span id="cb6-33"><a aria-label="33"></a>    )</span>
+<span id="cb6-34"><a aria-label="34"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-35"><a aria-label="35"></a></span>
+<span id="cb6-36"><a aria-label="36"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb6-37"><a aria-label="37"></a>    <span class="fu">aes</span>(</span>
+<span id="cb6-38"><a aria-label="38"></a>      <span class="at">yintercept =</span> curve1<span class="sc">$</span>y0,</span>
+<span id="cb6-39"><a aria-label="39"></a>      <span class="at">col =</span> <span class="st">"y0"</span></span>
+<span id="cb6-40"><a aria-label="40"></a>    )</span>
+<span id="cb6-41"><a aria-label="41"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-42"><a aria-label="42"></a></span>
+<span id="cb6-43"><a aria-label="43"></a></span>
+<span id="cb6-44"><a aria-label="44"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb6-45"><a aria-label="45"></a>    <span class="fu">aes</span>(</span>
+<span id="cb6-46"><a aria-label="46"></a>      <span class="at">yintercept =</span> curve1<span class="sc">$</span>y1,</span>
+<span id="cb6-47"><a aria-label="47"></a>      <span class="at">col =</span> <span class="st">"y1"</span></span>
+<span id="cb6-48"><a aria-label="48"></a>    )</span>
+<span id="cb6-49"><a aria-label="49"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-50"><a aria-label="50"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb6-51"><a aria-label="51"></a>    <span class="at">data =</span> curve1,</span>
+<span id="cb6-52"><a aria-label="52"></a>    <span class="fu">aes</span>(</span>
+<span id="cb6-53"><a aria-label="53"></a>      <span class="at">x =</span> t1,</span>
+<span id="cb6-54"><a aria-label="54"></a>      <span class="at">y =</span> y1,</span>
+<span id="cb6-55"><a aria-label="55"></a>      <span class="at">col =</span> <span class="st">"(t1,y1)"</span></span>
+<span id="cb6-56"><a aria-label="56"></a>    )</span>
+<span id="cb6-57"><a aria-label="57"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-58"><a aria-label="58"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb6-59"><a aria-label="59"></a>  <span class="fu">labs</span>(<span class="at">col =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-response-graph" class="quarto-float quarto-figure quarto-figure-center">
@@ -2319,32 +2354,31 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span id="cb13-2"><a aria-label="2"></a>sim_lifespan <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="co"># age range of the simulated survey</span></span>
 <span id="cb13-3"><a aria-label="3"></a>sim_n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># number of participants</span></span>
 <span id="cb13-4"><a aria-label="4"></a></span>
-<span id="cb13-5"><a aria-label="5"></a><span class="co"># Antibody-decay parameters. `typhoid_curves_nostrat_100` ships with the</span></span>
-<span id="cb13-6"><a aria-label="6"></a><span class="co"># package and is the same posterior sample the article downloads from OSF</span></span>
-<span id="cb13-7"><a aria-label="7"></a><span class="co"># elsewhere, so the simulation needs no network access.</span></span>
-<span id="cb13-8"><a aria-label="8"></a>sim_curve_params <span class="ot">&lt;-</span></span>
-<span id="cb13-9"><a aria-label="9"></a>  typhoid_curves_nostrat_100 <span class="sc">|&gt;</span></span>
-<span id="cb13-10"><a aria-label="10"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(iter <span class="sc">&lt;</span> <span class="dv">50</span>, antigen_iso <span class="sc">%in%</span> antibodies)</span>
-<span id="cb13-11"><a aria-label="11"></a></span>
-<span id="cb13-12"><a aria-label="12"></a><span class="co"># Biological-noise limits used when *generating* the data</span></span>
-<span id="cb13-13"><a aria-label="13"></a>sim_noise_limits <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb13-14"><a aria-label="14"></a>  <span class="st">"HlyE_IgA"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.5</span>),</span>
-<span id="cb13-15"><a aria-label="15"></a>  <span class="st">"HlyE_IgG"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.5</span>)</span>
-<span id="cb13-16"><a aria-label="16"></a>)</span>
-<span id="cb13-17"><a aria-label="17"></a></span>
-<span id="cb13-18"><a aria-label="18"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
-<span id="cb13-19"><a aria-label="19"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">sim_pop_data</span>(</span>
-<span id="cb13-20"><a aria-label="20"></a>  <span class="at">curve_params =</span> sim_curve_params,</span>
-<span id="cb13-21"><a aria-label="21"></a>  <span class="at">lambda =</span> sim_lambda,</span>
-<span id="cb13-22"><a aria-label="22"></a>  <span class="at">n_samples =</span> sim_n,</span>
-<span id="cb13-23"><a aria-label="23"></a>  <span class="at">age_range =</span> sim_lifespan,</span>
-<span id="cb13-24"><a aria-label="24"></a>  <span class="at">antigen_isos =</span> antibodies,</span>
-<span id="cb13-25"><a aria-label="25"></a>  <span class="at">n_mcmc_samples =</span> <span class="dv">0</span>,</span>
-<span id="cb13-26"><a aria-label="26"></a>  <span class="at">renew_params =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb13-27"><a aria-label="27"></a>  <span class="at">add_noise =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb13-28"><a aria-label="28"></a>  <span class="at">noise_limits =</span> sim_noise_limits,</span>
-<span id="cb13-29"><a aria-label="29"></a>  <span class="at">format =</span> <span class="st">"long"</span></span>
-<span id="cb13-30"><a aria-label="30"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-5"><a aria-label="5"></a><span class="co"># Antibody-decay parameters: `typhoid_curves_nostrat_100`, the same bundled</span></span>
+<span id="cb13-6"><a aria-label="6"></a><span class="co"># sample used for the antibody-response curves earlier in this article.</span></span>
+<span id="cb13-7"><a aria-label="7"></a>sim_curve_params <span class="ot">&lt;-</span></span>
+<span id="cb13-8"><a aria-label="8"></a>  typhoid_curves_nostrat_100 <span class="sc">|&gt;</span></span>
+<span id="cb13-9"><a aria-label="9"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(iter <span class="sc">&lt;</span> <span class="dv">50</span>, antigen_iso <span class="sc">%in%</span> antibodies)</span>
+<span id="cb13-10"><a aria-label="10"></a></span>
+<span id="cb13-11"><a aria-label="11"></a><span class="co"># Biological-noise limits used when *generating* the data</span></span>
+<span id="cb13-12"><a aria-label="12"></a>sim_noise_limits <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb13-13"><a aria-label="13"></a>  <span class="st">"HlyE_IgA"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.5</span>),</span>
+<span id="cb13-14"><a aria-label="14"></a>  <span class="st">"HlyE_IgG"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.5</span>)</span>
+<span id="cb13-15"><a aria-label="15"></a>)</span>
+<span id="cb13-16"><a aria-label="16"></a></span>
+<span id="cb13-17"><a aria-label="17"></a><span class="fu">set.seed</span>(<span class="dv">54321</span>)</span>
+<span id="cb13-18"><a aria-label="18"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">sim_pop_data</span>(</span>
+<span id="cb13-19"><a aria-label="19"></a>  <span class="at">curve_params =</span> sim_curve_params,</span>
+<span id="cb13-20"><a aria-label="20"></a>  <span class="at">lambda =</span> sim_lambda,</span>
+<span id="cb13-21"><a aria-label="21"></a>  <span class="at">n_samples =</span> sim_n,</span>
+<span id="cb13-22"><a aria-label="22"></a>  <span class="at">age_range =</span> sim_lifespan,</span>
+<span id="cb13-23"><a aria-label="23"></a>  <span class="at">antigen_isos =</span> antibodies,</span>
+<span id="cb13-24"><a aria-label="24"></a>  <span class="at">n_mcmc_samples =</span> <span class="dv">0</span>,</span>
+<span id="cb13-25"><a aria-label="25"></a>  <span class="at">renew_params =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb13-26"><a aria-label="26"></a>  <span class="at">add_noise =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-27"><a aria-label="27"></a>  <span class="at">noise_limits =</span> sim_noise_limits,</span>
+<span id="cb13-28"><a aria-label="28"></a>  <span class="at">format =</span> <span class="st">"long"</span></span>
+<span id="cb13-29"><a aria-label="29"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <aside class="notes">
@@ -2597,9 +2631,9 @@ Figure&nbsp;9: Simulated antibody responses by cluster, faceted by antigen-isoty
 <span id="cb22-6"><a aria-label="6"></a>  <span class="at">curve_strata_varnames =</span> <span class="cn">NULL</span>,</span>
 <span id="cb22-7"><a aria-label="7"></a>  <span class="at">noise_strata_varnames =</span> <span class="cn">NULL</span>,</span>
 <span id="cb22-8"><a aria-label="8"></a>  <span class="at">antigen_isos =</span> antibodies,</span>
-<span id="cb22-9"><a aria-label="9"></a>  <span class="co"># Graphs are attached per stratum, which would make the cached object</span></span>
-<span id="cb22-10"><a aria-label="10"></a>  <span class="co"># enormous for this many strata. The few curves this article plots are</span></span>
-<span id="cb22-11"><a aria-label="11"></a>  <span class="co"># re-fit on demand instead.</span></span>
+<span id="cb22-9"><a aria-label="9"></a>  <span class="co"># build_graph = TRUE attaches a log-likelihood plot to every stratum's</span></span>
+<span id="cb22-10"><a aria-label="10"></a>  <span class="co"># fit, which grows large across many strata; re-fit individual curves on</span></span>
+<span id="cb22-11"><a aria-label="11"></a>  <span class="co"># demand instead (see below).</span></span>
 <span id="cb22-12"><a aria-label="12"></a>  <span class="at">build_graph =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb22-13"><a aria-label="13"></a>  <span class="at">cache_path =</span> sim_cache,</span>
 <span id="cb22-14"><a aria-label="14"></a>  <span class="at">cache_id =</span> <span class="st">"ests"</span></span>

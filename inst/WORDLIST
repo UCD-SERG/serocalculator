@@ -74,6 +74,7 @@ bm
 boldsymbol
 callout
 cdot
+citable
 codecov
 colour
 csv
@@ -167,12 +168,14 @@ qmd
 qquad
 recombinant
 recomputation
+referenceable
 renamings
 repo's
 reproducibly
 revealjs
 rightarrow
 roadmap
+rtw5k
 sb
 se
 sectionally

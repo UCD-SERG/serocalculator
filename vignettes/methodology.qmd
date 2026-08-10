@@ -460,20 +460,33 @@ where $a$ is the patient's age at the time of the survey.
 Several approaches could estimate $\lambda$ from the data.
 `serocalculator` uses **maximum likelihood**: it reports the value of
 $\lambda$ that makes the observed data most probable.
-Stating that precisely takes two definitions.
+Stating that precisely takes three definitions.
 
 ::: {#def-likelihood}
 
-#### Likelihood and log-likelihood
+#### Likelihood
 
 The **likelihood** is the probability (or density) of the observed
 data, read as a function of the parameter rather than of the data:
 
 $$\Lik(\lambda) \eqdef \dens(\text{data} \mid \lambda)$$
 
-The **log-likelihood** $\llik(\lambda) \eqdef \logf{\Lik(\lambda)}$ is
-maximized at the same $\lambda$, and is easier to work with because the
-logarithm turns products into sums
+:::
+
+{{< slidebreak >}}
+
+::: {#def-log-likelihood}
+
+#### Log-likelihood
+
+The **log-likelihood** is the log of the likelihood (@def-likelihood):
+
+$$\llik(\lambda) \eqdef \logf{\Lik(\lambda)}$$
+:::
+
+::: notes
+The log-likelihood is maximized at the same $\lambda$ as the likelihood,
+and is easier to work with because the logarithm turns products into sums
 ([the logarithm-of-a-product theorem](https://d-morrison.github.io/rme/chapters/math-prereqs.html#thm-log-prod)
 in *Regression Models for Epidemiology*).
 :::

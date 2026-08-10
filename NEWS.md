@@ -69,6 +69,10 @@
 
 ## Documentation
 
+* Split the methodology article's combined "Likelihood and log-likelihood"
+  definition into two separate, independently cross-referenceable
+  definitions (`#def-likelihood`, `#def-log-likelihood`) --- previously
+  only the likelihood half had its own citable id.
 * Formalized the "Cluster-robust standard errors" section of the
   methodology article: the sandwich estimator now cites Huber (1967),
   White (1980), and the clustered-data extension by Liang and Zeger
@@ -84,6 +88,14 @@
   filtered to `iter < 50` now filter the already-bundled
   `typhoid_curves_nostrat_100` instead, since the two are identical once
   filtered, so no separate copy of `rtw5k` needed vendoring. (#648)
+* Removed maintainer-facing implementation notes (OSF/vendoring rationale,
+  an internal variable-naming decision, why `est_seroincidence_by_cached()`
+  is called with `build_graph = FALSE`) from the R comments the methodology
+  article renders on the website, replacing them with reader-facing
+  comments. The notes worth keeping for future editors but with no
+  reader-facing equivalent moved into HTML comments, invisible on the
+  published page; a couple of purely build-time asides (e.g. "no network
+  access needed") were dropped outright as no longer worth keeping.
 * Listed `sim_pop_data_multi_cached()`, `est_seroincidence_by_cached()`, and
   `refit_strata()` in the documentation site's reference index.
   All three were exported and had help pages, but no section of

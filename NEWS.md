@@ -92,9 +92,10 @@
   an internal variable-naming decision, why `est_seroincidence_by_cached()`
   is called with `build_graph = FALSE`) from the R comments the methodology
   article renders on the website, replacing them with reader-facing
-  comments; the notes that have no reader-facing equivalent moved into
-  HTML comments so they stay in the source without appearing on the
-  published page.
+  comments. The notes worth keeping for future editors but with no
+  reader-facing equivalent moved into HTML comments, invisible on the
+  published page; a couple of purely build-time asides (e.g. "no network
+  access needed") were dropped outright as no longer worth keeping.
 * Listed `sim_pop_data_multi_cached()`, `est_seroincidence_by_cached()`, and
   `refit_strata()` in the documentation site's reference index.
   All three were exported and had help pages, but no section of

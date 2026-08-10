@@ -153,8 +153,8 @@ library(ggplot2)
 cur_ai <- "HlyE_IgG"
 
 # `typhoid_curves_nostrat_100` bundles antibody response-curve parameters
-# for typhoid, in long format with one MCMC draw per `iter`
-# (see `?typhoid_curves_nostrat_100`); keep the first 50 draws.
+# for typhoid, in long format with one MCMC draw per `iter` (`iter` runs
+# 1:100; see `?typhoid_curves_nostrat_100`); keep the first 49 draws.
 curves_all <-
   typhoid_curves_nostrat_100 |>
   filter(iter < 50)

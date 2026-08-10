@@ -88,6 +88,13 @@
   filtered to `iter < 50` now filter the already-bundled
   `typhoid_curves_nostrat_100` instead, since the two are identical once
   filtered, so no separate copy of `rtw5k` needed vendoring. (#648)
+* Removed maintainer-facing implementation notes (OSF/vendoring rationale,
+  an internal variable-naming decision, why `est_seroincidence_by_cached()`
+  is called with `build_graph = FALSE`) from the R comments the methodology
+  article renders on the website, replacing them with reader-facing
+  comments; the notes that have no reader-facing equivalent moved into
+  HTML comments so they stay in the source without appearing on the
+  published page.
 * Listed `sim_pop_data_multi_cached()`, `est_seroincidence_by_cached()`, and
   `refit_strata()` in the documentation site's reference index.
   All three were exported and had help pages, but no section of

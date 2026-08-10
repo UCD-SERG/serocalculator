@@ -128,6 +128,20 @@ five parameters: $y_0,\ y_1,\ t_1,\ \alpha,\ r$.
 
 ---
 
+<!--
+Why this chunk filters the bundled `typhoid_curves_nostrat_100` instead of
+fetching `rtw5k` from OSF is explained in NEWS.md (#648).
+
+`curves_all` is named that way, not `curves`, because this file is included
+into methodology.qmd, which already defines a `curves` object filtered to
+the antigen-isotypes that document analyzes; reusing that name here would
+silently overwrite it for every later chunk in the parent document.
+
+`plot_curve_params_one_ab()` (below) picks rows via
+`iter == seq_len(nrow(.))`, so a single pre-filtered curve must be
+relabelled `iter = 1` or no curve is drawn.
+-->
+
 ```{r}
 #| label: fig-response-graph
 #| fig-cap: An example kinetics curve for HlyE IgG
@@ -138,14 +152,9 @@ library(ggplot2)
 
 cur_ai <- "HlyE_IgG"
 
-# `typhoid_curves_nostrat_100` is `load_sr_params()` applied to the OSF
-# object `rtw5k`, filtered to iter %in% 1:100, so filtering it further to
-# iter < 50 is identical to filtering the raw OSF object the same way ---
-# no need to fetch or vendor a separate copy of rtw5k for this.
-# Deliberately named `curves_all`, not `curves`: this file is included into
-# methodology.qmd, which already defines a `curves` object filtered to the
-# antigen-isotypes that document analyzes. Reusing that name here would silently
-# overwrite it for every later chunk in the parent document.
+# `typhoid_curves_nostrat_100` bundles antibody response-curve parameters
+# for typhoid, in long format with one MCMC draw per `iter`
+# (see `?typhoid_curves_nostrat_100`); keep the first 50 draws.
 curves_all <-
   typhoid_curves_nostrat_100 |>
   filter(iter < 50)
@@ -158,8 +167,7 @@ curve1 <-
   )
 
 curve1 |>
-  # plot_curve_params_one_ab() picks rows via `iter == seq_len(nrow(.))`, so a
-  # single pre-filtered curve must be relabelled iter 1 or no curve is drawn.
+  # Relabel as the (only) curve to plot.
   mutate(iter = 1) |>
   serocalculator:::plot_curve_params_one_ab(
     log_y = FALSE

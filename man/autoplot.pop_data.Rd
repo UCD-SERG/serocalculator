@@ -4,7 +4,14 @@
 \alias{autoplot.pop_data}
 \title{Plot distribution of antibodies}
 \usage{
-\method{autoplot}{pop_data}(object, log = FALSE, type = "density", strata = NULL, ...)
+\method{autoplot}{pop_data}(
+  object,
+  log = FALSE,
+  type = "density",
+  strata = NULL,
+  alpha = 0.7,
+  ...
+)
 }
 \arguments{
 \item{object}{A \code{pop_data} object (from \code{\link[=load_pop_data]{load_pop_data()}})}
@@ -16,6 +23,9 @@ the current options are \code{"density"} or \code{"age-scatter"}}
 
 \item{strata}{the name of a variable in \code{pop_data}
 to stratify by (or \code{NULL} for no stratification)}
+
+\item{alpha}{transparency level for points in age-scatter plot
+(default: 0.7). Only used when \code{type = "age-scatter"}.}
 
 \item{...}{unused}
 }
@@ -38,5 +48,6 @@ xs_data <-
 
 xs_data |> autoplot(strata = "catchment", type = "density")
 xs_data |> autoplot(strata = "catchment", type = "age-scatter")
+xs_data |> autoplot(strata = "catchment", type = "age-scatter", alpha = 0.5)
 }
 }

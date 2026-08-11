@@ -47,3 +47,18 @@ test_that("`autoplot.pop_data()` produces stable results
               autoplot(strata = NULL, type = "age-scatter") |>
               vdiffr::expect_doppelganger(title = "age_scatter_no_strat")
           })
+
+test_that("`autoplot.pop_data()` accepts custom alpha parameter
+          for `type = 'age-scatter'`",
+          {
+            xs_data <- sees_pop_data_pk_100 |>
+              autoplot(strata = "catchment", type = "age-scatter", alpha = 0.5)
+            
+            expect_s3_class(xs_data, "ggplot")
+            
+            # Test with different alpha values
+            xs_data2 <- sees_pop_data_pk_100 |>
+              autoplot(strata = NULL, type = "age-scatter", alpha = 0.3)
+            
+            expect_s3_class(xs_data2, "ggplot")
+          })

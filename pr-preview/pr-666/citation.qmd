@@ -1,0 +1,19 @@
+---
+title: Citing serocalculator
+---
+
+To cite `serocalculator` in publications, please use:
+
+```{r}
+#| echo: false
+#| results: asis
+print(citation("serocalculator"), style = "textVersion")
+```
+
+A BibTeX entry for LaTeX users:
+
+```{r}
+#| echo: false
+#| comment: ""
+print(citation("serocalculator"), style = "bibtex")
+```

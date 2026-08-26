@@ -11,3 +11,37 @@ sim_noise_params <- tibble::tibble(
   y.high = 5e6 # upper limit of detection
 )
 ```
+
+The assay limits censor measurements outside its quantifiable range.
+The `y.low` value is the lower limit of detection, $L$,
+and `y.high` is the upper limit, $U$.
+A result reported at or below $L$
+establishes only that the response lies in the lower interval.
+A result reported at or above $U$
+establishes only that it lies in the upper interval.
+
+Let $f_\lambda(y \mid a)$ and $F_\lambda(y \mid a)$
+be the model-implied density and cumulative distribution
+for a participant of age $a$,
+including the antibody-kinetics distribution and both noise sources.
+The intended noise-consistent likelihood contribution is
+
+$$
+\Lik_i(\lambda) =
+\begin{cases}
+F_\lambda(L \mid a_i), & y_i \le L, \\
+f_\lambda(y_i \mid a_i), & L < y_i < U, \\
+1 - F_\lambda(U \mid a_i), & y_i \ge U.
+\end{cases}
+$$
+
+Thus, a threshold-reported result contributes
+the probability of its entire censoring interval,
+rather than the density at an arbitrarily substituted boundary value.
+
+As implemented in `serocalculator` 1.4.1.9042
+(verified 2026-08-25 on the package source),
+measurement noise is included for uncensored and lower-censored observations
+but is inadvertently omitted from the upper-censored contribution.
+Issue [#664](https://github.com/UCD-SERG/serocalculator/issues/664)
+tracks the correction needed to make that branch conform to the equation above.

@@ -69,6 +69,10 @@
 
 ## Documentation
 
+* Reviewed the retired `_methods-continued.qmd` methodology draft,
+  retained its useful explanation of how assay detection limits enter the
+  likelihood, and removed the otherwise duplicated or outdated material.
+  (#662)
 * Split the methodology article's combined "Likelihood and log-likelihood"
   definition into two separate, independently cross-referenceable
   definitions (`#def-likelihood`, `#def-log-likelihood`) --- previously

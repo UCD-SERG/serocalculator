@@ -118,6 +118,10 @@ test_that("`sim_pop_data_multi()` leaves the caller's RNG state unchanged", {
       antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
       n_mcmc_samples = 0,
       add_noise = FALSE,
+      noise_limits = rbind(
+        "HlyE_IgA" = c(min = 0, max = 0.5),
+        "HlyE_IgG" = c(min = 0, max = 0.5)
+      ),
       format = "long",
       nclus = 2,
       num_cores = 1

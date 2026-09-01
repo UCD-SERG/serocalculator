@@ -2,6 +2,26 @@
 
 ## Bug fixes
 
+* `sim_pop_data_multi()` no longer changes the calling session's
+  random number generator.
+  It sets up reproducible parallel streams with `rngtools::setRNG()`,
+  and with `num_cores = 1` that loop runs in the caller's own process,
+  so the generator was left switched to `"L'Ecuyer-CMRG"`
+  after the call returned.
+  A later `set.seed()` then produced a different stream
+  than the same `set.seed()` had produced before the call,
+  silently changing the results of unrelated downstream work.
+  The generator state is now saved on entry and restored on exit.
+  Simulated output, and its reproducibility across `num_cores` values,
+  are unchanged. (#634)
+* `est_seroincidence_by()` now forwards `...` to `nlm()`
+  when `num_cores > 1`.
+  The parallel branch assembled its `est_seroincidence()` arguments
+  without splicing in `...`,
+  so optimizer tuning arguments such as `iterlim` were honored
+  when running serially and silently discarded when running in parallel,
+  and the two branches could return different estimates for one call.
+  Both branches now read their arguments from a single captured list. (#629)
 * `est_seroincidence()`'s `cluster_var` argument can now be pointed at
   the subject id (e.g. `cluster_var = ids_varname(pop_data)`) to get a
   cluster-robust standard error for a multi-biomarker fit that

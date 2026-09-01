@@ -95,3 +95,44 @@ test_that("`sim_pop_data_multi()` verbose = TRUE prints inputs w/o erroring", {
     )
   )
 })
+
+test_that("`sim_pop_data_multi()` leaves the caller's RNG state unchanged", {
+  # `rngtools::setRNG()` inside the `%dopar%` loop switches the generator to
+  # L'Ecuyer-CMRG. With `num_cores = 1` that loop runs in the calling process,
+  # so before #634 the switch escaped into the user's session: a later
+  # `set.seed()` then produced a different stream than it had before the call.
+  dmcmc <- typhoid_curves_nostrat_100
+
+  run_sim <- function() {
+    sim_pop_data_multi(
+      curve_params = dmcmc,
+      lambdas = 0.2,
+      sample_sizes = 5,
+      age_range = c(0, 10),
+      antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
+      n_mcmc_samples = 0,
+      add_noise = FALSE,
+      format = "long",
+      nclus = 2,
+      num_cores = 1
+    )
+  }
+
+  kind_before <- RNGkind()
+  set.seed(54321)
+  seed_before <- .Random.seed
+
+  invisible(run_sim())
+
+  expect_identical(RNGkind(), kind_before)
+  expect_identical(.Random.seed, seed_before)
+
+  # The user-visible consequence: an identical `set.seed()` must still give an
+  # identical stream after the call.
+  set.seed(99)
+  before <- runif(3)
+  invisible(run_sim())
+  set.seed(99)
+  after <- runif(3)
+  expect_identical(before, after)
+})

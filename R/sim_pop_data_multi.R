@@ -29,6 +29,14 @@ sim_pop_data_multi <- function(
     print(environment() |> as.list())
   }
 
+  # `rngtools::setRNG()` in the loop below switches the RNG to
+  # L'Ecuyer-CMRG. When `num_cores == 1`, `%dopar%` runs in the calling
+  # process, so that switch escapes into the caller's session and silently
+  # changes the results of their own `set.seed()` streams afterwards.
+  # Restore whatever the caller had on the way out.
+  old_rng_seed <- rngtools::RNGseed()
+  on.exit(rngtools::RNGseed(old_rng_seed), add = TRUE)
+
   if (num_cores > 1L) {
 
     chk <- Sys.getenv("_R_CHECK_LIMIT_CORES_", "")

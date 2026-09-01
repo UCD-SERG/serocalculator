@@ -395,3 +395,46 @@ test_that("clustering works with parallel processing", {
     )
   }
 })
+
+test_that("est_seroincidence_by() forwards `...` to nlm() when num_cores > 1", {
+  skip_on_cran()
+
+  # Before #629 the `num_cores > 1` branch built its `est_seroincidence()`
+  # argument list without splicing in `...`, so every `nlm()` tuning argument
+  # a caller passed was silently discarded -- while the serial branch honored
+  # it. `iterlim = 1` is a deterministic probe: `nlm()` stops after one
+  # iteration and reports convergence code 4.
+  fit_args <- list(
+    strata = "catchment",
+    pop_data = sees_pop_data_pk_100,
+    sr_params = typhoid_curves_nostrat_100,
+    noise_params = example_noise_params_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    iterlim = 1
+  )
+
+  parallel_fit <- suppressWarnings(
+    do.call(est_seroincidence_by, c(fit_args, list(num_cores = 2)))
+  )
+  serial_fit <- suppressWarnings(
+    do.call(est_seroincidence_by, c(fit_args, list(num_cores = 1)))
+  )
+
+  # `iterlim` reached the optimizer in the parallel branch.
+  expect_equal(
+    vapply(parallel_fit, function(x) x$iterations, integer(1)),
+    vapply(parallel_fit, function(x) 1L, integer(1))
+  )
+
+  # ...and both branches now agree, which is the property that was broken.
+  expect_equal(
+    vapply(parallel_fit, function(x) x$iterations, integer(1)),
+    vapply(serial_fit, function(x) x$iterations, integer(1))
+  )
+  expect_equal(
+    vapply(parallel_fit, function(x) x$estimate, numeric(1)),
+    vapply(serial_fit, function(x) x$estimate, numeric(1))
+  )
+})

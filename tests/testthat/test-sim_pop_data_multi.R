@@ -137,7 +137,11 @@ test_that("`sim_pop_data_multi()` leaves the caller's RNG state unchanged", {
   expect_identical(.Random.seed, seed_before)
 
   # The user-visible consequence: an identical `set.seed()` must still give
-  # an identical stream after the call.
+  # an identical stream after the call. Reset the kind first so this block
+  # stands on its own: without it, a leak from the call above would put
+  # both `before` and `after` under the same switched generator and the
+  # comparison would pass vacuously.
+  do.call(RNGkind, as.list(kind_before))
   set.seed(99)
   before <- runif(3)
   invisible(run_sim())

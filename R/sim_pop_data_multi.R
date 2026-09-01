@@ -34,8 +34,25 @@ sim_pop_data_multi <- function(
   # process, so that switch escapes into the caller's session and silently
   # changes the results of their own `set.seed()` streams afterwards.
   # Restore whatever the caller had on the way out.
+  #
+  # The kind is captured separately from the seed because it is not
+  # recoverable from it when there is no seed to recover: in a session
+  # that has not yet drawn a random number, `RNGseed()` returns NULL and
+  # `RNGseed(NULL)` only removes `.Random.seed`, leaving the generator
+  # kind switched. Reading `RNGkind()` does not itself create a seed, so
+  # capturing it costs nothing in the common case.
+  old_rng_kind <- RNGkind()
   old_rng_seed <- rngtools::RNGseed()
-  on.exit(rngtools::RNGseed(old_rng_seed), add = TRUE)
+  on.exit(
+    {
+      rngtools::RNGseed(old_rng_seed)
+      if (is.null(old_rng_seed)) {
+        do.call(RNGkind, as.list(old_rng_kind))
+        rngtools::RNGseed(NULL)
+      }
+    },
+    add = TRUE
+  )
 
   if (num_cores > 1L) {
 

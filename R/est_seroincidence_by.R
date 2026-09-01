@@ -167,12 +167,13 @@ est_seroincidence_by <- function(
     )
   }
 
-  # Capture `...` once, so the parallel and serial branches below forward
-  # the same thing. `...` cannot be spliced directly inside the
-  # `parLapplyLB()` closure, so the parallel branch's argument list was
-  # maintained separately and silently dropped every argument a caller
-  # passed through to `nlm()` whenever `num_cores > 1` (#629). Reading both
-  # branches off one object is what stops them drifting apart again.
+  # Capture `...` once so the parallel and serial branches below forward
+  # the same object. Each branch used to build its own argument list, and
+  # the parallel one simply omitted `...`, so every argument a caller
+  # passed through to `nlm()` was silently dropped when `num_cores > 1`
+  # while the serial branch honored it. Nothing prevented the parallel
+  # branch from forwarding them; the two lists were just maintained by
+  # hand, so reading both off one object is what stops the drift.
   dots <- list(...)
 
   # Loop over data per stratum
@@ -198,7 +199,7 @@ est_seroincidence_by <- function(
     # Export library paths and cluster variables to the cluster
     parallel::clusterExport(
       cl,
-      c("lib_paths", "lambda_start", "build_graph", "dots"),
+      c("lib_paths", "lambda_start", "build_graph"),
       envir = environment()
     )
 

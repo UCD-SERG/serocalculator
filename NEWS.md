@@ -21,7 +21,11 @@
   so optimizer tuning arguments such as `iterlim` were honored
   when running serially and silently discarded when running in parallel,
   and the two branches could return different estimates for one call.
-  Both branches now read their arguments from a single captured list. (#629)
+  Both branches now read the forwarded arguments from a single captured
+  list.
+  One consequence worth knowing: because `...` is now sent to the workers,
+  an argument that cannot be serialized fails instead of being discarded
+  in silence, which matches what the serial branch already did. (#629)
 * `est_seroincidence()`'s `cluster_var` argument can now be pointed at
   the subject id (e.g. `cluster_var = ids_varname(pop_data)`) to get a
   cluster-robust standard error for a multi-biomarker fit that

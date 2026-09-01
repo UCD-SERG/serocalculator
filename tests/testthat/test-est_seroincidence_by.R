@@ -399,11 +399,16 @@ test_that("clustering works with parallel processing", {
 test_that("est_seroincidence_by() forwards `...` to nlm() when num_cores > 1", {
   skip_on_cran()
 
-  # Before #629 the `num_cores > 1` branch built its `est_seroincidence()`
-  # argument list without splicing in `...`, so every `nlm()` tuning argument
-  # a caller passed was silently discarded -- while the serial branch honored
-  # it. `iterlim = 1` is a deterministic probe: `nlm()` stops after one
-  # iteration and reports convergence code 4.
+  # The parallel branch used to build its `est_seroincidence()` argument
+  # list without splicing in `...`, so every `nlm()` tuning argument a
+  # caller passed was silently discarded, while the serial branch honored
+  # it. Passing `iterlim = 1` is a deterministic probe.
+  #
+  # `iterations == 1` alone is ambiguous, because `nlm()` also reports one
+  # iteration when it converges immediately. Convergence code 4 ("iteration
+  # limit exceeded") is the unambiguous half: it cannot arise under the
+  # default `iterlim = 100` unless the optimizer really ran 100 iterations.
+  # Assert both.
   fit_args <- list(
     strata = "catchment",
     pop_data = sees_pop_data_pk_100,
@@ -415,26 +420,41 @@ test_that("est_seroincidence_by() forwards `...` to nlm() when num_cores > 1", {
     iterlim = 1
   )
 
-  parallel_fit <- suppressWarnings(
+  # Suppress only the `nlm()` non-convergence warning that `iterlim = 1` is
+  # meant to provoke, so an unrelated warning still surfaces.
+  hitting_iteration_limit <- function(expr) {
+    withCallingHandlers(
+      expr,
+      warning = function(w) {
+        if (grepl("maximum likelihood estimate", conditionMessage(w))) {
+          invokeRestart("muffleWarning")
+        }
+      }
+    )
+  }
+
+  parallel_fit <- hitting_iteration_limit(
     do.call(est_seroincidence_by, c(fit_args, list(num_cores = 2)))
   )
-  serial_fit <- suppressWarnings(
+  serial_fit <- hitting_iteration_limit(
     do.call(est_seroincidence_by, c(fit_args, list(num_cores = 1)))
   )
 
+  parallel_iterations <-
+    vapply(parallel_fit, function(fit) fit$iterations, integer(1))
+  parallel_codes <-
+    vapply(parallel_fit, function(fit) fit$code, integer(1))
+  serial_iterations <-
+    vapply(serial_fit, function(fit) fit$iterations, integer(1))
+
   # `iterlim` reached the optimizer in the parallel branch.
-  expect_equal(
-    vapply(parallel_fit, function(x) x$iterations, integer(1)),
-    vapply(parallel_fit, function(x) 1L, integer(1))
-  )
+  expect_true(all(parallel_iterations == 1L))
+  expect_true(all(parallel_codes == 4L))
 
   # ...and both branches now agree, which is the property that was broken.
+  expect_equal(parallel_iterations, serial_iterations)
   expect_equal(
-    vapply(parallel_fit, function(x) x$iterations, integer(1)),
-    vapply(serial_fit, function(x) x$iterations, integer(1))
-  )
-  expect_equal(
-    vapply(parallel_fit, function(x) x$estimate, numeric(1)),
-    vapply(serial_fit, function(x) x$estimate, numeric(1))
+    vapply(parallel_fit, function(fit) fit$estimate, numeric(1)),
+    vapply(serial_fit, function(fit) fit$estimate, numeric(1))
   )
 })

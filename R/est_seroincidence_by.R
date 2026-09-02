@@ -70,23 +70,24 @@
 #' summary(est2)
 #'
 est_seroincidence_by <- function(
-    pop_data,
-    sr_params,
-    noise_params,
-    strata,
-    curve_strata_varnames = strata,
-    noise_strata_varnames = strata,
-    antigen_isos = pop_data |>
-      pull("antigen_iso") |>
-      unique(),
-    lambda_start = 0.1,
-    build_graph = FALSE,
-    num_cores = 1L,
-    verbose = FALSE,
-    print_graph = FALSE,
-    cluster_var = NULL,
-    stratum_var = NULL,
-    ...) {
+  pop_data,
+  sr_params,
+  noise_params,
+  strata,
+  curve_strata_varnames = strata,
+  noise_strata_varnames = strata,
+  antigen_isos = pop_data |>
+    pull("antigen_iso") |>
+    unique(),
+  lambda_start = 0.1,
+  build_graph = FALSE,
+  num_cores = 1L,
+  verbose = FALSE,
+  print_graph = FALSE,
+  cluster_var = NULL,
+  stratum_var = NULL,
+  ...
+) {
 
   strata_is_empty <-
     missing(strata) ||
@@ -311,7 +312,8 @@ est_seroincidence_by <- function(
 #' @keywords internal
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
-    ...) {
+  ...
+) {
   lifecycle::deprecate_soft("1.4.0", "est.incidence.by()",
                             "est_seroincidence_by()")
   est_seroincidence_by(

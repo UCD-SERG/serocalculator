@@ -16,14 +16,15 @@
 #' @export
 #' @example inst/examples/exm-sim_pop_data_multi.R
 sim_pop_data_multi <- function(
-    nclus = 10,
-    sample_sizes = 100,
-    lambdas = c(.05, .1, .15, .2, .3),
-    num_cores = max(1, parallel::detectCores() - 1),
-    rng_seed = 1234,
-    verbose = FALSE,
-    sim_function = sim_pop_data,
-    ...) {
+  nclus = 10,
+  sample_sizes = 100,
+  lambdas = c(.05, .1, .15, .2, .3),
+  num_cores = max(1, parallel::detectCores() - 1),
+  rng_seed = 1234,
+  verbose = FALSE,
+  sim_function = sim_pop_data,
+  ...
+) {
   if (verbose) {
     cli::cli_inform("inputs to `sim_pop_data_multi()`:")
     print(environment() |> as.list())

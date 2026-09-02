@@ -1,5 +1,28 @@
 # serocalculator (development version)
 
+## New features
+
+* `log_likelihood()`, `est_seroincidence()` and `est_seroincidence_by()`
+  gain a `method` argument selecting how several biomarkers are combined.
+  The new `method = "joint"` fits the model the methodology article
+  describes: each person's biomarkers are conditionally independent
+  *given* their time since infection, so their densities multiply inside
+  one integral over that shared latent time
+  (implemented in C, `src/serocalc_joint.c`).
+  The default, `method = "composite"`, is unchanged: it sums the
+  per-biomarker marginal log-likelihoods, which gives each biomarker its
+  own latent time (a composite/independence likelihood --- see #637)
+  and reproduces previous results exactly.
+  The joint likelihood needs `pop_data` to identify people
+  (see `ids_varname()`), so that each person's readings can be paired,
+  a noise model for every biomarker, and the same posterior draws
+  (`iter`) for every biomarker.
+  Because it is a genuine likelihood, its Hessian-based standard error
+  is valid without the `cluster_var = ids_varname(pop_data)` correction
+  the composite likelihood calls for.
+  The methodology article's "Multiple biomarkers" section now compares
+  the two on simulated data with known incidence. (#646)
+
 ## Bug fixes
 
 * `sim_pop_data_multi()` no longer changes the calling session's

@@ -22,6 +22,9 @@
   sr_params_list <- attr(fit, "sr_params")
   noise_params_list <- attr(fit, "noise_params")
   antigen_isos <- attr(fit, "antigen_isos")
+  method <- attr(fit, "method")
+  if (is.null(method)) method <- "composite"
+  id_var <- attr(fit, "id_var")
 
   # Get MLE estimate
   log_lambda_mle <- fit$estimate
@@ -87,7 +90,9 @@
       antigen_isos = antigen_isos,
       curve_params = sr_params_list,
       noise_params = noise_params_list,
-      verbose = FALSE
+      verbose = FALSE,
+      method = method,
+      id_var = id_var
     ))
 
     # Compute log-likelihood at MLE + epsilon
@@ -97,7 +102,9 @@
       antigen_isos = antigen_isos,
       curve_params = sr_params_list,
       noise_params = noise_params_list,
-      verbose = FALSE
+      verbose = FALSE,
+      method = method,
+      id_var = id_var
     ))
 
     # Numerical derivative (score for this cluster)

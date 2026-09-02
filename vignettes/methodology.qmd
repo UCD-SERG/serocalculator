@@ -574,7 +574,7 @@ xs_data <-
 noise <- readRDS("precomputed/osf/hqy4v.rds")
 ```
 
-## Standard errors
+## Standard errors {#sec-standard-errors}
 
 How precisely the data pin down $\hat\lambda$ depends on how sharply
 the log-likelihood peaks at its maximum, which takes two more
@@ -860,7 +860,7 @@ That algorithm also returns a numerical Hessian (@def-hessian) at the maximum, a
 
 :::
 
-## Cluster-robust standard errors for clustered sampling designs
+## Cluster-robust standard errors for clustered sampling designs {#sec-cluster-robust}
 
 {{< include methodology/_cluster-robust-se.qmd >}}
 
@@ -874,7 +874,7 @@ That algorithm also returns a numerical Hessian (@def-hessian) at the maximum, a
 
 {{< include methodology/_variation-across-the-posterior.qmd >}}
 
-## Multiple biomarkers
+## Multiple biomarkers {#sec-multiple-biomarkers}
 
 {{< include methodology/_multiple-biomarkers.qmd >}}
 
@@ -1112,9 +1112,13 @@ width is an explicit function of time since infection.
 
 {{< include methodology/_checking-convergence-codes.qmd >}}
 
-## Estimates recover the simulated rates {.smaller}
+## Estimates recover the simulated rates {#sec-recover .smaller}
 
 {{< include methodology/_estimates-recover-the-simulated-rates.qmd >}}
+
+## Joint vs composite likelihood on the simulated clusters {#sec-joint-vs-composite-sim .smaller}
+
+{{< include methodology/_joint-vs-composite-simulation.qmd >}}
 
 ## A caveat: renewing parameters at each infection {.smaller}
 
@@ -1142,9 +1146,12 @@ width is an explicit function of time since infection.
 
 ## Multiple biomarkers: beyond conditional independence {#sec-multivariate .smaller}
 
-With several biomarkers (e.g. HlyE IgA and IgG), the current method treats
-them as **conditionally independent given the time since infection**, so the
-joint likelihood factors into a product of per-biomarker terms:
+With several biomarkers (e.g. HlyE IgA and IgG), the joint likelihood
+(`method = "joint"`, @sec-multiple-biomarkers) treats them as
+**conditionally independent given the time since infection**, so the
+joint density factors into a product of per-biomarker terms inside the
+integral over $t$ (the default composite likelihood assumes more: that the
+biomarkers are independent unconditionally):
 
 $$
 \dens(Y_1 = y_1, Y_2 = y_2 \mid T=t) =

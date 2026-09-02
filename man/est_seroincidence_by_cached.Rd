@@ -79,6 +79,18 @@ See issue \href{https://github.com/UCD-SERG/serocalculator/issues/645}{#645}.}
     \item{\code{stratum_var}}{optional name of the variable in \code{pop_data} containing
 stratum identifiers. Used in combination with \code{cluster_var} for
 stratified cluster sampling designs.}
+    \item{\code{method}}{how to combine several biomarkers into one likelihood;
+see \code{\link[=log_likelihood]{log_likelihood()}}. \code{"composite"} (the default) sums the
+per-biomarker marginal log-likelihoods; \code{"joint"} integrates over a
+shared latent infection time per person, which needs \code{pop_data} to
+identify people (see \code{\link[=ids_varname]{ids_varname()}}).
+The two methods call for different standard errors: the composite
+likelihood's naive standard error assumes independence across
+biomarkers (pass \code{cluster_var = ids_varname(pop_data)} to correct it),
+while the joint likelihood is a genuine likelihood, so its
+Hessian-based standard error is valid as is
+(up to any sampling-design clustering, which \code{cluster_var} still
+handles).}
     \item{\code{noise_params}}{a \code{\link[=data.frame]{data.frame()}} (or \code{\link[tibble:tibble]{tibble::tibble()}})
 containing the following variables,
 specifying noise parameters for each antigen isotype:

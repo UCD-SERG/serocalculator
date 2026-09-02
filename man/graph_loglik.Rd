@@ -70,6 +70,29 @@ existing graph}
   Arguments passed on to \code{\link{log_likelihood}}
   \describe{
     \item{\code{verbose}}{logical: if TRUE, print verbose log information to console}
+    \item{\code{method}}{how to combine several biomarkers into one likelihood:
+\itemize{
+\item \code{"composite"} (the default) sums the per-biomarker marginal
+log-likelihoods, giving each biomarker its own latent infection time.
+This is an independence (composite) likelihood: its point estimate is
+consistent, but its naive standard error assumes biomarker readings from
+the same person are independent --- see \code{cluster_var} in
+\code{\link[=est_seroincidence]{est_seroincidence()}} for the correction.
+\item \code{"joint"} integrates once per subject over a \strong{shared} latent
+infection time, with the per-biomarker densities multiplied inside the
+integral (conditional independence \emph{given} the time since infection).
+This is the model the methodology article describes. It needs
+\code{pop_data} to identify subjects (see \code{\link[=ids_varname]{ids_varname()}}) so that each
+person's readings can be paired, a noise model (\code{nu > 0} or \code{eps > 0})
+for every biomarker, and the same posterior draws (\code{iter}) for every
+biomarker, so that a person's biomarkers are evaluated under one
+coherent draw.
+}
+
+With a single biomarker the two methods coincide.
+See issues
+\href{https://github.com/UCD-SERG/serocalculator/issues/637}{#637} and
+\href{https://github.com/UCD-SERG/serocalculator/issues/646}{#646}.}
   }}
 }
 \value{

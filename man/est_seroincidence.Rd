@@ -18,6 +18,7 @@ est_seroincidence(
   cluster_var = NULL,
   stratum_var = NULL,
   sampling_weights = NULL,
+  method = c("composite", "joint"),
   ...
 )
 }
@@ -110,6 +111,19 @@ stratified cluster sampling designs.}
 weights with columns for cluster/stratum identifiers and their sampling
 probabilities. Currently not implemented; reserved for future use.}
 
+\item{method}{how to combine several biomarkers into one likelihood;
+see \code{\link[=log_likelihood]{log_likelihood()}}. \code{"composite"} (the default) sums the
+per-biomarker marginal log-likelihoods; \code{"joint"} integrates over a
+shared latent infection time per person, which needs \code{pop_data} to
+identify people (see \code{\link[=ids_varname]{ids_varname()}}).
+The two methods call for different standard errors: the composite
+likelihood's naive standard error assumes independence across
+biomarkers (pass \code{cluster_var = ids_varname(pop_data)} to correct it),
+while the joint likelihood is a genuine likelihood, so its
+Hessian-based standard error is valid as is
+(up to any sampling-design clustering, which \code{cluster_var} still
+handles).}
+
 \item{...}{
   Arguments passed on to \code{\link[stats:nlm]{stats::nlm}}
   \describe{
@@ -187,4 +201,15 @@ est3 <- est_seroincidence(
 )
 
 summary(est3)
+
+# Shared-latent-time (joint) likelihood across the two biomarkers
+est4 <- est_seroincidence(
+  pop_data = xs_data,
+  sr_params = sr_curve,
+  noise_params = noise,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+  method = "joint"
+)
+
+summary(est4)
 }

@@ -331,6 +331,126 @@ test_that("the joint likelihood refuses inputs it can't pair", {
   )
 })
 
+test_that("the joint likelihood validates `n_t_steps`", {
+  # A non-positive value doesn't fail in C: it integrates nothing, or
+  # runs the loop backwards, either way returning a plausible-looking
+  # number. Catch it in R instead (review of #677).
+  inputs <- joint_test_inputs()
+  for (bad in list(0, -5, 2.5, NA_integer_, c(10, 20), "10")) {
+    expect_error(
+      f_dev_joint(
+        lambda = 0.1,
+        pop_data = inputs$xs_data,
+        curve_params = inputs$curves,
+        noise_params = inputs$noise,
+        antigen_isos = inputs$antibodies,
+        n_t_steps = bad
+      ),
+      "whole number"
+    )
+  }
+  expect_no_error(
+    f_dev_joint(
+      lambda = 0.1,
+      pop_data = inputs$xs_data,
+      curve_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      n_t_steps = 25
+    )
+  )
+})
+
+test_that("a subject aged 0 contributes the never-infected mass alone", {
+  # `EXPla` divides by age; at age 0 the latent-time interval is empty,
+  # so it is never used and the likelihood stays finite (review of #677).
+  inputs <- joint_test_inputs()
+  newborn <- inputs$xs_data |>
+    dplyr::filter(.data$id == unique(.data$id)[1]) |>
+    dplyr::mutate(age = 0)
+  ll <- log_likelihood(
+    lambda = 0.1,
+    pop_data = newborn,
+    curve_params = inputs$curves,
+    noise_params = inputs$noise,
+    antigen_isos = inputs$antibodies,
+    method = "joint"
+  )
+  expect_true(is.finite(ll))
+})
+
+test_that("ambiguous noise parameters are refused", {
+  # Several rows per biomarker (one per country, say) would otherwise be
+  # resolved by taking the first, silently changing the noise model
+  # (review of #677).
+  inputs <- joint_test_inputs()
+  two_countries <- dplyr::bind_rows(
+    inputs$noise |> dplyr::mutate(Country = "A"),
+    inputs$noise |> dplyr::mutate(Country = "B", nu = .data$nu * 2)
+  )
+  expect_error(
+    log_likelihood(
+      lambda = 0.1,
+      pop_data = inputs$xs_data,
+      curve_params = inputs$curves,
+      noise_params = two_countries,
+      antigen_isos = inputs$antibodies,
+      method = "joint"
+    ),
+    "more than one row"
+  )
+})
+
+test_that("curve parameters may arrive as a list in raw units", {
+  # The documented interface accepts a list split by `antigen_iso`; it
+  # may still carry `r` rather than `d` (review of #677).
+  inputs <- joint_test_inputs()
+  raw_list <- split(inputs$curves, inputs$curves$antigen_iso)
+  expect_equal(
+    log_likelihood(
+      lambda = 0.1,
+      pop_data = inputs$xs_data,
+      curve_params = raw_list,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      method = "joint"
+    ),
+    log_likelihood(
+      lambda = 0.1,
+      pop_data = inputs$xs_data,
+      curve_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      method = "joint"
+    )
+  )
+})
+
+test_that("both entry points resolve the id column the same way", {
+  # `est_seroincidence()` falls back to an `id` column when the `id_var`
+  # attribute is absent; `est_seroincidence_by()` must not abort where
+  # the unstratified fit succeeds (review of #677).
+  inputs <- joint_test_inputs()
+  no_attr <- inputs$xs_data
+  attr(no_attr, "id_var") <- NULL
+
+  expect_equal(.joint_id_var_for_fit(no_attr, inputs$antibodies), "id")
+  expect_no_error(
+    est_seroincidence_by(
+      pop_data = no_attr,
+      sr_params = inputs$curves,
+      noise_params = inputs$noise,
+      strata = "catchment",
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      antigen_isos = inputs$antibodies,
+      method = "joint",
+      iterlim = 1
+    ) |>
+      suppressWarnings()
+  )
+})
+
 test_that("`est_seroincidence(method = 'joint')` fits and summarizes", {
   inputs <- joint_test_inputs()
   est_joint <- est_seroincidence(

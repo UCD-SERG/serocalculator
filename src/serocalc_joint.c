@@ -185,6 +185,13 @@ static double NLLFjoint(double lambda, double *yy, int *obs, double *aa,
     double age = aa[subj];
     double Qa = exp(-lambda * age);
     double Pa = 1 - Qa;
+    /* As in `NLLFf()`, this divides by age. At age 0 that is a positive
+     * infinity, but it is never used: EXPla appears only inside the
+     * integral over (0, age), whose bounds start at tlo = 0, thi = age
+     * and can only narrow, so age 0 leaves tlo >= thi and every draw
+     * takes the `continue` below. Such a subject contributes the
+     * never-infected mass alone, which is what age 0 should mean.
+     * Keep that ordering if the bounds logic changes. */
     double EXPla = Qa / age;
     double never, integ, rho;
 

@@ -92,7 +92,7 @@ fit_pk <- function(...) {
 
 bind_rows(
   "composite, naive SE" = fit_pk(),
-  "composite, person-clustered SE" = fit_pk(cluster_var = "id"),
+  "composite, person-clustered SE" = fit_pk(cluster_var = ids_varname(xs_pk)),
   "joint" = fit_pk(method = "joint"),
   .id = "estimator"
 )

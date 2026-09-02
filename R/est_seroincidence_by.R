@@ -130,7 +130,11 @@ est_seroincidence_by <- function(
 
   # The joint likelihood pairs each person's biomarkers, so the id column
   # has to survive stratification (see `stratify_data()`).
-  id_var <- if (method == "joint") ids_varname(pop_data) else NULL
+  id_var <- if (method == "joint") {
+    .joint_id_var_for_fit(pop_data, antigen_isos)
+  } else {
+    NULL
+  }
 
   check_strata(pop_data, strata = strata)
 

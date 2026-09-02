@@ -75,6 +75,7 @@ f_dev_joint <- function(
 }
 
 .negloglik_joint <- function(lambda, inputs, n_t_steps, n_dropped = FALSE) {
+  .validate_n_t_steps(n_t_steps)
   llpp <- .C(
     "negloglik_joint",
     res = as.double(0),
@@ -138,6 +139,38 @@ f_dev_joint <- function(
     ),
     n_subjects = nrow(inputs$y)
   )
+}
+
+#' Check the quadrature resolution before handing it to C
+#'
+#' @description
+#' `negloglik_joint` divides the latent-time interval into `n_t_steps`
+#' midpoint nodes, so a non-positive value does not error there: it
+#' either integrates nothing (returning a likelihood computed from the
+#' never-infected mass alone) or runs the loop backwards. Both give a
+#' plausible-looking number rather than a failure, so the value is
+#' checked here instead.
+#'
+#' @param n_t_steps the `n_t_steps` argument as passed by the caller
+#' @returns `invisible(NULL)`
+#' @noRd
+.validate_n_t_steps <- function(n_t_steps) {
+  ok <- length(n_t_steps) == 1 &&
+    is.numeric(n_t_steps) &&
+    !is.na(n_t_steps) &&
+    n_t_steps >= 1 &&
+    n_t_steps == trunc(n_t_steps)
+  if (!ok) {
+    cli::cli_abort(
+      c(
+        "{.arg n_t_steps} must be a single whole number >= 1,
+        not {.val {n_t_steps}}.",
+        "i" = "It sets how many midpoint nodes the integral over the
+        latent infection time uses."
+      )
+    )
+  }
+  invisible(NULL)
 }
 
 #' Marshal multi-biomarker inputs for the joint likelihood
@@ -279,14 +312,13 @@ f_dev_joint <- function(
 #' @noRd
 .align_joint_curve_params <- function(curve_params, antigen_isos) {
   if (is.data.frame(curve_params)) {
-    if (!is.element("d", names(curve_params))) {
-      curve_params <- curve_params |>
-        dplyr::mutate(
-          alpha = .data$alpha * 365.25,
-          d = .data$r - 1
-        )
-    }
+    curve_params <- .to_decay_params(curve_params)
     curve_params <- split(curve_params, curve_params$antigen_iso)
+  } else {
+    # A list split by `antigen_iso` may still hold the raw `alpha`/`r`
+    # parameterization, which the documented interface allows, so
+    # convert element-wise rather than only on the data.frame path.
+    curve_params <- lapply(curve_params, .to_decay_params)
   }
 
   missing_isos <- setdiff(antigen_isos, names(curve_params))
@@ -343,6 +375,21 @@ f_dev_joint <- function(
   )
 }
 
+#' Convert raw curve parameters (`alpha` per day, `r`) to the units the
+#' likelihood uses (`alpha` per year, `d = r - 1`), leaving already
+#' converted parameters untouched.
+#' @noRd
+.to_decay_params <- function(params) {
+  if (is.element("d", names(params))) {
+    return(params)
+  }
+  params |>
+    dplyr::mutate(
+      alpha = .data$alpha * 365.25,
+      d = .data$r - 1
+    )
+}
+
 .order_draws <- function(params) {
   if ("chain" %in% names(params)) {
     params[order(params$chain, params$iter), , drop = FALSE]
@@ -367,6 +414,26 @@ f_dev_joint <- function(
   if (anyNA(idx)) {
     cli::cli_abort(
       "{.arg noise_params} has no row for {.val {antigen_isos[is.na(idx)]}}."
+    )
+  }
+
+  # More than one row per biomarker (e.g. one per country or stratum)
+  # would otherwise be resolved by `match()` taking the first, which
+  # silently evaluates the likelihood under noise parameters the caller
+  # never chose.
+  relevant <- noise_params[noise_params$antigen_iso %in% antigen_isos, ,
+                           drop = FALSE]
+  n_rows <- table(as.character(relevant$antigen_iso))
+  dup_isos <- names(n_rows)[n_rows > 1]
+  if (length(dup_isos) > 0) {
+    cli::cli_abort(
+      c(
+        "{.arg noise_params} has more than one row for
+        {.val {dup_isos}}.",
+        "i" = "The joint likelihood needs exactly one noise model per
+        biomarker; subset {.arg noise_params} to the stratum being
+        analyzed (e.g. one country)."
+      )
     )
   }
   noise_params <- noise_params[idx, , drop = FALSE]

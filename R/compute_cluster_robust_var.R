@@ -14,9 +14,10 @@
 #' @keywords internal
 #' @noRd
 .compute_cluster_robust_var <- function(
-    fit,
-    cluster_var,
-    stratum_var = NULL) {
+  fit,
+  cluster_var,
+  stratum_var = NULL
+) {
   # Extract stored data (already split by antigen_iso)
   pop_data_list <- attr(fit, "pop_data")
   sr_params_list <- attr(fit, "sr_params")

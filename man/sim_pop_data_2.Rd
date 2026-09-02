@@ -72,8 +72,8 @@ combinations
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{...}{additional arguments passed to other functions
-(not currently used).}
+\item{...}{additional arguments passed to \code{\link[=f_dev_joint]{f_dev_joint()}} when
+\code{method = "joint"} (\code{id_var}, \code{n_t_steps}); otherwise unused.}
 }
 \value{
 a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey

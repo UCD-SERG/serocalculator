@@ -1,13 +1,12 @@
 # The joint (shared latent time) likelihood -- see issues #637 and #646.
 
-joint_test_inputs <- function() {
-  antibodies <- c("HlyE_IgA", "HlyE_IgG")
+joint_test_inputs <- function(antibodies = c("HlyE_IgA", "HlyE_IgG")) {
   list(
     antibodies = antibodies,
-    curves = typhoid_curves_nostrat_100 |>
+    curves = serocalculator::typhoid_curves_nostrat_100 |>
       dplyr::filter(.data$antigen_iso %in% antibodies),
-    xs_data = sees_pop_data_pk_100,
-    noise = example_noise_params_pk |>
+    xs_data = serocalculator::sees_pop_data_pk_100,
+    noise = serocalculator::example_noise_params_pk |>
       dplyr::filter(.data$antigen_iso %in% antibodies)
   )
 }

@@ -10,7 +10,7 @@ Note that this is **not** the product of the two single-biomarker likelihoods: t
 
 `serocalculator` offers two ways of combining biomarkers, selected by the `method` argument of `log_likelihood()`, `est_seroincidence()` and `est_seroincidence_by()`:
 
-* `method = "composite"` (the default) evaluates each biomarker's likelihood separately and **sums the log-likelihoods**.
+* `method = "composite"` (the default) evaluates the likelihood of each biomarker separately and **sums the log-likelihoods**.
   That is the product of the marginals, which treats the biomarkers as independent *unconditionally*, each with its own latent infection time.
   In the composite-likelihood literature this is an *independence likelihood* [@varin2011overview]: its point estimate is consistent, but its naive standard error assumes the biomarker readings are independent.
 * `method = "joint"` evaluates the formula above: one integral per person over a **shared** $t$, with the per-biomarker densities multiplied inside it.

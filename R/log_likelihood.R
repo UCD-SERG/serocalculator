@@ -116,14 +116,15 @@ llik <- function(...) {
 #' ) %>% print()
 #'
 log_likelihood <- function(
-    lambda,
-    pop_data,
-    curve_params,
-    noise_params,
-    antigen_isos = get_biomarker_levels(pop_data),
-    verbose = FALSE,
-    method = c("composite", "joint"),
-    ...) {
+  lambda,
+  pop_data,
+  curve_params,
+  noise_params,
+  antigen_isos = get_biomarker_levels(pop_data),
+  verbose = FALSE,
+  method = c("composite", "joint"),
+  ...
+) {
   method <- rlang::arg_match(method)
 
   if (method == "joint" && length(antigen_isos) > 1) {
@@ -152,20 +153,20 @@ log_likelihood <- function(
       cur_noise_params <- noise_params[[cur_antibody]]
     } else {
       cur_data <-
-        pop_data %>%
+        pop_data |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_curve_params <-
-        curve_params %>%
+        curve_params |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_noise_params <-
-        noise_params %>%
+        noise_params |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       if (!is.element("d", names(cur_curve_params))) {
         cur_curve_params <-
-          cur_curve_params %>%
+          cur_curve_params |>
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
             d = .data$r - 1
@@ -181,11 +182,10 @@ log_likelihood <- function(
         cond = cur_noise_params
       )
 
-    # if (!is.na(nllSingle))  # not meaningful for vectorized f_dev()
     nll_total <- nll_total + nll_single
     # note: summing log likelihoods treats the biomarkers as independent,
     # each with its own latent time since seroconversion (a composite
-    # likelihood; see #637). `method = "joint"` above integrates over a
+    # likelihood; see #637). The joint method above integrates over a
     # shared latent time instead.
 
   }

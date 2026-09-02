@@ -5,7 +5,8 @@
 <meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="UC Davis Seroepidemiology Research Group (UCD-SERG)">
-<meta name="dcterms.date" content="2026-08-10">
+<meta name="dcterms.date" content="2026-09-02">
+<link rel="canonical" href="https://UCD-SERG.github.io/serocalculator/dev/vignettes/methodology.html">
 <title>Estimating Incidence Rates from Cross-Sectional Serosurveys – serocalculator</title>
 <style>
 /* Default styles provided by pandoc.
@@ -99,9 +100,9 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3bf001d253865aa232e95694ec38c805.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-910f3d4e7a9c877e7486ccdaaa1c429e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-47a428c6c0d68a48c3eaf572e06d6a6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-099f6595bb203fc787b8386eccc2683a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-47a428c6c0d68a48c3eaf572e06d6a6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/div-anchors-1.0.0/div-anchors.js"></script>
 <link href="../site_libs/quarto-contrib/div-anchors-1.0.0/div-anchors.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
@@ -287,6 +288,36 @@ div.callout-def .callout-toggle::before {  background-image: url('data:image/svg
 div.callout-def.callout-style-default .callout-icon::before, div.callout-def.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231B5E20" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
+div.callout-solution.callout {
+  border-left-color: #4E342E;
+}
+div.callout-solution.callout-style-default .callout-header {
+  background-color: rgba(78, 52, 46, 0.13);
+}
+div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-lem.callout {
+  border-left-color: #1565C0;
+}
+div.callout-lem.callout-style-default .callout-header {
+  background-color: rgba(21, 101, 192, 0.13);
+}
+div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
+div.callout-cor.callout {
+  border-left-color: #00838F;
+}
+div.callout-cor.callout-style-default .callout-header {
+  background-color: rgba(0, 131, 143, 0.13);
+}
+div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+}
 div.callout-exr.callout {
   border-left-color: #FFA500;
 }
@@ -296,16 +327,6 @@ div.callout-exr.callout-style-default .callout-header {
 div.callout-exr .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-exr.callout-style-default .callout-icon::before, div.callout-exr.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23FFA500" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-exm.callout {
-  border-left-color: #6A1B9A;
-}
-div.callout-exm.callout-style-default .callout-header {
-  background-color: rgba(106, 27, 154, 0.13);
-}
-div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-proof.callout {
   border-left-color: #37474F;
@@ -317,25 +338,25 @@ div.callout-proof .callout-toggle::before {  background-image: url('data:image/s
 div.callout-proof.callout-style-default .callout-icon::before, div.callout-proof.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2337474F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-solution.callout {
-  border-left-color: #4E342E;
+div.callout-cnj.callout {
+  border-left-color: #558B2F;
 }
-div.callout-solution.callout-style-default .callout-header {
-  background-color: rgba(78, 52, 46, 0.13);
+div.callout-cnj.callout-style-default .callout-header {
+  background-color: rgba(85, 139, 47, 0.13);
 }
-div.callout-solution .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-solution.callout-style-default .callout-icon::before, div.callout-solution.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234E342E" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
-div.callout-cor.callout {
-  border-left-color: #00838F;
+div.callout-exm.callout {
+  border-left-color: #6A1B9A;
 }
-div.callout-cor.callout-style-default .callout-header {
-  background-color: rgba(0, 131, 143, 0.13);
+div.callout-exm.callout-style-default .callout-header {
+  background-color: rgba(106, 27, 154, 0.13);
 }
-div.callout-cor .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cor.callout-style-default .callout-icon::before, div.callout-cor.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2300838F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
+div.callout-exm .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-exm.callout-style-default .callout-icon::before, div.callout-exm.callout-titled .callout-icon::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236A1B9A" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 div.callout-prp.callout {
   border-left-color: #827717;
@@ -356,26 +377,6 @@ div.callout-remark.callout-style-default .callout-header {
 div.callout-remark .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-remark.callout-style-default .callout-icon::before, div.callout-remark.callout-titled .callout-icon::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23AD1457" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-lem.callout {
-  border-left-color: #1565C0;
-}
-div.callout-lem.callout-style-default .callout-header {
-  background-color: rgba(21, 101, 192, 0.13);
-}
-div.callout-lem .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-lem.callout-style-default .callout-icon::before, div.callout-lem.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%231565C0" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
-}
-div.callout-cnj.callout {
-  border-left-color: #558B2F;
-}
-div.callout-cnj.callout-style-default .callout-header {
-  background-color: rgba(85, 139, 47, 0.13);
-}
-div.callout-cnj .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-cnj.callout-style-default .callout-icon::before, div.callout-cnj.callout-titled .callout-icon::before {
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23558B2F" class="bi bi-exclamation-triangle" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/></svg>');
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script><script type="text/javascript">
@@ -573,7 +574,7 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9041</small></span>
+    <span class="navbar-title">serocalculator <small class="navbar-version text-danger" title="Development version">1.4.1.9045</small></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -663,7 +664,7 @@ window.Quarto = {
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dev" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">1.4.1.9041 (dev)</span>
+ <span class="menu-text">1.4.1.9045 (dev)</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-dev">
 <li>
@@ -672,7 +673,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="https://UCD-SERG.github.io/serocalculator/dev/">
- <span class="dropdown-text">1.4.1.9041 (dev)</span></a>
+ <span class="dropdown-text">1.4.1.9045 (dev)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -1255,7 +1256,7 @@ window.Quarto = {
   <li><a href="#maximum-likelihood-estimation" id="toc-maximum-likelihood-estimation" class="nav-link" data-scroll-target="#maximum-likelihood-estimation"><span class="header-section-number">4.6</span> Maximum likelihood estimation</a></li>
   <li><a href="#likelihood-of-latent-infection-times" id="toc-likelihood-of-latent-infection-times" class="nav-link" data-scroll-target="#likelihood-of-latent-infection-times"><span class="header-section-number">4.7</span> Likelihood of latent infection times</a></li>
   <li><a href="#example-log-likelihood-curves" id="toc-example-log-likelihood-curves" class="nav-link" data-scroll-target="#example-log-likelihood-curves"><span class="header-section-number">4.8</span> Example log-likelihood curves</a></li>
-  <li><a href="#standard-errors" id="toc-standard-errors" class="nav-link" data-scroll-target="#standard-errors"><span class="header-section-number">4.9</span> Standard errors</a></li>
+  <li><a href="#sec-standard-errors" id="toc-sec-standard-errors" class="nav-link" data-scroll-target="#sec-standard-errors"><span class="header-section-number">4.9</span> Standard errors</a></li>
   <li><a href="#hessian-for-the-exponential-model" id="toc-hessian-for-the-exponential-model" class="nav-link" data-scroll-target="#hessian-for-the-exponential-model"><span class="header-section-number">4.10</span> Hessian for the exponential model</a></li>
   <li><a href="#likelihood-of-observed-data" id="toc-likelihood-of-observed-data" class="nav-link" data-scroll-target="#likelihood-of-observed-data"><span class="header-section-number">4.11</span> Likelihood of observed data</a></li>
   <li><a href="#antibody-response-curves" id="toc-antibody-response-curves" class="nav-link" data-scroll-target="#antibody-response-curves"><span class="header-section-number">4.12</span> Antibody response curves</a></li>
@@ -1263,7 +1264,7 @@ window.Quarto = {
   <li><a href="#the-full-sample-likelihood" id="toc-the-full-sample-likelihood" class="nav-link" data-scroll-target="#the-full-sample-likelihood"><span class="header-section-number">4.14</span> The full-sample likelihood</a></li>
   <li><a href="#finding-the-mle-numerically" id="toc-finding-the-mle-numerically" class="nav-link" data-scroll-target="#finding-the-mle-numerically"><span class="header-section-number">4.15</span> Finding the MLE numerically</a></li>
   <li>
-<a href="#cluster-robust-standard-errors-for-clustered-sampling-designs" id="toc-cluster-robust-standard-errors-for-clustered-sampling-designs" class="nav-link" data-scroll-target="#cluster-robust-standard-errors-for-clustered-sampling-designs"><span class="header-section-number">4.16</span> Cluster-robust standard errors for clustered sampling designs</a>
+<a href="#sec-cluster-robust" id="toc-sec-cluster-robust" class="nav-link" data-scroll-target="#sec-cluster-robust"><span class="header-section-number">4.16</span> Cluster-robust standard errors for clustered sampling designs</a>
   <ul class="collapse">
 <li><a href="#why-clustering-matters" id="toc-why-clustering-matters" class="nav-link" data-scroll-target="#why-clustering-matters"><span class="header-section-number">4.16.1</span> Why clustering matters</a></li>
   <li><a href="#cluster-robust-variance-estimation" id="toc-cluster-robust-variance-estimation" class="nav-link" data-scroll-target="#cluster-robust-variance-estimation"><span class="header-section-number">4.16.2</span> Cluster-robust variance estimation</a></li>
@@ -1286,7 +1287,7 @@ window.Quarto = {
   <li><a href="#combined-biological-and-measurement-noise" id="toc-combined-biological-and-measurement-noise" class="nav-link" data-scroll-target="#combined-biological-and-measurement-noise"><span class="header-section-number">5.8</span> Combined biological and measurement noise</a></li>
   <li><a href="#noise-and-never-infected-subjects" id="toc-noise-and-never-infected-subjects" class="nav-link" data-scroll-target="#noise-and-never-infected-subjects"><span class="header-section-number">5.9</span> Noise and never-infected subjects</a></li>
   <li><a href="#variation-across-the-posterior" id="toc-variation-across-the-posterior" class="nav-link" data-scroll-target="#variation-across-the-posterior"><span class="header-section-number">5.10</span> Variation across the posterior</a></li>
-  <li><a href="#multiple-biomarkers" id="toc-multiple-biomarkers" class="nav-link" data-scroll-target="#multiple-biomarkers"><span class="header-section-number">5.11</span> Multiple biomarkers</a></li>
+  <li><a href="#sec-multiple-biomarkers" id="toc-sec-multiple-biomarkers" class="nav-link" data-scroll-target="#sec-multiple-biomarkers"><span class="header-section-number">5.11</span> Multiple biomarkers</a></li>
   <li><a href="#variation-in-antibody-kinetics-by-country" id="toc-variation-in-antibody-kinetics-by-country" class="nav-link" data-scroll-target="#variation-in-antibody-kinetics-by-country"><span class="header-section-number">5.12</span> Variation in antibody kinetics: by country</a></li>
   <li><a href="#variation-in-antibody-kinetics-by-age-and-serotype" id="toc-variation-in-antibody-kinetics-by-age-and-serotype" class="nav-link" data-scroll-target="#variation-in-antibody-kinetics-by-age-and-serotype"><span class="header-section-number">5.13</span> Variation in antibody kinetics: by age and serotype</a></li>
   </ul>
@@ -1322,8 +1323,9 @@ window.Quarto = {
   <li><a href="#estimating-incidence-in-each-cluster" id="toc-estimating-incidence-in-each-cluster" class="nav-link" data-scroll-target="#estimating-incidence-in-each-cluster"><span class="header-section-number">8.2</span> Estimating incidence in each cluster</a></li>
   <li><a href="#inspecting-individual-clusters" id="toc-inspecting-individual-clusters" class="nav-link" data-scroll-target="#inspecting-individual-clusters"><span class="header-section-number">8.3</span> Inspecting individual clusters</a></li>
   <li><a href="#checking-nlm-convergence" id="toc-checking-nlm-convergence" class="nav-link" data-scroll-target="#checking-nlm-convergence"><span class="header-section-number">8.4</span> Checking <code>nlm()</code> convergence</a></li>
-  <li><a href="#estimates-recover-the-simulated-rates" id="toc-estimates-recover-the-simulated-rates" class="nav-link" data-scroll-target="#estimates-recover-the-simulated-rates"><span class="header-section-number">8.5</span> Estimates recover the simulated rates</a></li>
-  <li><a href="#a-caveat-renewing-parameters-at-each-infection" id="toc-a-caveat-renewing-parameters-at-each-infection" class="nav-link" data-scroll-target="#a-caveat-renewing-parameters-at-each-infection"><span class="header-section-number">8.6</span> A caveat: renewing parameters at each infection</a></li>
+  <li><a href="#sec-recover" id="toc-sec-recover" class="nav-link" data-scroll-target="#sec-recover"><span class="header-section-number">8.5</span> Estimates recover the simulated rates</a></li>
+  <li><a href="#sec-joint-vs-composite-sim" id="toc-sec-joint-vs-composite-sim" class="nav-link" data-scroll-target="#sec-joint-vs-composite-sim"><span class="header-section-number">8.6</span> Joint vs composite likelihood on the simulated clusters</a></li>
+  <li><a href="#a-caveat-renewing-parameters-at-each-infection" id="toc-a-caveat-renewing-parameters-at-each-infection" class="nav-link" data-scroll-target="#a-caveat-renewing-parameters-at-each-infection"><span class="header-section-number">8.7</span> A caveat: renewing parameters at each infection</a></li>
   </ul>
 </li>
   <li>
@@ -1340,7 +1342,7 @@ window.Quarto = {
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Articles</li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Methodology</a></li><li class="breadcrumb-item"><a href="../vignettes/methodology.html">Estimating Incidence Rates from Cross-Sectional Serosurveys</a></li></ol></nav><h1 class="title display-7">Estimating Incidence Rates from Cross-Sectional Serosurveys</h1></header><header id="title-block-header">
 <p class="author">UC Davis Seroepidemiology Research Group (UCD-SERG)</p>
 
-<p class="date">2026-08-10</p>
+<p class="date">2026-09-02</p>
 </header><section id="infectious-disease-epidemiology" class="level1" data-number="1"><h1 data-number="1">
 <span class="header-section-number">1</span> Infectious disease epidemiology</h1>
 <section id="salmonella-enterica-typhoid-fever" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="salmonella-enterica-typhoid-fever">
@@ -1773,7 +1775,7 @@ Figure&nbsp;1: log-likelihood curve for latent data
 </div>
 </div>
 </div>
-</section><section id="standard-errors" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="standard-errors">
+</section><section id="sec-standard-errors" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="sec-standard-errors">
 <span class="header-section-number">4.9</span> Standard errors</h2>
 <p>How precisely the data pin down <span class="math inline">\(\hat\lambda\)</span> depends on how sharply the log-likelihood peaks at its maximum, which takes two more definitions to make precise.</p>
 <div class="callout callout-style-simple callout-def no-icon callout-titled">
@@ -2027,7 +2029,7 @@ Figure&nbsp;3: Observed antibody measurements over time since fever onset, for t
 <div class="notes">
 <p>Each <span class="math inline">\(\ell_i\)</span> is the log of an integral (<a href="#prp-marginal-likelihood" class="quarto-xref">Proposition&nbsp;3</a>), so the derivative of this sum doesn’t come out cleanly, and we use a <em>numerical method</em> (specifically, a Newton-type algorithm, implemented by <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>) to find the MLE. That algorithm also returns a numerical Hessian (<a href="#def-hessian" class="quarto-xref">Definition&nbsp;6</a>) at the maximum, and <a href="#thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> turns that Hessian into a standard error.</p>
 </div>
-</section><section id="cluster-robust-standard-errors-for-clustered-sampling-designs" class="level2" data-number="4.16"><h2 data-number="4.16" class="anchored" data-anchor-id="cluster-robust-standard-errors-for-clustered-sampling-designs">
+</section><section id="sec-cluster-robust" class="level2" data-number="4.16"><h2 data-number="4.16" class="anchored" data-anchor-id="sec-cluster-robust">
 <span class="header-section-number">4.16</span> Cluster-robust standard errors for clustered sampling designs</h2>
 <p>In many survey designs, observations are clustered (e.g., multiple individuals from the same household, school, or geographic area). Observations within the same cluster are often more similar to each other than to observations from different clusters, which violates the independence assumption of <a href="#prp-full-sample-likelihood" class="quarto-xref">Proposition&nbsp;4</a>. The estimate <span class="math inline">\(\hat\lambda\)</span> itself remains usable, but the inverse-information standard error of <a href="#thm-mle-asymptotic-variance" class="quarto-xref">Theorem&nbsp;1</a> no longer applies to it.</p>
 <section id="why-clustering-matters" class="level3" data-number="4.16.1"><h3 data-number="4.16.1" class="anchored" data-anchor-id="why-clustering-matters">
@@ -2483,47 +2485,116 @@ Figure&nbsp;5: Posterior draws of the antibody-decay curve per antigen-isotype, 
 <p><code>n_curves</code> caps how many draws are drawn rather than setting a target, so asking for more than the object holds simply draws them all. Passing <code>quantiles = NULL</code> omits the overlay, and <code>log_x = FALSE</code> puts time on a linear scale.</p>
 <p>This spread is what the incidence likelihood averages over, as described under “Propagating uncertainty and heterogeneity” above: each draw is one plausible antibody-response curve, and together they carry both the estimation uncertainty and the between-person heterogeneity.</p>
 </div>
-</section><section id="multiple-biomarkers" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="multiple-biomarkers">
+</section><section id="sec-multiple-biomarkers" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="sec-multiple-biomarkers">
 <span class="header-section-number">5.11</span> Multiple biomarkers</h2>
-<p>A serosurvey usually measures more than one antigen-isotype per participant. The current model treats biomarkers as <strong>conditionally independent given the time since infection</strong>, so their response densities multiply <em>inside</em> each person’s integral over <span class="math inline">\(t\)</span>:</p>
+<p>A serosurvey usually measures more than one antigen-isotype per participant. The model treats biomarkers as <strong>conditionally independent given the time since infection</strong>, so their response densities multiply <em>inside</em> each person’s integral over <span class="math inline">\(t\)</span>:</p>
 <p><span class="math display">\[
 \operatorname{p}(Y_1=y_1, Y_2=y_2) =
 \int_t \operatorname{p}(Y_1=y_1|T=t)\,\operatorname{p}(Y_2=y_2|T=t)\,\operatorname{p}_\lambda(T=t)\, dt
 \]</span></p>
 <p>Note that this is <strong>not</strong> the product of the two single-biomarker likelihoods: the shared latent infection time <span class="math inline">\(t\)</span> couples them.</p>
-<p><code><a href="../man/log_likelihood.html">log_likelihood()</a></code> evaluates the log-likelihood at a given <span class="math inline">\(\lambda\)</span>, which lets us check that claim numerically:</p>
+<p><code>serocalculator</code> offers two ways of combining biomarkers, selected by the <code>method</code> argument of <code><a href="../man/log_likelihood.html">log_likelihood()</a></code>, <code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code> and <code><a href="../man/est_seroincidence_by.html">est_seroincidence_by()</a></code>:</p>
+<ul>
+<li>
+<code>method = "composite"</code> (the default) evaluates the likelihood of each biomarker separately and <strong>sums the log-likelihoods</strong>. That is the product of the marginals, which treats the biomarkers as independent <em>unconditionally</em>, each with its own latent infection time. In the composite-likelihood literature this is an <em>independence likelihood</em> <span class="citation" data-cites="varin2011overview">(<a href="#ref-varin2011overview" role="doc-biblioref">Varin et al. 2011</a>)</span>: its point estimate is consistent, but its naive standard error assumes the biomarker readings are independent.</li>
+<li>
+<code>method = "joint"</code> evaluates the formula above: one integral per person over a <strong>shared</strong> <span class="math inline">\(t\)</span>, with the per-biomarker densities multiplied inside it. This needs the data to identify people (<code><a href="../man/ids_varname.html">ids_varname()</a></code>), so that each person’s readings can be paired, and it pairs the posterior draws of the curve parameters across biomarkers too, so that a person’s biomarkers are evaluated under one coherent draw.</li>
+</ul>
+<p><code><a href="../man/log_likelihood.html">log_likelihood()</a></code> evaluates the log-likelihood at a given <span class="math inline">\(\lambda\)</span>, which lets us see the difference numerically. First, the default:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ll_iga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">xs_pk</span> <span class="op">&lt;-</span> <span class="va">xs_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span></span>
+<span><span class="va">noise_pk</span> <span class="op">&lt;-</span> <span class="va">noise</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Pakistan"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ll_iga</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_pk</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise_pk</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgA"</span>, lambda <span class="op">=</span> <span class="fl">0.1</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ll_igg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_pk</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise_pk</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="st">"HlyE_IgG"</span>, lambda <span class="op">=</span> <span class="fl">0.1</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ll_both</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
-<span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
+<span><span class="va">ll_composite</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_pk</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise_pk</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>, lambda <span class="op">=</span> <span class="fl">0.1</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>IgA <span class="op">=</span> <span class="va">ll_iga</span>, IgG <span class="op">=</span> <span class="va">ll_igg</span>, sum <span class="op">=</span> <span class="va">ll_iga</span> <span class="op">+</span> <span class="va">ll_igg</span>, joint <span class="op">=</span> <span class="va">ll_both</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>IgA <span class="op">=</span> <span class="va">ll_iga</span>, IgG <span class="op">=</span> <span class="va">ll_igg</span>, sum <span class="op">=</span> <span class="va">ll_iga</span> <span class="op">+</span> <span class="va">ll_igg</span>, composite <span class="op">=</span> <span class="va">ll_composite</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>      IgA       IgG       sum     joint 
--3801.688 -4918.504 -8720.192 -8720.192 </code></pre>
+<pre><code>      IgA       IgG       sum composite 
+-1186.318 -1201.146 -2387.464 -2387.464 </code></pre>
 </div>
 </div>
-<p>The two-biomarker value is <strong>exactly</strong> the sum of the separate ones. That is worth pausing on, because the formula above says it should not be: one integral over a shared <span class="math inline">\(t\)</span> does not factor into two separate integrals.</p>
-<p>What it tells us is that <code><a href="../man/log_likelihood.html">log_likelihood()</a></code> currently combines biomarkers by summing their individual log-likelihoods, which is the stronger assumption that the biomarkers are independent <em>unconditionally</em>, each with its own latent infection time. <code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code> optimizes through the same code path, so this is the estimation model rather than a quirk of this one function.</p>
-<p>Whether the formula or the implementation should change is <a href="https://github.com/UCD-SERG/serocalculator/issues/637">an open question</a>. Until it is settled, read a multi-biomarker standard error as assuming independence across biomarkers.</p>
+<p>The two-biomarker value is <strong>exactly</strong> the sum of the separate ones, as summing log-likelihoods must give. Under the shared-latent-time model it is not:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ll_joint</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/log_likelihood.html">log_likelihood</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">xs_pk</span>, curve_params <span class="op">=</span> <span class="va">curves</span>, noise_params <span class="op">=</span> <span class="va">noise_pk</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>, lambda <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"joint"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>sum <span class="op">=</span> <span class="va">ll_iga</span> <span class="op">+</span> <span class="va">ll_igg</span>, joint <span class="op">=</span> <span class="va">ll_joint</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>      sum     joint 
+-2387.464 -2249.881 </code></pre>
+</div>
+</div>
 <div class="notes">
-<p><code>R/log_likelihood.R</code> loops over <code>antigen_isos</code>, calls <code><a href="../man/f_dev.html">f_dev()</a></code> once per biomarker, and adds the results, with a source comment naming the independence assumption. Summing log-likelihoods is the log of the product of the marginals.</p>
-<p>(<a href="#sec-multivariate" class="quarto-xref">Section&nbsp;9.2</a> describes work in progress to relax conditional independence <em>given</em> <span class="math inline">\(t\)</span>; the question above is whether the current code implements even that much.)</p>
+<p><code>R/log_likelihood.R</code> loops over <code>antigen_isos</code>, calls <code><a href="../man/f_dev.html">f_dev()</a></code> once per biomarker, and adds the results; <code>method = "joint"</code> instead hands all of a person’s readings to <code>f_dev_joint()</code>, which integrates once over <span class="math inline">\(t\)</span> in C (<code>src/serocalc_joint.c</code>). With a single biomarker the two agree, up to numerical integration.</p>
+<p>(<a href="#sec-multivariate" class="quarto-xref">Section&nbsp;9.2</a> describes work in progress to relax conditional independence <em>given</em> <span class="math inline">\(t\)</span>; <code>method = "joint"</code> is the model that work generalizes, and <code>method = "composite"</code> is a different, stronger, independence assumption.)</p>
+</div>
+<p>The two likelihoods call for different standard errors. The joint likelihood is a genuine likelihood, so the Hessian-based standard error of <a href="#sec-standard-errors" class="quarto-xref">Section&nbsp;4.9</a> applies to it directly. The composite likelihood’s Hessian understates the variance whenever one person’s biomarker readings are correlated (they respond to the same infection), and the fix is the cluster-robust estimator of <a href="#sec-cluster-robust" class="quarto-xref">Section&nbsp;4.16</a> with the <em>person</em> as the cluster, <code>cluster_var = ids_varname(pop_data)</code>. On the Pakistan data, the two agree closely once the composite standard error is corrected:</p>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit_pk</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>    pop_data <span class="op">=</span> <span class="va">xs_pk</span>,</span>
+<span>    sr_params <span class="op">=</span> <span class="va">curves</span>,</span>
+<span>    noise_params <span class="op">=</span> <span class="va">noise_pk</span>,</span>
+<span>    antigen_isos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HlyE_IgG"</span>, <span class="st">"HlyE_IgA"</span><span class="op">)</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">incidence.rate</span>, <span class="va">SE</span>, <span class="va">CI.lwr</span>, <span class="va">CI.upr</span>, <span class="va">log.lik</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span></span>
+<span>  <span class="st">"composite, naive SE"</span> <span class="op">=</span> <span class="fu">fit_pk</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="st">"composite, person-clustered SE"</span> <span class="op">=</span> <span class="fu">fit_pk</span><span class="op">(</span>cluster_var <span class="op">=</span> <span class="fu"><a href="../man/ids_varname.html">ids_varname</a></span><span class="op">(</span><span class="va">xs_pk</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="st">"joint"</span> <span class="op">=</span> <span class="fu">fit_pk</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"joint"</span><span class="op">)</span>,</span>
+<span>  .id <span class="op">=</span> <span class="st">"estimator"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div id="tbl-joint-vs-composite-sees" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-joint-vs-composite-sees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Incidence estimates for the Pakistan SEES data, combining HlyE IgA and IgG under the composite likelihood (with the naive and the person-clustered standard error) and under the joint likelihood.
+</figcaption><div aria-describedby="tbl-joint-vs-composite-sees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 2 of 494 subjects have zero likelihood under every posterior draw and
+contribute nothing to the joint likelihood.
+ℹ For these subjects, no shared time since infection is compatible with all of
+  their biomarker readings under the noise model (nu, eps), so the estimate is
+  based on the remaining subjects only. If the dropped subjects tend to have
+  high readings (recent infections), the incidence estimate will be biased
+  downward.
+ℹ Consider whether the noise parameters are realistic for these biomarkers, or
+  use `method = "composite"`, which evaluates each biomarker on its own.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  estimator                      incidence.rate      SE CI.lwr CI.upr log.lik
+  &lt;chr&gt;                                   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 composite, naive SE                     0.136 0.00695  0.123  0.150  -2371.
+2 composite, person-clustered SE          0.136 0.00804  0.121  0.152  -2371.
+3 joint                                   0.140 0.00857  0.125  0.158  -2236.</code></pre>
+</div>
+</div>
+</figure>
+</div>
+<div class="notes">
+<p>The joint estimate is a little higher and its log-likelihood is much higher, but the latter is not a like-for-like comparison: the two methods evaluate different functions of the data. Which one is <em>better</em> has to be settled on data where the truth is known; <a href="#sec-joint-vs-composite-sim" class="quarto-xref">Section&nbsp;8.6</a> does that on the simulated clusters, and the answer is not simply “the joint one”.</p>
 </div>
 <p>Using both biomarkers concentrates the log-likelihood around its maximum, and so shrinks the standard error, relative to either biomarker alone (<a href="#fig-loglik" class="quarto-xref">Figure&nbsp;6</a>):</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lik_HlyE_IgA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span> <span class="co"># nolint: object_name_linter.</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lik_HlyE_IgA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/graph_loglik.html">graph_loglik</a></span><span class="op">(</span> <span class="co"># nolint: object_name_linter.</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">xs_data</span>,</span>
 <span>  curve_params <span class="op">=</span> <span class="va">curves</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">noise</span>,</span>
@@ -2553,9 +2624,9 @@ Figure&nbsp;5: Posterior draws of the antibody-decay curve per antigen-isotype, 
 </details><div class="cell-output-display">
 <div id="fig-loglik" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both biomarkers combined.
+Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both biomarkers combined (composite likelihood).
 </figcaption><div aria-describedby="fig-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="methodology_files/figure-html/fig-loglik-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both biomarkers combined."><img src="methodology_files/figure-html/fig-loglik-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="methodology_files/figure-html/fig-loglik-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both biomarkers combined (composite likelihood)."><img src="methodology_files/figure-html/fig-loglik-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -2598,7 +2669,7 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 </section><section id="a-typical-serodynamics-workflow" class="level2 smaller" data-number="6.3"><h2 class="smaller anchored" data-number="6.3" data-anchor-id="a-typical-serodynamics-workflow">
 <span class="header-section-number">6.3</span> A typical <code>serodynamics</code> workflow</h2>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serodynamics">serodynamics</a></span><span class="op">)</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/UCD-SERG/serodynamics">serodynamics</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Longitudinal confirmed-case data (example data ships with the package)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nepal_sees"</span><span class="op">)</span></span>
@@ -2621,7 +2692,7 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <p>The overlapping chains indicate good convergence.</p>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nepal_sees_jags_output"</span><span class="op">)</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nepal_sees_jags_output"</span><span class="op">)</span></span>
 <span><span class="fu">plot_jags_dens</span><span class="op">(</span><span class="va">nepal_sees_jags_output</span>, iso <span class="op">=</span> <span class="st">"HlyE_IgG"</span>, strat <span class="op">=</span> <span class="st">"typhi"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
@@ -2696,7 +2767,7 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span class="header-section-number">7.2</span> Simulating a cross-sectional survey</h2>
 <p><code><a href="../man/sim_pop_data.html">sim_pop_data()</a></code> simulates infections as a Poisson process with rate <code>lambda</code>, then generates each person’s antibody levels from the seroresponse model:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_lambda</span> <span class="op">&lt;-</span> <span class="fl">0.2</span> <span class="co"># true incidence rate, per person-year</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_lambda</span> <span class="op">&lt;-</span> <span class="fl">0.2</span> <span class="co"># true incidence rate, per person-year</span></span>
 <span><span class="va">sim_lifespan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span> <span class="co"># age range of the simulated survey</span></span>
 <span><span class="va">sim_n</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># number of participants</span></span>
 <span></span>
@@ -2743,7 +2814,7 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 <span class="header-section-number">7.3</span> Noise parameters</h2>
 <p>Estimation needs its own noise parameters, matching <a href="#sec-noise" class="quarto-xref">Section&nbsp;5.6</a>. Here they are declared directly, consistent with the noise used to generate the data above:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_noise_params</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_noise_params</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  antigen_iso <span class="op">=</span> <span class="va">antibodies</span>,</span>
 <span>  nu <span class="op">=</span> <span class="fl">0.5</span>, <span class="co"># biological noise</span></span>
 <span>  eps <span class="op">=</span> <span class="fl">0</span>, <span class="co"># measurement noise</span></span>
@@ -2755,7 +2826,7 @@ Figure&nbsp;6: Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and bot
 </section><section id="the-simulated-antibody-distribution" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="the-simulated-antibody-distribution">
 <span class="header-section-number">7.4</span> The simulated antibody distribution</h2>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm">ggbeeswarm</a></span><span class="op">)</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eclarke/ggbeeswarm">ggbeeswarm</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sim_data</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2783,7 +2854,7 @@ Figure&nbsp;7: Distribution of simulated antibody responses, by antigen-isotype.
 <span class="header-section-number">7.5</span> Estimating incidence from the simulated survey</h2>
 <p><code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code> maximizes the log-likelihood <span class="math inline">\(\log\mathcal{L}(\lambda)\)</span> derived above:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_est</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">sim_data</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
@@ -2806,7 +2877,7 @@ Figure&nbsp;7: Distribution of simulated antibody responses, by antigen-isotype.
 <p>The true rate used to generate these data was 0.2 infections per person-year.</p>
 <p><code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> draws the log-likelihood curve, with the maximum marked:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">sim_est</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">sim_est</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div id="fig-est-single-loglik" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-est-single-loglik-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2822,7 +2893,7 @@ Figure&nbsp;8: Log-likelihood curve for the simulated survey, on a log x-axis.
 <span class="header-section-number">7.6</span> Estimating seroincidence in real data</h2>
 <p>The same call works on a real serosurvey. <code><a href="../man/est_seroincidence_by.html">est_seroincidence_by()</a></code> estimates separately within each stratum, and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> reports each stratum’s <span class="math inline">\(\hat\lambda\)</span> with a standard error and confidence interval (cluster-robust, if <code>cluster_var</code> was supplied):</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load antibody-decay curve parameters and cross-sectional population data</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load antibody-decay curve parameters and cross-sectional population data</span></span>
 <span><span class="va">curves</span> <span class="op">&lt;-</span> <span class="st">"https://osf.io/download/rtw5k/"</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/load_sr_params.html">load_sr_params</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">xs_data</span> <span class="op">&lt;-</span> <span class="st">"https://osf.io/download/n6cp3/"</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/load_pop_data.html">load_pop_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span><span class="op">(</span><span class="st">"https://osf.io/download/hqy4v/"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -2861,7 +2932,7 @@ Figure&nbsp;8: Log-likelihood curve for the simulated survey, on a log x-axis.
 <span class="header-section-number">8.1</span> Simulating clusters with known incidence</h2>
 <p>The single survey above recovered a rate close to the one that generated it. To check that this was not luck, we simulate many clusters across a range of <strong>known</strong> incidence rates and ask whether the estimates track them.</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_lambdas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span>, <span class="fl">.5</span>, <span class="fl">.8</span><span class="op">)</span> <span class="co"># true incidence rates</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_lambdas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.1</span>, <span class="fl">.15</span>, <span class="fl">.2</span>, <span class="fl">.5</span>, <span class="fl">.8</span><span class="op">)</span> <span class="co"># true incidence rates</span></span>
 <span><span class="va">sim_nclus</span> <span class="op">&lt;-</span> <span class="fl">20</span> <span class="co"># clusters per rate</span></span>
 <span></span>
 <span><span class="va">sim_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached</a></span><span class="op">(</span></span>
@@ -2885,7 +2956,7 @@ Figure&nbsp;8: Log-likelihood curve for the simulated survey, on a log x-axis.
 <p>Simulating and estimating on that many people is by far the most expensive work in this document, and it renders to three formats, so the work would otherwise be repeated three times per build. <code><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached()</a></code> and <code><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached()</a></code> write their results to a committed cache directory keyed on their arguments, so a build reuses them and only recomputes when the simulation settings actually change.</p>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_df</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">cluster</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html">geom_beeswarm</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">.2</span>, alpha <span class="op">=</span> <span class="fl">.3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">antigen_iso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2909,7 +2980,7 @@ Figure&nbsp;9: Simulated antibody responses by cluster, faceted by antigen-isoty
 </section><section id="estimating-incidence-in-each-cluster" class="level2 smaller" data-number="8.2"><h2 class="smaller anchored" data-number="8.2" data-anchor-id="estimating-incidence-in-each-cluster">
 <span class="header-section-number">8.2</span> Estimating incidence in each cluster</h2>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached</a></span><span class="op">(</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached</a></span><span class="op">(</span></span>
 <span>  pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
 <span>  sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
 <span>  noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
@@ -2917,22 +2988,90 @@ Figure&nbsp;9: Simulated antibody responses by cluster, faceted by antigen-isoty
 <span>  curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>  <span class="co"># The composite likelihood treats each biomarker reading as its own</span></span>
+<span>  <span class="co"># observation, so its naive standard error understates the variance</span></span>
+<span>  <span class="co"># whenever one person's readings are correlated (@sec-multiple-biomarkers).</span></span>
+<span>  <span class="co"># Clustering by person is what makes the intervals below, and the</span></span>
+<span>  <span class="co"># comparison in @sec-joint-vs-composite-sim, valid. It leaves the point</span></span>
+<span>  <span class="co"># estimates untouched -- only the variance changes.</span></span>
+<span>  cluster_var <span class="op">=</span> <span class="fu"><a href="../man/ids_varname.html">ids_varname</a></span><span class="op">(</span><span class="va">sim_df</span><span class="op">)</span>,</span>
 <span>  <span class="co"># build_graph = TRUE attaches a log-likelihood plot to every stratum's</span></span>
 <span>  <span class="co"># fit, which grows large across many strata; re-fit individual curves on</span></span>
 <span>  <span class="co"># demand instead (see below).</span></span>
 <span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cache_path <span class="op">=</span> <span class="va">sim_cache</span>,</span>
 <span>  cache_id <span class="op">=</span> <span class="st">"ests"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ests_summary</span> <span class="op">&lt;-</span> <span class="va">ests</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning: `nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.</code></pre>
+</div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">&lt;-</span> <span class="va">ests</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="notes">
 <p><code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> returns a <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> carrying some extra metadata about the stratification.</p>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/output_type.html">is_html_output</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/output_type.html">is_html_output</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span>options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>scrollX <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/formatCurrency.html">formatRound</a></span><span class="op">(</span></span>
@@ -2943,11 +3082,11 @@ Figure&nbsp;9: Simulated antibody responses by cluster, faceted by antigen-isoty
 <span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div id="tbl-ests-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-ests-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1
+Table&nbsp;2
 </figcaption><div aria-describedby="tbl-ests-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div class="datatables html-widget html-fill-item" id="htmlwidget-f55d30d0418b47276baa" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-f55d30d0418b47276baa">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120"],["Stratum 1","Stratum 2","Stratum 3","Stratum 4","Stratum 5","Stratum 6","Stratum 7","Stratum 8","Stratum 9","Stratum 10","Stratum 11","Stratum 12","Stratum 13","Stratum 14","Stratum 15","Stratum 16","Stratum 17","Stratum 18","Stratum 19","Stratum 20","Stratum 21","Stratum 22","Stratum 23","Stratum 24","Stratum 25","Stratum 26","Stratum 27","Stratum 28","Stratum 29","Stratum 30","Stratum 31","Stratum 32","Stratum 33","Stratum 34","Stratum 35","Stratum 36","Stratum 37","Stratum 38","Stratum 39","Stratum 40","Stratum 41","Stratum 42","Stratum 43","Stratum 44","Stratum 45","Stratum 46","Stratum 47","Stratum 48","Stratum 49","Stratum 50","Stratum 51","Stratum 52","Stratum 53","Stratum 54","Stratum 55","Stratum 56","Stratum 57","Stratum 58","Stratum 59","Stratum 60","Stratum 61","Stratum 62","Stratum 63","Stratum 64","Stratum 65","Stratum 66","Stratum 67","Stratum 68","Stratum 69","Stratum 70","Stratum 71","Stratum 72","Stratum 73","Stratum 74","Stratum 75","Stratum 76","Stratum 77","Stratum 78","Stratum 79","Stratum 80","Stratum 81","Stratum 82","Stratum 83","Stratum 84","Stratum 85","Stratum 86","Stratum 87","Stratum 88","Stratum 89","Stratum 90","Stratum 91","Stratum 92","Stratum 93","Stratum 94","Stratum 95","Stratum 96","Stratum 97","Stratum 98","Stratum 99","Stratum 100","Stratum 101","Stratum 102","Stratum 103","Stratum 104","Stratum 105","Stratum 106","Stratum 107","Stratum 108","Stratum 109","Stratum 110","Stratum 111","Stratum 112","Stratum 113","Stratum 114","Stratum 115","Stratum 116","Stratum 117","Stratum 118","Stratum 119","Stratum 120"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.05383538563218656,0.04624967871125162,0.04463516324324694,0.04745606402381423,0.05596071459149592,0.05686530696969867,0.03922190650777473,0.06978219449289177,0.05571944680552923,0.04156488432328583,0.06316788294138172,0.04499267092821859,0.05032606295794347,0.06142976053767459,0.05191697495112906,0.05142208004036077,0.03677899445512081,0.06910939310415415,0.0719918512966758,0.04596241157269911,0.1488557724012306,0.07686637177450931,0.09071343386810447,0.1070878667585429,0.1213584169112238,0.1004971039902725,0.0956177969659834,0.09558927338140298,0.1014315098209386,0.09815479547416386,0.09408689373095588,0.1020024744614309,0.1366342097564976,0.1108590992882062,0.1466230470885027,0.1443902764222288,0.1157945418377467,0.1004188640290551,0.1009290910898258,0.09092237392518437,0.154101402897483,0.1539234264911458,0.180427637499271,0.1788526837720751,0.1688792317399715,0.1608077427620512,0.175320414960829,0.2186332428097461,0.1663782803098836,0.1804500917730146,0.1728435218364059,0.1937476694327708,0.1479238191640001,0.1708325515757566,0.1654835137647131,0.1505616784263784,0.2022990233034689,0.1466244753609133,0.1741695534986323,0.181193150549119,0.1995852590142893,0.2331954672534036,0.2882752102227613,0.2084245983414726,0.268037303453351,0.1588346092334514,0.2003824451031426,0.2234862242730894,0.2164495513035067,0.197478291654943,0.239925823330684,0.1911066845471639,0.223178556398518,0.2485296710503597,0.2096359649877879,0.2642068432535751,0.2230354682969949,0.2272356307998453,0.2376879874242592,0.2788843045155922,0.7187456902301049,0.5544272008746569,0.6802293726619953,0.6595536285562257,0.6264290246520068,0.5468255563332032,0.5586370028732172,0.6192814885593336,0.5108685725704917,0.5912788183003933,0.5848161326770281,0.5945984745528178,0.4901603622901555,0.6605655683383352,0.462882529900265,0.6779842542560572,0.4839943425990171,0.5986300267265894,0.4649872006154914,0.6299027870169874,1.089793463925785,0.797745435201479,1.035786908065481,0.8332800888191376,0.9138609586069785,1.018843192957202,1.164749018151388,0.8732027437894927,1.009469232596086,0.9343915840495475,1.003664116960407,0.8632690790948235,1.123581720904224,0.8867873602667979,0.9778883884569719,1.161976987982605,1.094317873729256,0.958216858622255,0.8382513700170701,0.8515040498864884],[0.009572829826639788,0.008691956559986226,0.008007246347446999,0.008186287225100296,0.008961114195098464,0.009605445760201317,0.007426615353501052,0.01084153290114731,0.009466140625536216,0.00805328610868892,0.009930070046628898,0.008299570345212788,0.00887856689990058,0.01011713558374863,0.008764580536945362,0.009056911878464934,0.007453642044003312,0.01054263532166215,0.01111471971116032,0.008085745932338058,0.01781085225583491,0.01110534328369701,0.01261540995477535,0.01430274481832185,0.0149842884001431,0.01404448425720227,0.01325986555182386,0.01325131450316844,0.01342568991694863,0.01367715976149493,0.01288687813978864,0.01397121527883213,0.0170031567074155,0.01421549578475575,0.01786707876996001,0.01822712508882473,0.01487050530114859,0.01410061211931602,0.01342064034341167,0.01280813690799629,0.01895381582435516,0.01807046978293747,0.02123317702762839,0.02030913608726267,0.01955784838892067,0.01874193037283221,0.01992334908041157,0.02417526806465119,0.01975263829437822,0.02062545990085899,0.02036852275898053,0.02104861644625794,0.01760081570065361,0.01971359404146651,0.0195535551025379,0.01701760013176654,0.02235263790000716,0.01779526872158644,0.0198449567206997,0.02116941138274754,0.0221690581907047,0.02459206503281554,0.02877001458002552,0.02297531905453535,0.02736241585425676,0.01831557366245355,0.02226590502171663,0.02396708228054086,0.02375326643056608,0.02152819671590896,0.02630622430316365,0.02205743142362357,0.02442132974156916,0.02663044231193987,0.02286948397075091,0.02711209483348336,0.02363412807664986,0.02347928547505063,0.02465145178477733,0.02805399767012499,0.07140079414756419,0.05275559224016144,0.0659263609470277,0.06438330697012382,0.06121986101161909,0.05345934330555181,0.05345114078006715,0.06009058415583344,0.04969515753923982,0.05761753107853333,0.05850707744034769,0.06005382344041067,0.04767219088129016,0.06213885326138063,0.04419079238193834,0.06662403803502945,0.04617464717250059,0.05748331780516942,0.04404526947937433,0.0600040107088191,0.1094434948073264,0.0781905221334247,0.1025818728445835,0.08384640630303423,0.09118108307352507,0.103701346198883,0.1205002154452997,0.08755250558309091,0.1021715738691751,0.09581382645274479,0.1038183692178286,0.08703059603434804,0.1208308909948685,0.08707789884482696,0.09908197845221343,0.1252295999707473,0.1170710416055098,0.09336332273525448,0.08477360191354483,0.08454841691738206],[0.03799356021607712,0.03199909761637632,0.03140344754880343,0.03384210473267957,0.04088635994301382,0.04083814850144301,0.02706168474421842,0.05146356450172484,0.03993895696101035,0.02843180545292309,0.04641799492999962,0.03134187206991405,0.03561420507815165,0.04448265720320216,0.03729153350432846,0.03641065487677888,0.02472265403191427,0.05124910857787875,0.05319459956530635,0.0325580749851798,0.1177383470562508,0.05791062035365059,0.06907104318048439,0.08242388466326198,0.09527323086409362,0.07641841274763336,0.07286144129718237,0.07284656988583049,0.07825391012557051,0.07469693003061607,0.07193527331490561,0.07798699082183577,0.1070615346797748,0.08622267942828062,0.1154721298015602,0.1127421757256293,0.09002757148540043,0.07625903743995854,0.07777343079496236,0.06898631093782927,0.1210911573821109,0.1222853520979353,0.1432621714334103,0.1431658896990889,0.1345856862570518,0.1279677512941464,0.1403144026775039,0.1760333629331644,0.1318380938868261,0.144233021954663,0.137196917737427,0.1565894591905516,0.1171540534837695,0.1362524666287018,0.1312733718613334,0.120643887085219,0.1629078168757692,0.1155844197462538,0.1393111747484487,0.1441096316909348,0.1605390597758851,0.1896509622512461,0.2370592711061393,0.167926125615511,0.2194324629143044,0.1267042513586355,0.1611672041651638,0.1811199571278869,0.174560295359355,0.1594869640679301,0.1935301221952709,0.1524160319203667,0.1800983248764122,0.2014514177063312,0.1692805305427136,0.2160709462925265,0.1812073020038224,0.1855775414066539,0.1939662398213813,0.2289805424599164,0.5915836804033551,0.460097497515614,0.5625469401619152,0.5447018009523233,0.5172319793432413,0.4514739849826174,0.463111525021437,0.5120279567911857,0.4221899214449759,0.4884796312814752,0.4806867233658729,0.4878129506469238,0.4050901897734822,0.5493436538325762,0.3838907847273987,0.5592086537675715,0.4014512986316531,0.4959319111714346,0.3861998578559606,0.5226233211416877,0.8950793001274482,0.6583158908681231,0.8530400865344805,0.6841342033046249,0.7515379671374169,0.8345822478362914,0.9509780420811064,0.7174118690032975,0.8278283328402771,0.7642677174117493,0.8194843396854171,0.7084874795920223,0.9100510598988054,0.7315363942083586,0.8017584087758138,0.940721544271132,0.8873219797736571,0.7916395112816174,0.6875289657346915,0.7009198151653604],[0.07628263131128822,0.06684665944452442,0.06344200886399863,0.06654662972121944,0.07659281926675782,0.07918241290110886,0.05684634806165507,0.09462140283890691,0.07773504839760996,0.0607643299919426,0.08596195163779635,0.06458900836361295,0.07111523638641146,0.0848334096247378,0.07227839766265733,0.07262243221457802,0.05471477420602277,0.09319397639798317,0.09743144408408959,0.06488538645297054,0.1881973166022173,0.1020268661205012,0.1191371478586268,0.1391321369254377,0.1545855558966775,0.1321627543323246,0.1254815020655045,0.1254322502748604,0.1314739566118282,0.1289793820258222,0.1230598448300592,0.1334133383864541,0.1743754872524667,0.1425348872997489,0.1861775475559542,0.1849223841131549,0.1489363280402168,0.1322328289394592,0.1309789387467548,0.1198336013015856,0.1961104583387245,0.1937470090759563,0.2272346708684351,0.2234350833128475,0.211911056117891,0.2020753656347862,0.2190598207703824,0.271542246679989,0.2099676303165991,0.2257613074981174,0.2177518528367225,0.2397234118099262,0.1867750677452679,0.214188861310023,0.2086088971405645,0.1878986126711553,0.2512150467325094,0.1860003002312937,0.2177501799169253,0.2278193165903493,0.2481282478632315,0.2867379384845485,0.3505561982082087,0.2586900223808394,0.3274082379989566,0.1991127591996443,0.2491395474253255,0.2757625014485575,0.2683909772439475,0.2445195185880177,0.2974441396922409,0.2396189194696452,0.276563749664559,0.3066098918322916,0.2596118861127509,0.3230663688005224,0.2745188497834954,0.2782450479385012,0.2912650130137088,0.3396640363831808,0.873241410026936,0.6680964854830047,0.8225304706109531,0.7986222703525803,0.7586795453458504,0.6623154356737297,0.6738664103959087,0.7490012156282829,0.6181736824672783,0.7157118098323622,0.7115027156241963,0.7247600652497506,0.5930955298985719,0.7943058357549235,0.5581281057293838,0.8219877248362388,0.5835091939328574,0.722594978919998,0.5598476859535029,0.759203627241499,1.326865445158049,0.9667057839748899,1.257683590554785,1.014940786571452,1.111243727109481,1.243785683827347,1.426573711750242,1.062824668374693,1.230965516802075,1.142384549879197,1.229238450194924,1.051865451948935,1.387214343435274,1.07498660156199,1.192710534510107,1.435271179685004,1.349602101673163,1.159845529515606,1.022015644947597,1.034439505469019],["standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard","standard"],[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],[-253.4266114883648,-194.8272627939367,-217.3339744022631,-194.3988016496376,-247.449061184375,-212.5119712443964,-164.4280077558498,-293.1645933776645,-236.4948012426914,-164.6611982233771,-225.1121346509183,-192.8458491119057,-215.8982486130641,-224.0137221687603,-227.7928639218595,-219.9173657106051,-191.6069383072885,-282.3704132025493,-247.9344168384554,-208.3377832785749,-452.6640137987557,-297.634082719648,-294.1045779074578,-355.646500832295,-392.6062078563308,-296.2257060227838,-359.0702335394977,-346.9012857631451,-359.5270833617662,-307.7172941362315,-388.4044142665408,-358.8393283953872,-421.2161955120936,-394.8161780884269,-411.176871816879,-439.2746641255903,-380.0478183026185,-364.9446227299981,-360.2161767845124,-364.4578286678762,-447.9378082191544,-438.483270828312,-508.9700388114533,-437.9382965600221,-464.4550793738243,-456.5974892177491,-496.9974889125501,-552.4440975662369,-468.512100408051,-464.6841961653442,-493.0965959695091,-532.2014839750532,-450.033439224992,-479.9382887588635,-457.7428118670799,-502.1470108122797,-485.4242049316347,-451.0694625006037,-503.8818158396734,-476.9788722477995,-544.0867724732229,-495.9437846747896,-630.3817782651329,-522.4538019301353,-568.1417235657817,-489.5224708185381,-457.1992062123113,-520.8160734964395,-495.5280014687795,-501.1300168819924,-542.6373742415578,-509.2411954960178,-551.0659526027709,-537.232716658172,-520.839287943845,-591.2724213014795,-566.8157808719395,-543.0613474921486,-547.6791835553495,-622.2460289574244,-774.9867325587622,-770.6407639721183,-898.3392323789994,-794.7764077280342,-883.613187974428,-757.0758486665807,-751.6554907613651,-750.5762527938459,-720.0260737876063,-774.9008645038818,-705.4587098066989,-691.7327438930616,-698.4022282078331,-857.2118950352985,-703.3175455902701,-821.4181738437125,-741.8284304546365,-779.562928087826,-751.0925542191992,-739.3781594864408,-943.1824380027984,-876.245212167834,-907.0568994288453,-864.0939884045345,-843.9804802689519,-863.8219547198555,-952.9438160397747,-875.6922597043483,-909.6766924580405,-869.5775734152123,-939.5572706153803,-851.8386409585726,-843.9305150886123,-897.0485817922696,-941.3171971078302,-926.1564018216952,-810.8672385071563,-872.4925950647614,-806.8652189729402,-853.5179459372857],[6,6,6,6,5,6,6,5,6,6,5,6,6,6,6,6,8,5,5,6,7,5,3,3,4,1,6,3,2,2,3,2,4,3,7,4,3,1,2,8,8,5,5,5,5,5,5,8,7,5,5,7,5,5,5,8,6,5,5,5,7,6,6,6,6,5,6,6,6,7,6,10,6,8,7,9,7,6,6,7,5,6,5,5,8,6,8,5,5,7,6,6,5,6,7,5,6,6,6,6,4,9,5,5,6,5,6,5,5,6,4,5,5,5,5,5,5,6,5,5],["HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG"],["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","3","1","1","1","1","1","3","1","1","1","1","1","1","1","3","1","1","1","1","1","2","1","1","1","1","1","1","3","3","1","1","3","1","1","1","1","1","1","1","1","3","1","1","1","1","1","1","1","1","1","1","3","1","3","1","3","1","1","1","3","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","3","1","1","3","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Stratum<\/th>\n      <th>sample_size<\/th>\n      <th>lambda.sim<\/th>\n      <th>cluster<\/th>\n      <th>n<\/th>\n      <th>est.start<\/th>\n      <th>incidence.rate<\/th>\n      <th>SE<\/th>\n      <th>CI.lwr<\/th>\n      <th>CI.upr<\/th>\n      <th>se_type<\/th>\n      <th>coverage<\/th>\n      <th>log.lik<\/th>\n      <th>iterations<\/th>\n      <th>antigen.isos<\/th>\n      <th>nlm.convergence.code<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":9,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":10,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":13,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Stratum","targets":1},{"name":"sample_size","targets":2},{"name":"lambda.sim","targets":3},{"name":"cluster","targets":4},{"name":"n","targets":5},{"name":"est.start","targets":6},{"name":"incidence.rate","targets":7},{"name":"SE","targets":8},{"name":"CI.lwr","targets":9},{"name":"CI.upr","targets":10},{"name":"se_type","targets":11},{"name":"coverage","targets":12},{"name":"log.lik","targets":13},{"name":"iterations","targets":14},{"name":"antigen.isos","targets":15},{"name":"nlm.convergence.code","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-f55d30d0418b47276baa">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120"],["Stratum 1","Stratum 2","Stratum 3","Stratum 4","Stratum 5","Stratum 6","Stratum 7","Stratum 8","Stratum 9","Stratum 10","Stratum 11","Stratum 12","Stratum 13","Stratum 14","Stratum 15","Stratum 16","Stratum 17","Stratum 18","Stratum 19","Stratum 20","Stratum 21","Stratum 22","Stratum 23","Stratum 24","Stratum 25","Stratum 26","Stratum 27","Stratum 28","Stratum 29","Stratum 30","Stratum 31","Stratum 32","Stratum 33","Stratum 34","Stratum 35","Stratum 36","Stratum 37","Stratum 38","Stratum 39","Stratum 40","Stratum 41","Stratum 42","Stratum 43","Stratum 44","Stratum 45","Stratum 46","Stratum 47","Stratum 48","Stratum 49","Stratum 50","Stratum 51","Stratum 52","Stratum 53","Stratum 54","Stratum 55","Stratum 56","Stratum 57","Stratum 58","Stratum 59","Stratum 60","Stratum 61","Stratum 62","Stratum 63","Stratum 64","Stratum 65","Stratum 66","Stratum 67","Stratum 68","Stratum 69","Stratum 70","Stratum 71","Stratum 72","Stratum 73","Stratum 74","Stratum 75","Stratum 76","Stratum 77","Stratum 78","Stratum 79","Stratum 80","Stratum 81","Stratum 82","Stratum 83","Stratum 84","Stratum 85","Stratum 86","Stratum 87","Stratum 88","Stratum 89","Stratum 90","Stratum 91","Stratum 92","Stratum 93","Stratum 94","Stratum 95","Stratum 96","Stratum 97","Stratum 98","Stratum 99","Stratum 100","Stratum 101","Stratum 102","Stratum 103","Stratum 104","Stratum 105","Stratum 106","Stratum 107","Stratum 108","Stratum 109","Stratum 110","Stratum 111","Stratum 112","Stratum 113","Stratum 114","Stratum 115","Stratum 116","Stratum 117","Stratum 118","Stratum 119","Stratum 120"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.05383528074669734,0.04624967891174151,0.0446351627323501,0.04745606473044794,0.05596125953524365,0.05686530848083413,0.03922190660438954,0.06978219500592957,0.05571945833243853,0.04156488435190657,0.06316788560493225,0.04499267057842554,0.05032606387181621,0.06142975405377665,0.05191698024301231,0.05142208015785031,0.03677892247929835,0.06910938425771737,0.07199185103088496,0.04596241133868766,0.1488538823748186,0.07686637057454072,0.09071343158560261,0.1070878655080769,0.121358414056136,0.1004971041613591,0.09562324918539274,0.09558933936873593,0.101431509987283,0.09815479579654864,0.09408689852452293,0.1020024364973404,0.1366366878944504,0.1108590488271374,0.146623144371929,0.1443902789942808,0.1157946134231977,0.1004188615165088,0.1009290912680459,0.09091917970486493,0.154100154949946,0.1539234275251627,0.1804275241232522,0.1788526820032639,0.1688792311842331,0.160807738543474,0.1753203571253177,0.2186357835128577,0.1663796351136698,0.1804500770808679,0.1728435134892725,0.1937467617998314,0.1479238170983104,0.1708325496637978,0.1654835145396496,0.1505622184523529,0.2022989558626916,0.146623976113957,0.174169475344347,0.1811932024456795,0.199585865541913,0.2331954697291978,0.288275224185908,0.2084274646319694,0.2680374137957763,0.1588346212739327,0.2003824514083251,0.223486223852577,0.2164495540197685,0.1974773954212186,0.2399257489271669,0.191106822636932,0.2231785732322285,0.2485293997179243,0.2096368015143388,0.264204212511333,0.2230361698772693,0.2272356260142295,0.2376879837637192,0.2788840093921411,0.7187455661876203,0.5544271960159747,0.6802228436657647,0.6595536170250386,0.626432730065987,0.5468256134734422,0.5586367466233837,0.6192814794877354,0.5108697029477277,0.5912785510858665,0.5848161227195795,0.5945984996105486,0.4901579819773616,0.6605615792044427,0.4628807486207017,0.6779878973103184,0.4839911591981139,0.5986300749897142,0.4649837187471408,0.6299027808197705,1.089793447140365,0.7977413191525354,1.035811684754195,0.8332799047709778,0.9138619788611615,1.018842852526161,1.164744319382236,0.8732027832161868,1.009469120898136,0.9343916642219116,1.003669471698827,0.8632690578042556,1.12358170257703,0.8867923703544647,0.9778889836837806,1.161973697458637,1.094317874985246,0.9582168199428867,0.8382477671326096,0.8515039468022879],[0.01363951322163918,0.01127354801853136,0.01090990281025062,0.01088229168642613,0.0130778701099735,0.01258081170632452,0.0100360336702968,0.01472327719475352,0.01290290258596232,0.01044222992100838,0.01312508557657127,0.01047181031499765,0.0120805620712464,0.01356669774687732,0.01167326329293921,0.01238520426378584,0.00917856466829242,0.01430452725690401,0.01510957424549499,0.0109192805773186,0.02457107695783813,0.01456785330244501,0.01619100215903164,0.01905884022324441,0.02030591194427031,0.01844245601653275,0.01815527778576063,0.01755210057975332,0.01826506436948625,0.01776984616217944,0.01817986090765319,0.01978800100210352,0.02424636109456876,0.01989352570012767,0.02339504109420954,0.02688907706316305,0.0210818662122094,0.01846425997424275,0.01880644872806636,0.01749297237664343,0.0259951168899016,0.02469077618158404,0.03052744253007987,0.02643991262938353,0.0266373905286376,0.02526546597357109,0.02804997067379565,0.03409984066941966,0.02632864859869729,0.02705633441464398,0.03027692572942367,0.02837728853602536,0.02505922449109207,0.02793319112812145,0.02746450379581394,0.02289364352308165,0.0301232554039485,0.02450250034704677,0.02943884797019967,0.03043760558622059,0.03068872658462591,0.0321115756176334,0.04062219756063259,0.03048857372830549,0.03639178088717011,0.02531970319565568,0.02946965231606473,0.03251579548290586,0.03146032712357424,0.02790101059544606,0.03715706380906695,0.03129918283449588,0.0356873788426861,0.03657398980532871,0.03167516559437711,0.03623451387159974,0.03342422444559364,0.03129291907041291,0.03368144007085371,0.03960876817389161,0.0901304852534271,0.0742010384917613,0.09914120905633715,0.09270795947842222,0.09925003565071717,0.0739438610138778,0.07300085562689744,0.07513215036650231,0.06666963340574431,0.07985691335675456,0.07741131077058722,0.07673078387813631,0.06189573658770965,0.0930970295534008,0.05617373357596007,0.09904420320313607,0.06542184415654395,0.08249653990241188,0.05835482164836087,0.07713429327624492,0.1599769218682544,0.107671627741368,0.1512469638523856,0.1213608550682773,0.1306422923517182,0.1424775850619496,0.1864546409838428,0.1222763639605406,0.1487987377434822,0.1265254425676368,0.150598738395317,0.1274380459288695,0.1625641358250155,0.1351536853008235,0.1559672968006985,0.2049467617058396,0.1481704455625917,0.1394709215981375,0.1171310745191448,0.1171667896160702],[0.0327649582437835,0.02868301971161961,0.02764541275859181,0.03027611583274816,0.03539695321878115,0.03685773175457036,0.0237533419891379,0.04614774068296052,0.03539117198987707,0.02540279993243088,0.0420371092994612,0.02851208881189531,0.03143877231407988,0.03984664812773581,0.03341343916590785,0.03207262457141873,0.02255136094547784,0.04606298105789623,0.0477127064723808,0.02885247212720275,0.1077094137960394,0.05301699671432458,0.06393589439926754,0.07555246570549763,0.08742694286609839,0.0701370642961157,0.06591012975654927,0.06669786873647526,0.07126800066635822,0.06883524253441872,0.06442530137588748,0.06973990998107957,0.09649848292012111,0.077987326769362,0.1072471274645308,0.1002358237347288,0.08104316757258946,0.07003301088312018,0.07005016888284946,0.06235670920263238,0.110716946151427,0.1123993844862453,0.1295041568646261,0.1338633714103469,0.1239697924240165,0.1181869640979973,0.1281286781308287,0.1610506140076051,0.1220119236590583,0.1345022545685999,0.1226163739075847,0.1453993536092205,0.1061302562483121,0.1239906280992211,0.1195321980120138,0.1117601791849274,0.1510934968895255,0.1056719517788334,0.1250542408400793,0.1303627284722787,0.1476547116825521,0.1780359124208874,0.2187059332186445,0.1564739275225071,0.2054124212710226,0.1162132902491992,0.1502020987514418,0.1680375945348862,0.1627934667401137,0.1497109561459289,0.1771136840537072,0.1386333463215563,0.1631327207229041,0.1862574146068682,0.1559031355441652,0.2019300581469411,0.1662700944652377,0.1734827624503403,0.1800479570149353,0.2111207403393019,0.5621273967900758,0.426505936369404,0.5111992140024375,0.5007302098539914,0.4592114834207385,0.4195136582248577,0.4324114808907557,0.4882239212298864,0.3955728274570665,0.4537645100350354,0.451177000202294,0.4617206849549468,0.3826914882802205,0.5011274711952466,0.3648967624666648,0.509182812453452,0.3713463682924952,0.4569360266711657,0.3635909922841832,0.4954961120517947,0.8173188599247844,0.6123150027542313,0.7780190167975931,0.6263540699258983,0.6905514129438114,0.7745919988569984,0.8510763565815892,0.6636202438393902,0.756176907508866,0.7165858690536066,0.7479447280849429,0.6463824658879839,0.8461542394109266,0.6577980272617768,0.7153657227720566,0.8223618424082184,0.8392492382025226,0.7203925567996557,0.6374281776839607,0.6502217406489246],[0.08845539895127451,0.07457488161794402,0.07206612429847686,0.07438464339816353,0.08847265891543679,0.08773364921511892,0.06476385337216663,0.1055209782272961,0.08772408095861811,0.06800981056350995,0.09492046047630945,0.0709993722008245,0.08056016563012697,0.09470344082670311,0.08066732742385443,0.082445087145028,0.05998259448769489,0.1036864502207918,0.1086257099637239,0.07321879549014351,0.2057153364515951,0.1114442403657737,0.1287058974829963,0.1517860579663584,0.1684591063052209,0.1439990117376271,0.1387314183501987,0.1369957087692431,0.1443614402270846,0.1399626642274824,0.1374047817380805,0.149189998298201,0.1934702382235338,0.1575862286343397,0.200456151822076,0.2079950250443526,0.1654475373981163,0.1439884937276382,0.1454197987906289,0.132564680591845,0.2144825935057757,0.2107878228104828,0.2513748766788726,0.2389621710759343,0.2300576145826673,0.2187984857113736,0.2398934264440314,0.2968110747471221,0.2268809649941354,0.2420943085521554,0.243645112012796,0.2581703891807407,0.2061754719006663,0.2353706927049373,0.2290997240897556,0.2028359455990502,0.2708579018000895,0.2034465154619441,0.2425747894509057,0.2518432760442139,0.2697815550224779,0.3054447069850907,0.3799741673965299,0.2776309683072419,0.3497551645113839,0.2170873646304619,0.2673273354113126,0.2972316545599852,0.287790476936949,0.2604840868448945,0.3250136504461528,0.2634417954081006,0.3053260886550027,0.3316209593831342,0.2818903442561776,0.3456833843822228,0.2991826836540493,0.2976435756541498,0.3137807202165346,0.368397205171022,0.9190001979342827,0.7207156793613788,0.905132684813817,0.8687532031623513,0.8545473697102316,0.7127735788529054,0.7217084385342698,0.7855197874582185,0.6597719440631342,0.7704664363178337,0.7580392999630199,0.7657169957062104,0.6278029552624809,0.8707197769069462,0.587175906947749,0.9027555087423306,0.6308057979913414,0.7842628853165114,0.5946513067929091,0.8007681667601143,1.453104554004022,1.039319973250206,1.37902264997264,1.108566916117072,1.209386731753732,1.340112936456091,1.594015999906506,1.148975046639825,1.347605164780714,1.218399385017847,1.34682733976808,1.152929581928656,1.491968938481922,1.195504813829328,1.336752424626307,1.641835508359432,1.426908190083152,1.274554359779162,1.102334888388299,1.115094937761172],["cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust","cluster-robust"],[0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95],[-253.4266114885072,-194.8272627939357,-217.3339744022613,-194.3988016496374,-247.4490611874905,-212.5119712443966,-164.428007755849,-293.164593377662,-236.494801242674,-164.6611982233748,-225.1121346509107,-192.8458491119113,-215.8982486130656,-224.013722168769,-227.7928639218341,-219.9173657106049,-191.6069383234845,-282.3704132025482,-247.9344168384557,-208.3377832785758,-452.6640138082194,-297.6340827196514,-294.1045779074606,-355.6465008322976,-392.6062078563263,-296.2257060227444,-359.0702336233285,-346.9012857630307,-359.5270833617565,-307.717294136226,-388.4044142665336,-358.8393283954355,-421.2161954965354,-394.8161780883619,-411.1768718196632,-439.2746641255848,-380.0478183024591,-364.9446227299987,-360.216176784569,-364.4578287009887,-447.9378082140034,-438.4832708283133,-508.9700388113898,-437.9382965600224,-464.4550793738564,-456.5974892177613,-496.9974889125633,-552.4440975738131,-468.5121004098311,-464.6841961653153,-493.0965959695009,-532.2014839726036,-450.0334392249849,-479.9382887588601,-457.7428118670807,-502.1470108110965,-485.4242049316221,-451.0694625011967,-503.8818158396589,-476.9788722478013,-544.0867724724004,-495.9437846747908,-630.3817782651265,-522.4538019321714,-568.1417235658282,-489.522470818556,-457.1992062123097,-520.8160734964007,-495.5280014687787,-501.1300168828885,-542.6373742415921,-509.2411954960639,-551.0659526027669,-537.232716659033,-520.8392879400071,-591.2724213041656,-566.8157808714548,-543.0613474921479,-547.6791835553472,-622.246028956205,-774.9867325592527,-770.6407639721212,-898.3392323888186,-794.7764077276927,-883.6131879747064,-757.075848666562,-751.6554907621316,-750.5762527938406,-720.0260737867872,-774.9008645044623,-705.458709806717,-691.7327438930575,-698.4022282076101,-857.2118950326916,-703.3175455901861,-821.4181738444132,-741.8284304511665,-779.5629280878263,-751.0925542173139,-739.3781594864419,-943.1824380028024,-876.2452121692467,-907.0568994223578,-864.0939884046849,-843.9804802696758,-863.8219547195479,-952.9438160378892,-875.6922597043367,-909.6766924577449,-869.5775734156566,-939.557270616358,-851.8386409585765,-843.9305150886119,-897.0485817902337,-941.3171971075665,-926.1564018211411,-810.8672385071545,-872.4925950647626,-806.8652189741313,-853.5179459372984],[6,6,6,6,7,6,6,5,6,6,5,6,6,6,6,6,7,5,5,6,4,5,3,3,4,1,4,3,2,2,3,2,6,3,4,4,3,1,2,4,6,5,5,5,5,5,5,6,8,5,5,10,5,5,5,8,6,4,5,5,8,6,6,6,6,5,6,6,6,6,6,7,6,9,7,6,5,6,6,10,7,6,5,5,9,6,6,5,7,9,6,6,7,7,5,5,9,6,6,6,4,5,5,5,6,5,5,5,5,6,4,5,5,9,6,5,5,6,6,5],["HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG","HlyE_IgA+HlyE_IgG"],["1","1","1","1","2","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","3","1","1","1","1","1","2","1","1","1","1","1","1","1","3","1","1","1","1","1","1","1","3","1","1","1","1","1","1","3","1","1","1","1","2","1","1","1","1","1","1","1","1","1","1","2","1","2","3","1","1","1","1","1","3","1","1","1","1","1","1","1","1","1","1","1","3","1","1","1","3","1","3","1","1","1","1","1","1","1","1","1","1","1","1","1","1","3","1","1","1","1","1","1"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Stratum<\/th>\n      <th>sample_size<\/th>\n      <th>lambda.sim<\/th>\n      <th>cluster<\/th>\n      <th>n<\/th>\n      <th>est.start<\/th>\n      <th>incidence.rate<\/th>\n      <th>SE<\/th>\n      <th>CI.lwr<\/th>\n      <th>CI.upr<\/th>\n      <th>se_type<\/th>\n      <th>coverage<\/th>\n      <th>log.lik<\/th>\n      <th>iterations<\/th>\n      <th>antigen.isos<\/th>\n      <th>nlm.convergence.code<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"targets":7,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":8,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":9,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":10,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":13,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,12,13,14]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Stratum","targets":1},{"name":"sample_size","targets":2},{"name":"lambda.sim","targets":3},{"name":"cluster","targets":4},{"name":"n","targets":5},{"name":"est.start","targets":6},{"name":"incidence.rate","targets":7},{"name":"SE","targets":8},{"name":"CI.lwr","targets":9},{"name":"CI.upr","targets":10},{"name":"se_type","targets":11},{"name":"coverage","targets":12},{"name":"log.lik","targets":13},{"name":"iterations","targets":14},{"name":"antigen.isos","targets":15},{"name":"nlm.convergence.code","targets":16}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
 </div>
 </div>
 </figure>
@@ -2960,7 +3099,7 @@ Table&nbsp;1
 <span class="header-section-number">8.3</span> Inspecting individual clusters</h2>
 <p>The cached fit above carries no log-likelihood curves, so the few clusters we want to look at are re-fit with <code>build_graph = TRUE</code>. Strata are selected by the columns that define them, because stratum <em>labels</em> are assigned positionally and so are not stable across a subset:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stratum_ids</span> <span class="op">&lt;-</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stratum_ids</span> <span class="op">&lt;-</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="va">lambda.sim</span>, <span class="va">cluster</span><span class="op">)</span></span>
 <span></span>
@@ -2977,7 +3116,7 @@ Table&nbsp;1
 </details>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">ests_first_five</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">ests_first_five</span>, log_x <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div id="fig-cluster-logliks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-cluster-logliks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2993,14 +3132,14 @@ Figure&nbsp;10: Log-likelihood curves for the first five simulated clusters.
 <span class="header-section-number">8.4</span> Checking <code>nlm()</code> convergence</h2>
 <p><code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code> maximizes the log-likelihood numerically with <code><a href="https://rdrr.io/r/stats/nlm.html">stats::nlm()</a></code>. Exit codes 3 to 5 flag a possible non-convergence, so they are worth checking before trusting any of the estimates:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">problem_ids</span> <span class="op">&lt;-</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">problem_ids</span> <span class="op">&lt;-</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">nlm.convergence.code</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="va">lambda.sim</span>, <span class="va">cluster</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">problem_ids</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 13</code></pre>
+<pre><code>[1] 10</code></pre>
 </div>
 </div>
 <div class="notes">
@@ -3016,7 +3155,7 @@ Figure&nbsp;10: Log-likelihood curves for the first five simulated clusters.
 <p>Pass them with <code>num_cores = 1</code>. <code><a href="../man/est_seroincidence_by.html">est_seroincidence_by()</a></code> currently drops these arguments in its parallel branch (<a href="https://github.com/UCD-SERG/serocalculator/issues/629">#629</a>), so under parallelism they are silently ignored.</p>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">problem_ids</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">problem_ids</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../man/refit_strata.html">refit_strata</a></span><span class="op">(</span></span>
 <span>    pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
 <span>    strata_ids <span class="op">=</span> <span class="va">problem_ids</span>,</span>
@@ -3034,137 +3173,161 @@ Figure&nbsp;10: Log-likelihood curves for the first five simulated clusters.
 , , cluster = 1, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100 100    0 100   0
-
-, , cluster = 2, antigen_iso = HlyE_IgA
-
-           lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0   0 100
-
-, , cluster = 5, antigen_iso = HlyE_IgA
-
-           lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0   0 100
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0  100   0 100   0
 
 , , cluster = 7, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100 100    0   0   0
-
-, , cluster = 8, antigen_iso = HlyE_IgA
-
-           lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0  100   0   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100 100    0   0   0   0
 
 , , cluster = 9, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0  100   0   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0  100   0   0   0
 
-, , cluster = 12, antigen_iso = HlyE_IgA
+, , cluster = 13, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0  100 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0 100   0
 
 , , cluster = 14, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0   0 100
 
 , , cluster = 15, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100 100    0   0   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0 100   0   0
 
 , , cluster = 16, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0  100   0   0   0
 
-, , cluster = 20, antigen_iso = HlyE_IgA
+, , cluster = 17, antigen_iso = HlyE_IgA
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0 100   0
+
+, , cluster = 19, antigen_iso = HlyE_IgA
+
+           lambda.sim
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0 100   0
 
 , , cluster = 1, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100 100    0 100   0
-
-, , cluster = 2, antigen_iso = HlyE_IgG
-
-           lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0   0 100
-
-, , cluster = 5, antigen_iso = HlyE_IgG
-
-           lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0   0 100
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0  100   0 100   0
 
 , , cluster = 7, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100 100    0   0   0
-
-, , cluster = 8, antigen_iso = HlyE_IgG
-
-           lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0  100   0   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100 100    0   0   0   0
 
 , , cluster = 9, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0  100   0   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0  100   0   0   0
 
-, , cluster = 12, antigen_iso = HlyE_IgG
+, , cluster = 13, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0  100 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0 100   0
 
 , , cluster = 14, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0   0 100
 
 , , cluster = 15, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100 100    0   0   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0 100   0   0
 
 , , cluster = 16, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0 100   0
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0  100   0   0   0
 
-, , cluster = 20, antigen_iso = HlyE_IgG
+, , cluster = 17, antigen_iso = HlyE_IgG
 
            lambda.sim
-sample_size 0.1 0.15 0.2 0.8
-        100   0    0 100   0</code></pre>
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0 100   0
+
+, , cluster = 19, antigen_iso = HlyE_IgG
+
+           lambda.sim
+sample_size 0.1 0.15 0.2 0.5 0.8
+        100   0    0   0 100   0</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: `nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
+`nlm()` completed with the following convergence code:
+3: Last global step failed to locate a point lower than x. Either x is an
+approximate local minimum of the function, the function is too non-linear for
+this algorithm, or `stepmin` in `est_seroincidence()` (a.k.a. `steptol` in
+`nlm()`) is too large.
+`nlm()` may not have reached the maximum likelihood estimate.
 `nlm()` completed with the following convergence code:
 3: Last global step failed to locate a point lower than x. Either x is an
 approximate local minimum of the function, the function is too non-linear for
@@ -3188,10 +3351,10 @@ Figure&nbsp;11: Log-likelihood curves for any clusters whose optimizer reported 
 </div>
 </div>
 </div>
-</section><section id="estimates-recover-the-simulated-rates" class="level2 smaller" data-number="8.5"><h2 class="smaller anchored" data-number="8.5" data-anchor-id="estimates-recover-the-simulated-rates">
+</section><section id="sec-recover" class="level2 smaller" data-number="8.5"><h2 class="smaller anchored" data-number="8.5" data-anchor-id="sec-recover">
 <span class="header-section-number">8.5</span> Estimates recover the simulated rates</h2>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span></span>
 <span>    type <span class="op">=</span> <span class="st">"scatter"</span>,</span>
 <span>    xvar <span class="op">=</span> <span class="st">"lambda.sim"</span>,</span>
@@ -3221,22 +3384,22 @@ Figure&nbsp;12: Estimated incidence rates (points, with 95% confidence intervals
 </div>
 <p><code><a href="../man/analyze_sims.html">analyze_sims()</a></code> summarizes the simulation results across clusters:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/analyze_sims.html">analyze_sims</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/analyze_sims.html">analyze_sims</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
   lambda.sim sample_size    Bias Mean_Est_SE Empirical_SE   RMSE Mean_CI_Width
        &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
-1       0.05         100 0.00292     0.00905       0.0102 0.0103        0.0362
-2       0.1          100 0.00894     0.0144        0.0204 0.0218        0.0571
-3       0.15         100 0.0222      0.0199        0.0183 0.0285        0.0786
-4       0.2          100 0.0269      0.0242        0.0319 0.0411        0.0957
-5       0.5          100 0.0857      0.0568        0.0758 0.113         0.224 
-6       0.8          100 0.172       0.0989        0.115  0.205         0.390 
+1       0.05         100 0.00292      0.0122       0.0102 0.0103        0.0493
+2       0.1          100 0.00894      0.0197       0.0204 0.0218        0.0787
+3       0.15         100 0.0222       0.0276       0.0183 0.0285        0.110 
+4       0.2          100 0.0269       0.0332       0.0319 0.0411        0.132 
+5       0.5          100 0.0857       0.0786       0.0758 0.113         0.312 
+6       0.8          100 0.172        0.143        0.115  0.205         0.568 
 # ℹ 1 more variable: CI_Coverage &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_summary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../man/analyze_sims.html">analyze_sims</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>statistic <span class="op">=</span> <span class="st">"Empirical_SE"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
@@ -3250,11 +3413,132 @@ Figure&nbsp;13: Empirical standard error of the incidence estimates, by true rat
 </div>
 </div>
 </div>
-</section><section id="a-caveat-renewing-parameters-at-each-infection" class="level2 smaller" data-number="8.6"><h2 class="smaller anchored" data-number="8.6" data-anchor-id="a-caveat-renewing-parameters-at-each-infection">
-<span class="header-section-number">8.6</span> A caveat: renewing parameters at each infection</h2>
+</section><section id="sec-joint-vs-composite-sim" class="level2 smaller" data-number="8.6"><h2 class="smaller anchored" data-number="8.6" data-anchor-id="sec-joint-vs-composite-sim">
+<span class="header-section-number">8.6</span> Joint vs composite likelihood on the simulated clusters</h2>
+<p>The estimates above combine HlyE IgA and IgG with the default <code>method = "composite"</code>. <a href="#sec-multiple-biomarkers" class="quarto-xref">Section&nbsp;5.11</a> introduced the alternative, <code>method = "joint"</code>, which integrates over a shared latent infection time per person. The simulated clusters are the place to compare them, because <code><a href="../man/sim_pop_data.html">sim_pop_data()</a></code> draws <strong>one</strong> infection history per person and reads every biomarker off it: the shared-latent-time structure that the joint likelihood assumes is exactly how these data were made.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_joint</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence_by_cached.html">est_seroincidence_by_cached</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">sim_df</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
+<span>  strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"lambda.sim"</span>, <span class="st">"cluster"</span><span class="op">)</span>,</span>
+<span>  curve_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  noise_strata_varnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>  build_graph <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"joint"</span>,</span>
+<span>  cache_path <span class="op">=</span> <span class="va">sim_cache</span>,</span>
+<span>  cache_id <span class="op">=</span> <span class="st">"ests_joint"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ests_joint_summary</span> <span class="op">&lt;-</span> <span class="va">ests_joint</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span></span>
+<span>  composite <span class="op">=</span> <span class="va">ests_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/analyze_sims.html">analyze_sims</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  joint <span class="op">=</span> <span class="va">ests_joint_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../man/analyze_sims.html">analyze_sims</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .id <span class="op">=</span> <span class="st">"method"</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">lambda.sim</span>, <span class="va">method</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">lambda.sim</span>, <span class="va">method</span>, <span class="va">Bias</span>, <span class="va">Empirical_SE</span>, <span class="va">Mean_Est_SE</span>, <span class="va">CI_Coverage</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">sim_comparison</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div id="tbl-joint-vs-composite-sim" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-joint-vs-composite-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Bias, empirical standard error, mean estimated standard error and 95% confidence-interval coverage of the composite and joint estimators, by true incidence rate, across the simulated clusters.
+</figcaption><div aria-describedby="tbl-joint-vs-composite-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+   lambda.sim method        Bias Empirical_SE Mean_Est_SE CI_Coverage
+        &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1       0.05 composite  0.00292      0.0102      0.0122         1   
+ 2       0.05 joint     -0.0126       0.00876     0.00976        0.9 
+ 3       0.1  composite  0.00894      0.0204      0.0197         0.85
+ 4       0.1  joint     -0.0290       0.0136      0.0149         0.75
+ 5       0.15 composite  0.0222       0.0183      0.0276         0.9 
+ 6       0.15 joint     -0.0387       0.0188      0.0207         0.65
+ 7       0.2  composite  0.0269       0.0319      0.0332         0.8 
+ 8       0.2  joint     -0.0473       0.0260      0.0262         0.7 
+ 9       0.5  composite  0.0857       0.0758      0.0786         0.75
+10       0.5  joint     -0.142        0.0476      0.0560         0.35
+11       0.8  composite  0.172        0.115       0.143          0.75
+12       0.8  joint     -0.302        0.0579      0.0846         0.1 </code></pre>
+</div>
+</div>
+</figure>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span></span>
+<span>  composite <span class="op">=</span> <span class="va">ests_summary</span>,</span>
+<span>  joint <span class="op">=</span> <span class="va">ests_joint_summary</span>,</span>
+<span>  .id <span class="op">=</span> <span class="st">"method"</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lambda.sim</span>, y <span class="op">=</span> <span class="va">incidence.rate</span>, color <span class="op">=</span> <span class="va">method</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_pointrange</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">CI.lwr</span>, ymax <span class="op">=</span> <span class="va">CI.upr</span><span class="op">)</span>,</span>
+<span>    position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">.2</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"true incidence rate (per person-year)"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"estimated incidence rate"</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"likelihood"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<div id="fig-joint-vs-composite-sim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-joint-vs-composite-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Estimated incidence rates (points, with 95% confidence intervals) for each simulated cluster, against the true rate, under the composite and the joint likelihood. The red line is the identity.
+</figcaption><div aria-describedby="fig-joint-vs-composite-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="methodology_files/figure-html/fig-joint-vs-composite-sim-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;14: Estimated incidence rates (points, with 95% confidence intervals) for each simulated cluster, against the true rate, under the composite and the joint likelihood. The red line is the identity."><img src="methodology_files/figure-html/fig-joint-vs-composite-sim-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="notes">
+<p>The composite estimator over-estimates, increasingly so at higher incidence (as <a href="#sec-recover" class="quarto-xref">Section&nbsp;8.5</a> already showed). The joint estimator <strong>under</strong>-estimates, by more, and its confidence intervals cover the truth far less often. Both arms use the standard error their own likelihood calls for: the composite one is clustered by person, and the joint one comes from the Hessian, which is valid for a genuine likelihood (<a href="#sec-multiple-biomarkers" class="quarto-xref">Section&nbsp;5.11</a>). Its empirical standard error is the smaller of the two, which is the efficiency gain the shared latent time was expected to bring, but here that gain is swamped by bias.</p>
+</div>
+<p>The reason is visible in a single high-incidence cluster:</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_cluster</span> <span class="op">&lt;-</span> <span class="va">sim_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">lambda.sim</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">sim_lambdas</span><span class="op">)</span>, <span class="va">cluster</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">est_joint_one</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/est_seroincidence.html">est_seroincidence</a></span><span class="op">(</span></span>
+<span>  pop_data <span class="op">=</span> <span class="va">sim_cluster</span>,</span>
+<span>  sr_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
+<span>  noise_params <span class="op">=</span> <span class="va">sim_noise_params</span>,</span>
+<span>  antigen_isos <span class="op">=</span> <span class="va">antibodies</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"joint"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning: 48 of 100 subjects have zero likelihood under every posterior draw and
+contribute nothing to the joint likelihood.
+ℹ For these subjects, no shared time since infection is compatible with all of
+  their biomarker readings under the noise model (nu, eps), so the estimate is
+  based on the remaining subjects only. If the dropped subjects tend to have
+  high readings (recent infections), the incidence estimate will be biased
+  downward.
+ℹ Consider whether the noise parameters are realistic for these biomarkers, or
+  use `method = "composite"`, which evaluates each biomarker on its own.</code></pre>
+</div>
+</div>
+<p>A person contributes nothing to the joint likelihood when <strong>no</strong> shared infection time is compatible with all of their readings under any posterior draw, and this cluster has many such people. Shortly after infection, antibody levels are in the hundreds or thousands, while the simulated biological noise is additive on a scale of 0.5. The simulator’s response curve also differs slightly from the likelihood’s — it has a rise phase, and a baseline carried over from earlier infections — so one person’s IgA and IgG readings each point to a slightly different time since infection. Each biomarker on its own is still explained well (the composite method drops nobody), but no single <span class="math inline">\(t\)</span> reproduces both to within half a unit, so the joint likelihood discards exactly the people with the most recent infections, and the estimate falls. The higher the incidence, the more such people there are.</p>
+<div class="notes">
+<p>That mechanism is not specific to this simulator. Any mismatch between the assumed response curve and the real one plays the same role, and so does a noise model that is narrower than the real disagreement between a person’s biomarkers. <code><a href="../man/est_seroincidence.html">est_seroincidence()</a></code> warns whenever a joint fit drops anyone, and reports how many. The real SEES data, whose noise model includes a multiplicative (measurement) component, drop very few (<a href="#tbl-joint-vs-composite-sees" class="quarto-xref">Table&nbsp;1</a>).</p>
+<p>The joint estimator uses the fact that a person has one infection history, which is more information — but it also relies on that fact being reflected in the data <em>exactly as modeled</em>. The composite estimator, which lets each biomarker find its own infection time, is the more robust of the two, which is one reason it remains the default. Neither is unbiased here: the simulator’s response curve is not the likelihood’s, and both estimators inherit that.</p>
+</div>
+</section><section id="a-caveat-renewing-parameters-at-each-infection" class="level2 smaller" data-number="8.7"><h2 class="smaller anchored" data-number="8.7" data-anchor-id="a-caveat-renewing-parameters-at-each-infection">
+<span class="header-section-number">8.7</span> A caveat: renewing parameters at each infection</h2>
 <p>Everything above sets <code>renew_params = FALSE</code>, matching what the estimation method assumes. Setting it to <code>TRUE</code> — drawing fresh seroresponse parameters at every infection — is more realistic, and is <strong>not</strong> accounted for by the current method, so estimates can be biased in high-incidence populations:</p>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_df_renew</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached</a></span><span class="op">(</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sim_df_renew</span> <span class="op">&lt;-</span> <span class="fu"><a href="../man/sim_pop_data_multi_cached.html">sim_pop_data_multi_cached</a></span><span class="op">(</span></span>
 <span>  curve_params <span class="op">=</span> <span class="va">sim_curve_params</span>,</span>
 <span>  lambdas <span class="op">=</span> <span class="va">sim_lambdas</span>,</span>
 <span>  nclus <span class="op">=</span> <span class="va">sim_nclus</span>,</span>
@@ -3286,7 +3570,7 @@ Figure&nbsp;13: Empirical standard error of the incidence estimates, by true rat
 </details>
 </div>
 <div class="cell">
-<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_renew_summary</span> <span class="op">|&gt;</span></span>
+<details open="" class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ests_renew_summary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span></span>
 <span>    type <span class="op">=</span> <span class="st">"scatter"</span>,</span>
 <span>    xvar <span class="op">=</span> <span class="st">"lambda.sim"</span>,</span>
@@ -3303,9 +3587,9 @@ Figure&nbsp;13: Empirical standard error of the incidence estimates, by true rat
 </details><div class="cell-output-display">
 <div id="fig-sim-recovery-renew" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-sim-recovery-renew-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Recovery of the true incidence rate when seroresponse parameters are renewed at each infection. Compare with <a href="#fig-sim-recovery" class="quarto-xref">Figure&nbsp;12</a>.
+Figure&nbsp;15: Recovery of the true incidence rate when seroresponse parameters are renewed at each infection. Compare with <a href="#fig-sim-recovery" class="quarto-xref">Figure&nbsp;12</a>.
 </figcaption><div aria-describedby="fig-sim-recovery-renew-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="methodology_files/figure-html/fig-sim-recovery-renew-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;14: Recovery of the true incidence rate when seroresponse parameters are renewed at each infection. Compare with Figure&nbsp;12."><img src="methodology_files/figure-html/fig-sim-recovery-renew-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="methodology_files/figure-html/fig-sim-recovery-renew-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="Figure&nbsp;15: Recovery of the true incidence rate when seroresponse parameters are renewed at each infection. Compare with Figure&nbsp;12."><img src="methodology_files/figure-html/fig-sim-recovery-renew-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -3325,7 +3609,7 @@ Figure&nbsp;14: Recovery of the true incidence rate when seroresponse parameters
 <li><p>Calibrating to population demographics</p></li>
 </ul></section><section id="sec-multivariate" class="level2 smaller" data-number="9.2"><h2 class="smaller anchored" data-number="9.2" data-anchor-id="sec-multivariate">
 <span class="header-section-number">9.2</span> Multiple biomarkers: beyond conditional independence</h2>
-<p>With several biomarkers (e.g.&nbsp;HlyE IgA and IgG), the current method treats them as <strong>conditionally independent given the time since infection</strong>, so the joint likelihood factors into a product of per-biomarker terms:</p>
+<p>With several biomarkers (e.g.&nbsp;HlyE IgA and IgG), the joint likelihood (<code>method = "joint"</code>, <a href="#sec-multiple-biomarkers" class="quarto-xref">Section&nbsp;5.11</a>) treats them as <strong>conditionally independent given the time since infection</strong>, so the joint density factors into a product of per-biomarker terms inside the integral over <span class="math inline">\(t\)</span> (the default composite likelihood assumes more: that the biomarkers are independent unconditionally):</p>
 <p><span class="math display">\[
 \operatorname{p}(Y_1 = y_1, Y_2 = y_2 \mid T=t) =
 \operatorname{p}(Y_1 = y_1 \mid T=t)\,\operatorname{p}(Y_2 = y_2 \mid T=t)
@@ -3357,6 +3641,9 @@ Teunis, P. F. M., and J. C. H. van Eijkeren. 2020. <span>“Estimation of Seroco
 </div>
 <div id="ref-Teunis_2016" class="csl-entry" role="listitem">
 Teunis, P. F. M., J. C. H. van Eijkeren, W. F. de Graaf, A. Bonačić Marinović, and M. E. E. Kretzschmar. 2016. <span>“Linking the Seroresponse to Infection to Within-Host Heterogeneity in Antibody Production.”</span> <em>Epidemics</em> 16 (September): 33–39. <a href="https://doi.org/10.1016/j.epidem.2016.04.001">https://doi.org/10.1016/j.epidem.2016.04.001</a>.
+</div>
+<div id="ref-varin2011overview" class="csl-entry" role="listitem">
+Varin, Cristiano, Nancy Reid, and David Firth. 2011. <span>“An Overview of Composite Likelihood Methods.”</span> <em>Statistica Sinica</em> 21 (1): 5–42.
 </div>
 <div id="ref-volterra1928variations" class="csl-entry" role="listitem">
 Volterra, Vito. 1928. <span>“Variations and Fluctuations of the Number of Individuals in Animal Species Living Together.”</span> <em>ICES Journal of Marine Science</em> 3 (1): 3–51.

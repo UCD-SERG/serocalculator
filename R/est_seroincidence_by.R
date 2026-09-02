@@ -70,23 +70,24 @@
 #' summary(est2)
 #'
 est_seroincidence_by <- function(
-    pop_data,
-    sr_params,
-    noise_params,
-    strata,
-    curve_strata_varnames = strata,
-    noise_strata_varnames = strata,
-    antigen_isos = pop_data |>
-      pull("antigen_iso") |>
-      unique(),
-    lambda_start = 0.1,
-    build_graph = FALSE,
-    num_cores = 1L,
-    verbose = FALSE,
-    print_graph = FALSE,
-    cluster_var = NULL,
-    stratum_var = NULL,
-    ...) {
+  pop_data,
+  sr_params,
+  noise_params,
+  strata,
+  curve_strata_varnames = strata,
+  noise_strata_varnames = strata,
+  antigen_isos = pop_data |>
+    pull("antigen_iso") |>
+    unique(),
+  lambda_start = 0.1,
+  build_graph = FALSE,
+  num_cores = 1L,
+  verbose = FALSE,
+  print_graph = FALSE,
+  cluster_var = NULL,
+  stratum_var = NULL,
+  ...
+) {
 
   strata_is_empty <-
     missing(strata) ||
@@ -167,6 +168,15 @@ est_seroincidence_by <- function(
     )
   }
 
+  # Capture `...` once so the parallel and serial branches below forward
+  # the same object. Each branch used to build its own argument list, and
+  # the parallel one simply omitted `...`, so every argument a caller
+  # passed through to `nlm()` was silently dropped when `num_cores > 1`
+  # while the serial branch honored it. Nothing prevented the parallel
+  # branch from forwarding them; the two lists were just maintained by
+  # hand, so reading both off one object is what stops the drift.
+  dots <- list(...)
+
   # Loop over data per stratum
   if (num_cores > 1L) {
     requireNamespace("parallel", quietly = FALSE)
@@ -227,7 +237,8 @@ est_seroincidence_by <- function(
                 verbose = FALSE,
                 cluster_var = cluster_var,
                 stratum_var = stratum_var
-              )
+              ),
+              dots
             )
           )
         }
@@ -264,9 +275,9 @@ est_seroincidence_by <- function(
               print_graph = print_graph,
               verbose = verbose,
               cluster_var = cluster_var,
-              stratum_var = stratum_var,
-              ...
-            )
+              stratum_var = stratum_var
+            ),
+            dots
           )
         )
       }
@@ -301,7 +312,8 @@ est_seroincidence_by <- function(
 #' @keywords internal
 #' @export
 est.incidence.by <- function( # nolint: object_name_linter
-    ...) {
+  ...
+) {
   lifecycle::deprecate_soft("1.4.0", "est.incidence.by()",
                             "est_seroincidence_by()")
   est_seroincidence_by(

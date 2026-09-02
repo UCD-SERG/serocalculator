@@ -1,10 +1,6 @@
-The estimates above combine HlyE IgA and IgG with the default
-`method = "composite"`. @sec-multiple-biomarkers introduced the alternative,
-`method = "joint"`, which integrates over a shared latent infection time
-per person. The simulated clusters are the place to compare them, because
-`sim_pop_data()` draws **one** infection history per person and reads every
-biomarker off it: the shared-latent-time structure that the joint likelihood
-assumes is exactly how these data were made.
+The estimates above combine HlyE IgA and IgG with the default `method = "composite"`.
+@sec-multiple-biomarkers introduced the alternative, `method = "joint"`, which integrates over a shared latent infection time per person.
+The simulated clusters are the place to compare them, because `sim_pop_data()` draws **one** infection history per person and reads every biomarker off it: the shared-latent-time structure that the joint likelihood assumes is exactly how these data were made.
 
 ```{r}
 #| label: est-multi-joint
@@ -77,12 +73,9 @@ bind_rows(
 ```
 
 ::: notes
-The composite estimator over-estimates, increasingly so at higher incidence
-(as @sec-recover already showed). The joint estimator **under**-estimates,
-by more, and its confidence intervals cover the truth far less often. Its
-empirical standard error is the smaller of the two, which is the efficiency
-gain the shared latent time was expected to bring, but here that gain is
-swamped by bias.
+The composite estimator over-estimates, increasingly so at higher incidence (as @sec-recover already showed).
+The joint estimator **under**-estimates, by more, and its confidence intervals cover the truth far less often.
+Its empirical standard error is the smaller of the two, which is the efficiency gain the shared latent time was expected to bring, but here that gain is swamped by bias.
 :::
 
 {{< slidebreak >}}
@@ -103,34 +96,19 @@ est_joint_one <- est_seroincidence(
 )
 ```
 
-A person contributes nothing to the joint likelihood when **no** shared
-infection time is compatible with all of their readings under any posterior
-draw, and this cluster has many such people. Shortly after infection,
-antibody levels are in the hundreds or thousands, while the simulated
-biological noise is additive on a scale of 0.5. The simulator's response
-curve also differs slightly from the likelihood's --- it has a rise phase,
-and a baseline carried over from earlier infections --- so one person's IgA
-and IgG readings each point to a slightly different time since infection.
-Each biomarker on its own is still explained well (the composite method drops
-nobody), but no single $t$ reproduces both to within half a unit, so the
-joint likelihood discards exactly the people with the most recent
-infections, and the estimate falls. The higher the incidence, the more such
-people there are.
+A person contributes nothing to the joint likelihood when **no** shared infection time is compatible with all of their readings under any posterior draw, and this cluster has many such people.
+Shortly after infection, antibody levels are in the hundreds or thousands, while the simulated biological noise is additive on a scale of 0.5.
+The simulator's response curve also differs slightly from the likelihood's --- it has a rise phase, and a baseline carried over from earlier infections --- so one person's IgA and IgG readings each point to a slightly different time since infection.
+Each biomarker on its own is still explained well (the composite method drops nobody), but no single $t$ reproduces both to within half a unit, so the joint likelihood discards exactly the people with the most recent infections, and the estimate falls.
+The higher the incidence, the more such people there are.
 
 ::: notes
-That mechanism is not specific to this simulator. Any mismatch between the
-assumed response curve and the real one plays the same role, and so does a
-noise model that is narrower than the real disagreement between a person's
-biomarkers. `est_seroincidence()` warns whenever a joint fit drops anyone,
-and reports how many. The real SEES data, whose noise model includes a
-multiplicative (measurement) component, drop very few
-(@tbl-joint-vs-composite-sees).
+That mechanism is not specific to this simulator.
+Any mismatch between the assumed response curve and the real one plays the same role, and so does a noise model that is narrower than the real disagreement between a person's biomarkers.
+`est_seroincidence()` warns whenever a joint fit drops anyone, and reports how many.
+The real SEES data, whose noise model includes a multiplicative (measurement) component, drop very few (@tbl-joint-vs-composite-sees).
 
-The joint estimator uses the fact that a person has one infection history,
-which is more information --- but it also relies on that fact being
-reflected in the data *exactly as modeled*. The composite estimator, which
-lets each biomarker find its own infection time, is the more robust of the
-two, which is one reason it remains the default. Neither is unbiased here:
-the simulator's response curve is not the likelihood's, and both estimators
-inherit that.
+The joint estimator uses the fact that a person has one infection history, which is more information --- but it also relies on that fact being reflected in the data *exactly as modeled*.
+The composite estimator, which lets each biomarker find its own infection time, is the more robust of the two, which is one reason it remains the default.
+Neither is unbiased here: the simulator's response curve is not the likelihood's, and both estimators inherit that.
 :::

@@ -86,8 +86,10 @@ est_seroincidence_by <- function(
   print_graph = FALSE,
   cluster_var = NULL,
   stratum_var = NULL,
+  method = c("composite", "joint"),
   ...
 ) {
+  method <- rlang::arg_match(method)
 
   strata_is_empty <-
     missing(strata) ||
@@ -120,9 +122,18 @@ est_seroincidence_by <- function(
         verbose = verbose,
         cluster_var = cluster_var,
         stratum_var = stratum_var,
+        method = method,
         ...
       )
     return(to_return)
+  }
+
+  # The joint likelihood pairs each person's biomarkers, so the id column
+  # has to survive stratification (see `stratify_data()`).
+  id_var <- if (method == "joint" && length(antigen_isos) > 1) {
+    .joint_id_var_for_fit(pop_data, antigen_isos)
+  } else {
+    NULL
   }
 
   check_strata(pop_data, strata = strata)
@@ -143,7 +154,8 @@ est_seroincidence_by <- function(
     curve_strata_varnames = curve_strata_varnames,
     noise_strata_varnames = noise_strata_varnames,
     cluster_var = cluster_var,
-    stratum_var = stratum_var
+    stratum_var = stratum_var,
+    id_var = id_var
   )
 
   strata_table <- stratum_data_list |> attr("strata")
@@ -236,7 +248,8 @@ est_seroincidence_by <- function(
                 print_graph = FALSE,
                 verbose = FALSE,
                 cluster_var = cluster_var,
-                stratum_var = stratum_var
+                stratum_var = stratum_var,
+                method = method
               ),
               dots
             )
@@ -275,7 +288,8 @@ est_seroincidence_by <- function(
               print_graph = print_graph,
               verbose = verbose,
               cluster_var = cluster_var,
-              stratum_var = stratum_var
+              stratum_var = stratum_var,
+              method = method
             ),
             dots
           )

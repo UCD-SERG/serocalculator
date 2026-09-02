@@ -1,6 +1,55 @@
 # serocalculator (development version)
 
+## New features
+
+* `log_likelihood()`, `est_seroincidence()` and `est_seroincidence_by()`
+  gain a `method` argument selecting how several biomarkers are combined.
+  The new `method = "joint"` fits the model the methodology article
+  describes: each person's biomarkers are conditionally independent
+  *given* their time since infection, so their densities multiply inside
+  one integral over that shared latent time
+  (implemented in C, `src/serocalc_joint.c`).
+  The default, `method = "composite"`, is unchanged: it sums the
+  per-biomarker marginal log-likelihoods, which gives each biomarker its
+  own latent time (a composite/independence likelihood --- see #637)
+  and reproduces previous results exactly.
+  The joint likelihood needs `pop_data` to identify people
+  (see `ids_varname()`), so that each person's readings can be paired,
+  a noise model for every biomarker, and the same posterior draws
+  (`iter`) for every biomarker.
+  Because it is a genuine likelihood, its Hessian-based standard error
+  is valid without the `cluster_var = ids_varname(pop_data)` correction
+  the composite likelihood calls for.
+  The methodology article's "Multiple biomarkers" section now compares
+  the two on simulated data with known incidence. (#646)
+
 ## Bug fixes
+
+* `method = "joint"` now refuses a `curve_params` that carries an `iter`
+  column for some biomarkers but not others.
+  Draws are paired by `iter` when every biomarker has it and by position
+  when none does; with only some, the intended pairing is unknown, and
+  the previous fallback to positional pairing silently combined draws
+  that the biomarkers carrying `iter` showed to be ordered differently.
+
+* `n_t_steps` now rejects `Inf` and values above the largest R integer.
+  These satisfied "a whole number at least 1" but became `NA` when
+  coerced for the C call, which then failed with a message naming an
+  argument position rather than the argument the caller had set.
+
+* A joint fit's log-likelihood graph (`build_graph = TRUE`) now uses the
+  same `n_t_steps` the fit was optimized with.
+  `est_seroincidence()`'s `...` is shared between `nlm()`'s control
+  arguments and `log_likelihood()`'s, so the graph helpers were called
+  with explicit arguments only and never saw a caller's `n_t_steps`:
+  the plotted curve was drawn at the default quadrature.
+  No estimate was affected --- the graph is a diagnostic.
+
+* A joint fit made with a non-default `n_t_steps` now records it, so a
+  cluster-robust standard error recomputes each cluster's score under
+  the same quadrature the fit was optimized with.
+  The score previously used the default, pairing a sandwich middle
+  matrix built from one objective with a Hessian from another.
 
 * `sim_pop_data_multi()` no longer changes the calling session's
   random number generator.

@@ -13,12 +13,20 @@ stratify_data(
   noise_strata_varnames = NULL,
   antigen_isos = get_biomarker_levels(data),
   cluster_var = NULL,
-  stratum_var = NULL
+  stratum_var = NULL,
+  id_var = NULL
 )
 }
 \arguments{
 \item{strata_varnames}{\code{\link[=character]{character()}}
 vector of names of variables in \code{data} to stratify by}
+
+\item{id_var}{optional name of the column in \code{data} identifying
+subjects. When supplied (as \code{\link[=est_seroincidence_by]{est_seroincidence_by()}} does for
+\code{method = "joint"}), it is kept in each stratum's \code{pop_data}, and the
+\code{iter} and \code{chain} columns of \code{curve_params} (if any) are kept in each
+stratum's \code{sr_params}, so that the joint likelihood can pair a person's
+biomarker readings and pair posterior draws across biomarkers.}
 }
 \value{
 a \code{"biomarker_data_and_params.list"} object

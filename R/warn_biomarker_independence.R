@@ -9,7 +9,9 @@
 #' whenever biomarker readings from the same person are correlated,
 #' as is expected when they share an infection history --- see #645.
 #' This emits an informational message pointing the caller at
-#' `cluster_var` as the fix, unless they've already supplied one.
+#' `cluster_var` as the fix, unless they've already supplied one, or
+#' asked for the joint likelihood (`method = "joint"`), which has no
+#' independence assumption to correct for.
 #' [est_seroincidence_by()] calls this once per stratum, so a
 #' stratified verbose fit repeats the message.
 #'
@@ -20,6 +22,7 @@
 #' @param cluster_var the `cluster_var` argument as passed by the
 #' caller (`NULL` if not supplied)
 #' @param verbose whether to emit the message
+#' @param method the `method` argument as passed by the caller
 #'
 #' @return `invisible(NULL)`
 #' @keywords internal
@@ -27,9 +30,14 @@
   pop_data,
   antigen_isos,
   cluster_var,
-  verbose
+  verbose,
+  method = "composite"
 ) {
-  if (!verbose || length(antigen_isos) < 2 || !is.null(cluster_var)) {
+  skip <- !verbose ||
+    length(antigen_isos) < 2 ||
+    !is.null(cluster_var) ||
+    method == "joint"
+  if (skip) {
     return(invisible(NULL))
   }
 

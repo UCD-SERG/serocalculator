@@ -60,6 +60,18 @@
 #' @param sampling_weights optional [data.frame] containing sampling
 #' weights with columns for cluster/stratum identifiers and their sampling
 #' probabilities. Currently not implemented; reserved for future use.
+#' @param method how to combine several biomarkers into one likelihood;
+#' see [log_likelihood()]. `"composite"` (the default) sums the
+#' per-biomarker marginal log-likelihoods; `"joint"` integrates over a
+#' shared latent infection time per person, which needs `pop_data` to
+#' identify people (see [ids_varname()]).
+#' The two methods call for different standard errors: the composite
+#' likelihood's naive standard error assumes independence across
+#' biomarkers (pass `cluster_var = ids_varname(pop_data)` to correct it),
+#' while the joint likelihood is a genuine likelihood, so its
+#' Hessian-based standard error is valid as is
+#' (up to any sampling-design clustering, which `cluster_var` still
+#' handles).
 #' @inheritDotParams stats::nlm -f -p -hessian -print.level -steptol
 
 #' @returns a `"seroincidence"` object, which is a [stats::nlm()] fit object
@@ -112,6 +124,17 @@
 #' )
 #'
 #' summary(est3)
+#'
+#' # Shared-latent-time (joint) likelihood across the two biomarkers
+#' est4 <- est_seroincidence(
+#'   pop_data = xs_data,
+#'   sr_params = sr_curve,
+#'   noise_params = noise,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   method = "joint"
+#' )
+#'
+#' summary(est4)
 est_seroincidence <- function(
   pop_data,
   sr_params,
@@ -126,8 +149,11 @@ est_seroincidence <- function(
   cluster_var = NULL,
   stratum_var = NULL,
   sampling_weights = NULL,
+  method = c("composite", "joint"),
   ...
 ) {
+  method <- rlang::arg_match(method)
+
   if (verbose > 1) {
     cli::cli_inform("inputs to `est_seroincidence()`:")
     print(environment() |> as.list())
@@ -151,7 +177,8 @@ est_seroincidence <- function(
     pop_data = pop_data,
     antigen_isos = antigen_isos,
     cluster_var = cluster_var,
-    verbose = verbose
+    verbose = verbose,
+    method = method
   )
 
   # Prepare columns to keep
@@ -160,6 +187,17 @@ est_seroincidence <- function(
     pop_data |> get_age_var(),
     "antigen_iso"
   )
+
+  # The joint likelihood pairs each person's biomarker readings, so it
+  # needs the id column, which the composite likelihood never looks at.
+  # With only one biomarker there is nothing to pair: `log_likelihood()`
+  # routes to the marginal path either way, so demanding an id column
+  # there would reject data the composite fit accepts, for no gain.
+  id_var <- NULL
+  if (method == "joint" && length(antigen_isos) > 1) {
+    id_var <- .joint_id_var_for_fit(pop_data, antigen_isos)
+    cols_to_keep <- c(cols_to_keep, id_var)
+  }
 
   # Add cluster/stratum variables if specified
   if (!is.null(cluster_var)) {
@@ -171,8 +209,13 @@ est_seroincidence <- function(
 
   pop_data <- pop_data |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select(dplyr::all_of(cols_to_keep)) |>
+    dplyr::select(dplyr::all_of(unique(cols_to_keep))) |>
     filter(if_all(everything(), ~!is.na(.x)))
+
+  # `iter` (and `chain`) let the joint likelihood pair posterior draws
+  # across biomarkers; the composite likelihood evaluates each biomarker's
+  # draws separately, so it has no use for them.
+  draw_id_cols <- if (method == "joint") c("iter", "chain") else character(0)
 
   sr_params <- sr_params |>
     ungroup() |>
@@ -181,7 +224,10 @@ est_seroincidence <- function(
       d = .data$r - 1
     ) |>
     dplyr::filter(.data$antigen_iso %in% antigen_isos) |>
-    dplyr::select("y1", "alpha", "d", "antigen_iso") |>
+    dplyr::select(
+      "y1", "alpha", "d", "antigen_iso",
+      dplyr::any_of(draw_id_cols)
+    ) |>
     droplevels()
 
   noise_params <- noise_params |>
@@ -213,6 +259,8 @@ est_seroincidence <- function(
     curve_params = sr_params,
     noise_params = noise_params,
     verbose = verbose,
+    method = method,
+    id_var = id_var,
     ...
   )
 
@@ -227,15 +275,40 @@ est_seroincidence <- function(
     cli::cli_inform("Initial negative log-likelihood: {res}")
   }
 
+  if (method == "joint" && length(antigen_isos) > 1) {
+    .warn_joint_dropped_subjects(
+      pop_data = pop_data,
+      curve_params = sr_params,
+      noise_params = noise_params,
+      antigen_isos = antigen_isos,
+      id_var = id_var
+    )
+  }
+
+  # `...` here is shared between `nlm()`'s control arguments and
+  # `log_likelihood()`'s, so it cannot be forwarded wholesale to the graph
+  # helpers -- an `nlm()` argument would land in `f_dev_joint()`. Forward the
+  # joint-likelihood controls by name instead, as the fit's attributes do.
+  dots <- list(...)
+  ll_controls <- dots[intersect("n_t_steps", names(dots))]
+
   if (build_graph) {
     if (verbose) cli::cli_inform("building likelihood graph")
-    graph <- graph_loglik(
-      highlight_points = lambda_start,
-      highlight_point_names = "lambda_start",
-      pop_data = pop_data,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params,
-      noise_params = noise_params
+    graph <- do.call(
+      graph_loglik,
+      c(
+        list(
+          highlight_points = lambda_start,
+          highlight_point_names = "lambda_start",
+          pop_data = pop_data,
+          antigen_isos = antigen_isos,
+          curve_params = sr_params,
+          noise_params = noise_params,
+          method = method,
+          id_var = id_var
+        ),
+        ll_controls
+      )
     )
     if (print_graph) {
       print(
@@ -270,6 +343,8 @@ est_seroincidence <- function(
         stepmax = stepmax,
         steptol = stepmin,
         verbose = verbose,
+        method = method,
+        id_var = id_var,
         print.level = ifelse(verbose, 2, 0),
         ...
       )
@@ -294,15 +369,22 @@ est_seroincidence <- function(
   }
 
   if (build_graph) {
-    graph <-
-      graph |>
-      add_point_to_graph(
-        fit = fit,
-        pop_data = pop_data,
-        antigen_isos = antigen_isos,
-        curve_params = sr_params,
-        noise_params = noise_params
+    graph <- do.call(
+      add_point_to_graph,
+      c(
+        list(
+          graph = graph,
+          fit = fit,
+          pop_data = pop_data,
+          antigen_isos = antigen_isos,
+          curve_params = sr_params,
+          noise_params = noise_params,
+          method = method,
+          id_var = id_var
+        ),
+        ll_controls
       )
+    )
 
     if (print_graph) {
       print(
@@ -338,7 +420,103 @@ est_seroincidence <- function(
       )
   }
 
+  # Recorded only for the joint likelihood, so that fits under the
+  # default method are unchanged (including their snapshots).
+  if (method == "joint") {
+    attr(fit, "method") <- method
+    attr(fit, "id_var") <- id_var
+    # The cluster-robust variance recomputes the per-cluster score from
+    # this fit's attributes. Without the quadrature setting it would use
+    # `f_dev_joint()`'s default, so a fit optimized at another
+    # `n_t_steps` would pair a sandwich middle matrix built from one
+    # objective with a Hessian from a different one.
+    if (!is.null(ll_controls$n_t_steps)) {
+      attr(fit, "n_t_steps") <- ll_controls$n_t_steps
+    }
+  }
+
   return(fit)
+}
+
+#' Warn when the joint likelihood drops subjects
+#'
+#' @inheritParams f_dev_joint
+#' @returns `invisible(NULL)`
+#' @noRd
+.warn_joint_dropped_subjects <- function(
+  pop_data,
+  curve_params,
+  noise_params,
+  antigen_isos,
+  id_var
+) {
+  dropped <- .joint_dropped_subjects(
+    pop_data = pop_data,
+    curve_params = curve_params,
+    noise_params = noise_params,
+    antigen_isos = antigen_isos,
+    id_var = id_var
+  )
+  if (dropped$n_dropped == 0) {
+    return(invisible(NULL))
+  }
+  cli::cli_warn(
+    c(
+      "{dropped$n_dropped} of {dropped$n_subjects} subjects have zero
+      likelihood under every posterior draw and contribute nothing to the
+      joint likelihood.",
+      "i" = "For these subjects, no shared time since infection is
+      compatible with all of their biomarker readings under the noise
+      model ({.field nu}, {.field eps}), so the estimate is based on the
+      remaining subjects only. If the dropped subjects tend to have high
+      readings (recent infections), the incidence estimate will be biased
+      downward.",
+      "i" = "Consider whether the noise parameters are realistic for these
+      biomarkers, or use {.code method = \"composite\"}, which evaluates
+      each biomarker on its own."
+    ),
+    class = "joint_dropped_subjects"
+  )
+  invisible(NULL)
+}
+
+#' Resolve, and sanity-check, the subject id column for a joint fit
+#'
+#' @param pop_data the (unfiltered) `pop_data` passed to
+#' [est_seroincidence()]
+#' @param antigen_isos the biomarkers being combined
+#' @returns the id column name
+#' @noRd
+.joint_id_var_for_fit <- function(pop_data, antigen_isos) {
+  id_var <- tryCatch(
+    suppressWarnings(ids_varname(pop_data)),
+    error = function(e) NULL
+  )
+  if (is.null(id_var)) {
+    id_var <- .joint_id_var(pop_data)
+  }
+
+  if (length(antigen_isos) > 1) {
+    relevant <- pop_data[pop_data$antigen_iso %in% antigen_isos, , drop = FALSE]
+    n_bio_per_id <- tapply(
+      relevant$antigen_iso,
+      relevant[[id_var]],
+      FUN = \(x) length(unique(x))
+    )
+    if (all(n_bio_per_id < 2)) {
+      cli::cli_warn(
+        c(
+          "No subject in {.arg pop_data} has readings for more than one
+          of {.val {antigen_isos}}, so the joint likelihood reduces to the
+          composite one.",
+          "i" = "Check that the id column ({.val {id_var}}) identifies
+          people rather than observations; see {.fun set_id_var}."
+        )
+      )
+    }
+  }
+
+  id_var
 }
 
 #' @title Estimate Seroincidence

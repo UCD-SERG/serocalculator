@@ -37,6 +37,14 @@
   coerced for the C call, which then failed with a message naming an
   argument position rather than the argument the caller had set.
 
+* A joint fit's log-likelihood graph (`build_graph = TRUE`) now uses the
+  same `n_t_steps` the fit was optimized with.
+  `est_seroincidence()`'s `...` is shared between `nlm()`'s control
+  arguments and `log_likelihood()`'s, so the graph helpers were called
+  with explicit arguments only and never saw a caller's `n_t_steps`:
+  the plotted curve was drawn at the default quadrature.
+  No estimate was affected --- the graph is a diagnostic.
+
 * A joint fit made with a non-default `n_t_steps` now records it, so a
   cluster-robust standard error recomputes each cluster's score under
   the same quadrature the fit was optimized with.

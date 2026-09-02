@@ -847,3 +847,47 @@ test_that("a joint fit records `n_t_steps` for the cluster-robust score", {
     summary(default_fit, verbose = FALSE)$SE
   )))
 })
+
+test_that("a joint fit's log-likelihood graph uses the fit's quadrature", {
+  # `est_seroincidence()`'s `...` is shared between `nlm()`'s control arguments
+  # and `log_likelihood()`'s, so the graph helpers were called with explicit
+  # arguments only and never saw a caller's `n_t_steps`: the fit ran at one
+  # quadrature while its attached plot was drawn at `f_dev_joint()`'s default.
+  # Cosmetic -- no estimate depended on it -- but the same mismatch this round
+  # fixed for the cluster-robust score (review of #677).
+  skip_on_cran()
+  inputs <- joint_test_inputs()
+
+  plotted_at <- function(n_t_steps) {
+    fit <- est_seroincidence(
+      pop_data = inputs$xs_data,
+      sr_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      method = "joint",
+      n_t_steps = n_t_steps,
+      build_graph = TRUE,
+      print_graph = FALSE
+    )
+    ggplot2::ggplot_build(attr(fit, "ll_graph"))$data[[1]]
+  }
+
+  drawn <- plotted_at(7)
+  expected <- vapply(
+    drawn$x[1:3],
+    \(lambda) {
+      log_likelihood(
+        lambda = lambda,
+        pop_data = inputs$xs_data,
+        curve_params = inputs$curves,
+        noise_params = inputs$noise,
+        antigen_isos = inputs$antibodies,
+        method = "joint",
+        n_t_steps = 7
+      )
+    },
+    numeric(1)
+  )
+
+  expect_equal(drawn$y[1:3], expected)
+})

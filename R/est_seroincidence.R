@@ -285,17 +285,30 @@ est_seroincidence <- function(
     )
   }
 
+  # `...` here is shared between `nlm()`'s control arguments and
+  # `log_likelihood()`'s, so it cannot be forwarded wholesale to the graph
+  # helpers -- an `nlm()` argument would land in `f_dev_joint()`. Forward the
+  # joint-likelihood controls by name instead, as the fit's attributes do.
+  dots <- list(...)
+  ll_controls <- dots[intersect("n_t_steps", names(dots))]
+
   if (build_graph) {
     if (verbose) cli::cli_inform("building likelihood graph")
-    graph <- graph_loglik(
-      highlight_points = lambda_start,
-      highlight_point_names = "lambda_start",
-      pop_data = pop_data,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params,
-      noise_params = noise_params,
-      method = method,
-      id_var = id_var
+    graph <- do.call(
+      graph_loglik,
+      c(
+        list(
+          highlight_points = lambda_start,
+          highlight_point_names = "lambda_start",
+          pop_data = pop_data,
+          antigen_isos = antigen_isos,
+          curve_params = sr_params,
+          noise_params = noise_params,
+          method = method,
+          id_var = id_var
+        ),
+        ll_controls
+      )
     )
     if (print_graph) {
       print(
@@ -356,17 +369,22 @@ est_seroincidence <- function(
   }
 
   if (build_graph) {
-    graph <-
-      graph |>
-      add_point_to_graph(
-        fit = fit,
-        pop_data = pop_data,
-        antigen_isos = antigen_isos,
-        curve_params = sr_params,
-        noise_params = noise_params,
-        method = method,
-        id_var = id_var
+    graph <- do.call(
+      add_point_to_graph,
+      c(
+        list(
+          graph = graph,
+          fit = fit,
+          pop_data = pop_data,
+          antigen_isos = antigen_isos,
+          curve_params = sr_params,
+          noise_params = noise_params,
+          method = method,
+          id_var = id_var
+        ),
+        ll_controls
       )
+    )
 
     if (print_graph) {
       print(
@@ -412,9 +430,8 @@ est_seroincidence <- function(
     # `f_dev_joint()`'s default, so a fit optimized at another
     # `n_t_steps` would pair a sandwich middle matrix built from one
     # objective with a Hessian from a different one.
-    dots <- list(...)
-    if (!is.null(dots$n_t_steps)) {
-      attr(fit, "n_t_steps") <- dots$n_t_steps
+    if (!is.null(ll_controls$n_t_steps)) {
+      attr(fit, "n_t_steps") <- ll_controls$n_t_steps
     }
   }
 

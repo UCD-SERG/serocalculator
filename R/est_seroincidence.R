@@ -190,8 +190,11 @@ est_seroincidence <- function(
 
   # The joint likelihood pairs each person's biomarker readings, so it
   # needs the id column, which the composite likelihood never looks at.
+  # With only one biomarker there is nothing to pair: `log_likelihood()`
+  # routes to the marginal path either way, so demanding an id column
+  # there would reject data the composite fit accepts, for no gain.
   id_var <- NULL
-  if (method == "joint") {
+  if (method == "joint" && length(antigen_isos) > 1) {
     id_var <- .joint_id_var_for_fit(pop_data, antigen_isos)
     cols_to_keep <- c(cols_to_keep, id_var)
   }

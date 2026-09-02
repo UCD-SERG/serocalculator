@@ -451,6 +451,89 @@ test_that("both entry points resolve the id column the same way", {
   )
 })
 
+test_that("a single-biomarker joint fit needs no id column", {
+  # With one biomarker there is nothing to pair, and `log_likelihood()`
+  # routes to the marginal path, so `method = "joint"` must accept the
+  # same data as `method = "composite"` (review of #677).
+  inputs <- joint_test_inputs()
+  no_id <- inputs$xs_data |> dplyr::select(-"id")
+  attr(no_id, "id_var") <- NULL
+
+  expect_no_error(
+    log_likelihood(
+      lambda = 0.1,
+      pop_data = no_id,
+      curve_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = "HlyE_IgA",
+      method = "joint"
+    )
+  )
+  expect_no_error(
+    est_seroincidence(
+      pop_data = no_id,
+      sr_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = "HlyE_IgA",
+      method = "joint",
+      iterlim = 1
+    ) |>
+      suppressWarnings()
+  )
+  # ...while two biomarkers still require it, since pairing is real then.
+  expect_error(
+    est_seroincidence(
+      pop_data = no_id,
+      sr_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      method = "joint",
+      iterlim = 1
+    ),
+    "identifies subjects"
+  )
+})
+
+test_that("a custom id column name survives stratification", {
+  # `est_seroincidence_by()` resolves the id column once, then each
+  # per-stratum `est_seroincidence()` re-derives it from the
+  # `select()`-processed stratum data. That works only while the
+  # `id_var` attribute survives those dplyr verbs (review of #677).
+  inputs <- joint_test_inputs()
+  custom <- inputs$xs_data |> dplyr::rename(subject_code = "id")
+  attr(custom, "id_var") <- "subject_code"
+
+  strata <- stratify_data(
+    data = custom,
+    curve_params = inputs$curves |>
+      dplyr::mutate(alpha = .data$alpha * 365.25, d = .data$r - 1),
+    noise_params = inputs$noise,
+    strata_varnames = "catchment",
+    curve_strata_varnames = NULL,
+    noise_strata_varnames = NULL,
+    antigen_isos = inputs$antibodies,
+    id_var = "subject_code"
+  ) |>
+    suppressWarnings()
+
+  expect_equal(attr(strata[[1]]$pop_data, "id_var"), "subject_code")
+  expect_true("subject_code" %in% names(strata[[1]]$pop_data))
+  expect_no_error(
+    est_seroincidence_by(
+      pop_data = custom,
+      sr_params = inputs$curves,
+      noise_params = inputs$noise,
+      strata = "catchment",
+      curve_strata_varnames = NULL,
+      noise_strata_varnames = NULL,
+      antigen_isos = inputs$antibodies,
+      method = "joint",
+      iterlim = 1
+    ) |>
+      suppressWarnings()
+  )
+})
+
 test_that("`est_seroincidence(method = 'joint')` fits and summarizes", {
   inputs <- joint_test_inputs()
   est_joint <- est_seroincidence(

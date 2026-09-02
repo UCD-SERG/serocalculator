@@ -407,6 +407,15 @@ est_seroincidence <- function(
   if (method == "joint") {
     attr(fit, "method") <- method
     attr(fit, "id_var") <- id_var
+    # The cluster-robust variance recomputes the per-cluster score from
+    # this fit's attributes. Without the quadrature setting it would use
+    # `f_dev_joint()`'s default, so a fit optimized at another
+    # `n_t_steps` would pair a sandwich middle matrix built from one
+    # objective with a Hessian from a different one.
+    dots <- list(...)
+    if (!is.null(dots$n_t_steps)) {
+      attr(fit, "n_t_steps") <- dots$n_t_steps
+    }
   }
 
   return(fit)

@@ -25,6 +25,24 @@
 
 ## Bug fixes
 
+* `method = "joint"` now refuses a `curve_params` that carries an `iter`
+  column for some biomarkers but not others.
+  Draws are paired by `iter` when every biomarker has it and by position
+  when none does; with only some, the intended pairing is unknown, and
+  the previous fallback to positional pairing silently combined draws
+  that the biomarkers carrying `iter` showed to be ordered differently.
+
+* `n_t_steps` now rejects `Inf` and values above the largest R integer.
+  These satisfied "a whole number at least 1" but became `NA` when
+  coerced for the C call, which then failed with a message naming an
+  argument position rather than the argument the caller had set.
+
+* A joint fit made with a non-default `n_t_steps` now records it, so a
+  cluster-robust standard error recomputes each cluster's score under
+  the same quadrature the fit was optimized with.
+  The score previously used the default, pairing a sandwich middle
+  matrix built from one objective with a Hessian from another.
+
 * `sim_pop_data_multi()` no longer changes the calling session's
   random number generator.
   It sets up reproducible parallel streams with `rngtools::setRNG()`,

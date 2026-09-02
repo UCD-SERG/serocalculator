@@ -755,3 +755,95 @@ test_that("the joint estimator recovers a simulated incidence rate", {
     tolerance = 1e-4
   )
 })
+
+test_that("`n_t_steps` must be representable as an R integer", {
+  # `Inf` and values above the integer range satisfy "whole number >= 1" but
+  # become `NA_integer_` under `as.integer()`, which `.C()` then rejects with
+  # a message naming an argument position rather than the argument the caller
+  # set. Refuse them here instead (review of #677).
+  inputs <- joint_test_inputs()
+
+  for (bad in list(Inf, 2^31, 2^40)) {
+    expect_error(
+      log_likelihood(
+        lambda = 0.1,
+        pop_data = inputs$xs_data,
+        curve_params = inputs$curves,
+        noise_params = inputs$noise,
+        antigen_isos = inputs$antibodies,
+        method = "joint",
+        n_t_steps = bad
+      ),
+      "must be a single whole number"
+    )
+  }
+
+  # The largest representable value still passes validation: it is refused
+  # for being impractical, never for being unrepresentable.
+  expect_no_error(.validate_n_t_steps(.Machine$integer.max))
+})
+
+test_that("mixed `iter` availability across biomarkers is refused", {
+  # Positional pairing is documented as the no-`iter` case. Falling back to it
+  # when only some biomarkers carry `iter` silently pairs draws that the ones
+  # carrying it show to be ordered differently, and equal row counts do not
+  # rule that out (review of #677).
+  inputs <- joint_test_inputs()
+  split_curves <- split(inputs$curves, inputs$curves$antigen_iso)
+  mixed <- split_curves
+  mixed[[inputs$antibodies[2]]]$iter <- NULL
+
+  expect_error(
+    log_likelihood(
+      lambda = 0.1,
+      pop_data = inputs$xs_data,
+      curve_params = mixed,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      method = "joint"
+    ),
+    "for some"
+  )
+})
+
+test_that("a joint fit records `n_t_steps` for the cluster-robust score", {
+  # `.compute_cluster_robust_var()` rebuilds the per-cluster score from the
+  # fit's attributes. Without the quadrature setting it would use
+  # `f_dev_joint()`'s default, pairing a sandwich middle matrix built from one
+  # objective with a Hessian from another (review of #677).
+  inputs <- joint_test_inputs()
+  id_var <- ids_varname(inputs$xs_data)
+
+  fit_at <- function(n_t_steps) {
+    est_seroincidence(
+      pop_data = inputs$xs_data,
+      sr_params = inputs$curves,
+      noise_params = inputs$noise,
+      antigen_isos = inputs$antibodies,
+      method = "joint",
+      cluster_var = id_var,
+      n_t_steps = n_t_steps
+    )
+  }
+
+  coarse <- fit_at(7)
+  expect_equal(attr(coarse, "n_t_steps"), 7)
+
+  # A fit left at the default records nothing, so the recomputation omits the
+  # argument and reproduces that default.
+  default_fit <- est_seroincidence(
+    pop_data = inputs$xs_data,
+    sr_params = inputs$curves,
+    noise_params = inputs$noise,
+    antigen_isos = inputs$antibodies,
+    method = "joint",
+    cluster_var = id_var
+  )
+  expect_null(attr(default_fit, "n_t_steps"))
+
+  # The coarse quadrature must reach the standard error, not just the fit.
+  expect_false(isTRUE(all.equal(
+    summary(coarse, verbose = FALSE)$SE,
+    summary(default_fit, verbose = FALSE)$SE
+  )))
+})

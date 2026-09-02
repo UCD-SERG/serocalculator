@@ -155,16 +155,25 @@ f_dev_joint <- function(
 #' @returns `invisible(NULL)`
 #' @noRd
 .validate_n_t_steps <- function(n_t_steps) {
+  # `is.finite()` also rules out `NA` and `NaN`. The upper bound matters
+  # because `.negloglik_joint()` coerces with `as.integer()`, which maps
+  # anything above the integer range (and `Inf`) to `NA_integer_`; `.C()`
+  # then rejects it with "NAs in foreign function call", naming an
+  # argument position rather than the argument the caller set.
+  # A local rather than an inline `.Machine$integer.max`: cli >= 3.4.0
+  # reads a `{}` expression starting with a dot as a style name.
+  max_steps <- .Machine$integer.max
   ok <- length(n_t_steps) == 1 &&
     is.numeric(n_t_steps) &&
-    !is.na(n_t_steps) &&
+    is.finite(n_t_steps) &&
     n_t_steps >= 1 &&
+    n_t_steps <= max_steps &&
     n_t_steps == trunc(n_t_steps)
   if (!ok) {
     cli::cli_abort(
       c(
-        "{.arg n_t_steps} must be a single whole number >= 1,
-        not {.val {n_t_steps}}.",
+        "{.arg n_t_steps} must be a single whole number between 1 and
+        {.val {max_steps}}, not {.val {n_t_steps}}.",
         "i" = "It sets how many midpoint nodes the integral over the
         latent infection time uses."
       )
@@ -330,6 +339,22 @@ f_dev_joint <- function(
   params <- curve_params[antigen_isos]
 
   has_iter <- vapply(params, \(p) "iter" %in% names(p), logical(1))
+  # Mixed availability is ambiguous rather than a licence to fall back:
+  # positional pairing is documented as the no-`iter` case, and taking it
+  # here would silently pair draws that the biomarkers carrying `iter`
+  # show to be ordered differently. Equal row counts do not rule that out.
+  if (any(has_iter) && !all(has_iter)) {
+    cli::cli_abort(
+      c(
+        "{.arg curve_params} has an {.field iter} column for some
+        biomarkers but not others ({.val {antigen_isos[!has_iter]}}).",
+        "i" = "The joint likelihood pairs draws by {.field iter} when it
+        is present and by position when no biomarker has it; with only
+        some, the intended pairing is unknown. Add {.field iter} to every
+        biomarker or drop it from all of them."
+      )
+    )
+  }
   if (all(has_iter)) {
     params <- lapply(params, .order_draws)
     keys <- lapply(params, .draw_keys)

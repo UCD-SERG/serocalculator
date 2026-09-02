@@ -75,6 +75,7 @@ bind_rows(
 ::: notes
 The composite estimator over-estimates, increasingly so at higher incidence (as @sec-recover already showed).
 The joint estimator **under**-estimates, by more, and its confidence intervals cover the truth far less often.
+Both arms use the standard error their own likelihood calls for: the composite one is clustered by person, and the joint one comes from the Hessian, which is valid for a genuine likelihood (@sec-multiple-biomarkers).
 Its empirical standard error is the smaller of the two, which is the efficiency gain the shared latent time was expected to bring, but here that gain is swamped by bias.
 :::
 

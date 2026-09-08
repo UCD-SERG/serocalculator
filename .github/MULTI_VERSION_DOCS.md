@@ -9,9 +9,12 @@ The documentation site publishes several versions side by side on the
 | A push to `main` | `/dev/` |
 | A published release | `/latest-tag/`, plus an archived `/vX.Y.Z/` copy |
 
-The site root (`/`) is a redirect landing page into whichever of `/dev/` or
-`/latest-tag/` was deployed most recently, and a "Versions" dropdown in the
-navbar links between them.
+The site root (`/`) is a redirect landing page into `/latest-tag/`, and a
+"Versions" dropdown in the navbar links between the versions.
+It is pinned there by the `root-landing-target` input in
+[`workflows/docs.yaml`](workflows/docs.yaml):
+without it the root follows whichever version was deployed most recently, so
+a push to `main` would send every arriving reader to `/dev/`.
 
 ## How it is built
 
@@ -39,6 +42,8 @@ Run the **Docs** workflow from the Actions tab. Choose `dev` to rebuild
 `/dev/`, or `stable` plus the latest release tag to rebuild `/latest-tag/`.
 The workflow rejects a `stable` run whose tag is not the latest published
 release, since that run also rewrites the root landing page.
+That rewrite now always targets `/latest-tag/`, whichever version the run
+deployed, because `root-landing-target` pins it.
 
 ## Which URL to cite
 

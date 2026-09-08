@@ -40,10 +40,20 @@
   estimator.
 
 * The docs site redirects unversioned `/reference/...`, `/articles/...` and
-  `/news/...` paths, and the retired `/main/...` paths, to their `/latest-tag/`
+  `/news/...` paths, and the retired `/main/...` paths, to their `/v1.4.1/`
   counterparts, so links published before the altdoc migration resolve again.
+  The target is the frozen archive rather than `/latest-tag/` because only an
+  archive keeps the pkgdown path shape those links were written against;
+  `/latest-tag/` is rebuilt with altdoc on every release.
   `.github/MULTI_VERSION_DOCS.md` explains which URL to cite in print
   (a `/vX.Y.Z/` one). (#681)
+
+* The docs site root now redirects to `/latest-tag/` rather than to whichever
+  version was deployed most recently, so a reader arriving from CRAN, a
+  citation, or a search result lands on the released documentation instead of
+  on `/dev/`.
+  This needs `root-landing-target`, added upstream in
+  [Morrison-Lab/gha#847](https://github.com/Morrison-Lab/gha/pull/847). (#681)
 
 ## New features
 

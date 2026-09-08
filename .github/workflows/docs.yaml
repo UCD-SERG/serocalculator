@@ -84,6 +84,25 @@ jobs:
         local::.
       dispatch-version: ${{ github.event.inputs.version }}
       dispatch-release-tag: ${{ github.event.inputs.release_tag }}
+      # Point the site root at the released docs rather than at whatever the
+      # last deploy happened to build (UCD-SERG/serocalculator#681).
+      #
+      # Without this, a push to main repoints `/` at `/dev/`, so a reader
+      # arriving from CRAN, from a citation, or from a search result lands on
+      # documentation for unreleased behaviour they do not have installed --
+      # and pushes to main are far more frequent than releases, so that is
+      # where the root sits almost all the time.
+      #
+      # `latest-tag` rather than a pinned `vX.Y.Z` on purpose, and the
+      # opposite choice from `legacy-paths` below. The root only needs to
+      # land the reader on the current release, so it should track releases.
+      # The redirects below need the pkgdown PATH SHAPE preserved, which only
+      # a frozen archive keeps -- see MULTI_VERSION_DOCS.md.
+      #
+      # Requires Morrison-Lab/gha@v2 at eb526d7 or later (gha#847). Passing an
+      # input the pinned tag does not declare fails the call outright, so this
+      # line and the `@v2` pin above move together.
+      root-landing-target: latest-tag
       # Generates a site-root 404.html that rewrites a request whose first
       # path segment matches one of these keys, deep links included, so URLs
       # written against the pre-migration layout keep resolving

@@ -108,7 +108,7 @@ v1.4.1 build used,
 and it is why the numbers here differ from the ones quoted in
 @Aiemjoy_2022_Lancet.
 Restoring the full posterior needs a vendored copy of `rtw5k`, which does not
-exist yet; see [issue #680](https://github.com/UCD-SERG/serocalculator/issues/680).
+exist yet; see [issue #682](https://github.com/UCD-SERG/serocalculator/issues/682).
 
 ### Visualize curve parameters
 

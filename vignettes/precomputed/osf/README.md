@@ -43,7 +43,7 @@ and the bundled object gives a coarser Monte Carlo approximation of the
 marginal density.
 Vendoring `rtw5k.rds` by the refresh procedure below would close it;
 tracked in
-[issue #680](https://github.com/UCD-SERG/serocalculator/issues/680).
+[issue #682](https://github.com/UCD-SERG/serocalculator/issues/682).
 
 To refresh a byte-for-byte snapshot after the upstream OSF object changes,
 re-download it and overwrite the file here:
@@ -103,5 +103,6 @@ The largest `result` anywhere in `n6cp3.rds` is about `219`
 so no observation reaches `1000`, let alone `5e+06`:
 under either value no observation is right-censored and the likelihood is
 identical.
-The drift is still worth resolving upstream,
+The drift is still worth resolving upstream
+([issue #684](https://github.com/UCD-SERG/serocalculator/issues/684)),
 but it does not change any number this directory feeds.

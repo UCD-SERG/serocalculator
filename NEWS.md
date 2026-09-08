@@ -30,6 +30,9 @@
   inputs the published v1.4.1 build used, and shows the equivalent OSF download
   for each in a chunk that is shown but not run, so that route stays documented
   (#142, #680).
+  The curve parameters are not yet restored: `typhoid_curves_nostrat_100` is a
+  100-draw subset of the OSF object the published build read in full, which the
+  article now says explicitly (#682).
 
 * The docs site redirects unversioned `/reference/...`, `/articles/...` and
   `/news/...` paths, and the retired `/main/...` paths, to their `/latest-tag/`

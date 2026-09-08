@@ -33,6 +33,11 @@
   The curve parameters are not yet restored: `typhoid_curves_nostrat_100` is a
   100-draw subset of the OSF object the published build read in full, which the
   article now says explicitly (#682).
+  Note that the article's rendered estimates change materially as a result:
+  it now fits 1725 subjects across 3336 rows rather than 516 across 1000, so
+  every incidence figure in its Conclusions moves.
+  No package behaviour changes --- this is the article's inputs, not the
+  estimator.
 
 * The docs site redirects unversioned `/reference/...`, `/articles/...` and
   `/news/...` paths, and the retired `/main/...` paths, to their `/latest-tag/`

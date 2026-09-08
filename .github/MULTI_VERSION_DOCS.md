@@ -67,30 +67,51 @@ altdoc and pkgdown lay a site out differently:
 | --- | --- |
 | `reference/index.html` | `reference.html` |
 | `reference/<topic>.html` | `man/<topic>.html` |
-| `articles/<name>.html` | `vignettes/articles/<name>.html` |
+| `articles/<name>.html` | `vignettes/<source path>.html` |
 
-So a pre-migration deep link cannot simply be re-prefixed onto `/dev/` --
-the tail does not exist there.
-It can be re-prefixed onto `/latest-tag/`,
-which is still the pkgdown-shaped v1.4.1 build,
-and that is what the `legacy-paths` input in
-[`workflows/docs.yaml`](workflows/docs.yaml) does.
-It generates a site-root `404.html` that rewrites the first path segment,
-deep links included:
+That last row is a path, not a name, and the difference bites.
+altdoc mirrors the source tree, so an article at
+`vignettes/articles/enteric_fever_example.Rmd` publishes to
+`/dev/vignettes/articles/enteric_fever_example.html`,
+while `vignettes/methodology.qmd` publishes to
+`/dev/vignettes/methodology.html` -- one directory up.
+pkgdown flattened both to `articles/<name>.html`.
+
+So a pre-migration deep link cannot be re-prefixed onto `/dev/` at all:
+the 404 page rewrites only the first path segment,
+and no first-segment rewrite can turn `articles/methodology.html` into
+`vignettes/methodology.html`.
+It can be re-prefixed onto a pkgdown-shaped build, which is what the
+`legacy-paths` input in [`workflows/docs.yaml`](workflows/docs.yaml) does:
 
 | Requested | Served |
 | --- | --- |
-| `/reference/index.html` | `/latest-tag/reference/index.html` |
-| `/articles/<name>.html` | `/latest-tag/articles/<name>.html` |
-| `/news/index.html` | `/latest-tag/news/index.html` |
-| `/main/<anything>` | `/latest-tag/<anything>` |
+| `/reference/index.html` | `/v1.4.1/reference/index.html` |
+| `/articles/<name>.html` | `/v1.4.1/articles/<name>.html` |
+| `/news/index.html` | `/v1.4.1/news/index.html` |
+| `/main/<anything>` | `/v1.4.1/<anything>` |
+
+**The target is `/v1.4.1/` rather than `/latest-tag/` on purpose.**
+`/latest-tag/` is pkgdown-shaped only because it still holds the v1.4.1
+build.
+This workflow rebuilds `/latest-tag/` with altdoc on every published
+release, so the first release after these redirects shipped would have
+turned all of them into 404s, silently.
+A `/vX.Y.Z/` directory is archived and never rebuilt, so it keeps its shape
+for good -- and v1.4.1 is the version those links were written against
+anyway.
 
 Redirection needs JavaScript, and the HTTP status stays `404` --
 a browser follows it, `curl` reports the 404 page.
 That is worth remembering when checking these by hand.
 
-When adding an entry, do not name a segment that also exists under
-`/latest-tag/`: the rewritten URL would match the same rule again and loop.
+**The loop rule is about targets, not about what exists.**
+No key may be the *first segment* of any target, because the first segment
+is all the rewrite matches on.
+`v1.4.1` is absent from the key column for exactly that reason.
+A key naming a directory that also exists under `/v1.4.1/` is fine:
+`reference`, `articles` and `news` all do, and none of them loops, because
+each rewritten URL's first segment is `v1.4.1`, which is not a key.
 
 ## History
 

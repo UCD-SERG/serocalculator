@@ -89,24 +89,35 @@ jobs:
       # written against the pre-migration layout keep resolving
       # (UCD-SERG/serocalculator#681).
       #
-      # Every target is /latest-tag/ rather than /dev/, for two reasons.
+      # Every target is under /v1.4.1/, and the choice of *that* version over
+      # /latest-tag/ is the load-bearing part.
       #
-      # First, /latest-tag/ is still the pkgdown-shaped v1.4.1 build, so it is
-      # the only target that preserves a pre-migration path tail verbatim:
-      # /reference/index.html and /articles/<name>.html both resolve there and
-      # neither exists under /dev/, which altdoc publishes as reference.html,
-      # man/<topic>.html and vignettes/<path>.html instead. That is also why
-      # the old `main=dev` mapping had silently stopped working for deep
-      # links: /main/reference/index.html was being sent to a 404.
+      # A pre-migration URL is pkgdown-shaped: /reference/index.html,
+      # /articles/<name>.html. The 404 page rewrites only the FIRST path
+      # segment, so it cannot reshape the tail -- which means the target has
+      # to be a pkgdown-shaped build or the redirect lands on a 404. /dev/ is
+      # altdoc-shaped already (reference.html, man/<topic>.html,
+      # vignettes/<path>.html), so it was never a candidate.
       #
-      # Second, an unversioned link is overwhelmingly a citation or a search
-      # result, whose reader wants the released docs rather than unreleased
-      # behaviour they do not have installed.
+      # /latest-tag/ is pkgdown-shaped only because it still holds the v1.4.1
+      # build. This workflow rebuilds /latest-tag/ with altdoc on every
+      # published release, so the first release after this merges would
+      # silently turn all three of these into 404s. /vX.Y.Z/ directories are
+      # archived and never rebuilt, so v1.4.1 stays pkgdown-shaped for good.
+      # That is also the version those links were written against.
       #
-      # No entry may name a segment that exists under /latest-tag/, or the
-      # redirect would loop; `latest-tag` itself is deliberately absent.
+      # Bump this to a later /vX.Y.Z/ only if that release was itself built
+      # by pkgdown; every altdoc-built release fails for the shape reason
+      # above, not the freshness one.
+      #
+      # The loop rule is about targets, not about what exists: no KEY here may
+      # be the FIRST SEGMENT of any TARGET, since that is all the rewrite
+      # matches on. `v1.4.1` is absent from the key column for exactly that
+      # reason. It is fine for a key to name a directory that also exists
+      # under /v1.4.1/ -- `reference`, `articles` and `news` all do, and none
+      # of them loops, because the rewritten URL's first segment is `v1.4.1`.
       legacy-paths: |
-        main=latest-tag
-        reference=latest-tag/reference
-        articles=latest-tag/articles
-        news=latest-tag/news
+        main=v1.4.1
+        reference=v1.4.1/reference
+        articles=v1.4.1/articles
+        news=v1.4.1/news

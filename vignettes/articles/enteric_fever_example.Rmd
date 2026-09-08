@@ -105,8 +105,11 @@ so the estimates below average over 100 posterior draws rather than the full
 posterior.
 That is a coarser Monte Carlo approximation of $\rho(y)$ than the published
 v1.4.1 build used,
-and it is why the numbers here differ from the ones quoted in
-@Aiemjoy_2022_Lancet.
+so the estimates below differ from that build's even where the other two
+inputs now match it.
+It is one cause among several of the difference from @Aiemjoy_2022_Lancet,
+which the note at the top of this vignette already attributes to the analysis
+being a simplified version of the published one.
 Restoring the full posterior needs a vendored copy of `rtw5k`, which does not
 exist yet; see [issue #682](https://github.com/UCD-SERG/serocalculator/issues/682).
 

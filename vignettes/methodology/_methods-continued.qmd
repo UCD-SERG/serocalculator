@@ -271,7 +271,7 @@ That is a different device from the 2012 one
 
 The implementation composes @eq-bwrectime_pdf_age with the **decaying branch
 alone** of the curve above,
-reparameterised as a peak level $A$, a decay rate $k$, and a decay shape $d$.
+written with a peak level $A$, a decay rate $k$, and a decay shape $d$.
 Those are the same parameters under different names.
 `R/f_dev.r` passes `lnpars$y1`, `lnpars$alpha` and `lnpars$d` into the C
 entry point `negloglik()`, which forwards them to `NLLFf()`'s `A`, `k` and

@@ -1,5 +1,42 @@
 # serocalculator (development version)
 
+## Documentation
+
+* The methodology article's dormant "Backward recurrence time" derivation
+  (`vignettes/methodology/_methods-continued.qmd`) now says which model it
+  describes.
+  It derived the infinite-horizon density of Teunis et al. (2012), which
+  `seroincidence` 1.x implemented and this package does not, and presented it
+  as what `est_seroincidence()` computes.
+  The page now also derives the age-corrected density of Teunis and van
+  Eijkeren (2020) that `src/serocalc.c` actually evaluates, states the
+  implementation's mass accounting, and notes that the engine is Poisson-only
+  and uses a decay-only power-law seroresponse curve.
+  The omitted correction term carries between roughly a fifth and three fifths
+  of the backward-recurrence density at the incidence rates these data produce.
+  (#679)
+
+* The methodology article now records that `src/serocalc.c` realizes the time-
+  since-infection distribution as the age-corrected 2020 density rather than as
+  the truncated exponential stated in `@prp-time-since-infection`.
+  Both put the same mass on "never infected"; they distribute the remainder
+  over `[0, a]` differently. (#679)
+
+* The enteric fever article's "Load data" paragraph no longer promises to pull
+  data from OSF while the code below it loads bundled objects. (#680)
+
+* The enteric fever article reads its cross-sectional data and noise parameters
+  from the vendored OSF snapshots in `vignettes/precomputed/osf/`, restoring the
+  inputs the published v1.4.1 build used, and shows the equivalent OSF download
+  for each in a chunk that is shown but not run, so that route stays documented
+  (#142, #680).
+
+* The docs site redirects unversioned `/reference/...`, `/articles/...` and
+  `/news/...` paths, and the retired `/main/...` paths, to their `/latest-tag/`
+  counterparts, so links published before the altdoc migration resolve again.
+  `.github/MULTI_VERSION_DOCS.md` explains which URL to cite in print
+  (a `/vX.Y.Z/` one). (#681)
+
 ## New features
 
 * `log_likelihood()`, `est_seroincidence()` and `est_seroincidence_by()`

@@ -59,7 +59,13 @@ library(forcats)
 
 ## Load data
 
-Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Data Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF). We will pull this data directly into our R environment.
+Pathogen-specific sample datasets, noise parameters, and longitudinal antibody dynamics for **serocalculator** are available on the [Serocalculator Data Repository](https://osf.io/ne8pc/) on Open Science Framework (OSF).
+
+This vignette reads local, vendored copies of that data rather than fetching it at render time,
+so a documentation build does not depend on OSF being reachable --- see `vignettes/precomputed/osf/README.md` for why and how to refresh them.
+Each loading chunk below is followed by the equivalent OSF download,
+shown but not evaluated,
+so you can see how to pull the same data (or your own) directly into your R environment.
 
 Note that each dataset has specific formatting and variable name requirements.
 
@@ -84,6 +90,25 @@ r          |  Antibody decay shape
 # Load example longitudinal antibody parameters included in serocalculator
 curves <- typhoid_curves_nostrat_100
 ```
+
+To download the full posterior from OSF instead:
+
+```{r curve-osf, eval = FALSE}
+curves <-
+  "https://osf.io/download/rtw5k/" |>
+  load_sr_params()
+```
+
+`typhoid_curves_nostrat_100` is that OSF object filtered to `iter %in% 1:100`
+(see `data-raw/typhoid_curves_nostrat_100.R`),
+so the estimates below average over 100 posterior draws rather than the full
+posterior.
+That is a coarser Monte Carlo approximation of $\rho(y)$ than the published
+v1.4.1 build used,
+and it is why the numbers here differ from the ones quoted in
+@Aiemjoy_2022_Lancet.
+Restoring the full posterior needs a vendored copy of `rtw5k`, which does not
+exist yet; see [issue #680](https://github.com/UCD-SERG/serocalculator/issues/680).
 
 ### Visualize curve parameters
 
@@ -116,10 +141,26 @@ age       | Numeric age
 
 
 ```{r data, message = FALSE}
-# Load example cross-sectional data included in serocalculator
-xs_data <- sees_pop_data_100
-
+# Vendored from OSF (osf.io/n6cp3).
+# `as_pop_data()`'s defaults already name this file's columns, so no renaming
+# arguments are needed: age = "Age", value = "result", id = "index_id".
+xs_data <- load_pop_data("../precomputed/osf/n6cp3.rds")
 ```
+
+To download the same data from OSF instead:
+
+```{r data-osf, eval = FALSE}
+xs_data <- load_pop_data("https://osf.io/download/n6cp3/")
+```
+
+The package also bundles `sees_pop_data_100`, a much smaller extract of this
+same dataset, for examples and tests.
+It is a head-slice rather than a random sample
+(`dplyr::slice_head()` in `data-raw/sees_pop_data_pakistan_100.R`),
+so which subjects it retains is decided by source row order.
+That makes it well suited to a fast-running example and unsuitable for
+producing a number anyone quotes,
+which is why this vignette reads the full data instead.
 
 ### Summarize antibody data
 
@@ -198,9 +239,26 @@ eps         | Measurement noise
 *Note that variable names are case-sensitive.*
 
 ``` {r noise, message=FALSE}
-# Load example noise parameters included in serocalculator
-noise <- example_noise_params_sees
+# Vendored from OSF (osf.io/hqy4v).
+noise <- load_noise_params("../precomputed/osf/hqy4v.rds")
 ```
+
+To download the same parameters from OSF instead:
+
+```{r noise-osf, eval = FALSE}
+noise <- load_noise_params("https://osf.io/download/hqy4v/")
+```
+
+The package's own `example_noise_params_sees` is an earlier snapshot of this
+object.
+The two are identical except for `y.high`, the upper limit of quantification,
+which reads `1000` in the vendored snapshot and `5e+06` in the package data.
+`y.high` decides which observations are right-censored in the likelihood,
+so the difference would matter if any observation reached either bound.
+None does: the largest antibody concentration anywhere in this cross-sectional
+dataset is about 219,
+so no observation is right-censored under either value and the likelihood is
+the same either way.
 
 ## Estimate Seroincidence 
 Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.

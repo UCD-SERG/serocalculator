@@ -84,10 +84,29 @@ jobs:
         local::.
       dispatch-version: ${{ github.event.inputs.version }}
       dispatch-release-tag: ${{ github.event.inputs.release_tag }}
-      # Before the altdoc migration this site was built by pkgdown and
-      # insightsengineering/r-pkgdown-multiversion, which published each branch
-      # under its own name -- so the development docs lived at /main/. They now
-      # live at /dev/. This generates a site-root 404.html redirecting
-      # /main/<path> to /dev/<path>, deep links included, so links written
-      # against the old layout keep resolving.
-      legacy-paths: main=dev
+      # Generates a site-root 404.html that rewrites a request whose first
+      # path segment matches one of these keys, deep links included, so URLs
+      # written against the pre-migration layout keep resolving
+      # (UCD-SERG/serocalculator#681).
+      #
+      # Every target is /latest-tag/ rather than /dev/, for two reasons.
+      #
+      # First, /latest-tag/ is still the pkgdown-shaped v1.4.1 build, so it is
+      # the only target that preserves a pre-migration path tail verbatim:
+      # /reference/index.html and /articles/<name>.html both resolve there and
+      # neither exists under /dev/, which altdoc publishes as reference.html,
+      # man/<topic>.html and vignettes/<path>.html instead. That is also why
+      # the old `main=dev` mapping had silently stopped working for deep
+      # links: /main/reference/index.html was being sent to a 404.
+      #
+      # Second, an unversioned link is overwhelmingly a citation or a search
+      # result, whose reader wants the released docs rather than unreleased
+      # behaviour they do not have installed.
+      #
+      # No entry may name a segment that exists under /latest-tag/, or the
+      # redirect would loop; `latest-tag` itself is deliberately absent.
+      legacy-paths: |
+        main=latest-tag
+        reference=latest-tag/reference
+        articles=latest-tag/articles
+        news=latest-tag/news

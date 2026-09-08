@@ -40,10 +40,62 @@ Run the **Docs** workflow from the Actions tab. Choose `dev` to rebuild
 The workflow rejects a `stable` run whose tag is not the latest published
 release, since that run also rewrites the root landing page.
 
+## Which URL to cite
+
+**Cite a `/vX.Y.Z/` URL in anything that goes to print.**
+Those directories are archived copies of one release and are never rebuilt,
+so a link written against them survives any later restructuring of the site:
+
+```
+https://ucd-serg.github.io/serocalculator/v1.4.1/articles/enteric_fever_example.html
+```
+
+The other paths are all moving targets, and each fails differently:
+
+| Path | Why not to cite it |
+| --- | --- |
+| `/articles/...`, `/reference/...` | Unversioned. Served only by the redirect below, and pointed at whatever `/latest-tag/` currently is. |
+| `/latest-tag/...` | Advances on every release, so its content changes under a fixed URL. |
+| `/dev/...` | Unreleased behaviour, and rebuilt on every push to `main`. |
+
+## Redirects for pre-migration links
+
+The migration changed the path shape as well as the version prefix, because
+altdoc and pkgdown lay a site out differently:
+
+| pkgdown (`/latest-tag/`, `/vX.Y.Z/`) | altdoc (`/dev/`) |
+| --- | --- |
+| `reference/index.html` | `reference.html` |
+| `reference/<topic>.html` | `man/<topic>.html` |
+| `articles/<name>.html` | `vignettes/articles/<name>.html` |
+
+So a pre-migration deep link cannot simply be re-prefixed onto `/dev/` --
+the tail does not exist there.
+It can be re-prefixed onto `/latest-tag/`,
+which is still the pkgdown-shaped v1.4.1 build,
+and that is what the `legacy-paths` input in
+[`workflows/docs.yaml`](workflows/docs.yaml) does.
+It generates a site-root `404.html` that rewrites the first path segment,
+deep links included:
+
+| Requested | Served |
+| --- | --- |
+| `/reference/index.html` | `/latest-tag/reference/index.html` |
+| `/articles/<name>.html` | `/latest-tag/articles/<name>.html` |
+| `/news/index.html` | `/latest-tag/news/index.html` |
+| `/main/<anything>` | `/latest-tag/<anything>` |
+
+Redirection needs JavaScript, and the HTTP status stays `404` --
+a browser follows it, `curl` reports the 404 page.
+That is worth remembering when checking these by hand.
+
+When adding an entry, do not name a segment that also exists under
+`/latest-tag/`: the rewritten URL would match the same rule again and loop.
+
 ## History
 
 Before the altdoc migration this site was built by `pkgdown` and
 [`insightsengineering/r-pkgdown-multiversion`](https://github.com/insightsengineering/r-pkgdown-multiversion),
 which published each branch and tag under its own name -- so the development
 docs lived at `/main/` and PR previews at `/preview/pr<number>/`. Links written
-against those paths no longer resolve.
+against those paths are redirected as described above.

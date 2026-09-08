@@ -25,12 +25,25 @@ Each file is named after the OSF resource id it was downloaded from
 | `u5gxh.rds` | `u5gxh`  | Scrub typhus antibody-decay curve parameters         |
 | `h5js4.rds` | `h5js4`  | Scrub typhus cross-sectional population data         |
 
-There is no `rtw5k.rds` here: `typhoid_curves_nostrat_100` (the package's own
-bundled example data) is already `load_sr_params("https://osf.io/download/rtw5k/")`
-filtered to `iter %in% 1:100`, so vignettes that only need `iter < 50` from
-`rtw5k` filter the bundled object further instead of fetching or vendoring a
-second copy of it --- the two are identical once filtered (same reasoning as
-the methodology article's simulation sections, per NEWS.md).
+There is no `rtw5k.rds` here.
+`typhoid_curves_nostrat_100` (the package's own bundled example data) is
+`load_sr_params("https://osf.io/download/rtw5k/")` filtered to
+`iter %in% 1:100`, so a vignette that only needs `iter < 50` from `rtw5k`
+filters the bundled object further instead of fetching or vendoring a second
+copy of it --- the two are identical once filtered (same reasoning as the
+methodology article's simulation sections, per NEWS.md).
+
+That reasoning does not cover every consumer, though.
+A vignette that averages over the **full** posterior is not served by a
+100-draw subset: the two are identical only where the subset is what was
+wanted.
+`vignettes/articles/enteric_fever_example.Rmd` is that case --- the published
+v1.4.1 build read all draws of `rtw5k`,
+and the bundled object gives a coarser Monte Carlo approximation of the
+marginal density.
+Vendoring `rtw5k.rds` by the refresh procedure below would close it;
+tracked in
+[issue #680](https://github.com/UCD-SERG/serocalculator/issues/680).
 
 To refresh a byte-for-byte snapshot after the upstream OSF object changes,
 re-download it and overwrite the file here:
@@ -79,3 +92,16 @@ upper truncation bound, not just a formatting change, so this snapshot was
 NOT reconciled with the package data; it preserves whatever `hqy4v`
 currently serves. Whether the drift is intentional is a question for
 whoever owns the OSF data.
+
+The drift is, however, **inert for the data vendored here**,
+which is worth recording so the next reader does not have to re-derive it.
+`y.high` is the upper limit of quantification,
+and it only changes the likelihood through the `yHi <= y` right-censoring
+branch in `src/serocalc.c`.
+The largest `result` anywhere in `n6cp3.rds` is about `219`
+(`max(readRDS(...)$result)`),
+so no observation reaches `1000`, let alone `5e+06`:
+under either value no observation is right-censored and the likelihood is
+identical.
+The drift is still worth resolving upstream,
+but it does not change any number this directory feeds.

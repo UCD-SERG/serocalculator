@@ -1,5 +1,36 @@
 
+<!--
+NOT INCLUDED IN THE RENDERED ARTICLE.
+
+`methodology.qmd` carries this file's `{{< include >}}` commented out, and has
+since before commit a80d8e4 split that article into subfiles.
+It is kept as background on the 2012 model that `seroincidence` 1.x implemented,
+and on how the current package departs from it.
+The seroresponse model is not the problem: this page's two-phase curve
+(@eq-rho_y) is the same one the rendered article's own
+`methodology/_antibody-response-model.qmd` presents, in the same five
+parameters $y_{0}, y_{1}, t_{1}, \alpha, r$.
+What differs is the backward-recurrence density, and the fact that the C
+engine evaluates only the decaying branch of that curve
+(@sec-what-the-engine-computes).
+So re-enabling the include would put two derivations of the same kinetics
+side by side while leaving the density contradiction in place, which is why
+it is better fixed than re-included.
+-->
+
 # Other innovations in the `serocalculator` package
+
+::: {.callout-important}
+## Which model this page describes
+
+The derivation on this page is the **earlier** model of @Teunis_2012.
+The `serocalculator` package does not implement it.
+What `est_seroincidence()` computes is the age-corrected model of
+@Teunis_2020 (@sec-age-corrected-bwrec).
+The difference is not cosmetic: it is a term carrying between about an eighth
+and three fifths of the backward-recurrence density at the incidence rates
+these data produce (@sec-size-of-the-correction).
+:::
 
 The `serocalculator` package provides three refinements to the method for
 calculating seroincidence published earlier [@Teunis_2012] and implemented in R package
@@ -137,6 +168,11 @@ u_{m}(\tau) = \frac{1-P_{m}(\tau)}{\overline{\Delta t}} =
   \sum_{j=0}^{m}\frac{(\lambda\tau)^{j}}{j!}
 $${#eq-bwrectime_pdf}
 
+@eq-bwrectime_pdf is the density `seroincidence` 1.x used and the one this page
+derives.
+It is **not** the density `serocalculator` evaluates, which is
+@eq-bwrectime_pdf_age.
+
 Combining equations @eq-rho_y and @eq-bwrectime_pdf the marginal density of $y$ can be found
 
 $$
@@ -180,7 +216,157 @@ $$
 $$
 that can be used to estimate $(\lambda, m)$.
 
-# True seronegative subjects
+# The age-corrected backward recurrence density {#sec-age-corrected-bwrec}
+
+Everything above assumes the renewal process has been running forever:
+@eq-bwrectime_pdf is supported on $[0,\infty)$,
+so it assigns positive probability to a backward recurrence time longer than
+the subject has been alive.
+For the Poisson case ($m = 0$) it reduces to
+$u(\tau) = \lambda\text{e}^{-\lambda\tau}$.
+
+@Teunis_2020 address this directly, and are explicit that the earlier form is
+the limiting case rather than an alternative convention:
+
+> Ignoring age in Reference 5 is mathematically equivalent to taking the limit
+> $a\to\infty$ in Equation (4).
+> [...]
+> The density introduced in Teunis et al$^{5}$ needs an age dependent
+> correction term, especially at low seroconversion rate, ensuring that the
+> backward recurrence time is restricted to the age of the subject at the time
+> of sampling.
+
+Reference 5 there is @Teunis_2012 --- the derivation above.
+
+For a subject of age $a$ at the time of sampling,
+their Equation (4) restricts the support to $[0,a]$ and adds a correction term:
+
+$$
+u(\tau\vert a) = [0\le\tau\le a]
+  \left(\lambda\text{e}^{-\lambda\tau} + \frac{\text{e}^{-\lambda a}}{a}\right)
+$${#eq-bwrectime_pdf_age}
+
+which is a proper density on $[0,a]$:
+
+$$
+\int_{0}^{a} u(\tau\vert a)\,\text{d}\tau =
+  \left(1-\text{e}^{-\lambda a}\right) + \text{e}^{-\lambda a} = 1
+$$
+
+Two features of @eq-bwrectime_pdf_age are worth stating explicitly,
+because each is a departure from the derivation above rather than a
+refinement of it.
+
+It is written for a **Poisson** process, not for the Gamma renewal process of
+@eq-pm_cumul.
+The shape parameter $m$ does not appear, and `serocalculator` does not estimate
+one: the C likelihood in `src/serocalc.c` takes `lambda` alone.
+
+It **conserves mass by construction**, where @eq-bwrectime_pdf leaves the
+never-seroconverted subjects to be handled separately.
+That is a different device from the 2012 one
+(@sec-true-seronegative-2012), not the same correction written two ways.
+
+## What `est_seroincidence()` computes {#sec-what-the-engine-computes}
+
+The implementation composes @eq-bwrectime_pdf_age with the **decaying branch
+alone** of the curve above,
+written with a peak level $A$, a decay rate $k$, and a decay shape $d$.
+Those are the same parameters under different names.
+`R/f_dev.r` passes `lnpars$y1`, `lnpars$alpha` and `lnpars$d` into the C
+entry point `negloglik()`, which forwards them to `NLLFf()`'s `A`, `k` and
+`d`, and `R/log_likelihood.R` supplies the last two from a `curve_params`
+object as `alpha * 365.25` and `r - 1`.
+So
+
+$$
+A = y_{1}, \qquad k = \alpha \text{ (per year)}, \qquad d = r-1
+$$
+
+and substituting these into $\tau_{-}$ from @eq-rho_y recovers the engine's
+own $\tau$ exactly, with the $t_{1}$ offset dropped --- the rising branch
+$\rho_{+}$ has no counterpart in `serocalc.c` at all:
+
+$$
+\tau(y) = \frac{y^{-d}-A^{-d}}{k\,d},
+\qquad
+y_{a} = \frac{A}{\left(1+d\,A^{d}\,k\,a\right)^{1/d}}
+$$
+
+where $y_{a}$ is the concentration a curve peaking at $A$ has decayed to after
+the subject's whole lifetime, so that $\tau(y_{a}) = a$ and $\tau(A) = 0$.
+
+Writing $P_{a} = 1-\text{e}^{-\lambda a}$ for the probability of at least one
+seroconversion before age $a$,
+and $Q_{a} = \text{e}^{-\lambda a}$ for the probability of none,
+the density of $y$ is
+
+$$
+\rho(y\vert a) = [y_{a}\le y\le A]\;
+  P_{a}\,u(\tau(y)\vert a)\,\left|\frac{\text{d}\tau}{\text{d}y}\right|,
+\qquad
+\left|\frac{\text{d}\tau}{\text{d}y}\right| = \frac{1}{k\,y^{1+d}}
+$${#eq-dnsF}
+
+with the remaining mass $Q_{a}$ carried by the baseline distribution of
+subjects who have never seroconverted.
+The cumulative distribution is
+
+$$
+R(y\vert a) =
+\begin{cases}
+Q_{a} + P_{a}\left(\text{e}^{-\lambda\tau(y)} - \tau(y)\,
+  \dfrac{\text{e}^{-\lambda a}}{a}\right)
+  & y_{a}\le y\le A\\[2mm]
+Q_{a} & 0\le y < y_{a}\\[1mm]
+1 & y > A
+\end{cases}
+$${#eq-prbF}
+
+The $y > A$ branch is not decoration: `prbF()` sets it explicitly
+(`if(A < y) prb_f = 1;`), and the noise models reach it.
+`dnsBM()` integrates over ranges bounded by $A+\nu$, so a run with
+biological noise evaluates $R$ above $A$ on ordinary data.
+
+Note the mass accounting, since it is easy to state incorrectly.
+@eq-bwrectime_pdf_age integrates to $1$ on $[0,a]$ **on its own**,
+so it cannot also sit alongside a separate $Q_{a}$ atom without the total
+exceeding one.
+What the engine does is scale it by $P_{a}$, as in @eq-dnsF,
+which leaves exactly $Q_{a}$ for the baseline:
+$R(y_{a}\vert a) = Q_{a}$ and $R(A\vert a) = 1$.
+
+These are `dnsF()` and `prbF()` in `src/serocalc.c`,
+which carry the comment `/* SIM equation 8 ... */` --- the correspondence to
+@Teunis_2020 is deliberate rather than incidental.
+The noise models (`dnsB`, `dnsM`, `dnsBM` and their `prb*` counterparts)
+convolve @eq-dnsF and @eq-prbF with biological and measurement noise;
+those are Equations (11), (12), (14) and (15) of the same paper,
+and `NLLFf()` itself is Equation (20).
+
+## How large is the correction? {#sec-size-of-the-correction}
+
+The term @eq-bwrectime_pdf omits is $\text{e}^{-\lambda a}/a$,
+which integrates to $\text{e}^{-\lambda a}$ over $[0,a]$.
+That is exactly the share of the backward-recurrence density it carries,
+and it is largest where this package is most often used:
+at low seroconversion rates, and in young subjects.
+
+Over the ages in `sees_pop_data_100`
+(516 subjects, median age 10.1 years, interquartile range 5.4 to 14.8):
+
+| $\lambda$ (per year) | mean share over sampled ages | share at median age |
+| --- | --- | --- |
+| 0.05 | 0.612 | 0.604 |
+| 0.10 | 0.404 | 0.364 |
+| 0.20 | 0.208 | 0.133 |
+
+So at these rates the omitted term carries between about an eighth and three
+fifths of the density,
+and between a fifth and three fifths averaged over the sampled ages.
+It is not a small-sample or edge-case correction.
+
+# True seronegative subjects in the 2012 model {#sec-true-seronegative-2012}
 
 At the time that a cross--sectional serum sample is collected, the subject whose blood is drawn may
 have never been infected in their lifetime. The antibody concentration $y$ in that sample then
@@ -224,7 +410,32 @@ $$
 When the seroconversion rate is low, or a subject is young, or both, the probability of a true
 negative may be considerable.
 
+## What the package does instead {#sec-true-seronegative-implemented}
+
+The construction above keeps the never-seroconverted subjects out of
+$\rho^{*}(y,a)$ by discarding posterior draws,
+then adds them back through a separate $P_{m}(a)\rho_{0}(y)$ term.
+The implemented model does not need either step.
+@eq-bwrectime_pdf_age is already supported on $[0,a]$,
+so no draw can place a seroconversion before the subject was born and there is
+nothing to discard;
+and @eq-prbF already reserves exactly $Q_{a} = \text{e}^{-\lambda a}$ for the
+never-seroconverted, so there is no separate weight to add.
+
+What plays the role of $\rho_{0}(y)$ is the noise model.
+Without biological noise, the $Q_{a}$ mass sits as an atom at the bottom of the
+range (`prbF()`'s `if(0 <= y) prb_f = Qa;`).
+With biological noise $\nu$ it is spread uniformly over $[0,\nu]$
+(`prbB()`'s `(zmax - zmin)*Qa/nu`), which is the "true negative" baseline
+distribution in this implementation.
+
 # Censored observations
+
+The cumulative distribution derived in this section is the $m$-shape,
+infinite-horizon one built on @eq-bwrectime_pdf.
+The implemented equivalent is @eq-prbF,
+which is what `src/serocalc.c` evaluates for a left- or right-censored
+observation.
 
 In case observations are censored at $y_{c}$ such that an observed $Y = \max(Y,y_{c})$, 
 then for

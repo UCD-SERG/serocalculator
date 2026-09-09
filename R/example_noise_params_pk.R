@@ -4,7 +4,8 @@
 #' for examples and testing, for Pakistan
 #'
 #' @format ## `example_noise_params_pk`
-#' A `curve_params` object (from [as_sr_params()]) with 4 rows and 7 columns:
+#' A `noise_params` object (from [as_noise_params()]) with 4 rows and
+#' 7 columns:
 #' \describe{
 #'   \item{antigen_iso}{which antigen and isotype are being measured
 #'   (data is in long format)}
@@ -27,7 +28,7 @@
 #'   \item{y.high}{Upper limit of detection}
 #'   \item{Lab}{Lab for which noise was estimated.}
 #' }
-#' @source <https://osf.io/rtw5k>
+#' @source <https://osf.io/hqy4v>
 "example_noise_params_pk"
 
 #' @title Small example of noise parameters for typhoid
@@ -35,8 +36,9 @@
 #' @description A subset of noise parameter estimates from the SEES study,
 #' for examples and testing.
 #'
-#' @format ## `example_noise_params_pk`
-#' A `curve_params` object (from [as_sr_params()]) with 4 rows and 7 columns:
+#' @format ## `example_noise_params_sees`
+#' A `noise_params` object (from [as_noise_params()]) with 16 rows and
+#' 7 columns:
 #' \describe{
 #'   \item{antigen_iso}{which antigen and isotype are being measured
 #'   (data is in long format)}
@@ -59,5 +61,5 @@
 #'   \item{y.high}{Upper limit of detection}
 #'   \item{Lab}{Lab for which noise was estimated.}
 #' }
-#' @source <https://osf.io/rtw5k>
+#' @source <https://osf.io/hqy4v>
 "example_noise_params_sees"

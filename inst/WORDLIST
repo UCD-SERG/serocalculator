@@ -74,6 +74,7 @@ cdot
 citable
 codecov
 colour
+convolve
 csv
 dderiv
 deriv
@@ -102,6 +103,7 @@ geoms
 ggplot
 ggproto
 gh
+gha
 gha's
 hSEf
 hVar
@@ -201,6 +203,7 @@ toxoid
 tsutsugamushi
 undercount
 unstratified
+unversioned
 varepsilon
 vec
 vee

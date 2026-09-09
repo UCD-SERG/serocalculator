@@ -1,5 +1,54 @@
 # serocalculator (development version)
 
+## Documentation
+
+* The methodology article's dormant "Backward recurrence time" derivation
+  (`vignettes/methodology/_methods-continued.qmd`) now says which model it
+  describes.
+  It derived the infinite-horizon density of Teunis et al. (2012), which
+  `seroincidence` 1.x implemented and this package does not, and presented it
+  as what `est_seroincidence()` computes.
+  The page now also derives the age-corrected density of Teunis and van
+  Eijkeren (2020) that `src/serocalc.c` actually evaluates, states the
+  implementation's mass accounting, and notes that the engine is Poisson-only
+  and uses a decay-only power-law seroresponse curve.
+  The omitted correction term carries between roughly a fifth and three fifths
+  of the backward-recurrence density at the incidence rates these data produce.
+  (#679)
+
+* The enteric fever article's "Load data" paragraph no longer promises to pull
+  data from OSF while the code below it loads bundled objects. (#680)
+
+* The enteric fever article reads its cross-sectional data and noise parameters
+  from the vendored OSF snapshots in `vignettes/precomputed/osf/`, restoring the
+  inputs the published v1.4.1 build used, and shows the equivalent OSF download
+  for each in a chunk that is shown but not run, so that route stays documented
+  (#142, #680).
+  The curve parameters are not yet restored: `typhoid_curves_nostrat_100` is a
+  100-draw subset of the OSF object the published build read in full, which the
+  article now says explicitly (#682).
+  Note that the article's rendered estimates change materially as a result:
+  it now fits 1725 subjects across 3336 rows rather than 516 across 1000, so
+  every incidence figure in its Conclusions moves.
+  No package behaviour changes --- this is the article's inputs, not the
+  estimator.
+
+* The docs site redirects unversioned `/reference/...`, `/articles/...` and
+  `/news/...` paths, and the retired `/main/...` paths, to their `/v1.4.1/`
+  counterparts, so links published before the altdoc migration resolve again.
+  The target is the frozen archive rather than `/latest-tag/` because only an
+  archive keeps the pkgdown path shape those links were written against;
+  `/latest-tag/` is rebuilt with altdoc on every release.
+  `.github/MULTI_VERSION_DOCS.md` explains which URL to cite in print
+  (a `/vX.Y.Z/` one). (#681)
+
+* The docs site root now redirects to `/latest-tag/` rather than to whichever
+  version was deployed most recently, so a reader arriving from CRAN, a
+  citation, or a search result lands on the released documentation instead of
+  on `/dev/`.
+  This needs `root-landing-target`, added upstream in
+  [Morrison-Lab/gha#847](https://github.com/Morrison-Lab/gha/pull/847). (#681)
+
 ## New features
 
 * `log_likelihood()`, `est_seroincidence()` and `est_seroincidence_by()`
@@ -24,6 +73,41 @@
   the two on simulated data with known incidence. (#646)
 
 ## Bug fixes
+
+* `?example_noise_params_sees` and `?example_noise_params_pk` now name the
+  right class and row counts.
+  Both `@format` sections called them `curve_params` objects built by
+  `as_sr_params()`; they are `noise_params` objects built by
+  `as_noise_params()`.
+  The `example_noise_params_sees` section additionally carried
+  `example_noise_params_pk`'s heading and its row count, so a 16-row dataset
+  was documented as having 4 rows. (#680)
+
+* The enteric fever article names the density that its 100-draw estimate
+  coarsely approximates, and writes it `\operatorname{p}(y)` rather than
+  `\rho(y)`.
+  The article is an `.Rmd`, so it cannot include the `macros` submodule that
+  `vignettes/methodology.qmd` pulls in, and `\dens` would not resolve there;
+  `\operatorname{p}` is what that macro expands to. (#680)
+
+* `example_noise_params_sees` and `example_noise_params_pk` now match the OSF
+  file they are generated from.
+  `data-raw/example_noise_params_pk.R` builds both by downloading `hqy4v`, but
+  the shipped `.rda` files came from an earlier state of it, so `y.high` read
+  `5e+06` where the OSF file reads `1000`.
+  Every other value already agreed.
+  No estimate changes for any data the package ships or vendors: `y.high` is
+  the upper limit of detection, and it decides only which observations are
+  right-censored.
+  The largest measured antibody concentration is about `135` under `data/` and
+  about `219` in the cross-sectional data the enteric fever article vendors, so
+  nothing is censored under either value.
+  A user's own reading above `1000` would be censored where it previously was
+  not.
+  `inst/extdata/example_noise_params.csv` and its `.rds` counterpart are
+  regenerated to match: they hold the same four Pakistan rows, agreeing with
+  `example_noise_params_pk` on every other column, so all three copies of these
+  parameters now carry the same `y.high`. (#680)
 
 * `method = "joint"` now refuses a `curve_params` that carries an `iter`
   column for some biomarkers but not others.

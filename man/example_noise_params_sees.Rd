@@ -5,9 +5,10 @@
 \alias{example_noise_params_sees}
 \title{Small example of noise parameters for typhoid}
 \format{
-\subsection{\code{example_noise_params_pk}}{
+\subsection{\code{example_noise_params_sees}}{
 
-A \code{curve_params} object (from \code{\link[=as_sr_params]{as_sr_params()}}) with 4 rows and 7 columns:
+A \code{noise_params} object (from \code{\link[=as_noise_params]{as_noise_params()}}) with 16 rows and
+7 columns:
 \describe{
 \item{antigen_iso}{which antigen and isotype are being measured
 (data is in long format)}
@@ -33,7 +34,7 @@ in a population with no exposure.}
 }
 }
 \source{
-\url{https://osf.io/rtw5k}
+\url{https://osf.io/hqy4v}
 }
 \usage{
 example_noise_params_sees

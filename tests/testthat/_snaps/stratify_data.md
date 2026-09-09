@@ -41,10 +41,10 @@
       
       $noise_params
       # A tibble: 2 x 5
-           nu   eps y.low  y.high antigen_iso
-        <dbl> <dbl> <dbl>   <dbl> <chr>      
-      1  2.60 0.279 0.508 5000000 HlyE_IgA   
-      2  2.36 0.146 1.59  5000000 HlyE_IgG   
+           nu   eps y.low y.high antigen_iso
+        <dbl> <dbl> <dbl>  <dbl> <chr>      
+      1  2.60 0.279 0.508   1000 HlyE_IgA   
+      2  2.36 0.146 1.59    1000 HlyE_IgG   
       
       attr(,"class")
       [1] "biomarker_data_and_params" "list"                     
@@ -87,10 +87,10 @@
       
       $noise_params
       # A tibble: 2 x 5
-           nu   eps y.low  y.high antigen_iso
-        <dbl> <dbl> <dbl>   <dbl> <chr>      
-      1  2.60 0.279 0.508 5000000 HlyE_IgA   
-      2  2.36 0.146 1.59  5000000 HlyE_IgG   
+           nu   eps y.low y.high antigen_iso
+        <dbl> <dbl> <dbl>  <dbl> <chr>      
+      1  2.60 0.279 0.508   1000 HlyE_IgA   
+      2  2.36 0.146 1.59    1000 HlyE_IgG   
       
       attr(,"class")
       [1] "biomarker_data_and_params" "list"                     

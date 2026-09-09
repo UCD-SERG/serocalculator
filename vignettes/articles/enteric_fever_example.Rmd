@@ -103,7 +103,8 @@ curves <-
 (see `data-raw/typhoid_curves_nostrat_100.R`),
 so the estimates below average over 100 posterior draws rather than the full
 posterior.
-That is a coarser Monte Carlo approximation of $\rho(y)$ than the published
+That is a coarser Monte Carlo approximation of the marginal
+antibody-concentration density $\operatorname{p}(y)$ than the published
 v1.4.1 build used,
 so the estimates below differ from that build's even where the other two
 inputs now match it.
@@ -252,16 +253,9 @@ To download the same parameters from OSF instead:
 noise <- load_noise_params("https://osf.io/download/hqy4v/")
 ```
 
-The package's own `example_noise_params_sees` is an earlier snapshot of this
-object.
-The two are identical except for `y.high`, the upper limit of quantification,
-which reads `1000` in the vendored snapshot and `5e+06` in the package data.
-`y.high` decides which observations are right-censored in the likelihood,
-so the difference would matter if any observation reached either bound.
-None does: the largest antibody concentration anywhere in this cross-sectional
-dataset is about 219,
-so no observation is right-censored under either value and the likelihood is
-the same either way.
+The package's own `example_noise_params_sees` is the same object:
+`data-raw/example_noise_params_pk.R` builds it by downloading `hqy4v` from OSF,
+so either source gives the same noise model.
 
 ## Estimate Seroincidence 
 Now we are ready to begin estimating seroincidence. We will conduct two separate analyses using two distinct functions, `est.incidence` and `est.incidence.by`, to calculate the overall seroincidence and the stratified seroincidence, respectively.

@@ -27,7 +27,7 @@
 #'   \item{y.high}{Upper limit of detection}
 #'   \item{Lab}{Lab for which noise was estimated.}
 #' }
-#' @source <https://osf.io/rtw5k>
+#' @source <https://osf.io/hqy4v>
 "example_noise_params_pk"
 
 #' @title Small example of noise parameters for typhoid
@@ -59,5 +59,5 @@
 #'   \item{y.high}{Upper limit of detection}
 #'   \item{Lab}{Lab for which noise was estimated.}
 #' }
-#' @source <https://osf.io/rtw5k>
+#' @source <https://osf.io/hqy4v>
 "example_noise_params_sees"

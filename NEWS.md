@@ -80,6 +80,20 @@
 
 ## Bug fixes
 
+* `example_noise_params_sees` and `example_noise_params_pk` now match the OSF
+  file they are generated from.
+  `data-raw/example_noise_params_pk.R` builds both by downloading `hqy4v`, but
+  the shipped `.rda` files came from an earlier state of it, so `y.high` read
+  `5e+06` where the OSF file reads `1000`.
+  Every other value already agreed.
+  No estimate changes: `y.high` is the upper limit of quantification and
+  reaches the likelihood only through the right-censoring branch, and the
+  largest antibody concentration under `data/` is about `135`
+  (about `219` in the cross-sectional data the enteric fever article vendors),
+  so nothing is censored under either value.
+  `inst/extdata/example_noise_params.csv` is unchanged; it is a hand-maintained
+  example file, not a copy of the OSF release. (#680)
+
 * `method = "joint"` now refuses a `curve_params` that carries an `iter`
   column for some biomarkers but not others.
   Draws are paired by `iter` when every biomarker has it and by position

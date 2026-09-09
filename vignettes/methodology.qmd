@@ -453,27 +453,6 @@ The distribution of $T$ is truncated by the patient's birth date;
 the probability that they have never been infected is
 $\expf{-\lambda a}$,
 where $a$ is the patient's age at the time of the survey.
-
-One caveat about how the C likelihood realizes this distribution of $T$.
-@prp-time-since-infection is the backward recurrence time of the constant-rate
-process itself.
-`src/serocalc.c` instead evaluates the age-corrected density of
-@Teunis_2020 (their Equation 4),
-which spreads an extra $\expf{-\lambda a}/a$ uniformly across $[0,a]$ and
-scales the whole density by $1-\expf{-\lambda a}$,
-leaving exactly $\expf{-\lambda a}$ for the never-infected:
-
-$$
-\dens(T=t \mid A=a) =
-1_{t\in[0,a]}\left(1-\expf{-\lambda a}\right)
-\left(\lambda\expf{-\lambda t} + \frac{\expf{-\lambda a}}{a}\right)
-+ 1_{t=\NA}\,\expf{-\lambda a}
-$$
-
-Both forms put mass $\expf{-\lambda a}$ on "never infected",
-so the never-infected weight used throughout the rest of this article is the
-same either way.
-They differ in how the remaining mass is distributed over $[0,a]$.
 :::
 
 ## Maximum likelihood estimation {.smaller}

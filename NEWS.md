@@ -16,12 +16,6 @@
   of the backward-recurrence density at the incidence rates these data produce.
   (#679)
 
-* The methodology article now records that `src/serocalc.c` realizes the time-
-  since-infection distribution as the age-corrected 2020 density rather than as
-  the truncated exponential stated in `@prp-time-since-infection`.
-  Both put the same mass on "never infected"; they distribute the remainder
-  over `[0, a]` differently. (#679)
-
 * The enteric fever article's "Load data" paragraph no longer promises to pull
   data from OSF while the code below it loads bundled objects. (#680)
 

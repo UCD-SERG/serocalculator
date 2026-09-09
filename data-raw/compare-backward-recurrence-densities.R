@@ -9,6 +9,9 @@
 # Backs the measurements reported in
 # <https://github.com/UCD-SERG/serocalculator/issues/687>.
 #
+# Requires `withr` (already in Suggests) for `with_seed()`, which runs the
+# simulations reproducibly without leaving the caller's RNG stream altered.
+#
 # Both densities defined below are conditional on having seroconverted at
 # least once. The never-infected branch has mass exp(-lambda * age) under
 # both forms, so it says nothing about which is right; the whole
@@ -142,31 +145,6 @@ simulators <- list(
 )
 
 
-# ---- seeding without clobbering the caller's stream ------------------
-
-# `set.seed()` alone would overwrite the caller's RNG state, which the
-# lab's restore-global-state rule forbids. `withr::local_seed()` does
-# this too, but `withr` is only in Suggests, so this stays base-only and
-# runnable wherever the script is sourced.
-with_seed <- function(seed, code) {
-  had_seed <- exists(".Random.seed", envir = globalenv())
-  if (had_seed) {
-    old_seed <- get(".Random.seed", envir = globalenv())
-    on.exit(
-      assign(".Random.seed", old_seed, envir = globalenv()),
-      add = TRUE
-    )
-  } else {
-    on.exit(
-      suppressWarnings(rm(".Random.seed", envir = globalenv())),
-      add = TRUE
-    )
-  }
-  set.seed(seed)
-  code
-}
-
-
 # ---- estimation ------------------------------------------------------
 
 # Negative log-likelihood for directly observed times since infection.
@@ -227,7 +205,7 @@ compare_densities <- function(lambda = 0.1,
                               n_draws = 4e5,
                               bin_width = 1,
                               seed = 1) {
-  with_seed(seed, {
+  withr::with_seed(seed, {
     times <- vapply(
       seq_len(n_draws),
       function(i) sim_from_birth(lambda, age),
@@ -260,7 +238,7 @@ compare_fits <- function(ages,
                          lambdas = c(0.05, 0.1, 0.2, 0.5),
                          n_copies = 40,
                          seed = 2) {
-  with_seed(seed, {
+  withr::with_seed(seed, {
     pooled_ages <- rep(ages, n_copies)
     rows <- lapply(lambdas, function(lambda) {
       lapply(names(simulators), function(generator) {

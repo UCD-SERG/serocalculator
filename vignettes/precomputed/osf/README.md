@@ -95,26 +95,38 @@ Both have been regenerated to match, and this snapshot preserves whatever
 
 Regenerating changed no result,
 which is worth recording so the next reader does not have to re-derive it.
-`y.high` is the upper limit of detection,
-and both likelihood implementations read it only to decide censoring:
-`src/serocalc.c` in its uncensored guard (`yLo < y && y < yHi`) and its
-`yHi <= y` right-censoring branch,
-and `src/serocalc_joint.c` where `y >= yHi` sets `JOINT_RIGHT_CENSORED`.
-Its value enters a density only on that censored branch, where `prbB()` and
-`prbF()` are evaluated at `yHi` itself (`src/serocalc.c:57`, `:104`).
-The largest antibody concentration in any dataset the package ships or
-vendors is about `219` (in `n6cp3.rds`; the largest in `data/` is `135`),
+`y.high` is the upper limit of detection.
+Both likelihood implementations use it first to *classify* an observation:
+`src/serocalc.c` in its uncensored guard (`yLo < y && y < yHi`, `:24`, `:71`)
+and its `yHi <= y` right-censoring branch (`:54`, `:101`),
+and `src/serocalc_joint.c` where `y >= yHi` sets `JOINT_RIGHT_CENSORED`
+(`:201`).
+Then, on the censored branch only, its value is passed into the term being
+evaluated: the probability functions `prbB()` and `prbF()` are evaluated at
+`yHi` itself (`src/serocalc.c:57`, `:104` --- these are probability functions
+rather than densities, per the source's own comments at `:130` and `:157`),
+and in the joint engine `yHi` reaches `cond_term()` (`:210`, `:245`) and
+`ystar_support()` (`:224`).
+So an observation below the bound never sees the value at all.
+The largest *measured* antibody concentration in any dataset the package ships
+or vendors is about `219` (in `n6cp3.rds`; the largest in `data/` is `135`),
 so no observation reaches `1000`, let alone `5e+06`:
 under either value no observation is right-censored and the likelihood is
 identical.
+Note this is a claim about measurements, not about every number in `data/` ---
+`typhoid_curves_nostrat_100`'s `y1` (a fitted curve parameter, not an
+observation) runs far higher, and censoring never compares against it.
 Which value `hqy4v` *should* carry is a separate question for whoever owns
 the OSF data, tracked in
 [issue #684](https://github.com/UCD-SERG/serocalculator/issues/684).
 `inst/extdata/example_noise_params.csv` and `inst/extdata/example_noise_params.rds`
-are deliberately left at `5e+06`.
-They are hand-maintained example files with no OSF download script behind them
-(unlike `example_pop_data.csv`/`.rds`, which `data-raw/` does write),
-and they match the `y.high = 5e6` convention the package's own function
-examples use to mean "no upper censoring".
-So two copies of these values remain at `5e+06` after this change, both of
-them example fixtures rather than mirrors of the OSF release.
+are regenerated to match, so no copy of these parameters is left behind.
+They are not independent fixtures: they hold the same four Pakistan rows as
+`example_noise_params_pk` and agree with it to fifteen significant figures on
+every column except `y.high`, and the `.csv` still carries the row-index column
+`write.csv()` left in it, so they are a stale export of the same OSF-derived
+subset rather than hand-authored data.
+No `data-raw/` script writes them (unlike `example_pop_data.csv`/`.rds`, which
+`data-raw/sees_pop_data_pakistan_100.R` does), which is why they had drifted.
+The `.csv` writes the value as `1000.0` so it still parses as a double;
+a bare `1000` reads back as an integer and changes the column's type.

@@ -48,8 +48,29 @@ llik <- function(...) {
 #' * `y.high`: upper limit of detection for the current antigen isotype
 #'
 #' @param verbose logical: if TRUE, print verbose log information to console
-#' @param ... additional arguments passed to other functions
-#' (not currently used).
+#' @param method how to combine several biomarkers into one likelihood:
+#' * `"composite"` (the default) sums the per-biomarker marginal
+#' log-likelihoods, giving each biomarker its own latent infection time.
+#' This is an independence (composite) likelihood: its point estimate is
+#' consistent, but its naive standard error assumes biomarker readings from
+#' the same person are independent --- see `cluster_var` in
+#' [est_seroincidence()] for the correction.
+#' * `"joint"` integrates once per subject over a **shared** latent
+#' infection time, with the per-biomarker densities multiplied inside the
+#' integral (conditional independence *given* the time since infection).
+#' This is the model the methodology article describes. It needs
+#' `pop_data` to identify subjects (see [ids_varname()]) so that each
+#' person's readings can be paired, a noise model (`nu > 0` or `eps > 0`)
+#' for every biomarker, and the same posterior draws (`iter`) for every
+#' biomarker, so that a person's biomarkers are evaluated under one
+#' coherent draw.
+#'
+#' With a single biomarker the two methods coincide.
+#' See issues
+#' [#637](https://github.com/UCD-SERG/serocalculator/issues/637) and
+#' [#646](https://github.com/UCD-SERG/serocalculator/issues/646).
+#' @param ... additional arguments passed to [f_dev_joint()] when
+#' `method = "joint"` (`id_var`, `n_t_steps`); otherwise unused.
 #' @inheritParams f_dev
 #' @return the log-likelihood of the data with the current parameter values
 #' @export
@@ -84,14 +105,40 @@ llik <- function(...) {
 #'   lambda = 0.1
 #' ) %>% print()
 #'
+#' # The same data under the shared-latent-time (joint) likelihood
+#' ll_joint <- log_likelihood(
+#'   pop_data = xs_data,
+#'   curve_params = curve,
+#'   noise_params = cond,
+#'   antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+#'   lambda = 0.1,
+#'   method = "joint"
+#' ) %>% print()
+#'
 log_likelihood <- function(
-    lambda,
-    pop_data,
-    curve_params,
-    noise_params,
-    antigen_isos = get_biomarker_levels(pop_data),
-    verbose = FALSE,
-    ...) {
+  lambda,
+  pop_data,
+  curve_params,
+  noise_params,
+  antigen_isos = get_biomarker_levels(pop_data),
+  verbose = FALSE,
+  method = c("composite", "joint"),
+  ...
+) {
+  method <- rlang::arg_match(method)
+
+  if (method == "joint" && length(antigen_isos) > 1) {
+    nll_joint <- f_dev_joint(
+      lambda = lambda,
+      pop_data = pop_data,
+      curve_params = curve_params,
+      noise_params = noise_params,
+      antigen_isos = antigen_isos,
+      ...
+    )
+    return(-nll_joint)
+  }
+
   # Start with zero total
   nll_total <- 0
 
@@ -106,20 +153,20 @@ log_likelihood <- function(
       cur_noise_params <- noise_params[[cur_antibody]]
     } else {
       cur_data <-
-        pop_data %>%
+        pop_data |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_curve_params <-
-        curve_params %>%
+        curve_params |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       cur_noise_params <-
-        noise_params %>%
+        noise_params |>
         dplyr::filter(.data$antigen_iso == cur_antibody)
 
       if (!is.element("d", names(cur_curve_params))) {
         cur_curve_params <-
-          cur_curve_params %>%
+          cur_curve_params |>
           dplyr::mutate(
             alpha = .data$alpha * 365.25,
             d = .data$r - 1
@@ -135,10 +182,11 @@ log_likelihood <- function(
         cond = cur_noise_params
       )
 
-    # if (!is.na(nllSingle))  # not meaningful for vectorized f_dev()
     nll_total <- nll_total + nll_single
-    # note: summing log likelihoods represents an independence assumption
-    # for multiple Antibodies, given time since seroconversion
+    # note: summing log likelihoods treats the biomarkers as independent,
+    # each with its own latent time since seroconversion (a composite
+    # likelihood; see #637). The joint method above integrates over a
+    # shared latent time instead.
 
   }
 

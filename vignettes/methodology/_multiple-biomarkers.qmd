@@ -1,74 +1,117 @@
 A serosurvey usually measures more than one antigen-isotype per participant.
-The current model treats biomarkers as **conditionally independent given the
-time since infection**, so their response densities multiply *inside* each
-person's integral over $t$:
+The model treats biomarkers as **conditionally independent given the time since infection**, so their response densities multiply *inside* each person's integral over $t$:
 
 $$
 \dens(Y_1=y_1, Y_2=y_2) =
 \int_t \dens(Y_1=y_1|T=t)\,\dens(Y_2=y_2|T=t)\,\dens_\lambda(T=t)\, dt
 $$
 
-Note that this is **not** the product of the two single-biomarker
-likelihoods: the shared latent infection time $t$ couples them.
+Note that this is **not** the product of the two single-biomarker likelihoods: the shared latent infection time $t$ couples them.
 
-`log_likelihood()` evaluates the log-likelihood at a given $\lambda$, which
-lets us check that claim numerically:
+`serocalculator` offers two ways of combining biomarkers, selected by the `method` argument of `log_likelihood()`, `est_seroincidence()` and `est_seroincidence_by()`:
+
+* `method = "composite"` (the default) evaluates the likelihood of each biomarker separately and **sums the log-likelihoods**.
+  That is the product of the marginals, which treats the biomarkers as independent *unconditionally*, each with its own latent infection time.
+  In the composite-likelihood literature this is an *independence likelihood* [@varin2011overview]: its point estimate is consistent, but its naive standard error assumes the biomarker readings are independent.
+* `method = "joint"` evaluates the formula above: one integral per person over a **shared** $t$, with the per-biomarker densities multiplied inside it.
+  This needs the data to identify people (`ids_varname()`), so that each person's readings can be paired, and it pairs the posterior draws of the curve parameters across biomarkers too, so that a person's biomarkers are evaluated under one coherent draw.
+
+`log_likelihood()` evaluates the log-likelihood at a given $\lambda$, which lets us see the difference numerically.
+First, the default:
 
 ```{r}
 #| label: loglik-multi-biomarker
+xs_pk <- xs_data |> filter(Country == "Pakistan")
+noise_pk <- noise |> filter(Country == "Pakistan")
+
 ll_iga <- log_likelihood(
-  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  pop_data = xs_pk, curve_params = curves, noise_params = noise_pk,
   antigen_isos = "HlyE_IgA", lambda = 0.1
 )
 
 ll_igg <- log_likelihood(
-  pop_data = xs_data, curve_params = curves, noise_params = noise,
+  pop_data = xs_pk, curve_params = curves, noise_params = noise_pk,
   antigen_isos = "HlyE_IgG", lambda = 0.1
 )
 
-ll_both <- log_likelihood(
-  pop_data = xs_data, curve_params = curves, noise_params = noise,
+ll_composite <- log_likelihood(
+  pop_data = xs_pk, curve_params = curves, noise_params = noise_pk,
   antigen_isos = c("HlyE_IgG", "HlyE_IgA"), lambda = 0.1
 )
 
-c(IgA = ll_iga, IgG = ll_igg, sum = ll_iga + ll_igg, joint = ll_both)
+c(IgA = ll_iga, IgG = ll_igg, sum = ll_iga + ll_igg, composite = ll_composite)
 ```
 
-The two-biomarker value is **exactly** the sum of the separate ones. That is
-worth pausing on, because the formula above says it should not be: one
-integral over a shared $t$ does not factor into two separate integrals.
+The two-biomarker value is **exactly** the sum of the separate ones, as summing log-likelihoods must give.
+Under the shared-latent-time model it is not:
 
-What it tells us is that `log_likelihood()` currently combines biomarkers by
-summing their individual log-likelihoods, which is the stronger assumption
-that the biomarkers are independent *unconditionally*, each with its own
-latent infection time. `est_seroincidence()` optimizes through the same code
-path, so this is the estimation model rather than a quirk of this one
-function.
+```{r}
+#| label: loglik-multi-biomarker-joint
+ll_joint <- log_likelihood(
+  pop_data = xs_pk, curve_params = curves, noise_params = noise_pk,
+  antigen_isos = c("HlyE_IgG", "HlyE_IgA"), lambda = 0.1,
+  method = "joint"
+)
 
-Whether the formula or the implementation should change is
-[an open question](https://github.com/UCD-SERG/serocalculator/issues/637).
-Until it is settled, read a multi-biomarker standard error as assuming
-independence across biomarkers.
+c(sum = ll_iga + ll_igg, joint = ll_joint)
+```
 
 ::: notes
-`R/log_likelihood.R` loops over `antigen_isos`, calls `f_dev()` once per
-biomarker, and adds the results, with a source comment naming the
-independence assumption. Summing log-likelihoods is the log of the product of
-the marginals.
+`R/log_likelihood.R` loops over `antigen_isos`, calls `f_dev()` once per biomarker, and adds the results;
+`method = "joint"` instead hands all of a person's readings to `f_dev_joint()`, which integrates once over $t$ in C (`src/serocalc_joint.c`).
+With a single biomarker the two agree, up to numerical integration.
 
-(@sec-multivariate describes work in progress to relax conditional
-independence *given* $t$; the question above is whether the current code
-implements even that much.)
+(@sec-multivariate describes work in progress to relax conditional independence *given* $t$;
+`method = "joint"` is the model that work generalizes, and `method = "composite"` is a different, stronger, independence assumption.)
 :::
 
-Using both biomarkers concentrates the log-likelihood around its maximum,
-and so shrinks the standard error, relative to either biomarker alone
-(@fig-loglik):
+{{< slidebreak >}}
+
+The two likelihoods call for different standard errors.
+The joint likelihood is a genuine likelihood, so the Hessian-based standard error of @sec-standard-errors applies to it directly.
+The composite likelihood's Hessian understates the variance whenever one person's biomarker readings are correlated (they respond to the same infection), and the fix is the cluster-robust estimator of @sec-cluster-robust with the *person* as the cluster, `cluster_var = ids_varname(pop_data)`.
+On the Pakistan data, the two agree closely once the composite standard error is corrected:
+
+```{r}
+#| label: tbl-joint-vs-composite-sees
+#| tbl-cap: >
+#|   Incidence estimates for the Pakistan SEES data, combining HlyE IgA and
+#|   IgG under the composite likelihood (with the naive and the
+#|   person-clustered standard error) and under the joint likelihood.
+fit_pk <- function(...) {
+  est_seroincidence(
+    pop_data = xs_pk,
+    sr_params = curves,
+    noise_params = noise_pk,
+    antigen_isos = c("HlyE_IgG", "HlyE_IgA"),
+    ...
+  ) |>
+    summary(verbose = FALSE) |>
+    select(incidence.rate, SE, CI.lwr, CI.upr, log.lik)
+}
+
+bind_rows(
+  "composite, naive SE" = fit_pk(),
+  "composite, person-clustered SE" = fit_pk(cluster_var = ids_varname(xs_pk)),
+  "joint" = fit_pk(method = "joint"),
+  .id = "estimator"
+)
+```
+
+::: notes
+The joint estimate is a little higher and its log-likelihood is much higher, but the latter is not a like-for-like comparison: the two methods evaluate different functions of the data.
+Which one is *better* has to be settled on data where the truth is known;
+@sec-joint-vs-composite-sim does that on the simulated clusters, and the answer is not simply "the joint one".
+:::
+
+{{< slidebreak >}}
+
+Using both biomarkers concentrates the log-likelihood around its maximum, and so shrinks the standard error, relative to either biomarker alone (@fig-loglik):
 
 ```{r}
 #| fig-cap: >
 #|   Log-likelihood curves for HlyE IgA alone, HlyE IgG alone, and both
-#|   biomarkers combined.
+#|   biomarkers combined (composite likelihood).
 #| label: fig-loglik
 lik_HlyE_IgA <- graph_loglik( # nolint: object_name_linter.
   pop_data = xs_data,

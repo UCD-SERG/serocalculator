@@ -4,6 +4,12 @@
 #' to prepare for stratified incidence estimation.
 #' @param strata_varnames [character()]
 #' vector of names of variables in `data` to stratify by
+#' @param id_var optional name of the column in `data` identifying
+#' subjects. When supplied (as [est_seroincidence_by()] does for
+#' `method = "joint"`), it is kept in each stratum's `pop_data`, and the
+#' `iter` and `chain` columns of `curve_params` (if any) are kept in each
+#' stratum's `sr_params`, so that the joint likelihood can pair a person's
+#' biomarker readings and pair posterior draws across biomarkers.
 #' @inheritParams est.incidence.by
 #'
 #' @returns a `"biomarker_data_and_params.list"` object
@@ -42,10 +48,16 @@ stratify_data <- function(data,
                           noise_strata_varnames = NULL,
                           antigen_isos = get_biomarker_levels(data),
                           cluster_var = NULL,
-                          stratum_var = NULL) {
+                          stratum_var = NULL,
+                          id_var = NULL) {
   curve_params <-
     curve_params |>
     filter(.data[["antigen_iso"]] %in% antigen_isos)
+
+  sr_param_cols <- curve_param_names
+  if (!is.null(id_var)) {
+    sr_param_cols <- c(sr_param_cols, "iter", "chain")
+  }
 
   noise_params <-
     noise_params |>
@@ -69,14 +81,17 @@ stratify_data <- function(data,
     if (!is.null(stratum_var)) {
       cols_to_keep <- c(cols_to_keep, stratum_var)
     }
-    
+    if (!is.null(id_var)) {
+      cols_to_keep <- c(cols_to_keep, id_var)
+    }
+
     pop_data <-
-      data |> select(all_of(cols_to_keep))
+      data |> select(all_of(unique(cols_to_keep)))
 
     all_data <-
       list(
         pop_data = pop_data,
-        sr_params = curve_params |> select(all_of(curve_param_names)),
+        sr_params = curve_params |> select(any_of(sr_param_cols)),
         noise_params = noise_params |> select(all_of(noise_param_names)),
         antigen_isos = antigen_isos |> intersect(data |> get_biomarker_names())
       ) |>
@@ -130,11 +145,14 @@ stratify_data <- function(data,
     if (!is.null(stratum_var)) {
       cols_to_keep <- c(cols_to_keep, stratum_var)
     }
-    
+    if (!is.null(id_var)) {
+      cols_to_keep <- c(cols_to_keep, id_var)
+    }
+
     pop_data_cur_stratum <-
       data |>
       semi_join(cur_stratum_vals, by = strata_varnames) |>
-      select(all_of(cols_to_keep))
+      select(all_of(unique(cols_to_keep)))
 
     antigen_isos_cur_stratum <-
       intersect(antigen_isos,
@@ -146,12 +164,12 @@ stratify_data <- function(data,
 
     if (length(strata_vars_curve_params) == 0) {
       data_and_params_cur_stratum$sr_params <-
-        curve_params |> select(all_of(curve_param_names))
+        curve_params |> select(any_of(sr_param_cols))
     } else {
       data_and_params_cur_stratum$sr_params <-
         curve_params |>
         semi_join(cur_stratum_vals, by = strata_vars_curve_params) |>
-        select(all_of(curve_param_names))
+        select(any_of(sr_param_cols))
     }
 
     if (length(strata_vars_noise_params) == 0) {

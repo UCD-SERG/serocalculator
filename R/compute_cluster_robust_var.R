@@ -14,14 +14,23 @@
 #' @keywords internal
 #' @noRd
 .compute_cluster_robust_var <- function(
-    fit,
-    cluster_var,
-    stratum_var = NULL) {
+  fit,
+  cluster_var,
+  stratum_var = NULL
+) {
   # Extract stored data (already split by antigen_iso)
   pop_data_list <- attr(fit, "pop_data")
   sr_params_list <- attr(fit, "sr_params")
   noise_params_list <- attr(fit, "noise_params")
   antigen_isos <- attr(fit, "antigen_isos")
+  method <- attr(fit, "method")
+  if (is.null(method)) method <- "composite"
+  id_var <- attr(fit, "id_var")
+  # Recomputing the score under a different quadrature from the one the
+  # fit was optimized under would build the sandwich's middle matrix from
+  # a different objective than its Hessian. NULL means the fit used the
+  # default, so omitting the argument reproduces it.
+  n_t_steps <- attr(fit, "n_t_steps")
 
   # Get MLE estimate
   log_lambda_mle <- fit$estimate
@@ -81,23 +90,28 @@
     }
 
     # Compute log-likelihood for this cluster at MLE
-    ll_cluster_mle <- -(.nll(
-      log.lambda = log_lambda_mle,
+    nll_args <- list(
       pop_data = pop_data_cluster_list,
       antigen_isos = antigen_isos,
       curve_params = sr_params_list,
       noise_params = noise_params_list,
-      verbose = FALSE
+      verbose = FALSE,
+      method = method,
+      id_var = id_var
+    )
+    if (!is.null(n_t_steps)) {
+      nll_args$n_t_steps <- n_t_steps
+    }
+
+    ll_cluster_mle <- -(do.call(
+      .nll,
+      c(list(log.lambda = log_lambda_mle), nll_args)
     ))
 
     # Compute log-likelihood at MLE + epsilon
-    ll_cluster_plus <- -(.nll(
-      log.lambda = log_lambda_mle + epsilon,
-      pop_data = pop_data_cluster_list,
-      antigen_isos = antigen_isos,
-      curve_params = sr_params_list,
-      noise_params = noise_params_list,
-      verbose = FALSE
+    ll_cluster_plus <- -(do.call(
+      .nll,
+      c(list(log.lambda = log_lambda_mle + epsilon), nll_args)
     ))
 
     # Numerical derivative (score for this cluster)

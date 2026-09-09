@@ -72,8 +72,8 @@ combinations
 
 \item{verbose}{logical: if TRUE, print verbose log information to console}
 
-\item{...}{additional arguments passed to other functions
-(not currently used).}
+\item{...}{unused; accepted so that this function can stand in for
+\code{\link[=sim_pop_data]{sim_pop_data()}} as \code{\link[=sim_pop_data_multi]{sim_pop_data_multi()}}'s \code{sim_function} argument.}
 }
 \value{
 a \link[tibble:tbl_df]{tibble::tbl_df} containing simulated cross-sectional serosurvey

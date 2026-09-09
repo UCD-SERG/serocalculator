@@ -8,6 +8,13 @@ ests <- est_seroincidence_by_cached(
   curve_strata_varnames = NULL,
   noise_strata_varnames = NULL,
   antigen_isos = antibodies,
+  # The composite likelihood treats each biomarker reading as its own
+  # observation, so its naive standard error understates the variance
+  # whenever one person's readings are correlated (@sec-multiple-biomarkers).
+  # Clustering by person is what makes the intervals below, and the
+  # comparison in @sec-joint-vs-composite-sim, valid. It leaves the point
+  # estimates untouched -- only the variance changes.
+  cluster_var = ids_varname(sim_df),
   # build_graph = TRUE attaches a log-likelihood plot to every stratum's
   # fit, which grows large across many strata; re-fit individual curves on
   # demand instead (see below).

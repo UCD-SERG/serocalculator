@@ -57,24 +57,25 @@ full list). Slash commands are available for the common ones:
 
 ## Code review runs on request only
 
-There is no automatic review on this repository's pull requests.
+No review runs automatically on this repository's pull requests.
 Opening or pushing to a PR starts nothing,
-and no `review / claude-review` check run appears for it.
-
-To get a review, comment `/review` on the PR.
-The command must start the comment body,
-and the commenter must be an `OWNER`, `MEMBER`, or `COLLABORATOR`.
-Mentioning `@claude` does nothing while the agent is off.
-
-This matters most for an agent following the lab's standing instruction
-to drive a PR to a clean review verdict: waiting for one here never terminates,
-because nothing in the check-run list announces that the review is absent
+and no `review / claude-review` check run appears for it --
+so an agent told to wait for a clean review verdict waits forever,
+with nothing in the check-run list to show the review is absent
 rather than pending.
-Post the `/review` comment instead of polling.
 
-See "AI code review runs on request only" in
-[`.github/copilot-instructions.md`](.github/copilot-instructions.md)
-for why it is off, and what re-enabling it involves.
+To start one, comment `/review` on the PR.
+The command must begin the comment body,
+and the commenter must be an `OWNER`, `MEMBER`, or `COLLABORATOR`.
+
+This much is repeated here rather than left to
+[`.github/copilot-instructions.md`](.github/copilot-instructions.md),
+against this file's usual deference to it,
+because an agent auto-loads this file and the failure it prevents is a loop
+that never terminates.
+That file's "AI code review runs on request only" section carries the rest:
+why review is off, what re-enabling it involves,
+and why `@claude` does nothing meanwhile.
 
 ## Things to avoid
 

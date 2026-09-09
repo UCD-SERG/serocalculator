@@ -454,7 +454,7 @@ the probability that they have never been infected is
 $\expf{-\lambda a}$,
 where $a$ is the patient's age at the time of the survey.
 
-One caveat about how the C likelihood realizes this.
+One caveat about how the C likelihood realizes this distribution of $T$.
 @prp-time-since-infection is the backward recurrence time of the constant-rate
 process itself.
 `src/serocalc.c` instead evaluates the age-corrected density of

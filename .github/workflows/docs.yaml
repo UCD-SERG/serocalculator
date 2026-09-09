@@ -125,6 +125,13 @@ jobs:
       # archived and never rebuilt, so v1.4.1 stays pkgdown-shaped for good.
       # That is also the version those links were written against.
       #
+      # Measured 2026-09-08, with /dev/ standing in for what /latest-tag/
+      # becomes at the next release:
+      #
+      #   path                   /latest-tag/   /v1.4.1/   /dev/
+      #   reference/index.html   200            200        404
+      #   reference.html         404            --         200
+      #
       # Bump this to a later /vX.Y.Z/ only if that release was itself built
       # by pkgdown; every altdoc-built release fails for the shape reason
       # above, not the freshness one.

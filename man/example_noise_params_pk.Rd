@@ -7,7 +7,8 @@
 \format{
 \subsection{\code{example_noise_params_pk}}{
 
-A \code{curve_params} object (from \code{\link[=as_sr_params]{as_sr_params()}}) with 4 rows and 7 columns:
+A \code{noise_params} object (from \code{\link[=as_noise_params]{as_noise_params()}}) with 4 rows and
+7 columns:
 \describe{
 \item{antigen_iso}{which antigen and isotype are being measured
 (data is in long format)}

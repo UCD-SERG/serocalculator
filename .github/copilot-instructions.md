@@ -400,11 +400,35 @@ The following workflows run on every PR. **All must pass** for merge:
 
 7. **news.yaml**: Ensures NEWS.md is updated for every PR. Can be bypassed with `no-changelog` label. (~1 min)
 
-8. **version-check.yaml**: Verifies DESCRIPTION version number increased vs. main branch. Run `usethis::use_version()` to increment. (~1 min)
+8. **version-check.yaml**: Verifies DESCRIPTION version number increased vs. main branch. Run `usethis::use_version()` to increment, or apply the `no version increment` label for a change that does not warrant one (documentation, CI). (~1 min)
 
 9. **pkgdown.yaml**: Builds pkgdown website on PR (preview), tags, and main branch pushes. Requires Quarto setup. (~5-7 min)
 
 10. **copilot-setup-steps.yml**: Configures the GitHub Copilot coding agent's environment automatically. Runs when Copilot starts work, when the workflow file changes, or via manual dispatch. Not a required check for PR merges. See "Copilot Setup Workflow" section for details. (~5-10 min)
+
+### AI code review runs on request only
+
+The list above is what runs automatically. `claude-code-review.yml` does **not**:
+its `pull_request:` trigger is commented out, and `claude.yml`'s agent job carries
+`if: false`. Opening or pushing to a PR therefore starts no review, and no
+`review / claude-review` check run appears for it at all.
+
+This was deliberate (commit `864ad51`, 2026-07-31), not a workaround for the
+later token problem in #667.
+
+To get a review, comment `/review` on the PR. The command must begin the comment
+body, and the commenter must be an `OWNER`, `MEMBER`, or `COLLABORATOR`.
+Mentioning `@claude` does nothing while the agent is off.
+
+This matters most for an automated agent told to drive a PR to a clean review
+verdict: waiting for one here never terminates, because nothing in the check-run
+list distinguishes a review that is absent from one that is pending. Post the
+`/review` comment instead of polling.
+
+To re-enable automatic review, uncomment the `pull_request:` trigger in
+`claude-code-review.yml` and the two blocks in `claude.yml`. While it is off,
+keep `review / require-review` off branch protection's required-checks list, or
+PRs will block on a status that never arrives.
 
 ### Copilot PR review policy
 
@@ -415,6 +439,8 @@ The following workflows run on every PR. **All must pass** for merge:
 Team members can trigger actions by commenting on PRs:
 - `/document` - Runs `roxygen2::roxygenise()` and commits changes
 - `/style` - Runs `styler::style_pkg()` and commits changes
+- `/review` - Starts an AI code review of the PR (see "AI code review runs on
+  request only" above; this is the only trigger, as none runs automatically)
 
 ## Repository Structure
 

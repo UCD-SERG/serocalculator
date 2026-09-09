@@ -55,6 +55,33 @@ full list). Slash commands are available for the common ones:
 - Write commit messages and PR descriptions explaining the *why*, not the *what*.
 - Don't bypass CI failures (spell check, lint, docs sync) — fix the underlying issue.
 
+## Code review runs on request only
+
+There is no automatic review on this repository's pull requests.
+`claude-code-review.yml`'s `pull_request:` trigger is commented out and
+`claude.yml`'s job carries `if: false`,
+so opening or pushing to a PR starts nothing,
+and no `review / claude-review` check run appears for it.
+This was deliberate (commit `864ad51`, 2026-07-31), not a workaround for the
+later token bug in #667.
+
+To get a review, comment `/review` on the PR.
+The command must start the comment body, and the commenter must be an
+`OWNER`, `MEMBER`, or `COLLABORATOR`.
+Mentioning `@claude` does nothing while the agent is off.
+
+This matters most for an agent following the lab's standing instruction
+to drive a PR to a clean review verdict: waiting for one here never terminates,
+because nothing in the check-run list announces that the review is absent
+rather than pending.
+Post the `/review` comment instead of polling.
+
+Re-enabling means uncommenting the `pull_request:` trigger in
+`claude-code-review.yml` and the two blocks in `claude.yml`.
+While automatic review is off, keep `review / require-review` off branch
+protection's required-checks list, or PRs will block on a status that never
+arrives.
+
 ## Things to avoid
 
 - Adding new package dependencies without a clear reason; declare them in

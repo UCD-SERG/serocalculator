@@ -55,6 +55,28 @@ full list). Slash commands are available for the common ones:
 - Write commit messages and PR descriptions explaining the *why*, not the *what*.
 - Don't bypass CI failures (spell check, lint, docs sync) — fix the underlying issue.
 
+## Code review runs on request only
+
+No review runs automatically on this repository's pull requests.
+Opening or pushing to a PR starts nothing,
+and no `review / claude-review` check run appears for it --
+so an agent told to wait for a clean review verdict waits forever,
+with nothing in the check-run list to show the review is absent
+rather than pending.
+
+To start one, comment `/review` on the PR.
+The command must begin the comment body,
+and the commenter must be an `OWNER`, `MEMBER`, or `COLLABORATOR`.
+
+This much is repeated here rather than left to
+[`.github/copilot-instructions.md`](.github/copilot-instructions.md),
+against this file's usual deference to it,
+because an agent auto-loads this file and the failure it prevents is a loop
+that never terminates.
+That file's "AI code review runs on request only" section carries the rest:
+why review is off, what re-enabling it involves,
+and why `@claude` does nothing meanwhile.
+
 ## Things to avoid
 
 - Adding new package dependencies without a clear reason; declare them in

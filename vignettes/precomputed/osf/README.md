@@ -95,9 +95,13 @@ Both have been regenerated to match, and this snapshot preserves whatever
 
 Regenerating changed no result,
 which is worth recording so the next reader does not have to re-derive it.
-`y.high` is the upper limit of quantification,
-and it only changes the likelihood through the `yHi <= y` right-censoring
-branch in `src/serocalc.c`.
+`y.high` is the upper limit of detection,
+and both likelihood implementations read it only to decide censoring:
+`src/serocalc.c` in its uncensored guard (`yLo < y && y < yHi`) and its
+`yHi <= y` right-censoring branch,
+and `src/serocalc_joint.c` where `y >= yHi` sets `JOINT_RIGHT_CENSORED`.
+Its value enters a density only on that censored branch, where `prbB()` and
+`prbF()` are evaluated at `yHi` itself (`src/serocalc.c:57`, `:104`).
 The largest antibody concentration in any dataset the package ships or
 vendors is about `219` (in `n6cp3.rds`; the largest in `data/` is `135`),
 so no observation reaches `1000`, let alone `5e+06`:
@@ -106,7 +110,11 @@ identical.
 Which value `hqy4v` *should* carry is a separate question for whoever owns
 the OSF data, tracked in
 [issue #684](https://github.com/UCD-SERG/serocalculator/issues/684).
-`inst/extdata/example_noise_params.csv` is deliberately left at `5e+06`:
-it is a hand-maintained example file with no OSF download script behind it,
-matching the `y.high = 5e6` convention the package's own function examples
-use to mean "no upper censoring".
+`inst/extdata/example_noise_params.csv` and `inst/extdata/example_noise_params.rds`
+are deliberately left at `5e+06`.
+They are hand-maintained example files with no OSF download script behind them
+(unlike `example_pop_data.csv`/`.rds`, which `data-raw/` does write),
+and they match the `y.high = 5e6` convention the package's own function
+examples use to mean "no upper censoring".
+So two copies of these values remain at `5e+06` after this change, both of
+them example fixtures rather than mirrors of the OSF release.

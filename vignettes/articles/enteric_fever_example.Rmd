@@ -253,7 +253,7 @@ To download the same parameters from OSF instead:
 noise <- load_noise_params("https://osf.io/download/hqy4v/")
 ```
 
-The package's own `example_noise_params_sees` is the same object:
+The package's own `example_noise_params_sees` now carries the same values:
 `data-raw/example_noise_params_pk.R` builds it by downloading `hqy4v` from OSF,
 so either source gives the same noise model.
 

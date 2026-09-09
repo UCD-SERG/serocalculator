@@ -80,19 +80,35 @@
 
 ## Bug fixes
 
+* `?example_noise_params_sees` and `?example_noise_params_pk` describe the
+  objects they document.
+  Both `@format` sections called them `curve_params` objects built by
+  `as_sr_params()`; they are `noise_params` objects built by
+  `as_noise_params()`.
+  The `example_noise_params_sees` section additionally carried
+  `example_noise_params_pk`'s heading and its row count, so a 16-row dataset
+  was documented as having 4 rows. (#680)
+
+* The enteric fever article names the density it calls a coarser Monte Carlo
+  approximation, and writes it `\operatorname{p}(y)` rather than `\rho(y)`.
+  The article is an `.Rmd`, so it cannot include the `macros` submodule the
+  Quarto articles pull in and `\dens` would not resolve there;
+  `\operatorname{p}` is what that macro expands to. (#680)
+
 * `example_noise_params_sees` and `example_noise_params_pk` now match the OSF
   file they are generated from.
   `data-raw/example_noise_params_pk.R` builds both by downloading `hqy4v`, but
   the shipped `.rda` files came from an earlier state of it, so `y.high` read
   `5e+06` where the OSF file reads `1000`.
   Every other value already agreed.
-  No estimate changes: `y.high` is the upper limit of quantification and
+  No estimate changes: `y.high` is the upper limit of detection and
   reaches the likelihood only through the right-censoring branch, and the
   largest antibody concentration under `data/` is about `135`
   (about `219` in the cross-sectional data the enteric fever article vendors),
   so nothing is censored under either value.
-  `inst/extdata/example_noise_params.csv` is unchanged; it is a hand-maintained
-  example file, not a copy of the OSF release. (#680)
+  `inst/extdata/example_noise_params.csv` and its `.rds` counterpart are
+  unchanged; they are hand-maintained example files, not copies of the OSF
+  release. (#680)
 
 * `method = "joint"` now refuses a `curve_params` that carries an `iter`
   column for some biomarkers but not others.

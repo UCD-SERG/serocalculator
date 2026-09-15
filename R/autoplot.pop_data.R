@@ -6,6 +6,8 @@
 #' @param log whether to show antibody responses on logarithmic scale
 #' @param strata the name of a variable in `pop_data`
 #' to stratify by (or `NULL` for no stratification)
+#' @param alpha transparency level for points in age-scatter plot
+#' (default: 0.7). Only used when `type = "age-scatter"`.
 #' @param ... unused
 #' @param type an option to choose type of chart:
 #' the current options are `"density"` or `"age-scatter"`
@@ -25,6 +27,7 @@
 #'
 #' xs_data |> autoplot(strata = "catchment", type = "density")
 #' xs_data |> autoplot(strata = "catchment", type = "age-scatter")
+#' xs_data |> autoplot(strata = "catchment", type = "age-scatter", alpha = 0.5)
 #' }
 #' @export
 autoplot.pop_data <- function(
@@ -32,6 +35,7 @@ autoplot.pop_data <- function(
     log = FALSE,
     type = "density",
     strata = NULL,
+    alpha = 0.7,
     ...) {
   if (!is.null(strata) && !is.element(strata, names(object))) {
     cli::cli_abort(
@@ -45,7 +49,7 @@ autoplot.pop_data <- function(
   }
 
   if (type == "age-scatter") {
-    age_scatter(object, strata)
+    age_scatter(object, strata, alpha = alpha)
   } else if (type == "density") {
     density_plot(object, strata, log)
   } else {

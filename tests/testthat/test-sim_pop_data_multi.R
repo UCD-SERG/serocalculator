@@ -95,3 +95,68 @@ test_that("`sim_pop_data_multi()` verbose = TRUE prints inputs w/o erroring", {
     )
   )
 })
+
+test_that("`sim_pop_data_multi()` leaves the caller's RNG state unchanged", {
+  # `rngtools::setRNG()` inside the `%dopar%` loop switches the generator to
+  # L'Ecuyer-CMRG. With `num_cores = 1` on Unix, `doParallel` registers a
+  # multicore backend that runs the loop in the calling process, so that
+  # switch used to escape into the user's session: a later `set.seed()` then
+  # produced a different stream than it had before the call.
+  #
+  # Note this guard is Unix-specific by construction. On Windows,
+  # `registerDoParallel(cores = 1)` builds a one-worker PSOCK cluster, the
+  # loop body runs out of process, and the caller's generator is never
+  # touched -- so a green run there says nothing about the regression.
+  dmcmc <- typhoid_curves_nostrat_100
+
+  run_sim <- function() {
+    sim_pop_data_multi(
+      curve_params = dmcmc,
+      lambdas = 0.2,
+      sample_sizes = 5,
+      age_range = c(0, 10),
+      antigen_isos = c("HlyE_IgA", "HlyE_IgG"),
+      n_mcmc_samples = 0,
+      add_noise = FALSE,
+      noise_limits = rbind(
+        "HlyE_IgA" = c(min = 0, max = 0.5),
+        "HlyE_IgG" = c(min = 0, max = 0.5)
+      ),
+      format = "long",
+      nclus = 2,
+      num_cores = 1
+    )
+  }
+
+  kind_before <- RNGkind()
+  set.seed(54321)
+  seed_before <- .Random.seed
+
+  invisible(run_sim())
+
+  expect_identical(.Random.seed, seed_before)
+
+  # The user-visible consequence: an identical `set.seed()` must still give
+  # an identical stream after the call. Reset the kind first so this block
+  # stands on its own: without it, a leak from the call above would put
+  # both `before` and `after` under the same switched generator and the
+  # comparison would pass vacuously.
+  do.call(RNGkind, as.list(kind_before))
+  set.seed(99)
+  before <- runif(3)
+  invisible(run_sim())
+  set.seed(99)
+  after <- runif(3)
+  expect_identical(before, after)
+
+  # The fresh-session case, where there is no `.Random.seed` to restore.
+  # `rngtools::RNGseed()` returns NULL there and `RNGseed(NULL)` only
+  # removes `.Random.seed`, so restoring the seed alone leaves the kind
+  # switched. This is the branch that needs the kind captured separately.
+  if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+    rm(".Random.seed", envir = globalenv())
+  }
+  invisible(run_sim())
+  expect_identical(RNGkind(), kind_before)
+  expect_false(exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+})

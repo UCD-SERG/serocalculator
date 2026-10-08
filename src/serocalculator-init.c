@@ -7,9 +7,11 @@
 
 /* .C calls */
 extern void negloglik(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+extern void negloglik_joint(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
 static const R_CMethodDef CEntries[] = {
     {"negloglik", (DL_FUNC) &negloglik, 14},
+    {"negloglik_joint", (DL_FUNC) &negloglik_joint, 17},
     {NULL, NULL, 0}
 };
 

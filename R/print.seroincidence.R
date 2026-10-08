@@ -38,6 +38,9 @@ print.seroincidence <- function(x, ...) {
   cat("b) `lambda_start`: ",
       attr(x, "lambda_start"),
       "\n")
+  if (!is.null(attr(x, "method"))) {
+    cat("c) `method`: ", attr(x, "method"), "\n")
+  }
   cat("Call the `summary()` function to obtain output results.\n")
   cat("Call the `autoplot()` function to graph the log-likelihood curve.\n")
   invisible(x)

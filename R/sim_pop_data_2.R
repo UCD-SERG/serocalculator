@@ -23,6 +23,12 @@
 #' @param add_noise a [logical()] indicating
 #' whether to add biological and measurement noise
 #' @inheritParams log_likelihood
+# `@param ...` is declared explicitly rather than left to the
+# `@inheritParams log_likelihood` above, which would describe these as
+# joint-likelihood controls -- this function has no `method` argument to
+# select them with and never reads `...` at all.
+#' @param ... unused; accepted so that this function can stand in for
+#' [sim_pop_data()] as [sim_pop_data_multi()]'s `sim_function` argument.
 #' @param noise_limits biologic noise distribution parameters
 #' @param format a [character()] variable, containing either:
 #' * `"long"` (one measurement per row) or
@@ -73,22 +79,23 @@
 #' )
 #'
 sim_pop_data_2 <- function(
-    lambda = 0.1,
-    n_samples = 100,
-    age_range = c(0, 20),
-    age_fixed = NA,
-    antigen_isos = intersect(
-      get_biomarker_levels(curve_params),
-      rownames(noise_limits)
-    ),
-    n_mcmc_samples = 0,
-    renew_params = FALSE,
-    add_noise = FALSE,
-    curve_params,
-    noise_limits,
-    format = "wide",
-    verbose = FALSE,
-    ...) {
+  lambda = 0.1,
+  n_samples = 100,
+  age_range = c(0, 20),
+  age_fixed = NA,
+  antigen_isos = intersect(
+    get_biomarker_levels(curve_params),
+    rownames(noise_limits)
+  ),
+  n_mcmc_samples = 0,
+  renew_params = FALSE,
+  add_noise = FALSE,
+  curve_params,
+  noise_limits,
+  format = "wide",
+  verbose = FALSE,
+  ...
+) {
   verbose_level <- .validate_verbose(verbose)
 
   if (verbose_level >= 2) {

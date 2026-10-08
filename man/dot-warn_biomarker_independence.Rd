@@ -5,7 +5,13 @@
 \title{Inform the caller that a multi-biomarker fit assumes independence
 across biomarkers}
 \usage{
-.warn_biomarker_independence(pop_data, antigen_isos, cluster_var, verbose)
+.warn_biomarker_independence(
+  pop_data,
+  antigen_isos,
+  cluster_var,
+  verbose,
+  method = "composite"
+)
 }
 \arguments{
 \item{pop_data}{the original \code{pop_data} object passed to
@@ -18,6 +24,8 @@ attribute}
 caller (\code{NULL} if not supplied)}
 
 \item{verbose}{whether to emit the message}
+
+\item{method}{the \code{method} argument as passed by the caller}
 }
 \value{
 \code{invisible(NULL)}
@@ -30,7 +38,9 @@ The naive standard error therefore understates the true variance
 whenever biomarker readings from the same person are correlated,
 as is expected when they share an infection history --- see #645.
 This emits an informational message pointing the caller at
-\code{cluster_var} as the fix, unless they've already supplied one.
+\code{cluster_var} as the fix, unless they've already supplied one, or
+asked for the joint likelihood (\code{method = "joint"}), which has no
+independence assumption to correct for.
 \code{\link[=est_seroincidence_by]{est_seroincidence_by()}} calls this once per stratum, so a
 stratified verbose fit repeats the message.
 }

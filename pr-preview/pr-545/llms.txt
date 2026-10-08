@@ -70,6 +70,7 @@
 - [Load antibody-decay curve parameters and cross-sectional population data](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_estimating-seroincidence-in-real-data.html)
 - [ Inspecting-Individual-Clusters](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_inspecting-individual-clusters.html)
 - [ Interactive-Shiny-App](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_interactive-shiny-app.html)
+- [ Joint-vs-Composite-Simulation](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_joint-vs-composite-simulation.html)
 - [Other innovations in the `serocalculator` package](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_methods-continued.html)
 - [ Multiple-Biomarkers](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_multiple-biomarkers.html)
 - [ Noise-Parameters](https://ucd-serg.github.io/serocalculator/vignettes/methodology/_noise-parameters.html)

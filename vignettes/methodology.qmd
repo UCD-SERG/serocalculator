@@ -868,8 +868,6 @@ That algorithm also returns a numerical Hessian (@def-hessian) at the maximum, a
 
 {{< include methodology/_antibody-response-model.qmd >}}
 
-<!-- {{< include methodology/_methods-continued.qmd >}} -->
-
 ## Variation across the posterior {.smaller}
 
 {{< include methodology/_variation-across-the-posterior.qmd >}}

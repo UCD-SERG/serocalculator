@@ -23,7 +23,8 @@ To account for within-cluster correlation, `serocalculator` implements the **san
 
 Let $C$ be the total number of non-overlapping clusters in the sample,
 and let $H = \hess(\hat\lambda)$ be the Hessian (@def-hessian) at the
-MLE.
+MLE --- `serocalculator` obtains it from `stats::nlm()`'s own
+`hessian` output.
 Write $U_i$ for observation $i$'s score contribution (@def-score) --- the
 gradient of its own log-likelihood $\llik_i$ (@prp-full-sample-likelihood)
 --- and $U_c$ for the total over the observations in cluster $c$:
@@ -70,6 +71,118 @@ Clustering is what drives the two apart, and the gap between them is
 what the correction recovers.
 :::
 
+### Multi-way clustering
+
+When `cluster_var` names more than one variable,
+`serocalculator` does not collapse them into a single interaction.
+Instead it applies the inclusion-exclusion identity of
+Cameron, Gelbach, and Miller (2011) [@Cameron_2011]
+for multi-way cluster-robust variance estimation.
+
+::: {#def-multiway-clustering-variance}
+
+#### Multi-way clustering-robust variance
+
+Let $\mathcal{K} = \{k_1, \dots, k_p\}$ denote the cluster variables.
+For a non-empty subset $S \subseteq \mathcal{K}$,
+let $V_S$ be the one-way sandwich variance $V_{\text{robust}}$
+(@def-cluster-robust-variance),
+computed by clustering on the interaction of the variables in $S$.
+The multi-way variance is the signed sum over every such subset:
+
+$$V_{\text{multiway}} = \sum_{\emptyset \neq S \subseteq \mathcal{K}} (-1)^{|S| + 1} V_S$$
+:::
+
+::: notes
+Computing every subset costs $2^p - 1$ one-way variance evaluations,
+so this is intended for the small $p$ (2-3)
+typical of nested survey designs.
+:::
+
+::: {#exm-two-way-clustering}
+
+#### Two cluster variables
+
+For two cluster variables ($p = 2$),
+@def-multiway-clustering-variance reduces to the familiar
+three-term formula:
+
+$$V_{\text{multiway}} = V_1 + V_2 - V_{1 \cap 2}$$
+
+where $V_1$ and $V_2$ cluster on each variable separately,
+and $V_{1 \cap 2}$ clusters on their interaction,
+the most granular grouping.
+:::
+
+### Small-sample correction
+
+Two adjustments refine the one-way variance terms $V_S$ that feed
+@def-multiway-clustering-variance.
+
+::: {#def-finite-difference-score}
+
+#### Finite-difference score approximation
+
+`serocalculator` approximates each cluster's score contribution $U_c$
+(@def-cluster-robust-variance) by a forward finite difference of the
+cluster's log-likelihood,
+$\ell_c(\lambda) = \sum_{i \in c} \log p(Y_i \mid \lambda)$:
+
+$$U_c \approx \frac{\ell_c(\hl + \epsilon) - \ell_c(\hl)}{\epsilon}, \quad \epsilon = 10^{-6}$$
+:::
+
+::: {#def-cr1-correction}
+
+#### CR1 small-sample correction
+
+When `small_sample = "CR1"` (the default),
+each one-way subset variance $V_S$
+(@def-multiway-clustering-variance)
+is inflated by the usual cluster degrees-of-freedom correction:
+
+$$V_S^{\text{CR1}} = \frac{G_S}{G_S - 1} \, V_S$$
+
+where $G_S$ is the number of unique clusters in subset $S$'s grouping.
+:::
+
+### Safeguards against invalid variance
+
+::: {#def-variance-safeguards}
+
+#### Flooring and fallback for the final variance
+
+The inclusion-exclusion sum $V_{\text{multiway}}$
+(@def-multiway-clustering-variance)
+is not guaranteed to be non-negative.
+`serocalculator` therefore floors the raw estimate at 0
+(emitting a warning), independent of `floor_to_standard`,
+before it can reach $\sqrt{V}$ as a silent `NaN`:
+
+$$V_{\text{raw}}^{+} = \max\paren{0, V_{\text{multiway}}}$$
+
+Setting `floor_to_standard = TRUE` additionally floors the result
+at the model-based (non-cluster-robust) variance
+$V_{\text{standard}} = H^{-1}$,
+the inverse of the observed information at the MLE:
+
+$$V_{\text{final}} = \max\paren{V_{\text{standard}}, V_{\text{raw}}^{+}}$$
+
+If any one-way subset term is unavailable,
+for example because its Hessian is non-finite or non-positive,
+the inclusion-exclusion sum is itself non-finite.
+`serocalculator` warns and returns a missing standard error in that case.
+With `floor_to_standard = TRUE` it falls back to $V_{\text{standard}}$
+instead, unless $V_{\text{standard}}$ is itself unusable
+(the same degenerate Hessian poisons $V_{\text{standard}} = H^{-1}$ too),
+in which case it also returns a missing standard error
+rather than silently falling back to a negative or infinite "variance".
+:::
+
+::: notes
+The inclusion-exclusion sum's occasional negativity is a documented
+property of the Cameron-Gelbach-Miller estimator, not a bug.
+:::
+
 ### Implementation in serocalculator
 
 Users can specify clustering using the `cluster_var` parameter:
@@ -91,6 +204,16 @@ est <- est_seroincidence(
 ```
 
 When cluster-robust standard errors are used, the `summary()` output indicates this with `se_type = "cluster-robust"`.
+The multi-way behavior above is itself controlled through `summary()`:
+
+```{r, eval=FALSE}
+summary(
+  est,
+  small_sample = "CR1", # the default; "none" disables the CR1 correction
+  floor_to_standard = FALSE, # the default; TRUE additionally floors at V_standard
+  debug_cluster = TRUE # prints the V_S/V_raw/V_final decomposition
+)
+```
 
 ::: notes
 Internally the optimization is parameterized by $\log\lambda$ rather

@@ -12,6 +12,13 @@
 #' @param object a [list()] outputted by [stats::nlm()] or [est_seroincidence()]
 #' @param coverage desired confidence interval coverage probability
 #' @param verbose whether to produce verbose messaging
+#' @param small_sample small-sample correction for cluster-robust variance.
+#'   Use `"CR1"` to apply the one-way CR1 factor to each subset term, or
+#'   `"none"` to leave the one-way terms unadjusted.
+#' @param floor_to_standard whether to floor cluster-robust variance at the
+#'   model-based variance.
+#' @param debug_cluster whether to print the cluster-robust variance
+#'   decomposition when clustering is used.
 #' @param ... unused
 #'
 #' @return a [tibble::tibble()] containing the following:
@@ -75,8 +82,12 @@ summary.seroincidence <- function(
   object,
   coverage = .95,
   verbose = TRUE,
+  small_sample = c("CR1", "none"),
+  floor_to_standard = FALSE,
+  debug_cluster = FALSE,
   ...
 ) {
+  small_sample <- match.arg(small_sample)
   start <- object |> attr("lambda_start")
   antigen_isos <- object |> attr("antigen_isos")
   cluster_var <- object |> attr("cluster_var")
@@ -111,13 +122,17 @@ summary.seroincidence <- function(
     var_log_lambda <- .compute_cluster_robust_var(
       fit = object,
       cluster_var = cluster_var,
-      stratum_var = stratum_var
+      stratum_var = stratum_var,
+      small_sample = small_sample,
+      floor_to_standard = floor_to_standard,
+      debug_cluster = debug_cluster
     )
   } else {
     # Standard variance from Hessian
     var_log_lambda <- 1 / object$hessian |> as.vector()
   }
 
+  cluster_decomp <- attr(var_log_lambda, "cluster_decomp")
   # Ensure var_log_lambda is a scalar
   var_log_lambda <- as.numeric(var_log_lambda)[1]
   se_log_lambda <- sqrt(var_log_lambda)
@@ -144,6 +159,10 @@ summary.seroincidence <- function(
   class(to_return) <-
     "summary.seroincidence" |>
     union(class(to_return))
+
+  if (!is.null(cluster_decomp)) {
+    attr(to_return, "cluster_decomp") <- cluster_decomp
+  }
 
   return(to_return)
 }

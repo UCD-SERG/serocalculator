@@ -6,12 +6,40 @@
 <script>
 (function () {
   var basePath = "/serocalculator/";
+  var exact = {};
+  var prefixes = [];
   var moved = {"main": "dev"};
   var path = window.location.pathname;
   if (path.indexOf(basePath) !== 0) {
     return;
   }
   var rest = path.slice(basePath.length);
+  var cleanRest = rest.length > 0 && rest.charAt(rest.length - 1) === "/" ? rest.slice(0, -1) : rest;
+  if (Object.prototype.hasOwnProperty.call(exact, cleanRest)) {
+    window.location.replace(
+      basePath + exact[cleanRest] + window.location.search + window.location.hash
+    );
+    return;
+  }
+  for (var i = 0; i < prefixes.length; i++) {
+    var prefix = prefixes[i][0];
+    var target = prefixes[i][1];
+    if (rest.indexOf(prefix) === 0) {
+      var remainder = rest.slice(prefix.length);
+      var dest = target.indexOf("*") !== -1 ? target.replace("*", remainder) : target;
+      window.location.replace(
+        basePath + dest + window.location.search + window.location.hash
+      );
+      return;
+    }
+    if (rest === prefix.slice(0, -1)) {
+      var dest = target.indexOf("*") !== -1 ? target.replace("*", "") : target;
+      window.location.replace(
+        basePath + dest + window.location.search + window.location.hash
+      );
+      return;
+    }
+  }
   var slash = rest.indexOf("/");
   var head = slash === -1 ? rest : rest.slice(0, slash);
   if (!Object.prototype.hasOwnProperty.call(moved, head)) {

@@ -78,8 +78,7 @@ read_sr_params_url <- function(con) {
 #' consistent API.
 #' @keywords internal
 #' @export
-load_curve_params <- function(
-    ...) {
+load_curve_params <- function(...) {
   lifecycle::deprecate_soft("1.3.1", "load_curve_params()", "load_sr_params()")
   load_sr_params(
     ...

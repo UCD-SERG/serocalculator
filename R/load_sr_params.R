@@ -50,13 +50,12 @@ read_sr_params_url <- function(con) {
       warning = function(w) invokeRestart("muffleWarning")
     ),
     error = function(e) {
-      resource <- summary(con)$description
       cli::cli_abort(
         class = "internet_resource_unavailable",
         message = c(
           "Unable to load seroresponse parameters from internet resource.",
           "x" = paste(
-            "The resource at {.url {resource}}",
+            "The resource at {.url {summary(con)$description}}",
             "is not available or has changed."
           ),
           "i" = paste(

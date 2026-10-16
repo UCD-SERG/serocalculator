@@ -112,6 +112,18 @@ continuing to install `serocalculator`.**
     - **Do** select the box for “Save version information to registry”.
       It should be selected by default.
 
+### Troubleshooting installation
+
+If loading the package or calling its functions fails with an error like
+`lazy-load database '.../serocalculator.rdb' is corrupt` (often with
+`internal error in R_decompress1`), the installed copy of the package
+was damaged. This typically happens when a package is installed or
+updated while it is already loaded in the current R session, or when an
+installation is interrupted. To fix it, restart R, run
+`remove.packages("serocalculator")`, restart R again, and reinstall the
+package. To avoid the problem, restart R before installing or updating
+`serocalculator`, and run the installation before any `library()` call.
+
 ## Learning to use `{serocalculator}`
 
 Successful installation can be confirmed by loading the package into

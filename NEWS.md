@@ -25,6 +25,13 @@
 
 ## Bug fixes
 
+* `load_sr_params()` no longer reports every failure on a URL as
+  "resource not available or has changed".
+  Only a failure to read the resource gets that message;
+  errors from validating the downloaded data
+  (or other problems, such as a damaged package installation)
+  now surface with their real cause.
+
 * `method = "joint"` now refuses a `curve_params` that carries an `iter`
   column for some biomarkers but not others.
   Draws are paired by `iter` when every biomarker has it and by position

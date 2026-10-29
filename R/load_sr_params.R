@@ -18,49 +18,15 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
 
   if (is_url) {
     file_path <- url(file_path)
+    data <- read_sr_params_url(file_path)
+  } else {
+    data <- readr::read_rds(file_path)
   }
 
-  curve_params <- tryCatch(
-    {
-      # Read the RDS file with warning suppression for URLs
-      data <- if (is_url) {
-        withCallingHandlers(
-          readRDS(file_path),
-          warning = function(w) {
-            # Suppress warnings for URLs - we'll handle errors instead
-            invokeRestart("muffleWarning")
-          }
-        )
-      } else {
-        readr::read_rds(file_path)
-      }
-
-      # Convert to sr_params (warnings from validation will be preserved)
-      as_sr_params(data, antigen_isos = antigen_isos)
-    },
-    error = function(e) {
-      if (is_url) {
-        cli::cli_abort(
-          class = "internet_resource_unavailable",
-          message = c(
-            "Unable to load seroresponse parameters from internet resource.",
-            "x" = paste(
-              "The resource at {.url {summary(file_path)$description}}",
-              "is not available or has changed."
-            ),
-            "i" = paste(
-              "Please check your internet connection",
-              "and verify the URL is correct."
-            ),
-            "i" = "Original error: {e$message}"
-          )
-        )
-      } else {
-        # Re-throw the original error for non-URL paths unchanged
-        rlang::cnd_signal(e)
-      }
-    }
-  )
+  # Validation errors (e.g., wrong data format) are never network failures,
+  # so they are raised as-is, for URLs and local paths alike.
+  # Warnings from validation are preserved.
+  curve_params <- as_sr_params(data, antigen_isos = antigen_isos)
 
   return(curve_params)
 }
@@ -74,8 +40,7 @@ load_sr_params <- function(file_path, antigen_isos = NULL) {
 #' consistent API.
 #' @keywords internal
 #' @export
-load_curve_params <- function(
-    ...) {
+load_curve_params <- function(...) {
   lifecycle::deprecate_soft("1.3.1", "load_curve_params()", "load_sr_params()")
   load_sr_params(
     ...

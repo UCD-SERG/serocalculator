@@ -94,3 +94,21 @@ test_that(
     expect_s3_class(result, "curve_params")
   }
 )
+
+test_that(
+  desc = "validation errors on URL data are not reported as network errors",
+  code = {
+    # readRDS() succeeds here, so the failure is in validating the data
+    local_mocked_bindings(
+      read_sr_params_url = function(con) data.frame(x = 1)
+    )
+    err <- tryCatch(
+      load_sr_params("https://example.org/not_params.rds"),
+      error = function(e) e
+    )
+
+    expect_s3_class(err, "error")
+    expect_false(inherits(err, "internet_resource_unavailable"))
+    expect_no_match(conditionMessage(err), "not available or has changed")
+  }
+)
